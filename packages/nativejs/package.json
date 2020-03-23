@@ -1,0 +1,9 @@
+{
+  "name": "pjax-api",
+  "version": "1.0.0",
+  "description": "A pjax miniature library",
+  "main": "api.js",
+  "author": "Okiki Ojo",
+  "license": "MIT",
+  "private": true
+}

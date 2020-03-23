@@ -1,0 +1,6 @@
+{
+    "emmet.showSuggestionsAsSnippets": true,
+    "emmet.triggerExpansionOnTab": true,
+    "liveServer.settings.multiRootWorkspaceName": "pjax-api",
+    "liveServer.settings.root": "/"
+}
