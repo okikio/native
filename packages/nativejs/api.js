@@ -18,7 +18,7 @@ export class Manager {
  */
 class Storage {
     constructor () {
-
+        this.store = new Set();
     }
 }
 
@@ -29,5 +29,53 @@ class State {
 
     toJSON () {
         return this.state;
+    }
+}
+
+class History extends Storage {
+    constructor () {
+        super();
+    }
+}
+
+class Component {
+
+}
+
+class ComponentManager extends Manager {
+    constructor () {
+        super();
+    }
+}
+
+class Page {
+    constructor () {
+        // HTMLELEMENT
+        this.container = null;
+    }
+}
+
+class PageManager extends Manager {
+    constructor () {
+        super();
+    }
+}
+
+class Transition {
+    constructor ({ }) {
+        this.lifecycle
+    }
+}
+
+class TransitionManager extends Manager {
+    constructor () {
+        super();
+    }
+}
+
+class App {
+    constructor () {
+        this.history = new History();
+        this.transition = new TransitionManager();
     }
 }
