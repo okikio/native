@@ -55,6 +55,7 @@ class Page {
     }
 }
 
+// Also know as the page cache
 class PageManager extends Manager {
     constructor () {
         super();
