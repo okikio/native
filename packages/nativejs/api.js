@@ -19,6 +19,7 @@ const ErrorCheck = {
      *    - context = [Object*]
      *    - message = [String]
      *    - method = [String]
+     *    - type = [Object*]
      * @return {ErrorCheck}
      */
     type (value, { context, message, method, type }) {
@@ -40,12 +41,22 @@ const ErrorCheck = {
      * @return {ErrorCheck}
      */
     class (value, { context, message, method, type }) {
-        let _class = context.#class;
-        let _type = type || context.#type;
-        if (_type != null && !(value instanceof _type))
+        let _class = context.#class, _type;
+        if (typeof type == "undefined")
+            _type = context.#type;
+        else if (typeof context.#type == "undefined") _type = type;
+        else if (typeof context.#type == "null" || typeof type == "null") {
+            return this;
+        }
+
+        if (!(value instanceof _type))
             this._throw(_class, method, message);
         return this;
     }
+};
+
+const Config = {
+    "container": "data-container"
 };
 
 /**
@@ -111,6 +122,12 @@ export class Manager extends BasicClass {
      * @return {Manager}
      */
     set (key, value) {
+        ErrorCheck
+            .class(value, {
+                method: "set", context: this,
+                message: `value doesn't match type ${this.#type}`
+            });
+
         this.list.set(key, value);
         return this;
     }
@@ -232,11 +249,12 @@ export class Storage extends Manager {
      * @return {any*}
      */
     get (key) {
-        ErrorCheck.type(key, {
-            type: "number",
-            method: "get", context: this,
-            message: "key must be a number"
-        });
+        ErrorCheck
+            .type(key, {
+                type: "number",
+                method: "get", context: this,
+                message: "key must be a number"
+            });
 
         return super.get(key);
     }
@@ -255,10 +273,6 @@ export class Storage extends Manager {
                 type: "number",
                 method: "set", context: this,
                 message: "key must be a number"
-            })
-            .class(value, {
-                method: "set", context: this,
-                message: `value doesn't match type ${this.#type}`
             });
 
         super.set(key, value);
@@ -305,8 +319,8 @@ export class Storage extends Manager {
  */
 export class _URL extends URL {
     // Read up on the native URL class [devdocs.io/dom/url]
-    constructor (...args) {
-        super(...args);
+    constructor (url = window.location) {
+        super(url);
     }
 
     /**
@@ -345,24 +359,6 @@ export class _URL extends URL {
 }
 
 /**
- * Controls the animation between pages
- *
- * @export
- * @class Transition
- * @extends {BasicClass}
- */
-export class Transition extends BasicClass {
-    #class = "Transition";
-
-    // Based off the highwayjs Transition class
-    in ({ from, to, trigger, done })
-        { return done(); }
-
-    out ({ from, trigger, done })
-        { return done(); }
-}
-
-/**
  * Represents the current status of the page consisting of properties like: url, transition, data
  *
  * @export
@@ -376,9 +372,10 @@ export class State extends BasicClass {
      *
      * @param    {Object}
      *    - url = [_URL]
-     *    - transition = [Transition]
+     *    - transition = [String]
      *    - data = [Object]
-     * @memberof {State}
+     * @memberof State
+     * @constructor
      */
     constructor ({ url = null, transition = null, data: {} }) {
         ErrorCheck
@@ -387,11 +384,17 @@ export class State extends BasicClass {
                 method: "constructor",
                 message: "the url is not a valid _URL class instance."
             })
-            .class(transition, {
-                context: this, type: Transition,
+            .type(transition, {
+                context: this, type: "String",
                 method: "constructor",
-                message: "the transition is not a valid Transition class instance."
-            })
+                message: "the transition name is not a valid String."
+            });
+
+        /**
+         * The current state data
+         *
+         * @type {Object}
+         */
         this.state = { url, transition, data };
     }
 
@@ -421,6 +424,7 @@ export class HistoryManager extends Storage {
      * Creates an instance of the HistoryManager class, which inherits properties and methods from the Storage class.
      *
      * @memberof HistoryManager
+     * @constructor
      */
     constructor () {
         super();
@@ -431,52 +435,619 @@ export class HistoryManager extends Storage {
  * Controls specific kinds of actions that require JS
  *
  * @export
- * @class Component
+ * @class Service
  * @extends {BasicClass}
  */
-export class Component extends BasicClass  {
-    #class = "Component";
+export class Service extends BasicClass  {
+    #class = "Service";
+    constructor () { }
 
-    constructor (el) {
-        this.el = el instanceof Element ? el : document.querySelectorAll(el);
-    }
-
+    // Method is run once when Plugin is installed on a PluginManager
     install () {}
 
-    // On start of Component
+    // On start of Plugin
     boot () {}
-}
 
-class ComponentManager extends Manager {
-    constructor () {
-        super();
+    // Initialize events
+    initEvents (emitter) {}
+
+    // Stop events
+    stopEvents (emitter) {}
+
+    // Stop services
+    stop () {
+        this.stopEvents();
     }
 }
 
-class Page {
+/**
+ * A service that interact with the DOM
+ *
+ * @export
+ * @class Component
+ * @extends {Service}
+ */
+export class Component extends Service {
+    /**
+     *
+     * @param {String|Element} el
+     * @constructor
+     */
+    constructor (el) {
+        /**
+         * Stores the element the Component is going to act on
+         *
+         * @type {Array}
+         */
+        this.el = el instanceof Element ? [el] : [].slice.call(document.querySelectorAll(el));
+    }
+}
+
+/**
+ * Represents a new event listener consisting of properties like: callback, scope, name
+ *
+ * @export
+ * @class Listener
+ * @extends {BasicClass}
+ */
+export class Listener extends BasicClass {
+    #class = "Listener";
+    /**
+     * Creates a new instance of a Listener
+     *
+     * @param    {Object}
+     *    - callback = [Function]
+     *    - scope = [Object*]
+     *    - name = [String]
+     * @memberof State
+     * @constructor
+     */
+    constructor ({ callback = null, scope = null, name = null }) {
+        ErrorCheck
+            .type(callback, {
+                context: this, type: "function",
+                method: "constructor",
+                message: "the listener callback is not a valid Method."
+            })
+            .type(name, {
+                context: this, type: "string",
+                method: "constructor",
+                message: "the name of the event is not a valid."
+            });
+
+        /**
+         * The current listener data
+         *
+         * @type {Object}
+         */
+        this.listener = { callback, scope, name };
+    }
+
+    /**
+     * Returns the callback Function of the Listener
+     *
+     * @public
+     * @return {Function}
+     */
+    getCallback () {
+        return this.listener.callback;
+    }
+
+    /**
+     * Returns the scope as an Object, from the Listener
+     *
+     * @public
+     * @return {Function}
+     */
+    getScope () {
+        return this.listener.scope;
+    }
+
+    /**
+     * Returns the event as a String, from the Listener
+     *
+     * @public
+     * @return {Function}
+     */
+    getEventName () {
+        return this.listener.name;
+    }
+
+    /**
+     * Returns the listener as an Object
+     *
+     * @public
+     * @return {Object}
+     */
+    toJSON () {
+        return this.listener;
+    }
+}
+
+/**
+ * An event emitter
+ *
+ * @export
+ * @class EventEmitter
+ * @extends {Manager}
+ */
+// A small event emitter
+export class EventEmitter extends Manager  {
+    #class = "EventEmitter";
+    constructor() {
+        super();
+    }
+
+    // Get event, ensure event is valid
+    getEvent (name) {
+        let event = this.get(name);
+        if (!Array.isArray(event)) this.set(name, []);
+        return event;
+    }
+
+    // New event listener
+    newListener (name, callback, scope) {
+        let event = this.getEvent(name);
+        event.push(new Listener({ name, callback, scope }));
+        return event;
+    }
+
+    /**
+     * Adds a listener for a given event
+     *
+     * @param {String|Object|Array} events
+     * @param {Function*} callback
+     * @param {Object*} scope
+     */
+    on (events, callback, scope) {
+        let event;
+        // If there is no event break
+        if (typeof events == "undefined") return this;
+
+         // Create a new event every space
+        if (typeof events == "string") events = events.split(/\s/g);
+
+        // Loop through the list of events
+        Object.keys(events).forEach(key => {
+            // Select the name of the event from the list
+            // Remember events can be {String | Object | Array}
+            event = events[key];
+
+            // Check If events is an Object (JSON like Object, and not an Array)
+            if (typeof events == "object" && !Array.isArray(events)) {
+                this.newListener(key, event, callback);
+            } else {
+                this.newListener(event, callback, scope);
+            }
+        }, this);
+        return this;
+    }
+
+    // Remove an event listener
+    removeListener (name, callback, scope) {
+        let event = this.getEvent(name);
+
+        if (callback) {
+            let value, listener = new Listener({ name, callback, scope });
+            for (let i = 0; i < event.length; i ++) {
+                value = event[i];
+                if (value.callback === listener.callback &&
+                    value.scope === listener.scope)
+                    break;
+            }
+
+            event.splice(i, 1);
+        } else this.remove(name);
+        return event;
+    }
+
+    /**
+     * Removes a listener for a given event
+     *
+     * @param {String|Object|Array} events
+     * @param {Function*} callback
+     * @param {Object*} scope
+     */
+    off (events, callback, scope) {
+        let event;
+        // If there is no event break
+        if (typeof events == "undefined") return this;
+
+         // Create a new event every space
+        if (typeof events == "string") events = events.split(/\s/g);
+
+        // Loop through the list of events
+        Object.keys(events).forEach(key => {
+            // Select the name of the event from the list
+            // Remember events can be {String | Object | Array}
+            event = events[key];
+
+            // Check If events is an Object (JSON like Object, and not an Array)
+            if (typeof events == "object" && !Array.isArray(events)) {
+                this.removeListener(key, event, callback);
+            } else {
+                this.removeListener(event, callback, scope);
+            }
+        }, this);
+        return this;
+    }
+
+    /**
+     * Adds a one time event listener for an event
+     *
+     * @param {String|Object|Array} events
+     * @param {Function*} callback
+     * @param {Object*} scope
+     */
+    once (events, callback, scope) {
+        let onceFn;
+        // If there is no event break
+        if (typeof events == "undefined") return this;
+
+         // Create a new event every space
+        if (typeof events == "string") events = events.split(/\s/g);
+
+        onceFn = (...args) => {
+            this.off(events, onceFn, scope);
+            callback.apply(scope, args);
+        };
+
+        this.on(events, onceFn, scope);
+        return this;
+    }
+
+    /**
+     * Call all listener within an event
+     *
+     * @param {String|Array} events
+     * @param {Array} [args = []]
+     */
+    emit (events, args = []) {
+        // If there is no event break
+        if (typeof events == "undefined") return this;
+
+         // Create a new event every space
+        if (typeof events == "string") events = events.split(/\s/g);
+
+        // Loop through the list of events
+        events.forEach(event => {
+            let listeners = this.getEvent(event);
+            listeners.forEach(listener => {
+                let { callback, scope } = listener.toJSON();
+                callback.apply(scope, args);
+            });
+        }, this);
+        return this;
+    }
+
+    // Call all listener within an event
+    emit(evt, args) {
+        let $Evt, $args = args;
+        if (_is.undef(evt)) { return; } // If there is no event break
+        if (_is.str(evt)) { evt = evt.split(/\s/g); }
+        if (!_is.arr(evt)) { evt = [evt]; } // Set evt to an array
+
+        // Loop through the list of events
+        evt.forEach(function ($evt) {
+            $Evt = this._preEvent($evt);
+            if (!this._emit.includes($evt))
+                { this._emit.push($evt); }
+
+            $Evt.forEach(_evt => {
+                $args = args;
+                // Check to see if first param is $evt, if so give details about event
+                if (_argNames(_evt.callback)[0] === "$evt")
+                    { $args = [_evt, ...args]; }
+
+                _evt.callback
+                    .apply(_is.undef(_evt.scope) ? scope : _evt.scope, $args);
+            }, this);
+        }, this);
+        return this;
+    }
+}
+
+/**
+ * The Service Manager controls the lifecycle of all services of a website
+ *
+ * @export
+ * @class ServiceManager
+ * @extends {Storage}
+ */
+export class ServiceManager extends Storage {
+    #class = "ServiceManager";
+    #type = Service;
     constructor () {
-        // HTMLELEMENT
+        super();
+    }
+
+    _callForEach (fn, args = []) {
+        return this.each(service => {
+            service[fn](...args);
+        });
+    }
+
+    install () {
+        return this._callForEach("install");
+    }
+
+    boot () {
+        return this._callForEach("boot");
+    }
+
+    initEvents (emitter) {
+        return this._callForEach("initEvents", emitter);
+    }
+
+    stopEvents (emitter) {
+        return this._callForEach("stopEvents", emitter);
+    }
+}
+
+/**
+ * The Service Manager controls the lifecycle of all services of a website
+ *
+ * @export
+ * @class Page
+ * @extends {BasicClass}
+ */
+export class Page extends BasicClass {
+    #class = "Page";
+    /**
+     * Creates a new page from response text, or a Document Object
+     *
+     * @param {_URL} url
+     * @param {String | Document} dom
+     * @constructor
+     */
+    constructor (dom) {
+        /**
+         * The meta tags of each page
+         *
+         * @type {NodeList}
+         */
+        this.mata = [];
+
+        /**
+         * The DOM of the current page
+         *
+         * @type {Document}
+         */
+        this.dom = null;
+
+        /**
+         * The container to replace between pages
+         *
+         * @type {HTMLElement}
+         */
         this.container = null;
+
+        /**
+         * The url of the current page
+         *
+         * @type {String}
+         */
+        this.title = "";
+
+        /**
+         * The head element of the current page
+         *
+         * @type {HTMLElement}
+         */
+        this.head = null;
+
+        /**
+         * The body element of the current page
+         *
+         * @type {HTMLElement}
+         */
+        this.body = null;
+
+        this.parse(dom);
     }
+
+    parse (dom) {
+        if (typeof dom == "string") {
+            const parser = new DOMParser();
+            this.dom = parser.parseFromString(dom, 'text/html');
+        } else {
+            this.dom = dom || document;
+        }
+
+        this.title = Page.getTitle(this.dom);
+        this.meta = Page.getMeta(this.dom);
+        this.head = Page.getHead(this.dom);
+        this.body = Page.getBody(this.dom);
+        this.container = Page.getContainer(this.dom);
+        return this;
+    }
+
+    static getTitle (dom) { return dom.title; }
+    static getHead (dom) { return dom.head; }
+    static getBody (dom) { return dom.body; }
+
+    static getMeta (dom) {
+        return Page.getHead(dom).querySelectorAll("meta");
+    }
+
+    static getContainer (dom) {
+        return Page.getBody(dom).querySelector(Config.container);
+    }
+
+    getTitle () { return this.title; }
+    getMeta () { return this.meta; }
+    getContainer () { return this.container; }
+    getDOM () { return this.dom; }
 }
 
+/**
+ * Controls the animation between pages
+ *
+ * @export
+ * @class Transition
+ * @extends {BasicClass}
+ */
+export class Transition extends BasicClass {
+    #class = "Transition";
+    /**
+     * Transition name
+     *
+     * @type {String}
+     */
+    name = "Transition";
 
-class TransitionManager extends Manager {
+    // Based off the highwayjs Transition class
+    out ({ from, trigger, done })
+        { return done(); }
+
+    in ({ from, to, trigger, done })
+        { return done(); }
+}
+
+/**
+ * Controls which animation between pages to use
+ *
+ * @export
+ * @class TransitionManager
+ * @extends {Manager}
+ */
+export class TransitionManager extends Manager {
+    #class = "TransitionManager";
+    #type = Transition;
     constructor () {
         super();
     }
+
+    show (name, oldPage, newPage) {
+        let transition = this.get(name);
+        return new Promise(resolve => {
+            transition.in({ from: oldPage, to: newPage, done: resolve });
+        });
+    }
+
+    hide (name, oldPage) {
+        let transition = this.get(name);
+        return new Promise(resolve => {
+            transition.out({ from: oldPage, done: resolve });
+        });
+    }
 }
 
+/**
+ * Controls which page to be loaded
+ *
+ * @export
+ * @class PageManager
+ * @extends {Manager}
+ */
 // Also know as the page cache
-class PageManager extends Manager {
+export class PageManager extends Manager {
+    #class = "PageManager";
     constructor () {
         super();
+
+        this.set(new _URL(), new Page());
+    }
+
+    load (url) {
+        return new Promise(resolve => {
+            if (this.has(url)) {
+                let _page = this.get(url);
+                resolve(_page);
+                return;
+            }
+
+            this.request(url)
+                .then(response => {
+                    let _url = new _URL(url);
+                    let _page = new Page(response);
+                    this.set(_url, _page);
+
+                    return resolve(_page);
+                });
+        });
+    }
+
+    request (url) {
+        return new Promise((resolve, reject) => {
+            const headers = new Headers([
+                ["X-Partial", "true"]
+            ]);
+
+            const timeout = window.setTimeout(() => {
+                window.clearTimeout(timeout);
+                reject("Request Timed Out!");
+            }, Config.timeout);
+
+            fetch(url, {
+                method: 'GET',
+                headers: headers,
+                cache: 'default',
+                credentials: 'same-origin'
+            }).then(response => {
+                window.clearTimeout(timeout);
+
+                if (response.status >= 200 && response.status < 300) {
+                    return resolve(res.text());
+                }
+
+                const err = new Error(res.statusText || res.status);
+                return reject(err);
+            }).catch(err => {
+                window.clearTimeout(timeout);
+                reject(err);
+            });
+        });
     }
 }
 
-class App {
+export class App extends BasicClass {
+    #class = "App";
     constructor () {
         this.history = new HistoryManager();
         this.transitions = new TransitionManager();
+        this.services = new ServiceManager();
+        this.emitter = new EventEmitter();
+    }
+
+    addService (service) {
+        this.services.add(service);
+        return this;
+    }
+
+    addTransition (service) {
+        this.services.add(service);
+        return this;
+    }
+
+    add (type, value) {
+        switch (type) {
+            case "service":
+                this.addService(value);
+                break;
+            case "transition":
+                this.addTransition(value);
+                break;
+        }
+    }
+
+    on (events, callback) {
+        this.emitter.on(events, callback, this);
+        return this;
+    }
+
+    off (events, callback) {
+        this.emitter.off(events, callback, this);
+        return this;
+    }
+
+    once (events, callback) {
+        this.emitter.once(events, callback, this);
+        return this;
+    }
+
+    emit (events, args) {
+        this.emitter.emit(events, args);
+        return this;
     }
 }
