@@ -91,9 +91,19 @@ export class Manager extends BasicClass {
     #class = "Manager"; // For error checks
     /**
      * Creates an instance of the Manager class.
+     *
+     * @param {App} $app
      * @memberof Manager
+     * @constructor
      */
-    constructor () {
+    constructor ($app) {
+        /**
+         * The instance of the App Class, the manager is instantiated
+         *
+         * @type {App}
+         */
+        this.app = $app;
+
         /**
          * The complex list of named data, to which the Manager controls
          *
@@ -235,10 +245,13 @@ export class Storage extends Manager {
 
     /**
      * Creates an instance of the Storage class, which inherits properties and methods from the Manager class.
+     *
+     * @param {App} $app
      * @memberof Storage
+     * @constructor
      */
-    constructor () {
-        super();
+    constructor ($app) {
+        super($app);
     }
 
     /**
@@ -423,11 +436,12 @@ export class HistoryManager extends Storage {
     /**
      * Creates an instance of the HistoryManager class, which inherits properties and methods from the Storage class.
      *
+     * @param {App} $app
      * @memberof HistoryManager
      * @constructor
      */
-    constructor () {
-        super();
+    constructor ($app) {
+        super($app);
     }
 }
 
@@ -440,7 +454,14 @@ export class HistoryManager extends Storage {
  */
 export class Service extends BasicClass  {
     #class = "Service";
-    constructor () { }
+    constructor () {
+        /**
+         * Stores the App Classes EventEmitter
+         *
+         * @type {EventEmitter}
+         */
+        this.emitter = null;
+    }
 
     // Method is run once when Plugin is installed on a PluginManager
     install () {}
@@ -461,7 +482,7 @@ export class Service extends BasicClass  {
 }
 
 /**
- * A service that interact with the DOM
+ * A service that interacts with the DOM
  *
  * @export
  * @class Component
@@ -469,8 +490,10 @@ export class Service extends BasicClass  {
  */
 export class Component extends Service {
     /**
+     * Creates an instance of a Component
      *
      * @param {String|Element} el
+     * @memberof Component
      * @constructor
      */
     constructor (el) {
@@ -481,6 +504,71 @@ export class Component extends Service {
          */
         this.el = el instanceof Element ? [el] : [].slice.call(document.querySelectorAll(el));
     }
+}
+
+/**
+ * A service that interacts with the DOM
+ *
+ * @export
+ * @class AnchorLink
+ * @extends {Component}
+ */
+export class AnchorLink extends Component {
+    /**
+     * Creates an instance of the Component AnchorLink
+     *
+     * @memberof AnchorLink
+     * @constructor
+     */
+    constructor () { super(); }
+
+    /**
+     * Callback called from click event.
+     *
+     * @private
+     * @param {MouseEvent} evt
+     */
+    onClick (evt) {
+        /**
+         * @type {HTMLElement|Node|EventTarget}
+         */
+        let el = evt.target;
+
+        // Go up in the node list until we  find something with an href
+        while (el && !this.getHref(el)) {
+          el = el.parentNode;
+        }
+
+        if (this.preventCheck(evt, el)) {
+          evt.preventDefault();
+          this.linkHash = el.hash.split('#')[1];
+          const href = this.getHref(el);
+          const transitionName = this.getTransitionName(el);
+          const cursorPosition = {
+            x: evt.clientX,
+            y: evt.clientY
+          };
+          this.goTo(href, transitionName, el, cursorPosition);
+          this.emitter.emit("anchor:click", [evt, this]);
+        }
+    }
+
+    /**
+     * Callback called from click event.
+     *
+     * @private
+     * @param {MouseEvent} evt
+     */
+    // Initialize events
+    initEvents (emitter) {
+        this.emitter = emitter;
+
+        // If the browser starts
+        document.addEventListener("click", this.onClick.bind(this));
+    }
+
+    // Stop events
+    stopEvents (emitter) {}
 }
 
 /**
@@ -499,7 +587,7 @@ export class Listener extends BasicClass {
      *    - callback = [Function]
      *    - scope = [Object*]
      *    - name = [String]
-     * @memberof State
+     * @memberof Listener
      * @constructor
      */
     constructor ({ callback = null, scope = null, name = null }) {
@@ -574,8 +662,16 @@ export class Listener extends BasicClass {
 // A small event emitter
 export class EventEmitter extends Manager  {
     #class = "EventEmitter";
-    constructor() {
-        super();
+
+    /**
+     * Creates an instance of an EventEmitter
+     *
+     * @param {String|Element} el
+     * @memberof EventEmitter
+     * @constructor
+     */
+    constructor($app) {
+        super($app);
     }
 
     // Get event, ensure event is valid
@@ -757,8 +853,16 @@ export class EventEmitter extends Manager  {
 export class ServiceManager extends Storage {
     #class = "ServiceManager";
     #type = Service;
-    constructor () {
-        super();
+
+    /**
+     * Creates an instance of a ServiceManager
+     *
+     * @param {App} $app
+     * @memberof ServiceManager
+     * @constructor
+     */
+    constructor ($app) {
+        super($app);
     }
 
     _callForEach (fn, args = []) {
@@ -785,7 +889,7 @@ export class ServiceManager extends Storage {
 }
 
 /**
- * The Service Manager controls the lifecycle of all services of a website
+ * A page represents the DOM elements that create each page
  *
  * @export
  * @class Page
@@ -798,6 +902,7 @@ export class Page extends BasicClass {
      *
      * @param {_URL} url
      * @param {String | Document} dom
+     * @memberof ServiceManager
      * @constructor
      */
     constructor (dom) {
@@ -914,8 +1019,16 @@ export class Transition extends BasicClass {
 export class TransitionManager extends Manager {
     #class = "TransitionManager";
     #type = Transition;
-    constructor () {
-        super();
+
+    /**
+     * Creates an instance of the TransitionManager
+     *
+     * @param {App} $app
+     * @memberof TransitionManager
+     * @constructor
+     */
+    constructor ($app) {
+        super($app);
     }
 
     show (name, oldPage, newPage) {
@@ -943,8 +1056,16 @@ export class TransitionManager extends Manager {
 // Also know as the page cache
 export class PageManager extends Manager {
     #class = "PageManager";
-    constructor () {
-        super();
+
+    /**
+     * Creates an instance of the PageManager
+     *
+     * @param {App} $app
+     * @memberof PageManager
+     * @constructor
+     */
+    constructor ($app) {
+        super($app);
 
         this.set(new _URL(), new Page());
     }
@@ -1004,10 +1125,11 @@ export class PageManager extends Manager {
 export class App extends BasicClass {
     #class = "App";
     constructor () {
-        this.history = new HistoryManager();
-        this.transitions = new TransitionManager();
-        this.services = new ServiceManager();
-        this.emitter = new EventEmitter();
+        this.history = new HistoryManager(this);
+        this.transitions = new TransitionManager(this);
+        this.services = new ServiceManager(this);
+        this.emitter = new EventEmitter(this);
+        this.pages = new PageManager(this);
     }
 
     addService (service) {
