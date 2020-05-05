@@ -7,7 +7,7 @@ const ErrorCheck = {
      * @param {String} method
      * @param {String} message
      */
-    _throw (_class, method, message) {
+    throw (_class, method, message) {
         throw `${_class}.${method}: ${message}.`;
     },
 
@@ -25,7 +25,7 @@ const ErrorCheck = {
     type (value, { context, message, method, type }) {
         let _class = context.#class;
         if (typeof value != type)
-            this._throw(_class, method, message);
+            this.throw(_class, method, message);
         return this;
     },
 
@@ -50,7 +50,7 @@ const ErrorCheck = {
         }
 
         if (!(value instanceof _type))
-            this._throw(_class, method, message);
+            this.throw(_class, method, message);
         return this;
     }
 };
@@ -63,10 +63,9 @@ const Config = {
  * The building block of all Classes in use
  *
  * @export
- * @class BasicClass
  */
-export class BasicClass {
-    #class = "BasicClass"; // For error checks
+export class Class {
+    #class = "Class"; // For error checks
     #type = null; // The type of values a Class allows in use; null means {any*} value
 
     /**
@@ -84,25 +83,24 @@ export class BasicClass {
  * Manages complex lists of named data, eg. A page can be stored in a list by of other pages with the url being how the page is stored in the list. Managers use Maps to store data.
  *
  * @export
- * @class Manager
- * @extends {BasicClass}
+ * @extends {Class}
  */
-export class Manager extends BasicClass {
+export class Manager extends Class {
     #class = "Manager"; // For error checks
     /**
      * Creates an instance of the Manager class.
      *
-     * @param {App} $app
+     * @param {App} app
      * @memberof Manager
      * @constructor
      */
-    constructor ($app) {
+    constructor (app) {
         /**
          * The instance of the App Class, the manager is instantiated
          *
          * @type {App}
          */
-        this.app = $app;
+        this.app = app;
 
         /**
          * The complex list of named data, to which the Manager controls
@@ -237,7 +235,6 @@ export class Manager extends BasicClass {
  * Controls lists of a certain type that follow chronological order, meant for the History class. Storage use Sets to store data.
  *
  * @export
- * @class Storage
  * @extends {Manager}
  */
 export class Storage extends Manager {
@@ -246,12 +243,12 @@ export class Storage extends Manager {
     /**
      * Creates an instance of the Storage class, which inherits properties and methods from the Manager class.
      *
-     * @param {App} $app
+     * @param {App} app
      * @memberof Storage
      * @constructor
      */
-    constructor ($app) {
-        super($app);
+    constructor (app) {
+        super(app);
     }
 
     /**
@@ -327,7 +324,6 @@ export class Storage extends Manager {
  * This doesn't extend the Basic class because it's meants to be a small extention of the native URL class.
  *
  * @export
- * @class _URL
  * @extends {URL}
  */
 export class _URL extends URL {
@@ -375,10 +371,9 @@ export class _URL extends URL {
  * Represents the current status of the page consisting of properties like: url, transition, data
  *
  * @export
- * @class State
- * @extends {BasicClass}
+ * @extends {Class}
  */
-export class State extends BasicClass {
+export class State extends Class {
     #class = "State";
     /**
      * Creates a new instance of a State
@@ -426,7 +421,6 @@ export class State extends BasicClass {
  * History of the site, stores only the State class
  *
  * @export
- * @class HistoryManager
  * @extends {Storage}
  */
 export class HistoryManager extends Storage {
@@ -436,12 +430,12 @@ export class HistoryManager extends Storage {
     /**
      * Creates an instance of the HistoryManager class, which inherits properties and methods from the Storage class.
      *
-     * @param {App} $app
+     * @param {App} app
      * @memberof HistoryManager
      * @constructor
      */
-    constructor ($app) {
-        super($app);
+    constructor (app) {
+        super(app);
     }
 }
 
@@ -449,10 +443,9 @@ export class HistoryManager extends Storage {
  * Controls specific kinds of actions that require JS
  *
  * @export
- * @class Service
- * @extends {BasicClass}
+ * @extends {Class}
  */
-export class Service extends BasicClass  {
+export class Service extends Class  {
     #class = "Service";
     constructor () {
         /**
@@ -485,7 +478,6 @@ export class Service extends BasicClass  {
  * A service that interacts with the DOM
  *
  * @export
- * @class Component
  * @extends {Service}
  */
 export class Component extends Service {
@@ -510,7 +502,6 @@ export class Component extends Service {
  * A service that interacts with the DOM
  *
  * @export
- * @class AnchorLink
  * @extends {Component}
  */
 export class AnchorLink extends Component {
@@ -575,10 +566,9 @@ export class AnchorLink extends Component {
  * Represents a new event listener consisting of properties like: callback, scope, name
  *
  * @export
- * @class Listener
- * @extends {BasicClass}
+ * @extends {Class}
  */
-export class Listener extends BasicClass {
+export class Listener extends Class {
     #class = "Listener";
     /**
      * Creates a new instance of a Listener
@@ -656,7 +646,6 @@ export class Listener extends BasicClass {
  * An event emitter
  *
  * @export
- * @class EventEmitter
  * @extends {Manager}
  */
 // A small event emitter
@@ -670,17 +659,37 @@ export class EventEmitter extends Manager  {
      * @memberof EventEmitter
      * @constructor
      */
-    constructor($app) {
-        super($app);
+    constructor(app) {
+        super(app);
     }
 
+    /**
+     * Gets events, if event doesn't exist create a new Array for the event
+     *
+     * @public
+     * @param {String} name
+     * @return {Array}
+     */
     // Get event, ensure event is valid
     getEvent (name) {
         let event = this.get(name);
-        if (!Array.isArray(event)) this.set(name, []);
+        if (!Array.isArray(event)) {
+            this.set(name, []);
+            return this.get(name);
+        }
+
         return event;
     }
 
+    /**
+     * Creates a new listener and adds it to the event
+     *
+     * @public
+     * @param {String} name
+     * @param {Function} callback
+     * @param {Object*} scope
+     * @return {Array}
+     */
     // New event listener
     newListener (name, callback, scope) {
         let event = this.getEvent(name);
@@ -696,13 +705,13 @@ export class EventEmitter extends Manager  {
      * @param {Object*} scope
      */
     on (events, callback, scope) {
-        let event;
         // If there is no event break
         if (typeof events == "undefined") return this;
 
          // Create a new event every space
         if (typeof events == "string") events = events.split(/\s/g);
 
+        let event;
         // Loop through the list of events
         Object.keys(events).forEach(key => {
             // Select the name of the event from the list
@@ -719,13 +728,23 @@ export class EventEmitter extends Manager  {
         return this;
     }
 
+    /**
+     * Removes an event listener from an event
+     *
+     * @public
+     * @param {String} name
+     * @param {Function} callback
+     * @param {Object*} scope
+     * @return {Array}
+     */
     // Remove an event listener
     removeListener (name, callback, scope) {
         let event = this.getEvent(name);
 
         if (callback) {
-            let value, listener = new Listener({ name, callback, scope });
-            for (let i = 0; i < event.length; i ++) {
+            let i = 0, len = event.length, value;
+            let listener = new Listener({ name, callback, scope });
+            for (; i < len; i ++) {
                 value = event[i];
                 if (value.callback === listener.callback &&
                     value.scope === listener.scope)
@@ -745,13 +764,13 @@ export class EventEmitter extends Manager  {
      * @param {Object*} scope
      */
     off (events, callback, scope) {
-        let event;
         // If there is no event break
         if (typeof events == "undefined") return this;
 
          // Create a new event every space
         if (typeof events == "string") events = events.split(/\s/g);
 
+        let event;
         // Loop through the list of events
         Object.keys(events).forEach(key => {
             // Select the name of the event from the list
@@ -776,14 +795,13 @@ export class EventEmitter extends Manager  {
      * @param {Object*} scope
      */
     once (events, callback, scope) {
-        let onceFn;
         // If there is no event break
         if (typeof events == "undefined") return this;
 
          // Create a new event every space
         if (typeof events == "string") events = events.split(/\s/g);
 
-        onceFn = (...args) => {
+        let onceFn = (...args) => {
             this.off(events, onceFn, scope);
             callback.apply(scope, args);
         };
@@ -815,39 +833,12 @@ export class EventEmitter extends Manager  {
         }, this);
         return this;
     }
-
-    // Call all listener within an event
-    emit(evt, args) {
-        let $Evt, $args = args;
-        if (_is.undef(evt)) { return; } // If there is no event break
-        if (_is.str(evt)) { evt = evt.split(/\s/g); }
-        if (!_is.arr(evt)) { evt = [evt]; } // Set evt to an array
-
-        // Loop through the list of events
-        evt.forEach(function ($evt) {
-            $Evt = this._preEvent($evt);
-            if (!this._emit.includes($evt))
-                { this._emit.push($evt); }
-
-            $Evt.forEach(_evt => {
-                $args = args;
-                // Check to see if first param is $evt, if so give details about event
-                if (_argNames(_evt.callback)[0] === "$evt")
-                    { $args = [_evt, ...args]; }
-
-                _evt.callback
-                    .apply(_is.undef(_evt.scope) ? scope : _evt.scope, $args);
-            }, this);
-        }, this);
-        return this;
-    }
 }
 
 /**
  * The Service Manager controls the lifecycle of all services of a website
  *
  * @export
- * @class ServiceManager
  * @extends {Storage}
  */
 export class ServiceManager extends Storage {
@@ -857,12 +848,12 @@ export class ServiceManager extends Storage {
     /**
      * Creates an instance of a ServiceManager
      *
-     * @param {App} $app
+     * @param {App} app
      * @memberof ServiceManager
      * @constructor
      */
-    constructor ($app) {
-        super($app);
+    constructor (app) {
+        super(app);
     }
 
     _callForEach (fn, args = []) {
@@ -892,10 +883,9 @@ export class ServiceManager extends Storage {
  * A page represents the DOM elements that create each page
  *
  * @export
- * @class Page
- * @extends {BasicClass}
+ * @extends {Class}
  */
-export class Page extends BasicClass {
+export class Page extends Class {
     #class = "Page";
     /**
      * Creates a new page from response text, or a Document Object
@@ -989,10 +979,9 @@ export class Page extends BasicClass {
  * Controls the animation between pages
  *
  * @export
- * @class Transition
- * @extends {BasicClass}
+ * @extends {Class}
  */
-export class Transition extends BasicClass {
+export class Transition extends Class {
     #class = "Transition";
     /**
      * Transition name
@@ -1013,7 +1002,6 @@ export class Transition extends BasicClass {
  * Controls which animation between pages to use
  *
  * @export
- * @class TransitionManager
  * @extends {Manager}
  */
 export class TransitionManager extends Manager {
@@ -1050,7 +1038,6 @@ export class TransitionManager extends Manager {
  * Controls which page to be loaded
  *
  * @export
- * @class PageManager
  * @extends {Manager}
  */
 // Also know as the page cache
@@ -1060,12 +1047,12 @@ export class PageManager extends Manager {
     /**
      * Creates an instance of the PageManager
      *
-     * @param {App} $app
+     * @param {App} app
      * @memberof PageManager
      * @constructor
      */
-    constructor ($app) {
-        super($app);
+    constructor (app) {
+        super(app);
 
         this.set(new _URL(), new Page());
     }
@@ -1122,7 +1109,7 @@ export class PageManager extends Manager {
     }
 }
 
-export class App extends BasicClass {
+export class App extends Class {
     #class = "App";
     constructor () {
         this.history = new HistoryManager(this);
