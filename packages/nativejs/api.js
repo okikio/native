@@ -55,10 +55,6 @@ const ErrorCheck = {
     }
 };
 
-const Config = {
-    "container": "data-container"
-};
-
 /**
  * The building block of all Classes in use
  *
@@ -77,6 +73,16 @@ export class Class {
     toString () {
         return `[object ${this.#class}]`;
     }
+}
+
+/**
+ * The config Class
+ *
+ * @export
+ */
+export class Config extends Class {
+    #class = "Config"; // For error checks
+    
 }
 
 /**

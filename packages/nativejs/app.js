@@ -1,13 +1,15 @@
 const parser = new DOMParser();
 let cache = {};
-let history = [];
 cache[window.location.href] = document.getElementsByTagName('html')[0].innerHTML;
 
 let push = url => {
-    history.push(url);
-    window.history.pushState(null, null, url);
+    window.history.pushState({
+        url: url || window.location.href
+    }, null, url);
     window.scrollTo(0, 0);
 };
+push(window.location.href);
+
 let a = document.querySelectorAll("a");
 
 let dom;
@@ -29,13 +31,14 @@ let load = href => {
     else render(cache[href]);
 };
 
-window.addEventListener('popstate', () => {
-    let lastHREF = history[history.length - 1] || window.location.href;
-    if (window.location.href == lastHREF || history.length < 2) return false;
-
-    let url = history[history.length - 2];
-    history.push(url);
-    load(url);
+window.addEventListener('popstate', (event) => {
+    let { state } = event;
+    if (!state) return;
+    // let lastHREF = state ? state.url : window.location.href;
+    // console.log(lastHREF, event);
+    // if (window.location.href == lastHREF) return false;
+    
+    load(state ? state.url : window.location.href);
 });
 
 a.forEach(anchor => {
@@ -44,7 +47,7 @@ a.forEach(anchor => {
             href
         } = e.target;
         e.preventDefault();
-        push(href);
+        if (window.location.href != href) push(href);
         load(href);
     });
 });
