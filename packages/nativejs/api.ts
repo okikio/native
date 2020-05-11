@@ -47,7 +47,7 @@ export class Manager<T> {
      *
      * @public
      * @param  {*} key - The key to find in the Manager's list
-     * @return {T}
+     * @returns T
      */
     public get (key: any): T {
         return this.list.get(key);
@@ -59,7 +59,7 @@ export class Manager<T> {
      * @public
      * @param  {*} key - The key where the value will be stored
      * @param  {T} value - The value to store
-     * @return {Manager<T>}
+     * @returns Manager<T>
      */
     public set (key: any, value: T): Manager<T> {
         this.list.set(key, value);
@@ -70,7 +70,7 @@ export class Manager<T> {
      * Returns the keys of all items stored in the Manager
      *
      * @public
-     * @return {IterableIterator<any>}
+     * @returns IterableIterator<any>
      */
     public keys (): IterableIterator<any> {
         return this.list.keys();
@@ -80,7 +80,7 @@ export class Manager<T> {
      * Returns the total number of items stored in the Manager
      *
      * @public
-     * @return {Number}
+     * @returns Number
      */
     public size (): number {
         return this.list.size;
@@ -91,7 +91,7 @@ export class Manager<T> {
      *
      * @public
      * @param {Number} [distance=0] - Distance from the last item in the Manager
-     * @return {T}
+     * @returns T
      */
     public last (distance: number = 0): T {
         let size = this.size();
@@ -103,7 +103,7 @@ export class Manager<T> {
      * Returns the second last item in the Manager
      *
      * @public
-     * @return {T}
+     * @returns T
      */
     public prev (): T {
         return this.last(1);
@@ -114,7 +114,7 @@ export class Manager<T> {
      *
      * @public
      * @param  {*} key - The key for the key value pair to be removed
-     * @return {Manager<T>}
+     * @returns Manager<T>
      */
     public remove (key: any): Manager<T> {
         this.list.delete(key);
@@ -125,7 +125,7 @@ export class Manager<T> {
      * Clear the Manager of all its contents
      *
      * @public
-     * @return {Manager<T>}
+     * @returns Manager<T>
      */
     public clear (): Manager<T> {
         this.list.clear();
@@ -137,7 +137,7 @@ export class Manager<T> {
      *
      * @public
      * @param {*} key
-     * @return {Boolean}
+     * @returns Boolean
      */
     public has (key: any): boolean {
         return this.list.has(key);
@@ -148,7 +148,7 @@ export class Manager<T> {
      *
      * @param {*} [callback=(...args: any): void => { }]
      * @param {object} context
-     * @returns {Manager<T>}
+     * @returns Manager<T>
      * @memberof Manager
      */
     public forEach(callback = (...args: any): void => { }, context?: object): Manager<T> {
@@ -189,7 +189,7 @@ export class AdvancedManager<T> extends Manager<T> {
     /**
      * Returns the instance the App class
      *
-     * @returns {App}
+     * @returns App
      * @memberof AdvancedManager
      */
     public getApp(): App {
@@ -219,7 +219,7 @@ export class Storage<T> extends Manager<T> {
      * Get a value stored in Storage, the key must be a number though.
      *
      * @param {number} key
-     * @returns {T}
+     * @returns T
      * @memberof Storage
      */
     public get (key: number): T {
@@ -231,7 +231,7 @@ export class Storage<T> extends Manager<T> {
      *
      * @param {number} key
      * @param {T} value
-     * @returns {Storage<T>}
+     * @returns Storage<T>
      * @memberof Storage
      */
     public set (key: number, value: T): Storage<T> {
@@ -244,7 +244,7 @@ export class Storage<T> extends Manager<T> {
      *
      * @public
      * @param  {T} value
-     * @return {Storage<T>}
+     * @returns Storage<T>
      */
     public add (value: T): Storage<T> {
         let size = this.size() + 1;
@@ -255,7 +255,7 @@ export class Storage<T> extends Manager<T> {
     /**
      * Lists all values stored in Storage.
      *
-     * @returns {IterableIterator<T>}
+     * @returns IterableIterator<T>
      * @memberof Storage
      */
     public values (): IterableIterator<T> {
@@ -295,7 +295,7 @@ export class AdvancedStorage<T> extends Storage<T> {
     /**
      * Returns the instance the App class
      *
-     * @returns {App}
+     * @returns App
      * @memberof AdvancedStorage
      */
     public getApp(): App {
@@ -327,7 +327,7 @@ export class _URL extends URL {
     /**
      * Removes the hash from the URL for a clean URL string
      *
-     * @returns {string}
+     * @returns string
      * @memberof _URL
      */
     public clean (): string {
@@ -338,7 +338,7 @@ export class _URL extends URL {
      * Compares this clean **_URL** to another clean **_URL**
      *
      * @param {_URL} url
-     * @returns {boolean}
+     * @returns boolean
      * @memberof _URL
      */
     public compare (url: _URL): boolean {
@@ -351,7 +351,7 @@ export class _URL extends URL {
      * @static
      * @param {_URL} a
      * @param {_URL} b
-     * @returns {boolean}
+     * @returns boolean
      * @memberof _URL
      */
     static compare (a: _URL, b: _URL): boolean {
@@ -363,13 +363,13 @@ export type LinkEvent = MouseEvent | TouchEvent;
 export type StateEvent = LinkEvent | "ReplaceState";
 export type Trigger = HTMLAnchorElement | "HistoryManager" | 'back' | 'forward';
 
-export interface IStateCoords {
+export interface ICoords {
     readonly x: number,
     readonly y: number
 }
 
 export interface IStateData {
-    scroll: IStateCoords,
+    scroll: ICoords,
     trigger: Trigger,
     event?: StateEvent
 }
@@ -381,23 +381,26 @@ export interface IState {
 }
 
 /**
- * A quick snapshot of the scroll positions in a State
+ * A quick snapshot of page coordinates, e.g. scroll positions
  *
  * @export
- * @class StateCoords
- * @implements {IStateCoords}
+ * @class Coords
+ * @implements {ICoords}
  */
-export class StateCoords implements IStateCoords {
+export class Coords implements ICoords {
     public x: number;
     public y: number;
 
     /**
-     * Creates an instance of StateCoords.
-     * @memberof StateCoords
+     * Creates an instance of Coords.
+     *
+     * @param {number} [x=window.scrollX]
+     * @param {number} [y=window.scrollY]
+     * @memberof Coords
      */
-    constructor() {
-        this.x = window.scrollX;
-        this.y = window.scrollY;
+    constructor(x: number = window.scrollX, y: number = window.scrollY) {
+        this.x = x;
+        this.y = y;
     }
 }
 
@@ -434,7 +437,7 @@ export class State {
         url = new _URL(),
         transition = "none",
         data = {
-            scroll: new StateCoords(),
+            scroll: new Coords(),
             trigger: "HistoryManager",
             event: "ReplaceState"
         }
@@ -445,7 +448,7 @@ export class State {
     /**
      * Get state URL
      *
-     * @returns {_URL}
+     * @returns _URL
      * @memberof State
      */
     public getURL(): _URL {
@@ -455,7 +458,7 @@ export class State {
     /**
      * Get state transition
      *
-     * @returns {string}
+     * @returns string
      * @memberof State
      */
     public getTransition(): string {
@@ -465,7 +468,7 @@ export class State {
     /**
      * Get state data
      *
-     * @returns {IStateData}
+     * @returns IStateData
      * @memberof State
      */
     public getData(): IStateData {
@@ -475,7 +478,7 @@ export class State {
     /**
      * Returns the State as an Object
      *
-     * @returns {IState}
+     * @returns IState
      * @memberof State
      */
     public toJSON (): IState {
@@ -676,10 +679,7 @@ export class AnchorLink extends Component {
           this.linkHash = el.hash.split('#')[1];
           const href = this.getHref(el);
           const transitionName = this.getTransitionName(el);
-          const cursorPosition = {
-            x: evt.clientX,
-            y: evt.clientY
-          };
+            const cursorPosition: Coords = new Coords(evt.clientX, evt.clientY);
           this.goTo(href, transitionName, el, cursorPosition);
           this.EventEmitter.emit("anchor:click", [evt, this]);
         }
@@ -735,14 +735,10 @@ export class Listener {
     private listener: IListener;
 
     /**
-     * Creates a new instance of a Listener
+     * Creates an instance of Listener.
      *
-     * @param    {Object}
-     *    - callback = [Function]
-     *    - scope = [Object*]
-     *    - name = [String]
+     * @param {IListener} { callback = () => { }, scope = null, name = "event" }
      * @memberof Listener
-     * @constructor
      */
     constructor({ callback = () => { }, scope = null, name = "event" }: IListener) {
         this.listener = { callback, scope, name };
@@ -751,7 +747,7 @@ export class Listener {
     /**
      * Returns the callback Function of the Listener
      *
-     * @returns {ListenerCallback}
+     * @returns ListenerCallback
      * @memberof Listener
      */
     public getCallback (): ListenerCallback {
@@ -761,7 +757,7 @@ export class Listener {
     /**
      * Returns the scope as an Object, from the Listener
      *
-     * @returns {object}
+     * @returns object
      * @memberof Listener
      */
     public getScope (): object {
@@ -771,7 +767,7 @@ export class Listener {
     /**
      * Returns the event as a String, from the Listener
      *
-     * @returns {string}
+     * @returns string
      * @memberof Listener
      */
     public getEventName (): string {
@@ -781,7 +777,7 @@ export class Listener {
     /**
      * Returns the listener as an Object
      *
-     * @returns {IListener}
+     * @returns IListener
      * @memberof Listener
      */
     public toJSON (): IListener {
@@ -841,7 +837,7 @@ export class EventEmitter extends AdvancedManager<Event> {
      *
      * @public
      * @param {String} name
-     * @return {Event}
+     * @returns Event
      */
     // Get event, ensure event is valid
     public getEvent (name: string): Event {
@@ -859,7 +855,7 @@ export class EventEmitter extends AdvancedManager<Event> {
      * @param {string} name
      * @param {ListenerCallback} callback
      * @param {object} scope
-     * @returns {Event}
+     * @returns Event
      * @memberof EventEmitter
      */
     public newListener (name: string, callback: ListenerCallback, scope: object): Event {
@@ -911,7 +907,7 @@ export class EventEmitter extends AdvancedManager<Event> {
      * @param {string} name
      * @param {ListenerCallback} callback
      * @param {object} scope
-     * @returns {Event}
+     * @returns Event
      * @memberof EventEmitter
      */
     public removeListener (name: string, callback: ListenerCallback, scope: object): Event {
@@ -938,7 +934,7 @@ export class EventEmitter extends AdvancedManager<Event> {
      * @param {(string | object | Array<any>)} events
      * @param {ListenerCallback} callback
      * @param {object} scope
-     * @returns {EventEmitter}
+     * @returns EventEmitter
      * @memberof EventEmitter
      */
     public off (events: string | object | Array<any>, callback: ListenerCallback, scope: object): EventEmitter {
@@ -977,7 +973,7 @@ export class EventEmitter extends AdvancedManager<Event> {
      * @param {(string | object | Array<any>)} events
      * @param {ListenerCallback} callback
      * @param {object} scope
-     * @returns {EventEmitter}
+     * @returns EventEmitter
      * @memberof EventEmitter
      */
     public once (events: string | object | Array<any>, callback: ListenerCallback, scope: object): EventEmitter {
@@ -1001,7 +997,7 @@ export class EventEmitter extends AdvancedManager<Event> {
      *
      * @param {(string | Array<any>)} events
      * @param {Array<any>} [args=[]]
-     * @returns {EventEmitter}
+     * @returns EventEmitter
      * @memberof EventEmitter
      */
     public emit (events: string | Array<any>, args: Array<any> = []): EventEmitter {
@@ -1060,7 +1056,7 @@ export class ServiceManager extends AdvancedStorage<Service> {
     /**
      * Call the install method for all Services
      *
-     * @returns {ServiceManager}
+     * @returns ServiceManager
      * @memberof ServiceManager
      */
     public install(): ServiceManager {
@@ -1083,7 +1079,7 @@ export class ServiceManager extends AdvancedStorage<Service> {
     /**
      * Call the install boot for all Services
      *
-     * @returns {ServiceManager}
+     * @returns ServiceManager
      * @memberof ServiceManager
      */
     public boot (): ServiceManager {
@@ -1093,7 +1089,7 @@ export class ServiceManager extends AdvancedStorage<Service> {
     /**
      * Call the install initEvents for all Services
      *
-     * @returns {ServiceManager}
+     * @returns ServiceManager
      * @memberof ServiceManager
      */
     public initEvents (): ServiceManager {
@@ -1103,7 +1099,7 @@ export class ServiceManager extends AdvancedStorage<Service> {
     /**
      * Call the install stopEvents for all Services
      *
-     * @returns {ServiceManager}
+     * @returns ServiceManager
      * @memberof ServiceManager
      */
     public stopEvents (): ServiceManager {
@@ -1113,7 +1109,7 @@ export class ServiceManager extends AdvancedStorage<Service> {
     /**
      * Call the install stop for all Services
      *
-     * @returns {ServiceManager}
+     * @returns ServiceManager
      * @memberof ServiceManager
      */
     public stop (): ServiceManager {
@@ -1256,7 +1252,7 @@ export class Transition {
     /**
      * Returns the Transitions name
      *
-     * @returns {string}
+     * @returns string
      * @memberof Transition
      */
     public getName(): string {

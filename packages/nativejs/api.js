@@ -27,7 +27,7 @@ const ErrorCheck = {
      *    - message = [String]
      *    - method = [String]
      *    - type = [Object*]
-     * @return {ErrorCheck}
+     * @returns ErrorCheck
      */
     type (value, { context, message, method, type }) {
         let _class = context.#class, _type;
@@ -52,7 +52,7 @@ const ErrorCheck = {
      *    - message = [String]
      *    - method = [String]
      *    - type = [Object*]
-     * @return {ErrorCheck}
+     * @returns ErrorCheck
      */
     class (value, { context, message, method, type }) {
         let _class = context.#class, _type;
@@ -82,7 +82,7 @@ export class Class {
      * Returns a string describing the nature of the class.
      *
      * @public
-     * @return {String}
+     * @returns String
      */
     toString () {
         return `[object ${this.#class}]`;
@@ -137,7 +137,7 @@ export class Manager extends Class {
      * @public
      * @param  {any*} key
      * @param  {any*} value
-     * @return {Manager}
+     * @returns Manager
      */
     set (key, value) {
         ErrorCheck
@@ -154,7 +154,7 @@ export class Manager extends Class {
      * Returns the keys of all items stored in the Manager
      *
      * @public
-     * @return {Array}
+     * @returns Array
      */
     keys () {
         return this.list.keys();
@@ -164,7 +164,7 @@ export class Manager extends Class {
      * Returns the total number of items stored in the Manager
      *
      * @public
-     * @return {Number}
+     * @returns Number
      */
     size () {
         return this.list.size;
@@ -198,7 +198,7 @@ export class Manager extends Class {
      *
      * @public
      * @param  {any*} key
-     * @return {Manager}
+     * @returns Manager
      */
     remove (key) {
         this.list.delete(key);
@@ -209,7 +209,7 @@ export class Manager extends Class {
      * Clear the Manager of all its contents
      *
      * @public
-     * @return {Manager}
+     * @returns Manager
      */
     clear () {
         this.list.clear();
@@ -221,7 +221,7 @@ export class Manager extends Class {
      *
      * @public
      * @param {any*} key
-     * @return {Boolean}
+     * @returns Boolean
      */
     has (key) {
         return this.list.has(key);
@@ -233,7 +233,7 @@ export class Manager extends Class {
      * @public
      * @param {Function} fn
      * @param {Object* | Manager} [context=this]
-     * @return {Manager}
+     * @returns Manager
      */
     each (fn, context = this) {
         this.list.forEach(fn, context);
@@ -284,7 +284,7 @@ export class Storage extends Manager {
      * @public
      * @param  {Number} key
      * @param  {<type>any} value
-     * @return {Storage}
+     * @returns Storage
      */
     set (key, value) {
         ErrorCheck
@@ -303,7 +303,7 @@ export class Storage extends Manager {
      *
      * @public
      * @param  {any*} value
-     * @return {Storage}
+     * @returns Storage
      */
     add (value) {
         ErrorCheck
@@ -321,7 +321,7 @@ export class Storage extends Manager {
      * Lists all values stored in Storage.
      *
      * @public
-     * @return {Array}
+     * @returns Array
      */
     values () {
         return this.list.values();
@@ -346,7 +346,7 @@ export class _URL extends URL {
      * Removes the hash from the URL for a clean URL string
      *
      * @public
-     * @return {String}
+     * @returns String
      */
     clean () {
         return this.toString().replace(/#.*/, '');
@@ -358,7 +358,7 @@ export class _URL extends URL {
      * @public
      * @param  {_URL} a
      * @param  {_URL} b
-     * @return {Boolean}
+     * @returns Boolean
      */
     static compare (a, b) {
         return a.clean() == b.clean();
@@ -369,7 +369,7 @@ export class _URL extends URL {
      *
      * @public
      * @param  {_URL} url
-     * @return {Boolean}
+     * @returns Boolean
      */
     compare (url) {
         return _URL.compare(this, url);
@@ -419,7 +419,7 @@ export class State extends Class {
      * Returns the State as an Object
      *
      * @public
-     * @return {Object}
+     * @returns Object
      */
     toJSON () {
         return this.state;
@@ -614,7 +614,7 @@ export class Listener extends Class {
      * Returns the callback Function of the Listener
      *
      * @public
-     * @return {Function}
+     * @returns Function
      */
     getCallback () {
         return this.listener.callback;
@@ -624,7 +624,7 @@ export class Listener extends Class {
      * Returns the scope as an Object, from the Listener
      *
      * @public
-     * @return {Function}
+     * @returns Function
      */
     getScope () {
         return this.listener.scope;
@@ -634,7 +634,7 @@ export class Listener extends Class {
      * Returns the event as a String, from the Listener
      *
      * @public
-     * @return {Function}
+     * @returns Function
      */
     getEventName () {
         return this.listener.name;
@@ -644,7 +644,7 @@ export class Listener extends Class {
      * Returns the listener as an Object
      *
      * @public
-     * @return {Object}
+     * @returns Object
      */
     toJSON () {
         return this.listener;
@@ -677,7 +677,7 @@ export class EventEmitter extends Manager  {
      *
      * @public
      * @param {String} name
-     * @return {Array}
+     * @returns Array
      */
     // Get event, ensure event is valid
     getEvent (name) {
@@ -697,7 +697,7 @@ export class EventEmitter extends Manager  {
      * @param {String} name
      * @param {Function} callback
      * @param {Object*} scope
-     * @return {Array}
+     * @returns Array
      */
     // New event listener
     newListener (name, callback, scope) {
@@ -744,7 +744,7 @@ export class EventEmitter extends Manager  {
      * @param {String} name
      * @param {Function} callback
      * @param {Object*} scope
-     * @return {Array}
+     * @returns Array
      */
     // Remove an event listener
     removeListener (name, callback, scope) {
