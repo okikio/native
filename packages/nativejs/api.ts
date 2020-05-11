@@ -359,7 +359,8 @@ export class _URL extends URL {
     }
 }
 
-export type LinkEvent = MouseEvent | TouchEvent | "ReplaceState";
+export type LinkEvent = MouseEvent | TouchEvent;
+export type StateEvent = LinkEvent | "ReplaceState";
 export type Trigger = HTMLAnchorElement | "HistoryManager" | 'back' | 'forward';
 
 export interface IStateCoords {
@@ -370,7 +371,7 @@ export interface IStateCoords {
 export interface IStateData {
     scroll: IStateCoords,
     trigger: Trigger,
-    event: LinkEvent
+    event?: StateEvent
 }
 
 export interface IState {
@@ -401,7 +402,7 @@ export class StateCoords implements IStateCoords {
 }
 
 /**
- * Represents the current status of the page consisting of properties like: url, transition, data
+ * Represents the current status of the page consisting of properties like: url, transition, and data
  *
  * @export
  * @class State
@@ -659,11 +660,11 @@ export class AnchorLink extends Component {
      * @private
      * @param {MouseEvent} evt
      */
-    onClick (evt: MouseEvent) {
+    onClick (evt: LinkEvent) {
         /**
          * @type {HTMLElement|Node|EventTarget}
          */
-        let el: HTMLElement | Node | EventTarget = evt.target;
+        let el: HTMLElement | Node | EventTarget = (evt as MouseEvent | TouchEvent).target;
 
         // Go up in the node list until we  find something with an href
         while (el && !this.getHref(el)) {
@@ -680,13 +681,13 @@ export class AnchorLink extends Component {
             y: evt.clientY
           };
           this.goTo(href, transitionName, el, cursorPosition);
-          this.emitter.emit("anchor:click", [evt, this]);
+          this.EventEmitter.emit("anchor:click", [evt, this]);
         }
     }
     getHref(el: HTMLElement | Node | EventTarget) {
         throw new Error("Method not implemented.");
     }
-    preventCheck(evt: MouseEvent, el: HTMLElement | Node | EventTarget) {
+    preventCheck(evt: LinkEvent, el: HTMLElement | Node | EventTarget) {
         throw new Error("Method not implemented.");
     }
     getTransitionName(el: HTMLElement | Node | EventTarget) {
