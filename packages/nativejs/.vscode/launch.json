@@ -6,23 +6,10 @@
     "configurations": [
         {
             "type": "edge",
-            "request": "attach",
-            "name": "Attach to Edge",
-            "port": 5500,
-            "webRoot": "${workspaceFolder}"
-        },
-        {
-            "type": "edge",
             "request": "launch",
             "name": "Launch Edge",
             "url": "http://127.0.0.1:5500/docs/index.html",
             "webRoot": "${workspaceFolder}"
-        },
-        {
-            "name": "Launch Microsoft Edge and open the Elements tool",
-            "request": "launch",
-            "type": "vscode-edge-devtools.debug",
-            "url": "http://127.0.0.1:5500/docs/index.html"
         }
     ]
 }
