@@ -1630,7 +1630,6 @@ __metadata:
     cross-fetch: ^3.0.4
     eslint: ^7.0.0
     typescript: ^4.0.0-dev.20200509
-    whatwg-fetch: ^3.0.0
   languageName: unknown
   linkType: soft
 
@@ -2129,7 +2128,7 @@ typescript@^4.0.0-dev.20200509:
   languageName: node
   linkType: hard
 
-"whatwg-fetch@npm:3.0.0, whatwg-fetch@npm:^3.0.0":
+"whatwg-fetch@npm:3.0.0":
   version: 3.0.0
   resolution: "whatwg-fetch@npm:3.0.0"
   checksum: 3/56ffff2db0908b2180830c1c543b16b3cb93f07c771f15af9ce1a31f426c4b843e0a22cb0afd9de585d7583c07f4b84cb5dbf42fe22bcf6ad34f96103b456aaf

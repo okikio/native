@@ -1,12 +1,12 @@
 // The config variables
 export const CONFIG = {
-	wrapperAttr: "wrapper",
+    wrapperAttr: "wrapper",
     noAjaxLinkAttr: "no-ajax-link",
-	noPrefetchAttr: "no-prefetch",
-	headers: [
-		["x-partial", "true"]
-	],
-	timeout: 30000
+    noPrefetchAttr: "no-prefetch",
+    headers: [
+        ["x-partial", "true"]
+    ],
+    timeout: 30000
 };
 
 /**
@@ -21,17 +21,18 @@ export const toAttr = (value: string): string => `[data-${value}]`;
  *
  * @export
  * @class Manager
- * @template T
+ * @template K
+ * @template V
  */
-export class Manager<T> {
+export class Manager<K, V> {
 	/**
 	 * The complex list of named data, to which the Manager controls
 	 *
 	 * @protected
-	 * @type {Map<any, T>}
+	 * @type {Map<K, V>}
 	 * @memberof Manager
 	 */
-	protected list: Map<any, T>;
+    protected list: Map<K, V>;
 
 	/**
 	 * Creates an instance of the Manager class.
@@ -39,53 +40,53 @@ export class Manager<T> {
 	 * @memberof Manager
 	 * @constructor
 	 */
-	constructor() {
-		this.list = new Map();
-	}
+    constructor() {
+        this.list = new Map();
+    }
 
 	/**
 	 * Returns the Manager class's list
 	 *
-	 * @returns {Map<any, T>}
+	 * @returns {Map<K, V>}
 	 * @memberof Manager
 	 */
-	public getList(): Map<any, T> {
-		return this.list;
-	}
+    public getList(): Map<K, V> {
+        return this.list;
+    }
 
 	/**
 	 * Get a value stored in the Manager
 	 *
 	 * @public
-	 * @param  {*} key - The key to find in the Manager's list
-	 * @returns T
+	 * @param  {K} key - The key to find in the Manager's list
+	 * @returns V
 	 */
-	public get(key: any): T {
-		return this.list.get(key);
-	}
+    public get(key: K): V {
+        return this.list.get(key);
+    }
 
 	/**
 	 * Set a value stored in the Manager
 	 *
 	 * @public
-	 * @param  {*} key - The key where the value will be stored
-	 * @param  {T} value - The value to store
-	 * @returns Manager<T>
+	 * @param  {K} key - The key where the value will be stored
+	 * @param  {V} value - The value to store
+	 * @returns Manager<K, V>
 	 */
-	public set(key: any, value: T): Manager<T> {
-		this.list.set(key, value);
-		return this;
-	}
+    public set(key: K, value: V): Manager<K, V> {
+        this.list.set(key, value);
+        return this;
+    }
 
 	/**
 	 * Returns the keys of all items stored in the Manager
 	 *
 	 * @public
-	 * @returns IterableIterator<any>
+	 * @returns IterableIterator<K>
 	 */
-	public keys(): IterableIterator<any> {
-		return this.list.keys();
-	}
+    public keys(): IterableIterator<K> {
+        return this.list.keys();
+    }
 
 	/**
 	 * Returns the total number of items stored in the Manager
@@ -93,82 +94,82 @@ export class Manager<T> {
 	 * @public
 	 * @returns Number
 	 */
-	public size(): number {
-		return this.list.size;
-	}
+    public size(): number {
+        return this.list.size;
+    }
 
 	/**
 	 * Returns the last item in the Manager who's index is a certain distance from the last item in the Manager
 	 *
 	 * @public
 	 * @param {Number} [distance=0] - Distance from the last item in the Manager
-	 * @returns T
+	 * @returns V
 	 */
-	public last(distance: number = 0): T {
-		let size = this.size();
-		let key = this.keys()[size - distance];
-		return this.get(key);
-	}
+    public last(distance: number = 0): V {
+        let size = this.size();
+        let key = this.keys()[size - distance];
+        return this.get(key);
+    }
 
 	/**
 	 * Returns the second last item in the Manager
 	 *
 	 * @public
-	 * @returns T
+	 * @returns V
 	 */
-	public prev(): T {
-		return this.last(1);
-	}
+    public prev(): V {
+        return this.last(1);
+    }
 
 	/**
 	 * Removes a value stored in the Manager, via the key
 	 *
 	 * @public
-	 * @param  {*} key - The key for the key value pair to be removed
-	 * @returns Manager<T>
+	 * @param  {K} key - The key for the key value pair to be removed
+	 * @returns Manager<K, V>
 	 */
-	public remove(key: any): Manager<T> {
-		this.list.delete(key);
-		return this;
-	}
+    public remove(key: K): Manager<K, V> {
+        this.list.delete(key);
+        return this;
+    }
 
 	/**
 	 * Clear the Manager of all its contents
 	 *
 	 * @public
-	 * @returns Manager<T>
+	 * @returns Manager<K, V>
 	 */
-	public clear(): Manager<T> {
-		this.list.clear();
-		return this;
-	}
+    public clear(): Manager<K, V> {
+        this.list.clear();
+        return this;
+    }
 
 	/**
 	 * Checks if the Manager contains a certain key
 	 *
 	 * @public
-	 * @param {*} key
+	 * @param {K} key
 	 * @returns Boolean
 	 */
-	public has(key: any): boolean {
-		return this.list.has(key);
-	}
+    public has(key: K): boolean {
+        return this.list.has(key);
+    }
 
 	/**
 	 * Iterates through the Managers contents, calling a callback function every iteration
 	 *
 	 * @param {*} [callback=(...args: any): void => { }]
 	 * @param {object} context
-	 * @returns Manager<T>
+	 * @returns Manager<K, V>
 	 * @memberof Manager
 	 */
-	public forEach(
-		callback: any = (...args: any): void => { },
-		context?: object
-	): Manager<T> {
-		this.list.forEach(callback, context);
-		return this;
-	}
+    public forEach(
+        callback: any = (...args: any): void => { },
+        context?: object
+    ): Manager<K, V> {
+        this.list.forEach(callback, context);
+        return this;
+    }
 }
 
 /**
@@ -176,18 +177,19 @@ export class Manager<T> {
  *
  * @export
  * @class AdvancedManager
- * @extends {Manager<T>}
- * @template T
+ * @extends {Manager<K, V>}
+ * @template K
+ * @template V
  */
-export class AdvancedManager<T> extends Manager<T> {
+export class AdvancedManager<K, V> extends Manager<K, V> {
 	/**
 	 * The instance of the App class, the Manager is instantiated in
 	 *
 	 * @private
-	 * @type {App}
+	 * @type App
 	 * @memberof AdvancedManager
 	 */
-	private app: App;
+    private app: App;
 
 	/**
 	 * Creates an instance of AdvancedManager.
@@ -195,10 +197,10 @@ export class AdvancedManager<T> extends Manager<T> {
 	 * @param {App} app - The instance of the App class, the Manager is instantiated in
 	 * @memberof AdvancedManager
 	 */
-	constructor(app: App) {
-		super();
-		this.app = app;
-	}
+    constructor(app: App) {
+        super();
+        this.app = app;
+    }
 
 	/**
 	 * Returns the instance the App class
@@ -206,9 +208,9 @@ export class AdvancedManager<T> extends Manager<T> {
 	 * @returns App
 	 * @memberof AdvancedManager
 	 */
-	public getApp(): App {
-		return this.app;
-	}
+    public getApp(): App {
+        return this.app;
+    }
 }
 
 /**
@@ -216,65 +218,54 @@ export class AdvancedManager<T> extends Manager<T> {
  *
  * @export
  * @class Storage
- * @extends {Manager<T>}
- * @template T
+ * @extends {Manager<number, V>}
+ * @template V
  */
-export class Storage<T> extends Manager<T> {
+export class Storage<V> extends Manager<number, V> {
 	/**
 	 * Creates an instance of Storage.
 	 *
 	 * @memberof Storage
 	 */
-	constructor() {
-		super();
-	}
-
-	/**
-	 * Get a value stored in Storage, the key must be a number though.
-	 *
-	 * @param {number} key
-	 * @returns T
-	 * @memberof Storage
-	 */
-	public get(key: number): T {
-		return super.get(key);
-	}
+    constructor() {
+        super();
+    }
 
 	/**
 	 * Sets a value in the **Storage** class
 	 *
 	 * @param {number} key
-	 * @param {T} value
-	 * @returns Storage<T>
+	 * @param {V} value
+	 * @returns Storage<V>
 	 * @memberof Storage
 	 */
-	public set(key: number, value: T): Storage<T> {
-		super.set(key, value);
-		return this;
-	}
+    public set(key: number, value: V): Storage<V> {
+        super.set(key, value);
+        return this;
+    }
 
 	/**
 	 * Adds a value to Storage
 	 *
 	 * @public
-	 * @param  {T} value
-	 * @returns Storage<T>
+	 * @param  {V} value
+	 * @returns Storage<V>
 	 */
-	public add(value: T): Storage<T> {
-		let size = this.size() + 1;
-		this.set(size, value);
-		return this;
-	}
+    public add(value: V): Storage<V> {
+        let size = this.size() + 1;
+        this.set(size, value);
+        return this;
+    }
 
 	/**
 	 * Lists all values stored in Storage.
 	 *
-	 * @returns IterableIterator<T>
+	 * @returns IterableIterator<V>
 	 * @memberof Storage
 	 */
-	public values(): IterableIterator<T> {
-		return this.list.values();
-	}
+    public values(): IterableIterator<V> {
+        return this.list.values();
+    }
 }
 
 /**
@@ -282,18 +273,18 @@ export class Storage<T> extends Manager<T> {
  *
  * @export
  * @class AdvancedStorage
- * @extends {Storage<T>}
- * @template T
+ * @extends {Storage<V>}
+ * @template V
  */
-export class AdvancedStorage<T> extends Storage<T> {
+export class AdvancedStorage<V> extends Storage<V> {
 	/**
 	 * The instance of the App class, the Manager is instantiated in
 	 *
 	 * @private
-	 * @type {App}
+	 * @type App
 	 * @memberof AdvancedStorage
 	 */
-	private app: App;
+    private app: App;
 
 	/**
 	 * Creates an instance of AdvancedStorage.
@@ -301,10 +292,10 @@ export class AdvancedStorage<T> extends Storage<T> {
 	 * @param {App} app - The instance of the App class, the Manager is instantiated in
 	 * @memberof AdvancedStorage
 	 */
-	constructor(app: App) {
-		super();
-		this.app = app;
-	}
+    constructor(app: App) {
+        super();
+        this.app = app;
+    }
 
 	/**
 	 * Returns the instance the App class
@@ -312,9 +303,9 @@ export class AdvancedStorage<T> extends Storage<T> {
 	 * @returns App
 	 * @memberof AdvancedStorage
 	 */
-	public getApp(): App {
-		return this.app;
-	}
+    public getApp(): App {
+        return this.app;
+    }
 }
 
 /**
@@ -327,16 +318,26 @@ export class AdvancedStorage<T> extends Storage<T> {
  * @extends {URL}
  */
 export class _URL extends URL {
-	// Read up on the native URL class [devdocs.io/dom/url]
+    // Read up on the native URL class [devdocs.io/dom/url]
 	/**
 	 * Creates an instance of _URL.
 	 *
-	 * @param {string} [url=window.location.toString()]
+     * @param {(string | _URL | URL | Location)} [url=window.location]
 	 * @memberof _URL
 	 */
-	constructor(url: string = window.location.toString()) {
-		super(url);
-	}
+    constructor(url: string | _URL | URL | Location = window.location) {
+        super(url.toString());
+    }
+
+    /**
+     * Returns the _URL's hostname and pathname as a string
+     *
+     * @returns string
+     * @memberof _URL
+     */
+    public toStr(): string {
+        return `${this.host}${this.pathname}`;
+    }
 
 	/**
 	 * Removes the hash from the URL for a clean URL string
@@ -344,9 +345,9 @@ export class _URL extends URL {
 	 * @returns string
 	 * @memberof _URL
 	 */
-	public clean(): string {
-		return this.toString().replace(/#.*/, "");
-	}
+    public clean(): string {
+        return this.toStr().replace(/#.*/, "");
+    }
 
 	/**
 	 * Compares this clean **_URL** to another clean **_URL**
@@ -355,9 +356,9 @@ export class _URL extends URL {
 	 * @returns boolean
 	 * @memberof _URL
 	 */
-	public compare(url: _URL): boolean {
-		return this.clean() == url.clean();
-	}
+    public compare(url: _URL): boolean {
+        return this.clean() == url.clean();
+    }
 
 	/**
 	 * Compares two clean URLs to each other
@@ -368,36 +369,37 @@ export class _URL extends URL {
 	 * @returns boolean
 	 * @memberof _URL
 	 */
-	static compare(a: _URL, b: _URL): boolean {
-		return a.compare(b);
-	}
+    static compare(a: _URL, b: _URL): boolean {
+        return a.compare(b);
+    }
 }
 
 /**
  * This is the default starting URL, to avoid needless instances of the same class that produce the same value, I defined the default value
  */
 export const newURL = new _URL();
+export const URLString = newURL.clean();
 
 export type LinkEvent = MouseEvent | TouchEvent;
 export type StateEvent = LinkEvent | "ReplaceState";
 export type Trigger = HTMLAnchorElement | "HistoryManager" | "popstate" | "back" | "forward";
 
 export interface ICoords {
-	readonly x: number;
-	readonly y: number;
+    readonly x: number;
+    readonly y: number;
 }
 
 export interface IStateData {
-	scroll: ICoords;
-	trigger: Trigger;
-	event?: StateEvent;
+    scroll: ICoords;
+    trigger: Trigger;
+    event?: StateEvent;
 }
 
 export interface IState {
-	url: _URL;
-	index?: number;
-	transition: string;
-	data: IStateData;
+    url: _URL;
+    index?: number;
+    transition: string;
+    data: IStateData;
 }
 
 /**
@@ -408,8 +410,8 @@ export interface IState {
  * @implements {ICoords}
  */
 export class Coords implements ICoords {
-	public x: number;
-	public y: number;
+    public x: number;
+    public y: number;
 
 	/**
 	 * Creates an instance of Coords.
@@ -418,10 +420,10 @@ export class Coords implements ICoords {
 	 * @param {number} [y=window.scrollY]
 	 * @memberof Coords
 	 */
-	constructor(x: number = window.scrollX, y: number = window.scrollY) {
-		this.x = x;
-		this.y = y;
-	}
+    constructor(x: number = window.scrollX, y: number = window.scrollY) {
+        this.x = x;
+        this.y = y;
+    }
 }
 
 /**
@@ -435,10 +437,10 @@ export class State {
 	 * The current state data
 	 *
 	 * @private
-	 * @type {IState}
+	 * @type IState
 	 * @memberof State
 	 */
-	private state: IState;
+    private state: IState;
 
 	/**
 	 * Creates an instance of State.
@@ -454,18 +456,18 @@ export class State {
 	 *     }
 	 * @memberof State
 	 */
-	constructor({
-		url = newURL,
-		index = 0,
-		transition = "none",
-		data = {
-			scroll: new Coords(),
-			trigger: "HistoryManager",
-			event: "ReplaceState",
-		},
-	}: IState) {
-		this.state = { index, url, transition, data };
-	}
+    constructor({
+        url = newURL,
+        index = 0,
+        transition = "none",
+        data = {
+            scroll: new Coords(),
+            trigger: "HistoryManager",
+            event: "ReplaceState",
+        }
+    }: IState) {
+        this.state = { index, url, transition, data };
+    }
 
 	/**
 	 * Get state index
@@ -473,9 +475,9 @@ export class State {
 	 * @returns number
 	 * @memberof State
 	 */
-	public getIndex(): number {
-		return this.state.index;
-	}
+    public getIndex(): number {
+        return this.state.index;
+    }
 
 	/**
 	 * Set state index
@@ -484,10 +486,10 @@ export class State {
 	 * @returns State
 	 * @memberof State
 	 */
-	public setIndex(index: number): State {
-		this.state.index = index;
-		return this;
-	}
+    public setIndex(index: number): State {
+        this.state.index = index;
+        return this;
+    }
 
 	/**
 	 * Get state URL
@@ -495,9 +497,9 @@ export class State {
 	 * @returns _URL
 	 * @memberof State
 	 */
-	public getURL(): _URL {
-		return this.state.url;
-	}
+    public getURL(): _URL {
+        return this.state.url;
+    }
 
 	/**
 	 * Get state transition
@@ -505,9 +507,9 @@ export class State {
 	 * @returns string
 	 * @memberof State
 	 */
-	public getTransition(): string {
-		return this.state.transition;
-	}
+    public getTransition(): string {
+        return this.state.transition;
+    }
 
 	/**
 	 * Get state data
@@ -515,9 +517,9 @@ export class State {
 	 * @returns IStateData
 	 * @memberof State
 	 */
-	public getData(): IStateData {
-		return this.state.data;
-	}
+    public getData(): IStateData {
+        return this.state.data;
+    }
 
 	/**
 	 * Returns the State as an Object
@@ -525,9 +527,9 @@ export class State {
 	 * @returns IState
 	 * @memberof State
 	 */
-	public toJSON(): IState {
-		return this.state;
-	}
+    public toJSON(): IState {
+        return this.state;
+    }
 }
 
 /**
@@ -545,9 +547,9 @@ export class HistoryManager extends AdvancedStorage<State> {
 	 * @memberof HistoryManager
 	 * @constructor
 	 */
-	constructor(app: App) {
-		super(app);
-	}
+    constructor(app: App) {
+        super(app);
+    }
 
 	/**
 	 * Sets the index of the state before adding to HistoryManager
@@ -556,13 +558,13 @@ export class HistoryManager extends AdvancedStorage<State> {
 	 * @returns HistoryManager
 	 * @memberof HistoryManager
 	 */
-	public add(value: State): HistoryManager {
-		let state = value;
-		let index = this.size();
-		state.setIndex(index);
-		super.add(state);
-		return this;
-	}
+    public add(value: State): HistoryManager {
+        let state = value;
+        let index = this.size();
+        state.setIndex(index);
+        super.add(state);
+        return this;
+    }
 
 	/**
 	 * Quick way to add a State to the HistoryManager
@@ -571,19 +573,19 @@ export class HistoryManager extends AdvancedStorage<State> {
 	 * @returns HistoryManager
 	 * @memberof HistoryManager
 	 */
-	public addItem(value: IState): HistoryManager {
-		let state = new State(value);
-		this.add(state);
-		return this;
-	}
+    public addItem(value: IState | State): HistoryManager {
+        let state = value instanceof State ? value : new State(value);
+        this.add(state);
+        return this;
+    }
 }
 
 interface IService {
-	PageManager: PageManager;
-	EventEmitter: EventEmitter;
-	HistoryManager: HistoryManager;
-	ServiceManager: ServiceManager;
-	TransitionManager: TransitionManager;
+    PageManager: PageManager;
+    EventEmitter: EventEmitter;
+    HistoryManager: HistoryManager;
+    ServiceManager: ServiceManager;
+    TransitionManager: TransitionManager;
 }
 
 /**
@@ -597,46 +599,46 @@ export class Service {
 	 * Stores access to the App class's EventEmitter
 	 *
 	 * @protected
-	 * @type {EventEmitter}
+	 * @type EventEmitter
 	 * @memberof Service
 	 */
-	protected EventEmitter: EventEmitter;
+    protected EventEmitter: EventEmitter;
 
 	/**
 	 * Stores access to the App class's PageManager
 	 *
 	 * @protected
-	 * @type {PageManager}
+	 * @type PageManager
 	 * @memberof Service
 	 */
-	protected PageManager: PageManager;
+    protected PageManager: PageManager;
 
 	/**
 	 * Stores access to the App class's HistoryManager
 	 *
 	 * @protected
-	 * @type {HistoryManager}
+	 * @type HistoryManager
 	 * @memberof Service
 	 */
-	protected HistoryManager: HistoryManager;
+    protected HistoryManager: HistoryManager;
 
 	/**
 	 * Stores the ServiceManager the service is install on
 	 *
 	 * @protected
-	 * @type {ServiceManager}
+	 * @type ServiceManager
 	 * @memberof Service
 	 */
-	protected ServiceManager: ServiceManager;
+    protected ServiceManager: ServiceManager;
 
 	/**
 	 * Stores access to the App's TransitionManager
 	 *
 	 * @protected
-	 * @type {TransitionManager}
+	 * @type TransitionManager
 	 * @memberof Service
 	 */
-	protected TransitionManager: TransitionManager;
+    protected TransitionManager: TransitionManager;
 
 	/**
 	 * Method is run once when Service is installed on a ServiceManager
@@ -650,33 +652,33 @@ export class Service {
 	 *     }
 	 * @memberof Service
 	 */
-	public install({
-		PageManager,
-		EventEmitter,
-		HistoryManager,
-		ServiceManager,
-		TransitionManager,
-	}: IService): void {
-		this.PageManager = PageManager;
-		this.EventEmitter = EventEmitter;
-		this.HistoryManager = HistoryManager;
-		this.ServiceManager = ServiceManager;
-		this.TransitionManager = TransitionManager;
-	}
+    public install({
+        PageManager,
+        EventEmitter,
+        HistoryManager,
+        ServiceManager,
+        TransitionManager,
+    }: IService): void {
+        this.PageManager = PageManager;
+        this.EventEmitter = EventEmitter;
+        this.HistoryManager = HistoryManager;
+        this.ServiceManager = ServiceManager;
+        this.TransitionManager = TransitionManager;
+    }
 
-	// Called on start of Service
-	public boot(): void { }
+    // Called on start of Service
+    public boot(): void { }
 
-	// Initialize events
-	public initEvents(): void { }
+    // Initialize events
+    public initEvents(): void { }
 
-	// Stop events
-	public stopEvents(): void { }
+    // Stop events
+    public stopEvents(): void { }
 
-	// Stop services
-	public stop(): void {
-		this.stopEvents();
-	}
+    // Stop services
+    public stop(): void {
+        this.stopEvents();
+    }
 }
 
 /**
@@ -687,20 +689,29 @@ export class Service {
  */
 export class Component extends Service {
 	/**
-	 * Stores the elements the Component is going to act on
+	 * The Component name
 	 *
-	 * @type {NodeListOf<Element>}
+	 * @protected
+	 * @type string
 	 * @memberof Component
 	 */
-	public el: NodeListOf<Element>;
+    protected name: string = "Component";
+
+	/**
+	 * Stores the elements the Component is going to act on
+	 *
+	 * @type NodeListOf<Element>
+	 * @memberof Component
+	 */
+    public el: NodeListOf<Element>;
 
 	/**
 	 * Stores the query to find the Elements the Component is going to act on
 	 *
-	 * @type {String}
+	 * @type String
 	 * @memberof Component
 	 */
-	public query: string;
+    public query: string;
 
 	/**
 	 * Creates an instance of Component.
@@ -708,18 +719,18 @@ export class Component extends Service {
 	 * @param {string} query
 	 * @memberof Component
 	 */
-	constructor(query: string) {
-		super();
-		this.query = query;
-		this.el = document.querySelectorAll(this.query);
-	}
+    constructor(query: string) {
+        super();
+        this.query = query;
+        this.el = document.querySelectorAll(this.query);
+    }
 }
 
 export type ListenerCallback = (...args: any) => void;
 export interface IListener {
-	readonly callback: ListenerCallback;
-	readonly scope: object;
-	readonly name: string;
+    readonly callback: ListenerCallback;
+    readonly scope: object;
+    readonly name: string;
 }
 
 /**
@@ -733,10 +744,10 @@ export class Listener {
 	 * The current listener data
 	 *
 	 * @private
-	 * @type {IListener}
+	 * @type IListener
 	 * @memberof Listener
 	 */
-	private listener: IListener;
+    private listener: IListener;
 
 	/**
 	 * Creates an instance of Listener.
@@ -744,13 +755,13 @@ export class Listener {
 	 * @param {IListener} { callback = () => { }, scope = null, name = "event" }
 	 * @memberof Listener
 	 */
-	constructor({
-		callback = () => { },
-		scope = null,
-		name = "event",
-	}: IListener) {
-		this.listener = { callback, scope, name };
-	}
+    constructor({
+        callback = () => { },
+        scope = null,
+        name = "event",
+    }: IListener) {
+        this.listener = { callback, scope, name };
+    }
 
 	/**
 	 * Returns the callback Function of the Listener
@@ -758,9 +769,9 @@ export class Listener {
 	 * @returns ListenerCallback
 	 * @memberof Listener
 	 */
-	public getCallback(): ListenerCallback {
-		return this.listener.callback;
-	}
+    public getCallback(): ListenerCallback {
+        return this.listener.callback;
+    }
 
 	/**
 	 * Returns the scope as an Object, from the Listener
@@ -768,9 +779,9 @@ export class Listener {
 	 * @returns object
 	 * @memberof Listener
 	 */
-	public getScope(): object {
-		return this.listener.scope;
-	}
+    public getScope(): object {
+        return this.listener.scope;
+    }
 
 	/**
 	 * Returns the event as a String, from the Listener
@@ -778,9 +789,9 @@ export class Listener {
 	 * @returns string
 	 * @memberof Listener
 	 */
-	public getEventName(): string {
-		return this.listener.name;
-	}
+    public getEventName(): string {
+        return this.listener.name;
+    }
 
 	/**
 	 * Returns the listener as an Object
@@ -788,9 +799,9 @@ export class Listener {
 	 * @returns IListener
 	 * @memberof Listener
 	 */
-	public toJSON(): IListener {
-		return this.listener;
-	}
+    public toJSON(): IListener {
+        return this.listener;
+    }
 }
 
 /**
@@ -805,10 +816,10 @@ export class Event extends Storage<Listener> {
 	 * The name of the event
 	 *
 	 * @private
-	 * @type {string}
+	 * @type string
 	 * @memberof Event
 	 */
-	private name: string;
+    private name: string;
 
 	/**
 	 * Creates an instance of Event.
@@ -816,10 +827,10 @@ export class Event extends Storage<Listener> {
 	 * @param {string} [name="event"]
 	 * @memberof Event
 	 */
-	constructor(name: string = "event") {
-		super();
-		this.name = name;
-	}
+    constructor(name: string = "event") {
+        super();
+        this.name = name;
+    }
 }
 
 /**
@@ -829,34 +840,33 @@ export class Event extends Storage<Listener> {
  * @class EventEmitter
  * @extends {AdvancedManager<Event>}
  */
-export class EventEmitter extends AdvancedManager<Event> {
+export class EventEmitter extends AdvancedManager<string, Event> {
 	/**
 	 * Creates an instance of EventEmitter.
 	 *
 	 * @param {App} app
 	 * @memberof EventEmitter
 	 */
-	constructor(app: App) {
-		super(app);
-	}
+    constructor(app: App) {
+        super(app);
+    }
 
-	/**
+    /**
 	 * Gets events, if event doesn't exist create a new Event
-	 *
-	 * @public
-	 * @param {String} name
-	 * @returns Event
-	 */
-	// Get event, ensure event is valid
-	public getEvent(name: string): Event {
-		let event = this.get(name);
-		if (!(event instanceof Event)) {
-			this.set(name, new Event(name));
-			return this.get(name);
-		}
+     *
+     * @param {string} name
+     * @returns Event
+     * @memberof EventEmitter
+     */
+    public getEvent(name: string): Event {
+        let event = this.get(name);
+        if (!(event instanceof Event)) {
+            this.set(name, new Event(name));
+            return this.get(name);
+        }
 
-		return event;
-	}
+        return event;
+    }
 	/**
 	 * Creates a new listener and adds it to the event
 	 *
@@ -866,15 +876,15 @@ export class EventEmitter extends AdvancedManager<Event> {
 	 * @returns Event
 	 * @memberof EventEmitter
 	 */
-	public newListener(
-		name: string,
-		callback: ListenerCallback,
-		scope: object
-	): Event {
-		let event = this.getEvent(name);
-		event.add(new Listener({ name, callback, scope }));
-		return event;
-	}
+    public newListener(
+        name: string,
+        callback: ListenerCallback,
+        scope: object
+    ): Event {
+        let event = this.getEvent(name);
+        event.add(new Listener({ name, callback, scope }));
+        return event;
+    }
 
 	/**
 	 * Adds a listener for a given event
@@ -885,41 +895,41 @@ export class EventEmitter extends AdvancedManager<Event> {
 	 * @returns
 	 * @memberof EventEmitter
 	 */
-	public on(
-		events: string | object | Array<any>,
-		callback: ListenerCallback,
-		scope: object
-	): EventEmitter {
-		// If there is no event break
-		if (typeof events == "undefined") return this;
+    public on(
+        events: string | object | Array<any>,
+        callback: ListenerCallback,
+        scope: object
+    ): EventEmitter {
+        // If there is no event break
+        if (typeof events == "undefined") return this;
 
-		// Create a new event every space
-		if (typeof events == "string") events = events.split(/\s/g);
+        // Create a new event every space
+        if (typeof events == "string") events = events.split(/\s/g);
 
-		let _name: string;
-		let _callback: ListenerCallback;
-		let _scope: object;
+        let _name: string;
+        let _callback: ListenerCallback;
+        let _scope: object;
 
-		// Loop through the list of events
-		Object.keys(events).forEach((key) => {
-			// Select the name of the event from the list
-			// Remember events can be {String | Object | Array<any>}
+        // Loop through the list of events
+        Object.keys(events).forEach((key) => {
+            // Select the name of the event from the list
+            // Remember events can be {String | Object | Array<any>}
 
-			// Check If events is an Object (JSON like Object, and not an Array)
-			if (typeof events == "object" && !Array.isArray(events)) {
-				_name = key;
-				_callback = events[key];
-				_scope = callback;
-			} else {
-				_name = events[key];
-				_callback = callback;
-				_scope = scope;
-			}
+            // Check If events is an Object (JSON like Object, and not an Array)
+            if (typeof events == "object" && !Array.isArray(events)) {
+                _name = key;
+                _callback = events[key];
+                _scope = callback;
+            } else {
+                _name = events[key];
+                _callback = callback;
+                _scope = scope;
+            }
 
-			this.newListener(_name, _callback, _scope);
-		}, this);
-		return this;
-	}
+            this.newListener(_name, _callback, _scope);
+        }, this);
+        return this;
+    }
 
 	/**
 	 * Removes a listener from an event
@@ -930,31 +940,31 @@ export class EventEmitter extends AdvancedManager<Event> {
 	 * @returns Event
 	 * @memberof EventEmitter
 	 */
-	public removeListener(
-		name: string,
-		callback: ListenerCallback,
-		scope: object
-	): Event {
-		let event: Event = this.getEvent(name);
+    public removeListener(
+        name: string,
+        callback: ListenerCallback,
+        scope: object
+    ): Event {
+        let event: Event = this.getEvent(name);
 
-		if (callback) {
-			let i = 0,
-				len: number = event.size(),
-				value: Listener;
-			let listener = new Listener({ name, callback, scope });
-			for (; i < len; i++) {
-				value = event.get(i);
-				if (
-					value.getCallback() === listener.getCallback() &&
-					value.getScope() === listener.getScope()
-				)
-					break;
-			}
+        if (callback) {
+            let i = 0,
+                len: number = event.size(),
+                value: Listener;
+            let listener = new Listener({ name, callback, scope });
+            for (; i < len; i++) {
+                value = event.get(i);
+                if (
+                    value.getCallback() === listener.getCallback() &&
+                    value.getScope() === listener.getScope()
+                )
+                    break;
+            }
 
-			event.remove(i);
-		}
-		return event;
-	}
+            event.remove(i);
+        }
+        return event;
+    }
 
 	/**
 	 * Removes a listener from a given event, or it just completely removes an event
@@ -965,43 +975,43 @@ export class EventEmitter extends AdvancedManager<Event> {
 	 * @returns EventEmitter
 	 * @memberof EventEmitter
 	 */
-	public off(
-		events: string | object | Array<any>,
-		callback: ListenerCallback,
-		scope: object
-	): EventEmitter {
-		// If there is no event break
-		if (typeof events == "undefined") return this;
+    public off(
+        events: string | object | Array<any>,
+        callback: ListenerCallback,
+        scope: object
+    ): EventEmitter {
+        // If there is no event break
+        if (typeof events == "undefined") return this;
 
-		// Create a new event every space
-		if (typeof events == "string") events = events.split(/\s/g);
+        // Create a new event every space
+        if (typeof events == "string") events = events.split(/\s/g);
 
-		let _name: string;
-		let _callback: ListenerCallback;
-		let _scope: object;
+        let _name: string;
+        let _callback: ListenerCallback;
+        let _scope: object;
 
-		// Loop through the list of events
-		Object.keys(events).forEach((key) => {
-			// Select the name of the event from the list
-			// Remember events can be {String | Object | Array<any>}
+        // Loop through the list of events
+        Object.keys(events).forEach((key) => {
+            // Select the name of the event from the list
+            // Remember events can be {String | Object | Array<any>}
 
-			// Check If events is an Object (JSON like Object, and not an Array)
-			if (typeof events == "object" && !Array.isArray(events)) {
-				_name = key;
-				_callback = events[key];
-				_scope = callback;
-			} else {
-				_name = events[key];
-				_callback = callback;
-				_scope = scope;
-			}
+            // Check If events is an Object (JSON like Object, and not an Array)
+            if (typeof events == "object" && !Array.isArray(events)) {
+                _name = key;
+                _callback = events[key];
+                _scope = callback;
+            } else {
+                _name = events[key];
+                _callback = callback;
+                _scope = scope;
+            }
 
-			if (_callback) {
-				this.removeListener(_name, _callback, _scope);
-			} else this.remove(_name);
-		}, this);
-		return this;
-	}
+            if (_callback) {
+                this.removeListener(_name, _callback, _scope);
+            } else this.remove(_name);
+        }, this);
+        return this;
+    }
 
 	/**
 	 * Adds a one time event listener for an event
@@ -1012,25 +1022,25 @@ export class EventEmitter extends AdvancedManager<Event> {
 	 * @returns EventEmitter
 	 * @memberof EventEmitter
 	 */
-	public once(
-		events: string | object | Array<any>,
-		callback: ListenerCallback,
-		scope: object
-	): EventEmitter {
-		// If there is no event break
-		if (typeof events == "undefined") return this;
+    public once(
+        events: string | object | Array<any>,
+        callback: ListenerCallback,
+        scope: object
+    ): EventEmitter {
+        // If there is no event break
+        if (typeof events == "undefined") return this;
 
-		// Create a new event every space
-		if (typeof events == "string") events = events.split(/\s/g);
+        // Create a new event every space
+        if (typeof events == "string") events = events.split(/\s/g);
 
-		let onceFn: ListenerCallback = (...args) => {
-			this.off(events, onceFn, scope);
-			callback.apply(scope, args);
-		};
+        let onceFn: ListenerCallback = (...args) => {
+            this.off(events, onceFn, scope);
+            callback.apply(scope, args);
+        };
 
-		this.on(events, onceFn, scope);
-		return this;
-	}
+        this.on(events, onceFn, scope);
+        return this;
+    }
 
 	/**
 	 * Call all listeners within an event
@@ -1040,26 +1050,26 @@ export class EventEmitter extends AdvancedManager<Event> {
 	 * @returns EventEmitter
 	 * @memberof EventEmitter
 	 */
-	public emit(
-		events: string | Array<any>,
-		args: Array<any> = []
-	): EventEmitter {
-		// If there is no event break
-		if (typeof events == "undefined") return this;
+    public emit(
+        events: string | Array<any>,
+        args: Array<any> = []
+    ): EventEmitter {
+        // If there is no event break
+        if (typeof events == "undefined") return this;
 
-		// Create a new event every space
-		if (typeof events == "string") events = events.split(/\s/g);
+        // Create a new event every space
+        if (typeof events == "string") events = events.split(/\s/g);
 
-		// Loop through the list of events
-		events.forEach((event: string) => {
-			let listeners: Event = this.getEvent(event);
-			listeners.forEach((listener: Listener) => {
-				let { callback, scope }: IListener = listener.toJSON();
-				callback.apply(scope, args);
-			});
-		}, this);
-		return this;
-	}
+        // Loop through the list of events
+        events.forEach((event: string) => {
+            let listeners: Event = this.getEvent(event);
+            listeners.forEach((listener: Listener) => {
+                let { callback, scope }: IListener = listener.toJSON();
+                callback.apply(scope, args);
+            });
+        }, this);
+        return this;
+    }
 }
 
 /**
@@ -1077,9 +1087,9 @@ export class ServiceManager extends AdvancedStorage<Service> {
 	 * @memberof ServiceManager
 	 * @constructor
 	 */
-	constructor(app: App) {
-		super(app);
-	}
+    constructor(app: App) {
+        super(app);
+    }
 
 	/**
 	 * Calls the method of the same method name for all service that are currently installed
@@ -1089,12 +1099,12 @@ export class ServiceManager extends AdvancedStorage<Service> {
 	 * @returns
 	 * @memberof ServiceManager
 	 */
-	public methodCall(method: string, ...args: any): ServiceManager {
-		this.forEach((service: Service) => {
-			service[method].call(this, ...args);
-		});
-		return this;
-	}
+    public methodCall(method: string, ...args: any): ServiceManager {
+        this.forEach((service: Service) => {
+            service[method].call(this, ...args);
+        });
+        return this;
+    }
 
 	/**
 	 * Call the install method for all Services
@@ -1102,22 +1112,22 @@ export class ServiceManager extends AdvancedStorage<Service> {
 	 * @returns ServiceManager
 	 * @memberof ServiceManager
 	 */
-	public install(): ServiceManager {
-		const {
-			getPages,
-			getEmitter,
-			getHistory,
-			getServices,
-			getTransitions,
-		}: App = this.getApp();
-		return this.methodCall("install", {
-			PageManager: getPages(),
-			EventEmitter: getEmitter(),
-			HistoryManager: getHistory(),
-			ServiceManager: getServices(),
-			TransitionManager: getTransitions(),
-		});
-	}
+    public install(): ServiceManager {
+        const {
+            getPages,
+            getEmitter,
+            getHistory,
+            getServices,
+            getTransitions,
+        }: App = this.getApp();
+        return this.methodCall("install", {
+            PageManager: getPages(),
+            EventEmitter: getEmitter(),
+            HistoryManager: getHistory(),
+            ServiceManager: getServices(),
+            TransitionManager: getTransitions(),
+        });
+    }
 
 	/**
 	 * Call the install boot for all Services
@@ -1125,9 +1135,9 @@ export class ServiceManager extends AdvancedStorage<Service> {
 	 * @returns ServiceManager
 	 * @memberof ServiceManager
 	 */
-	public boot(): ServiceManager {
-		return this.methodCall("boot");
-	}
+    public boot(): ServiceManager {
+        return this.methodCall("boot");
+    }
 
 	/**
 	 * Call the install initEvents for all Services
@@ -1135,9 +1145,9 @@ export class ServiceManager extends AdvancedStorage<Service> {
 	 * @returns ServiceManager
 	 * @memberof ServiceManager
 	 */
-	public initEvents(): ServiceManager {
-		return this.methodCall("initEvents");
-	}
+    public initEvents(): ServiceManager {
+        return this.methodCall("initEvents");
+    }
 
 	/**
 	 * Call the install stopEvents for all Services
@@ -1145,9 +1155,9 @@ export class ServiceManager extends AdvancedStorage<Service> {
 	 * @returns ServiceManager
 	 * @memberof ServiceManager
 	 */
-	public stopEvents(): ServiceManager {
-		return this.methodCall("stopEvents");
-	}
+    public stopEvents(): ServiceManager {
+        return this.methodCall("stopEvents");
+    }
 
 	/**
 	 * Call the install stop for all Services
@@ -1155,9 +1165,9 @@ export class ServiceManager extends AdvancedStorage<Service> {
 	 * @returns ServiceManager
 	 * @memberof ServiceManager
 	 */
-	public stop(): ServiceManager {
-		return this.methodCall("stop");
-	}
+    public stop(): ServiceManager {
+        return this.methodCall("stop");
+    }
 }
 
 /**
@@ -1176,54 +1186,54 @@ export class Page {
 	 * Holds the DOM of the current page
 	 *
 	 * @private
-	 * @type {Document}
+	 * @type Document
 	 * @memberof Page
 	 */
-	private dom: Document;
+    private dom: Document;
 
 	/**
 	 * Holds the wrapper element to be swapped out of each Page
 	 *
 	 * @private
-	 * @type {Element}
+	 * @type Element
 	 * @memberof Page
 	 */
-	private wrapper: Element;
+    private wrapper: Element;
 
 	/**
 	 * Holds the title of each page
 	 *
 	 * @private
-	 * @type {string}
+	 * @type string
 	 * @memberof Page
 	 */
-	private title: string;
+    private title: string;
 	/**
 	 * Holds the head element of each page
 	 *
 	 * @private
-	 * @type {Element}
+	 * @type Element
 	 * @memberof Page
 	 */
-	private head: Element;
+    private head: Element;
 
 	/**
 	 * Holds the body element of each page
 	 *
 	 * @private
-	 * @type {Element}
+	 * @type Element
 	 * @memberof Page
 	 */
-	private body: Element;
+    private body: Element;
 
 	/**
 	 * The URL of the current page
 	 *
 	 * @private
-	 * @type {_URL}
+	 * @type _URL
 	 * @memberof Page
 	 */
-	private url: _URL;
+    private url: _URL;
 
 	/**
 	 * Creates an instance of Page, it also creates a new page from response text, or a Document Object
@@ -1232,79 +1242,89 @@ export class Page {
 	 * @param {(string | Document)} [dom=document]
 	 * @memberof Page
 	 */
-	constructor(url: _URL = newURL, dom: string | Document = document) {
-		this.url = url;
-		if (typeof dom == "string") {
-			this.dom = PARSER.parseFromString(dom, "text/html");
-		} else this.dom = dom || document;
+    constructor(url: _URL = newURL, dom: string | Document = document) {
+        this.url = url;
+        if (typeof dom == "string") {
+            this.dom = PARSER.parseFromString(dom, "text/html");
+        } else this.dom = dom || document;
 
-		const { title, head, body } = this.dom;
+        const { title, head, body } = this.dom;
 
-		this.title = title;
-		this.head = head;
-		this.body = body;
-		this.wrapper = this.body.querySelector(toAttr(CONFIG.wrapperAttr));
-	}
+        this.title = title;
+        this.head = head;
+        this.body = body;
+        this.wrapper = this.body.querySelector(toAttr(CONFIG.wrapperAttr));
+    }
 
 	/**
 	 * Returns the current page's URL
 	 *
-	 * @returns {_URL}
+	 * @returns _URL
 	 * @memberof Page
 	 */
-	public getURL(): _URL {
-		return this.url;
-	}
+    public getURL(): _URL {
+        return this.url;
+    }
+
+	/**
+	 * Returns the current page's URL
+	 *
+	 * @returns string
+	 * @memberof Page
+	 */
+    public getPathname(): string {
+        return this.url.pathname;
+    }
 
 	/**
 	 * The page title
 	 *
-	 * @returns {string}
+	 * @returns string
 	 * @memberof Page
 	 */
-	public getTitle(): string {
-		return this.title;
-	}
+    public getTitle(): string {
+        return this.title;
+    }
 
 	/**
 	 * The page's head element
 	 *
-	 * @returns {Element}
+	 * @returns Element
 	 * @memberof Page
 	 */
-	public getHead(): Element {
-		return this.head;
-	}
+    public getHead(): Element {
+        return this.head;
+    }
 
 	/**
 	 * The page's body element
 	 *
-	 * @returns {Element}
+	 * @returns Element
 	 * @memberof Page
 	 */
-	public getBody(): Element {
-		return this.body;
-	}
+    public getBody(): Element {
+        return this.body;
+    }
 
 	/**
 	 * The page's wrapper element
 	 *
-	 * @returns {Element}
+	 * @returns Element
 	 * @memberof Page
 	 */
-	public getWrapper(): Element {
-		return this.wrapper;
-	}
+    public getWrapper(): Element {
+        return this.wrapper;
+    }
 
 	/**
 	 * The page's document
 	 *
-	 * @returns {Document}
+	 * @returns Document
 	 * @memberof Page
 	 */
-	public getDOM(): Document {
-		return this.dom;
-	}
+    public getDOM(): Document {
+        return this.dom;
+    }
 }
 
 /**
@@ -1312,15 +1332,15 @@ export class Page {
  */
 export type asyncFn = (err?: any, value?: any) => void;
 export interface ITransition {
-	oldPage: Page,
-	newPage: Page,
-	trigger: Trigger
+    oldPage: Page,
+    newPage: Page,
+    trigger: Trigger
 }
 export interface ITransitionData {
-	from: Page,
-	to?: Page,
-	trigger: Trigger,
-	done: asyncFn
+    from: Page,
+    to?: Page,
+    trigger: Trigger,
+    done: asyncFn
 }
 
 /**
@@ -1334,36 +1354,37 @@ export class Transition {
 	 * Transition name
 	 *
 	 * @protected
-	 * @type {string}
+	 * @type string
 	 * @memberof Transition
 	 */
-	protected name: string = "Transition";
+    protected name: string = "Transition";
+
 	/**
 	 * The page to transtion from
 	 *
 	 * @protected
-	 * @type {Page}
+	 * @type Page
 	 * @memberof Transition
 	 */
-	protected oldPage: Page;
+    protected oldPage: Page;
 
 	/**
 	 * Page to transition to
 	 *
 	 * @protected
-	 * @type {Page}
+	 * @type Page
 	 * @memberof Transition
 	 */
-	protected newPage: Page;
+    protected newPage: Page;
 
 	/**
 	 * What triggered the transition to occur
 	 *
 	 * @protected
-	 * @type {Trigger}
+	 * @type Trigger
 	 * @memberof Transition
 	 */
-	protected trigger: Trigger;
+    protected trigger: Trigger;
 
 	/**
 	 * Initialize the transition
@@ -1375,15 +1396,15 @@ export class Transition {
 	 * 	}
 	 * @memberof Transition
 	 */
-	public init({
-		oldPage,
-		newPage,
-		trigger
-	}: ITransition): void {
-		this.oldPage = oldPage;
-		this.newPage = newPage;
-		this.trigger = trigger;
-	}
+    public init({
+        oldPage,
+        newPage,
+        trigger
+    }: ITransition): void {
+        this.oldPage = oldPage;
+        this.newPage = newPage;
+        this.trigger = trigger;
+    }
 
 	/**
 	 * Returns the Transition's name
@@ -1391,50 +1412,50 @@ export class Transition {
 	 * @returns string
 	 * @memberof Transition
 	 */
-	public getName(): string {
-		return this.name;
-	}
+    public getName(): string {
+        return this.name;
+    }
 
 	/**
 	 * Returns the Transition's old page
 	 *
-	 * @returns {Page}
+	 * @returns Page
 	 * @memberof Transition
 	 */
-	public getOldPage(): Page {
-		return this.oldPage;
-	}
+    public getOldPage(): Page {
+        return this.oldPage;
+    }
 
 	/**
 	 * Returns the Transition's new page
 	 *
-	 * @returns {Page}
+	 * @returns Page
 	 * @memberof Transition
 	 */
-	public getNewPage(): Page {
-		return this.newPage;
-	}
+    public getNewPage(): Page {
+        return this.newPage;
+    }
 
 	/**
 	 * Returns the Transition's trigger
 	 *
-	 * @returns {Trigger}
+	 * @returns Trigger
 	 * @memberof Transition
 	 */
-	public getTrigger(): Trigger {
-		return this.trigger;
-	}
+    public getTrigger(): Trigger {
+        return this.trigger;
+    }
 
-	// Based off the highwayjs Transition class
+    // Based off the highwayjs Transition class
 	/**
 	 * Transition from current page
 	 *
 	 * @param {ITransitionData} { from, to, trigger, done }
 	 * @memberof Transition
 	 */
-	public out({ from, to, trigger, done }: ITransitionData) {
-		return done();
-	}
+    public out({ from, to, trigger, done }: ITransitionData) {
+        return done();
+    }
 
 	/**
 	 * Transition into the next page
@@ -1442,9 +1463,9 @@ export class Transition {
 	 * @param {ITransitionData} { from, trigger, done }
 	 * @memberof Transition
 	 */
-	public in({ from, trigger, done }: ITransitionData) {
-		return done();
-	}
+    public in({ from, trigger, done }: ITransitionData) {
+        return done();
+    }
 }
 
 /**
@@ -1454,7 +1475,7 @@ export class Transition {
  * @class TransitionManager
  * @extends {AdvancedManager<Transition>}
  */
-export class TransitionManager extends AdvancedManager<Transition> {
+export class TransitionManager extends AdvancedManager<string, Transition> {
 	/**
 	 * Creates an instance of the TransitionManager
 	 *
@@ -1462,90 +1483,51 @@ export class TransitionManager extends AdvancedManager<Transition> {
 	 * @memberof TransitionManager
 	 * @constructor
 	 */
-	constructor(app: App) {
-		super(app);
-	}
+    constructor(app: App) {
+        super(app);
+    }
+
+	/**
+	 * Quick way to add a Transition to the TransitionManager
+	 *
+	 * @param {Transition} value
+	 * @returns TransitionManager
+	 * @memberof TransitionManager
+	 */
+    public add(value: Transition): TransitionManager {
+        let name = value.getName();
+        this.set(name, value);
+        return this;
+    }
 }
 
 /**
- * Controls which page to be loaded
+ * Controls which page to be load
  *
- * @abstract
- * @extends {Manager}
+ * @export
+ * @class PageManager
+ * @extends {AdvancedManager<Page>}
  */
-// Also know as the page cache
-export class PageManager extends AdvancedManager<Page> {
-	/**
-	 * Creates an instance of the PageManager
-	 *
-	 * @param {App} app
-	 * @memberof PageManager
-	 * @constructor
-	 */
+export class PageManager extends AdvancedManager<string, Page> {
 	/**
 	 * Creates an instance of the PageManager
 	 *
 	 * @param {App} app
 	 * @memberof PageManager
 	 */
-	constructor(app: App) {
-		super(app);
-
-		this.set(newURL, new Page());
-	}
-
-	load(url: _URL) {
-		return new Promise((resolve, reject) => {
-			if (this.has(url)) {
-				let _page = this.get(url);
-				resolve(_page);
-				return;
-			}
-
-			this.request(url).then((response) => {
-				let _url = new _URL(url);
-				let _page = new Page(response);
-				this.set(_url, _page);
-
-				return resolve(_page);
-			});
-		});
-	}
-
-	request(url: _URL) {
-		return new Promise((resolve, reject) => {
-			const headers = new Headers(CONFIG.headers);
-
-			const timeout = window.setTimeout(() => {
-				window.clearTimeout(timeout);
-				reject("Request Timed Out!");
-			}, CONFIG.timeout);
-
-			fetch(url.toString(), {
-				method: "GET",
-				headers: headers,
-				cache: "default",
-				credentials: "same-origin",
-			})
-				.then((response) => {
-					window.clearTimeout(timeout);
-
-					if (response.status >= 200 && response.status < 300) {
-						return resolve(response.text());
-					}
-
-					const err = new Error(response.statusText || "" + response.status);
-					return reject(err);
-				})
-				.catch((err) => {
-					window.clearTimeout(timeout);
-					reject(err);
-				});
-		});
+    constructor(app: App) {
+        super(app);
+        this.set(URLString, new Page());
     }
 
-
-	public async _request(url: _URL) {
+    /**
+     * Starts a fetch request
+     *
+     * @param {string} url
+     * @returns Promise<string>
+     * @memberof PageManager
+     */
+    public async request(url: string): Promise<string> {
         const headers = new Headers(CONFIG.headers);
         const timeout = window.setTimeout(() => {
             window.clearTimeout(timeout);
@@ -1553,7 +1535,7 @@ export class PageManager extends AdvancedManager<Page> {
         }, CONFIG.timeout);
 
         try {
-            let response = await fetch(url.toString(), {
+            let response = await fetch(url, {
                 method: "GET",
                 headers: headers,
                 cache: "default",
@@ -1571,81 +1553,329 @@ export class PageManager extends AdvancedManager<Page> {
             window.clearTimeout(timeout);
             throw err;
         }
-	}
+    }
+
+    /**
+     * Load from cache or by requesting URL via a fetch request
+     *
+     * @param {(_URL | string)} [_url=newURL]
+     * @returns Promise<Page>
+     * @memberof PageManager
+     */
+    public async load(_url: _URL | string = newURL): Promise<Page> {
+        let url: _URL = _url instanceof URL ? _url : new _URL(_url);
+        let urlString: string = url.clean();
+        let page: Page;
+        if (this.has(urlString)) {
+            page = this.get(urlString);
+            return Promise.resolve(page);
+        }
+
+        try {
+            let response = await this.request(urlString);
+            page = new Page(url, response);
+            this.set(urlString, page);
+            return page;
+        } catch (err) {
+            console.error(err);
+        }
+    }
 }
 
+/**
+ * The App class starts the entire process, it controls all managers and all services
+ *
+ * @export
+ * @class App
+ */
 export class App {
-	history: HistoryManager;
-	transitions: TransitionManager;
-	services: ServiceManager;
-	emitter: EventEmitter;
-	pages: PageManager;
-	constructor() {
-		this.history = new HistoryManager(this);
-		this.transitions = new TransitionManager(this);
-		this.services = new ServiceManager(this);
-		this.emitter = new EventEmitter(this);
-		this.pages = new PageManager(this);
-	}
+    /**
+     * A new instance of the HistoryManager
+     *
+     * @protected
+     * @type HistoryManager
+     * @memberof App
+     */
+    protected history: HistoryManager;
 
-	public getEmitter(): EventEmitter {
-		return this.emitter;
-	}
+    /**
+     * A new instance of the TransitionManager
+     *
+     * @protected
+     * @type TransitionManager
+     * @memberof App
+     */
+    protected transitions: TransitionManager;
 
-	public getServices(): ServiceManager {
-		return this.services;
-	}
+    /**
+     * A new instance of the ServiceManager
+     *
+     * @protected
+     * @type ServiceManager
+     * @memberof App
+     */
+    protected services: ServiceManager;
 
-	public getPages(): PageManager {
-		return this.pages;
-	}
+    /**
+     * A new instance of an EventEmitter
+     *
+     * @protected
+     * @type EventEmitter
+     * @memberof App
+     */
+    protected emitter: EventEmitter;
 
-	public getTransitions(): TransitionManager {
-		return this.transitions;
-	}
+    /**
+     * A new instance of the PageManager
+     *
+     * @protected
+     * @type PageManager
+     * @memberof App
+     */
+    protected pages: PageManager;
 
-	public getHistory(): HistoryManager {
-		return this.history;
-	}
+    /**
+     * Creates an instance of App
+     *
+     * @memberof App
+     */
+    constructor() {
+        this.history = new HistoryManager(this);
+        this.transitions = new TransitionManager(this);
+        this.services = new ServiceManager(this);
+        this.emitter = new EventEmitter(this);
+        this.pages = new PageManager(this);
+    }
 
-	addService(service) {
-		this.services.add(service);
-		return this;
-	}
+    /**
+     * Return the App's EventEmitter
+     *
+     * @returns EventEmitter
+     * @memberof App
+     */
+    public getEmitter(): EventEmitter {
+        return this.emitter;
+    }
 
-	addTransition(service) {
-		this.services.add(service);
-		return this;
-	}
+    /**
+     * Return the App's ServiceManager
+     *
+     * @returns ServiceManager
+     * @memberof App
+     */
+    public getServices(): ServiceManager {
+        return this.services;
+    }
 
-	add(type, value) {
-		switch (type) {
-			case "service":
-				this.addService(value);
-				break;
-			case "transition":
-				this.addTransition(value);
-				break;
-		}
-	}
+    /**
+     * Return the App's PageManager
+     *
+     * @returns PageManager
+     * @memberof App
+     */
+    public getPages(): PageManager {
+        return this.pages;
+    }
 
-	on(events, callback) {
-		this.emitter.on(events, callback, this);
-		return this;
-	}
+    /**
+     * Return the App's TransitionManager
+     *
+     * @returns TransitionManager
+     * @memberof App
+     */
+    public getTransitions(): TransitionManager {
+        return this.transitions;
+    }
 
-	off(events, callback) {
-		this.emitter.off(events, callback, this);
-		return this;
-	}
+    /**
+     * Return the App's HistoryManager
+     *
+     * @returns HistoryManager
+     * @memberof App
+     */
+    public getHistory(): HistoryManager {
+        return this.history;
+    }
 
-	once(events, callback) {
-		this.emitter.once(events, callback, this);
-		return this;
-	}
+    /**
+     * Returns a Service from the App's instance of the ServiceManager
+     *
+     * @param {number} key
+     * @returns Service
+     * @memberof App
+     */
+    public getService(key: number): Service {
+        return this.services.get(key);
+    }
 
-	emit(events, args) {
-		this.emitter.emit(events, args);
-		return this;
-	}
+    /**
+     * Returns a Transition from the App's instance of the TransitionManager
+     *
+     * @param {string} key
+     * @returns Transition
+     * @memberof App
+     */
+    public getTransition(key: string): Transition {
+        return this.transitions.get(key);
+    }
+
+    /**
+     * Returns a State from the App's instance of the HistoryManager
+     *
+     * @param {number} key
+     * @returns State
+     * @memberof App
+     */
+    public getState(key: number): State {
+        return this.history.get(key);
+    }
+
+    /**
+     * Based on the type, it will return either a Transition, a Service, or a State from their respective Managers
+     *
+     * @param {string} type
+     * @param {*} key
+     * @returns App
+     * @memberof App
+     */
+    public get(type: string, key: any): App {
+        switch (type.toLowerCase()) {
+            case "service":
+                this.getService(key);
+                break;
+            case "transition":
+                this.getTransition(key);
+                break;
+            case "state":
+                this.getState(key);
+                break;
+            default:
+                throw `Error: can't get type '${type}', it is not a recognized type. Did you spell it correctly.`;
+        }
+        return this;
+    }
+
+    /**
+     * Adds a Service to the App's instance of the ServiceManager
+     *
+     * @param {Service} service
+     * @returns App
+     * @memberof App
+     */
+    public addService(service: Service): App {
+        this.services.add(service);
+        return this;
+    }
+
+    /**
+     * Adds a Transition to the App's instance of the TransitionManager
+     *
+     * @param {Transition} transition
+     * @returns App
+     * @memberof App
+     */
+    public addTransition(transition: Transition): App {
+        this.transitions.add(transition);
+        return this;
+    }
+
+    /**
+     * Adds a State to the App's instance of the HistoryManager
+     *
+     * @param {(IState | State)} state
+     * @returns App
+     * @memberof App
+     */
+    public addState(state: IState | State): App {
+        this.history.addItem(state);
+        return this;
+    }
+
+    /**
+     * Returns a Page
+     *
+     * @param {string} url
+     * @returns Promise<Page>
+     * @memberof App
+     */
+    public async loadPage(url: string): Promise<Page> {
+        return await this.pages.load(url);
+    }
+
+    /**
+     * Based on the type, it will add either a Transition, a Service, or a State to their respective Managers
+     *
+     * @param {string} type
+     * @param {*} value
+     * @returns App
+     * @memberof App
+     */
+    public add(type: string, value: any): App {
+        switch (type.toLowerCase()) {
+            case "service":
+                this.addService(value);
+                break;
+            case "transition":
+                this.addTransition(value);
+                break;
+            case "state":
+                this.addState(value);
+                break;
+            default:
+                throw `Error: can't add type '${type}', it is not a recognized type. Did you spell it correctly.`;
+        }
+        return this;
+    }
+
+    /**
+     * A shortcut to the App EventEmiiter on method
+     *
+     * @param {string} events
+     * @param {ListenerCallback} callback
+     * @returns App
+     * @memberof App
+     */
+    public on(events: string, callback: ListenerCallback): App {
+        this.emitter.on(events, callback, this);
+        return this;
+    }
+
+    /**
+     * A shortcut to the App EventEmiiter off method
+     *
+     * @param {string} events
+     * @param {ListenerCallback} callback
+     * @returns App
+     * @memberof App
+     */
+    public off(events: string, callback: ListenerCallback): App {
+        this.emitter.off(events, callback, this);
+        return this;
+    }
+
+    /**
+     * A shortcut to the App EventEmiiter once method
+     *
+     * @param {string} events
+     * @param {ListenerCallback} callback
+     * @returns App
+     * @memberof App
+     */
+    public once(events: string, callback: ListenerCallback): App {
+        this.emitter.once(events, callback, this);
+        return this;
+    }
+
+    /**
+     * A shortcut to the App EventEmiiter emit method
+     *
+     * @param {string} events
+     * @param {...any} args
+     * @returns App
+     * @memberof App
+     */
+    public emit(events: string, ...args: any): App {
+        this.emitter.emit(events, args);
+        return this;
+    }
 }

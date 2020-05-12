@@ -108,14 +108,14 @@ export class Manager extends Class {
         /**
          * The instance of the App Class, the manager is instantiated
          *
-         * @type {App}
+         * @type App
          */
         this.app = app;
 
         /**
          * The complex list of named data, to which the Manager controls
          *
-         * @type {Map}
+         * @type Map
          */
         this.list = new Map();
     }
@@ -410,7 +410,7 @@ export class State extends Class {
         /**
          * The current state data
          *
-         * @type {Object}
+         * @type Object
          */
         this.state = { url, transition, data };
     }
@@ -460,7 +460,7 @@ export class Service extends Class  {
         /**
          * Stores the App Classes EventEmitter
          *
-         * @type {EventEmitter}
+         * @type EventEmitter
          */
         this.emitter = null;
     }
@@ -501,7 +501,7 @@ export class Component extends Service {
         /**
          * Stores the element the Component is going to act on
          *
-         * @type {Array}
+         * @type Array
          */
         this.el = el instanceof Element ? [el] : [].slice.call(document.querySelectorAll(el));
     }
@@ -605,7 +605,7 @@ export class Listener extends Class {
         /**
          * The current listener data
          *
-         * @type {Object}
+         * @type Object
          */
         this.listener = { callback, scope, name };
     }
@@ -908,42 +908,42 @@ export class Page extends Class {
         /**
          * The meta tags of each page
          *
-         * @type {NodeList}
+         * @type NodeList
          */
         this.mata = [];
 
         /**
          * The DOM of the current page
          *
-         * @type {Document}
+         * @type Document
          */
         this.dom = null;
 
         /**
          * The container to replace between pages
          *
-         * @type {HTMLElement}
+         * @type HTMLElement
          */
         this.container = null;
 
         /**
          * The url of the current page
          *
-         * @type {String}
+         * @type String
          */
         this.title = "";
 
         /**
          * The head element of the current page
          *
-         * @type {HTMLElement}
+         * @type HTMLElement
          */
         this.head = null;
 
         /**
          * The body element of the current page
          *
-         * @type {HTMLElement}
+         * @type HTMLElement
          */
         this.body = null;
 
@@ -995,7 +995,7 @@ export class Transition extends Class {
     /**
      * Transition name
      *
-     * @type {String}
+     * @type String
      */
     name = "Transition";
 
