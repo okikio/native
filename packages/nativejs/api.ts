@@ -1588,7 +1588,7 @@ export class PageManager extends AdvancedManager<string, Page> {
  * @export
  * @class App
  */
-export class App {
+export default class App {
     /**
      * A new instance of the HistoryManager
      *

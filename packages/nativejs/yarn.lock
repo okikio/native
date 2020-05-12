@@ -1629,7 +1629,7 @@ __metadata:
     "@yarnpkg/pnpify": ^2.0.0-rc.22
     cross-fetch: ^3.0.4
     eslint: ^7.0.0
-    typescript: ^4.0.0-dev.20200509
+    typescript: ^3.9.2
   languageName: unknown
   linkType: soft
 
@@ -2085,23 +2085,23 @@ __metadata:
   languageName: node
   linkType: hard
 
-typescript@^4.0.0-dev.20200509:
-  version: 4.0.0-dev.20200509
-  resolution: "typescript@npm:4.0.0-dev.20200509"
+typescript@^3.9.2:
+  version: 3.9.2
+  resolution: "typescript@npm:3.9.2"
   bin:
     tsc: bin/tsc
     tsserver: bin/tsserver
-  checksum: 3/6abdb705152a12f491d80569bbe4ad67dbb585955875f30983113ff0c51227e3aee3d6d783b46d08d31a1a49a4431317bd43071d39ddcf33c4cb253c8e7cd433
+  checksum: 3/bf7cbf2f8c695aa942be60da470aaaf902c2e9b3693ed5141fa6de5632f42f471b7e83bd9d4dcff5e0fa37eff746d61cfe1e6949019ad70f0f98d1f60ccfd3ae
   languageName: node
   linkType: hard
 
-"typescript@patch:typescript@^4.0.0-dev.20200509#builtin<compat/typescript>":
-  version: 4.0.0-dev.20200509
-  resolution: "typescript@patch:typescript@npm%3A4.0.0-dev.20200509#builtin<compat/typescript>::version=4.0.0-dev.20200509&hash=8cac75"
+"typescript@patch:typescript@^3.9.2#builtin<compat/typescript>":
+  version: 3.9.2
+  resolution: "typescript@patch:typescript@npm%3A3.9.2#builtin<compat/typescript>::version=3.9.2&hash=8cac75"
   bin:
     tsc: bin/tsc
     tsserver: bin/tsserver
-  checksum: 3/13415722b872eee3c43dbfc7c6a36b1e247f184248080323c06b66ee6b40527a7015cdcfa50d1b76d7f12e0d1b7f5de0b441ac6fc7a896bca595bfd032da4c0e
+  checksum: 3/51daca430f15c0df7aa820da2ef0a042b081327a1c2426016abbbcb35395f38d9559036a9b9e71320075197444e9b1093726a8086129a4ec367f188ba398212c
   languageName: node
   linkType: hard
 
