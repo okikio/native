@@ -1520,8 +1520,8 @@ export class PageManager extends AdvancedManager<Page> {
 				window.clearTimeout(timeout);
 				reject("Request Timed Out!");
 			}, CONFIG.timeout);
-			
-			fetch(url, {
+
+			fetch(url.toString(), {
 				method: "GET",
 				headers: headers,
 				cache: "default",
@@ -1542,6 +1542,35 @@ export class PageManager extends AdvancedManager<Page> {
 					reject(err);
 				});
 		});
+    }
+
+
+	public async _request(url: _URL) {
+        const headers = new Headers(CONFIG.headers);
+        const timeout = window.setTimeout(() => {
+            window.clearTimeout(timeout);
+            throw "Request Timed Out!";
+        }, CONFIG.timeout);
+
+        try {
+            let response = await fetch(url.toString(), {
+                method: "GET",
+                headers: headers,
+                cache: "default",
+                credentials: "same-origin",
+            });
+
+            window.clearTimeout(timeout);
+            if (response.status >= 200 && response.status < 300) {
+                return await response.text();
+            }
+
+            const err = new Error(response.statusText || "" + response.status);
+            throw err;
+        } catch (err) {
+            window.clearTimeout(timeout);
+            throw err;
+        }
 	}
 }
 
