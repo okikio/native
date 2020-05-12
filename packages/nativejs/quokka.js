@@ -1,4 +1,5 @@
-import { fetch } from 'whatwg-fetch';
+// import { fetch } from 'whatwg-fetch';
+import fetch from 'cross-fetch';
 let request = async (url) => {
     const timeout = setTimeout(() => {
         clearTimeout(timeout);
@@ -9,7 +10,7 @@ let request = async (url) => {
         let response = await fetch(url.toString(), {
             method: "GET",
             cache: "default",
-            credentials: "same-origin",
+            credentials: "cors",
         });
 
         clearTimeout(timeout);
@@ -26,7 +27,7 @@ let request = async (url) => {
 };
 
 try {
-    await request("docs/index.html");
+    await request("http://josephojo.com");
 } catch (err) {
     console.log(err)
 }
