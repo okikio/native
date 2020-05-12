@@ -1,8 +1,20 @@
 // The config variables
-const Config = {
-	wrapper: "",
-	anchorLink: "a",
+export const CONFIG = {
+	wrapperAttr: "wrapper",
+    noAjaxLinkAttr: "no-ajax-link",
+	noPrefetchAttr: "no-prefetch",
+	headers: [
+		["x-partial", "true"]
+	],
+	timeout: 30000
 };
+
+/**
+ * Converts string into data attributes
+ *
+ * @param {string} value
+ */
+export const toAttr = (value: string): string => `[data-${value}]`;
 
 /**
  * Manages complex lists of named data, eg. A page can be stored in a list by of other pages with the url being how the page is stored in the list. Managers use Maps to store data.
@@ -361,9 +373,14 @@ export class _URL extends URL {
 	}
 }
 
+/**
+ * This is the default starting URL, to avoid needless instances of the same class that produce the same value, I defined the default value
+ */
+export const newURL = new _URL();
+
 export type LinkEvent = MouseEvent | TouchEvent;
 export type StateEvent = LinkEvent | "ReplaceState";
-export type Trigger = HTMLAnchorElement | "HistoryManager" | "back" | "forward";
+export type Trigger = HTMLAnchorElement | "HistoryManager" | "popstate" | "back" | "forward";
 
 export interface ICoords {
 	readonly x: number;
@@ -426,7 +443,7 @@ export class State {
 	/**
 	 * Creates an instance of State.
 	 * @param {IState} {
-	 *         url = new _URL(),
+	 *         url = newURL,
 	 *         index = 0,
 	 *         transition = "none",
 	 *         data = {
@@ -438,7 +455,7 @@ export class State {
 	 * @memberof State
 	 */
 	constructor({
-		url = new _URL(),
+		url = newURL,
 		index = 0,
 		transition = "none",
 		data = {
@@ -696,84 +713,6 @@ export class Component extends Service {
 		this.query = query;
 		this.el = document.querySelectorAll(this.query);
 	}
-}
-
-/**
- * A service that interacts with the DOM
- *
- * @abstract
- * @extends {Component}
- */
-export class AnchorLink extends Component {
-	linkHash: any;
-	/**
-	 * Creates an instance of the Component AnchorLink
-	 *
-	 * @memberof AnchorLink
-	 * @constructor
-	 */
-	constructor() {
-		super(Config.anchorLink);
-	}
-
-	/**
-	 * Callback called from click event.
-	 *
-	 * @private
-	 * @param {MouseEvent} evt
-	 */
-	onClick(evt: LinkEvent) {
-		/**
-		 * @type {HTMLElement|Node|EventTarget}
-		 */
-		let el: HTMLElement | Node | EventTarget = (evt as MouseEvent | TouchEvent)
-			.target;
-
-		// Go up in the node list until we  find something with an href
-		while (el && !this.getHref(el)) {
-			el = el.parentNode;
-		}
-
-		if (this.preventCheck(evt, el)) {
-			evt.preventDefault();
-			this.linkHash = el.hash.split("#")[1];
-			const href = this.getHref(el);
-			const transitionName = this.getTransitionName(el);
-			const cursorPosition: Coords = new Coords(evt.clientX, evt.clientY);
-			this.goTo(href, transitionName, el, cursorPosition);
-			this.EventEmitter.emit("anchor:click", [evt, this]);
-		}
-	}
-	getHref(el: HTMLElement | Node | EventTarget) {
-		throw new Error("Method not implemented.");
-	}
-	preventCheck(evt: LinkEvent, el: HTMLElement | Node | EventTarget) {
-		throw new Error("Method not implemented.");
-	}
-	getTransitionName(el: HTMLElement | Node | EventTarget) {
-		throw new Error("Method not implemented.");
-	}
-	goTo(
-		href: any,
-		transitionName: any,
-		el: HTMLElement | Node | EventTarget,
-		cursorPosition: { x: number; y: number }
-	) {
-		throw new Error("Method not implemented.");
-	}
-
-	/**
-	 * Callback called from click event.
-	 *
-	 */
-	// Initialize events
-	initEvents() {
-		// If the browser starts
-		document.addEventListener("click", this.onClick.bind(this));
-	}
-
-	// Stop events
-	stopEvents() { }
 }
 
 export type ListenerCallback = (...args: any) => void;
@@ -1222,126 +1161,173 @@ export class ServiceManager extends AdvancedStorage<Service> {
 }
 
 /**
+ * Parses strings to DOM
+ */
+export const PARSER: DOMParser = new DOMParser();
+
+/**
  * A page represents the DOM elements that create each page
  *
  * @export
  * @class Page
  */
-const PARSER = new DOMParser();
 export class Page {
-	mata: any[];
-	dom: any;
-	container: any;
-	title: string;
-	head: any;
-	body: any;
-	meta: any;
 	/**
-	 * Creates a new page from response text, or a Document Object
+	 * Holds the DOM of the current page
 	 *
-	 * @param {_URL} url
-	 * @param {String | Document} dom
-	 * @memberof ServiceManager
-	 * @constructor
+	 * @private
+	 * @type {Document}
+	 * @memberof Page
 	 */
-	constructor(dom: string | Document) {
-		/**
-		 * The meta tags of each page
-		 *
-		 * @type {NodeList}
-		 */
-		this.mata = [];
+	private dom: Document;
 
-		/**
-		 * The DOM of the current page
-		 *
-		 * @type {Document}
-		 */
-		this.dom = null;
+	/**
+	 * Holds the wrapper element to be swapped out of each Page
+	 *
+	 * @private
+	 * @type {Element}
+	 * @memberof Page
+	 */
+	private wrapper: Element;
 
-		/**
-		 * The container to replace between pages
-		 *
-		 * @type {HTMLElement}
-		 */
-		this.container = null;
+	/**
+	 * Holds the title of each page
+	 *
+	 * @private
+	 * @type {string}
+	 * @memberof Page
+	 */
+	private title: string;
+	/**
+	 * Holds the head element of each page
+	 *
+	 * @private
+	 * @type {Element}
+	 * @memberof Page
+	 */
+	private head: Element;
 
-		/**
-		 * The url of the current page
-		 *
-		 * @type {String}
-		 */
-		this.title = "";
+	/**
+	 * Holds the body element of each page
+	 *
+	 * @private
+	 * @type {Element}
+	 * @memberof Page
+	 */
+	private body: Element;
 
-		/**
-		 * The head element of the current page
-		 *
-		 * @type {HTMLElement}
-		 */
-		this.head = null;
+	/**
+	 * The URL of the current page
+	 *
+	 * @private
+	 * @type {_URL}
+	 * @memberof Page
+	 */
+	private url: _URL;
 
-		/**
-		 * The body element of the current page
-		 *
-		 * @type {HTMLElement}
-		 */
-		this.body = null;
-
-		this.parse(dom);
-	}
-
-	parse(dom: Document) {
+	/**
+	 * Creates an instance of Page, it also creates a new page from response text, or a Document Object
+	 *
+	 * @param {_URL} [url=newURL]
+	 * @param {(string | Document)} [dom=document]
+	 * @memberof Page
+	 */
+	constructor(url: _URL = newURL, dom: string | Document = document) {
+		this.url = url;
 		if (typeof dom == "string") {
 			this.dom = PARSER.parseFromString(dom, "text/html");
-		} else {
-			this.dom = dom || document;
-		}
+		} else this.dom = dom || document;
 
-		this.title = Page.getTitle(this.dom);
-		this.meta = Page.getMeta(this.dom);
-		this.head = Page.getHead(this.dom);
-		this.body = Page.getBody(this.dom);
-		this.container = Page.getContainer(this.dom);
-		return this;
+		const { title, head, body } = this.dom;
+
+		this.title = title;
+		this.head = head;
+		this.body = body;
+		this.wrapper = this.body.querySelector(toAttr(CONFIG.wrapperAttr));
 	}
 
-	static getTitle(dom: Document) {
-		return dom.title;
-	}
-	static getHead(dom: Document) {
-		return dom.head;
-	}
-	static getBody(dom: Document) {
-		return dom.body;
-	}
-
-	static getMeta(dom: Document) {
-		return Page.getHead(dom).querySelectorAll("meta");
+	/**
+	 * Returns the current page's URL
+	 *
+	 * @returns {_URL}
+	 * @memberof Page
+	 */
+	public getURL(): _URL {
+		return this.url;
 	}
 
-	static getContainer(dom: Document) {
-		return Page.getBody(dom).querySelector(Config.container);
-	}
-
-	getTitle() {
+	/**
+	 * The page title
+	 *
+	 * @returns {string}
+	 * @memberof Page
+	 */
+	public getTitle(): string {
 		return this.title;
 	}
-	getMeta() {
-		return this.meta;
+
+	/**
+	 * The page's head element
+	 *
+	 * @returns {Element}
+	 * @memberof Page
+	 */
+	public getHead(): Element {
+		return this.head;
 	}
-	getContainer() {
-		return this.container;
+
+	/**
+	 * The page's body element
+	 *
+	 * @returns {Element}
+	 * @memberof Page
+	 */
+	public getBody(): Element {
+		return this.body;
 	}
-	getDOM() {
+
+	/**
+	 * The page's wrapper element
+	 *
+	 * @returns {Element}
+	 * @memberof Page
+	 */
+	public getWrapper(): Element {
+		return this.wrapper;
+	}
+
+	/**
+	 * The page's document
+	 *
+	 * @returns {Document}
+	 * @memberof Page
+	 */
+	public getDOM(): Document {
 		return this.dom;
 	}
 }
 
 /**
+ * The async function type, allows for smooth transition between Promises
+ */
+export type asyncFn = (err?: any, value?: any) => void;
+export interface ITransition {
+	oldPage: Page,
+	newPage: Page,
+	trigger: Trigger
+}
+export interface ITransitionData {
+	from: Page,
+	to?: Page,
+	trigger: Trigger,
+	done: asyncFn
+}
+
+/**
  * Controls the animation between pages
  *
- * @abstract
- * @extends {Class}
+ * @export
+ * @class Transition
  */
 export class Transition {
 	/**
@@ -1352,24 +1338,112 @@ export class Transition {
 	 * @memberof Transition
 	 */
 	protected name: string = "Transition";
+	/**
+	 * The page to transtion from
+	 *
+	 * @protected
+	 * @type {Page}
+	 * @memberof Transition
+	 */
+	protected oldPage: Page;
 
-	// Based off the highwayjs Transition class
-	public out({ from: Page, trigger: Trigger, done }: any) {
-		return done();
-	}
+	/**
+	 * Page to transition to
+	 *
+	 * @protected
+	 * @type {Page}
+	 * @memberof Transition
+	 */
+	protected newPage: Page;
 
-	public in({ from, to, trigger, done }) {
-		return done();
+	/**
+	 * What triggered the transition to occur
+	 *
+	 * @protected
+	 * @type {Trigger}
+	 * @memberof Transition
+	 */
+	protected trigger: Trigger;
+
+	/**
+	 * Initialize the transition
+	 *
+	 * @param {ITransition} {
+	 * 		oldPage,
+	 * 		newPage,
+	 * 		trigger
+	 * 	}
+	 * @memberof Transition
+	 */
+	public init({
+		oldPage,
+		newPage,
+		trigger
+	}: ITransition): void {
+		this.oldPage = oldPage;
+		this.newPage = newPage;
+		this.trigger = trigger;
 	}
 
 	/**
-	 * Returns the Transitions name
+	 * Returns the Transition's name
 	 *
 	 * @returns string
 	 * @memberof Transition
 	 */
 	public getName(): string {
 		return this.name;
+	}
+
+	/**
+	 * Returns the Transition's old page
+	 *
+	 * @returns {Page}
+	 * @memberof Transition
+	 */
+	public getOldPage(): Page {
+		return this.oldPage;
+	}
+
+	/**
+	 * Returns the Transition's new page
+	 *
+	 * @returns {Page}
+	 * @memberof Transition
+	 */
+	public getNewPage(): Page {
+		return this.newPage;
+	}
+
+	/**
+	 * Returns the Transition's trigger
+	 *
+	 * @returns {Trigger}
+	 * @memberof Transition
+	 */
+	public getTrigger(): Trigger {
+		return this.trigger;
+	}
+
+	// Based off the highwayjs Transition class
+	/**
+	 * Transition from current page
+	 *
+	 * @param {ITransitionData} { from, to, trigger, done }
+	 * @memberof Transition
+	 */
+	public out({ from, to, trigger, done }: ITransitionData) {
+		return done();
+	}
+
+	/**
+	 * Transition into the next page
+	 *
+	 * @param {ITransitionData} { from, trigger, done }
+	 * @memberof Transition
+	 */
+	public in({ from, trigger, done }: ITransitionData) {
+		return done();
 	}
 }
 
@@ -1378,7 +1452,7 @@ export class Transition {
  *
  * @export
  * @class TransitionManager
- * @extends {Manager}
+ * @extends {AdvancedManager<Transition>}
  */
 export class TransitionManager extends AdvancedManager<Transition> {
 	/**
@@ -1391,23 +1465,6 @@ export class TransitionManager extends AdvancedManager<Transition> {
 	constructor(app: App) {
 		super(app);
 	}
-
-	show(name, oldPage, newPage) {
-		let transition = this.get(name);
-		return new Promise((resolve) => {
-			transition.in({ from: oldPage, to: newPage, done: resolve });
-		});
-	}
-	get(name: any) {
-		throw new Error("Method not implemented.");
-	}
-
-	hide(name, oldPage) {
-		let transition = this.get(name);
-		return new Promise((resolve) => {
-			transition.out({ from: oldPage, done: resolve });
-		});
-	}
 }
 
 /**
@@ -1418,11 +1475,6 @@ export class TransitionManager extends AdvancedManager<Transition> {
  */
 // Also know as the page cache
 export class PageManager extends AdvancedManager<Page> {
-	set(arg0: _URL, arg1: Page) {
-		throw new Error("Method not implemented.");
-	}
-	#class = "PageManager";
-
 	/**
 	 * Creates an instance of the PageManager
 	 *
@@ -1430,14 +1482,20 @@ export class PageManager extends AdvancedManager<Page> {
 	 * @memberof PageManager
 	 * @constructor
 	 */
+	/**
+	 * Creates an instance of the PageManager
+	 *
+	 * @param {App} app
+	 * @memberof PageManager
+	 */
 	constructor(app: App) {
 		super(app);
 
-		this.set(new _URL(), new Page());
+		this.set(newURL, new Page());
 	}
 
-	load(url) {
-		return new Promise((resolve) => {
+	load(url: _URL) {
+		return new Promise((resolve, reject) => {
 			if (this.has(url)) {
 				let _page = this.get(url);
 				resolve(_page);
@@ -1453,22 +1511,16 @@ export class PageManager extends AdvancedManager<Page> {
 			});
 		});
 	}
-	has(url: any) {
-		throw new Error("Method not implemented.");
-	}
-	get(url: any) {
-		throw new Error("Method not implemented.");
-	}
 
-	request(url) {
+	request(url: _URL) {
 		return new Promise((resolve, reject) => {
-			const headers = new Headers([["X-Partial", "true"]]);
+			const headers = new Headers(CONFIG.headers);
 
 			const timeout = window.setTimeout(() => {
 				window.clearTimeout(timeout);
 				reject("Request Timed Out!");
-			}, Config.timeout);
-
+			}, CONFIG.timeout);
+			
 			fetch(url, {
 				method: "GET",
 				headers: headers,
@@ -1479,10 +1531,10 @@ export class PageManager extends AdvancedManager<Page> {
 					window.clearTimeout(timeout);
 
 					if (response.status >= 200 && response.status < 300) {
-						return resolve(res.text());
+						return resolve(response.text());
 					}
 
-					const err = new Error(res.statusText || res.status);
+					const err = new Error(response.statusText || "" + response.status);
 					return reject(err);
 				})
 				.catch((err) => {
