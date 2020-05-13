@@ -6,6 +6,9 @@ export const CONFIG = {
     headers: [
         ["x-partial", "true"]
     ],
+    preventSelfAttr: `prevent="self"`,
+    preventAllAttr: `prevent="all"`,
+    transitionAttr: "transition",
     timeout: 30000
 };
 
@@ -13,8 +16,28 @@ export const CONFIG = {
  * Converts string into data attributes
  *
  * @param {string} value
+ * @param {boolean} brackets [brackets=true]
  */
-export const toAttr = (value: string): string => `[data-${value}]`;
+export const toAttr = (value: string, brackets: boolean = true): string => {
+    let attr = `data-${value}`;
+    return brackets ? `[${attr}]` : attr;
+};
+
+/**
+ * Selects config vars, and formats them for use
+ *
+ * @param {string} value
+ * @param {boolean} brackets [brackets=true]
+ */
+export const getConfig = (value: string, brackets: boolean = true): any => {
+    let config = CONFIG[value];
+    if (typeof config === "string") {
+        let attr = `data-${config}`;
+        return brackets ? `[${attr}]` : attr;
+    }
+
+    return config;
+};
 
 /**
  * Manages complex lists of named data, eg. A page can be stored in a list by of other pages with the url being how the page is stored in the list. Managers use Maps to store data.
@@ -82,10 +105,10 @@ export class Manager<K, V> {
 	 * Returns the keys of all items stored in the Manager
 	 *
 	 * @public
-	 * @returns IterableIterator<K>
+	 * @returns Array<K>
 	 */
-    public keys(): IterableIterator<K> {
-        return this.list.keys();
+    public keys(): Array<K> {
+        return [...this.list.keys()];
     }
 
 	/**
@@ -98,14 +121,14 @@ export class Manager<K, V> {
         return this.list.size;
     }
 
-	/**
+    /**
 	 * Returns the last item in the Manager who's index is a certain distance from the last item in the Manager
-	 *
-	 * @public
-	 * @param {Number} [distance=0] - Distance from the last item in the Manager
-	 * @returns V
-	 */
-    public last(distance: number = 0): V {
+     *
+     * @param {number} [distance=1]
+     * @returns {V}
+     * @memberof Manager
+     */
+    public last(distance: number = 1): V {
         let size = this.size();
         let key = this.keys()[size - distance];
         return this.get(key);
@@ -118,7 +141,7 @@ export class Manager<K, V> {
 	 * @returns V
 	 */
     public prev(): V {
-        return this.last(1);
+        return this.last(2);
     }
 
 	/**
@@ -322,11 +345,11 @@ export class _URL extends URL {
 	/**
 	 * Creates an instance of _URL.
 	 *
-     * @param {(string | _URL | URL | Location)} [url=window.location]
+     * @param {(string | _URL | URL | Location)} [url=window.location.href]
 	 * @memberof _URL
 	 */
-    constructor(url: string | _URL | URL | Location = window.location) {
-        super(url.toString(), window.location.toString());
+    constructor(url: any = window.location.href) {
+        super(url instanceof URL ? url.href : url, window.location.href);
     }
 
 	/**
@@ -336,7 +359,7 @@ export class _URL extends URL {
 	 * @memberof _URL
 	 */
     public clean(): string {
-        return this.toString().replace(/#.*/, "");
+        return this.toString().replace(/(\/#.*|\/|#.*)$/, '');
     }
 
 	/**
@@ -435,7 +458,7 @@ export class State {
 	/**
 	 * Creates an instance of State.
 	 * @param {IState} {
-	 *         url = newURL,
+	 *         url = new _URL(),
 	 *         index = 0,
 	 *         transition = "none",
 	 *         data = {
@@ -447,7 +470,7 @@ export class State {
 	 * @memberof State
 	 */
     constructor({
-        url = newURL,
+        url = new _URL(),
         index = 0,
         transition = "none",
         data = {
@@ -672,47 +695,98 @@ export class Service {
 }
 
 /**
- * A service that interacts with the DOM
+ * The Service Manager controls the lifecycle of all services in an App
  *
- * @abstract
- * @extends {Service}
+ * @export
+ * @class ServiceManager
+ * @extends {AdvancedStorage<Service>}
  */
-export class Component extends Service {
-	/**
-	 * The Component name
-	 *
-	 * @protected
-	 * @type string
-	 * @memberof Component
-	 */
-    protected name: string = "Component";
+export class ServiceManager extends AdvancedStorage<Service> {
+    /**
+     * Creates an instance of ServiceManager.
+     *
+     * @param {App} app
+     * @memberof ServiceManager
+     */
+    constructor(app: App) {
+        super(app);
+    }
 
 	/**
-	 * Stores the elements the Component is going to act on
+	 * Calls the method of the same method name for all service that are currently installed
 	 *
-	 * @type NodeListOf<Element>
-	 * @memberof Component
+	 * @param {string} method
+	 * @param {Array<any>} [args=[]]
+	 * @returns ServiceManager
+	 * @memberof ServiceManager
 	 */
-    public el: NodeListOf<Element>;
+    public async methodCall(method: string, ...args: any): Promise<ServiceManager> {
+        for await (let [, service] of this.list) {
+            // @ts-ignore
+            await service.prototype[method](...args);
+        }
+        return this;
+    }
 
 	/**
-	 * Stores the query to find the Elements the Component is going to act on
+	 * Call the install method for all Services
 	 *
-	 * @type String
-	 * @memberof Component
+	 * @returns ServiceManager
+	 * @memberof ServiceManager
 	 */
-    public query: string;
+    public install(): ServiceManager {
+        let app: App = this.getApp();
+        this.methodCall("install", {
+            PageManager: app.getPages(),
+            EventEmitter: app.getEmitter(),
+            HistoryManager: app.getHistory(),
+            ServiceManager: app.getServices(),
+            TransitionManager: app.getTransitions()
+        });
+        return this;
+    }
 
 	/**
-	 * Creates an instance of Component.
+	 * Call the install boot for all Services
 	 *
-	 * @param {string} query
-	 * @memberof Component
+	 * @returns Promise<ServiceManager>
+	 * @memberof ServiceManager
 	 */
-    constructor(query: string) {
-        super();
-        this.query = query;
-        this.el = document.querySelectorAll(this.query);
+    public async boot(): Promise<ServiceManager> {
+        return await this.methodCall("boot");
+    }
+
+	/**
+	 * Call the install initEvents for all Services
+	 *
+	 * @returns ServiceManager
+	 * @memberof ServiceManager
+	 */
+    public initEvents(): ServiceManager {
+        this.methodCall("initEvents");
+        return this;
+    }
+
+	/**
+	 * Call the install stopEvents for all Services
+	 *
+	 * @returns ServiceManager
+	 * @memberof ServiceManager
+	 */
+    public stopEvents(): ServiceManager {
+        this.methodCall("stopEvents");
+        return this;
+    }
+
+	/**
+	 * Call the install stop for all Services
+	 *
+	 * @returns ServiceManager
+	 * @memberof ServiceManager
+	 */
+    public stop(): ServiceManager {
+        this.methodCall("stop");
+        return this;
     }
 }
 
@@ -1063,104 +1137,6 @@ export class EventEmitter extends AdvancedManager<string, Event> {
 }
 
 /**
- * The Service Manager controls the lifecycle of all services in an App
- *
- * @export
- * @class ServiceManager
- * @extends {AdvancedStorage<Service>}
- */
-export class ServiceManager extends AdvancedStorage<Service> {
-	/**
-	 * Creates an instance of a ServiceManager
-	 *
-	 * @param {App} app
-	 * @memberof ServiceManager
-	 * @constructor
-	 */
-    constructor(app: App) {
-        super(app);
-    }
-
-	/**
-	 * Calls the method of the same method name for all service that are currently installed
-	 *
-	 * @param {string} method
-	 * @param {Array<any>} [args=[]]
-	 * @returns
-	 * @memberof ServiceManager
-	 */
-    public methodCall(method: string, ...args: any): ServiceManager {
-        this.forEach((service: Service) => {
-            service[method].call(this, ...args);
-        });
-        return this;
-    }
-
-	/**
-	 * Call the install method for all Services
-	 *
-	 * @returns ServiceManager
-	 * @memberof ServiceManager
-	 */
-    public install(): ServiceManager {
-        const {
-            getPages,
-            getEmitter,
-            getHistory,
-            getServices,
-            getTransitions,
-        }: App = this.getApp();
-        return this.methodCall("install", {
-            PageManager: getPages(),
-            EventEmitter: getEmitter(),
-            HistoryManager: getHistory(),
-            ServiceManager: getServices(),
-            TransitionManager: getTransitions(),
-        });
-    }
-
-	/**
-	 * Call the install boot for all Services
-	 *
-	 * @returns ServiceManager
-	 * @memberof ServiceManager
-	 */
-    public boot(): ServiceManager {
-        return this.methodCall("boot");
-    }
-
-	/**
-	 * Call the install initEvents for all Services
-	 *
-	 * @returns ServiceManager
-	 * @memberof ServiceManager
-	 */
-    public initEvents(): ServiceManager {
-        return this.methodCall("initEvents");
-    }
-
-	/**
-	 * Call the install stopEvents for all Services
-	 *
-	 * @returns ServiceManager
-	 * @memberof ServiceManager
-	 */
-    public stopEvents(): ServiceManager {
-        return this.methodCall("stopEvents");
-    }
-
-	/**
-	 * Call the install stop for all Services
-	 *
-	 * @returns ServiceManager
-	 * @memberof ServiceManager
-	 */
-    public stop(): ServiceManager {
-        return this.methodCall("stop");
-    }
-}
-
-/**
  * Parses strings to DOM
  */
 export const PARSER: DOMParser = new DOMParser();
@@ -1228,11 +1204,11 @@ export class Page {
 	/**
 	 * Creates an instance of Page, it also creates a new page from response text, or a Document Object
 	 *
-	 * @param {_URL} [url=newURL]
+	 * @param {_URL} [url=new _URL()]
 	 * @param {(string | Document)} [dom=document]
 	 * @memberof Page
 	 */
-    constructor(url: _URL = newURL, dom: string | Document = document) {
+    constructor(url: _URL = new _URL(), dom: string | Document = document) {
         this.url = url;
         if (typeof dom == "string") {
             this.dom = PARSER.parseFromString(dom, "text/html");
@@ -1243,7 +1219,7 @@ export class Page {
         this.title = title;
         this.head = head;
         this.body = body;
-        this.wrapper = this.body.querySelector(toAttr(CONFIG.wrapperAttr));
+        this.wrapper = this.body.querySelector( getConfig("wrapperAttr") );
     }
 
 	/**
@@ -1518,14 +1494,15 @@ export class PageManager extends AdvancedManager<string, Page> {
      * @memberof PageManager
      */
     public async request(url: string): Promise<string> {
-        const headers = new Headers(CONFIG.headers);
+        const headers = new Headers( getConfig("headers") );
         const timeout = window.setTimeout(() => {
             window.clearTimeout(timeout);
             throw "Request Timed Out!";
-        }, CONFIG.timeout);
+        }, getConfig("timeout") );
 
         try {
             let response = await fetch(url, {
+                mode: 'same-origin',
                 method: "GET",
                 headers: headers,
                 cache: "default",
@@ -1548,11 +1525,11 @@ export class PageManager extends AdvancedManager<string, Page> {
     /**
      * Load from cache or by requesting URL via a fetch request
      *
-     * @param {(_URL | string)} [_url=newURL]
+     * @param {(_URL | string)} [_url=new _URL()]
      * @returns Promise<Page>
      * @memberof PageManager
      */
-    public async load(_url: _URL | string = newURL): Promise<Page> {
+    public async load(_url: _URL | string = new _URL()): Promise<Page> {
         let url: _URL = _url instanceof URL ? _url : new _URL(_url);
         let urlString: string = url.clean();
         let page: Page;
@@ -1742,6 +1719,35 @@ export class App {
     }
 
     /**
+     * Returns a Page
+     *
+     * @param {string} url
+     * @returns Promise<Page>
+     * @memberof App
+     */
+    public async loadPage(url: string): Promise<Page> {
+        return await this.pages.load(url);
+    }
+
+    /**
+     * Based on the type, it will return load a Transition, a Service, a State, or a Page from their respective Managers
+     *
+     * @param {string} type
+     * @param {*} key
+     * @returns App
+     * @memberof App
+     */
+    public async load(type: string, key: any): Promise<any> {
+        switch (type.toLowerCase()) {
+            case "page":
+                return await this.loadPage(key);
+                break;
+            default:
+                return Promise.resolve(this.get(type, key));
+        }
+    }
+
+    /**
      * Adds a Service to the App's instance of the ServiceManager
      *
      * @param {Service} service
@@ -1778,17 +1784,6 @@ export class App {
     }
 
     /**
-     * Returns a Page
-     *
-     * @param {string} url
-     * @returns Promise<Page>
-     * @memberof App
-     */
-    public async loadPage(url: string): Promise<Page> {
-        return await this.pages.load(url);
-    }
-
-    /**
      * Based on the type, it will add either a Transition, a Service, or a State to their respective Managers
      *
      * @param {string} type
@@ -1811,6 +1806,29 @@ export class App {
                 throw `Error: can't add type '${type}', it is not a recognized type. Did you spell it correctly.`;
         }
         return this;
+    }
+
+    /**
+     * Start the App and the ServiceManager
+     *
+     * @returns Promise<App>
+     * @memberof App
+     */
+    public async boot(): Promise<App> {
+        this.services.install();
+        await this.services.boot();
+        this.services.initEvents();
+        return Promise.resolve(this);
+    }
+
+    /**
+     * Returns the current page in the PageManager
+     *
+     * @returns {Page}
+     * @memberof App
+     */
+    public currentPage(): Page {
+        return this.pages.last();
     }
 
     /**
