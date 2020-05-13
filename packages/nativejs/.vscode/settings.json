@@ -3,7 +3,7 @@
   "emmet.triggerExpansionOnTab": true,
   "liveServer.settings.multiRootWorkspaceName": "pjax-api",
   "typescript.tsdk": ".vscode/pnpify/typescript/lib",
-  "liveServer.settings.root": "/",
+  "liveServer.settings.root": "/docs",
   "workbench.colorCustomizations": {
     "activityBar.activeBackground": "#fa1b49",
     "activityBar.activeBorder": "#155e02",
@@ -24,5 +24,6 @@
 },
   "peacock.color": "#dd0531",
   "eslint.nodePath": ".vscode/pnpify",
-  "typescript.enablePromptUseWorkspaceTsdk": true
+"typescript.enablePromptUseWorkspaceTsdk": true,
+"liveServer.settings.host": "localhost"
 }
