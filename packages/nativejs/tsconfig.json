@@ -1,7 +1,7 @@
 {
     "compilerOptions": {
         "target": "ES2020",
-        "module": "ES2020",
+        "module": "esnext",
         "sourceMap": true,
         "outDir": "out"
     }

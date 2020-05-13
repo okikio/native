@@ -326,17 +326,7 @@ export class _URL extends URL {
 	 * @memberof _URL
 	 */
     constructor(url: string | _URL | URL | Location = window.location) {
-        super(url.toString());
-    }
-
-    /**
-     * Returns the _URL's hostname and pathname as a string
-     *
-     * @returns string
-     * @memberof _URL
-     */
-    public toStr(): string {
-        return `${this.host}${this.pathname}`;
+        super(url.toString(), window.location.toString());
     }
 
 	/**
@@ -346,7 +336,7 @@ export class _URL extends URL {
 	 * @memberof _URL
 	 */
     public clean(): string {
-        return this.toStr().replace(/#.*/, "");
+        return this.toString().replace(/#.*/, "");
     }
 
 	/**
@@ -1571,14 +1561,10 @@ export class PageManager extends AdvancedManager<string, Page> {
             return Promise.resolve(page);
         }
 
-        try {
-            let response = await this.request(urlString);
-            page = new Page(url, response);
-            this.set(urlString, page);
-            return page;
-        } catch (err) {
-            console.error(err);
-        }
+        let response = await this.request(urlString);
+        page = new Page(url, response);
+        this.set(urlString, page);
+        return page;
     }
 }
 
@@ -1588,7 +1574,7 @@ export class PageManager extends AdvancedManager<string, Page> {
  * @export
  * @class App
  */
-export default class App {
+export class App {
     /**
      * A new instance of the HistoryManager
      *

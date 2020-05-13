@@ -274,16 +274,7 @@ export class _URL extends URL {
      * @memberof _URL
      */
     constructor(url = window.location) {
-        super(url.toString());
-    }
-    /**
-     * Returns the _URL's hostname and pathname as a string
-     *
-     * @returns string
-     * @memberof _URL
-     */
-    toStr() {
-        return `${this.host}${this.pathname}`;
+        super(url.toString(), window.location.toString());
     }
     /**
      * Removes the hash from the URL for a clean URL string
@@ -292,7 +283,7 @@ export class _URL extends URL {
      * @memberof _URL
      */
     clean() {
-        return this.toStr().replace(/#.*/, "");
+        return this.toString().replace(/#.*/, "");
     }
     /**
      * Compares this clean **_URL** to another clean **_URL**
@@ -1171,15 +1162,10 @@ export class PageManager extends AdvancedManager {
             page = this.get(urlString);
             return Promise.resolve(page);
         }
-        try {
-            let response = await this.request(urlString);
-            page = new Page(url, response);
-            this.set(urlString, page);
-            return page;
-        }
-        catch (err) {
-            console.error(err);
-        }
+        let response = await this.request(urlString);
+        page = new Page(url, response);
+        this.set(urlString, page);
+        return page;
     }
 }
 /**
@@ -1188,7 +1174,7 @@ export class PageManager extends AdvancedManager {
  * @export
  * @class App
  */
-export default class App {
+export class App {
     /**
      * Creates an instance of App
      *
