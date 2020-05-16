@@ -1,5 +1,17 @@
 // The config variables
-export const CONFIG = {
+export interface ICONFIG {
+    prefix?: string;
+    wrapperAttr?: string;
+    noAjaxLinkAttr?: string;
+    noPrefetchAttr?: "no-prefetch";
+    headers?: string[][];
+    preventSelfAttr?: string;
+    preventAllAttr?: string;
+    transitionAttr?: string;
+    timeout?: number
+}
+
+export const CONFIG_DEFAULTS: ICONFIG = {
     wrapperAttr: "wrapper",
     noAjaxLinkAttr: "no-ajax-link",
     noPrefetchAttr: "no-prefetch",
@@ -12,32 +24,65 @@ export const CONFIG = {
     timeout: 30000
 };
 
-/**
- * Converts string into data attributes
- *
- * @param {string} value
- * @param {boolean} brackets [brackets=true]
- */
-export const toAttr = (value: string, brackets: boolean = true): string => {
-    let attr = `data-${value}`;
-    return brackets ? `[${attr}]` : attr;
-};
+export type ConfigKeys = keyof ICONFIG;
 
 /**
- * Selects config vars, and formats them for use
+ * The Config class
  *
- * @param {string} value
- * @param {boolean} brackets [brackets=true]
+ * @export
+ * @class CONFIG
  */
-export const getConfig = (value: string, brackets: boolean = true): any => {
-    let config = CONFIG[value];
-    if (typeof config === "string") {
-        let attr = `data-${config}`;
+export class CONFIG {
+    /**
+     * The current Configuration
+     *
+     * @protected
+     * @type ICONFIG
+     * @memberof CONFIG
+     */
+    protected config: ICONFIG;
+
+    /**
+     * Creates an instance of CONFIG.
+     *
+     * @param {ICONFIG} config
+     * @memberof CONFIG
+     */
+    constructor(config: ICONFIG) {
+        this.config = Object.assign({ ...CONFIG_DEFAULTS }, config);
+    }
+
+    /**
+     * Converts string into data attributes
+     *
+     * @param {string} value
+     * @param {boolean} brackets [brackets=true]
+     * @returns string
+     * @memberof CONFIG
+     */
+    public toAttr(value: string, brackets: boolean = true): string {
+        let attr = `data-${value}`;
         return brackets ? `[${attr}]` : attr;
     }
 
-    return config;
-};
+    /**
+     * Selects config vars, and formats them for use, or simply returns the current configurations for the framework
+     *
+     * @param {ConfigKeys} value
+     * @param {boolean} [brackets=true]
+     * @returns any
+     * @memberof CONFIG
+     */
+    public getConfig(value?: ConfigKeys, brackets: boolean = true): any {
+        if (typeof value !== "string")
+            return this.config;
+
+        let config = this.config[value];
+        if (typeof config === "string")
+            return this.toAttr(config, brackets);
+        return config;
+    }
+}
 
 /**
  * Manages complex lists of named data, eg. A page can be stored in a list by of other pages with the url being how the page is stored in the list. Managers use Maps to store data.
@@ -52,7 +97,7 @@ export class Manager<K, V> {
 	 * The complex list of named data, to which the Manager controls
 	 *
 	 * @protected
-	 * @type {Map<K, V>}
+	 * @type Map<K, V>
 	 * @memberof Manager
 	 */
     protected list: Map<K, V>;
@@ -70,7 +115,7 @@ export class Manager<K, V> {
 	/**
 	 * Returns the Manager class's list
 	 *
-	 * @returns {Map<K, V>}
+	 * @returns Map<K, V>
 	 * @memberof Manager
 	 */
     public getList(): Map<K, V> {
@@ -125,7 +170,7 @@ export class Manager<K, V> {
 	 * Returns the last item in the Manager who's index is a certain distance from the last item in the Manager
      *
      * @param {number} [distance=1]
-     * @returns {V}
+     * @returns V
      * @memberof Manager
      */
     public last(distance: number = 1): V {
@@ -172,7 +217,7 @@ export class Manager<K, V> {
 	 *
 	 * @public
 	 * @param {K} key
-	 * @returns Boolean
+	 * @returns boolean
 	 */
     public has(key: K): boolean {
         return this.list.has(key);
@@ -193,46 +238,37 @@ export class Manager<K, V> {
         this.list.forEach(callback, context);
         return this;
     }
-}
-
-/**
- * A tweak to the Manager class that makes it self aware of the App class it's instantiated in
- *
- * @export
- * @class AdvancedManager
- * @extends {Manager<K, V>}
- * @template K
- * @template V
- */
-export class AdvancedManager<K, V> extends Manager<K, V> {
-	/**
-	 * The instance of the App class, the Manager is instantiated in
-	 *
-	 * @private
-	 * @type App
-	 * @memberof AdvancedManager
-	 */
-    private app: App;
 
 	/**
-	 * Creates an instance of AdvancedManager.
+	 * Calls the method of a certain name for all items that are currently installed
 	 *
-	 * @param {App} app - The instance of the App class, the Manager is instantiated in
-	 * @memberof AdvancedManager
+	 * @param {string} method
+	 * @param {Array<any>} [args=[]]
+	 * @returns Manager<K, V>
+	 * @memberof Manager
 	 */
-    constructor(app: App) {
-        super();
-        this.app = app;
+    public methodCall(method: string, ...args: any): Manager<K, V> {
+        this.forEach((item: V) => {
+            // @ts-ignore
+            item[method](...args);
+        });
+        return this;
     }
 
 	/**
-	 * Returns the instance the App class
+	 * Asyncronously calls the method of a certain name for all items that are currently installed, similar to methodCall
 	 *
-	 * @returns App
-	 * @memberof AdvancedManager
+	 * @param {string} method
+	 * @param {Array<any>} [args=[]]
+	 * @returns Promise<Manager<K, V>>
+	 * @memberof Manager
 	 */
-    public getApp(): App {
-        return this.app;
+    public async asyncMethodCall(method: string, ...args: any): Promise<Manager<K, V>> {
+        for await (let [, item] of this.list) {
+            // @ts-ignore
+            await item[method](...args);
+        }
+        return this;
     }
 }
 
@@ -291,6 +327,124 @@ export class Storage<V> extends Manager<number, V> {
     }
 }
 
+export type IAdvancedManager = AdvancedManager<any, ManagerItem> | AdvancedStorage<ManagerItem>;
+
+/**
+ * The base class for all AdvancedManager and AdvancedStorage items
+ *
+ * @export
+ * @class ManagerItem
+ */
+export class ManagerItem {
+    /**
+     * The AdvancedManager or AdvancedStorage the ManagerItem is attached to
+     *
+     * @protected
+     * @type IAdvancedManager
+     * @memberof ManagerItem
+     */
+    protected manager: IAdvancedManager;
+
+    /**
+     * The getConfig method for accessing the Configuration of the current App
+     *
+     * @param {ConfigKeys} [value]
+     * @param {boolean} [brackets]
+     * @returns any
+     * @memberof ManagerItem
+     */
+    protected getConfig(value?: ConfigKeys, brackets?: boolean): any {
+        return this.manager.getConfig(value, brackets);
+    };
+
+    /**
+     * Register the current Manager Item's manager
+     *
+     * @param {IAdvancedManager} manager
+     * @returns ManagerItem
+     * @memberof ManagerItem
+     */
+    public register(manager: IAdvancedManager): ManagerItem {
+        this.manager = manager;
+        this.install();
+        return this;
+    }
+
+    /**
+     * Run after the Manager Item has been registered
+     *
+     * @returns any
+     * @memberof ManagerItem
+     */
+    public install(): any { }
+}
+
+/**
+ * A tweak to the Manager class that makes it self aware of the App class it's instantiated in
+ *
+ * @export
+ * @class AdvancedManager
+ * @extends {Manager<K, V>}
+ * @template K
+ * @template V
+ */
+export class AdvancedManager<K, V extends ManagerItem> extends Manager<K, V> {
+	/**
+	 * The instance of the App class, the Manager is instantiated in
+	 *
+	 * @private
+	 * @type App
+	 * @memberof AdvancedManager
+	 */
+    private app: App;
+
+	/**
+	 * Creates an instance of AdvancedManager.
+	 *
+	 * @param {App} app - The instance of the App class, the Manager is instantiated in
+	 * @memberof AdvancedManager
+	 */
+    constructor(app: App) {
+        super();
+        this.app = app;
+    }
+
+	/**
+	 * Set a value stored in the Manager
+	 *
+	 * @public
+	 * @param  {K} key - The key where the value will be stored
+	 * @param  {V} value - The value to store
+	 * @returns AdvancedManager<K, V>
+	 */
+    public set(key: K, value: V): AdvancedManager<K, V> {
+        super.set(key, value);
+        value.register(this);
+        return this;
+    }
+
+	/**
+	 * Returns the instance the App class
+	 *
+	 * @returns App
+	 * @memberof AdvancedManager
+	 */
+    public getApp(): App {
+        return this.app;
+    }
+
+	/**
+	 * Returns the App config
+	 *
+     * @param {...any} args
+     * @returns any
+	 * @memberof AdvancedManager
+	 */
+    public getConfig(...args: any): any {
+        return this.app.getConfig(...args);
+    }
+}
+
 /**
  * A tweak to the Storage class that makes it self aware of the App class it's instantiated in
  *
@@ -299,7 +453,7 @@ export class Storage<V> extends Manager<number, V> {
  * @extends {Storage<V>}
  * @template V
  */
-export class AdvancedStorage<V> extends Storage<V> {
+export class AdvancedStorage<V extends ManagerItem> extends Storage<V> {
 	/**
 	 * The instance of the App class, the Manager is instantiated in
 	 *
@@ -321,6 +475,20 @@ export class AdvancedStorage<V> extends Storage<V> {
     }
 
 	/**
+	 * Set a value stored in AdvancedStorage
+	 *
+	 * @public
+	 * @param  {number} key - The number key where the value will be stored
+	 * @param  {V} value - The value to store
+	 * @returns AdvancedStorage<V>
+	 */
+    public set(key: number, value: V): AdvancedStorage<V> {
+        super.set(key, value);
+        value.register(this);
+        return this;
+    }
+
+	/**
 	 * Returns the instance the App class
 	 *
 	 * @returns App
@@ -328,6 +496,17 @@ export class AdvancedStorage<V> extends Storage<V> {
 	 */
     public getApp(): App {
         return this.app;
+    }
+
+	/**
+	 * Returns the App config
+	 *
+     * @param {...any} args
+     * @returns any
+	 * @memberof AdvancedStorage
+	 */
+    public getConfig(...args: any): any {
+        return this.app.getConfig(...args);
     }
 }
 
@@ -394,7 +573,7 @@ export const newURL = new _URL();
 export const URLString = newURL.clean();
 
 export type LinkEvent = MouseEvent | TouchEvent;
-export type StateEvent = LinkEvent | "ReplaceState";
+export type StateEvent = LinkEvent | PopStateEvent | "ReplaceState";
 export type Trigger = HTMLAnchorElement | "HistoryManager" | "popstate" | "back" | "forward";
 
 export interface ICoords {
@@ -409,7 +588,7 @@ export interface IStateData {
 }
 
 export interface IState {
-    url: _URL;
+    url: string;
     index?: number;
     transition: string;
     data: IStateData;
@@ -479,7 +658,7 @@ export class State {
             event: "ReplaceState",
         }
     }: IState) {
-        this.state = { index, url, transition, data };
+        this.state = { index, url: url.clean(), transition, data };
     }
 
 	/**
@@ -550,18 +729,17 @@ export class State {
  *
  * @export
  * @class HistoryManager
- * @extends {AdvancedStorage<State>}
+ * @extends {Storage<State>}
  */
-export class HistoryManager extends AdvancedStorage<State> {
+export class HistoryManager extends Storage<State> {
 	/**
 	 * Creates an instance of the HistoryManager class, which inherits properties and methods from the Storage class.
 	 *
-	 * @param {App} app
 	 * @memberof HistoryManager
 	 * @constructor
 	 */
-    constructor(app: App) {
-        super(app);
+    constructor() {
+        super();
     }
 
 	/**
@@ -593,21 +771,13 @@ export class HistoryManager extends AdvancedStorage<State> {
     }
 }
 
-interface IService {
-    PageManager: PageManager;
-    EventEmitter: EventEmitter;
-    HistoryManager: HistoryManager;
-    ServiceManager: ServiceManager;
-    TransitionManager: TransitionManager;
-}
-
 /**
  * Controls specific kinds of actions that require JS
  *
  * @export
  * @class Service
  */
-export class Service {
+export class Service extends ManagerItem {
 	/**
 	 * Stores access to the App class's EventEmitter
 	 *
@@ -655,28 +825,16 @@ export class Service {
 
 	/**
 	 * Method is run once when Service is installed on a ServiceManager
-	 *
-	 * @param {IService} {
-	 *         PageManager,
-	 *         EventEmitter,
-	 *         HistoryManager,
-	 *         ServiceManager,
-	 *         TransitionManager
-	 *     }
+     *
 	 * @memberof Service
 	 */
-    public install({
-        PageManager,
-        EventEmitter,
-        HistoryManager,
-        ServiceManager,
-        TransitionManager,
-    }: IService): void {
-        this.PageManager = PageManager;
-        this.EventEmitter = EventEmitter;
-        this.HistoryManager = HistoryManager;
-        this.ServiceManager = ServiceManager;
-        this.TransitionManager = TransitionManager;
+    public install(): void {
+        let app = this.manager.getApp();
+        this.PageManager = app.getPages();
+        this.EventEmitter = app.getEmitter();
+        this.HistoryManager = app.getHistory();
+        this.ServiceManager = app.getServices();
+        this.TransitionManager = app.getTransitions();
     }
 
     // Called on start of Service
@@ -713,51 +871,18 @@ export class ServiceManager extends AdvancedStorage<Service> {
     }
 
 	/**
-	 * Calls the method of the same method name for all service that are currently installed
-	 *
-	 * @param {string} method
-	 * @param {Array<any>} [args=[]]
-	 * @returns ServiceManager
-	 * @memberof ServiceManager
-	 */
-    public async methodCall(method: string, ...args: any): Promise<ServiceManager> {
-        for await (let [, service] of this.list) {
-            // @ts-ignore
-            await service.prototype[method](...args);
-        }
-        return this;
-    }
-
-	/**
-	 * Call the install method for all Services
-	 *
-	 * @returns ServiceManager
-	 * @memberof ServiceManager
-	 */
-    public install(): ServiceManager {
-        let app: App = this.getApp();
-        this.methodCall("install", {
-            PageManager: app.getPages(),
-            EventEmitter: app.getEmitter(),
-            HistoryManager: app.getHistory(),
-            ServiceManager: app.getServices(),
-            TransitionManager: app.getTransitions()
-        });
-        return this;
-    }
-
-	/**
-	 * Call the install boot for all Services
+	 * Call the boot method for all Services
 	 *
 	 * @returns Promise<ServiceManager>
 	 * @memberof ServiceManager
 	 */
     public async boot(): Promise<ServiceManager> {
-        return await this.methodCall("boot");
+        await this.asyncMethodCall("boot");
+        return this;
     }
 
 	/**
-	 * Call the install initEvents for all Services
+	 * Call the initEvents method for all Services
 	 *
 	 * @returns ServiceManager
 	 * @memberof ServiceManager
@@ -768,7 +893,7 @@ export class ServiceManager extends AdvancedStorage<Service> {
     }
 
 	/**
-	 * Call the install stopEvents for all Services
+	 * Call the stopEvents method for all Services
 	 *
 	 * @returns ServiceManager
 	 * @memberof ServiceManager
@@ -779,7 +904,7 @@ export class ServiceManager extends AdvancedStorage<Service> {
     }
 
 	/**
-	 * Call the install stop for all Services
+	 * Call the stop method for all Services
 	 *
 	 * @returns ServiceManager
 	 * @memberof ServiceManager
@@ -902,17 +1027,16 @@ export class Event extends Storage<Listener> {
  *
  * @export
  * @class EventEmitter
- * @extends {AdvancedManager<Event>}
+ * @extends {Manager<string, Event>}
  */
-export class EventEmitter extends AdvancedManager<string, Event> {
+export class EventEmitter extends Manager<string, Event> {
 	/**
 	 * Creates an instance of EventEmitter.
 	 *
-	 * @param {App} app
 	 * @memberof EventEmitter
 	 */
-    constructor(app: App) {
-        super(app);
+    constructor() {
+        super();
     }
 
     /**
@@ -1147,7 +1271,7 @@ export const PARSER: DOMParser = new DOMParser();
  * @export
  * @class Page
  */
-export class Page {
+export class Page extends ManagerItem {
 	/**
 	 * Holds the DOM of the current page
 	 *
@@ -1174,6 +1298,7 @@ export class Page {
 	 * @memberof Page
 	 */
     private title: string;
+
 	/**
 	 * Holds the head element of each page
 	 *
@@ -1209,17 +1334,26 @@ export class Page {
 	 * @memberof Page
 	 */
     constructor(url: _URL = new _URL(), dom: string | Document = document) {
+        super();
         this.url = url;
         if (typeof dom == "string") {
             this.dom = PARSER.parseFromString(dom, "text/html");
         } else this.dom = dom || document;
 
         const { title, head, body } = this.dom;
-
         this.title = title;
         this.head = head;
         this.body = body;
-        this.wrapper = this.body.querySelector( getConfig("wrapperAttr") );
+    }
+
+    /**
+     * Runs once the the manager and config have been registered
+     *
+     * @returns void
+     * @memberof Page
+     */
+    public install(): void {
+        this.wrapper = this.body.querySelector(this.getConfig("wrapperAttr"));
     }
 
 	/**
@@ -1294,6 +1428,84 @@ export class Page {
 }
 
 /**
+ * Controls which page to be load
+ *
+ * @export
+ * @class PageManager
+ * @extends {AdvancedManager<string, Page>}
+ */
+export class PageManager extends AdvancedManager<string, Page> {
+	/**
+	 * Creates an instance of the PageManager
+	 *
+     * @param {App} app
+	 * @memberof PageManager
+	 */
+    constructor(app: App) {
+        super(app);
+        this.set(URLString, new Page());
+    }
+
+    /**
+     * Starts a fetch request
+     *
+     * @param {string} url
+     * @returns Promise<string>
+     * @memberof PageManager
+     */
+    public async request(url: string): Promise<string> {
+        const headers = new Headers(this.getConfig("headers"));
+        const timeout = window.setTimeout(() => {
+            window.clearTimeout(timeout);
+            throw "Request Timed Out!";
+        }, this.getConfig("timeout"));
+
+        try {
+            let response = await fetch(url, {
+                mode: 'same-origin',
+                method: "GET",
+                headers: headers,
+                cache: "default",
+                credentials: "same-origin",
+            });
+
+            window.clearTimeout(timeout);
+            if (response.status >= 200 && response.status < 300) {
+                return await response.text();
+            }
+
+            const err = new Error(response.statusText || "" + response.status);
+            throw err;
+        } catch (err) {
+            window.clearTimeout(timeout);
+            throw err;
+        }
+    }
+
+    /**
+     * Load from cache or by requesting URL via a fetch request
+     *
+     * @param {(_URL | string)} [_url=new _URL()]
+     * @returns Promise<Page>
+     * @memberof PageManager
+     */
+    public async load(_url: _URL | string = new _URL()): Promise<Page> {
+        let url: _URL = _url instanceof URL ? _url : new _URL(_url);
+        let urlString: string = url.clean();
+        let page: Page;
+        if (this.has(urlString)) {
+            page = this.get(urlString);
+            return Promise.resolve(page);
+        }
+
+        let response = await this.request(urlString);
+        page = new Page(url, response);
+        this.set(urlString, page);
+        return page;
+    }
+}
+
+/**
  * The async function type, allows for smooth transition between Promises
  */
 export type asyncFn = (err?: any, value?: any) => void;
@@ -1315,7 +1527,7 @@ export interface ITransitionData {
  * @export
  * @class Transition
  */
-export class Transition {
+export class Transition  extends ManagerItem {
 	/**
 	 * Transition name
 	 *
@@ -1439,19 +1651,16 @@ export class Transition {
  *
  * @export
  * @class TransitionManager
- * @extends {AdvancedManager<Transition>}
+ * @extends {Manager<string, Transition>}
  */
-export class TransitionManager extends AdvancedManager<string, Transition> {
+export class TransitionManager extends Manager<string, Transition> {
 	/**
 	 * Creates an instance of the TransitionManager
 	 *
-	 * @param {App} app
 	 * @memberof TransitionManager
 	 * @constructor
 	 */
-    constructor(app: App) {
-        super(app);
-    }
+    constructor() { super(); }
 
 	/**
 	 * Quick way to add a Transition to the TransitionManager
@@ -1467,83 +1676,6 @@ export class TransitionManager extends AdvancedManager<string, Transition> {
     }
 }
 
-/**
- * Controls which page to be load
- *
- * @export
- * @class PageManager
- * @extends {AdvancedManager<Page>}
- */
-export class PageManager extends AdvancedManager<string, Page> {
-	/**
-	 * Creates an instance of the PageManager
-	 *
-	 * @param {App} app
-	 * @memberof PageManager
-	 */
-    constructor(app: App) {
-        super(app);
-        this.set(URLString, new Page());
-    }
-
-    /**
-     * Starts a fetch request
-     *
-     * @param {string} url
-     * @returns Promise<string>
-     * @memberof PageManager
-     */
-    public async request(url: string): Promise<string> {
-        const headers = new Headers( getConfig("headers") );
-        const timeout = window.setTimeout(() => {
-            window.clearTimeout(timeout);
-            throw "Request Timed Out!";
-        }, getConfig("timeout") );
-
-        try {
-            let response = await fetch(url, {
-                mode: 'same-origin',
-                method: "GET",
-                headers: headers,
-                cache: "default",
-                credentials: "same-origin",
-            });
-
-            window.clearTimeout(timeout);
-            if (response.status >= 200 && response.status < 300) {
-                return await response.text();
-            }
-
-            const err = new Error(response.statusText || "" + response.status);
-            throw err;
-        } catch (err) {
-            window.clearTimeout(timeout);
-            throw err;
-        }
-    }
-
-    /**
-     * Load from cache or by requesting URL via a fetch request
-     *
-     * @param {(_URL | string)} [_url=new _URL()]
-     * @returns Promise<Page>
-     * @memberof PageManager
-     */
-    public async load(_url: _URL | string = new _URL()): Promise<Page> {
-        let url: _URL = _url instanceof URL ? _url : new _URL(_url);
-        let urlString: string = url.clean();
-        let page: Page;
-        if (this.has(urlString)) {
-            page = this.get(urlString);
-            return Promise.resolve(page);
-        }
-
-        let response = await this.request(urlString);
-        page = new Page(url, response);
-        this.set(urlString, page);
-        return page;
-    }
-}
 
 /**
  * The App class starts the entire process, it controls all managers and all services
@@ -1598,16 +1730,50 @@ export class App {
     protected pages: PageManager;
 
     /**
-     * Creates an instance of App
+     * The current Configuration's for the framework
      *
+     * @protected
+     * @type CONFIG
      * @memberof App
      */
-    constructor() {
-        this.history = new HistoryManager(this);
-        this.transitions = new TransitionManager(this);
+    protected config: CONFIG;
+
+    /**
+     * Creates an instance of App.
+     *
+     * @param {(ICONFIG | CONFIG)} [config={}]
+     * @memberof App
+     */
+    constructor(config: object = {}) {
+        this.register(config);
+    }
+
+    /**
+     * For registering all managers and the configurations
+     *
+     * @param {(ICONFIG | CONFIG)} [config={}]
+     * @returns App
+     * @memberof App
+     */
+    public register(config: ICONFIG | CONFIG = {}): App {
+        this.config = config instanceof CONFIG ? config : new CONFIG(config);
+        this.transitions = new TransitionManager();
         this.services = new ServiceManager(this);
-        this.emitter = new EventEmitter(this);
+        this.history = new HistoryManager();
         this.pages = new PageManager(this);
+        this.emitter = new EventEmitter();
+        return this;
+    }
+
+    /**
+     * Returns the current configurations for the framework
+     *
+     * @param {...any} args
+     * @returns any
+     * @memberof App
+     */
+    public getConfig(...args: any): any {
+        return this.config.getConfig(...args);
     }
 
     /**
@@ -1815,16 +1981,26 @@ export class App {
      * @memberof App
      */
     public async boot(): Promise<App> {
-        this.services.install();
         await this.services.boot();
         this.services.initEvents();
         return Promise.resolve(this);
     }
 
     /**
+     * Stop the App and the ServiceManager
+     *
+     * @returns App
+     * @memberof App
+     */
+    public stop(): App {
+        this.services.stop();
+        return this;
+    }
+
+    /**
      * Returns the current page in the PageManager
      *
-     * @returns {Page}
+     * @returns Page
      * @memberof App
      */
     public currentPage(): Page {
