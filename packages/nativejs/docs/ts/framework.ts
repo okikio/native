@@ -1,4 +1,4 @@
-import { App, Service, LinkEvent, _URL, Page, Trigger, IState, Coords, StateEvent } from "./api.js";
+import { App, Service, LinkEvent, _URL, Page, Trigger, IState, Coords, StateEvent, State } from "./api.js";
 const app = new App();
 
 export type IgnoreURLsList = Array<RegExp | string>;
@@ -7,10 +7,16 @@ export
 // Based on Barba JS and StartingBlocks
 class PJAX extends Service {
     private ignoreURLs: IgnoreURLsList = [];
-    private prefetchIgnore: boolean;
+    private prefetchIgnore: boolean = false;
     private transitions = {
         isRunning: false
     };
+
+    public boot() {
+        let current = new State();
+        this.HistoryManager.add(current);
+        window.history && window.history.replaceState(current.toJSON(), '', current.getCleanURL());
+    }
 
     public getHref(el: HTMLAnchorElement): string | null {
         if (el && el.tagName && el.tagName.toLowerCase() === 'a' && typeof el.href === 'string')
@@ -50,23 +56,23 @@ class PJAX extends Service {
         return eventMutate && newTab && crossOrigin && download && prevent && sameURL;
     }
 
-    public ignoredURL({ pathname }: _URL): boolean {
+    public ignoredURL ({ pathname }: _URL): boolean {
         return this.ignoreURLs.length && this.ignoreURLs.some(url => {
             return typeof url === "string" ? url == pathname : (url as RegExp).exec(pathname) !== null;
         });
     }
 
-    public getLink (e: LinkEvent): HTMLAnchorElement {
-        let el = e.target as HTMLAnchorElement;
-        let href: string;
+    public getLink (event: LinkEvent): HTMLAnchorElement {
+        let el = event.target as HTMLAnchorElement;
+        let href: string = this.getHref(el);
 
-        do {
+        while (el && !href) {
             el = (el as HTMLElement).parentNode as HTMLAnchorElement;
             href = this.getHref(el);
-        } while (el && !href);
+        }
 
         // Check prevent
-        if (!el || this.preventLink(el, e, href)) return;
+        if (!el || this.preventLink(el, event, href)) return;
         return el;
     }
 
@@ -75,7 +81,6 @@ class PJAX extends Service {
         if (!el) return;
 
         const url = new _URL(this.getHref(el));
-
         // If Url is ignored or already in cache, don't do any think
         if (this.ignoredURL(url) || this.PageManager.has(url.clean())) return;
 
@@ -87,14 +92,49 @@ class PJAX extends Service {
         }
     }
 
+    public async load(href: string, trigger: Trigger, transition: string): Promise<any> {
+        let oldPage = this.PageManager.last();
+        this.EventEmitter.emit("Page:Loading");
+
+        try {
+            let newPage = await this.PageManager.load(href);
+            if (!this.TransitionManager.has(transition)) throw `Transition with name '${transition}' doesn't exist.`;
+            this.EventEmitter.emit("Page:Loaded");
+            this.transitions.isRunning = true;
+            await this.TransitionManager.boot({
+                name: transition,
+                oldPage,
+                newPage,
+                trigger
+            });
+            this.transitions.isRunning = false;
+        } catch (err) {
+            this.force(href);
+        }
+    }
+
     public force(url: string): void {
         window.location.assign(url);
+    }
+
+    public getDirection(value: number): Trigger {
+        if (Math.abs(value) > 1) {
+            // Ex 6-0 > 0 -> forward, 0-6 < 0 -> back
+            return value > 0 ? 'forward' : 'back';
+        } else {
+            if (value === 0) {
+                return 'popstate';
+            } else {
+                // Ex 6-5 > 0 -> back, 5-6 < 0 -> forward
+                return value > 0 ? 'back' : 'forward';
+            }
+        }
     }
 
     public async go(
         href: string,
         trigger: Trigger = 'HistoryManager',
-        e?: StateEvent
+        event?: StateEvent
     ): Promise<void> {
         // If animation running, force reload
         if (this.transitions.isRunning) {
@@ -106,46 +146,61 @@ class PJAX extends Service {
         let current = this.HistoryManager.last();
         if (current.getURL().compare(url)) return;
 
-        if (e && (e as PopStateEvent).state) {
-            // If popstate, move to existing state
-            // and get back/forward direction.
-            const { state }: { state: IState } = e as PopStateEvent;
-            const { index } = state;
-            const diff = this._pointer - index;
+        let transitionName: string;
+        if (event && (event as PopStateEvent).state) {
+            this.EventEmitter.emit("Popstate", event);
 
-            trigger = this._getDirection(diff);
+            // If popstate, get back/forward direction.
+            const { state }: { state: IState } = event as PopStateEvent;
+            const { index, transition, data } = state;
+            const currentIndex = current.getIndex();
+            const diff = currentIndex - index;
+            trigger = this.getDirection(diff);
+            transitionName = transition;
 
-            // Work with previous states
-            this.replace(state.states);
-            this._pointer = index;
+            if (trigger !== "popstate") {
+                let { x, y } = data.scroll;
+                window.scrollTo(x, y);
+            }
+
+            if (trigger === "back") {
+                this.HistoryManager.remove(currentIndex);
+                this.EventEmitter.emit("Popstate:Back", event);
+            } else if (trigger === "forward") {
+                this.HistoryManager.addState({ url, transition, data });
+                this.EventEmitter.emit("Popstate:Forward", event);
+            }
         } else {
             // Add new state
-            this.HistoryManager.addItem({
-                url: url.clean(),
-                index: this.HistoryManager.size(),
-                transition: "none",
+            transitionName = this.getTransitionName(trigger as HTMLAnchorElement);
+            const index = this.HistoryManager.size();
+            const state = new State({
+                url, index,
+                transition: transitionName,
                 data: {
-                    scroll: new Coords(),
-                    trigger,
-                    event: e
+                    scroll: new Coords()
                 }
             });
+
+            this.HistoryManager.add(state);
+            window.history && window.history.pushState(state.toJSON(), '', url.clean());
+            this.EventEmitter.emit("History:NewState", event);
         }
 
-        if (e) {
-            e.stopPropagation();
-            e.preventDefault();
+        if (event) {
+            event.stopPropagation();
+            event.preventDefault();
         }
 
-        const currentPosition = window.scrollY;
-        window.history.pushState(null, null, url);
-        window.scrollTo(0, currentPosition);
+
+        console.log("Click");
+
+        // return await this.load(href, trigger, transitionName);
     }
 
-    public async onClick (event: LinkEvent) {
+    public onClick (event: LinkEvent) {
         event.preventDefault();
         let el = this.getLink(event);
-
         if (!el) return;
         if (this.transitions.isRunning) {
             event.preventDefault();
@@ -156,8 +211,8 @@ class PJAX extends Service {
         this.go(this.getHref(el), el, event);
     }
 
-    public onStateChange (e: PopStateEvent): void {
-        this.go(this.url.getHref(), 'popstate', e);
+    public onStateChange (event: PopStateEvent): void {
+        this.go(new _URL().clean(), 'popstate', event);
     }
 
     public initEvents() {
@@ -167,7 +222,7 @@ class PJAX extends Service {
         }
 
         document.addEventListener('click', this.onClick.bind(this));
-        // window.addEventListener('popstate', onStateChange.bind(this));
+        window.addEventListener('popstate', this.onStateChange.bind(this));
     }
 }
 
@@ -177,16 +232,16 @@ app.add("service", new PJAX());
     try {
         await app.boot();
     } catch (err) {
-        console.warn("App boot failed");
+        console.warn("App boot failed", err);
     }
 
-    try {
-        let page: Page = await app.load("page", "./other.html");
-        console.log(page.getURL().clean());
+    // try {
+    //     let page: Page = await app.load("page", "./other.html");
+    //     console.log(page.getURL().clean());
 
-        page = await app.load("page", "./about.html");
-        console.log(page.getURL().clean());
-    } catch (err) {
-        console.warn("Page loading failed");
-    }
+    //     page = await app.load("page", "./about.html");
+    //     console.log(page.getURL().clean());
+    // } catch (err) {
+    //     console.warn("Page loading failed");
+    // }
 })();

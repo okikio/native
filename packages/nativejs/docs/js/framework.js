@@ -1,12 +1,18 @@
-import { App, Service, _URL } from "./api.js";
+import { App, Service, _URL, Coords, State } from "./api.js";
 const app = new App();
 export class PJAX extends Service {
     constructor() {
         super(...arguments);
         this.ignoreURLs = [];
+        this.prefetchIgnore = false;
         this.transitions = {
             isRunning: false
         };
+    }
+    boot() {
+        let current = new State();
+        this.HistoryManager.add(current);
+        window.history && window.history.replaceState(current.toJSON(), '', current.getCleanURL());
     }
     getHref(el) {
         if (el && el.tagName && el.tagName.toLowerCase() === 'a' && typeof el.href === 'string')
@@ -45,15 +51,15 @@ export class PJAX extends Service {
             return typeof url === "string" ? url == pathname : url.exec(pathname) !== null;
         });
     }
-    getLink(e) {
-        let el = e.target;
-        let href;
-        do {
+    getLink(event) {
+        let el = event.target;
+        let href = this.getHref(el);
+        while (el && !href) {
             el = el.parentNode;
             href = this.getHref(el);
-        } while (el && !href);
+        }
         // Check prevent
-        if (!el || this.preventLink(el, e, href))
+        if (!el || this.preventLink(el, event, href))
             return;
         return el;
     }
@@ -73,10 +79,46 @@ export class PJAX extends Service {
             console.warn(err);
         }
     }
+    async load(href, trigger, transition) {
+        let oldPage = this.PageManager.last();
+        this.EventEmitter.emit("Page:Loading");
+        try {
+            let newPage = await this.PageManager.load(href);
+            if (!this.TransitionManager.has(transition))
+                throw `Transition with name '${transition}' doesn't exist.`;
+            this.EventEmitter.emit("Page:Loaded");
+            this.transitions.isRunning = true;
+            await this.TransitionManager.boot({
+                name: transition,
+                oldPage,
+                newPage,
+                trigger
+            });
+            this.transitions.isRunning = false;
+        }
+        catch (err) {
+            this.force(href);
+        }
+    }
     force(url) {
         window.location.assign(url);
     }
-    async go(href, trigger = 'HistoryManager', e) {
+    getDirection(value) {
+        if (Math.abs(value) > 1) {
+            // Ex 6-0 > 0 -> forward, 0-6 < 0 -> back
+            return value > 0 ? 'forward' : 'back';
+        }
+        else {
+            if (value === 0) {
+                return 'popstate';
+            }
+            else {
+                // Ex 6-5 > 0 -> back, 5-6 < 0 -> forward
+                return value > 0 ? 'back' : 'forward';
+            }
+        }
+    }
+    async go(href, trigger = 'HistoryManager', event) {
         // If animation running, force reload
         if (this.transitions.isRunning) {
             this.force(href);
@@ -86,31 +128,52 @@ export class PJAX extends Service {
         let current = this.HistoryManager.last();
         if (current.getURL().compare(url))
             return;
-        if (e && e.state) {
-            // If popstate, move to existing state
-            // and get back/forward direction.
-            const { state } = e;
-            const { index } = state;
-            const diff = this._pointer - index;
-            trigger = this._getDirection(diff);
-            // Work with previous states
-            this.replace(state.states);
-            this._pointer = index;
+        let transitionName;
+        if (event && event.state) {
+            this.EventEmitter.emit("Popstate", event);
+            // If popstate, get back/forward direction.
+            const { state } = event;
+            const { index, transition, data } = state;
+            const currentIndex = current.getIndex();
+            const diff = currentIndex - index;
+            trigger = this.getDirection(diff);
+            transitionName = transition;
+            if (trigger !== "popstate") {
+                let { x, y } = data.scroll;
+                window.scrollTo(x, y);
+            }
+            if (trigger === "back") {
+                this.HistoryManager.remove(currentIndex);
+                this.EventEmitter.emit("Popstate:Back", event);
+            }
+            else if (trigger === "forward") {
+                this.HistoryManager.addState({ url, transition, data });
+                this.EventEmitter.emit("Popstate:Forward", event);
+            }
         }
         else {
             // Add new state
-            this.add(url, trigger);
+            transitionName = this.getTransitionName(trigger);
+            const index = this.HistoryManager.size();
+            const state = new State({
+                url, index,
+                transition: transitionName,
+                data: {
+                    scroll: new Coords()
+                }
+            });
+            this.HistoryManager.add(state);
+            window.history && window.history.pushState(state.toJSON(), '', url.clean());
+            this.EventEmitter.emit("History:NewState", event);
         }
-        if (e) {
-            e.stopPropagation();
-            e.preventDefault();
+        if (event) {
+            event.stopPropagation();
+            event.preventDefault();
         }
-        const currentPosition = window.scrollY;
-        window.history.pushState(null, null, url);
-        window.scrollTo(0, currentPosition);
-        this.onStateChange(transitionName, true, element, cursorPosition);
+        console.log("Click");
+        // return await this.load(href, trigger, transitionName);
     }
-    async onClick(event) {
+    onClick(event) {
         event.preventDefault();
         let el = this.getLink(event);
         if (!el)
@@ -120,10 +183,10 @@ export class PJAX extends Service {
             event.stopPropagation();
             return;
         }
-        this.go(this.getHref(el), el, e);
+        this.go(this.getHref(el), el, event);
     }
-    onStateChange(e) {
-        // this.go(this.url.getHref(), 'popstate', e);
+    onStateChange(event) {
+        this.go(new _URL().clean(), 'popstate', event);
     }
     initEvents() {
         if (this.prefetchIgnore !== true) {
@@ -131,7 +194,7 @@ export class PJAX extends Service {
             document.addEventListener('touchstart', this.onHover.bind(this));
         }
         document.addEventListener('click', this.onClick.bind(this));
-        // window.addEventListener('popstate', onStateChange.bind(this));
+        window.addEventListener('popstate', this.onStateChange.bind(this));
     }
 }
 app.add("service", new PJAX());
@@ -140,16 +203,15 @@ app.add("service", new PJAX());
         await app.boot();
     }
     catch (err) {
-        console.warn("App boot failed");
+        console.warn("App boot failed", err);
     }
-    try {
-        let page = await app.load("page", "./other.html");
-        console.log(page.getURL().clean());
-        page = await app.load("page", "./about.html");
-        console.log(page.getURL().clean());
-    }
-    catch (err) {
-        console.warn("Page loading failed");
-    }
+    // try {
+    //     let page: Page = await app.load("page", "./other.html");
+    //     console.log(page.getURL().clean());
+    //     page = await app.load("page", "./about.html");
+    //     console.log(page.getURL().clean());
+    // } catch (err) {
+    //     console.warn("Page loading failed");
+    // }
 })();
 //# sourceMappingURL=framework.js.map

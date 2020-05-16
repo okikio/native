@@ -61,7 +61,8 @@ export class CONFIG {
      * @memberof CONFIG
      */
     public toAttr(value: string, brackets: boolean = true): string {
-        let attr = `data-${value}`;
+        let { prefix } = this.config;
+        let attr = `data${prefix ? "-" + prefix : ""}-${value}`;
         return brackets ? `[${attr}]` : attr;
     }
 
@@ -573,7 +574,7 @@ export const newURL = new _URL();
 export const URLString = newURL.clean();
 
 export type LinkEvent = MouseEvent | TouchEvent;
-export type StateEvent = LinkEvent | PopStateEvent | "ReplaceState";
+export type StateEvent = LinkEvent | PopStateEvent;
 export type Trigger = HTMLAnchorElement | "HistoryManager" | "popstate" | "back" | "forward";
 
 export interface ICoords {
@@ -583,12 +584,11 @@ export interface ICoords {
 
 export interface IStateData {
     scroll: ICoords;
-    trigger: Trigger;
-    event?: StateEvent;
+    [key: string]: any;
 }
 
 export interface IState {
-    url: string;
+    url: _URL;
     index?: number;
     transition: string;
     data: IStateData;
@@ -637,28 +637,26 @@ export class State {
 	/**
 	 * Creates an instance of State.
 	 * @param {IState} {
-	 *         url = new _URL(),
+     *         url = new _URL(),
 	 *         index = 0,
 	 *         transition = "none",
 	 *         data = {
 	 *             scroll: new StateCoords(),
-	 *             trigger: "HistoryManager",
-	 *             event: "ReplaceState"
+	 *             trigger: "HistoryManager"
 	 *         }
 	 *     }
 	 * @memberof State
 	 */
-    constructor({
-        url = new _URL(),
-        index = 0,
-        transition = "none",
-        data = {
+    constructor(state: IState = {
+        url: new _URL(),
+        index: 0,
+        transition: "none",
+        data: {
             scroll: new Coords(),
-            trigger: "HistoryManager",
-            event: "ReplaceState",
+            trigger: "HistoryManager"
         }
-    }: IState) {
-        this.state = { index, url: url.clean(), transition, data };
+    }) {
+        this.state = state;
     }
 
 	/**
@@ -694,6 +692,16 @@ export class State {
     }
 
 	/**
+	 * Get state URL as a string
+	 *
+	 * @returns string
+	 * @memberof State
+	 */
+    public getCleanURL(): string {
+        return this.state.url.clean();
+    }
+
+	/**
 	 * Get state transition
 	 *
 	 * @returns string
@@ -716,11 +724,14 @@ export class State {
 	/**
 	 * Returns the State as an Object
 	 *
-	 * @returns IState
+	 * @returns object
 	 * @memberof State
 	 */
-    public toJSON(): IState {
-        return this.state;
+    public toJSON(): object {
+        const { url, index, transition, data } = this.state;
+        return {
+            url: url.clean(), index, transition, data
+        };
     }
 }
 
@@ -764,7 +775,7 @@ export class HistoryManager extends Storage<State> {
 	 * @returns HistoryManager
 	 * @memberof HistoryManager
 	 */
-    public addItem(value: IState | State): HistoryManager {
+    public addState(value: IState | State): HistoryManager {
         let state = value instanceof State ? value : new State(value);
         this.add(state);
         return this;
@@ -1234,13 +1245,13 @@ export class EventEmitter extends Manager<string, Event> {
 	 * Call all listeners within an event
 	 *
 	 * @param {(string | Array<any>)} events
-	 * @param {Array<any>} [args=[]]
+     * @param {...any} args
 	 * @returns EventEmitter
 	 * @memberof EventEmitter
 	 */
     public emit(
         events: string | Array<any>,
-        args: Array<any> = []
+        ...args: any
     ): EventEmitter {
         // If there is no event break
         if (typeof events == "undefined") return this;
@@ -1564,6 +1575,13 @@ export class Transition  extends ManagerItem {
 	 */
     protected trigger: Trigger;
 
+    /**
+     * Creates an instance of Transition.
+     *
+     * @memberof Transition
+     */
+    constructor() { super(); }
+
 	/**
 	 * Initialize the transition
 	 *
@@ -1631,8 +1649,8 @@ export class Transition  extends ManagerItem {
 	 * @param {ITransitionData} { from, to, trigger, done }
 	 * @memberof Transition
 	 */
-    public out({ from, to, trigger, done }: ITransitionData) {
-        return done();
+    public async out({ from, to, trigger, done }: ITransitionData): Promise<void> {
+        done();
     }
 
 	/**
@@ -1641,8 +1659,58 @@ export class Transition  extends ManagerItem {
 	 * @param {ITransitionData} { from, trigger, done }
 	 * @memberof Transition
 	 */
-    public in({ from, trigger, done }: ITransitionData) {
-        return done();
+    public async in({ from, trigger, done }: ITransitionData): Promise<void> {
+        done();
+    }
+
+    /**
+     * Starts the transition
+     *
+     * @returns Promise<void>
+     * @memberof Transition
+     */
+    public async boot(): Promise<void> {
+        return new Promise(resolve => {
+            let inMethod = this.in({
+                from: this.oldPage,
+                to: this.newPage,
+                trigger: this.trigger,
+                done: resolve
+            });
+
+            if (inMethod instanceof Promise) inMethod.then(resolve);
+        }).then(() => {
+            return new Promise(resolve => {
+                let outMethod = this.out({
+                    from: this.newPage,
+                    trigger: this.trigger,
+                    done: resolve
+                });
+
+                if (outMethod instanceof Promise) outMethod.then(resolve);
+            });
+        });
+    }
+
+    /**
+     * A small test of Transition booting
+     *
+     * @returns Promise<void>
+     * @memberof Transition
+     */
+    public async bootModern(): Promise<void> {
+        await this.in({
+            from: this.oldPage,
+            to: this.newPage,
+            trigger: this.trigger,
+            done: Promise.resolve
+        });
+
+        await this.out({
+            from: this.newPage,
+            trigger: this.trigger,
+            done: Promise.resolve
+        });
     }
 }
 
@@ -1673,6 +1741,23 @@ export class TransitionManager extends Manager<string, Transition> {
         let name = value.getName();
         this.set(name, value);
         return this;
+    }
+
+    /**
+     * Runs a transition
+     *
+     * @param {{ name: string, oldPage: Page, newPage: Page, trigger: Trigger }} { name, oldPage, newPage, trigger }
+     * @returns Promise<void>
+     * @memberof TransitionManager
+     */
+    public async boot({ name, oldPage, newPage, trigger }: { name: string, oldPage: Page, newPage: Page, trigger: Trigger }): Promise<void> {
+        let transition: any = this.get(name);
+        let newTransition: Transition = new transition({
+            oldPage,
+            newPage,
+            trigger
+        });
+        await newTransition.boot();
     }
 }
 
@@ -1945,7 +2030,7 @@ export class App {
      * @memberof App
      */
     public addState(state: IState | State): App {
-        this.history.addItem(state);
+        this.history.addState(state);
         return this;
     }
 
