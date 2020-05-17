@@ -19,12 +19,12 @@
             <small>v4</small>
         </a>
         <ul class="navbar-nav mr-auto">
-            <li class="nav-item"><a href="./index.html" class="nav-link active" data-transition="fade">Homepage</a></li>
-            <li class="nav-item"><a href="./about.html" class="nav-link" data-transition="slide">About</a></li>
-			<li class="nav-item"><a href="./other.html" class="nav-link active" data-transition="slide">Other</a></li>
+            <li class="nav-item"><a href="./index.html" class="nav-link active" data-transition="default">Homepage</a></li>
+            <li class="nav-item"><a href="./about.html" class="nav-link" data-transition="default">About</a></li>
+			<li class="nav-item"><a href="./other.html" class="nav-link" data-transition="default">Other</a></li>
         </ul>
     </nav>
-    <main id="home-page"  role="main" id="sb-wrapper">
+    <main data-wrapper id="home-page" role="main" id="sb-wrapper">
         <div id="page-home-page"
             class="page-content page-content-ajax"
             data-node-name="home-page"
@@ -93,9 +93,9 @@
                             data-node-type="InViewBlock"
                             class="card my-3 border-light rounded box-shadow page-block">
                             <img id="first-image"
-                                width="700"
+                                width="747"
                                 class="card-img-top img-fluid"
-                                src="/img/test1.jpg"
+                                src="https://images.unsplash.com/photo-1589646609975-cb53c8e5b37a?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=747&q=80"
                                 alt="Normal img">
                             <div class="card-body">
                                 <p class="card-text">Normal image.</p>
@@ -111,9 +111,8 @@
                                 <source data-srcset="/img/test2.webp" type="image/webp" />
                                 <img class="card-img-top img-fluid lazyload"
                                     id="snd-image1"
-                                    width="700"
-                                    src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mPsqAcAAZUBCZuIJhEAAAAASUVORK5CYII="
-                                    data-src="/img/test2.jpg"
+                                    width="747" loading="lazy"
+                                    src="https://images.unsplash.com/photo-1589646609975-cb53c8e5b37a?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=747&q=80"
                                     alt="Lazyloaded img">
                             </picture>
                             <div class="card-body">

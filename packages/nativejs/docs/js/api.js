@@ -255,7 +255,7 @@ export class Storage extends Manager {
      * @returns Storage<V>
      */
     add(value) {
-        let size = this.size() + 1;
+        let size = this.size();
         this.set(size, value);
         return this;
     }
@@ -502,7 +502,7 @@ export class State {
      * @param {IState} {
      *         url = new _URL(),
      *         index = 0,
-     *         transition = "none",
+     *         transition = "default",
      *         data = {
      *             scroll: new StateCoords(),
      *             trigger: "HistoryManager"
@@ -513,7 +513,7 @@ export class State {
     constructor(state = {
         url: new _URL(),
         index: 0,
-        transition: "none",
+        transition: "default",
         data: {
             scroll: new Coords(),
             trigger: "HistoryManager"
@@ -617,8 +617,8 @@ export class HistoryManager extends Storage {
     add(value) {
         let state = value;
         let index = this.size();
-        state.setIndex(index);
         super.add(state);
+        state.setIndex(index);
         return this;
     }
     /**
@@ -1200,12 +1200,14 @@ export class Transition extends ManagerItem {
      * 		newPage,
      * 		trigger
      * 	}
+     * @returns Transition
      * @memberof Transition
      */
     init({ oldPage, newPage, trigger }) {
         this.oldPage = oldPage;
         this.newPage = newPage;
         this.trigger = trigger;
+        return this;
     }
     /**
      * Returns the Transition's name
@@ -1250,7 +1252,7 @@ export class Transition extends ManagerItem {
      * @param {ITransitionData} { from, to, trigger, done }
      * @memberof Transition
      */
-    async out({ from, to, trigger, done }) {
+    out({ from, to, trigger, done }) {
         done();
     }
     /**
@@ -1259,16 +1261,17 @@ export class Transition extends ManagerItem {
      * @param {ITransitionData} { from, trigger, done }
      * @memberof Transition
      */
-    async in({ from, trigger, done }) {
+    in({ from, trigger, done }) {
         done();
     }
     /**
      * Starts the transition
      *
-     * @returns Promise<void>
+     * @returns Promise<any>
      * @memberof Transition
      */
     async boot() {
+        document.title = this.newPage.getTitle();
         return new Promise(resolve => {
             let inMethod = this.in({
                 from: this.oldPage,
@@ -1279,6 +1282,10 @@ export class Transition extends ManagerItem {
             if (inMethod instanceof Promise)
                 inMethod.then(resolve);
         }).then(() => {
+            let fromWrapper = this.oldPage.getWrapper();
+            let toWrapper = this.newPage.getWrapper();
+            fromWrapper.insertAdjacentElement('beforebegin', toWrapper);
+            fromWrapper.remove();
             return new Promise(resolve => {
                 let outMethod = this.out({
                     from: this.newPage,
@@ -1288,25 +1295,6 @@ export class Transition extends ManagerItem {
                 if (outMethod instanceof Promise)
                     outMethod.then(resolve);
             });
-        });
-    }
-    /**
-     * A small test of Transition booting
-     *
-     * @returns Promise<void>
-     * @memberof Transition
-     */
-    async bootModern() {
-        await this.in({
-            from: this.oldPage,
-            to: this.newPage,
-            trigger: this.trigger,
-            done: Promise.resolve
-        });
-        await this.out({
-            from: this.newPage,
-            trigger: this.trigger,
-            done: Promise.resolve
         });
     }
 }
@@ -1346,12 +1334,12 @@ export class TransitionManager extends Manager {
      */
     async boot({ name, oldPage, newPage, trigger }) {
         let transition = this.get(name);
-        let newTransition = new transition({
+        transition.init({
             oldPage,
             newPage,
             trigger
         });
-        await newTransition.boot();
+        await transition.boot();
     }
 }
 /**

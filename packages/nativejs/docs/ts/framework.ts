@@ -1,16 +1,22 @@
-import { App, Service, LinkEvent, _URL, Page, Trigger, IState, Coords, StateEvent, State } from "./api.js";
+import { App, Service, LinkEvent, _URL, Page, Trigger, IState, Coords, StateEvent, State, Transition, ITransitionData } from "./api.js";
 const app = new App();
 
 export type IgnoreURLsList = Array<RegExp | string>;
-export
 
 // Based on Barba JS and StartingBlocks
-class PJAX extends Service {
+export class PJAX extends Service {
     private ignoreURLs: IgnoreURLsList = [];
     private prefetchIgnore: boolean = false;
-    private transitions = {
-        isRunning: false
-    };
+    private isTransitioning: boolean = false;
+    private stopOnTransitioning: boolean = false;
+
+    private transitionStart() {
+        this.isTransitioning = true;
+    }
+
+    private transitionStop() {
+        this.isTransitioning = false;
+    }
 
     public boot() {
         let current = new State();
@@ -84,31 +90,49 @@ class PJAX extends Service {
         // If Url is ignored or already in cache, don't do any think
         if (this.ignoredURL(url) || this.PageManager.has(url.clean())) return;
 
+        this.EventEmitter.emit("Anchor:Hover Hover", event);
         try {
             let page = await this.PageManager.load(url);
-            console.log(page.getURL().clean());
+            console.log("Prefetch: ", page.getURL().clean());
         } catch (err) {
             console.warn(err);
         }
     }
 
-    public async load(href: string, trigger: Trigger, transition: string): Promise<any> {
-        let oldPage = this.PageManager.last();
+    public async load(oldHref: string, href: string, trigger: Trigger, transition: string = "default"): Promise<any> {
+        let oldPage = this.PageManager.get(oldHref);
         this.EventEmitter.emit("Page:Loading");
+        let newPage: Page;
 
         try {
-            let newPage = await this.PageManager.load(href);
-            if (!this.TransitionManager.has(transition)) throw `Transition with name '${transition}' doesn't exist.`;
+            newPage = await this.PageManager.load(href);
+            this.transitionStart();
             this.EventEmitter.emit("Page:Loaded");
-            this.transitions.isRunning = true;
+        } catch (err) {
+            this.EventEmitter.emit("Page:Loading--Failed");
+            console.error(err);
+            this.force(href);
+        }
+
+        try {
+            if (!this.TransitionManager.has(transition)) throw `PJAX: Transition with name '${transition}' doesn't exist, using 'default'.`;
+        } catch (err) {
+            transition = "default";
+            console.warn(err);
+        }
+
+        try {
+            this.EventEmitter.emit("Transition:Start");
             await this.TransitionManager.boot({
                 name: transition,
                 oldPage,
                 newPage,
                 trigger
             });
-            this.transitions.isRunning = false;
+            this.EventEmitter.emit("Transition:End");
+            this.transitionStop();
         } catch (err) {
+            console.error(err);
             this.force(href);
         }
     }
@@ -131,30 +155,32 @@ class PJAX extends Service {
         }
     }
 
-    public async go(
+    public go(
         href: string,
         trigger: Trigger = 'HistoryManager',
         event?: StateEvent
     ): Promise<void> {
         // If animation running, force reload
-        if (this.transitions.isRunning) {
+        if (this.isTransitioning) {
             this.force(href);
             return;
         }
 
         let url = new _URL(href);
         let current = this.HistoryManager.last();
-        if (current.getURL().compare(url)) return;
+        let currentURL = current.getURL();
+        if (currentURL.compare(url)) return;
 
         let transitionName: string;
         if (event && (event as PopStateEvent).state) {
             this.EventEmitter.emit("Popstate", event);
 
             // If popstate, get back/forward direction.
-            const { state }: { state: IState } = event as PopStateEvent;
-            const { index, transition, data } = state;
-            const currentIndex = current.getIndex();
-            const diff = currentIndex - index;
+            let { state }: { state: IState } = event as PopStateEvent;
+            let { index, transition, data } = state;
+            let currentIndex = current.getIndex();
+            let diff = currentIndex - index;
+
             trigger = this.getDirection(diff);
             transitionName = transition;
 
@@ -165,10 +191,10 @@ class PJAX extends Service {
 
             if (trigger === "back") {
                 this.HistoryManager.remove(currentIndex);
-                this.EventEmitter.emit("Popstate:Back", event);
+                this.EventEmitter.emit(`Popstate:Back`, event);
             } else if (trigger === "forward") {
-                this.HistoryManager.addState({ url, transition, data });
-                this.EventEmitter.emit("Popstate:Forward", event);
+                this.HistoryManager.addState({ url, transition, data })
+                this.EventEmitter.emit(`Popstate:Forward`, event);
             }
         } else {
             // Add new state
@@ -192,33 +218,32 @@ class PJAX extends Service {
             event.preventDefault();
         }
 
-
-        console.log("Click");
-
-        // return await this.load(href, trigger, transitionName);
+        return this.load(currentURL.clean(), href, trigger, transitionName);
     }
 
     public onClick (event: LinkEvent) {
-        event.preventDefault();
         let el = this.getLink(event);
         if (!el) return;
-        if (this.transitions.isRunning) {
+
+        if (this.isTransitioning && this.stopOnTransitioning) {
             event.preventDefault();
             event.stopPropagation();
             return;
         }
 
+        this.EventEmitter.emit("Anchor:Click Click", event);
         this.go(this.getHref(el), el, event);
     }
 
-    public onStateChange (event: PopStateEvent): void {
-        this.go(new _URL().clean(), 'popstate', event);
+    public onStateChange(event: PopStateEvent): void {
+        let { state } = event;
+        this.go(state.url, 'popstate', event);
     }
 
     public initEvents() {
         if (this.prefetchIgnore !== true) {
-          document.addEventListener('mouseover', this.onHover.bind(this));
-          document.addEventListener('touchstart', this.onHover.bind(this));
+            document.addEventListener('mouseover', this.onHover.bind(this));
+            document.addEventListener('touchstart', this.onHover.bind(this));
         }
 
         document.addEventListener('click', this.onClick.bind(this));
@@ -226,7 +251,15 @@ class PJAX extends Service {
     }
 }
 
+export class Default extends Transition {
+    protected name = "default";
+    in({ done }: ITransitionData) {
+        done();
+    }
+}
+
 app.add("service", new PJAX());
+app.add("transition", new Default());
 
 (async () => {
     try {
@@ -235,6 +268,13 @@ app.add("service", new PJAX());
         console.warn("App boot failed", err);
     }
 
+    app.on("Page:Loading", () => {
+        console.log("Page is loading");
+    });
+
+    app.on("Popstate:Back", () => {
+        console.log("Popstate Back");
+    });
     // try {
     //     let page: Page = await app.load("page", "./other.html");
     //     console.log(page.getURL().clean());
