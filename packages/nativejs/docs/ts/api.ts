@@ -529,11 +529,31 @@ export class _URL extends URL {
 	 * @memberof _URL
 	 */
     constructor(url: any = window.location.href) {
-        super(url instanceof URL ? url.href : url, window.location.href);
+        super(url instanceof URL ? url.href : url, window.location.origin);
     }
 
-	/**
-	 * Removes the hash from the URL for a clean URL string
+    /**
+     * Returns the pathname with the hash
+     *
+     * @returns {string}
+     * @memberof _URL
+     */
+    public getFullPath(): string {
+        return `${this.pathname}${this.hash}`;
+    }
+
+    /**
+     * Returns the actual hash without the hashtag
+     *
+     * @returns {string}
+     * @memberof _URL
+     */
+    public getHash(): string {
+        return this.hash.slice(1);
+    }
+
+    /**
+	 * Removes the hash from the full URL for a clean URL string
 	 *
 	 * @returns string
 	 * @memberof _URL
@@ -543,18 +563,28 @@ export class _URL extends URL {
     }
 
 	/**
-	 * Compares this clean **_URL** to another clean **_URL**
+	 * Returns the pathname of a URL
+	 *
+	 * @returns string
+	 * @memberof _URL
+	 */
+    public getPathname(): string {
+        return this.pathname;
+    }
+
+	/**
+	 * Compares this **_URL** to another **_URL**
 	 *
 	 * @param {_URL} url
 	 * @returns boolean
 	 * @memberof _URL
 	 */
-    public compare(url: _URL): boolean {
+    public equalTo(url: _URL): boolean {
         return this.clean() == url.clean();
     }
 
 	/**
-	 * Compares two clean URLs to each other
+	 * Compares the pathnames of two URLs to each other
 	 *
 	 * @static
 	 * @param {_URL} a
@@ -562,8 +592,10 @@ export class _URL extends URL {
 	 * @returns boolean
 	 * @memberof _URL
 	 */
-    static compare(a: _URL, b: _URL): boolean {
-        return a.compare(b);
+    static equal(a: _URL | string, b: _URL | string): boolean {
+        let urlA = a instanceof _URL ? a : new _URL(a);
+        let urlB = b instanceof _URL ? b : new _URL(b);
+        return urlA.equalTo(urlB);
     }
 }
 
@@ -571,7 +603,7 @@ export class _URL extends URL {
  * This is the default starting URL, to avoid needless instances of the same class that produce the same value, I defined the default value
  */
 export const newURL = new _URL();
-export const URLString = newURL.clean();
+export const URLString = newURL.getPathname();
 
 export type LinkEvent = MouseEvent | TouchEvent;
 export type StateEvent = LinkEvent | PopStateEvent;
@@ -697,8 +729,8 @@ export class State {
 	 * @returns string
 	 * @memberof State
 	 */
-    public getCleanURL(): string {
-        return this.state.url.clean();
+    public getURLPathname(): string {
+        return this.state.url.getPathname();
     }
 
 	/**
@@ -730,7 +762,7 @@ export class State {
     public toJSON(): object {
         const { url, index, transition, data } = this.state;
         return {
-            url: url.clean(), index, transition, data
+            url: url.toString(), index, transition, data
         };
     }
 }
@@ -1347,7 +1379,7 @@ export class Page extends ManagerItem {
     constructor(url: _URL = new _URL(), dom: string | Document = document) {
         super();
         this.url = url;
-        if (typeof dom == "string") {
+        if (typeof dom === "string") {
             this.dom = PARSER.parseFromString(dom, "text/html");
         } else this.dom = dom || document;
 
@@ -1446,6 +1478,15 @@ export class Page extends ManagerItem {
  * @extends {AdvancedManager<string, Page>}
  */
 export class PageManager extends AdvancedManager<string, Page> {
+    /**
+     * Stores all URL's that are currently loading
+     *
+     * @protected
+     * @type {Manager<string, Promise<string>>}
+     * @memberof PageManager
+     */
+    protected loading: Manager<string, Promise<string>> = new Manager();
+
 	/**
 	 * Creates an instance of the PageManager
 	 *
@@ -1455,6 +1496,45 @@ export class PageManager extends AdvancedManager<string, Page> {
     constructor(app: App) {
         super(app);
         this.set(URLString, new Page());
+    }
+
+    /**
+     * Returns the loading Manager
+     *
+     * @returns {Manager<string, Promise<string>>}
+     * @memberof PageManager
+     */
+    public getLoading(): Manager<string, Promise<string>> {
+        return this.loading;
+    }
+
+    /**
+     * Load from cache or by requesting URL via a fetch request, avoid reqesting for the same thing twice by storing the fetch request in "this.loading"
+     *
+     * @param {(_URL | string)} [_url=new _URL()]
+     * @returns Promise<Page>
+     * @memberof PageManager
+     */
+    public async load(_url: _URL | string = new _URL()): Promise<Page> {
+        let url: _URL = _url instanceof URL ? _url : new _URL(_url);
+        let urlString: string = url.getPathname();
+        let page: Page, request: Promise<string>;
+        if (this.has(urlString)) {
+            page = this.get(urlString);
+            return Promise.resolve(page);
+        }
+
+        if (this.loading.has(urlString)) {
+            request = this.request(urlString);
+            this.loading.set(urlString, request);
+        } else request = this.loading.get(urlString);
+
+        let response = await request;
+        this.loading.remove(urlString);
+
+        page = new Page(url, response);
+        this.set(urlString, page);
+        return page;
     }
 
     /**
@@ -1491,28 +1571,6 @@ export class PageManager extends AdvancedManager<string, Page> {
             window.clearTimeout(timeout);
             throw err;
         }
-    }
-
-    /**
-     * Load from cache or by requesting URL via a fetch request
-     *
-     * @param {(_URL | string)} [_url=new _URL()]
-     * @returns Promise<Page>
-     * @memberof PageManager
-     */
-    public async load(_url: _URL | string = new _URL()): Promise<Page> {
-        let url: _URL = _url instanceof URL ? _url : new _URL(_url);
-        let urlString: string = url.clean();
-        let page: Page;
-        if (this.has(urlString)) {
-            page = this.get(urlString);
-            return Promise.resolve(page);
-        }
-
-        let response = await this.request(urlString);
-        page = new Page(url, response);
-        this.set(urlString, page);
-        return page;
     }
 }
 
@@ -2077,7 +2135,7 @@ export class App {
      */
     public currentPage(): Page {
         let currentState = this.history.last();
-        return this.pages.get(currentState.getCleanURL());
+        return this.pages.get(currentState.getURLPathname());
     }
 
     /**

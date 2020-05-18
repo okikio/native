@@ -431,10 +431,28 @@ export class _URL extends URL {
      * @memberof _URL
      */
     constructor(url = window.location.href) {
-        super(url instanceof URL ? url.href : url, window.location.href);
+        super(url instanceof URL ? url.href : url, window.location.origin);
     }
     /**
-     * Removes the hash from the URL for a clean URL string
+     * Returns the pathname with the hash
+     *
+     * @returns {string}
+     * @memberof _URL
+     */
+    getFullPath() {
+        return `${this.pathname}${this.hash}`;
+    }
+    /**
+     * Returns the actual hash without the hashtag
+     *
+     * @returns {string}
+     * @memberof _URL
+     */
+    getHash() {
+        return this.hash.slice(1);
+    }
+    /**
+     * Removes the hash from the full URL for a clean URL string
      *
      * @returns string
      * @memberof _URL
@@ -443,17 +461,26 @@ export class _URL extends URL {
         return this.toString().replace(/(\/#.*|\/|#.*)$/, '');
     }
     /**
-     * Compares this clean **_URL** to another clean **_URL**
+     * Returns the pathname of a URL
+     *
+     * @returns string
+     * @memberof _URL
+     */
+    getPathname() {
+        return this.pathname;
+    }
+    /**
+     * Compares this **_URL** to another **_URL**
      *
      * @param {_URL} url
      * @returns boolean
      * @memberof _URL
      */
-    compare(url) {
+    equalTo(url) {
         return this.clean() == url.clean();
     }
     /**
-     * Compares two clean URLs to each other
+     * Compares the pathnames of two URLs to each other
      *
      * @static
      * @param {_URL} a
@@ -461,15 +488,17 @@ export class _URL extends URL {
      * @returns boolean
      * @memberof _URL
      */
-    static compare(a, b) {
-        return a.compare(b);
+    static equal(a, b) {
+        let urlA = a instanceof _URL ? a : new _URL(a);
+        let urlB = b instanceof _URL ? b : new _URL(b);
+        return urlA.equalTo(urlB);
     }
 }
 /**
  * This is the default starting URL, to avoid needless instances of the same class that produce the same value, I defined the default value
  */
 export const newURL = new _URL();
-export const URLString = newURL.clean();
+export const URLString = newURL.getPathname();
 /**
  * A quick snapshot of page coordinates, e.g. scroll positions
  *
@@ -556,8 +585,8 @@ export class State {
      * @returns string
      * @memberof State
      */
-    getCleanURL() {
-        return this.state.url.clean();
+    getURLPathname() {
+        return this.state.url.getPathname();
     }
     /**
      * Get state transition
@@ -586,7 +615,7 @@ export class State {
     toJSON() {
         const { url, index, transition, data } = this.state;
         return {
-            url: url.clean(), index, transition, data
+            url: url.toString(), index, transition, data
         };
     }
 }
@@ -1014,7 +1043,7 @@ export class Page extends ManagerItem {
     constructor(url = new _URL(), dom = document) {
         super();
         this.url = url;
-        if (typeof dom == "string") {
+        if (typeof dom === "string") {
             this.dom = PARSER.parseFromString(dom, "text/html");
         }
         else
@@ -1113,7 +1142,51 @@ export class PageManager extends AdvancedManager {
      */
     constructor(app) {
         super(app);
+        /**
+         * Stores all URL's that are currently loading
+         *
+         * @protected
+         * @type {Manager<string, Promise<string>>}
+         * @memberof PageManager
+         */
+        this.loading = new Manager();
         this.set(URLString, new Page());
+    }
+    /**
+     * Returns the loading Manager
+     *
+     * @returns {Manager<string, Promise<string>>}
+     * @memberof PageManager
+     */
+    getLoading() {
+        return this.loading;
+    }
+    /**
+     * Load from cache or by requesting URL via a fetch request, avoid reqesting for the same thing twice by storing the fetch request in "this.loading"
+     *
+     * @param {(_URL | string)} [_url=new _URL()]
+     * @returns Promise<Page>
+     * @memberof PageManager
+     */
+    async load(_url = new _URL()) {
+        let url = _url instanceof URL ? _url : new _URL(_url);
+        let urlString = url.getPathname();
+        let page, request;
+        if (this.has(urlString)) {
+            page = this.get(urlString);
+            return Promise.resolve(page);
+        }
+        if (this.loading.has(urlString)) {
+            request = this.request(urlString);
+            this.loading.set(urlString, request);
+        }
+        else
+            request = this.loading.get(urlString);
+        let response = await request;
+        this.loading.remove(urlString);
+        page = new Page(url, response);
+        this.set(urlString, page);
+        return page;
     }
     /**
      * Starts a fetch request
@@ -1147,26 +1220,6 @@ export class PageManager extends AdvancedManager {
             window.clearTimeout(timeout);
             throw err;
         }
-    }
-    /**
-     * Load from cache or by requesting URL via a fetch request
-     *
-     * @param {(_URL | string)} [_url=new _URL()]
-     * @returns Promise<Page>
-     * @memberof PageManager
-     */
-    async load(_url = new _URL()) {
-        let url = _url instanceof URL ? _url : new _URL(_url);
-        let urlString = url.clean();
-        let page;
-        if (this.has(urlString)) {
-            page = this.get(urlString);
-            return Promise.resolve(page);
-        }
-        let response = await this.request(urlString);
-        page = new Page(url, response);
-        this.set(urlString, page);
-        return page;
     }
 }
 /**
@@ -1596,7 +1649,7 @@ export class App {
      */
     currentPage() {
         let currentState = this.history.last();
-        return this.pages.get(currentState.getCleanURL());
+        return this.pages.get(currentState.getURLPathname());
     }
     /**
      * A shortcut to the App EventEmiiter on method
