@@ -84,7 +84,7 @@ export class PJAX extends Service {
     public boot() {
         let current = new State();
         this.HistoryManager.add(current);
-        window.history && window.history.replaceState(current.toJSON(), '', current.getURL().getPathname());
+        this.changeState("replace", current);
     }
 
     /**
@@ -94,9 +94,9 @@ export class PJAX extends Service {
      * @returns {(string | null)}
      * @memberof PJAX
      */
-    public getTransitionName (el: HTMLAnchorElement): string | null {
+    public getTransitionName(el: HTMLAnchorElement): string | null {
         if (!el) return null;
-        let transitionAttr = el.getAttribute( this.getConfig("transitionAttr", false) );
+        let transitionAttr = el.getAttribute(this.getConfig("transitionAttr", false));
         if (typeof transitionAttr === 'string')
             return transitionAttr;
         return null;
@@ -111,7 +111,7 @@ export class PJAX extends Service {
      *
      * @memberof PJAX
      */
-    public validLink (el: HTMLAnchorElement, event: LinkEvent | KeyboardEvent, href: string): boolean {
+    public validLink(el: HTMLAnchorElement, event: LinkEvent | KeyboardEvent, href: string): boolean {
         let location = new _URL();
         let eventMutate =
             (event as KeyboardEvent).which > 1 ||
@@ -126,7 +126,7 @@ export class PJAX extends Service {
         let download = typeof el.getAttribute('download') === 'string';
         let preventSelf = el.hasAttribute(this.getConfig("preventSelfAttr", false));
         let preventAll = Boolean(
-            el.closest( this.getConfig("preventAllAttr") )
+            el.closest(this.getConfig("preventAllAttr"))
         );
         let prevent = preventSelf && preventAll;
         let sameURL = _URL.equal(location, href);
@@ -153,7 +153,7 @@ export class PJAX extends Service {
      *
      * @memberof PJAX
      */
-    public getLink (event: LinkEvent): HTMLAnchorElement {
+    public getLink(event: LinkEvent): HTMLAnchorElement {
         let el = event.target as HTMLAnchorElement;
         let href: string = this.getHref(el);
 
@@ -188,7 +188,7 @@ export class PJAX extends Service {
      * @returns
      * @memberof PJAX
      */
-    public onClick (event: LinkEvent) {
+    public onClick(event: LinkEvent) {
         let el = this.getLink(event);
         if (!el) return;
 
@@ -199,10 +199,8 @@ export class PJAX extends Service {
         }
 
         let href = this.getHref(el);
-        let url = new _URL(href);
-        let hash = url.getHash();
         this.EventEmitter.emit("Anchor:Click Click", event);
-        this.go({ href, trigger: el, event, hash });
+        this.go({ href, trigger: el, event });
     }
 
     /**
@@ -246,27 +244,18 @@ export class PJAX extends Service {
      * @param {string} href
      * @param {Trigger} [trigger='HistoryManager']
      * @param {AnchorEvent} [event]
-     *
      * @memberof PJAX
      */
-    public go({
-        href, hash,
-        trigger = 'HistoryManager',
-        event }: { hash?: string, href: string; trigger?: Trigger; event?: AnchorEvent; }): Promise<void> {
-        let url = new _URL(href);
-        if (typeof hash == "string" && hash !== "") {
-            this.EventEmitter.emit("Page:PageWithHash PageWithHash", event);
-            this.hashAction({ url, href, hash });
-        }
-
+    public go({ href, trigger = 'HistoryManager', event }: { href: string; trigger?: Trigger; event?: AnchorEvent; }): Promise<void> {
         // If transition running, force reload
         if (this.isTransitioning) {
             this.force(href);
             return;
         }
 
+        let url = new _URL(href);
         let currentState = this.HistoryManager.last();
-        let currentURL = currentState.getURL();
+        let currentURL = trigger === "popstate" ? currentState.getURL() : new _URL();
         if (currentURL.equalTo(url)) return;
 
         let transitionName: string;
@@ -316,7 +305,7 @@ export class PJAX extends Service {
             } else window.scrollTo(0, 0);
 
             this.HistoryManager.add(state);
-            window.history && window.history.pushState(state.toJSON(), '', url.getPathname());
+            this.changeState("push", state);
             this.EventEmitter.emit("History:NewState", event);
         }
 
@@ -326,6 +315,28 @@ export class PJAX extends Service {
         }
 
         return this.load(currentURL.getPathname(), href, trigger, transitionName);
+    }
+
+    /**
+     * Either push or replace history state
+     *
+     * @param {("push" | "replace")} action
+     * @param {IState} state
+     * @param {_URL} url
+     * @memberof PJAX
+     */
+    public changeState(action: "push" | "replace", state: State) {
+        let url = state.getURL();
+        let href = url.getFullPath();
+        let json = state.toJSON();
+        switch (action) {
+            case 'push':
+                window.history && window.history.pushState(state, '', href);
+                break;
+            case 'replace':
+                window.history && window.history.replaceState(state, '', href);
+                break;
+        }
     }
 
     /**
@@ -354,6 +365,7 @@ export class PJAX extends Service {
             this.force(href);
         }
 
+        this.EventEmitter.emit("Transition:Before", oldPage, newPage, trigger, transitionName);
         try {
             if (!this.TransitionManager.has(transitionName)) throw `PJAX: Transition with name '${transitionName}' doesn't exist, using 'default'.`;
         } catch (err) {
@@ -376,6 +388,14 @@ export class PJAX extends Service {
             console.error(err);
             this.force(href);
         }
+
+        this.EventEmitter.emit("Transition:After", oldPage, newPage, trigger, transitionName);
+        let url = new _URL(href);
+        let hash = url.getHash();
+        if (typeof hash == "string" && hash !== "") {
+            this.EventEmitter.emit("Page:PageWithHash PageWithHash", event);
+            this.hashAction({ url, href, hash });
+        }
     }
 
     /**
@@ -385,7 +405,7 @@ export class PJAX extends Service {
      *
      * @memberof PJAX
      */
-    public ignoredURL ({ pathname }: _URL): boolean {
+    public ignoredURL({ pathname }: _URL): boolean {
         return this.ignoreURLs.length && this.ignoreURLs.some(url => {
             return typeof url === "string" ? url === pathname : (url as RegExp).exec(pathname) !== null;
         });
@@ -397,7 +417,7 @@ export class PJAX extends Service {
      * @param {LinkEvent} event
      * @memberof PJAX
      */
-    public onHover (event: LinkEvent): Promise<void> {
+    public onHover(event: LinkEvent): Promise<void> {
         let el = this.getLink(event);
         if (!el) return;
 
@@ -428,9 +448,8 @@ export class PJAX extends Service {
      */
     public onStateChange(event: PopStateEvent): void {
         let url = new _URL();
-        let hash = url.getHash();
         let { href } = url;
-        this.go({ href, trigger: 'popstate', event, hash });
+        this.go({ href, trigger: 'popstate', event });
     }
 
     /**
