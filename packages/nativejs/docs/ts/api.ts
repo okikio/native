@@ -760,9 +760,9 @@ export class State {
 	 * @memberof State
 	 */
     public toJSON(): object {
-        const { url, index, transition, data } = this.state;
+        const { url, index, transition, data }: IState = this.state;
         return {
-            url: url.toString(), index, transition, data
+            url: url.getFullPath(), index, transition, data
         };
     }
 }
@@ -1524,8 +1524,10 @@ export class PageManager extends AdvancedManager<string, Page> {
             return Promise.resolve(page);
         }
 
-        if (this.loading.has(urlString)) {
-            request = this.request(urlString);
+        if (!this.loading.has(urlString)) {
+            request = new Promise(resolve => {
+                this.request(urlString).then(resolve);
+            });
             this.loading.set(urlString, request);
         } else request = this.loading.get(urlString);
 

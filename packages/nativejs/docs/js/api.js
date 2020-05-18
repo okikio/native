@@ -615,7 +615,7 @@ export class State {
     toJSON() {
         const { url, index, transition, data } = this.state;
         return {
-            url: url.toString(), index, transition, data
+            url: url.getFullPath(), index, transition, data
         };
     }
 }
@@ -1176,8 +1176,10 @@ export class PageManager extends AdvancedManager {
             page = this.get(urlString);
             return Promise.resolve(page);
         }
-        if (this.loading.has(urlString)) {
-            request = this.request(urlString);
+        if (!this.loading.has(urlString)) {
+            request = new Promise(resolve => {
+                this.request(urlString).then(resolve);
+            });
             this.loading.set(urlString, request);
         }
         else
