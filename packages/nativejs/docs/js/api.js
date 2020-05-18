@@ -1339,7 +1339,7 @@ export class TransitionManager extends Manager {
             newPage,
             trigger
         });
-        await transition.boot();
+        return await transition.boot();
     }
 }
 /**
@@ -1595,7 +1595,8 @@ export class App {
      * @memberof App
      */
     currentPage() {
-        return this.pages.last();
+        let currentState = this.history.last();
+        return this.pages.get(currentState.getCleanURL());
     }
     /**
      * A shortcut to the App EventEmiiter on method

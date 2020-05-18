@@ -1671,7 +1671,7 @@ export class Transition  extends ManagerItem {
      * @returns Promise<any>
      * @memberof Transition
      */
-    public async boot(): Promise<any> {
+    public async boot(): Promise<Transition> {
         document.title = this.newPage.getTitle();
         return new Promise(resolve => {
             let inMethod: Promise<any> = this.in({
@@ -1737,14 +1737,14 @@ export class TransitionManager extends Manager<string, Transition> {
      * @returns Promise<void>
      * @memberof TransitionManager
      */
-    public async boot({ name, oldPage, newPage, trigger }: { name: string, oldPage: Page, newPage: Page, trigger: Trigger }): Promise<void> {
+    public async boot({ name, oldPage, newPage, trigger }: { name: string, oldPage: Page, newPage: Page, trigger: Trigger }): Promise<Transition> {
         let transition: Transition = this.get(name);
         transition.init({
             oldPage,
             newPage,
             trigger
         });
-        await transition.boot();
+        return await transition.boot();
     }
 }
 
@@ -2076,7 +2076,8 @@ export class App {
      * @memberof App
      */
     public currentPage(): Page {
-        return this.pages.last();
+        let currentState = this.history.last();
+        return this.pages.get(currentState.getCleanURL());
     }
 
     /**
