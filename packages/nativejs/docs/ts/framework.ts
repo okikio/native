@@ -173,9 +173,13 @@ export class PJAX extends Service {
      * @param {{ url: _URL, href: string, hash: string }} { hash }
      * @memberof PJAX
      */
-    public hashAction({ hash }: { url: _URL, href: string, hash: string }) {
-        let { top, left } = document.getElementById(hash).getBoundingClientRect();
-        window.scrollTo(left, top);
+    public hashAction({ }: { url: _URL, href: string, hash: string }) {
+        const oldHash = window.location.hash;
+
+        if (oldHash) {
+        window.location.hash = '';
+        window.location.hash = oldHash;
+        }
     }
 
     /**
@@ -329,13 +333,16 @@ export class PJAX extends Service {
         let url = state.getURL();
         let href = url.getFullPath();
         let json = state.toJSON();
-        switch (action) {
-            case 'push':
-                window.history && window.history.pushState(state, '', href);
-                break;
-            case 'replace':
-                window.history && window.history.replaceState(state, '', href);
-                break;
+        let args = [json, '', href];
+        if (window.history) {
+            switch (action) {
+                case 'push':
+                    window.history.pushState.apply(window.history, args);
+                    break;
+                case 'replace':
+                    window.history.replaceState.apply(window.history, args);
+                    break;
+            }
         }
     }
 

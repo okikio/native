@@ -77,7 +77,7 @@ export class PJAX extends Service {
     boot() {
         let current = new State();
         this.HistoryManager.add(current);
-        window.history && window.history.replaceState(current.toJSON(), '', current.getURL().getPathname());
+        this.changeState("replace", current);
     }
     /**
      * Gets the transition to use for a certain anchor
@@ -157,9 +157,12 @@ export class PJAX extends Service {
      * @param {{ url: _URL, href: string, hash: string }} { hash }
      * @memberof PJAX
      */
-    hashAction({ hash }) {
-        let { top, left } = document.getElementById(hash).getBoundingClientRect();
-        window.scrollTo(left, top);
+    hashAction({}) {
+        const oldHash = window.location.hash;
+        if (oldHash) {
+            window.location.hash = '';
+            window.location.hash = oldHash;
+        }
     }
     /**
      * When an element is clicked.
@@ -181,10 +184,8 @@ export class PJAX extends Service {
             return;
         }
         let href = this.getHref(el);
-        let url = new _URL(href);
-        let hash = url.getHash();
         this.EventEmitter.emit("Anchor:Click Click", event);
-        this.go({ href, trigger: el, event, hash });
+        this.go({ href, trigger: el, event });
     }
     /**
      * Returns the direction of the State change as a String, either the Back button or the Forward button
@@ -227,22 +228,17 @@ export class PJAX extends Service {
      * @param {string} href
      * @param {Trigger} [trigger='HistoryManager']
      * @param {AnchorEvent} [event]
-     *
      * @memberof PJAX
      */
-    go({ href, hash, trigger = 'HistoryManager', event }) {
-        let url = new _URL(href);
-        if (typeof hash == "string" && hash !== "") {
-            this.EventEmitter.emit("Page:PageWithHash PageWithHash", event);
-            this.hashAction({ url, href, hash });
-        }
+    go({ href, trigger = 'HistoryManager', event }) {
         // If transition running, force reload
         if (this.isTransitioning) {
             this.force(href);
             return;
         }
+        let url = new _URL(href);
         let currentState = this.HistoryManager.last();
-        let currentURL = currentState.getURL();
+        let currentURL = trigger === "popstate" ? currentState.getURL() : new _URL();
         if (currentURL.equalTo(url))
             return;
         let transitionName;
@@ -290,7 +286,7 @@ export class PJAX extends Service {
             else
                 window.scrollTo(0, 0);
             this.HistoryManager.add(state);
-            window.history && window.history.pushState(state.toJSON(), '', url.getPathname());
+            this.changeState("push", state);
             this.EventEmitter.emit("History:NewState", event);
         }
         if (event) {
@@ -298,6 +294,30 @@ export class PJAX extends Service {
             event.preventDefault();
         }
         return this.load(currentURL.getPathname(), href, trigger, transitionName);
+    }
+    /**
+     * Either push or replace history state
+     *
+     * @param {("push" | "replace")} action
+     * @param {IState} state
+     * @param {_URL} url
+     * @memberof PJAX
+     */
+    changeState(action, state) {
+        let url = state.getURL();
+        let href = url.getFullPath();
+        let json = state.toJSON();
+        let args = [json, '', href];
+        if (window.history) {
+            switch (action) {
+                case 'push':
+                    window.history.pushState.apply(window.history, args);
+                    break;
+                case 'replace':
+                    window.history.replaceState.apply(window.history, args);
+                    break;
+            }
+        }
     }
     /**
      * Load the new Page as well as a Transition; run the Transition
@@ -323,6 +343,7 @@ export class PJAX extends Service {
             console.error(err);
             this.force(href);
         }
+        this.EventEmitter.emit("Transition:Before", oldPage, newPage, trigger, transitionName);
         try {
             if (!this.TransitionManager.has(transitionName))
                 throw `PJAX: Transition with name '${transitionName}' doesn't exist, using 'default'.`;
@@ -345,6 +366,13 @@ export class PJAX extends Service {
         catch (err) {
             console.error(err);
             this.force(href);
+        }
+        this.EventEmitter.emit("Transition:After", oldPage, newPage, trigger, transitionName);
+        let url = new _URL(href);
+        let hash = url.getHash();
+        if (typeof hash == "string" && hash !== "") {
+            this.EventEmitter.emit("Page:PageWithHash PageWithHash", event);
+            this.hashAction({ url, href, hash });
         }
     }
     /**
@@ -395,9 +423,8 @@ export class PJAX extends Service {
      */
     onStateChange(event) {
         let url = new _URL();
-        let hash = url.getHash();
         let { href } = url;
-        this.go({ href, trigger: 'popstate', event, hash });
+        this.go({ href, trigger: 'popstate', event });
     }
     /**
      * Bind the event listeners to the PJAX class

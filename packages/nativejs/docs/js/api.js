@@ -436,7 +436,7 @@ export class _URL extends URL {
     /**
      * Returns the pathname with the hash
      *
-     * @returns {string}
+     * @returns string
      * @memberof _URL
      */
     getFullPath() {
@@ -445,7 +445,7 @@ export class _URL extends URL {
     /**
      * Returns the actual hash without the hashtag
      *
-     * @returns {string}
+     * @returns string
      * @memberof _URL
      */
     getHash() {
@@ -1146,7 +1146,7 @@ export class PageManager extends AdvancedManager {
          * Stores all URL's that are currently loading
          *
          * @protected
-         * @type {Manager<string, Promise<string>>}
+         * @type Manager<string, Promise<string>>
          * @memberof PageManager
          */
         this.loading = new Manager();
@@ -1155,7 +1155,7 @@ export class PageManager extends AdvancedManager {
     /**
      * Returns the loading Manager
      *
-     * @returns {Manager<string, Promise<string>>}
+     * @returns Manager<string, Promise<string>>
      * @memberof PageManager
      */
     getLoading() {
