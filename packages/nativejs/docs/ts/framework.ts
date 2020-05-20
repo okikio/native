@@ -170,15 +170,15 @@ export class PJAX extends Service {
     /**
      * What to do if a URL has a hashtag
      *
-     * @param {{ url: _URL, href: string, hash: string }} { hash }
+     * @param {{ url: _URL, href: string, hash: string }} { }
      * @memberof PJAX
      */
     public hashAction({ }: { url: _URL, href: string, hash: string }) {
         const oldHash = window.location.hash;
 
         if (oldHash) {
-        window.location.hash = '';
-        window.location.hash = oldHash;
+            // window.location.hash = '';
+            window.location.hash = oldHash;
         }
     }
 
@@ -279,7 +279,6 @@ export class PJAX extends Service {
             if (trigger !== "popstate") {
                 // Keep scroll position
                 let { x, y } = data.scroll;
-                console.log(x, y);
                 window.scrollTo(x, y);
             }
 
