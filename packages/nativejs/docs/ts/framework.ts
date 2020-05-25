@@ -413,7 +413,7 @@ export class PJAX extends Service {
      * @memberof PJAX
      */
     public hashAction({ }: { href: string, oldHref: string, trigger: Trigger, transitionName: string }) {
-        const { hash } = window.location;
+        let { hash } = window.location;
         let hashID = hash.slice(1);
 
         window.setTimeout(() => {

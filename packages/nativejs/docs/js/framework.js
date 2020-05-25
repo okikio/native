@@ -385,7 +385,7 @@ export class PJAX extends Service {
      * @memberof PJAX
      */
     hashAction({}) {
-        const { hash } = window.location;
+        let { hash } = window.location;
         let hashID = hash.slice(1);
         window.setTimeout(() => {
             if (hashID.length) {
