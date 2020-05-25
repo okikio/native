@@ -387,13 +387,15 @@ export class PJAX extends Service {
     hashAction({}) {
         const { hash } = window.location;
         let hashID = hash.slice(1);
-        if (hashID.length) {
-            let el = document.getElementById(hashID);
-            if (el) {
-                let scroll = el.getBoundingClientRect();
-                window.scrollTo(scroll.left, scroll.top);
+        window.setTimeout(() => {
+            if (hashID.length) {
+                let el = document.getElementById(hashID);
+                if (el) {
+                    let scroll = el.getBoundingClientRect();
+                    window.scrollTo(scroll.left, scroll.top);
+                }
             }
-        }
+        }, 100);
     }
     /**
      * Check to see if the URL is to be ignored, uses either RegExp of Strings to check
