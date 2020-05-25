@@ -415,6 +415,7 @@ export class PJAX extends Service {
     public hashAction({ }: { href: string, oldHref: string, trigger: Trigger, transitionName: string }) {
         let { hash } = window.location;
         let hashID = hash.slice(1);
+        console.log(hashID);
 
         window.setTimeout(() => {
             if (hashID.length) {
