@@ -50,6 +50,22 @@ export class PJAX extends Service {
          * @memberof PJAX
          */
         this.stickyScroll = true;
+        /**
+         * Force load a page if an error occurs
+         *
+         * @private
+         * @type {boolean}
+         * @memberof PJAX
+         */
+        this.forceOnError = false;
+        /**
+         * Dictates whether to auto scroll if an hash is present in the window URL
+         *
+         * @protected
+         * @type {boolean}
+         * @memberof PJAX
+         */
+        this.autoScrollOnHash = true;
     }
     /**
      * Sets the transition state, sets isTransitioning to true
@@ -87,7 +103,7 @@ export class PJAX extends Service {
      * @memberof PJAX
      */
     getTransitionName(el) {
-        if (!el)
+        if (!el && !el.getAttribute)
             return null;
         let transitionAttr = el.getAttribute(this.getConfig("transitionAttr", false));
         if (typeof transitionAttr === 'string')
@@ -104,7 +120,8 @@ export class PJAX extends Service {
      * @memberof PJAX
      */
     validLink(el, event, href) {
-        let location = new _URL();
+        let pushStateSupport = !window.history.pushState;
+        let exists = !el || !href;
         let eventMutate = event.which > 1 ||
             event.metaKey ||
             event.ctrlKey ||
@@ -117,8 +134,8 @@ export class PJAX extends Service {
         let preventSelf = el.hasAttribute(this.getConfig("preventSelfAttr", false));
         let preventAll = Boolean(el.closest(this.getConfig("preventAllAttr")));
         let prevent = preventSelf && preventAll;
-        let sameURL = _URL.equal(location, href);
-        return eventMutate && newTab && crossOrigin && download && prevent && sameURL;
+        let sameURL = _URL.equal(window.location.href, href);
+        return !(exists || pushStateSupport || eventMutate || newTab || crossOrigin || download || prevent || sameURL);
     }
     /**
      * Returns the href or an Anchor element
@@ -147,22 +164,9 @@ export class PJAX extends Service {
             href = this.getHref(el);
         }
         // Check for a valid link
-        if (!el || this.validLink(el, event, href))
+        if (!el || !this.validLink(el, event, href))
             return;
         return el;
-    }
-    /**
-     * What to do if a URL has a hashtag
-     *
-     * @param {{ url: _URL, href: string, hash: string }} { }
-     * @memberof PJAX
-     */
-    hashAction({}) {
-        const oldHash = window.location.hash;
-        if (oldHash) {
-            // window.location.hash = '';
-            window.location.hash = oldHash;
-        }
     }
     /**
      * When an element is clicked.
@@ -184,7 +188,7 @@ export class PJAX extends Service {
             return;
         }
         let href = this.getHref(el);
-        this.EventEmitter.emit("Anchor:Click Click", event);
+        this.EventEmitter.emit("anchor--click click", event);
         this.go({ href, trigger: el, event });
     }
     /**
@@ -231,19 +235,19 @@ export class PJAX extends Service {
      * @memberof PJAX
      */
     go({ href, trigger = 'HistoryManager', event }) {
-        // If transition running, force reload
+        // If transition is already running and the go method is called again, force load page
         if (this.isTransitioning) {
             this.force(href);
             return;
         }
         let url = new _URL(href);
         let currentState = this.HistoryManager.last();
-        let currentURL = trigger === "popstate" ? currentState.getURL() : new _URL();
+        let currentURL = currentState.getURL();
         if (currentURL.equalTo(url))
             return;
         let transitionName;
         if (event && event.state) {
-            this.EventEmitter.emit("Popstate", event);
+            this.EventEmitter.emit("popstate", event);
             // If popstate, get back/forward direction.
             let { state } = event;
             let { index, transition, data } = state;
@@ -260,16 +264,16 @@ export class PJAX extends Service {
             // Based on the direction of the state change either remove or add a state
             if (trigger === "back") {
                 this.HistoryManager.remove(currentIndex);
-                this.EventEmitter.emit(`Popstate:Back`, event);
+                this.EventEmitter.emit(`popstate--back`, event);
             }
             else if (trigger === "forward") {
                 this.HistoryManager.addState({ url, transition, data });
-                this.EventEmitter.emit(`Popstate:Forward`, event);
+                this.EventEmitter.emit(`popstate--forward`, event);
             }
         }
         else {
             // Add new state
-            transitionName = this.getTransitionName(trigger);
+            transitionName = this.getTransitionName(trigger) || "default";
             const scroll = new Coords();
             const index = this.HistoryManager.size();
             const state = new State({
@@ -286,13 +290,13 @@ export class PJAX extends Service {
                 window.scrollTo(0, 0);
             this.HistoryManager.add(state);
             this.changeState("push", state);
-            this.EventEmitter.emit("History:NewState", event);
+            this.EventEmitter.emit("hstory--new-item", event);
         }
         if (event) {
             event.stopPropagation();
             event.preventDefault();
         }
-        return this.load(currentURL.getPathname(), href, trigger, transitionName);
+        return this.load({ oldHref: currentURL.getPathname(), href, trigger, transitionName });
     }
     /**
      * Either push or replace history state
@@ -328,50 +332,67 @@ export class PJAX extends Service {
      *
      * @memberof PJAX
      */
-    async load(oldHref, href, trigger, transitionName = "default") {
-        let oldPage = this.PageManager.get(oldHref);
-        this.EventEmitter.emit("Page:Loading", href, oldPage, trigger);
-        let newPage;
+    async load({ oldHref, href, trigger, transitionName = "default" }) {
         try {
-            newPage = await this.PageManager.load(href);
-            this.transitionStart(); // Sets isTransitioning to true
-            this.EventEmitter.emit("Page:Loaded", newPage, oldPage, trigger);
-        }
-        catch (err) {
-            this.EventEmitter.emit("Page:Loading--Failed", trigger);
-            console.error(err);
-            this.force(href);
-        }
-        this.EventEmitter.emit("Transition:Before", oldPage, newPage, trigger, transitionName);
-        try {
-            if (!this.TransitionManager.has(transitionName))
-                throw `PJAX: Transition with name '${transitionName}' doesn't exist, using 'default'.`;
-        }
-        catch (err) {
-            transitionName = "default";
-            console.warn(err);
-        }
-        try {
-            this.EventEmitter.emit("Transition:Start", transitionName);
-            let transition = await this.TransitionManager.boot({
-                name: transitionName,
-                oldPage,
-                newPage,
-                trigger
-            });
-            this.EventEmitter.emit("Transition:End", transition);
+            let oldPage = this.PageManager.get(oldHref);
+            let newPage;
+            this.EventEmitter.emit("page--loading", { href, oldPage, trigger });
+            try {
+                try {
+                    newPage = await this.PageManager.load(href);
+                    this.transitionStart();
+                    this.EventEmitter.emit("page--loading-complete", { newPage, oldPage, trigger });
+                }
+                catch (err) {
+                    throw `Page loading failed, ${err}`;
+                }
+                // --
+                // --
+                this.EventEmitter.emit("transition--before", { oldPage, newPage, trigger, transitionName });
+                try {
+                    this.EventEmitter.emit("transition--start", transitionName);
+                    let transition = await this.TransitionManager.boot({
+                        name: transitionName,
+                        oldPage,
+                        newPage,
+                        trigger
+                    });
+                    this.EventEmitter.emit("transition--end", { transition });
+                }
+                catch (err) {
+                    throw err;
+                }
+                this.EventEmitter.emit("transition--after", { oldPage, newPage, trigger, transitionName });
+                this.autoScrollOnHash && this.hashAction({ href, oldHref, trigger, transitionName });
+            }
+            catch (err) {
+                this.transitionStop();
+                throw `Transition Error ${err}`;
+            }
             this.transitionStop(); // Sets isTransitioning to false
         }
         catch (err) {
-            console.error(err);
-            this.force(href);
+            if (this.forceOnError)
+                this.force(href);
+            else
+                console.error(err);
         }
-        this.EventEmitter.emit("Transition:After", oldPage, newPage, trigger, transitionName);
-        let url = new _URL(href);
-        let hash = url.getHash();
-        if (typeof hash == "string" && hash !== "") {
-            this.EventEmitter.emit("Page:PageWithHash PageWithHash", event);
-            this.hashAction({ url, href, hash });
+    }
+    /**
+     * Auto scrolls to an elements position if the element has an hash
+     *
+     * @param {{ href: string, oldHref: string, trigger: Trigger, transitionName: string }} { }
+     * @memberof PJAX
+     */
+    hashAction({}) {
+        const { hash } = window.location;
+        let hashID = hash.slice(1);
+        if (hashID.length) {
+            let el = document.getElementById(hashID);
+            if (el) {
+                let scroll = el.getBoundingClientRect();
+                window.scrollTo(scroll.left, scroll.top);
+            }
         }
     }
     /**
@@ -401,7 +422,7 @@ export class PJAX extends Service {
         // If Url is ignored or already in cache, don't do any think
         if (this.ignoredURL(url) || this.PageManager.has(urlString))
             return;
-        this.EventEmitter.emit("Anchor:Hover Hover", event);
+        this.EventEmitter.emit("anchor--hover hover", event);
         (async () => {
             try {
                 await this.PageManager.load(url);
@@ -421,9 +442,7 @@ export class PJAX extends Service {
      * @memberof PJAX
      */
     onStateChange(event) {
-        let url = new _URL();
-        let { href } = url;
-        this.go({ href, trigger: 'popstate', event });
+        this.go({ href: window.location.href, trigger: 'popstate', event });
     }
     /**
      * Bind the event listeners to the PJAX class
@@ -471,6 +490,9 @@ export class Default extends Transition {
     in({ done }) {
         done();
     }
+    out({ done }) {
+        done();
+    }
 }
 app.add("service", new PJAX());
 app.add("transition", new Default());
@@ -481,7 +503,8 @@ app.add("transition", new Default());
     catch (err) {
         console.warn("App boot failed", err);
     }
-    app.on("Page:Loading", (href) => {
+    app
+        .on("page--loading", ({ href }) => {
         let navLink = document.querySelectorAll(".nav-link");
         for (let item of navLink) {
             if (_URL.equal(item.href, href)) {

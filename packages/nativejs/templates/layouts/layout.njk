@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Home page</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0/css/bootstrap.min.css"
+          integrity="sha256-LA89z+k9fjgMKQ/kq4OO2Mrf8VltYml/VES+Rg0fh20="
+          crossorigin="anonymous"/>
+    <link rel="stylesheet" href="./css/demo.css">
+</head>
+<body class="home-page bg-light">
+    
+    {% include "partials/navbar.njk" %}
+    {% block content %} {% endblock %}
+
+    <!-- <script src="../app.js" type="module"></script> -->
+    <script src="./js/framework.js" type="module"></script>
+</body>
+</html>

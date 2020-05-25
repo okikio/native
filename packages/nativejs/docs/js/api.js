@@ -427,7 +427,7 @@ export class _URL extends URL {
     /**
      * Creates an instance of _URL.
      *
-     * @param {(string | _URL | URL | Location)} [url=window.location.href]
+     * @param {(string | _URL | URL | Location)} [url=window.location.pathname]
      * @memberof _URL
      */
     constructor(url = window.location.href) {
@@ -1322,34 +1322,36 @@ export class Transition extends ManagerItem {
     /**
      * Starts the transition
      *
-     * @returns Promise<any>
+     * @returns Promise<Transition>
      * @memberof Transition
      */
     async boot() {
+        let fromWrapper = this.oldPage.getWrapper();
+        let toWrapper = this.newPage.getWrapper();
         document.title = this.newPage.getTitle();
-        return new Promise(resolve => {
-            let inMethod = this.in({
-                from: this.oldPage,
-                to: this.newPage,
-                trigger: this.trigger,
-                done: resolve
-            });
-            if (inMethod instanceof Promise)
-                inMethod.then(resolve);
-        }).then(() => {
-            let fromWrapper = this.oldPage.getWrapper();
-            let toWrapper = this.newPage.getWrapper();
-            fromWrapper.insertAdjacentElement('beforebegin', toWrapper);
-            fromWrapper.remove();
-            return new Promise(resolve => {
+        return new Promise(async (resolve) => {
+            await new Promise(done => {
                 let outMethod = this.out({
-                    from: this.newPage,
+                    from: this.oldPage,
+                    to: this.newPage,
                     trigger: this.trigger,
-                    done: resolve
+                    done
                 });
                 if (outMethod instanceof Promise)
-                    outMethod.then(resolve);
+                    outMethod.then(done);
             });
+            fromWrapper.insertAdjacentElement('beforebegin', toWrapper);
+            await new Promise(done => {
+                let inMethod = this.out({
+                    from: this.newPage,
+                    trigger: this.trigger,
+                    done
+                });
+                if (inMethod instanceof Promise)
+                    inMethod.then(done);
+            });
+            fromWrapper.remove();
+            resolve();
         });
     }
 }
