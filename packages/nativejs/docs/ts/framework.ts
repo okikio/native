@@ -545,6 +545,10 @@ export class Fade extends Transition {
     out({ from }: ITransitionData) {
         let { duration } = this;
         let fromWrapper = from.getWrapper();
+        // window.scroll({
+        //     top: 0,
+        //     behavior: 'smooth'  // 👈 
+        // });
         return new Promise(resolve => {
             let animation = fromWrapper.animate([
                 { opacity: 1 },
@@ -553,17 +557,16 @@ export class Fade extends Transition {
                 duration,
                 easing: "ease"
             });
-            animation.onfinish = resolve;
+            animation.onfinish = () => {
+                window.scrollTo(0, 0);
+                resolve();
+            };
         });
     }
 
     in({ to }: ITransitionData) {
         let { duration } = this;
         let toWrapper = to.getWrapper();
-        // window.scroll({
-        //     top: 0,
-        //     behavior: 'smooth'  // 👈 
-        // });
         return new Promise(resolve => {
             let animation = toWrapper.animate([
                 { opacity: 0 },
