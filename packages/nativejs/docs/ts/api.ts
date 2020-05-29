@@ -1065,6 +1065,8 @@ export class Event extends Storage<Listener> {
     }
 }
 
+export type EventInput = string | object | Array<string>;
+
 /**
  * An event emitter
  *
@@ -1120,14 +1122,15 @@ export class EventEmitter extends Manager<string, Event> {
 	/**
 	 * Adds a listener for a given event
 	 *
-	 * @param {(string | object | Array<any>)} events
+	 * @param {EventInput} events
 	 * @param {ListenerCallback} callback
 	 * @param {object} scope
 	 * @returns
 	 * @memberof EventEmitter
 	 */
+
     public on(
-        events: string | object | Array<any>,
+        events: EventInput,
         callback: ListenerCallback,
         scope: object
     ): EventEmitter {
@@ -1142,9 +1145,9 @@ export class EventEmitter extends Manager<string, Event> {
         let _scope: object;
 
         // Loop through the list of events
-        Object.keys(events).forEach((key) => {
+        Object.keys(events).forEach(key => {
             // Select the name of the event from the list
-            // Remember events can be {String | Object | Array<any>}
+            // Remember events can be {String | Object | Array<string>}
 
             // Check If events is an Object (JSON like Object, and not an Array)
             if (typeof events == "object" && !Array.isArray(events)) {
@@ -1200,14 +1203,14 @@ export class EventEmitter extends Manager<string, Event> {
 	/**
 	 * Removes a listener from a given event, or it just completely removes an event
 	 *
-	 * @param {(string | object | Array<any>)} events
+	 * @param {EventInput} events
 	 * @param {ListenerCallback} callback
 	 * @param {object} scope
 	 * @returns EventEmitter
 	 * @memberof EventEmitter
 	 */
     public off(
-        events: string | object | Array<any>,
+        events: EventInput,
         callback: ListenerCallback,
         scope: object
     ): EventEmitter {
@@ -1247,14 +1250,14 @@ export class EventEmitter extends Manager<string, Event> {
 	/**
 	 * Adds a one time event listener for an event
 	 *
-	 * @param {(string | object | Array<any>)} events
+	 * @param {EventInput} events
 	 * @param {ListenerCallback} callback
 	 * @param {object} scope
 	 * @returns EventEmitter
 	 * @memberof EventEmitter
 	 */
     public once(
-        events: string | object | Array<any>,
+        events: EventInput,
         callback: ListenerCallback,
         scope: object
     ): EventEmitter {
@@ -1328,10 +1331,10 @@ export class Page extends ManagerItem {
 	 * Holds the wrapper element to be swapped out of each Page
 	 *
 	 * @private
-	 * @type Element
+	 * @type HTMLElement
 	 * @memberof Page
 	 */
-    private wrapper: Element;
+    private wrapper: HTMLElement;
 
 	/**
 	 * Holds the title of each page
@@ -1452,10 +1455,10 @@ export class Page extends ManagerItem {
 	/**
 	 * The page's wrapper element
 	 *
-	 * @returns Element
+	 * @returns HTMLElement
 	 * @memberof Page
 	 */
-    public getWrapper(): Element {
+    public getWrapper(): HTMLElement {
         return this.wrapper;
     }
 
@@ -1708,20 +1711,20 @@ export class Transition extends ManagerItem {
 	/**
 	 * Transition from current page
 	 *
-	 * @param {ITransitionData} { from, to, trigger, done }
+	 * @param {ITransitionData} { from, trigger, done }
 	 * @memberof Transition
 	 */
-    public out({ from, to, trigger, done }: ITransitionData): any {
+    public out({ done }: ITransitionData): any {
         done();
     }
 
 	/**
 	 * Transition into the next page
 	 *
-	 * @param {ITransitionData} { from, trigger, done }
+	 * @param {ITransitionData} { from, to, trigger, done }
 	 * @memberof Transition
 	 */
-    public in({ from, trigger, done }: ITransitionData): any {
+    public in({ done }: ITransitionData): any {
         done();
     }
 
@@ -1736,11 +1739,10 @@ export class Transition extends ManagerItem {
         let toWrapper = this.newPage.getWrapper();
         document.title = this.newPage.getTitle();
 
-        return new Promise(async resolve => {
+        return new Promise(async finish => {
             await new Promise(done => {
                 let outMethod: Promise<any> = this.out({
                     from: this.oldPage,
-                    to: this.newPage,
                     trigger: this.trigger,
                     done
                 });
@@ -1749,11 +1751,16 @@ export class Transition extends ManagerItem {
                     outMethod.then(done);
             });
 
-            fromWrapper.insertAdjacentElement('beforebegin', toWrapper);
+            await new Promise(done => {
+                fromWrapper.insertAdjacentElement('beforebegin', toWrapper);
+                fromWrapper.remove();
+                done();
+            });
 
             await new Promise(done => {
-                let inMethod: Promise<any> = this.out({
-                    from: this.newPage,
+                let inMethod: Promise<any> = this.in({
+                    from: this.oldPage,
+                    to: this.newPage,
                     trigger: this.trigger,
                     done
                 });
@@ -1762,8 +1769,7 @@ export class Transition extends ManagerItem {
                     inMethod.then(done);
             });
 
-            fromWrapper.remove();
-            resolve();
+            finish();
         });
     }
 }
@@ -1901,6 +1907,15 @@ export class App {
         this.history = new HistoryManager();
         this.pages = new PageManager(this);
         this.emitter = new EventEmitter();
+
+        let handler = (() => {
+            document.removeEventListener("DOMContentLoaded", handler);
+            window.removeEventListener("load", handler);
+            this.emitter.emit("ready");
+        }).bind(this);
+
+        document.addEventListener("DOMContentLoaded", handler);
+        window.addEventListener("load", handler);
         return this;
     }
 
@@ -2046,7 +2061,6 @@ export class App {
         switch (type.toLowerCase()) {
             case "page":
                 return await this.loadPage(key);
-                break;
             default:
                 return Promise.resolve(this.get(type, key));
         }
@@ -2150,12 +2164,12 @@ export class App {
     /**
      * A shortcut to the App EventEmiiter on method
      *
-     * @param {string} events
+     * @param {EventInput} events
      * @param {ListenerCallback} callback
      * @returns App
      * @memberof App
      */
-    public on(events: string, callback: ListenerCallback): App {
+    public on(events: EventInput, callback?: ListenerCallback): App {
         this.emitter.on(events, callback, this);
         return this;
     }
@@ -2163,12 +2177,12 @@ export class App {
     /**
      * A shortcut to the App EventEmiiter off method
      *
-     * @param {string} events
+     * @param {EventInput} events
      * @param {ListenerCallback} callback
      * @returns App
      * @memberof App
      */
-    public off(events: string, callback: ListenerCallback): App {
+    public off(events: EventInput, callback?: ListenerCallback): App {
         this.emitter.off(events, callback, this);
         return this;
     }

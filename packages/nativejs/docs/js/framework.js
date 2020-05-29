@@ -259,7 +259,10 @@ export class PJAX extends Service {
             if (trigger !== "popstate") {
                 // Keep scroll position
                 let { x, y } = data.scroll;
-                window.scrollTo(x, y);
+                window.scroll({
+                    top: y, left: x,
+                    behavior: 'smooth' // 👈 
+                });
             }
             // Based on the direction of the state change either remove or add a state
             if (trigger === "back") {
@@ -284,10 +287,17 @@ export class PJAX extends Service {
             if (this.stickyScroll) {
                 // Keep scroll position
                 let { x, y } = scroll;
-                window.scrollTo(x, y);
+                window.scroll({
+                    top: y, left: x,
+                    behavior: 'smooth' // 👈 
+                });
             }
-            else
-                window.scrollTo(0, 0);
+            else {
+                window.scroll({
+                    top: 0, left: 0,
+                    behavior: 'smooth' // 👈 
+                });
+            }
             this.HistoryManager.add(state);
             this.changeState("push", state);
             this.EventEmitter.emit("hstory--new-item", event);
@@ -296,6 +306,7 @@ export class PJAX extends Service {
             event.stopPropagation();
             event.preventDefault();
         }
+        this.EventEmitter.emit("go", event);
         return this.load({ oldHref: currentURL.getPathname(), href, trigger, transitionName });
     }
     /**
@@ -387,15 +398,18 @@ export class PJAX extends Service {
     hashAction({}) {
         let { hash } = window.location;
         let hashID = hash.slice(1);
-        window.setTimeout(() => {
-            if (hashID.length) {
-                let el = document.getElementById(hashID);
-                if (el) {
-                    let scroll = el.getBoundingClientRect();
-                    window.scrollTo(scroll.left, scroll.top);
+        if (hashID.length) {
+            let el = document.getElementById(hashID);
+            if (el) {
+                if (el.scrollIntoView) {
+                    el.scrollIntoView({ behavior: 'smooth' });
+                }
+                else {
+                    let { left, top } = el.getBoundingClientRect();
+                    window.scrollTo(left, top);
                 }
             }
-        }, 100);
+        }
     }
     /**
      * Check to see if the URL is to be ignored, uses either RegExp of Strings to check
@@ -484,20 +498,47 @@ export class PJAX extends Service {
         window.removeEventListener('popstate', this.onStateChange);
     }
 }
-export class Default extends Transition {
+export class Fade extends Transition {
     constructor() {
         super(...arguments);
         this.name = "default";
+        this.duration = 500;
     }
-    in({ done }) {
-        done();
+    out({ from }) {
+        let { duration } = this;
+        let fromWrapper = from.getWrapper();
+        return new Promise(resolve => {
+            let animation = fromWrapper.animate([
+                { opacity: 1 },
+                { opacity: 0 },
+            ], {
+                duration,
+                easing: "ease"
+            });
+            animation.onfinish = resolve;
+        });
     }
-    out({ done }) {
-        done();
+    in({ to }) {
+        let { duration } = this;
+        let toWrapper = to.getWrapper();
+        // window.scroll({
+        //     top: 0,
+        //     behavior: 'smooth'  // 👈 
+        // });
+        return new Promise(resolve => {
+            let animation = toWrapper.animate([
+                { opacity: 0 },
+                { opacity: 1 },
+            ], {
+                duration,
+                easing: "ease"
+            });
+            animation.onfinish = resolve;
+        });
     }
 }
 app.add("service", new PJAX());
-app.add("transition", new Default());
+app.add("transition", new Fade());
 (async () => {
     try {
         await app.boot();
@@ -505,17 +546,21 @@ app.add("transition", new Default());
     catch (err) {
         console.warn("App boot failed", err);
     }
-    app
-        .on("page--loading", ({ href }) => {
+    let navbarLinks = () => {
+        let { href } = window.location;
         let navLink = document.querySelectorAll(".nav-link");
         for (let item of navLink) {
-            if (_URL.equal(item.href, href)) {
-                item.className = "nav-link active";
-            }
-            else {
-                item.className = "nav-link";
+            let URLmatch = _URL.equal(item.href, href);
+            let isActive = item.classList.contains("active");
+            if (!(URLmatch && isActive)) {
+                item.classList[URLmatch ? "add" : "remove"]("active");
             }
         }
+    };
+    app
+        .on({
+        "ready": navbarLinks,
+        "go": navbarLinks
     });
 })();
 //# sourceMappingURL=framework.js.map

@@ -283,7 +283,10 @@ export class PJAX extends Service {
             if (trigger !== "popstate") {
                 // Keep scroll position
                 let { x, y } = data.scroll;
-                window.scrollTo(x, y);
+                window.scroll({
+                    top: y, left: x,
+                    behavior: 'smooth'  // 👈 
+                });
             }
 
             // Based on the direction of the state change either remove or add a state
@@ -308,8 +311,16 @@ export class PJAX extends Service {
             if (this.stickyScroll) {
                 // Keep scroll position
                 let { x, y } = scroll;
-                window.scrollTo(x, y);
-            } else window.scrollTo(0, 0);
+                window.scroll({
+                    top: y, left: x,
+                    behavior: 'smooth'  // 👈 
+                });
+            } else {
+                window.scroll({
+                    top: 0, left: 0,
+                    behavior: 'smooth'  // 👈 
+                });
+            }
 
             this.HistoryManager.add(state);
             this.changeState("push", state);
@@ -321,6 +332,7 @@ export class PJAX extends Service {
             event.preventDefault();
         }
 
+        this.EventEmitter.emit("go", event);
         return this.load({ oldHref: currentURL.getPathname(), href, trigger, transitionName });
     }
 
@@ -415,18 +427,19 @@ export class PJAX extends Service {
     public hashAction({ }: { href: string, oldHref: string, trigger: Trigger, transitionName: string }) {
         let { hash } = window.location;
         let hashID = hash.slice(1);
-        console.log(hashID);
 
-        window.setTimeout(() => {
-            if (hashID.length) {
-                let el = document.getElementById(hashID);
+        if (hashID.length) {
+            let el = document.getElementById(hashID);
 
-                if (el) {
-                    let scroll = el.getBoundingClientRect();
-                    window.scrollTo(scroll.left, scroll.top);
+            if (el) {
+                if (el.scrollIntoView) {
+                    el.scrollIntoView({ behavior: 'smooth' });
+                } else {
+                    let { left, top } = el.getBoundingClientRect();
+                    window.scrollTo(left, top);
                 }
             }
-        }, 100);
+        }
     }
 
     /**
@@ -525,19 +538,47 @@ export class PJAX extends Service {
     }
 }
 
-export class Default extends Transition {
+export class Fade extends Transition {
     protected name = "default";
-    in({ done }: ITransitionData) {
-        done();
+    protected duration = 500;
+
+    out({ from }: ITransitionData) {
+        let { duration } = this;
+        let fromWrapper = from.getWrapper();
+        return new Promise(resolve => {
+            let animation = fromWrapper.animate([
+                { opacity: 1 },
+                { opacity: 0 },
+            ], {
+                duration,
+                easing: "ease"
+            });
+            animation.onfinish = resolve;
+        });
     }
 
-    out({ done }: ITransitionData) {
-        done();
+    in({ to }: ITransitionData) {
+        let { duration } = this;
+        let toWrapper = to.getWrapper();
+        // window.scroll({
+        //     top: 0,
+        //     behavior: 'smooth'  // 👈 
+        // });
+        return new Promise(resolve => {
+            let animation = toWrapper.animate([
+                { opacity: 0 },
+                { opacity: 1 },
+            ], {
+                duration,
+                easing: "ease"
+            });
+            animation.onfinish = resolve;
+        });
     }
 }
 
 app.add("service", new PJAX());
-app.add("transition", new Default());
+app.add("transition", new Fade());
 
 (async () => {
     try {
@@ -546,15 +587,22 @@ app.add("transition", new Default());
         console.warn("App boot failed", err);
     }
 
-    app
-        .on("page--loading", ({ href }: { href: string }) => {
-            let navLink = document.querySelectorAll(".nav-link");
-            for (let item of navLink) {
-                if (_URL.equal((item as HTMLAnchorElement).href, href)) {
-                    item.className = "nav-link active";
-                } else {
-                    item.className = "nav-link";
-                }
+    let navbarLinks = () => {
+        let { href } = window.location;
+        let navLink = document.querySelectorAll(".nav-link");
+
+        for (let item of navLink) {
+            let URLmatch = _URL.equal((item as HTMLAnchorElement).href, href);
+            let isActive = item.classList.contains("active");
+            if (!(URLmatch && isActive)) {
+                item.classList[URLmatch ? "add" : "remove"]("active");
             }
+        }
+    };
+
+    app
+        .on({
+            "ready": navbarLinks,
+            "go": navbarLinks
         });
 })();

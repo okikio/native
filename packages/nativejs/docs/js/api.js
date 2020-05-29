@@ -872,7 +872,7 @@ export class EventEmitter extends Manager {
     /**
      * Adds a listener for a given event
      *
-     * @param {(string | object | Array<any>)} events
+     * @param {EventInput} events
      * @param {ListenerCallback} callback
      * @param {object} scope
      * @returns
@@ -889,9 +889,9 @@ export class EventEmitter extends Manager {
         let _callback;
         let _scope;
         // Loop through the list of events
-        Object.keys(events).forEach((key) => {
+        Object.keys(events).forEach(key => {
             // Select the name of the event from the list
-            // Remember events can be {String | Object | Array<any>}
+            // Remember events can be {String | Object | Array<string>}
             // Check If events is an Object (JSON like Object, and not an Array)
             if (typeof events == "object" && !Array.isArray(events)) {
                 _name = key;
@@ -934,7 +934,7 @@ export class EventEmitter extends Manager {
     /**
      * Removes a listener from a given event, or it just completely removes an event
      *
-     * @param {(string | object | Array<any>)} events
+     * @param {EventInput} events
      * @param {ListenerCallback} callback
      * @param {object} scope
      * @returns EventEmitter
@@ -976,7 +976,7 @@ export class EventEmitter extends Manager {
     /**
      * Adds a one time event listener for an event
      *
-     * @param {(string | object | Array<any>)} events
+     * @param {EventInput} events
      * @param {ListenerCallback} callback
      * @param {object} scope
      * @returns EventEmitter
@@ -1110,7 +1110,7 @@ export class Page extends ManagerItem {
     /**
      * The page's wrapper element
      *
-     * @returns Element
+     * @returns HTMLElement
      * @memberof Page
      */
     getWrapper() {
@@ -1304,19 +1304,19 @@ export class Transition extends ManagerItem {
     /**
      * Transition from current page
      *
-     * @param {ITransitionData} { from, to, trigger, done }
+     * @param {ITransitionData} { from, trigger, done }
      * @memberof Transition
      */
-    out({ from, to, trigger, done }) {
+    out({ done }) {
         done();
     }
     /**
      * Transition into the next page
      *
-     * @param {ITransitionData} { from, trigger, done }
+     * @param {ITransitionData} { from, to, trigger, done }
      * @memberof Transition
      */
-    in({ from, trigger, done }) {
+    in({ done }) {
         done();
     }
     /**
@@ -1329,29 +1329,32 @@ export class Transition extends ManagerItem {
         let fromWrapper = this.oldPage.getWrapper();
         let toWrapper = this.newPage.getWrapper();
         document.title = this.newPage.getTitle();
-        return new Promise(async (resolve) => {
+        return new Promise(async (finish) => {
             await new Promise(done => {
                 let outMethod = this.out({
                     from: this.oldPage,
-                    to: this.newPage,
                     trigger: this.trigger,
                     done
                 });
                 if (outMethod instanceof Promise)
                     outMethod.then(done);
             });
-            fromWrapper.insertAdjacentElement('beforebegin', toWrapper);
             await new Promise(done => {
-                let inMethod = this.out({
-                    from: this.newPage,
+                fromWrapper.insertAdjacentElement('beforebegin', toWrapper);
+                fromWrapper.remove();
+                done();
+            });
+            await new Promise(done => {
+                let inMethod = this.in({
+                    from: this.oldPage,
+                    to: this.newPage,
                     trigger: this.trigger,
                     done
                 });
                 if (inMethod instanceof Promise)
                     inMethod.then(done);
             });
-            fromWrapper.remove();
-            resolve();
+            finish();
         });
     }
 }
@@ -1429,6 +1432,13 @@ export class App {
         this.history = new HistoryManager();
         this.pages = new PageManager(this);
         this.emitter = new EventEmitter();
+        let handler = (() => {
+            document.removeEventListener("DOMContentLoaded", handler);
+            window.removeEventListener("load", handler);
+            this.emitter.emit("ready");
+        }).bind(this);
+        document.addEventListener("DOMContentLoaded", handler);
+        window.addEventListener("load", handler);
         return this;
     }
     /**
@@ -1562,7 +1572,6 @@ export class App {
         switch (type.toLowerCase()) {
             case "page":
                 return await this.loadPage(key);
-                break;
             default:
                 return Promise.resolve(this.get(type, key));
         }
@@ -1658,7 +1667,7 @@ export class App {
     /**
      * A shortcut to the App EventEmiiter on method
      *
-     * @param {string} events
+     * @param {EventInput} events
      * @param {ListenerCallback} callback
      * @returns App
      * @memberof App
@@ -1670,7 +1679,7 @@ export class App {
     /**
      * A shortcut to the App EventEmiiter off method
      *
-     * @param {string} events
+     * @param {EventInput} events
      * @param {ListenerCallback} callback
      * @returns App
      * @memberof App
