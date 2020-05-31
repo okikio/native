@@ -507,10 +507,10 @@ export class Fade extends Transition {
     out({ from }) {
         let { duration } = this;
         let fromWrapper = from.getWrapper();
-        // window.scroll({
-        //     top: 0,
-        //     behavior: 'smooth'  // 👈 
-        // });
+        window.scroll({
+            top: 0,
+            behavior: 'smooth' // 👈 
+        });
         return new Promise(resolve => {
             let animation = fromWrapper.animate([
                 { opacity: 1 },
@@ -560,8 +560,7 @@ app.add("transition", new Fade());
             }
         }
     };
-    app
-        .on({
+    app.on({
         "ready": navbarLinks,
         "go": navbarLinks
     });

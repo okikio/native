@@ -1,4 +1,4 @@
-import fetch from 'cross-fetch';
+/*import fetch from 'cross-fetch';
 let request = async (url) => {
     const timeout = setTimeout(() => {
         clearTimeout(timeout);
@@ -27,7 +27,7 @@ let request = async (url) => {
 
 let counter = 0;
 const cache = new Map();
-let toStr = url => `//${url.host}${url.pathname}`.replace(/#.*/, "");
+let toStr = url => `//${url.host}${url.pathname}`.replace(/#.* /, "");
 let load = async (_url) => {
     let url = _url instanceof URL ? _url : new URL(_url);
     let urlStr = toStr(url);
@@ -60,6 +60,7 @@ try {
 } catch (err) {
     console.log(err);
 }
+*/
 
 // const newURL = new URL("https://josephojo.com");
 // const URLString = toStr(newURL);
@@ -70,3 +71,23 @@ try {
 // } catch (err) {
 //     console.log(err);
 // }
+
+let hex2rgba = (hex, alpha = 1) => {
+    const [r, g, b] = hex.match(/\w\w/g).map(x => parseInt(x, 16));
+    return `rgba(${r},${g},${b},${alpha})`;
+};
+hex2rgba = (hex) => `rgb(${hex.substr(1).match(/../g).map(x => +`0x${x}`)})`;
+hex2rgba = (hex) => {
+    let color = +`0x${hex.replace("#", "")}`;
+    let [r, g, b] = [color >> 16 & 0xFF, color >> 8 & 0xFF, color & 0xFF];
+    return `rgb(${r},${g},${b})`;
+};
+hex2rgba = (color) => {
+    if (/^rgb/.test(color)) return color;
+    let hex = color.replace("#", "");
+    let [r, g, b] = color.match(/\w/g).map(x => parseInt(hex.length == 3 ? x + x : x, 16));
+    return `rgb(${r},${g},${b})`;
+};
+let result = hex2rgba("ff00");
+result
+console.log()
