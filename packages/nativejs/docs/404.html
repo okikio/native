@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+     <title>Home page</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0/css/bootstrap.min.css"
+          integrity="sha256-LA89z+k9fjgMKQ/kq4OO2Mrf8VltYml/VES+Rg0fh20="
+          crossorigin="anonymous"/>
+    <link rel="stylesheet" href="./css/demo.css">
+</head>
+<body class="home-page bg-light">
+    
+    <nav id="main-nav" class="navbar navbar-expand-md fixed-top navbar-dark bg-dark">
+    <a class="navbar-brand" href="/">Starting Blocks
+        <small>v4</small>
+    </a>
+    <ul class="navbar-nav mr-auto">
+        <li class="nav-item"><a href="./index.html" class="nav-link active" data-transition="default">Homepage</a></li>
+        <li class="nav-item"><a href="./about.html" class="nav-link" data-transition="default">About</a></li>
+        <li class="nav-item"><a href="./other.html" class="nav-link" data-transition="default">Other</a></li>
+    </ul>
+</nav>
+    
+    <main data-wrapper id="404-page" role="main" id="sb-wrapper">
+        <div id="page-home-page"
+            class="page-content page-content-ajax"
+            data-node-name="home-page"
+            data-is-home="1"
+            data-node-type="HomePage"
+            data-meta-title="Home page">
+            <div class="container">
+                <div class="row">
+                    <div class="col">
+                        <div class="jumbotron jumbotron-fluid my-3 bg-white rounded box-shadow">
+                            <div class="container">
+                                <h1 class="display-4">404 Page</h1>
+                                <p class="lead">Dynamic blocks example.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col">
+                        <div class="page-block usersblock"
+                            id="users-block-1"
+                            data-node-type="UsersBlock">
+                            <div class="usersblock__intro d-flex align-items-center bg-white p-3 my-3 text-white-50 rounded box-shadow">
+                                <div class="avatar-cont"></div>
+                                <div class="lh-100">
+                                    <h6 class="mb-0 lh-100">Starting Blocks</h6>
+                                    <small>By Rezo Zero</small>
+                                </div>
+                            </div>
+                            <div class="my-3 p-3 bg-white rounded box-shadow">
+                                <h6 class="border-bottom border-gray pb-2 mb-0">Contributors</h6>
+                                <div class="row usersblock__contributors-list"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <footer class="footer">
+            <div class="container">
+                <a href="https://github.com/rezozero/starting-blocks" class="text-muted" target="_blank">Starting blocks</a>
+            </div>
+        </footer>
+    </main>
+
+
+    <!-- <script src="../app.js" type="module"></script> -->
+    <script src="./js/framework.js" type="module"></script>
+</body>
+</html>

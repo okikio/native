@@ -3,6 +3,7 @@ import gulp, { parallel, watch as sentry } from "gulp";
 import sass from "gulp-sass";
 import stream from "./stream";
 import bs from "browser-sync";
+import { init, write } from "gulp-sourcemaps";
 import postcss from "gulp-postcss";
 import nunjuck from "gulp-nunjucks-render";
 import ts from "gulp-typescript";
@@ -28,7 +29,7 @@ export const css = () => {
             // Minify scss to css
             sass({ outputStyle: "compressed" }).on("error", logError)
         ],
-        dest: "docs",
+        dest: "docs/css",
         end: [browserSync.stream()],
     })
 };
@@ -36,10 +37,16 @@ export const css = () => {
 export const js = () => {
     return stream(tsProject.src(), {
         pipes: [
+            // Sourcemaps Initialize
+            init(),
+
             // Compile typescript
-            tsProject()
+            tsProject(),
+
+            // Sourcemaps Write
+            write('.'),
         ],
-        dest: "docs"
+        dest: "docs/js"
     })
 };
 

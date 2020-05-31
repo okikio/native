@@ -31,6 +31,29 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@gulp-sourcemaps/identity-map@npm:1.X":
+  version: 1.0.2
+  resolution: "@gulp-sourcemaps/identity-map@npm:1.0.2"
+  dependencies:
+    acorn: ^5.0.3
+    css: ^2.2.1
+    normalize-path: ^2.1.1
+    source-map: ^0.6.0
+    through2: ^2.0.3
+  checksum: 3/f2437c66da6c03fa8d40f3f487aca113f33169277488b949e9ed143adccc50e84eb433b5272cf510b63c359efb9c0d69bfddc2ec327ebd84482c1b4ddbb12569
+  languageName: node
+  linkType: hard
+
+"@gulp-sourcemaps/map-sources@npm:1.X":
+  version: 1.0.0
+  resolution: "@gulp-sourcemaps/map-sources@npm:1.0.0"
+  dependencies:
+    normalize-path: ^2.0.1
+    through2: ^2.0.3
+  checksum: 3/0e92dd2cbdb19879e6065a4247805ea03c4d72b646c739048e98376f8178c08607b5f395e5af80cbc05395abb952c3da010c8a034da7334af312ff7ae27baa1e
+  languageName: node
+  linkType: hard
+
 "@nodelib/fs.scandir@npm:2.1.3":
   version: 2.1.3
   resolution: "@nodelib/fs.scandir@npm:2.1.3"
@@ -302,6 +325,15 @@ __metadata:
   peerDependencies:
     acorn: ^6.0.0 || ^7.0.0
   checksum: 3/1247cc4b32e7883c70823eae643ef07faefb02ef6084bb92d650e5564bb22d6e6392771036c1e15428dc01e6350a5336c6741e272c30ab6bf9ce578e4701f6c0
+  languageName: node
+  linkType: hard
+
+"acorn@npm:5.X, acorn@npm:^5.0.3":
+  version: 5.7.4
+  resolution: "acorn@npm:5.7.4"
+  bin:
+    acorn: bin/acorn
+  checksum: 3/1ca0f3e95b48b40ff3a6eb28e7e07a26f7aea762138ee8698eec6a6a241f3729506fbd55520c4f00de8fd2a2af7704be17c9f1c2c017a413a855f3e95929b6a1
   languageName: node
   linkType: hard
 
@@ -1510,7 +1542,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"convert-source-map@npm:^1.5.0":
+"convert-source-map@npm:1.X, convert-source-map@npm:^1.5.0":
   version: 1.7.0
   resolution: "convert-source-map@npm:1.7.0"
   dependencies:
@@ -1606,6 +1638,18 @@ __metadata:
   languageName: node
   linkType: hard
 
+"css@npm:2.X, css@npm:^2.2.1":
+  version: 2.2.4
+  resolution: "css@npm:2.2.4"
+  dependencies:
+    inherits: ^2.0.3
+    source-map: ^0.6.1
+    source-map-resolve: ^0.5.2
+    urix: ^0.1.0
+  checksum: 3/b94365b3c07c35529beab95f679102c66d1027774c2e80f5179a6ee11ccc440046aeb7771df33569334bbdfd8ea753dd132197040dc079fcd881141348a1886f
+  languageName: node
+  linkType: hard
+
 "currently-unhandled@npm:^0.4.1":
   version: 0.4.1
   resolution: "currently-unhandled@npm:0.4.1"
@@ -1634,12 +1678,32 @@ __metadata:
   languageName: node
   linkType: hard
 
+"debug-fabulous@npm:1.X":
+  version: 1.1.0
+  resolution: "debug-fabulous@npm:1.1.0"
+  dependencies:
+    debug: 3.X
+    memoizee: 0.4.X
+    object-assign: 4.X
+  checksum: 3/eca9cb8e14d258574434deb9f06cf495e6dba9e7fbb5f09d5f156ba240fe3bd715f1c64a08a8ee1d07112a48c2b855878be0ff03ddfe5167ba55f862598040a4
+  languageName: node
+  linkType: hard
+
 "debug@npm:2.6.9, debug@npm:^2.2.0, debug@npm:^2.3.3":
   version: 2.6.9
   resolution: "debug@npm:2.6.9"
   dependencies:
     ms: 2.0.0
   checksum: 3/559f44f98cf25e2ee489022aec173afbff746564cb108c4493becb95bc3c017a67bdaa25a0ff64801fd32c35051d00af0e56cc7f762ae2c3bc089496e5a1c31b
+  languageName: node
+  linkType: hard
+
+"debug@npm:3.X":
+  version: 3.2.6
+  resolution: "debug@npm:3.2.6"
+  dependencies:
+    ms: ^2.1.1
+  checksum: 3/619feb53b115f1a8341365b8aa58a8757e6632738587d4b61b25627b74891211cb20e31fdbea37fec766e575a60cf456f7a02d6f9eddfdcef80caa6a4b0fc042
   languageName: node
   linkType: hard
 
@@ -1783,6 +1847,13 @@ __metadata:
   version: 1.0.0
   resolution: "detect-file@npm:1.0.0"
   checksum: 3/69717e5618370f31d3b266240289442d7c50f933834bbcffad187e73a6efaf3adc4ed283d8120a9ad77cbdcef3375c48acb4cdbb2df477695ed78d86c0d08c9c
+  languageName: node
+  linkType: hard
+
+"detect-newline@npm:2.X":
+  version: 2.1.0
+  resolution: "detect-newline@npm:2.1.0"
+  checksum: 3/634e4a25406321b203b33ae5123c1f2091d94509d6979448081b9256c1078cec9ca5c12eee16164be79f6cbbd56c2e2232fca541e2edf3c8d374efe661e5b44a
   languageName: node
   linkType: hard
 
@@ -2001,7 +2072,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"es5-ext@npm:^0.10.35, es5-ext@npm:^0.10.46, es5-ext@npm:^0.10.50":
+"es5-ext@npm:^0.10.35, es5-ext@npm:^0.10.45, es5-ext@npm:^0.10.46, es5-ext@npm:^0.10.50, es5-ext@npm:~0.10.14, es5-ext@npm:~0.10.2, es5-ext@npm:~0.10.46":
   version: 0.10.53
   resolution: "es5-ext@npm:0.10.53"
   dependencies:
@@ -2033,7 +2104,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"es6-weak-map@npm:^2.0.1":
+"es6-weak-map@npm:^2.0.1, es6-weak-map@npm:^2.0.2":
   version: 2.0.3
   resolution: "es6-weak-map@npm:2.0.3"
   dependencies:
@@ -2202,6 +2273,16 @@ __metadata:
   version: 1.8.1
   resolution: "etag@npm:1.8.1"
   checksum: 3/f18341a3c12a554ec46c0d4756bc9cae177e92f25a4ebd9ceefebf0ee448b675972fc110879f22b1bf514174713921ae5de9ff77af2062d422b1085588465a57
+  languageName: node
+  linkType: hard
+
+"event-emitter@npm:^0.3.5":
+  version: 0.3.5
+  resolution: "event-emitter@npm:0.3.5"
+  dependencies:
+    d: 1
+    es5-ext: ~0.10.14
+  checksum: 3/92107b89703222355070b8c49208baf9426ce015d54b646a80f6652d348ab6064c5e13f1756ae20c750d8368f4b3cde48bafc56484667ba0e12d07c50b645f21
   languageName: node
   linkType: hard
 
@@ -2898,7 +2979,7 @@ fsevents@~2.1.2:
   languageName: node
   linkType: hard
 
-"graceful-fs@npm:^4.0.0, graceful-fs@npm:^4.1.11, graceful-fs@npm:^4.1.2, graceful-fs@npm:^4.1.6, graceful-fs@npm:^4.2.2":
+"graceful-fs@npm:4.X, graceful-fs@npm:^4.0.0, graceful-fs@npm:^4.1.11, graceful-fs@npm:^4.1.2, graceful-fs@npm:^4.1.6, graceful-fs@npm:^4.2.2":
   version: 4.2.4
   resolution: "graceful-fs@npm:4.2.4"
   checksum: 3/d095ee4dc6eacc76814cd52d5d185b860119378a6fd4888e7d4e94983095c54d4f6369942a5e3d759cdbdd4e3ee7eaeb27a39ff938c6ee4610894fd9de46b6cb
@@ -2972,6 +3053,25 @@ fsevents@~2.1.2:
     through2: ^2.0.0
     vinyl-sourcemaps-apply: ^0.2.0
   checksum: 3/667fa0f9aca0ceb151ae3ea406df4dd2df7d0693963ca5de4c11ea593371b11e2acbf6199ad18295f99727cdf498ffeb29a734569fc71a3c821e8f92857316f1
+  languageName: node
+  linkType: hard
+
+"gulp-sourcemaps@npm:^2.6.5":
+  version: 2.6.5
+  resolution: "gulp-sourcemaps@npm:2.6.5"
+  dependencies:
+    "@gulp-sourcemaps/identity-map": 1.X
+    "@gulp-sourcemaps/map-sources": 1.X
+    acorn: 5.X
+    convert-source-map: 1.X
+    css: 2.X
+    debug-fabulous: 1.X
+    detect-newline: 2.X
+    graceful-fs: 4.X
+    source-map: ~0.6.0
+    strip-bom-string: 1.X
+    through2: 2.X
+  checksum: 3/467191db6a2f87202f0d6277b81af6479e95eeb9b2a8bf12e27d02b10c8be46441185354fa4d13180c67859a4cdefe5b21e8c9b4768168392425f5193e367e3d
   languageName: node
   linkType: hard
 
@@ -3638,6 +3738,13 @@ fsevents@~2.1.2:
   languageName: node
   linkType: hard
 
+"is-promise@npm:^2.1":
+  version: 2.2.2
+  resolution: "is-promise@npm:2.2.2"
+  checksum: 3/6fe84293b8750d3604a909979a7517a38b1618817f1fbbfdaf4d6138642117c85fbee12927b4d51349a5bcd9bdf8d1bf181f09145ede2d7eb41f4b394ab2ce7d
+  languageName: node
+  linkType: hard
+
 "is-relative@npm:^1.0.0":
   version: 1.0.0
   resolution: "is-relative@npm:1.0.0"
@@ -4059,6 +4166,15 @@ fsevents@~2.1.2:
   languageName: node
   linkType: hard
 
+"lru-queue@npm:0.1":
+  version: 0.1.0
+  resolution: "lru-queue@npm:0.1.0"
+  dependencies:
+    es5-ext: ~0.10.2
+  checksum: 3/2eab98cdfb3101dab91ef6b8b50fce616440fa29d27ef1a1b99aa6be13422d03d6ebee15c1eb4873971c34baee27d64376aebc64560aecb37a328c82e3f40169
+  languageName: node
+  linkType: hard
+
 "make-iterator@npm:^1.0.0":
   version: 1.0.1
   resolution: "make-iterator@npm:1.0.1"
@@ -4100,6 +4216,22 @@ fsevents@~2.1.2:
     resolve: ^1.4.0
     stack-trace: 0.0.10
   checksum: 3/df53c85b080a71c149141517a3a9cee53e11a92e8db8484ac2a0e6310a540accede12af186e9f7671c5ccef7249ed40a5dfa45af2e8025c0f51e2f6afd8c087f
+  languageName: node
+  linkType: hard
+
+"memoizee@npm:0.4.X":
+  version: 0.4.14
+  resolution: "memoizee@npm:0.4.14"
+  dependencies:
+    d: 1
+    es5-ext: ^0.10.45
+    es6-weak-map: ^2.0.2
+    event-emitter: ^0.3.5
+    is-promise: ^2.1
+    lru-queue: 0.1
+    next-tick: 1
+    timers-ext: ^0.1.5
+  checksum: 3/89530bbed2a59f20dd115d743f17159e0f857bd83186e5ffcfa6a4b88f47a6173472f351c7ae2219c4993c2888103e3ac348959356a104b74aba195c2db47ee6
   languageName: node
   linkType: hard
 
@@ -4338,6 +4470,13 @@ fsevents@~2.1.2:
   languageName: node
   linkType: hard
 
+"next-tick@npm:1":
+  version: 1.1.0
+  resolution: "next-tick@npm:1.1.0"
+  checksum: 3/586cc85dcd8ec759b03269b39c8e3d899a27dbe49c472e7fb2b6a98b14a5b46d8c3b1b9a5fae29eb22881d9efa6d882d44617c51268b49d92e98ba8f20d42000
+  languageName: node
+  linkType: hard
+
 "next-tick@npm:~1.0.0":
   version: 1.0.0
   resolution: "next-tick@npm:1.0.0"
@@ -4474,7 +4613,7 @@ fsevents@~2.1.2:
   languageName: node
   linkType: hard
 
-"normalize-path@npm:^2.1.1":
+"normalize-path@npm:^2.0.1, normalize-path@npm:^2.1.1":
   version: 2.1.1
   resolution: "normalize-path@npm:2.1.1"
   dependencies:
@@ -4549,7 +4688,7 @@ fsevents@~2.1.2:
   languageName: node
   linkType: hard
 
-"object-assign@npm:^4.0.1, object-assign@npm:^4.1.0":
+"object-assign@npm:4.X, object-assign@npm:^4.0.1, object-assign@npm:^4.1.0":
   version: 4.1.1
   resolution: "object-assign@npm:4.1.1"
   checksum: 3/66cf021898fc1b13ea573ea8635fbd5a76533f50cecbc2fcd5eee1e8029af41bcebe7023788b6d0e06cbe4401ecea075d972f78ec74467cdc571a0f1a4d1a081
@@ -5010,6 +5149,7 @@ fsevents@~2.1.2:
     gulp-nunjucks-render: ^2.2.3
     gulp-postcss: ^8.0.0
     gulp-sass: ^4.1.0
+    gulp-sourcemaps: ^2.6.5
     gulp-typescript: ^6.0.0-alpha.1
     typescript: ^3.9.2
   languageName: unknown
@@ -5982,7 +6122,7 @@ fsevents@~2.1.2:
   languageName: node
   linkType: hard
 
-"source-map-resolve@npm:^0.5.0":
+"source-map-resolve@npm:^0.5.0, source-map-resolve@npm:^0.5.2":
   version: 0.5.3
   resolution: "source-map-resolve@npm:0.5.3"
   dependencies:
@@ -6018,7 +6158,7 @@ fsevents@~2.1.2:
   languageName: node
   linkType: hard
 
-"source-map@npm:^0.6.1":
+"source-map@npm:^0.6.0, source-map@npm:^0.6.1, source-map@npm:~0.6.0":
   version: 0.6.1
   resolution: "source-map@npm:0.6.1"
   checksum: 3/8647829a0611724114022be455ca1c8a2c8ae61df81c5b3667d9b398207226a1e21174fb7bbf0b4dbeb27ac358222afb5a14f1c74a62a62b8883b012e5eb1270
@@ -6297,6 +6437,13 @@ fsevents@~2.1.2:
   languageName: node
   linkType: hard
 
+"strip-bom-string@npm:1.X":
+  version: 1.0.0
+  resolution: "strip-bom-string@npm:1.0.0"
+  checksum: 3/63cf934fcf06551b5529af0cd20638568754b25fc1365356da028081c61ef6619388596800976f93c1d32731c8068cea6103eda025dedb6e68b5d0818103df2b
+  languageName: node
+  linkType: hard
+
 "strip-bom@npm:^2.0.0":
   version: 2.0.0
   resolution: "strip-bom@npm:2.0.0"
@@ -6440,7 +6587,7 @@ fsevents@~2.1.2:
   languageName: node
   linkType: hard
 
-"through2@npm:^2.0.0, through2@npm:^2.0.3, through2@npm:~2.0.0":
+"through2@npm:2.X, through2@npm:^2.0.0, through2@npm:^2.0.3, through2@npm:~2.0.0":
   version: 2.0.5
   resolution: "through2@npm:2.0.5"
   dependencies:
@@ -6470,6 +6617,16 @@ fsevents@~2.1.2:
   version: 1.1.0
   resolution: "time-stamp@npm:1.1.0"
   checksum: 3/e880c4d2c65d992c5c37be84fa5ac83ae9f19fff431aa51c58dc548523914b09f049d88166d0fe06acb5f66ac4b76f45b46675bc50bfaba26f35766da7ae699c
+  languageName: node
+  linkType: hard
+
+"timers-ext@npm:^0.1.5":
+  version: 0.1.7
+  resolution: "timers-ext@npm:0.1.7"
+  dependencies:
+    es5-ext: ~0.10.46
+    next-tick: 1
+  checksum: 3/4593b57c397934fc7ddf7b240a8ff8468cdd7006407a442ec48c291bd85dcb7268858b72d1132bc55309e29d8eeae796f9edf378b0b45feff56b51f350e723b6
   languageName: node
   linkType: hard
 

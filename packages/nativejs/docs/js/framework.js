@@ -103,7 +103,7 @@ export class PJAX extends Service {
      * @memberof PJAX
      */
     getTransitionName(el) {
-        if (!el && !el.getAttribute)
+        if (!el || !el.getAttribute)
             return null;
         let transitionAttr = el.getAttribute(this.getConfig("transitionAttr", false));
         if (typeof transitionAttr === 'string')
@@ -134,7 +134,7 @@ export class PJAX extends Service {
         let preventSelf = el.hasAttribute(this.getConfig("preventSelfAttr", false));
         let preventAll = Boolean(el.closest(this.getConfig("preventAllAttr")));
         let prevent = preventSelf && preventAll;
-        let sameURL = _URL.equal(window.location.href, href);
+        let sameURL = new _URL().getFullPath() === new _URL(href).getFullPath();
         return !(exists || pushStateSupport || eventMutate || newTab || crossOrigin || download || prevent || sameURL);
     }
     /**
@@ -243,8 +243,10 @@ export class PJAX extends Service {
         let url = new _URL(href);
         let currentState = this.HistoryManager.last();
         let currentURL = currentState.getURL();
-        if (currentURL.equalTo(url))
+        if (currentURL.equalTo(url)) {
+            this.hashAction(url.hash);
             return;
+        }
         let transitionName;
         if (event && event.state) {
             this.EventEmitter.emit("popstate", event);
@@ -374,7 +376,7 @@ export class PJAX extends Service {
                     throw err;
                 }
                 this.EventEmitter.emit("transition--after", { oldPage, newPage, trigger, transitionName });
-                this.autoScrollOnHash && this.hashAction({ href, oldHref, trigger, transitionName });
+                this.hashAction();
             }
             catch (err) {
                 this.transitionStop();
@@ -392,21 +394,22 @@ export class PJAX extends Service {
     /**
      * Auto scrolls to an elements position if the element has an hash
      *
-     * @param {{ href: string, oldHref: string, trigger: Trigger, transitionName: string }} { }
+     * @param {string} [hash=window.location.hash]
      * @memberof PJAX
      */
-    hashAction({}) {
-        let { hash } = window.location;
-        let hashID = hash.slice(1);
-        if (hashID.length) {
-            let el = document.getElementById(hashID);
-            if (el) {
-                if (el.scrollIntoView) {
-                    el.scrollIntoView({ behavior: 'smooth' });
-                }
-                else {
-                    let { left, top } = el.getBoundingClientRect();
-                    window.scrollTo(left, top);
+    hashAction(hash = window.location.hash) {
+        if (this.autoScrollOnHash) {
+            let hashID = hash.slice(1);
+            if (hashID.length) {
+                let el = document.getElementById(hashID);
+                if (el) {
+                    if (el.scrollIntoView) {
+                        el.scrollIntoView({ behavior: 'smooth' });
+                    }
+                    else {
+                        let { left, top } = el.getBoundingClientRect();
+                        window.scroll({ left, top, behavior: 'smooth' });
+                    }
                 }
             }
         }
@@ -543,12 +546,6 @@ export class Fade extends Transition {
 app.add("service", new PJAX());
 app.add("transition", new Fade());
 (async () => {
-    try {
-        await app.boot();
-    }
-    catch (err) {
-        console.warn("App boot failed", err);
-    }
     let navbarLinks = () => {
         let { href } = window.location;
         let navLink = document.querySelectorAll(".nav-link");
@@ -560,6 +557,12 @@ app.add("transition", new Fade());
             }
         }
     };
+    try {
+        await app.boot();
+    }
+    catch (err) {
+        console.warn("App boot failed", err);
+    }
     app.on({
         "ready": navbarLinks,
         "go": navbarLinks
