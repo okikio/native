@@ -1,6 +1,4 @@
 import { App, Service, LinkEvent, _URL, Page, Trigger, IState, Coords, StateEvent as AnchorEvent, State, Transition, ITransitionData } from "./api.js";
-// @ts-ignore
-import animate from "./animateplus.js";
 const app = new App();
 
 export type IgnoreURLsList = Array<RegExp | string>;
