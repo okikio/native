@@ -1,29 +1,17 @@
-import gulp from "gulp";
+import gulp, { parallel, watch as sentry } from "gulp";
+
 import sass from "gulp-sass";
 import stream from "./stream";
 import bs from "browser-sync";
 import postcss from "gulp-postcss";
 import nunjuck from "gulp-nunjucks-render";
+import ts from "gulp-typescript";
 
-const { series, watch: sentry } = gulp;
+const tsProject = ts.createProject("tsconfig.json");
 const browserSync = bs.create();
-// const { task, src, dest, watch } = require("gulp");
-// const nunjucks = require("gulp-nunjucks-render");
-// const sass = require("gulp-sass");
+const { logError } = sass;
 
-// let { logError } = sass;
-
-// task("sass", () => {
-//     return src("sass/*.scss")
-//         .pipe(// Minify scss to css
-//             sass({ outputStyle: dev ? "expanded" : "compressed" }).on(
-//                 "error",
-//                 logError
-//             ),)
-//         .pipe(dest("docs"));
-// });
-
-export const nunjucks = () => {
+export const html = () => {
     return stream("pages/*.njk", {
         pipes: [
             nunjuck({
@@ -32,6 +20,27 @@ export const nunjucks = () => {
         ],
         dest: "docs"
     });
+};
+
+export const css = () => {
+    return stream("sass/app.scss", {
+        pipes: [
+            // Minify scss to css
+            sass({ outputStyle: "compressed" }).on("error", logError)
+        ],
+        dest: "docs",
+        end: [browserSync.stream()],
+    })
+};
+
+export const js = () => {
+    return stream(tsProject.src(), {
+        pipes: [
+            // Compile typescript
+            tsProject()
+        ],
+        dest: "docs"
+    })
 };
 
 export const watch = () => {
@@ -49,7 +58,11 @@ export const watch = () => {
             });
         }
     );
-    sentry(["templates/**/*.njk", "pages/*.njk"], { delay: 1000 }, nunjucks);
+    sentry(["templates/**/*.njk", "pages/*.njk"], { delay: 1000 }, html);
+    sentry("sass/**/*.scss", { delay: 1000 }, css);
+    sentry("ts/**/*.ts", { delay: 1000 }, js);
+
     sentry("docs/**/*.html").on('change', browserSync.reload);
+    sentry("docs/**/*.js").on('change', browserSync.reload);
 };
-export default nunjucks;
+export default parallel(html, css, js);

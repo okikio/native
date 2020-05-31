@@ -349,6 +349,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"ansi-colors@npm:^4.1.1":
+  version: 4.1.1
+  resolution: "ansi-colors@npm:4.1.1"
+  checksum: 3/50d8dfbce25602caea1b170ecf4c71c4c9c58d2d1e3186fb5712848c0610d05fe60b8bb6a9eaebd9b54f1db3baf6f603e04214cce597cc7799bc9f47fd9a797a
+  languageName: node
+  linkType: hard
+
 "ansi-escapes@npm:^4.2.1":
   version: 4.3.1
   resolution: "ansi-escapes@npm:4.3.1"
@@ -2968,6 +2975,22 @@ fsevents@~2.1.2:
   languageName: node
   linkType: hard
 
+"gulp-typescript@npm:^6.0.0-alpha.1":
+  version: 6.0.0-alpha.1
+  resolution: "gulp-typescript@npm:6.0.0-alpha.1"
+  dependencies:
+    ansi-colors: ^4.1.1
+    plugin-error: ^1.0.1
+    source-map: ^0.7.3
+    through2: ^3.0.1
+    vinyl: ^2.2.0
+    vinyl-fs: ^3.0.3
+  peerDependencies:
+    typescript: "~2.7.1 || >=2.8.0-dev || >=2.9.0-dev || ~3.0.0 || >=3.0.0-dev || >=3.1.0-dev || >= 3.2.0-dev || >= 3.3.0-dev || >= 3.4.0-dev || >= 3.5.0-dev || >= 3.6.0-dev || >= 3.7.0-dev "
+  checksum: 3/39ee6423d25da5cffab8942af65973629e48af23c6fb1aa91f19a4142d8b42f50c052784c99982a4bb45c7f58aba731dad87225b599414bbb2510e9cf875de03
+  languageName: node
+  linkType: hard
+
 "gulp@npm:^4.0.2":
   version: 4.0.2
   resolution: "gulp@npm:4.0.2"
@@ -4987,6 +5010,7 @@ fsevents@~2.1.2:
     gulp-nunjucks-render: ^2.2.3
     gulp-postcss: ^8.0.0
     gulp-sass: ^4.1.0
+    gulp-typescript: ^6.0.0-alpha.1
     typescript: ^3.9.2
   languageName: unknown
   linkType: soft
@@ -5221,6 +5245,17 @@ fsevents@~2.1.2:
     normalize-package-data: ^2.3.2
     path-type: ^1.0.0
   checksum: 3/01fdadf10e5643baffe30c294d06d8cb6dab9724f2cff0cdccbadcfab74a0050c968a0faa7a1d5191fc89eb27ab9dbec1f90ff9ac489cb77b9c0f81c630720ec
+  languageName: node
+  linkType: hard
+
+"readable-stream@npm:2 || 3":
+  version: 3.6.0
+  resolution: "readable-stream@npm:3.6.0"
+  dependencies:
+    inherits: ^2.0.3
+    string_decoder: ^1.1.1
+    util-deprecate: ^1.0.1
+  checksum: 3/f178b1daa80d9e58ebba71dbb08486430aa6f0dea3a22a1b7401f3f6983077d0bc0edea43099db06b8d006c9ad48d6383e8fb72c05d5b187670aeaf1b9b44f00
   languageName: node
   linkType: hard
 
@@ -5589,7 +5624,7 @@ fsevents@~2.1.2:
   languageName: node
   linkType: hard
 
-"safe-buffer@npm:^5.0.1, safe-buffer@npm:^5.1.2":
+"safe-buffer@npm:^5.0.1, safe-buffer@npm:^5.1.2, safe-buffer@npm:~5.2.0":
   version: 5.2.1
   resolution: "safe-buffer@npm:5.2.1"
   checksum: 3/0bb57f0d8f9d1fa4fe35ad8a2db1f83a027d48f2822d59ede88fd5cd4ddad83c0b497213feb7a70fbf90597a70c5217f735b0eb1850df40ce9b4ae81dd22b3f9
@@ -5990,6 +6025,13 @@ fsevents@~2.1.2:
   languageName: node
   linkType: hard
 
+"source-map@npm:^0.7.3":
+  version: 0.7.3
+  resolution: "source-map@npm:0.7.3"
+  checksum: 3/351ce26ffa1ebf203660c0d70d7566c81e65d2d994d1c2d94da140808e02da34961673ce12ecea9b40797b96fbeb8c70bf71a4ad9f779f1a4fdbba75530bb386
+  languageName: node
+  linkType: hard
+
 "sparkles@npm:^1.0.0":
   version: 1.0.1
   resolution: "sparkles@npm:1.0.1"
@@ -6201,6 +6243,15 @@ fsevents@~2.1.2:
   languageName: node
   linkType: hard
 
+"string_decoder@npm:^1.1.1":
+  version: 1.3.0
+  resolution: "string_decoder@npm:1.3.0"
+  dependencies:
+    safe-buffer: ~5.2.0
+  checksum: 3/0a09afb610cb538707fcf0a50a080f159040529eabdba82f23b04f1d1f90adf9ba18cc3800231c6ab2ee55dece047f4bed87c56da52b2afd85c3c7fb73eb7e48
+  languageName: node
+  linkType: hard
+
 "string_decoder@npm:~1.1.1":
   version: 1.1.1
   resolution: "string_decoder@npm:1.1.1"
@@ -6396,6 +6447,15 @@ fsevents@~2.1.2:
     readable-stream: ~2.3.6
     xtend: ~4.0.1
   checksum: 3/7427403555ead550d3cbe11f69eb07797e27505fc365cf53572111556a7c08625adb5159cad0fc4b9f57babfd937692e34b3a8a20ba35072f4e85f83d340661c
+  languageName: node
+  linkType: hard
+
+"through2@npm:^3.0.1":
+  version: 3.0.1
+  resolution: "through2@npm:3.0.1"
+  dependencies:
+    readable-stream: 2 || 3
+  checksum: 3/f0ff930ba9ce2309b05c8621bb053f99733b0fa0d0cd4fe475e9a980b35f7ccd71141192ecd88b45d97249db5c0e158778397f77842ad47bab0384eac75ad31c
   languageName: node
   linkType: hard
 
@@ -6743,7 +6803,7 @@ typescript@^3.9.2:
   languageName: node
   linkType: hard
 
-"util-deprecate@npm:~1.0.1":
+"util-deprecate@npm:^1.0.1, util-deprecate@npm:~1.0.1":
   version: 1.0.2
   resolution: "util-deprecate@npm:1.0.2"
   checksum: 3/73c2b1cf0210ccac300645384d8443cabbd93194117b2dc1b3bae8d8279ad39aedac857e020c4ea505e96a1045059c7359db3df6a9df0be6b8584166c9d61dc9
@@ -6810,7 +6870,7 @@ typescript@^3.9.2:
   languageName: node
   linkType: hard
 
-"vinyl-fs@npm:^3.0.0":
+"vinyl-fs@npm:^3.0.0, vinyl-fs@npm:^3.0.3":
   version: 3.0.3
   resolution: "vinyl-fs@npm:3.0.3"
   dependencies:
@@ -6859,7 +6919,7 @@ typescript@^3.9.2:
   languageName: node
   linkType: hard
 
-"vinyl@npm:^2.0.0":
+"vinyl@npm:^2.0.0, vinyl@npm:^2.2.0":
   version: 2.2.0
   resolution: "vinyl@npm:2.2.0"
   dependencies:

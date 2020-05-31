@@ -1,10 +1,9 @@
-import gulp from "gulp";
-const { src, dest } = gulp;
+import gulp, { src, dest } from "gulp";
 
 // Streamline Gulp Tasks
 export const stream = (_src, _opt = {}) => {
     let _end = _opt.end || [];
-    let host = src(_src, _opt.opts),
+    let host = typeof _src !== "string" && !Array.isArray(_src) ? _src : src(_src, _opt.opts),
         _pipes = _opt.pipes || [],
         _dest = _opt.dest || ".",
         _log = _opt.log || (() => { });
