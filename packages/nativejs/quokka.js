@@ -88,6 +88,13 @@ hex2rgba = (color) => {
     let [r, g, b] = color.match(/\w/g).map(x => parseInt(hex.length == 3 ? x + x : x, 16));
     return `rgb(${r},${g},${b})`;
 };
-let result = hex2rgba("ff00");
-result
-console.log()
+// let result = hex2rgba("ff00");
+// result
+
+class Block { 
+    name = "Cool";
+    getName() { 
+        return this.name;
+    }
+}
+console.log(Block.prototype.name)

@@ -8,6 +8,7 @@ export interface ICONFIG {
     preventSelfAttr?: string;
     preventAllAttr?: string;
     transitionAttr?: string;
+    blockAttr?: string;
     timeout?: number
 }
 
@@ -21,6 +22,7 @@ export const CONFIG_DEFAULTS: ICONFIG = {
     preventSelfAttr: `prevent="self"`,
     preventAllAttr: `prevent="all"`,
     transitionAttr: "transition",
+    blockAttr: `block`,
     timeout: 30000
 };
 
@@ -347,6 +349,13 @@ export class ManagerItem {
     protected manager: IAdvancedManager;
 
     /**
+     * Creates an instance of ManagerItem.
+     * 
+     * @memberof ManagerItem
+     */
+    constructor() { }
+
+    /**
      * The getConfig method for accessing the Configuration of the current App
      *
      * @param {ConfigKeys} [value]
@@ -421,7 +430,7 @@ export class AdvancedManager<K, V extends ManagerItem> extends Manager<K, V> {
     public set(key: K, value: V): AdvancedManager<K, V> {
         super.set(key, value);
         value.register(this);
-        return this;
+        return this;.register
     }
 
 	/**
@@ -485,7 +494,7 @@ export class AdvancedStorage<V extends ManagerItem> extends Storage<V> {
 	 */
     public set(key: number, value: V): AdvancedStorage<V> {
         super.set(key, value);
-        value.register(this);
+        value.register && value.register(this);
         return this;
     }
 
@@ -916,12 +925,11 @@ export class ServiceManager extends AdvancedStorage<Service> {
 	/**
 	 * Call the boot method for all Services
 	 *
-	 * @returns Promise<ServiceManager>
+	 * @returns Promise<void>
 	 * @memberof ServiceManager
 	 */
-    public async boot(): Promise<ServiceManager> {
+    public async boot(): Promise<void> {
         await this.asyncMethodCall("boot");
-        return this;
     }
 
 	/**
@@ -1297,6 +1305,10 @@ export class EventEmitter extends Manager<string, Event> {
         // Loop through the list of events
         events.forEach((event: string) => {
             let listeners: Event = this.getEvent(event);
+
+            const customEvent: CustomEvent<any> = new CustomEvent(event, { detail: args })
+            window.dispatchEvent(customEvent);
+
             listeners.forEach((listener: Listener) => {
                 let { callback, scope }: IListener = listener.toJSON();
                 callback.apply(scope, args);
@@ -1864,6 +1876,242 @@ export class TransitionManager extends AdvancedManager<string, Transition> {
     }
 }
 
+/**
+ * Services that interact with specific Components to achieve certain actions
+ *
+ * @export
+ * @class Block
+ * @extends {Service}
+ */
+export class Block extends Service {
+    /**
+     * The name of the Block
+     *
+     * @protected
+     * @type {string}
+     * @memberof Block
+     */
+    protected name: string;
+
+    /**
+     * Query selector string 
+     *
+     * @protected
+     * @type {string}
+     * @memberof Block
+     */
+    protected selector: string;
+
+    /**
+     * Index of Block in a BlockManager 
+     *
+     * @protected
+     * @type {number}
+     * @memberof Block
+     */
+    protected index: number;
+
+    /**
+     * The Root Element of a Block
+     *
+     * @protected
+     * @type {HTMLElement}
+     * @memberof Block
+     */
+    protected rootElement: HTMLElement;
+
+    /**
+     * It initializes the Block
+     *
+     * @param {string} [name]
+     * @param {HTMLElement} [rootElement]
+     * @param {string} [selector]
+     * @param {number} [index]
+     * @memberof Block
+     */
+    public init(name?: string, rootElement?: HTMLElement, selector?: string, index?: number) {
+        this.rootElement = rootElement;
+        this.name = name;
+        this.selector = selector;
+        this.index = index;
+    }
+
+    /**
+     * Get Root Element
+     *
+     * @returns HTMLElement
+     * @memberof Block
+     */
+    public getRootElement(): HTMLElement {
+        return this.rootElement;
+    }
+
+    /**
+     * Get Selector
+     *
+     * @returns string
+     * @memberof Block
+     */
+    public getSelector(): string {
+        return this.selector;
+    }
+
+    /**
+     * Get Index
+     *
+     * @returns number
+     * @memberof Block
+     */
+    public getIndex(): number {
+        return this.index;
+    }
+
+    /**
+     * Get the name of the Block
+     *
+     * @returns {string}
+     * @memberof Block
+     */
+    public getName(): string {
+        return this.name;
+    }
+}
+
+export interface IBlockIntent extends ManagerItem {
+    name: string,
+    block: new () => Block
+}
+
+/**
+ * A Service Manager designed to handle only Block Services, it refreshes on Page Change
+ *
+ * @export
+ * @class BlockManager
+ * @extends {ServiceManager}
+ */
+export class BlockManager extends AdvancedStorage<IBlockIntent> {
+    /**
+     * A list of Active Blocks 
+     *
+     * @protected
+     * @type {AdvancedStorage<Block>}
+     * @memberof BlockManager
+     */
+    protected activeBlocks: AdvancedStorage<Block>;
+
+    /**
+     * Creates an instance of BlockManager.
+     *
+     * @param {App} app
+     * @memberof BlockManager
+     */
+    constructor(app: App) {
+        super(app);
+        this.activeBlocks = new AdvancedStorage(app);
+    }
+
+	/**
+	 * Initialize all Blocks
+	 *
+	 * @memberof BlockManager
+	 */
+    public init() {
+        this.forEach(({ name, block }: IBlockIntent) => {
+            const selector: string = `[${this.getConfig("blockAttr", false)}="${name}"]`;
+            const rootElements: Node[] = [...document.querySelectorAll(selector)];
+
+            for (let i = 0, len = rootElements.length; i < len; i++) {
+                const newInstance: Block = new block();
+                newInstance.init(name, rootElements[i] as HTMLElement, selector, i);
+                this.activeBlocks.add(newInstance);
+            }
+        });
+    }
+
+    /**
+     * Getter for activeBlocks in BlockManager
+     *
+     * @returns
+     * @memberof BlockManager
+     */
+    public getActiveBlocks() {
+        return this.activeBlocks;
+    }
+
+	/**
+	 * Call the boot method for all Blocks
+	 *
+	 * @returns Promise<void>
+	 * @memberof BlockManager
+	 */
+    public async boot(): Promise<void> {
+        await this.activeBlocks.asyncMethodCall("boot");
+    }
+
+    /**
+     * Refreshes DOM Elements
+     *
+     * @memberof BlockManager
+     */
+    public refresh() {
+        const EventEmitter = this.getApp().getEmitter();
+        EventEmitter.on("BEFORE_TRANSITION_OUT", () => {
+            this.stop();
+        });
+
+        EventEmitter.on("BEFORE_TRANSITION_IN", () => {
+            const rootElementsStore: Manager<string, Node[]> = new Manager();
+
+            this.activeBlocks.forEach((block: Block) => {
+                let selector: string = block.getSelector();
+                let name: string = block.getName();
+                let index: number = block.getIndex();
+                let rootElements: Node[] = rootElementsStore.has(selector) ? rootElementsStore.get(selector) : [...document.querySelectorAll(selector)];
+                if (!rootElementsStore.has(selector)) rootElementsStore.set(selector, rootElements);
+
+                if (rootElements[index]) {
+                    block.init(name, rootElements[index] as HTMLElement, selector, index);
+                    block.boot();
+                }
+            });
+        });
+    }
+
+	/**
+	 * Call the initEvents method for all Blocks
+	 *
+	 * @returns BlockManager
+	 * @memberof BlockManager
+	 */
+    public initEvents(): BlockManager {
+        this.activeBlocks.methodCall("initEvents");
+        this.refresh();
+        return this;
+    }
+
+	/**
+	 * Call the stopEvents method for all Blocks
+	 *
+	 * @returns BlockManager
+	 * @memberof BlockManager
+	 */
+    public stopEvents(): BlockManager {
+        this.activeBlocks.methodCall("stopEvents");
+        return this;
+    }
+
+	/**
+	 * Call the stop method for all Blocks
+	 *
+	 * @returns BlockManager
+	 * @memberof BlockManager
+	 */
+    public stop(): BlockManager {
+        this.activeBlocks.methodCall("stop");
+        return this;
+    }
+}
+
 
 /**
  * The App class starts the entire process, it controls all managers and all services
@@ -1898,6 +2146,15 @@ export class App {
      * @memberof App
      */
     protected services: ServiceManager;
+
+    /**
+     * A new instance of the BlockManager
+     *
+     * @protected
+     * @type BlockManager
+     * @memberof App
+     */
+    protected blocks: BlockManager;
 
     /**
      * A new instance of an EventEmitter
@@ -1947,6 +2204,7 @@ export class App {
         this.config = config instanceof CONFIG ? config : new CONFIG(config);
         this.transitions = new TransitionManager(this);
         this.services = new ServiceManager(this);
+        this.blocks = new BlockManager(this);
         this.history = new HistoryManager();
         this.pages = new PageManager(this);
         this.emitter = new EventEmitter();
@@ -1981,6 +2239,16 @@ export class App {
      */
     public getEmitter(): EventEmitter {
         return this.emitter;
+    }
+
+    /**
+     * Returns the App's BlockManager
+     *
+     * @returns {BlockManager}
+     * @memberof App
+     */
+    public getBlocks(): BlockManager {
+        return this.blocks;
     }
 
     /**
@@ -2024,6 +2292,28 @@ export class App {
     }
 
     /**
+     * Returns a Block Intent Object from the App's instance of the BlockManager
+     *
+     * @param {number} key
+     * @returns IBlockIntent
+     * @memberof App
+     */
+    public getBlock(key: number): IBlockIntent {
+        return this.blocks.get(key);
+    }
+
+    /**
+     * Returns an instance of a Block from the App's instance of the BlockManager
+     *
+     * @param {number} key
+     * @returns Block
+     * @memberof App
+     */
+    public getActiveBlock(key: number): Block {
+        return this.blocks.getActiveBlocks().get(key);
+    }
+
+    /**
      * Returns a Service from the App's instance of the ServiceManager
      *
      * @param {number} key
@@ -2059,12 +2349,12 @@ export class App {
     /**
      * Based on the type, it will return either a Transition, a Service, or a State from their respective Managers
      *
-     * @param {string} type
+     * @param {("service" | "transition" | "state" | "block" | string)} type
      * @param {any} key
      * @returns App
      * @memberof App
      */
-    public get(type: string, key: any): App {
+    public get(type: "service" | "transition" | "state" | "block" | string, key: any): App {
         switch (type.toLowerCase()) {
             case "service":
                 this.getService(key);
@@ -2074,6 +2364,9 @@ export class App {
                 break;
             case "state":
                 this.getState(key);
+                break;
+            case "block":
+                this.getActiveBlock(key);
                 break;
             default:
                 throw `Error: can't get type '${type}', it is not a recognized type. Did you spell it correctly.`;
@@ -2107,6 +2400,18 @@ export class App {
             default:
                 return Promise.resolve(this.get(type, key));
         }
+    }
+
+    /**
+     * Adds a Block Intent to the App's instance of the BlockManager
+     *
+     * @param {IBlockIntent} blockIntent
+     * @returns App
+     * @memberof App
+     */
+    public addBlock(blockIntent: IBlockIntent): App {
+        this.blocks.add(blockIntent);
+        return this;
     }
 
     /**
@@ -2153,7 +2458,7 @@ export class App {
      * @returns App
      * @memberof App
      */
-    public add(type: "service" | "transition" | "state", value: any): App {
+    public add(type: "service" | "transition" | "state" | "block", value: any): App {
         switch (type.toLowerCase()) {
             case "service":
                 this.addService(value);
@@ -2163,6 +2468,9 @@ export class App {
                 break;
             case "state":
                 this.addState(value);
+                break;
+            case "block":
+                this.addBlock(value);
                 break;
             default:
                 throw `Error: can't add type '${type}', it is not a recognized type. Did you spell it correctly.`;
@@ -2177,8 +2485,11 @@ export class App {
      * @memberof App
      */
     public async boot(): Promise<App> {
+        this.blocks.init();
         await this.services.boot();
+        await this.blocks.boot();
         this.services.initEvents();
+        this.blocks.initEvents();
         this.transitions.initEvents();
         return Promise.resolve(this);
     }
@@ -2191,6 +2502,7 @@ export class App {
      */
     public stop(): App {
         this.services.stop();
+        this.blocks.stop();
         this.transitions.stopEvents();
         return this;
     }

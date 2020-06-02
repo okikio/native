@@ -1,0 +1,198 @@
+import { Service, Manager } from "./api.js";
+//== Services
+export class Splashscreen extends Service {
+    constructor() {
+        super(...arguments);
+        this.minimalDuration = 1000; // ms
+    }
+    boot() {
+        // Elements
+        this.rootElement = document.getElementById('splashscreen');
+        this.innerEl = this.rootElement.querySelector('.splashscreen-inner');
+        this.bgEl = this.rootElement.querySelector('.splashscreen-bg');
+    }
+    initEvents() {
+        this.hide();
+    }
+    // You need to override this method
+    async hide() {
+        await new Promise(resolve => {
+            window.setTimeout(() => {
+                this.EventEmitter.emit("BEFORE_SPLASHSCREEN_HIDE");
+                resolve();
+            }, this.minimalDuration);
+        });
+        await new Promise(resolve => {
+            let elInner = this.innerEl.animate([
+                { opacity: '1' },
+                { opacity: '0' },
+            ], 500);
+            elInner.onfinish = () => {
+                this.innerEl.style.opacity = '0';
+            };
+            this.EventEmitter.emit("START_SPLASHSCREEN_HIDE");
+            let rootEl = this.rootElement.animate([
+                { transform: "translateY(0%)" },
+                { transform: "translateY(100%)" }
+            ], {
+                duration: 1200,
+                easing: "cubic-bezier(0.65, 0, 0.35, 1)" // ease-in-out-cubic
+            });
+            rootEl.onfinish = () => {
+                this.rootElement.style.visibility = "hidden";
+                this.rootElement.style.pointerEvents = "none";
+                this.rootElement.style.transform = "translateY(100%)";
+                this.EventEmitter.emit("AFTER_SPLASHSCREEN_HIDE");
+                resolve();
+            };
+        });
+    }
+}
+export class IntroAnimation extends Service {
+    boot() {
+        // Elements
+        this.elements = [...document.querySelectorAll('.bg-white')];
+        // Bind methods
+        this.prepareToShow = this.prepareToShow.bind(this);
+        this.show = this.show.bind(this);
+    }
+    initEvents() {
+        this.EventEmitter.on("BEFORE_SPLASHSCREEN_HIDE", this.prepareToShow);
+        this.EventEmitter.on("START_SPLASHSCREEN_HIDE", this.show);
+        this.EventEmitter.on("BEFORE_TRANSITION_IN", () => {
+            this.boot();
+            this.prepareToShow();
+        });
+        this.EventEmitter.on("AFTER_TRANSITION_IN", this.show);
+    }
+    stopEvents() {
+        this.EventEmitter.off("BEFORE_SPLASHSCREEN_HIDE", this.prepareToShow);
+        this.EventEmitter.off("START_SPLASHSCREEN_HIDE", this.show);
+        this.EventEmitter.off("BEFORE_TRANSITION_IN", () => {
+            this.boot();
+            this.prepareToShow();
+        });
+        this.EventEmitter.off("AFTER_TRANSITION_IN", this.show);
+    }
+    prepareToShow() {
+        for (let el of this.elements) {
+            el.style.transform = "translateY(200px)";
+            el.style.opacity = '0';
+        }
+    }
+    show() {
+        let count = 1;
+        for (let el of this.elements) {
+            let animation = el.animate([
+                { transform: "translateY(200px)", opacity: 0 },
+                { transform: "translateY(0px)", opacity: 1 },
+            ], {
+                duration: 1200,
+                delay: 200 * count,
+                easing: "cubic-bezier(0.33, 1, 0.68, 1)" // ease-out-cubic
+            });
+            animation.onfinish = () => {
+                el.style.opacity = '1';
+                el.style.transform = "translateY(0)";
+            };
+            count++;
+        }
+    }
+}
+export class InView extends Service {
+    boot() {
+        this.rootElements = [...document.querySelectorAll('[data-node-type="InViewBlock"]')];
+        // Values
+        this.observers = [];
+        this.observerOptions = {
+            root: null,
+            rootMargin: '0px',
+            threshold: 0.1
+        };
+        // Bind method
+        this.onIntersectionCallback = this.onIntersectionCallback.bind(this);
+        // Create observers
+        for (let i = 0, len = this.rootElements.length; i < len; i++) {
+            this.observers[i] = new IntersectionObserver(entries => {
+                this.onIntersectionCallback([i, entries]);
+            }, this.observerOptions);
+        }
+        // Add block rootElement in the observer
+        this.observe();
+        // Prepare values
+        this.imgs = new Manager();
+        this.onScreenEl = [];
+        this.direction = [];
+        this.xPercent = [];
+        for (let i = 0, len = this.rootElements.length; i < len; i++) {
+            let rootElement = this.rootElements[i];
+            if (rootElement.hasAttribute('data-direction')) {
+                this.direction[i] = rootElement.getAttribute('data-direction');
+            }
+            else {
+                this.direction[i] = "right";
+            }
+            if (this.direction[i] === 'left') {
+                this.xPercent[i] = -(typeof this.xPercent[i] === "undefined" ? 30 : this.xPercent[i]);
+            }
+            else {
+                this.xPercent[i] = typeof this.xPercent[i] === "undefined" ? 30 : this.xPercent[i];
+            }
+            // Find elements
+            this.imgs.set(i, [...rootElement.querySelectorAll('img')]);
+        }
+    }
+    initEvents() {
+        this.EventEmitter.on("BEFORE_TRANSITION_OUT", () => {
+            this.unobserve();
+        });
+        this.EventEmitter.on("BEFORE_TRANSITION_IN", () => {
+            this.boot();
+        });
+    }
+    observe() {
+        for (let i = 0, len = this.rootElements.length; i < len; i++) {
+            this.observers[i].observe(this.rootElements[i]);
+        }
+    }
+    unobserve() {
+        for (let i = 0, len = this.rootElements.length; i < len; i++) {
+            this.observers[i].unobserve(this.rootElements[i]);
+        }
+    }
+    stopEvents() {
+        this.unobserve();
+    }
+    onIntersectionCallback([i, entries]) {
+        for (let entry of entries) {
+            if (!this.onScreenEl[i]) {
+                if (entry.intersectionRatio > 0) {
+                    this.onScreen([i, entry]);
+                }
+                else {
+                    this.offScreen([i, entry]);
+                }
+            }
+        }
+    }
+    onScreen([i, { target }]) {
+        let animation = target.animate([
+            { transform: `translateX(${this.xPercent[i]}%)`, opacity: 0 },
+            { transform: "translateX(0%)", opacity: 1 },
+        ], {
+            duration: 1500,
+            delay: 0.15,
+            easing: "cubic-bezier(0.22, 1, 0.36, 1)" // ease-out-quint
+        });
+        animation.onfinish = () => {
+            target.style.transform = "translateX(0%)";
+            target.style.opacity = "1";
+            this.onScreenEl[i] = true;
+        };
+    }
+    offScreen([i, { target }]) {
+        target.style.transform = `translateX(${this.xPercent[i]}%)`;
+        target.style.opacity = "0";
+    }
+}
+//# sourceMappingURL=services.js.map
