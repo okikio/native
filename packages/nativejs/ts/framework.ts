@@ -735,7 +735,7 @@ export class BigTransition extends Transition {
                 toWrapper.style.opacity = "1";
             };
 
-            let count = 1;
+            let count = 0;
             for (let el of this.horizontalElements) {
                 let animation = el.animate([
                     { transform: "scaleX(1)" },
@@ -750,7 +750,7 @@ export class BigTransition extends Transition {
                 count++;
             }
 
-            count = 1;
+            count = 0;
             for (let el of this.verticalElements) {
                 let animation = el.animate([
                     { transform: "scaleY(1)" },
