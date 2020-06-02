@@ -211,6 +211,7 @@ body {
     background: #eee;
     transform-origin: 0 0;
     transform: scaleY(0);
+    border: none;
 }
 
 #big-transition #big-transition-horizontal {

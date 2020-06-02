@@ -14,15 +14,71 @@
     <link rel="stylesheet" href="./css/demo.css">
 </head>
 <body class="home-page bg-light">
-    
+    <div id="splashscreen">
+        <div class="splashscreen-inner">
+            <div class="spinner">
+                <svg viewBox="0 0 66 66" xmlns="http://www.w3.org/2000/svg">
+                    <circle class="length" fill="none" stroke-width="8" stroke-linecap="round" cx="33" cy="33" r="28"></circle>
+                </svg>
+                <svg viewBox="0 0 66 66" xmlns="http://www.w3.org/2000/svg">
+                    <circle fill="none" stroke-width="8" stroke-linecap="round" cx="33" cy="33" r="28"></circle>
+                </svg>
+                <svg viewBox="0 0 66 66" xmlns="http://www.w3.org/2000/svg">
+                    <circle fill="none" stroke-width="8" stroke-linecap="round" cx="33" cy="33" r="28"></circle>
+                </svg>
+                <svg viewBox="0 0 66 66" xmlns="http://www.w3.org/2000/svg">
+                    <circle fill="none" stroke-width="8" stroke-linecap="round" cx="33" cy="33" r="28"></circle>
+                </svg>
+            </div>
+            <div class="splashscreen-text">Loading...</div>
+        </div>
+        <div class="splashscreen-bg"></div>
+    </div>
+
+    <div id="big-transition">
+        <div id="big-transition-vertical">
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+        </div>
+        <div id="big-transition-horizontal">
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+        </div>
+    </div>
     <nav id="main-nav" class="navbar navbar-expand-md fixed-top navbar-dark bg-dark">
-    <a class="navbar-brand" href="/">Starting Blocks
+    <a class="navbar-brand" href="./index.html">Starting Blocks
         <small>v4</small>
     </a>
     <ul class="navbar-nav mr-auto">
         <li class="nav-item"><a href="./index.html" class="nav-link active" data-transition="default">Homepage</a></li>
-        <li class="nav-item"><a href="./about.html" class="nav-link" data-transition="default">About</a></li>
-        <li class="nav-item"><a href="./other.html" class="nav-link" data-transition="default">Other</a></li>
+        <li class="nav-item"><a href="./about.html" class="nav-link" data-transition="slide-left">About</a></li>
+        <li class="nav-item"><a href="./other.html" class="nav-link" data-transition="big">Other</a></li>
     </ul>
 </nav>
     
@@ -33,9 +89,8 @@
             data-node-type="page"
             data-meta-title="Page 1">
             <div class="container">
-                <h1>Page 1</h1>
-                <p><a href="#" class="duplicate-last btn btn-primary">Duplicated last block</a></p>
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus ex est, maximus aliquam sagittis vel,
+                <h1 class="bg-white">About Page</h1>
+                <p class="bg-white">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus ex est, maximus aliquam sagittis vel,
                     tempus vel odio. Praesent felis elit, blandit et laoreet nec, hendrerit et arcu. Aenean ligula sapien,
                     sodales vel semper in, pulvinar id nulla. Donec pellentesque non tellus vel imperdiet. Pellentesque
                     posuere, nisl sed rutrum tincidunt, augue augue vestibulum ex, vel ornare justo arcu eu magna. Praesent
@@ -46,9 +101,9 @@
                     fermentum rutrum.</p>
                 <div class="row">
                     <div class="col">
-                        <div class="my-3 p-3 bg-white rounded box-shadow">
+                        <div class="my-3 p-3 rounded box-shadow">
                             <div class="row">
-                                <div class="col-sm-6">
+                                <div class="col-sm-6 bg-white">
                                     <p>Vivamus dolor massa, aliquet ut leo vel, sodales mattis tortor. Aenean at mauris et
                                         ex mollis
                                         fringilla. Sed volutpat viverra vehicula. Nullam maximus ligula ac nisl aliquam
@@ -65,7 +120,7 @@
                                         tortor. Duis auctor
                                         iaculis arcu ac rutrum. Suspendisse vel odio risus.</p>
                                 </div>
-                                <div class="col-sm-6">
+                                <div class="col-sm-6 bg-white">
                                     <p>Vivamus dolor massa, aliquet ut leo vel, sodales mattis tortor. Aenean at mauris et
                                         ex mollis
                                         fringilla. Sed volutpat viverra vehicula. Nullam maximus ligula ac nisl aliquam
@@ -82,7 +137,7 @@
                                         tortor. Duis auctor
                                         iaculis arcu ac rutrum. Suspendisse vel odio risus.</p>
                                 </div>
-                                <div class="col-sm-12">
+                                <div class="col-sm-12 bg-white">
                                     <p>Vivamus dolor massa, aliquet ut leo vel, sodales mattis tortor. Aenean at mauris
                                         et ex mollis
                                         fringilla. Sed volutpat viverra vehicula. Nullam maximus ligula ac nisl aliquam
@@ -269,16 +324,16 @@
                         pellentesque erat ac, porttitor nulla. Curabitur rhoncus urna non magna mattis aliquet. Vestibulum
                         non lobortis turpis. Nunc aliquet velit a magna dictum pulvinar vitae laoreet tortor. Duis auctor
                         iaculis arcu ac rutrum. Suspendisse vel odio risus.</p>
-                    <p><img class="lazyload img-fluid"
+                    <p><img loading="lazy" class="lazyload img-fluid"
                             id="4-image"
                             width="700"
-                            src="#"
+                            src="https://images.unsplash.com/photo-1590233183655-79cd23bd56db?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1534&q=80"
                             data-src="/img/test1.jpg"
                             alt="Lazyloaded img"></p>
-                    <p><img class="lazyload img-fluid"
+                    <p><img loading="lazy" class="lazyload img-fluid"
                             id="5-image"
                             width="700"
-                            src="#"
+                            src="https://images.unsplash.com/photo-1590305840667-d7b021e86fd6?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1502&q=80"
                             data-src="/img/test2.jpg"
                             alt="Lazyloaded img"></p>
                     <p>Vivamus dolor massa, aliquet ut leo vel, sodales mattis tortor. Aenean at mauris et ex mollis
@@ -301,10 +356,10 @@
                         pellentesque erat ac, porttitor nulla. Curabitur rhoncus urna non magna mattis aliquet. Vestibulum
                         non lobortis turpis. Nunc aliquet velit a magna dictum pulvinar vitae laoreet tortor. Duis auctor
                         iaculis arcu ac rutrum. Suspendisse vel odio risus.</p>
-                    <p><img class="lazyload img-fluid"
+                    <p><img loading="lazy" class="lazyload img-fluid"
                             id="snd-image"
                             width="700"
-                            src="#"
+                            src="https://images.unsplash.com/photo-1589979812000-4eab44f02c30?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1541&q=80"
                             data-src="/img/test3.jpg"
                             alt="Lazyloaded img"></p>
                 </div>
@@ -312,8 +367,14 @@
         </div>
     </main>
 
+    <footer class="footer">
+        <div class="container">
+            Made by <a href="https://github.com/okikio" class="text-muted" target="_blank">Okiki Ojo</a>
+            Based on <a href="https://github.com/rezozero/starting-blocks" class="text-muted" target="_blank">Starting blocks</a>
+        </div>
+    </footer>
 
-    <!-- <script src="../app.js" type="module"></script> -->
+    
     <script src="./js/framework.js" type="module"></script>
 </body>
 </html>

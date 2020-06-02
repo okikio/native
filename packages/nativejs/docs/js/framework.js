@@ -1,4 +1,4 @@
-import { App, Service, _URL, Coords, State, Transition } from "./api.js";
+import { App, Service, _URL, Coords, State, Transition, Manager } from "./api.js";
 const app = new App();
 /**
  * Creates a Barba JS like PJAX Service, for the Framework
@@ -15,7 +15,7 @@ export class PJAX extends Service {
          * URL's to ignore when prefetching
          *
          * @private
-         *
+         * @type {boolean}
          * @memberof PJAX
          */
         this.ignoreURLs = [];
@@ -31,7 +31,7 @@ export class PJAX extends Service {
          * Current state or transitions
          *
          * @private
-         *
+         * @type {boolean}
          * @memberof PJAX
          */
         this.isTransitioning = false;
@@ -39,7 +39,7 @@ export class PJAX extends Service {
          * Ignore extra clicks of an anchor element if a transition has already started
          *
          * @private
-         *
+         * @type {boolean}
          * @memberof PJAX
          */
         this.stopOnTransitioning = false;
@@ -47,6 +47,7 @@ export class PJAX extends Service {
          * On page change (excluding popstate event) keep current scroll position
          *
          * @private
+         * @type {boolean}
          * @memberof PJAX
          */
         this.stickyScroll = true;
@@ -236,7 +237,7 @@ export class PJAX extends Service {
      */
     go({ href, trigger = 'HistoryManager', event }) {
         // If transition is already running and the go method is called again, force load page
-        if (this.isTransitioning) {
+        if (this.isTransitioning && this.stopOnTransitioning) {
             this.force(href);
             return;
         }
@@ -501,6 +502,7 @@ export class PJAX extends Service {
         window.removeEventListener('popstate', this.onStateChange);
     }
 }
+//== Transitions
 export class Fade extends Transition {
     constructor() {
         super(...arguments);
@@ -523,6 +525,7 @@ export class Fade extends Transition {
                 easing: "ease"
             });
             animation.onfinish = () => {
+                fromWrapper.style.opacity = "0";
                 window.scrollTo(0, 0);
                 resolve();
             };
@@ -539,16 +542,399 @@ export class Fade extends Transition {
                 duration,
                 easing: "ease"
             });
-            animation.onfinish = resolve;
+            animation.onfinish = () => {
+                toWrapper.style.opacity = "1";
+                resolve();
+            };
         });
     }
 }
-app.add("service", new PJAX());
-app.add("transition", new Fade());
+export class Slide extends Transition {
+    constructor() {
+        super(...arguments);
+        this.name = "slide";
+        this.duration = 500;
+        this.direction = "right";
+    }
+    out({ from }) {
+        let { duration } = this;
+        let fromWrapper = from.getWrapper();
+        window.scroll({
+            top: 0,
+            behavior: 'smooth' // 👈 
+        });
+        return new Promise(resolve => {
+            let animation = fromWrapper.animate([
+                { transform: "translateX(0%)", opacity: 1 },
+                { transform: `translateX(${this.direction === "left" ? "-" : ""}25%)`, opacity: 0 },
+            ], {
+                duration,
+                easing: "cubic-bezier(0.64, 0, 0.78, 0)" // ease-in-quint
+            });
+            animation.onfinish = () => {
+                fromWrapper.style.opacity = "0";
+                resolve();
+            };
+        });
+    }
+    in({ to }) {
+        let toWrapper = to.getWrapper();
+        return new Promise(resolve => {
+            let animation = toWrapper.animate([
+                { transform: `translateX(${this.direction === "left" ? "" : "-"}25%)`, opacity: 0 },
+                { transform: "translateX(0%)", opacity: 1 },
+            ], {
+                duration: 750,
+                easing: "cubic-bezier(0.22, 1, 0.36, 1)" // ease-out-quint
+            });
+            animation.onfinish = () => {
+                toWrapper.style.opacity = "1";
+                resolve();
+            };
+        });
+    }
+}
+export class SlideLeft extends Slide {
+    constructor() {
+        super(...arguments);
+        this.name = "slide-left";
+        this.duration = 500;
+        this.direction = "left";
+    }
+}
+export class SlideRight extends Slide {
+    constructor() {
+        super(...arguments);
+        this.name = "slide-right";
+        this.duration = 500;
+        this.direction = "right";
+    }
+}
+export class BigTransition extends Transition {
+    constructor() {
+        super(...arguments);
+        this.name = "big";
+        this.duration = 500;
+    }
+    boot() {
+        this.mainElement = document.getElementById('big-transition');
+        this.verticalElements = [...document.getElementById('big-transition-vertical').querySelectorAll('div')];
+        this.horizontalElements = [...document.getElementById('big-transition-horizontal').querySelectorAll('div')];
+        this.maxLength = Math.max(this.verticalElements.length, this.horizontalElements.length);
+    }
+    out({ from }) {
+        let { duration } = this;
+        let fromWrapper = from.getWrapper();
+        window.scroll({
+            top: 0,
+            behavior: 'smooth' // 👈 
+        });
+        return new Promise(resolve => {
+            let wrapperAnim = fromWrapper.animate([
+                { opacity: 1 },
+                { opacity: 0 },
+            ], {
+                duration,
+                easing: "ease"
+            });
+            wrapperAnim.onfinish = () => {
+                fromWrapper.style.opacity = "0";
+            };
+            this.mainElement.style.opacity = "1";
+            this.mainElement.style.visibility = "visible";
+            let count = 1;
+            for (let el of this.horizontalElements) {
+                let animation = el.animate([
+                    { transform: "scaleX(0)" },
+                    { transform: "scaleX(1)" },
+                ], {
+                    duration,
+                    delay: 100 * count,
+                    easing: "linear"
+                });
+                animation.onfinish = () => {
+                    el.style.transform = "scaleX(1)";
+                };
+                count++;
+            }
+            count = 1;
+            for (let el of this.verticalElements.reverse()) {
+                let animation = el.animate([
+                    { transform: "scaleY(0)" },
+                    { transform: "scaleY(1)" },
+                ], {
+                    duration,
+                    delay: 100 * count,
+                    easing: "linear"
+                });
+                animation.onfinish = () => {
+                    el.style.transform = "scaleY(1)";
+                };
+                count++;
+            }
+            window.setTimeout(resolve, this.maxLength * 100 + duration);
+        });
+    }
+    in({ to }) {
+        let { duration } = this;
+        let toWrapper = to.getWrapper();
+        return new Promise(resolve => {
+            let wrapperAnim = toWrapper.animate([
+                { opacity: 0 },
+                { opacity: 1 },
+            ], {
+                duration,
+                easing: "ease"
+            });
+            wrapperAnim.onfinish = () => {
+                toWrapper.style.opacity = "1";
+            };
+            let count = 1;
+            for (let el of this.horizontalElements) {
+                let animation = el.animate([
+                    { transform: "scaleX(1)" },
+                    { transform: "scaleX(0)" },
+                ], {
+                    duration,
+                    delay: 100 * count
+                });
+                animation.onfinish = () => {
+                    el.style.transform = "scaleX(0)";
+                };
+                count++;
+            }
+            count = 1;
+            for (let el of this.verticalElements) {
+                let animation = el.animate([
+                    { transform: "scaleY(1)" },
+                    { transform: "scaleY(0)" },
+                ], {
+                    duration,
+                    delay: 100 * count
+                });
+                animation.onfinish = () => {
+                    el.style.transform = "scaleY(0)";
+                };
+                count++;
+            }
+            window.setTimeout(() => {
+                this.mainElement.style.opacity = "0";
+                this.mainElement.style.visibility = "hidden";
+                resolve();
+            }, this.maxLength * 100 + duration);
+        });
+    }
+}
+//== Services
+export class Splashscreen extends Service {
+    constructor() {
+        super(...arguments);
+        this.minimalDuration = 1000; // ms
+    }
+    boot() {
+        // Elements
+        this.rootElement = document.getElementById('splashscreen');
+        this.innerEl = this.rootElement.querySelector('.splashscreen-inner');
+        this.bgEl = this.rootElement.querySelector('.splashscreen-bg');
+    }
+    initEvents() {
+        this.hide();
+    }
+    // You need to override this method
+    async hide() {
+        await new Promise(resolve => {
+            window.setTimeout(() => {
+                this.EventEmitter.emit("BEFORE_SPLASHSCREEN_HIDE");
+                resolve();
+            }, this.minimalDuration);
+        });
+        await new Promise(resolve => {
+            let elInner = this.innerEl.animate([
+                { opacity: '1' },
+                { opacity: '0' },
+            ], 500);
+            elInner.onfinish = () => {
+                this.innerEl.style.opacity = '0';
+            };
+            this.EventEmitter.emit("START_SPLASHSCREEN_HIDE");
+            let rootEl = this.rootElement.animate([
+                { transform: "translateY(0%)" },
+                { transform: "translateY(100%)" }
+            ], {
+                duration: 1200,
+                easing: "cubic-bezier(0.65, 0, 0.35, 1)" // ease-in-out-cubic
+            });
+            rootEl.onfinish = () => {
+                this.rootElement.style.visibility = "hidden";
+                this.rootElement.style.pointerEvents = "none";
+                this.rootElement.style.transform = "translateY(100%)";
+                this.EventEmitter.emit("AFTER_SPLASHSCREEN_HIDE");
+                resolve();
+            };
+        });
+    }
+}
+export class IntroAnimation extends Service {
+    boot() {
+        // Elements
+        this.elements = [...document.querySelectorAll('.bg-white')];
+        // Bind methods
+        this.prepareToShow = this.prepareToShow.bind(this);
+        this.show = this.show.bind(this);
+    }
+    initEvents() {
+        this.EventEmitter.on("BEFORE_SPLASHSCREEN_HIDE", this.prepareToShow);
+        this.EventEmitter.on("START_SPLASHSCREEN_HIDE", this.show);
+        this.EventEmitter.on("BEFORE_TRANSITION_IN", () => {
+            this.boot();
+            this.prepareToShow();
+        });
+        this.EventEmitter.on("AFTER_TRANSITION_IN", this.show);
+    }
+    stopEvents() {
+        this.EventEmitter.off("BEFORE_SPLASHSCREEN_HIDE", this.prepareToShow);
+        this.EventEmitter.off("START_SPLASHSCREEN_HIDE", this.show);
+        this.EventEmitter.off("BEFORE_TRANSITION_IN", () => {
+            this.boot();
+            this.prepareToShow();
+        });
+        this.EventEmitter.off("AFTER_TRANSITION_IN", this.show);
+    }
+    prepareToShow() {
+        for (let el of this.elements) {
+            el.style.transform = "translateY(200px)";
+            el.style.opacity = '0';
+        }
+    }
+    show() {
+        let count = 1;
+        for (let el of this.elements) {
+            let animation = el.animate([
+                { transform: "translateY(200px)", opacity: 0 },
+                { transform: "translateY(0px)", opacity: 1 },
+            ], {
+                duration: 1200,
+                delay: 200 * count,
+                easing: "cubic-bezier(0.33, 1, 0.68, 1)" // ease-out-cubic
+            });
+            animation.onfinish = () => {
+                el.style.opacity = '1';
+                el.style.transform = "translateY(0)";
+            };
+            count++;
+        }
+    }
+}
+export class InView extends Service {
+    boot() {
+        this.rootElements = [...document.querySelectorAll('[data-node-type="InViewBlock"]')];
+        // Values
+        this.observers = [];
+        this.observerOptions = {
+            root: null,
+            rootMargin: '0px',
+            threshold: 0.1
+        };
+        // Bind method
+        this.onIntersectionCallback = this.onIntersectionCallback.bind(this);
+        // Create observers
+        for (let i = 0, len = this.rootElements.length; i < len; i++) {
+            this.observers[i] = new IntersectionObserver(entries => {
+                this.onIntersectionCallback([i, entries]);
+            }, this.observerOptions);
+        }
+        // Add block rootElement in the observer
+        this.observe();
+        // Prepare values
+        this.imgs = new Manager();
+        this.onScreenEl = [];
+        this.direction = [];
+        this.xPercent = [];
+        for (let i = 0, len = this.rootElements.length; i < len; i++) {
+            let rootElement = this.rootElements[i];
+            if (rootElement.hasAttribute('data-direction')) {
+                this.direction[i] = rootElement.getAttribute('data-direction');
+            }
+            else {
+                this.direction[i] = "right";
+            }
+            if (this.direction[i] === 'left') {
+                this.xPercent[i] = -(typeof this.xPercent[i] === "undefined" ? 30 : this.xPercent[i]);
+            }
+            else {
+                this.xPercent[i] = typeof this.xPercent[i] === "undefined" ? 30 : this.xPercent[i];
+            }
+            // Find elements
+            this.imgs.set(i, [...rootElement.querySelectorAll('img')]);
+        }
+    }
+    initEvents() {
+        this.EventEmitter.on("BEFORE_TRANSITION_OUT", () => {
+            this.unobserve();
+        });
+        this.EventEmitter.on("BEFORE_TRANSITION_IN", () => {
+            this.boot();
+        });
+    }
+    observe() {
+        for (let i = 0, len = this.rootElements.length; i < len; i++) {
+            this.observers[i].observe(this.rootElements[i]);
+        }
+    }
+    unobserve() {
+        for (let i = 0, len = this.rootElements.length; i < len; i++) {
+            this.observers[i].unobserve(this.rootElements[i]);
+        }
+    }
+    stopEvents() {
+        this.unobserve();
+    }
+    onIntersectionCallback([i, entries]) {
+        for (let entry of entries) {
+            if (!this.onScreenEl[i]) {
+                if (entry.intersectionRatio > 0) {
+                    this.onScreen([i, entry]);
+                }
+                else {
+                    this.offScreen([i, entry]);
+                }
+            }
+        }
+    }
+    onScreen([i, { target }]) {
+        let animation = target.animate([
+            { transform: `translateX(${this.xPercent[i]}%)`, opacity: 0 },
+            { transform: "translateX(0%)", opacity: 1 },
+        ], {
+            duration: 1500,
+            delay: 0.15,
+            easing: "cubic-bezier(0.22, 1, 0.36, 1)" // ease-out-quint
+        });
+        animation.onfinish = () => {
+            target.style.transform = "translateX(0%)";
+            target.style.opacity = "1";
+            this.onScreenEl[i] = true;
+        };
+    }
+    offScreen([i, { target }]) {
+        target.style.transform = `translateX(${this.xPercent[i]}%)`;
+        target.style.opacity = "0";
+    }
+}
+app
+    .add("service", new PJAX())
+    .add("service", new Splashscreen())
+    .add("service", new IntroAnimation())
+    .add("service", new InView())
+    .add("transition", new Fade())
+    .add("transition", new BigTransition())
+    .add("transition", new Slide())
+    .add("transition", new SlideLeft())
+    .add("transition", new SlideRight());
 (async () => {
     let navbarLinks = () => {
         let { href } = window.location;
-        let navLink = document.querySelectorAll(".nav-link");
+        let navLink = document.querySelectorAll(".navbar .nav-link");
         for (let item of navLink) {
             let URLmatch = _URL.equal(item.href, href);
             let isActive = item.classList.contains("active");

@@ -67,9 +67,9 @@ export const watch = () => {
     );
     sentry(["templates/**/*.njk", "pages/*.njk"], { delay: 1000 }, html);
     sentry("sass/**/*.scss", { delay: 1000 }, css);
-    sentry("ts/**/*.ts", { delay: 1000 }, js);
+    // sentry("ts/**/*.ts", { delay: 1000 }, js);
 
     sentry("docs/**/*.html").on('change', browserSync.reload);
-    sentry("docs/**/*.js").on('change', browserSync.reload);
+    // sentry("docs/**/*.js").on('change', browserSync.reload);
 };
 export default parallel(html, css, js);

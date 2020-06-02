@@ -14,11 +14,73 @@
     <link rel="stylesheet" href="./css/demo.css">
 </head>
 <body class="home-page bg-light">
-    
+    <div id="splashscreen">
+        <div class="splashscreen-inner">
+            <div class="spinner">
+                <svg viewBox="0 0 66 66" xmlns="http://www.w3.org/2000/svg">
+                    <circle class="length" fill="none" stroke-width="8" stroke-linecap="round" cx="33" cy="33" r="28"></circle>
+                </svg>
+                <svg viewBox="0 0 66 66" xmlns="http://www.w3.org/2000/svg">
+                    <circle fill="none" stroke-width="8" stroke-linecap="round" cx="33" cy="33" r="28"></circle>
+                </svg>
+                <svg viewBox="0 0 66 66" xmlns="http://www.w3.org/2000/svg">
+                    <circle fill="none" stroke-width="8" stroke-linecap="round" cx="33" cy="33" r="28"></circle>
+                </svg>
+                <svg viewBox="0 0 66 66" xmlns="http://www.w3.org/2000/svg">
+                    <circle fill="none" stroke-width="8" stroke-linecap="round" cx="33" cy="33" r="28"></circle>
+                </svg>
+            </div>
+            <div class="splashscreen-text">Loading...</div>
+        </div>
+        <div class="splashscreen-bg"></div>
+    </div>
+
+    <div id="big-transition">
+        <div id="big-transition-vertical">
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+        </div>
+        <div id="big-transition-horizontal">
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+        </div>
+    </div>
     {% include "partials/navbar.njk" %}
     {% block content %} {% endblock %}
+    <footer class="footer">
+        <div class="container">
+            Made by <a href="https://github.com/okikio" class="text-muted" target="_blank">Okiki Ojo</a>
+            Based on <a href="https://github.com/rezozero/starting-blocks" class="text-muted" target="_blank">Starting blocks</a>
+        </div>
+    </footer>
 
-    <!-- <script src="../app.js" type="module"></script> -->
+    {# <!-- <script src="../app.js" type="module"></script> --> #}
     <script src="./js/framework.js" type="module"></script>
 </body>
 </html>

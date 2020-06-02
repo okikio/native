@@ -1131,8 +1131,8 @@ export class EventEmitter extends Manager<string, Event> {
 
     public on(
         events: EventInput,
-        callback: ListenerCallback,
-        scope: object
+        callback?: ListenerCallback,
+        scope?: object
     ): EventEmitter {
         // If there is no event break
         if (typeof events == "undefined") return this;
@@ -1169,8 +1169,8 @@ export class EventEmitter extends Manager<string, Event> {
 	 * Removes a listener from an event
 	 *
 	 * @param {string} name
-	 * @param {ListenerCallback} callback
-	 * @param {object} scope
+	 * @param {ListenerCallback} [callback]
+	 * @param {object} [scope]
 	 * @returns Event
 	 * @memberof EventEmitter
 	 */
@@ -1204,15 +1204,15 @@ export class EventEmitter extends Manager<string, Event> {
 	 * Removes a listener from a given event, or it just completely removes an event
 	 *
 	 * @param {EventInput} events
-	 * @param {ListenerCallback} callback
-	 * @param {object} scope
+	 * @param {ListenerCallback} [callback]
+	 * @param {object} [scope]
 	 * @returns EventEmitter
 	 * @memberof EventEmitter
 	 */
     public off(
         events: EventInput,
-        callback: ListenerCallback,
-        scope: object
+        callback?: ListenerCallback,
+        scope?: object
     ): EventEmitter {
         // If there is no event break
         if (typeof events == "undefined") return this;
@@ -1528,9 +1528,7 @@ export class PageManager extends AdvancedManager<string, Page> {
         }
 
         if (!this.loading.has(urlString)) {
-            request = new Promise(resolve => {
-                this.request(urlString).then(resolve);
-            });
+            request = this.request(urlString);
             this.loading.set(urlString, request);
         } else request = this.loading.get(urlString);
 
@@ -1664,7 +1662,22 @@ export class Transition extends ManagerItem {
         this.oldPage = oldPage;
         this.newPage = newPage;
         this.trigger = trigger;
+        this.boot();
         return this;
+    }
+
+    // Called on start of Transition
+    public boot(): void { }
+
+    // Initialize events
+    public initEvents(): void { }
+
+    // Stop events
+    public stopEvents(): void { }
+
+    // Stop services
+    public stop(): void {
+        this.stopEvents();
     }
 
 	/**
@@ -1734,12 +1747,13 @@ export class Transition extends ManagerItem {
      * @returns Promise<Transition>
      * @memberof Transition
      */
-    public async boot(): Promise<Transition> {
+    public async start(EventEmiiter: EventEmitter): Promise<Transition> {
         let fromWrapper = this.oldPage.getWrapper();
         let toWrapper = this.newPage.getWrapper();
         document.title = this.newPage.getTitle();
 
         return new Promise(async finish => {
+            EventEmiiter.emit("BEFORE_TRANSITION_OUT");
             await new Promise(done => {
                 let outMethod: Promise<any> = this.out({
                     from: this.oldPage,
@@ -1751,11 +1765,15 @@ export class Transition extends ManagerItem {
                     outMethod.then(done);
             });
 
+            EventEmiiter.emit("AFTER_TRANSITION_OUT");
+
             await new Promise(done => {
                 fromWrapper.insertAdjacentElement('beforebegin', toWrapper);
                 fromWrapper.remove();
                 done();
             });
+
+            EventEmiiter.emit("BEFORE_TRANSITION_IN");
 
             await new Promise(done => {
                 let inMethod: Promise<any> = this.in({
@@ -1769,6 +1787,7 @@ export class Transition extends ManagerItem {
                     inMethod.then(done);
             });
 
+            EventEmiiter.emit("AFTER_TRANSITION_IN");
             finish();
         });
     }
@@ -1779,16 +1798,16 @@ export class Transition extends ManagerItem {
  *
  * @export
  * @class TransitionManager
- * @extends {Manager<string, Transition>}
+ * @extends {AdvancedManager<string, Transition>}
  */
-export class TransitionManager extends Manager<string, Transition> {
+export class TransitionManager extends AdvancedManager<string, Transition> {
 	/**
 	 * Creates an instance of the TransitionManager
 	 *
+     * @param {App} app
 	 * @memberof TransitionManager
-	 * @constructor
 	 */
-    constructor() { super(); }
+    constructor(app: App) { super(app); }
 
 	/**
 	 * Quick way to add a Transition to the TransitionManager
@@ -1817,7 +1836,31 @@ export class TransitionManager extends Manager<string, Transition> {
             newPage,
             trigger
         });
-        return await transition.boot();
+
+        let EventEmitter = this.getApp().getEmitter();
+        return await transition.start(EventEmitter);
+    }
+
+	/**
+	 * Call the initEvents method for all Transitions
+	 *
+	 * @returns TransitionManager
+	 * @memberof TransitionManager
+	 */
+    public initEvents(): TransitionManager {
+        this.methodCall("initEvents");
+        return this;
+    }
+
+	/**
+	 * Call the stopEvents method for all Transitions
+	 *
+	 * @returns TransitionManager
+	 * @memberof TransitionManager
+	 */
+    public stopEvents(): TransitionManager {
+        this.methodCall("stopEvents");
+        return this;
     }
 }
 
@@ -1902,7 +1945,7 @@ export class App {
      */
     public register(config: ICONFIG | CONFIG = {}): App {
         this.config = config instanceof CONFIG ? config : new CONFIG(config);
-        this.transitions = new TransitionManager();
+        this.transitions = new TransitionManager(this);
         this.services = new ServiceManager(this);
         this.history = new HistoryManager();
         this.pages = new PageManager(this);
@@ -2017,7 +2060,7 @@ export class App {
      * Based on the type, it will return either a Transition, a Service, or a State from their respective Managers
      *
      * @param {string} type
-     * @param {*} key
+     * @param {any} key
      * @returns App
      * @memberof App
      */
@@ -2052,12 +2095,12 @@ export class App {
     /**
      * Based on the type, it will return load a Transition, a Service, a State, or a Page from their respective Managers
      *
-     * @param {string} type
-     * @param {*} key
+     * @param {("page" | string)} type
+     * @param {any} key
      * @returns App
      * @memberof App
      */
-    public async load(type: string, key: any): Promise<any> {
+    public async load(type: "page" | string, key: any): Promise<any> {
         switch (type.toLowerCase()) {
             case "page":
                 return await this.loadPage(key);
@@ -2105,12 +2148,12 @@ export class App {
     /**
      * Based on the type, it will add either a Transition, a Service, or a State to their respective Managers
      *
-     * @param {string} type
-     * @param {*} value
+     * @param {("service" | "transition" | "state")} type
+     * @param {any} value
      * @returns App
      * @memberof App
      */
-    public add(type: string, value: any): App {
+    public add(type: "service" | "transition" | "state", value: any): App {
         switch (type.toLowerCase()) {
             case "service":
                 this.addService(value);
@@ -2136,6 +2179,7 @@ export class App {
     public async boot(): Promise<App> {
         await this.services.boot();
         this.services.initEvents();
+        this.transitions.initEvents();
         return Promise.resolve(this);
     }
 
@@ -2147,6 +2191,7 @@ export class App {
      */
     public stop(): App {
         this.services.stop();
+        this.transitions.stopEvents();
         return this;
     }
 
