@@ -2156,9 +2156,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"eslint@npm:^7.0.0":
-  version: 7.0.0
-  resolution: "eslint@npm:7.0.0"
+"eslint@npm:^7.1.0":
+  version: 7.1.0
+  resolution: "eslint@npm:7.1.0"
   dependencies:
     "@babel/code-frame": ^7.0.0
     ajv: ^6.10.0
@@ -2198,7 +2198,7 @@ __metadata:
     v8-compile-cache: ^2.0.3
   bin:
     eslint: bin/eslint.js
-  checksum: 3/6f5b92b843767f459b60f52312da7ba31c34b8d958f29c1fa96d1c564c270ebe272250f81fe8f1368ddfe2ec2fd3d89c6a160b18effe1269853f7e35c7010317
+  checksum: 3/26b8bc7947b9b8c42f05965a24cd9ea261f0d7b2b5993135bdac403bc65df7812338a2a0999810cae865ff877ec0e17eb818534179d765b7ed36a3a90c3a69b3
   languageName: node
   linkType: hard
 
@@ -5143,7 +5143,7 @@ fsevents@~2.1.2:
     "@yarnpkg/pnpify": ^2.0.0-rc.22
     browser-sync: ^2.26.7
     cross-fetch: ^3.0.4
-    eslint: ^7.0.0
+    eslint: ^7.1.0
     esm: ^3.2.25
     gulp: ^4.0.2
     gulp-nunjucks-render: ^2.2.3
@@ -5151,7 +5151,7 @@ fsevents@~2.1.2:
     gulp-sass: ^4.1.0
     gulp-sourcemaps: ^2.6.5
     gulp-typescript: ^6.0.0-alpha.1
-    typescript: ^3.9.2
+    typescript: ^3.9.3
   languageName: unknown
   linkType: soft
 
@@ -6812,23 +6812,23 @@ fsevents@~2.1.2:
   languageName: node
   linkType: hard
 
-typescript@^3.9.2:
-  version: 3.9.2
-  resolution: "typescript@npm:3.9.2"
+typescript@^3.9.3:
+  version: 3.9.4
+  resolution: "typescript@npm:3.9.4"
   bin:
     tsc: bin/tsc
     tsserver: bin/tsserver
-  checksum: 3/bf7cbf2f8c695aa942be60da470aaaf902c2e9b3693ed5141fa6de5632f42f471b7e83bd9d4dcff5e0fa37eff746d61cfe1e6949019ad70f0f98d1f60ccfd3ae
+  checksum: 3/f364e86609679566abda039acf35030b78d738c456dae201bad71722b47aa753ea42f3076a2767b72b63a1b8641f1ffb3984dcbdf088bd401b4e7118e3601893
   languageName: node
   linkType: hard
 
-"typescript@patch:typescript@^3.9.2#builtin<compat/typescript>":
-  version: 3.9.2
-  resolution: "typescript@patch:typescript@npm%3A3.9.2#builtin<compat/typescript>::version=3.9.2&hash=8cac75"
+"typescript@patch:typescript@^3.9.3#builtin<compat/typescript>":
+  version: 3.9.4
+  resolution: "typescript@patch:typescript@npm%3A3.9.4#builtin<compat/typescript>::version=3.9.4&hash=8cac75"
   bin:
     tsc: bin/tsc
     tsserver: bin/tsserver
-  checksum: 3/51daca430f15c0df7aa820da2ef0a042b081327a1c2426016abbbcb35395f38d9559036a9b9e71320075197444e9b1093726a8086129a4ec367f188ba398212c
+  checksum: 3/6fe6acffaf466fe06116a9adb089914b070b8363c38fa1c80a4728452eb8fc88b7977930b61a860ab37080733eddf4dacf25dc88f0dd14efe6d8312ed6fcfb12
   languageName: node
   linkType: hard
 

@@ -14,12 +14,12 @@
     "dependencies": {
         "@yarnpkg/pnpify": "^2.0.0-rc.22",
         "cross-fetch": "^3.0.4",
-        "eslint": "^7.0.0",
+        "eslint": "^7.1.0",
         "esm": "^3.2.25",
         "gulp-nunjucks-render": "^2.2.3",
         "gulp-postcss": "^8.0.0",
         "gulp-sass": "^4.1.0",
-        "typescript": "^3.9.2"
+        "typescript": "^3.9.3"
     },
     "devDependencies": {
         "browser-sync": "^2.26.7",
