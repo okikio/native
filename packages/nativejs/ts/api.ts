@@ -430,7 +430,7 @@ export class AdvancedManager<K, V extends ManagerItem> extends Manager<K, V> {
     public set(key: K, value: V): AdvancedManager<K, V> {
         super.set(key, value);
         value.register(this);
-        return this;.register
+        return this;
     }
 
 	/**

@@ -347,7 +347,6 @@ export class AdvancedManager extends Manager {
         super.set(key, value);
         value.register(this);
         return this;
-        register;
     }
     /**
      * Returns the instance the App class
