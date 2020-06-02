@@ -109,7 +109,7 @@ export class Animation extends EventEmitter {
      * Stores the options for the current animation
      *
      * @protected
-     * @type {AnimationOptions}
+     * @type AnimationOptions
      * @memberof Animation
      */
     protected options: AnimationOptions;

@@ -13,7 +13,7 @@
           crossorigin="anonymous"/>
     <link rel="stylesheet" href="./css/demo.css">
 </head>
-<body class="home-page bg-light">
+<body class="home-page bg-dark text-white">
     <div id="splashscreen">
         <div class="splashscreen-inner">
             <div class="spinner">
@@ -71,15 +71,20 @@
             <div></div>
         </div>
     </div>
-    <nav id="main-nav" class="navbar navbar-expand-md fixed-top navbar-dark bg-dark">
+    <nav id="main-nav" class="navbar navbar-expand-md fixed-top navbar-light bg-light">
     <a class="navbar-brand" href="./index.html">Starting Blocks
         <small>v4</small>
     </a>
-    <ul class="navbar-nav mr-auto">
-        <li class="nav-item"><a href="./index.html" class="nav-link active" data-transition="default">Homepage</a></li>
-        <li class="nav-item"><a href="./about.html" class="nav-link" data-transition="slide-left">About</a></li>
-        <li class="nav-item"><a href="./other.html" class="nav-link" data-transition="big">Other</a></li>
-    </ul>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item"><a href="./index.html" class="nav-link active" data-transition="default">Homepage</a></li>
+            <li class="nav-item"><a href="./about.html" class="nav-link" data-transition="slide-left">About</a></li>
+            <li class="nav-item"><a href="./other.html" class="nav-link" data-transition="big">Other</a></li>
+        </ul>
+    </div>
 </nav>
     
     <main data-wrapper id="about-page"  role="main" id="sb-wrapper">
@@ -89,8 +94,8 @@
             data-node-type="page"
             data-meta-title="Page 1">
             <div class="container">
-                <h1 class="bg-white">About Page</h1>
-                <p class="bg-white">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus ex est, maximus aliquam sagittis vel,
+                <h1 data-block="IntroBlock">About Page</h1>
+                <p data-block="IntroBlock">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus ex est, maximus aliquam sagittis vel,
                     tempus vel odio. Praesent felis elit, blandit et laoreet nec, hendrerit et arcu. Aenean ligula sapien,
                     sodales vel semper in, pulvinar id nulla. Donec pellentesque non tellus vel imperdiet. Pellentesque
                     posuere, nisl sed rutrum tincidunt, augue augue vestibulum ex, vel ornare justo arcu eu magna. Praesent
@@ -101,9 +106,9 @@
                     fermentum rutrum.</p>
                 <div class="row">
                     <div class="col">
-                        <div class="my-3 p-3 rounded box-shadow">
+                        <div class="my-3 p-3">
                             <div class="row">
-                                <div class="col-sm-6 bg-white">
+                                <div class="col-sm-6 my-3 p-3 rounded box-shadow bg-white text-dark" data-block="IntroBlock">
                                     <p>Vivamus dolor massa, aliquet ut leo vel, sodales mattis tortor. Aenean at mauris et
                                         ex mollis
                                         fringilla. Sed volutpat viverra vehicula. Nullam maximus ligula ac nisl aliquam
@@ -120,7 +125,7 @@
                                         tortor. Duis auctor
                                         iaculis arcu ac rutrum. Suspendisse vel odio risus.</p>
                                 </div>
-                                <div class="col-sm-6 bg-white">
+                                <div class="col-sm-6 my-3 p-3" data-block="IntroBlock">
                                     <p>Vivamus dolor massa, aliquet ut leo vel, sodales mattis tortor. Aenean at mauris et
                                         ex mollis
                                         fringilla. Sed volutpat viverra vehicula. Nullam maximus ligula ac nisl aliquam
@@ -137,7 +142,7 @@
                                         tortor. Duis auctor
                                         iaculis arcu ac rutrum. Suspendisse vel odio risus.</p>
                                 </div>
-                                <div class="col-sm-12 bg-white">
+                                <div class="col-sm-12" data-block="IntroBlock">
                                     <p>Vivamus dolor massa, aliquet ut leo vel, sodales mattis tortor. Aenean at mauris
                                         et ex mollis
                                         fringilla. Sed volutpat viverra vehicula. Nullam maximus ligula ac nisl aliquam
@@ -367,7 +372,7 @@
         </div>
     </main>
 
-    <footer class="footer">
+    <footer class="footer text-dark">
         <div class="container">
             Made by <a href="https://github.com/okikio" class="text-muted" target="_blank">Okiki Ojo</a>
             Based on <a href="https://github.com/rezozero/starting-blocks" class="text-muted" target="_blank">Starting blocks</a>
@@ -375,6 +380,9 @@
     </footer>
 
     
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
     <script src="./js/framework.js" type="module"></script>
 </body>
 </html>

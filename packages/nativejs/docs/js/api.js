@@ -929,6 +929,7 @@ export class EventEmitter extends Manager {
             let listener = new Listener({ name, callback, scope });
             for (; i < len; i++) {
                 value = event.get(i);
+                console.log(value);
                 if (value.getCallback() === listener.getCallback() &&
                     value.getScope() === listener.getScope())
                     break;
@@ -1497,11 +1498,50 @@ export class Block extends Service {
     /**
      * Get the name of the Block
      *
-     * @returns {string}
+     * @returns string
      * @memberof Block
      */
     getName() {
         return this.name;
+    }
+}
+/**
+ * Creates a new Block Intent Class
+ *
+ * @export
+ * @class BlockIntent
+ * @extends {ManagerItem}
+ */
+export class BlockIntent extends ManagerItem {
+    /**
+     * Creates an instance of BlockIntent.
+     *
+     * @param {string} name
+     * @param {typeof Block} block
+     * @memberof BlockIntent
+     */
+    constructor(name, block) {
+        super();
+        this.name = name;
+        this.block = block;
+    }
+    /**
+     * Getter for name of Block Intent
+     *
+     * @returns string
+     * @memberof BlockIntent
+     */
+    getName() {
+        return this.name;
+    }
+    /**
+     * Getter for the Block of the Block Intent
+     *
+     * @returns {typeof Block}
+     * @memberof BlockIntent
+     */
+    getBlock() {
+        return this.block;
     }
 }
 /**
@@ -1528,13 +1568,15 @@ export class BlockManager extends AdvancedStorage {
      * @memberof BlockManager
      */
     init() {
-        this.forEach(({ name, block }) => {
-            const selector = `[${this.getConfig("blockAttr", false)}="${name}"]`;
-            const rootElements = [...document.querySelectorAll(selector)];
+        this.forEach((intent) => {
+            let name = intent.getName();
+            let block = intent.getBlock();
+            let selector = `[${this.getConfig("blockAttr", false)}="${name}"]`;
+            let rootElements = [...document.querySelectorAll(selector)];
             for (let i = 0, len = rootElements.length; i < len; i++) {
-                const newInstance = new block();
+                let newInstance = new block();
                 newInstance.init(name, rootElements[i], selector, i);
-                this.activeBlocks.add(newInstance);
+                this.activeBlocks.set(i, newInstance);
             }
         });
     }
@@ -1566,20 +1608,10 @@ export class BlockManager extends AdvancedStorage {
         EventEmitter.on("BEFORE_TRANSITION_OUT", () => {
             this.stop();
         });
-        EventEmitter.on("BEFORE_TRANSITION_IN", () => {
-            const rootElementsStore = new Manager();
-            this.activeBlocks.forEach((block) => {
-                let selector = block.getSelector();
-                let name = block.getName();
-                let index = block.getIndex();
-                let rootElements = rootElementsStore.has(selector) ? rootElementsStore.get(selector) : [...document.querySelectorAll(selector)];
-                if (!rootElementsStore.has(selector))
-                    rootElementsStore.set(selector, rootElements);
-                if (rootElements[index]) {
-                    block.init(name, rootElements[index], selector, index);
-                    block.boot();
-                }
-            });
+        EventEmitter.on("AFTER_TRANSITION_IN", () => {
+            this.init();
+            this.boot();
+            // this.activeBlocks.methodCall("initEvents");
         });
     }
     /**
@@ -1611,6 +1643,7 @@ export class BlockManager extends AdvancedStorage {
      */
     stop() {
         this.activeBlocks.methodCall("stop");
+        this.activeBlocks.clear();
         return this;
     }
 }
@@ -1676,7 +1709,7 @@ export class App {
     /**
      * Returns the App's BlockManager
      *
-     * @returns {BlockManager}
+     * @returns BlockManager
      * @memberof App
      */
     getBlocks() {
@@ -1824,7 +1857,7 @@ export class App {
     /**
      * Adds a Block Intent to the App's instance of the BlockManager
      *
-     * @param {IBlockIntent} blockIntent
+     * @param {BlockIntent} blockIntent
      * @returns App
      * @memberof App
      */

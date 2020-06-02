@@ -14,7 +14,7 @@ export default class PJAX extends Service {
          * URL's to ignore when prefetching
          *
          * @private
-         * @type {boolean}
+         * @type boolean
          * @memberof PJAX
          */
         this.ignoreURLs = [];
@@ -30,7 +30,7 @@ export default class PJAX extends Service {
          * Current state or transitions
          *
          * @private
-         * @type {boolean}
+         * @type boolean
          * @memberof PJAX
          */
         this.isTransitioning = false;
@@ -38,7 +38,7 @@ export default class PJAX extends Service {
          * Ignore extra clicks of an anchor element if a transition has already started
          *
          * @private
-         * @type {boolean}
+         * @type boolean
          * @memberof PJAX
          */
         this.stopOnTransitioning = false;
@@ -46,7 +46,7 @@ export default class PJAX extends Service {
          * On page change (excluding popstate event) keep current scroll position
          *
          * @private
-         * @type {boolean}
+         * @type boolean
          * @memberof PJAX
          */
         this.stickyScroll = true;
@@ -54,7 +54,7 @@ export default class PJAX extends Service {
          * Force load a page if an error occurs
          *
          * @private
-         * @type {boolean}
+         * @type boolean
          * @memberof PJAX
          */
         this.forceOnError = false;
@@ -62,7 +62,7 @@ export default class PJAX extends Service {
          * Dictates whether to auto scroll if an hash is present in the window URL
          *
          * @protected
-         * @type {boolean}
+         * @type boolean
          * @memberof PJAX
          */
         this.autoScrollOnHash = true;

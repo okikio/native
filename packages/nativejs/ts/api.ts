@@ -1196,6 +1196,7 @@ export class EventEmitter extends Manager<string, Event> {
             let listener = new Listener({ name, callback, scope });
             for (; i < len; i++) {
                 value = event.get(i);
+                console.log(value);
                 if (
                     value.getCallback() === listener.getCallback() &&
                     value.getScope() === listener.getScope()
@@ -1888,7 +1889,7 @@ export class Block extends Service {
      * The name of the Block
      *
      * @protected
-     * @type {string}
+     * @type string
      * @memberof Block
      */
     protected name: string;
@@ -1897,7 +1898,7 @@ export class Block extends Service {
      * Query selector string 
      *
      * @protected
-     * @type {string}
+     * @type string
      * @memberof Block
      */
     protected selector: string;
@@ -1906,7 +1907,7 @@ export class Block extends Service {
      * Index of Block in a BlockManager 
      *
      * @protected
-     * @type {number}
+     * @type number
      * @memberof Block
      */
     protected index: number;
@@ -1915,7 +1916,7 @@ export class Block extends Service {
      * The Root Element of a Block
      *
      * @protected
-     * @type {HTMLElement}
+     * @type HTMLElement
      * @memberof Block
      */
     protected rootElement: HTMLElement;
@@ -1969,7 +1970,7 @@ export class Block extends Service {
     /**
      * Get the name of the Block
      *
-     * @returns {string}
+     * @returns string
      * @memberof Block
      */
     public getName(): string {
@@ -1977,9 +1978,64 @@ export class Block extends Service {
     }
 }
 
-export interface IBlockIntent extends ManagerItem {
-    name: string,
-    block: new () => Block
+/**
+ * Creates a new Block Intent Class
+ *
+ * @export
+ * @class BlockIntent
+ * @extends {ManagerItem}
+ */
+export class BlockIntent extends ManagerItem {
+    /**
+     * The name of the Block
+     *
+     * @protected
+     * @type string
+     * @memberof BlockIntent
+     */
+    protected name: string;
+
+    /**
+     * The Block Class
+     *
+     * @protected
+     * @type {typeof Block}
+     * @memberof BlockIntent
+     */
+    protected block: typeof Block;
+
+    /**
+     * Creates an instance of BlockIntent.
+     *
+     * @param {string} name
+     * @param {typeof Block} block
+     * @memberof BlockIntent
+     */
+    constructor(name: string, block: typeof Block) {
+        super();
+        this.name = name;
+        this.block = block;
+    }
+
+    /**
+     * Getter for name of Block Intent
+     *
+     * @returns string
+     * @memberof BlockIntent
+     */
+    public getName(): string {
+        return this.name;
+    }
+
+    /**
+     * Getter for the Block of the Block Intent
+     *
+     * @returns {typeof Block}
+     * @memberof BlockIntent
+     */
+    public getBlock(): typeof Block {
+        return this.block;
+    }
 }
 
 /**
@@ -1989,7 +2045,7 @@ export interface IBlockIntent extends ManagerItem {
  * @class BlockManager
  * @extends {ServiceManager}
  */
-export class BlockManager extends AdvancedStorage<IBlockIntent> {
+export class BlockManager extends AdvancedStorage<BlockIntent> {
     /**
      * A list of Active Blocks 
      *
@@ -2016,14 +2072,16 @@ export class BlockManager extends AdvancedStorage<IBlockIntent> {
 	 * @memberof BlockManager
 	 */
     public init() {
-        this.forEach(({ name, block }: IBlockIntent) => {
-            const selector: string = `[${this.getConfig("blockAttr", false)}="${name}"]`;
-            const rootElements: Node[] = [...document.querySelectorAll(selector)];
+        this.forEach((intent: BlockIntent) => {
+            let name: string = intent.getName();
+            let block: typeof Block = intent.getBlock();
+            let selector: string = `[${this.getConfig("blockAttr", false)}="${name}"]`;
+            let rootElements: Node[] = [...document.querySelectorAll(selector)];
 
             for (let i = 0, len = rootElements.length; i < len; i++) {
-                const newInstance: Block = new block();
+                let newInstance: Block = new block();
                 newInstance.init(name, rootElements[i] as HTMLElement, selector, i);
-                this.activeBlocks.add(newInstance);
+                this.activeBlocks.set(i, newInstance);
             }
         });
     }
@@ -2059,21 +2117,10 @@ export class BlockManager extends AdvancedStorage<IBlockIntent> {
             this.stop();
         });
 
-        EventEmitter.on("BEFORE_TRANSITION_IN", () => {
-            const rootElementsStore: Manager<string, Node[]> = new Manager();
-
-            this.activeBlocks.forEach((block: Block) => {
-                let selector: string = block.getSelector();
-                let name: string = block.getName();
-                let index: number = block.getIndex();
-                let rootElements: Node[] = rootElementsStore.has(selector) ? rootElementsStore.get(selector) : [...document.querySelectorAll(selector)];
-                if (!rootElementsStore.has(selector)) rootElementsStore.set(selector, rootElements);
-
-                if (rootElements[index]) {
-                    block.init(name, rootElements[index] as HTMLElement, selector, index);
-                    block.boot();
-                }
-            });
+        EventEmitter.on("AFTER_TRANSITION_IN", () => {
+            this.init();
+            this.boot();
+            // this.activeBlocks.methodCall("initEvents");
         });
     }
 
@@ -2108,6 +2155,7 @@ export class BlockManager extends AdvancedStorage<IBlockIntent> {
 	 */
     public stop(): BlockManager {
         this.activeBlocks.methodCall("stop");
+        this.activeBlocks.clear();
         return this;
     }
 }
@@ -2244,7 +2292,7 @@ export class App {
     /**
      * Returns the App's BlockManager
      *
-     * @returns {BlockManager}
+     * @returns BlockManager
      * @memberof App
      */
     public getBlocks(): BlockManager {
@@ -2298,7 +2346,7 @@ export class App {
      * @returns IBlockIntent
      * @memberof App
      */
-    public getBlock(key: number): IBlockIntent {
+    public getBlock(key: number): BlockIntent {
         return this.blocks.get(key);
     }
 
@@ -2405,11 +2453,11 @@ export class App {
     /**
      * Adds a Block Intent to the App's instance of the BlockManager
      *
-     * @param {IBlockIntent} blockIntent
+     * @param {BlockIntent} blockIntent
      * @returns App
      * @memberof App
      */
-    public addBlock(blockIntent: IBlockIntent): App {
+    public addBlock(blockIntent: BlockIntent): App {
         this.blocks.add(blockIntent);
         return this;
     }

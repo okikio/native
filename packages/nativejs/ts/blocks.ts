@@ -1,4 +1,4 @@
-import { Block } from "./api.js";
+import { Block, BlockIntent } from "./api.js";
 
 //== Blocks
 export class InViewBlock extends Block {
@@ -7,6 +7,7 @@ export class InViewBlock extends Block {
     protected imgs: HTMLElement[];
     protected direction: string;
     protected xPercent: number;
+    protected inView: boolean = false;
 
     public boot() {
         // Values
@@ -41,31 +42,16 @@ export class InViewBlock extends Block {
         this.observe();
     }
 
-    observe() {
+    protected observe() {
         this.observer.observe(this.rootElement);
     }
 
-    unobserve() {
+    protected unobserve() {
         this.observer.unobserve(this.rootElement);
     }
 
-    stopEvents() {
-        this.unobserve();
-
-    }
-
-    onIntersectionCallback(entries) {
-        for (let entry of entries) {
-            if (entry.intersectionRatio > 0) {
-                this.onScreen(entry)
-            } else {
-                this.offScreen(entry)
-            }
-        }
-    }
-
-    onScreen({ target }) {
-        let animation = target.animate([
+    protected onScreen() {
+        let animation = this.rootElement.animate([
             { transform: `translateX(${this.xPercent}%)`, opacity: 0 },
             { transform: "translateX(0%)", opacity: 1 },
         ], {
@@ -74,18 +60,32 @@ export class InViewBlock extends Block {
             easing: "cubic-bezier(0.22, 1, 0.36, 1)" // ease-out-quint
         });
         animation.onfinish = () => {
-            target.style.transform = "translateX(0%)";
-            target.style.opacity = "1";
+            this.rootElement.style.transform = "translateX(0%)";
+            this.rootElement.style.opacity = "1";
         };
     }
 
-    offScreen({ target }) {
-        target.style.transform = `translateX(${this.xPercent}%)`;
-        target.style.opacity = "0";
+    protected offScreen() {
+        this.rootElement.style.transform = `translateX(${this.xPercent}%)`;
+        this.rootElement.style.opacity = "0";
+    }
+
+    public onIntersectionCallback(entries) {
+        if (!this.inView) {
+            for (let entry of entries) {
+                if (entry.intersectionRatio > 0) {
+                    this.onScreen();
+                    this.inView = true;
+                } else {
+                    this.offScreen();
+                }
+            }
+        }
+    }
+
+    public stopEvents() {
+        this.unobserve();
     }
 }
 
-export default {
-    name: "InViewBlock",
-    block: InViewBlock
-}; 
+export const InViewBlockIntent: BlockIntent = new BlockIntent("InViewBlock", InViewBlock);

@@ -13,7 +13,7 @@
           crossorigin="anonymous"/>
     <link rel="stylesheet" href="./css/demo.css">
 </head>
-<body class="home-page bg-light">
+<body class="home-page bg-dark text-white">
     <div id="splashscreen">
         <div class="splashscreen-inner">
             <div class="spinner">
@@ -71,15 +71,20 @@
             <div></div>
         </div>
     </div>
-    <nav id="main-nav" class="navbar navbar-expand-md fixed-top navbar-dark bg-dark">
+    <nav id="main-nav" class="navbar navbar-expand-md fixed-top navbar-light bg-light">
     <a class="navbar-brand" href="./index.html">Starting Blocks
         <small>v4</small>
     </a>
-    <ul class="navbar-nav mr-auto">
-        <li class="nav-item"><a href="./index.html" class="nav-link active" data-transition="default">Homepage</a></li>
-        <li class="nav-item"><a href="./about.html" class="nav-link" data-transition="slide-left">About</a></li>
-        <li class="nav-item"><a href="./other.html" class="nav-link" data-transition="big">Other</a></li>
-    </ul>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item"><a href="./index.html" class="nav-link active" data-transition="default">Homepage</a></li>
+            <li class="nav-item"><a href="./about.html" class="nav-link" data-transition="slide-left">About</a></li>
+            <li class="nav-item"><a href="./other.html" class="nav-link" data-transition="big">Other</a></li>
+        </ul>
+    </div>
 </nav>
     
     <main data-wrapper id="404-page" role="main" id="sb-wrapper">
@@ -92,43 +97,19 @@
             <div class="container">
                 <div class="row">
                     <div class="col">
-                        <div class="jumbotron jumbotron-fluid my-3 bg-white rounded box-shadow">
+                        <div class="jumbotron jumbotron-fluid my-3 px-4 bg-white rounded box-shadow text-dark">
                             <div class="container">
-                                <h1 class="display-4">404 Page</h1>
+                                <h1 class="display-4"><strong>404 Page</strong></h1>
                                 <p class="lead">Dynamic blocks example.</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col">
-                        <div class="page-block usersblock"
-                            id="users-block-1"
-                            data-node-type="UsersBlock">
-                            <div class="usersblock__intro d-flex align-items-center bg-white p-3 my-3 text-white-50 rounded box-shadow">
-                                <div class="avatar-cont"></div>
-                                <div class="lh-100">
-                                    <h6 class="mb-0 lh-100">Starting Blocks</h6>
-                                    <small>By Rezo Zero</small>
-                                </div>
-                            </div>
-                            <div class="my-3 p-3 bg-white rounded box-shadow">
-                                <h6 class="border-bottom border-gray pb-2 mb-0">Contributors</h6>
-                                <div class="row usersblock__contributors-list"></div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-        <footer class="footer">
-            <div class="container">
-                <a href="https://github.com/rezozero/starting-blocks" class="text-muted" target="_blank">Starting blocks</a>
-            </div>
-        </footer>
     </main>
 
-    <footer class="footer">
+    <footer class="footer text-dark">
         <div class="container">
             Made by <a href="https://github.com/okikio" class="text-muted" target="_blank">Okiki Ojo</a>
             Based on <a href="https://github.com/rezozero/starting-blocks" class="text-muted" target="_blank">Starting blocks</a>
@@ -136,6 +117,9 @@
     </footer>
 
     
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
     <script src="./js/framework.js" type="module"></script>
 </body>
 </html>

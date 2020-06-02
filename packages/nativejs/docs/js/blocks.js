@@ -1,6 +1,10 @@
-import { Block } from "./api.js";
+import { Block, BlockIntent } from "./api.js";
 //== Blocks
 export class InViewBlock extends Block {
+    constructor() {
+        super(...arguments);
+        this.inView = false;
+    }
     boot() {
         // Values
         this.observerOptions = {
@@ -33,21 +37,8 @@ export class InViewBlock extends Block {
     unobserve() {
         this.observer.unobserve(this.rootElement);
     }
-    stopEvents() {
-        this.unobserve();
-    }
-    onIntersectionCallback(entries) {
-        for (let entry of entries) {
-            if (entry.intersectionRatio > 0) {
-                this.onScreen(entry);
-            }
-            else {
-                this.offScreen(entry);
-            }
-        }
-    }
-    onScreen({ target }) {
-        let animation = target.animate([
+    onScreen() {
+        let animation = this.rootElement.animate([
             { transform: `translateX(${this.xPercent}%)`, opacity: 0 },
             { transform: "translateX(0%)", opacity: 1 },
         ], {
@@ -56,17 +47,30 @@ export class InViewBlock extends Block {
             easing: "cubic-bezier(0.22, 1, 0.36, 1)" // ease-out-quint
         });
         animation.onfinish = () => {
-            target.style.transform = "translateX(0%)";
-            target.style.opacity = "1";
+            this.rootElement.style.transform = "translateX(0%)";
+            this.rootElement.style.opacity = "1";
         };
     }
-    offScreen({ target }) {
-        target.style.transform = `translateX(${this.xPercent}%)`;
-        target.style.opacity = "0";
+    offScreen() {
+        this.rootElement.style.transform = `translateX(${this.xPercent}%)`;
+        this.rootElement.style.opacity = "0";
+    }
+    onIntersectionCallback(entries) {
+        if (!this.inView) {
+            for (let entry of entries) {
+                if (entry.intersectionRatio > 0) {
+                    this.onScreen();
+                    this.inView = true;
+                }
+                else {
+                    this.offScreen();
+                }
+            }
+        }
+    }
+    stopEvents() {
+        this.unobserve();
     }
 }
-export default {
-    name: "InViewBlock",
-    block: InViewBlock
-};
+export const InViewBlockIntent = new BlockIntent("InViewBlock", InViewBlock);
 //# sourceMappingURL=blocks.js.map

@@ -9,12 +9,12 @@
             data-node-type="page"
             data-meta-title="Page 1">
             <div class="container">
-                <h1 class="bg-white">Other Page</h1>
-                <nav id="in-page-nav" class="nav nav-pills bg-white">
+                <h1 data-block="IntroBlock">Other Page</h1>
+                <nav id="in-page-nav" class="nav nav-pills" data-block="IntroBlock">
                     <a href="./about.html" data-transition="big" class="nav-link">Link to the about</a>
                     <a href="./index.html" data-transition="slide-right" class="nav-link">Link to homepage</a>
                 </nav>
-                <p class="bg-white">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus ex est, maximus aliquam sagittis vel,
+                <p data-block="IntroBlock">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus ex est, maximus aliquam sagittis vel,
                     tempus vel odio. Praesent felis elit, blandit et laoreet nec, hendrerit et arcu. Aenean ligula sapien,
                     sodales vel semper in, pulvinar id nulla. Donec pellentesque non tellus vel imperdiet. Pellentesque
                     posuere, nisl sed rutrum tincidunt, augue augue vestibulum ex, vel ornare justo arcu eu magna. Praesent
@@ -25,42 +25,44 @@
                     fermentum rutrum.</p>
                 <div class="row">
                     <div class="col">
-                        <div class="my-3 p-3 bg-white rounded box-shadow">
+                        <div class="my-3"  data-block="IntroBlock">
+                            <div class="row my-3 px-2 py-4 bg-white rounded box-shadow text-dark">
+                                <div class="col-sm-6">
+                                    <p>Vivamus dolor massa, aliquet ut leo vel, sodales mattis tortor. Aenean at mauris et
+                                        ex mollis
+                                        fringilla. Sed volutpat viverra vehicula. Nullam maximus ligula ac nisl aliquam
+                                        commodo. Donec sed
+                                        vestibulum orci. Cum sociis natoque penatibus et magnis dis parturient montes,
+                                        nascetur ridiculus
+                                        mus. Proin ut porttitor lorem, sit amet aliquet dui. Nunc dictum, lorem vitae
+                                        elementum pharetra,
+                                        sapien orci dignissim ligula, aliquam interdum erat urna a nibh. Morbi quis tellus
+                                        maximus,
+                                        pellentesque erat ac, porttitor nulla. Curabitur rhoncus urna non magna mattis
+                                        aliquet. Vestibulum
+                                        non lobortis turpis. Nunc aliquet velit a magna dictum pulvinar vitae laoreet
+                                        tortor. Duis auctor
+                                        iaculis arcu ac rutrum. Suspendisse vel odio risus.</p>
+                                </div>
+                                <div class="col-sm-6">
+                                    <p>Vivamus dolor massa, aliquet ut leo vel, sodales mattis tortor. Aenean at mauris et
+                                        ex mollis
+                                        fringilla. Sed volutpat viverra vehicula. Nullam maximus ligula ac nisl aliquam
+                                        commodo. Donec sed
+                                        vestibulum orci. Cum sociis natoque penatibus et magnis dis parturient montes,
+                                        nascetur ridiculus
+                                        mus. Proin ut porttitor lorem, sit amet aliquet dui. Nunc dictum, lorem vitae
+                                        elementum pharetra,
+                                        sapien orci dignissim ligula, aliquam interdum erat urna a nibh. Morbi quis tellus
+                                        maximus,
+                                        pellentesque erat ac, porttitor nulla. Curabitur rhoncus urna non magna mattis
+                                        aliquet. Vestibulum
+                                        non lobortis turpis. Nunc aliquet velit a magna dictum pulvinar vitae laoreet
+                                        tortor. Duis auctor
+                                        iaculis arcu ac rutrum. Suspendisse vel odio risus.</p>
+                                </div>
+                            </div>
                             <div class="row">
-                                <div class="col-sm-6">
-                                    <p>Vivamus dolor massa, aliquet ut leo vel, sodales mattis tortor. Aenean at mauris et
-                                        ex mollis
-                                        fringilla. Sed volutpat viverra vehicula. Nullam maximus ligula ac nisl aliquam
-                                        commodo. Donec sed
-                                        vestibulum orci. Cum sociis natoque penatibus et magnis dis parturient montes,
-                                        nascetur ridiculus
-                                        mus. Proin ut porttitor lorem, sit amet aliquet dui. Nunc dictum, lorem vitae
-                                        elementum pharetra,
-                                        sapien orci dignissim ligula, aliquam interdum erat urna a nibh. Morbi quis tellus
-                                        maximus,
-                                        pellentesque erat ac, porttitor nulla. Curabitur rhoncus urna non magna mattis
-                                        aliquet. Vestibulum
-                                        non lobortis turpis. Nunc aliquet velit a magna dictum pulvinar vitae laoreet
-                                        tortor. Duis auctor
-                                        iaculis arcu ac rutrum. Suspendisse vel odio risus.</p>
-                                </div>
-                                <div class="col-sm-6">
-                                    <p>Vivamus dolor massa, aliquet ut leo vel, sodales mattis tortor. Aenean at mauris et
-                                        ex mollis
-                                        fringilla. Sed volutpat viverra vehicula. Nullam maximus ligula ac nisl aliquam
-                                        commodo. Donec sed
-                                        vestibulum orci. Cum sociis natoque penatibus et magnis dis parturient montes,
-                                        nascetur ridiculus
-                                        mus. Proin ut porttitor lorem, sit amet aliquet dui. Nunc dictum, lorem vitae
-                                        elementum pharetra,
-                                        sapien orci dignissim ligula, aliquam interdum erat urna a nibh. Morbi quis tellus
-                                        maximus,
-                                        pellentesque erat ac, porttitor nulla. Curabitur rhoncus urna non magna mattis
-                                        aliquet. Vestibulum
-                                        non lobortis turpis. Nunc aliquet velit a magna dictum pulvinar vitae laoreet
-                                        tortor. Duis auctor
-                                        iaculis arcu ac rutrum. Suspendisse vel odio risus.</p>
-                                </div>
                                 <div class="col-sm-12">
                                     <p>Vivamus dolor massa, aliquet ut leo vel, sodales mattis tortor. Aenean at mauris
                                         et ex mollis
@@ -222,7 +224,7 @@
                     </div>
                 </div>
             </div>
-            <div class="page-block" id="block-1" data-node-type="DefaultBlock">
+            <div class="page-block" id="block-1" data-node-type="DefaultBlock"  data-block="IntroBlock">
                 <div class="container">
                     <p>Vivamus dolor massa, aliquet ut leo vel, sodales mattis tortor. Aenean at mauris et ex mollis
                         fringilla. Sed volutpat viverra vehicula. Nullam maximus ligula ac nisl aliquam commodo. Donec sed

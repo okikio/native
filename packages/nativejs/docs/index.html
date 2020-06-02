@@ -13,7 +13,7 @@
           crossorigin="anonymous"/>
     <link rel="stylesheet" href="./css/demo.css">
 </head>
-<body class="home-page bg-light">
+<body class="home-page bg-dark text-white">
     <div id="splashscreen">
         <div class="splashscreen-inner">
             <div class="spinner">
@@ -71,15 +71,20 @@
             <div></div>
         </div>
     </div>
-    <nav id="main-nav" class="navbar navbar-expand-md fixed-top navbar-dark bg-dark">
+    <nav id="main-nav" class="navbar navbar-expand-md fixed-top navbar-light bg-light">
     <a class="navbar-brand" href="./index.html">Starting Blocks
         <small>v4</small>
     </a>
-    <ul class="navbar-nav mr-auto">
-        <li class="nav-item"><a href="./index.html" class="nav-link active" data-transition="default">Homepage</a></li>
-        <li class="nav-item"><a href="./about.html" class="nav-link" data-transition="slide-left">About</a></li>
-        <li class="nav-item"><a href="./other.html" class="nav-link" data-transition="big">Other</a></li>
-    </ul>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item"><a href="./index.html" class="nav-link active" data-transition="default">Homepage</a></li>
+            <li class="nav-item"><a href="./about.html" class="nav-link" data-transition="slide-left">About</a></li>
+            <li class="nav-item"><a href="./other.html" class="nav-link" data-transition="big">Other</a></li>
+        </ul>
+    </div>
 </nav>
     
     <main data-wrapper id="home-page" role="main" id="sb-wrapper">
@@ -92,9 +97,9 @@
             <div class="container">
                 <div class="row">
                     <div class="col">
-                        <div class="jumbotron jumbotron-fluid my-3 bg-white rounded box-shadow">
+                        <div class="jumbotron jumbotron-fluid my-3 px-4 bg-white rounded box-shadow text-dark" data-block="IntroBlock">
                             <div class="container">
-                                <h1 class="display-4">Home page</h1>
+                                <h1 class="display-4"><strong>Home page</strong></h1>
                                 <p class="lead">Dynamic blocks example.</p>
                             </div>
                         </div>
@@ -102,9 +107,9 @@
                 </div>
                 <div class="row">
                     <div class="col">
-                        <div class="my-3 p-3 bg-white rounded box-shadow">
+                        <div class="my-3 p-3 bg-white rounded box-shadow  text-dark" data-block="IntroBlock">
                             <div class="row">
-                                <div class="col-sm-3">
+                                <div class="col-sm-3 mb-3">
                                     <nav id="in-page-nav" class="nav nav-pills flex-column" role="tablist" aria-orientation="vertical">
                                         <a href="./index.html" class="nav-link active">Link to homepage</a>
                                         <a href="./about.html" class="nav-link">Link to the about page</a>
@@ -126,26 +131,26 @@
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-sm-6">
+                    <div class="col-sm-6" data-block="IntroBlock">
                         <div id="inview-00"
                             data-direction="left"
                             data-node-type="InViewBlock" data-block="InViewBlock"
-                            class="card my-3 border-light rounded box-shadow page-block bg-white ">
+                            class="card my-3 border-light rounded box-shadow page-block ">
                             <img loading="lazy" id="first-image"
                                 width="747"
                                 class="card-img-top img-fluid"
                                 src="https://images.unsplash.com/photo-1589646609975-cb53c8e5b37a?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=747&q=80"
                                 alt="Normal img">
-                            <div class="card-body">
+                            <div class="card-body text-dark">
                                 <p class="card-text">Normal image.</p>
                             </div>
                         </div>
                     </div>
-                    <div class="col-sm-6">
+                    <div class="col-sm-6" data-block="IntroBlock">
                         <div id="inview-01"
                             data-direction="right"
                             data-node-type="InViewBlock" data-block="InViewBlock"
-                            class="card my-3 border-light rounded box-shadow page-block bg-white">
+                            class="card my-3 border-light rounded box-shadow page-block ">
                             <picture>
                                 <source data-srcset="/img/test2.webp" type="image/webp" />
                                 <img loading="lazy" class="card-img-top img-fluid lazyload"
@@ -154,7 +159,7 @@
                                     src="https://images.unsplash.com/photo-1570506020466-17c74d2f4590?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1500&q=80"
                                     alt="Lazyloaded img">
                             </picture>
-                            <div class="card-body">
+                            <div class="card-body text-dark">
                                 <p class="card-text">Lazyloaded picture with webp (for chrome).</p>
                             </div>
                         </div>
@@ -162,9 +167,9 @@
                 </div>
                 <div class="row">
                     <div class="col">
-                        <div class="my-3 p-3  rounded box-shadow">
+                        <div class="my-3 p-3">
                             <div class="row">
-                                <div class="col-sm-6 bg-white">
+                                <div class="col-sm-6" data-block="IntroBlock">
                                     <p>Vivamus dolor massa, aliquet ut leo vel, sodales mattis tortor. Aenean at mauris et ex mollis
                                         fringilla. Sed volutpat viverra vehicula. Nullam maximus ligula ac nisl aliquam commodo. Donec sed
                                         vestibulum orci. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus
@@ -174,7 +179,7 @@
                                         non lobortis turpis. Nunc aliquet velit a magna dictum pulvinar vitae laoreet tortor. Duis auctor
                                         iaculis arcu ac rutrum. Suspendisse vel odio risus.</p>
                                 </div>
-                                <div class="col-sm-6 bg-white">
+                                <div class="col-sm-6" data-block="IntroBlock">
                                     <p>Vivamus dolor massa, aliquet ut leo vel, sodales mattis tortor. Aenean at mauris et ex mollis
                                         fringilla. Sed volutpat viverra vehicula. Nullam maximus ligula ac nisl aliquam commodo. Donec sed
                                         vestibulum orci. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus
@@ -185,7 +190,7 @@
                                         iaculis arcu ac rutrum. Suspendisse vel odio risus.</p>
                                 </div>
                                 <div class="col-sm-12">
-                                    <div class="page-block bg-white" data-node-type="DefaultBlock" id="block-1">
+                                    <div class="page-block" data-block="IntroBlock" data-node-type="DefaultBlock" id="block-1">
                                         <p>Vivamus dolor massa, aliquet ut leo vel, sodales mattis tortor. Aenean at mauris et ex mollis
                                             fringilla. Sed volutpat viverra vehicula. Nullam maximus ligula ac nisl aliquam commodo. Donec sed
                                             vestibulum orci. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus
@@ -218,7 +223,7 @@
                                             porta sem malesuada magna mollis euismod. Donec sed odio dui. Donec id elit non mi porta gravida at
                                             eget metus. Cras mattis consectetur purus sit amet fermentum.</p>
 
-                                        <p><img loading="lazy" class="lazyload img-fluid"
+                                        <p data-block="IntroBlock"><img loading="lazy" class="lazyload img-fluid"
                                                 id="snd-image"
                                                 width="700"
                                                 src="https://images.unsplash.com/photo-1590510325281-54a9164cf0f4?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1502&q=80"
@@ -302,7 +307,7 @@
                                 width="700"
                                 data-src="/img/test3.jpg"
                                 alt="Lazyloaded img">
-                            <div class="card-body">
+                            <div class="card-body text-dark">
                                 <p class="card-text">Lazyloaded image.</p>
                             </div>
                         </div>
@@ -318,7 +323,7 @@
                                 width="700"
                                 data-src="/img/test4.jpg"
                                 alt="Lazyloaded img">
-                            <div class="card-body">
+                            <div class="card-body text-dark">
                                 <p class="card-text">Lazyloaded image.</p>
                             </div>
                         </div>
@@ -332,7 +337,7 @@
                                 width="700"
                                 data-src="/img/test5.jpg"
                                 alt="Lazyloaded img">
-                            <div class="card-body">
+                            <div class="card-body text-dark">
                                 <p class="card-text">Lazyloaded image.</p>
                             </div>
                         </div>
@@ -342,7 +347,7 @@
         </div>
     </main>
 
-    <footer class="footer">
+    <footer class="footer text-dark">
         <div class="container">
             Made by <a href="https://github.com/okikio" class="text-muted" target="_blank">Okiki Ojo</a>
             Based on <a href="https://github.com/rezozero/starting-blocks" class="text-muted" target="_blank">Starting blocks</a>
@@ -350,6 +355,9 @@
     </footer>
 
     
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
     <script src="./js/framework.js" type="module"></script>
 </body>
 </html>

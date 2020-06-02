@@ -1,8 +1,8 @@
 
 import PJAX from "./pjax.js";
 import { App, _URL } from "./api.js";
-import InViewBlockIntent from "./blocks.js";
-import { Splashscreen, IntroAnimation, InView } from "./services.js";
+import { InViewBlockIntent } from "./blocks.js";
+import { Splashscreen, IntroAnimation } from "./services.js";
 import { Fade, Slide, SlideLeft, SlideRight, BigTransition } from "./transitions.js";
 
 const app = new App();

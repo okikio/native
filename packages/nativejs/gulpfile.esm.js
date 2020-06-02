@@ -52,19 +52,20 @@ export const js = () => {
 
 export const watch = () => {
     browserSync.init(
-        { server: "./docs", },
+        { server: "./", },
         (...args) => {
             let [, $this] = args;
             $this.addMiddleware("*", (...args) => {
                 let [, res] = args;
                 res.writeHead(302, {
-                    location: "/404.html",
+                    location: "/docs/404.html",
                 });
 
                 res.end("Redirecting!");
             });
         }
     );
+
     sentry(["templates/**/*.njk", "pages/*.njk"], { delay: 1000 }, html);
     sentry("sass/**/*.scss", { delay: 1000 }, css);
     // sentry("ts/**/*.ts", { delay: 1000 }, js);
@@ -74,19 +75,20 @@ export const watch = () => {
 };
 export const watch_include = () => {
     browserSync.init(
-        { server: "./docs", },
+        { server: "./", },
         (...args) => {
             let [, $this] = args;
             $this.addMiddleware("*", (...args) => {
                 let [, res] = args;
                 res.writeHead(302, {
-                    location: "/404.html",
+                    location: "/docs/404.html",
                 });
 
                 res.end("Redirecting!");
             });
         }
     );
+
     sentry(["templates/**/*.njk", "pages/*.njk"], { delay: 1000 }, html);
     sentry("sass/**/*.scss", { delay: 1000 }, css);
     sentry("ts/**/*.ts", { delay: 1000 }, js);

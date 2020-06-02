@@ -91,10 +91,15 @@ hex2rgba = (color) => {
 // let result = hex2rgba("ff00");
 // result
 
-class Block { 
+class Block {
     name = "Cool";
-    getName() { 
+    getName() {
         return this.name;
     }
 }
-console.log(Block.prototype.name)
+console.log(Array.from(Array(11), (x, i) => i / 10))
+
+/*
+    Find: @(returns|type) \{([\w_-]+)\}
+    Replace: @$1 $2
+*/
