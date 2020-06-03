@@ -73,4 +73,5 @@ export class InViewBlock extends Block {
     }
 }
 export const InViewBlockIntent = new BlockIntent("InViewBlock", InViewBlock);
+
 //# sourceMappingURL=blocks.js.map

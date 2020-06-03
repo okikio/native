@@ -38,4 +38,5 @@ app
         "go": navbarLinks
     });
 })();
+
 //# sourceMappingURL=framework.js.map

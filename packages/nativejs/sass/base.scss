@@ -2,60 +2,92 @@
 @import "_layout";
 @import "_utilities";
 
-@mixin modifier($selector, $property, $value) {
+@mixin modifier(
+    $modifiers: (
+        "responsive",
+    )
+) {
+    $selector: str-slice(#{&}, 2);
+    & {
+        @content;
+    }
+
     @at-root {
-        @each $key, $screen in $screens {
-            @media (min-width: $screen) {
-                #{$key}:#{str-slice($selector, 2)} {
-                    #{$property}: $value;
+        @each $modifier in $modifiers {
+            @if $modifier == "responsive" {
+                @each $key, $screen in $screens {
+                    @media (min-width: $screen) {
+                        #{$key}:#{$selector} {
+                            @content;
+                        }
+                    }
                 }
-
-                // hover-#{$key}:#{str-slice($selector, 2)}:hover,
-                // focus-#{$key}:#{str-slice($selector, 2)}:focus {
-                //     #{$property}: $value;
-                // }
+            } @else {
+                .#{$modifier}:#{$modifier} #{$modifier}:#{$selector} {
+                    @content;
+                }
             }
-        }
-
-        hover:#{str-slice($selector, 2)}:hover,
-        focus:#{str-slice($selector, 2)}:focus {
-            #{$property}: $value;
         }
     }
 }
 
-@mixin listSet($property, $list, $suffix: false) {
+@mixin listSet($property, $list, $scale: 1, $suffix: false) {
     @if map-has-key($list, "default") {
         &#{if($suffix, "> #{$suffix}", "")} {
-            $value: map-get($list, "default");
+            $values: map-get($list, "default");
+            $value: if(type-of($values) == "number", $values * $scale, $values);
             #{$property}: $value;
-
-            @include modifier($selector, $property, $value);
         }
     }
 
-    @each $key, $value in $list {
-        &-#{$key}#{if($suffix, "> #{$suffix}", "")} {
-            // If value is a map, loop through, and create new sub-classes using it's index
-            @if type-of($value) == "map" {
-                @each $index, $val in $value {
-                    &-#{$index} {
-                        #{$property}: $val;
-
-                        @include modifier(#{&}, $property, $val);
+    @each $key, $values in $list {
+        @if $key != default {
+            &-#{$key}#{if($suffix, "> #{$suffix}", "")} {
+                // If value is a map, loop through, and create new sub-classes using it's index
+                @if type-of($values) == "map" {
+                    @each $index, $value in $values {
+                        &-#{$index} {
+                            $val: if(
+                                type-of($value) == "number",
+                                $value * $scale,
+                                $value
+                            );
+                            #{$property}: $val;
+                        }
                     }
+                } @else {
+                    $value: if(
+                        type-of($values) == "number",
+                        $values * $scale,
+                        $values
+                    );
+                    #{$property}: $value;
                 }
-            } @else {
-                #{$property}: $value;
-
-                @include modifier(#{&}, $property, $value);
             }
         }
     }
 }
 
 @mixin theme($property, $suffix: false) {
-    @include listSet($property, $colors, $suffix);
+    @include listSet($property, $colors, 1, $suffix);
+}
+
+.bg {
+    @include modifier(("responsive", "hover", "focus")) {
+        @include theme(background-color);
+    }
+}
+
+.color {
+    @include modifier(("responsive", "hover", "focus")) {
+        @include theme(color);
+    }
+}
+
+.opacity {
+    @include modifier(("responsive", "hover", "focus")) {
+        @include listSet(opacity, $opacity);
+    }
 }
 
 $dirs: (
@@ -73,163 +105,146 @@ $dirs: (
     ),
 );
 
-@mixin dirSet($property, $list, $suffix: false) {
-    @each $key, $dir in $dirs {
+@mixin dirSet($property, $list, $scale: 1, $suffix: false, $dirsList: $dirs) {
+    @each $key, $dir in $dirsList {
         &#{$key} {
             // If value is a map, loop through, and create new sub-classes using it's index
             @if type-of($dir) == "list" {
-                @each $val in $dir {
-                    // @debug #{$property}-#{$val};
-                    @include listSet(#{$property}-#{$val}, $list, $suffix);
-                }
-            } @else {
-                @include listSet(#{$property}-#{$dir}, $list, $suffix);
-            }
-        }
-    }
-}
-
-.bg {
-    @include theme(background-color);
-    @include dirSet(padding, $screens);
-}
-
-/*
-.color {
-    @include theme(color);
-}
-
-.opacity {
-    @include listSet(opacity, $opacity);
-}
-
-
-.border {
-    @include listSet(border-width, $borderWidth);
-
-    & {
-        border-color: map-get(map-get($colors, "gray"), "300");
-    }
-
-    @include theme(border-color);
-
-    &- {
-        @include dirSet(border-width, $borderWidth);
-        @include dirSet(border-color, $colors);
-    }
-
-    &-solid {
-        border-style: solid;
-    }
-
-    &-dashed {
-        border-style: dashed;
-    }
-
-    &-dotted {
-        border-style: dotted;
-    }
-
-    &-double {
-        border-style: double;
-    }
-
-    &-none {
-        border-style: none;
-    }
-}
-
-.divide {
-    & {
-        border-color: map-get(map-get($colors, "gray"), "300");
-    }
-
-    @include theme(border-color, "* + *");
-
-    &- {
-        @include dirSet(border-width, $borderWidth, "* + *");
-        @include dirSet(border-color, $colors, "* + *");
-    }
-
-    &-solid > * + * {
-        border-style: solid;
-    }
-
-    &-dashed > * + * {
-        border-style: dashed;
-    }
-
-    &-dotted > * + * {
-        border-style: dotted;
-    }
-
-    &-double > * + * {
-        border-style: double;
-    }
-
-    &-none > * + * {
-        border-style: none;
-    }
-}
-
-.radius {
-    @include listSet(border-radius, $borderRadius);
-
-    &- {
-        @include dirSet(border-radius, $borderRadius);
-    }
-}
-
-.cursor {
-    @include listSet(cursor, $cursors);
-}
-
-@mixin negativeListSet($property, $list, $suffix: false) {
-    @if map-has-key($list, "default") {
-         &#{if($suffix, "> #{$suffix}", "")} {
-            $value: map-get($list, "default");
-            #{$property}: -$value;
-
-            @include modifier($selector, $property, -$value);
-        }
-    }
-
-    @each $key, $value in $list {
-        &-#{$key}#{if($suffix, "> #{$suffix}", "")} {
-            // If value is a map, loop through, and create new sub-classes using it's index
-            @if type-of($value) == "map" {
-                @each $index, $val in $value {
-                    &-#{$index} {
-                        #{$property}: -$val;
-
-                        @include modifier(#{&}, $property, -$val);
-                    }
-                }
-            } @else {
-                #{$property}: -$value;
-
-                @include modifier(#{&}, $property, -$value);
-            }
-        }
-    }
-}
-
-@mixin negDirSet($property, $list, $suffix: false) {
-    @each $key, $dir in $dirs {
-        &#{$key} {
-            // If value is a map, loop through, and create new sub-classes using it's index
-            @if type-of($dir) == map {
-                @each $val in $value {
-                    @include negativeListSet(
-                        #{$property}-#{$val},
+                @each $value in $dir {
+                    @include listSet(
+                        #{$property}-#{$value},
                         $list,
+                        $scale,
                         $suffix
                     );
                 }
             } @else {
-                @include negativeListSet(#{$property}-#{$dir}, $list, $suffix);
+                @include listSet(#{$property}-#{$dir}, $list, $scale, $suffix);
             }
         }
+    }
+}
+
+.border {
+    @include modifier(("responsive", "hover", "focus")) {
+        @include listSet(border-width, $borderWidth);
+
+        & {
+            border-color: map-get(map-get($colors, "gray"), "300");
+        }
+
+        @include theme(border-color);
+
+        &- {
+            @include dirSet(border-width, $borderWidth);
+        }
+
+        &-solid {
+            border-style: solid;
+        }
+
+        &-dashed {
+            border-style: dashed;
+        }
+
+        &-dotted {
+            border-style: dotted;
+        }
+
+        &-double {
+            border-style: double;
+        }
+
+        &-none {
+            border-style: none;
+        }
+    }
+}
+
+.divide {
+    @include modifier(("responsive")) {
+        & {
+            border-color: map-get(map-get($colors, "gray"), "300");
+        }
+
+        @include theme(border-color, "* + *");
+
+        &- {
+            @include dirSet(border-width, $borderWidth, 1, "* + *");
+        }
+
+        &-solid > * + * {
+            border-style: solid;
+        }
+
+        &-dashed > * + * {
+            border-style: dashed;
+        }
+
+        &-dotted > * + * {
+            border-style: dotted;
+        }
+
+        &-double > * + * {
+            border-style: double;
+        }
+
+        &-none > * + * {
+            border-style: none;
+        }
+    }
+}
+
+$radDirs: (
+    "t": (
+        "top-left",
+        "top-right",
+    ),
+    "r": (
+        "top-right",
+        "bottom-right",
+    ),
+    "l": (
+        "top-left",
+        "bottom-left",
+    ),
+    "b": (
+        "bottom-left",
+        "bottom-right",
+    ),
+    "tl": "top-left",
+    "tr": "top-right",
+    "bl": "bottom-left",
+    "br": "bottom-right",
+);
+
+.radius {
+    @include modifier(("responsive")) {
+        @include listSet(border-radius, $borderRadius);
+
+        &- {
+            @each $key, $dir in $radDirs {
+                &#{$key} {
+                    // If value is a map, loop through, and create new sub-classes using it's index
+                    @if type-of($dir) == "list" {
+                        @each $value in $dir {
+                            @include listSet(
+                                border-#{$value}-radius,
+                                $borderRadius
+                            );
+                        }
+                    } @else {
+                        @include listSet(border-#{$dir}-radius, $borderRadius);
+                    }
+                }
+            }
+        }
+    }
+}
+
+.cursor {
+    @include modifier(("responsive")) {
+        @include listSet(cursor, $cursors);
     }
 }
 
@@ -238,51 +253,54 @@ $spacingTypes: (
     "p": "padding",
 );
 
-@each $key, $spaceType in $spaceTypes {
+@each $key, $spaceType in $spacingTypes {
     .#{$key} {
-        &-auto {
-            #{$spaceType}: auto;
-        }
+        @include modifier(("responsive")) {
+            &-auto {
+                #{$spaceType}: auto;
+            }
 
-        @include listSet(#{$spaceType}, $spacing);
-        @include dirSet(#{$spaceType}, $spacing);
+            @include listSet(#{$spaceType}, $spacing);
+            @include dirSet(#{$spaceType}, $spacing);
 
-        @if $spaceType == "margin" {
-            &-neg {
-                @include negativeListSet(#{$spaceType}, $spacing);
-                @include negDirSet(#{$spaceType}, $spacing);
+            @if $spaceType == "margin" {
+                &-- {
+                    @include listSet(#{$spaceType}, $spacing, -1);
+                    @include dirSet(#{$spaceType}, $spacing, -1);
+                }
             }
         }
     }
 }
 
 .space {
-    @include listSet(#{$spaceType}, $spacing, "* + *");
-    @include dirSet(#{$spaceType}, $spacing, "* + *");
+    @include modifier(("responsive")) {
+        @include listSet(margin, $spacing, 1, "* + *");
+        @include dirSet(margin, $spacing, 1, "* + *");
 
-    &-neg {
-        @include negativeListSet(#{$spaceType}, $spacing, "* + *");
-        @include negDirSet(#{$spaceType}, $spacing, "* + *");
+        &-- {
+            @include listSet(margin, $spacing, -1, "* + *");
+            @include dirSet(margin, $spacing, -1, "* + *");
+        }
     }
 }
 
 .font {
-    @include listSet(font-family, $fontFamily);
-
-    &-italic {
-        font-style: italic;
-    }
-
-    &-bold {
-        font-style: bold;
-    }
-
-    &-w {
+    @include modifier(("responsive")) {
+        @include listSet(font-family, $fontFamily);
         @include listSet(font-weight, $fontWeight);
-    }
 
-    &-sz {
-        @include listSet(font-size, $fontSize);
+        &-italic {
+            font-style: italic;
+        }
+
+        &-bold {
+            font-style: bold;
+        }
+
+        &-sz {
+            @include listSet(font-size, $fontSize);
+        }
     }
 }
 
@@ -297,129 +315,142 @@ $sizeTypes: (
 
 @each $key, $sizeType in $sizeTypes {
     .#{$key} {
-        @include listSet(#{$sizeType}, $sizes);
+        @include modifier(("responsive")) {
+            @include listSet(#{$sizeType}, $sizes);
+        }
     }
 }
 
 .flex {
-    display: flex;
-    @include listSet(flex, $flex);
+    @include modifier(("responsive")) {
+        @include listSet(flex, $flex);
 
-    &-grow {
-        @include listSet(flex-grow, $flexGrow);
-    }
+        &-grow {
+            @include listSet(flex-grow, $flexGrow);
+        }
 
-    &-shrink {
-        @include listSet(flex-shrink, $flexShrink);
-    }
+        &-shrink {
+            @include listSet(flex-shrink, $flexShrink);
+        }
 
-    &-row {
-        flex-direction: row;
-    }
-    &-row-reverse {
-        flex-direction: row-reverse;
-    }
-    &-col {
-        flex-direction: column;
-    }
-    &-col-reverse {
-        flex-direction: column-reverse;
-    }
+        &-row {
+            flex-direction: row;
+        }
+        &-row-reverse {
+            flex-direction: row-reverse;
+        }
+        &-col {
+            flex-direction: column;
+        }
+        &-col-reverse {
+            flex-direction: column-reverse;
+        }
 
-    &-no-wrap {
-        flex-wrap: nowrap;
-    }
+        &-no-wrap {
+            flex-wrap: nowrap;
+        }
 
-    &-wrap {
-        flex-wrap: wrap;
-    }
+        &-wrap {
+            flex-wrap: wrap;
+        }
 
-    &-wrap-reverse {
-        flex-wrap: wrap-reverse;
+        &-wrap-reverse {
+            flex-wrap: wrap-reverse;
+        }
     }
 }
 
 .items {
-    &-stretch {
-        align-items: stretch;
-    }
-    &-start {
-        align-items: flex-start;
-    }
-    &-center {
-        align-items: center;
-    }
-    &-end {
-        align-items: flex-end;
-    }
-    &-baseline {
-        align-items: baseline;
+    @include modifier(("responsive")) {
+        &-stretch {
+            align-items: stretch;
+        }
+        &-start {
+            align-items: flex-start;
+        }
+        &-center {
+            align-items: center;
+        }
+        &-end {
+            align-items: flex-end;
+        }
+        &-baseline {
+            align-items: baseline;
+        }
     }
 }
 
 .content {
-    &-start {
-        align-content: flex-start;
-    }
-    &-center {
-        align-content: center;
-    }
-    &-end {
-        align-content: flex-end;
-    }
-    &-between {
-        align-content: space-between;
-    }
-    &-around {
-        align-content: space-around;
+    @include modifier(("responsive")) {
+        &-start {
+            align-content: flex-start;
+        }
+        &-center {
+            align-content: center;
+        }
+        &-end {
+            align-content: flex-end;
+        }
+        &-between {
+            align-content: space-between;
+        }
+        &-around {
+            align-content: space-around;
+        }
     }
 }
 
 .self {
-    &-auto {
-        align-self: auto;
-    }
-    &-start {
-        align-self: flex-start;
-    }
-    &-center {
-        align-self: center;
-    }
-    &-end {
-        align-self: flex-end;
-    }
-    &-stretch {
-        align-self: stretch;
+    @include modifier(("responsive")) {
+        &-auto {
+            align-self: auto;
+        }
+        &-start {
+            align-self: flex-start;
+        }
+        &-center {
+            align-self: center;
+        }
+        &-end {
+            align-self: flex-end;
+        }
+        &-stretch {
+            align-self: stretch;
+        }
     }
 }
 
 .float {
-    &-right {
-        float: right;
-    }
-    &-left {
-        float: left;
-    }
-    &-none {
-        float: none;
+    @include modifier(("responsive")) {
+        &-right {
+            float: right;
+        }
+        &-left {
+            float: left;
+        }
+        &-none {
+            float: none;
+        }
     }
 }
 
 .justify {
-    &-start {
-        justify-content: flex-start;
-    }
-    &-center {
-        justify-content: center;
-    }
-    &-end {
-        justify-content: flex-end;
-    }
-    &-between {
-        justify-content: space-between;
-    }
-    &-around {
-        justify-content: space-around;
+    @include modifier(("responsive")) {
+        &-start {
+            justify-content: flex-start;
+        }
+        &-center {
+            justify-content: center;
+        }
+        &-end {
+            justify-content: flex-end;
+        }
+        &-between {
+            justify-content: space-between;
+        }
+        &-around {
+            justify-content: space-around;
+        }
     }
 }
 
@@ -430,107 +461,105 @@ $sizeTypes: (
 }
 
 .object {
-    &-contain {
-        object-fit: contain;
-    }
+    @include modifier(("responsive")) {
+        &-contain {
+            object-fit: contain;
+        }
 
-    &-cover {
-        object-fit: cover;
-    }
+        &-cover {
+            object-fit: cover;
+        }
 
-    &-fill {
-        object-fit: fill;
-    }
+        &-fill {
+            object-fit: fill;
+        }
 
-    &-none {
-        object-fit: none;
-    }
+        &-none {
+            object-fit: none;
+        }
 
-    &-scale-down {
-        object-fit: scale-down;
-    }
+        &-scale-down {
+            object-fit: scale-down;
+        }
 
-    &-bottom {
-        object-position: bottom;
-    }
-    &-center {
-        object-position: center;
-    }
-    &-left {
-        object-position: left;
-    }
-    &-left-bottom {
-        object-position: left bottom;
-    }
-    &-left-top {
-        object-position: left top;
-    }
-    &-right {
-        object-position: right;
-    }
-    &-right-bottom {
-        object-position: right bottom;
-    }
-    &-right-top {
-        object-position: right top;
-    }
-    &-top {
-        object-position: top;
+        &-bottom {
+            object-position: bottom;
+        }
+        &-center {
+            object-position: center;
+        }
+        &-left {
+            object-position: left;
+        }
+        &-left-bottom {
+            object-position: left bottom;
+        }
+        &-left-top {
+            object-position: left top;
+        }
+        &-right {
+            object-position: right;
+        }
+        &-right-bottom {
+            object-position: right bottom;
+        }
+        &-right-top {
+            object-position: right top;
+        }
+        &-top {
+            object-position: top;
+        }
     }
 }
 
 .overflow {
-    &-auto {
-        overflow: auto;
-    }
-    &-hidden {
-        overflow: hidden;
-    }
-    &-visible {
-        overflow: visible;
-    }
-    &-scroll {
-        overflow: scroll;
-    }
-    &-x-auto {
-        overflow-x: auto;
-    }
-    &-y-auto {
-        overflow-y: auto;
-    }
-    &-x-hidden {
-        overflow-x: hidden;
-    }
-    &-y-hidden {
-        overflow-y: hidden;
-    }
-    &-x-visible {
-        overflow-x: visible;
-    }
-    &-y-visible {
-        overflow-y: visible;
-    }
-    &-x-scroll {
-        overflow-x: scroll;
-    }
-    &-y-scroll {
-        overflow-y: scroll;
+    @include modifier(("responsive")) {
+        &-auto {
+            overflow: auto;
+        }
+        &-hidden {
+            overflow: hidden;
+        }
+        &-visible {
+            overflow: visible;
+        }
+        &-scroll {
+            overflow: scroll;
+        }
+        &-x-auto {
+            overflow-x: auto;
+        }
+        &-y-auto {
+            overflow-y: auto;
+        }
+        &-x-hidden {
+            overflow-x: hidden;
+        }
+        &-y-hidden {
+            overflow-y: hidden;
+        }
+        &-x-visible {
+            overflow-x: visible;
+        }
+        &-y-visible {
+            overflow-y: visible;
+        }
+        &-x-scroll {
+            overflow-x: scroll;
+        }
+        &-y-scroll {
+            overflow-y: scroll;
+        }
     }
 }
-.static {
-    position: static;
-}
-.fixed {
-    position: fixed;
-}
-.absolute {
-    position: absolute;
-}
-.relative {
-    position: relative;
-}
-.sticky {
-    position: sticky;
+
+$positionList: ("static", "fixed", "absolute", "relative", "sticky");
+@each $pos in $positionList {
+    .#{$pos} {
+        @include modifier(("responsive")) {
+            position: #{$pos};
+        }
+    }
 }
 
 .pos {
@@ -570,86 +599,86 @@ $sizeTypes: (
 }
 
 .scrolling {
-    &-touch {
-        -webkit-overflow-scrolling: touch;
-    }
-    &-auto {
-        -webkit-overflow-scrolling: auto;
+    @include modifier(("responsive")) {
+        &-touch {
+            -webkit-overflow-scrolling: touch;
+        }
+        &-auto {
+            -webkit-overflow-scrolling: auto;
+        }
     }
 }
 
 .shadow {
-    // @include listSet(box-shadow, $boxShadow);
-
-    @if map-has-key($boxShadow, "default") {
-        $selector: &;
-        #{$selector} {
-            $value: map-get($boxShadow, "default");
-            #{$property}: #{$value};
-
-            @include modifier($selector, $property, #{$value});
+    @include modifier(("responsive", "hover", "focus")) {
+        @if map-has-key($boxShadow, "default") {
+            & {
+                $value: map-get($boxShadow, "default");
+                box-shadow: #{$value};
+            }
         }
-    }
 
-    @each $key, $value in $boxShadow {
-        $parentSelector: &-#{$key};
-        #{$parentSelector} {
-            #{$property}: #{$value};
-
-            @include modifier($parentSelector, $property, #{$value});
+        @each $key, $value in $boxShadow {
+            @if $key != "default" {
+                &-#{$key} {
+                    box-shadow: #{$value};
+                }
+            }
         }
     }
 }
 
 .text {
-    @include listSet(letter-spacing, $letterSpacing);
+    @include modifier(("responsive", "hover", "focus")) {
+        @include listSet(letter-spacing, $letterSpacing);
 
-    &-height {
-        @include listSet(line-height, $lineHeight);
-    }
+        &-height {
+            @include listSet(line-height, $lineHeight);
+        }
 
-    &-uppercase {
-        text-transform: uppercase;
-    }
+        &-uppercase {
+            text-transform: uppercase;
+        }
 
-    &-lowercase {
-        text-transform: lowercase;
-    }
+        &-lowercase {
+            text-transform: lowercase;
+        }
 
-    &-capitalize {
-        text-transform: capitalize;
-    }
+        &-capitalize {
+            text-transform: capitalize;
+        }
 
-    &-normal-case {
-        text-transform: none;
-    }
+        &-normal-case {
+            text-transform: none;
+        }
 
-    &-left {
-        text-align: left;
-    }
+        &-left {
+            text-align: left;
+        }
 
-    &-right {
-        text-align: right;
-    }
+        &-right {
+            text-align: right;
+        }
 
-    &-center {
-        text-align: center;
-    }
+        &-center {
+            text-align: center;
+        }
 
-    &-justify {
-        text-align: justify;
-    }
+        &-justify {
+            text-align: justify;
+        }
 
-    &-underline {
-        text-decoration: underline;
-    }
+        &-underline {
+            text-decoration: underline;
+        }
 
-    &-line-through {
-        text-decoration: line-through;
-    }
+        &-line-through {
+            text-decoration: line-through;
+        }
 
-    &-no-underline {
-        text-decoration: none;
+        &-no-underline {
+            text-decoration: none;
+        }
     }
 }
 
@@ -658,149 +687,178 @@ $sizeTypes: (
 }
 
 .visible {
-    visibility: visible;
+    @include modifier(("responsive")) {
+        visibility: visible;
+    }
 }
 
 .invisible {
-    visibility: hidden;
+    @include modifier(("responsive")) {
+        visibility: hidden;
+    }
 }
 
 .pointer-events {
-    &-none {
-        pointer-events: none;
-    }
-    &-auto {
-        pointer-events: auto;
+    @include modifier(("responsive")) {
+        &-none {
+            pointer-events: none;
+        }
+        &-auto {
+            pointer-events: auto;
+        }
     }
 }
 
 .container {
-    width: 100%;
-    @include listSet(max-width, $screens);
+    @include modifier(("responsive")) {
+        width: 100%;
+        @include listSet(max-width, $screens);
+    }
 }
 
 .show {
-    visibility: visible;
-    pointer-events: auto;
+    @include modifier(("responsive")) {
+        visibility: visible;
+        pointer-events: auto;
+    }
 }
 
 .hide {
-    visibility: hidden;
-    pointer-events: none;
+    @include modifier(("responsive")) {
+        visibility: hidden;
+        pointer-events: none;
+    }
 }
 
 .z {
-    @include listSet(z-index, $zIndex);
+    @include modifier(("responsive")) {
+        @include listSet(z-index, $zIndex);
+    }
 }
 
 .d {
-    &-hidden {
-        display: none;
-    }
-    &-block {
-        display: block;
-    }
-    &-inline-block {
-        display: inline-block;
-    }
-    &-inline {
-        display: inline;
-    }
-    &-flex {
-        display: flex;
-    }
-    &-inline-flex {
-        display: inline-flex;
+    @include modifier(("responsive")) {
+        &-hidden {
+            display: none;
+        }
+        &-block {
+            display: block;
+        }
+        &-inline-block {
+            display: inline-block;
+        }
+        &-inline {
+            display: inline;
+        }
+        &-flex {
+            display: flex;
+        }
+        &-inline-flex {
+            display: inline-flex;
+        }
     }
 }
 
 .v-align {
-    &-baseline {
-        vertical-align: baseline;
-    }
-    &-top {
-        vertical-align: top;
-    }
-    &-middle {
-        vertical-align: middle;
-    }
-    &-bottom {
-        vertical-align: bottom;
-    }
-    &-text-top {
-        vertical-align: text-top;
-    }
-    &-text-bottom {
-        vertical-align: text-bottom;
+    @include modifier(("responsive")) {
+        &-baseline {
+            vertical-align: baseline;
+        }
+        &-top {
+            vertical-align: top;
+        }
+        &-middle {
+            vertical-align: middle;
+        }
+        &-bottom {
+            vertical-align: bottom;
+        }
+        &-text-top {
+            vertical-align: text-top;
+        }
+        &-text-bottom {
+            vertical-align: text-bottom;
+        }
     }
 }
 
 .sr-only {
-    position: absolute;
-    width: 1px;
-    height: 1px;
-    padding: 0;
-    margin: -1px;
-    overflow: hidden;
-    clip: rect(0, 0, 0, 0);
-    white-space: nowrap;
-    border-width: 0;
+    @include modifier(("responsive", "focus")) {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        padding: 0;
+        margin: -1px;
+        overflow: hidden;
+        clip: rect(0, 0, 0, 0);
+        white-space: nowrap;
+        border-width: 0;
+    }
 }
 
 .not-sr-only {
-    position: static;
-    width: auto;
-    height: auto;
-    padding: 0;
-    margin: 0;
-    overflow: visible;
-    clip: auto;
-    white-space: normal;
+    @include modifier(("responsive", "focus")) {
+        position: static;
+        width: auto;
+        height: auto;
+        padding: 0;
+        margin: 0;
+        overflow: visible;
+        clip: auto;
+        white-space: normal;
+    }
 }
 
 .whitespace {
-    white-space: normal;
+    @include modifier(("responsive")) {
+        white-space: normal;
 
-    &-no-wrap {
-        white-space: nowrap;
-    }
-    &-pre {
-        white-space: pre;
-    }
-    &-pre-line {
-        white-space: pre-line;
-    }
-    &-pre-wrap {
-        white-space: pre-wrap;
+        &-no-wrap {
+            white-space: nowrap;
+        }
+        &-pre {
+            white-space: pre;
+        }
+        &-pre-line {
+            white-space: pre-line;
+        }
+        &-pre-wrap {
+            white-space: pre-wrap;
+        }
     }
 }
 
 .w-break {
-    word-break: normal;
-    overflow-wrap: normal;
-    &-words {
-        overflow-wrap: break-word;
-    }
-    &-all {
-        word-break: break-all;
+    @include modifier(("responsive")) {
+        word-break: normal;
+        overflow-wrap: normal;
+        &-words {
+            overflow-wrap: break-word;
+        }
+        &-all {
+            word-break: break-all;
+        }
     }
 }
 
 .truncate {
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
+    @include modifier(("responsive")) {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
 }
 
 .list {
-    @include listSet(list-style-type, $listStyleType);
+    @include modifier(("responsive")) {
+        @include listSet(list-style-type, $listStyleType);
 
-    &-inside {
-        list-style-position: inside;
-    }
+        &-inside {
+            list-style-position: inside;
+        }
 
-    &-outside {
-        list-style-position: outside;
+        &-outside {
+            list-style-position: outside;
+        }
     }
 }
-*/

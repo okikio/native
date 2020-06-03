@@ -93,4 +93,5 @@ export class Animation extends EventEmitter {
 }
 export const animate = (targets, properties, options) => { };
 export default animate;
+
 //# sourceMappingURL=animate.js.map
