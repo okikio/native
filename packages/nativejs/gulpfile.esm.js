@@ -23,11 +23,22 @@ export const html = () => {
     });
 };
 
-export const css = () => {
+export const appCss = () => {
     return stream("sass/app.scss", {
         pipes: [
             // Minify scss to css
             sass({ outputStyle: "compressed" }).on("error", logError)
+        ],
+        dest: "docs/css",
+        end: [browserSync.stream()],
+    })
+};
+
+export const baseCss = () => {
+    return stream("sass/base.scss", {
+        pipes: [
+            // Minify scss to css
+            sass({ outputStyle: "expanded" || "compressed" }).on("error", logError)
         ],
         dest: "docs/css",
         end: [browserSync.stream()],
@@ -67,7 +78,8 @@ export const watch = () => {
     );
 
     sentry(["templates/**/*.njk", "pages/*.njk"], { delay: 1000 }, html);
-    sentry("sass/**/*.scss", { delay: 1000 }, css);
+    sentry(["sass/**/*.scss", "!sass/app.scss"], { delay: 1000 }, baseCss);
+    sentry("sass/app.scss", { delay: 1000 }, appCss);
     // sentry("ts/**/*.ts", { delay: 1000 }, js);
 
     sentry("docs/**/*.html").on('change', browserSync.reload);
@@ -90,10 +102,10 @@ export const watch_include = () => {
     );
 
     sentry(["templates/**/*.njk", "pages/*.njk"], { delay: 1000 }, html);
-    sentry("sass/**/*.scss", { delay: 1000 }, css);
-    sentry("ts/**/*.ts", { delay: 1000 }, js);
+    sentry(["sass/**/*.scss", "!sass/app.scss"], { delay: 1000 }, baseCss);
+    sentry("sass/app.scss", { delay: 1000 }, appCss);
 
     sentry("docs/**/*.html").on('change', browserSync.reload);
     sentry("docs/**/*.js").on('change', browserSync.reload);
 };
-export default parallel(html, css, js);
+export default parallel(html, baseCss, appCss, js);
