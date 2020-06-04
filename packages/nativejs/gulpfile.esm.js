@@ -7,19 +7,24 @@ import { init, write } from "gulp-sourcemaps";
 import postcss from "gulp-postcss";
 import nunjuck from "gulp-nunjucks-render";
 import ts from "gulp-typescript";
+import tailwind from "tailwindcss";
+import autoprefixer from "autoprefixer";
+import newer from "gulp-newer";
 
 const tsProject = ts.createProject("tsconfig.json");
 const browserSync = bs.create();
 const { logError } = sass;
 
 export const html = () => {
-    return stream("pages/*.njk", {
+    return stream("pages/**/*", {
         pipes: [
+            newer("docs/*.html"),
             nunjuck({
                 path: ["templates/"]
             })
         ],
-        dest: "docs"
+        dest: "docs",
+        end: [browserSync.stream()]
     });
 };
 
@@ -34,11 +39,33 @@ export const appCss = () => {
     })
 };
 
+export const tailwindCss = () => {
+    return stream("sass/tailwindcss.scss", {
+        pipes: [
+            postcss([
+                // ...
+                tailwind,
+                autoprefixer,
+                // ...
+            ]),
+            // Minify scss to css
+            sass({ outputStyle: "compressed" }).on("error", logError)
+        ],
+        dest: "docs/css",
+        end: [browserSync.stream()],
+    })
+};
+
 export const baseCss = () => {
     return stream("sass/base.scss", {
         pipes: [
             // Minify scss to css
-            sass({ outputStyle: "expanded" || "compressed" }).on("error", logError)
+            sass({ outputStyle: "expanded" || "compressed" }).on("error", logError),
+            postcss([
+                // ...
+                autoprefixer,
+                // ...
+            ]),
         ],
         dest: "docs/css",
         end: [browserSync.stream()],
@@ -63,7 +90,9 @@ export const js = () => {
 
 export const watch = () => {
     browserSync.init(
-        { server: "./", },
+        {
+            server: "./",
+        },
         (...args) => {
             let [, $this] = args;
             $this.addMiddleware("*", (...args) => {
@@ -77,35 +106,12 @@ export const watch = () => {
         }
     );
 
-    sentry(["templates/**/*.njk", "pages/*.njk"], { delay: 1000 }, html);
-    sentry(["sass/**/*.scss", "!sass/app.scss"], { delay: 1000 }, baseCss);
+    sentry(["templates/**/*", "pages/**/*"], { delay: 1000 }, html);
+    sentry(["sass/**/*.scss", "!sass/app.scss", "!sass/tailwindcss.scss"], { delay: 1000 }, baseCss);
     sentry("sass/app.scss", { delay: 1000 }, appCss);
     // sentry("ts/**/*.ts", { delay: 1000 }, js);
 
-    sentry("docs/**/*.html").on('change', browserSync.reload);
-    // sentry("docs/**/*.js").on('change', browserSync.reload);
-};
-export const watch_include = () => {
-    browserSync.init(
-        { server: "./", },
-        (...args) => {
-            let [, $this] = args;
-            $this.addMiddleware("*", (...args) => {
-                let [, res] = args;
-                res.writeHead(302, {
-                    location: "/docs/404.html",
-                });
-
-                res.end("Redirecting!");
-            });
-        }
-    );
-
-    sentry(["templates/**/*.njk", "pages/*.njk"], { delay: 1000 }, html);
-    sentry(["sass/**/*.scss", "!sass/app.scss"], { delay: 1000 }, baseCss);
-    sentry("sass/app.scss", { delay: 1000 }, appCss);
-
-    sentry("docs/**/*.html").on('change', browserSync.reload);
+    // sentry("docs/**/*.html").on('change', browserSync.reload);
     sentry("docs/**/*.js").on('change', browserSync.reload);
 };
 export default parallel(html, baseCss, appCss, js);

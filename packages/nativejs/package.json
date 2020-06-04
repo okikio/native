@@ -13,15 +13,19 @@
     "private": true,
     "dependencies": {
         "@yarnpkg/pnpify": "^2.0.0-rc.22",
+        "autoprefixer": "^9.8.0",
         "cross-fetch": "^3.0.4",
         "eslint": "^7.1.0",
         "esm": "^3.2.25",
+        "gulp-newer": "^1.4.0",
         "gulp-nunjucks-render": "^2.2.3",
         "gulp-postcss": "^8.0.0",
         "gulp-sass": "^4.1.0",
+        "tailwindcss": "^1.4.6",
         "typescript": "^3.9.3"
     },
     "devDependencies": {
+        "@types/gulp-newer": "0.0.31",
         "browser-sync": "^2.26.7",
         "gulp": "^4.0.2",
         "gulp-sourcemaps": "^2.6.5",

@@ -10,13 +10,16 @@ export class Splashscreen extends Service {
     public boot() {
         // Elements
         this.rootElement = document.getElementById('splashscreen');
-        this.innerEl = this.rootElement.querySelector('.splashscreen-inner');
-        this.bgEl = this.rootElement.querySelector('.splashscreen-bg');
+        if (this.rootElement) {
+            this.innerEl = this.rootElement.querySelector('.splashscreen-inner');
+            this.bgEl = this.rootElement.querySelector('.splashscreen-bg');
+        }
     }
 
-
     public initEvents() {
-        this.hide();
+        if (this.rootElement) {
+            this.hide();
+        }
     }
 
     // You need to override this method
