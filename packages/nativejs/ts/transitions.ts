@@ -142,13 +142,14 @@ export class BigTransition extends Transition {
             this.mainElement.style.visibility = "visible";
 
             let count = 1;
+            let delay = 50;
             for (let el of this.horizontalElements) {
                 let animation = el.animate([
                     { transform: "scaleX(0)" },
                     { transform: "scaleX(1)" },
                 ], {
                     duration,
-                    delay: 100 * count,
+                    delay: delay * count,
                     easing: "linear"
                 });
                 animation.onfinish = () => {
@@ -164,7 +165,7 @@ export class BigTransition extends Transition {
                     { transform: "scaleY(1)" },
                 ], {
                     duration,
-                    delay: 100 * count,
+                    delay: delay * count,
                     easing: "linear"
                 });
                 animation.onfinish = () => {
@@ -173,7 +174,7 @@ export class BigTransition extends Transition {
                 count++;
             }
 
-            window.setTimeout(resolve, this.maxLength * 100 + duration);
+            window.setTimeout(resolve, this.maxLength * delay + duration);
         });
     }
 
@@ -193,13 +194,14 @@ export class BigTransition extends Transition {
             };
 
             let count = 0;
+            let delay = 50;
             for (let el of this.horizontalElements) {
                 let animation = el.animate([
                     { transform: "scaleX(1)" },
                     { transform: "scaleX(0)" },
                 ], {
                     duration,
-                    delay: 100 * count
+                    delay: delay * count
                 });
                 animation.onfinish = () => {
                     el.style.transform = "scaleX(0)";
@@ -214,7 +216,7 @@ export class BigTransition extends Transition {
                     { transform: "scaleY(0)" },
                 ], {
                     duration,
-                    delay: 100 * count
+                    delay: delay * count
                 });
                 animation.onfinish = () => {
                     el.style.transform = "scaleY(0)";
@@ -226,7 +228,7 @@ export class BigTransition extends Transition {
                 this.mainElement.style.opacity = "0";
                 this.mainElement.style.visibility = "hidden";
                 resolve();
-            }, this.maxLength * 100 + duration);
+            }, this.maxLength * delay + duration);
         });
     }
 }
