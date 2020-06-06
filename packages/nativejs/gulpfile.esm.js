@@ -7,7 +7,6 @@ import { init, write } from "gulp-sourcemaps";
 import postcss from "gulp-postcss";
 import nunjuck from "gulp-nunjucks-render";
 import ts from "gulp-typescript";
-import tailwind from "tailwindcss";
 import autoprefixer from "autoprefixer";
 import newer from "gulp-newer";
 
@@ -31,23 +30,6 @@ export const html = () => {
 export const appCss = () => {
     return stream("sass/app.scss", {
         pipes: [
-            // Minify scss to css
-            sass({ outputStyle: "compressed" }).on("error", logError)
-        ],
-        dest: "docs/css",
-        end: [browserSync.stream()],
-    })
-};
-
-export const tailwindCss = () => {
-    return stream("sass/tailwindcss.scss", {
-        pipes: [
-            postcss([
-                // ...
-                tailwind,
-                autoprefixer,
-                // ...
-            ]),
             // Minify scss to css
             sass({ outputStyle: "compressed" }).on("error", logError)
         ],
@@ -107,11 +89,11 @@ export const watch = () => {
     );
 
     sentry(["templates/**/*", "pages/**/*"], { delay: 1000 }, html);
-    sentry(["sass/**/*.scss", "!sass/app.scss", "!sass/tailwindcss.scss"], { delay: 1000 }, baseCss);
+    sentry(["sass/**/*.scss", "!sass/app.scss"], { delay: 1000 }, baseCss);
     sentry("sass/app.scss", { delay: 1000 }, appCss);
     // sentry("ts/**/*.ts", { delay: 1000 }, js);
 
     // sentry("docs/**/*.html").on('change', browserSync.reload);
-    sentry("docs/**/*.js").on('change', browserSync.reload);
+    sentry("docs/js/**/*.js").on('change', browserSync.reload);
 };
 export default parallel(html, baseCss, appCss, js);

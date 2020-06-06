@@ -21,7 +21,6 @@
         "gulp-nunjucks-render": "^2.2.3",
         "gulp-postcss": "^8.0.0",
         "gulp-sass": "^4.1.0",
-        "tailwindcss": "^1.4.6",
         "typescript": "^3.9.3"
     },
     "devDependencies": {

@@ -106,26 +106,29 @@ export class SlideRight extends Slide {
 
 export class BigTransition extends Transition {
     protected name = "big";
-    protected duration = 500;
+    protected delay = 200;
+    protected durationPerAnimation = 700;
     protected mainElement: HTMLElement;
     protected verticalElements: HTMLDivElement[];
     protected horizontalElements: HTMLDivElement[];
     protected maxLength: number;
+    protected spinnerElement: HTMLElement;
 
     public boot() {
         this.mainElement = document.getElementById('big-transition');
-        this.verticalElements = [...document.getElementById('big-transition-vertical').querySelectorAll('div')];
-        this.horizontalElements = [...document.getElementById('big-transition-horizontal').querySelectorAll('div')];
-        this.maxLength = Math.max(this.verticalElements.length, this.horizontalElements.length);
+        this.spinnerElement = this.mainElement.querySelector('.spinner');
+        this.horizontalElements = [...this.mainElement.querySelector('#big-transition-horizontal').querySelectorAll('div')];
+        this.maxLength = this.horizontalElements.length;
     }
 
     out({ from }: ITransitionData) {
-        let { duration } = this;
+        let { durationPerAnimation: duration, delay } = this;
         let fromWrapper = from.getWrapper();
         window.scroll({
             top: 0,
             behavior: 'smooth'  // 👈 
         });
+
         return new Promise(resolve => {
             let wrapperAnim = fromWrapper.animate([
                 { opacity: 1 },
@@ -142,7 +145,6 @@ export class BigTransition extends Transition {
             this.mainElement.style.visibility = "visible";
 
             let count = 1;
-            let delay = 50;
             for (let el of this.horizontalElements) {
                 let animation = el.animate([
                     { transform: "scaleX(0)" },
@@ -150,7 +152,7 @@ export class BigTransition extends Transition {
                 ], {
                     duration,
                     delay: delay * count,
-                    easing: "linear"
+                    easing: "ease"
                 });
                 animation.onfinish = () => {
                     el.style.transform = "scaleX(1)";
@@ -158,28 +160,42 @@ export class BigTransition extends Transition {
                 count++;
             }
 
-            count = 1;
-            for (let el of this.verticalElements.reverse()) {
-                let animation = el.animate([
-                    { transform: "scaleY(0)" },
-                    { transform: "scaleY(1)" },
-                ], {
-                    duration,
-                    delay: delay * count,
-                    easing: "linear"
-                });
-                animation.onfinish = () => {
-                    el.style.transform = "scaleY(1)";
-                };
-                count++;
-            }
+            window.setTimeout(() => {
+                let loaderDuration = 500;
+                this.spinnerElement.style.visibility = "visible";
 
-            window.setTimeout(resolve, this.maxLength * delay + duration);
+                let animation = this.spinnerElement.animate([
+                    { opacity: 0 },
+                    { opacity: 1 },
+                ], {
+                    duration: loaderDuration,
+                    easing: "ease"
+                });
+
+                animation.onfinish = () => {
+                    this.spinnerElement.style.opacity = "1";
+
+                    let animation = this.spinnerElement.animate([
+                        { opacity: 1 },
+                        { opacity: 0 },
+                    ], {
+                        duration: loaderDuration,
+                        delay: 3000,
+                        easing: "ease"
+                    });
+
+                    animation.onfinish = () => {
+                        this.spinnerElement.style.opacity = "0";
+                        this.spinnerElement.style.visibility = "hidden";
+                        resolve();
+                    };
+                };
+            }, this.maxLength * delay + duration);
         });
     }
 
     in({ to }: ITransitionData) {
-        let { duration } = this;
+        let { durationPerAnimation: duration, delay } = this;
         let toWrapper = to.getWrapper();
         return new Promise(resolve => {
             let wrapperAnim = toWrapper.animate([
@@ -193,33 +209,18 @@ export class BigTransition extends Transition {
                 toWrapper.style.opacity = "1";
             };
 
-            let count = 0;
-            let delay = 50;
+            let count = 1;
             for (let el of this.horizontalElements) {
                 let animation = el.animate([
                     { transform: "scaleX(1)" },
                     { transform: "scaleX(0)" },
                 ], {
                     duration,
-                    delay: delay * count
+                    delay: delay * count,
+                    easing: "ease"
                 });
                 animation.onfinish = () => {
                     el.style.transform = "scaleX(0)";
-                };
-                count++;
-            }
-
-            count = 0;
-            for (let el of this.verticalElements) {
-                let animation = el.animate([
-                    { transform: "scaleY(1)" },
-                    { transform: "scaleY(0)" },
-                ], {
-                    duration,
-                    delay: delay * count
-                });
-                animation.onfinish = () => {
-                    el.style.transform = "scaleY(0)";
                 };
                 count++;
             }

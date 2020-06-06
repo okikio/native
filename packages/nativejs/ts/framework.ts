@@ -3,7 +3,42 @@ import PJAX from "./pjax.js";
 import { App, _URL } from "./api.js";
 import { InViewBlockIntent } from "./blocks.js";
 import { Splashscreen, IntroAnimation } from "./services.js";
+import { getTheme, setTheme, mediaTheme } from "./theme.js";
 import { Fade, Slide, SlideLeft, SlideRight, BigTransition } from "./transitions.js";
+
+const html = document.querySelector("html");
+try {
+    let theme = getTheme();
+    if (theme === null) theme = mediaTheme();
+    theme && html.setAttribute("theme", theme);
+} catch (e) {
+    console.warn("Theming isn't available on this browser.");
+}
+
+// Get theme from html tag, if it has a theme or get it from localStorage
+let themeGet = () => {
+    let themeAttr = html.getAttribute("theme");
+    if (themeAttr && themeAttr.length) {
+        return themeAttr;
+    }
+
+    return getTheme();
+};
+
+// Set theme in localStorage, as well as in the html tag
+let themeSet = (theme: string) => {
+    html.setAttribute("theme", theme);
+    setTheme(theme);
+};
+
+// On theme switcher button click (mouseup is a tiny bit more efficient) toggle the theme between dark and light mode
+// on(_themeSwitcher, "mouseup", () => {
+//     themeSet(themeGet() === "dark" ? "light" : "dark");
+// });
+
+window.matchMedia('(prefers-color-scheme: dark)').addListener(e => {
+    themeSet(e.matches ? "dark" : "light");
+});
 
 const app = new App();
 app
