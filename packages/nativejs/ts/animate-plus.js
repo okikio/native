@@ -1,18 +1,28 @@
-import { EventEmitter } from "./api.js";
+/*
+ * Animate Plus v2.1.1
+ * Copyright (c) 2017-2018 Benjamin De Cock
+ * http://animateplus.com/license
+ */
 
-// Based on animate-plus.js
-// DOM
-export type AnimationTarget = string | Node | NodeList;
-export const getElements = (selector: string | Node): Node[] => {
-    return typeof selector === "string" ? [...document.querySelectorAll(selector as string)] : [selector];
-};
 
-export const getTargets = (targets: AnimationTarget): Node[] => {
-    if (Array.isArray(targets)) return targets;
-    if (typeof targets == "string" || targets instanceof Node)
-        return getElements(targets);
-    if (targets instanceof NodeList) return [...targets];
-    return null;
+// logic
+// =====
+
+const first = ([item]) => item;
+
+const computeValue = (value, index) =>
+    typeof value == "function" ? value(index) : value;
+
+
+// dom
+// ===
+
+const getElements = elements => {
+    if (Array.isArray(elements))
+        return elements;
+    if (!elements || elements.nodeType)
+        return [elements];
+    return Array.from(typeof elements == "string" ? document.querySelectorAll(elements) : elements);
 };
 
 const accelerate = ({ style }, keyframes) =>
@@ -20,27 +30,114 @@ const accelerate = ({ style }, keyframes) =>
         ? keyframes.map(({ property }) => property).join()
         : "auto";
 
-// Compute Value
-export const computeValue = (value: any, input: any) =>
-    typeof value == "function" ? value(input) : value;
+const createSVG = (element, attributes) =>
+    Object.entries(attributes).reduce((node, [attribute, value]) => {
+        node.setAttribute(attribute, value);
+        return node;
+    }, document.createElementNS("http://www.w3.org/2000/svg", element));
 
-// Convert all hex color to rgba
-export const parseColor = (value: string): string => {
-    let strValue = String(value);
-    if (!strValue.startsWith("#")) return strValue;
-    let hex = strValue.slice(1);
-    let [r, g, b, a = 255] = hex.length < 5 ?
-        hex.match(/\w/g).map(x => parseInt(x + x, 16)) :
-        hex.match(/\w\w/g).map(x => parseInt(x, 16));
+
+// motion blur
+// ===========
+
+const blurs = {
+    axes: ["x", "y"],
+    count: 0,
+    add({ element, blur }) {
+        const id = `motion-blur-${this.count++}`;
+        const svg = createSVG("svg", {
+            style: "position: absolute; width: 0; height: 0"
+        });
+        const filter = createSVG("filter", this.axes.reduce((attributes, axis) => {
+            const offset = blur[axis] * 2;
+            attributes[axis] = `-${offset}%`;
+            attributes[axis == "x" ? "width" : "height"] = `${100 + offset * 2}%`;
+            return attributes;
+        }, {
+            id,
+            "color-interpolation-filters": "sRGB"
+        }));
+        const gaussian = createSVG("feGaussianBlur", {
+            in: "SourceGraphic"
+        });
+        filter.append(gaussian);
+        svg.append(filter);
+        element.style.filter = `url("#${id}")`;
+        document.body.prepend(svg);
+        return gaussian;
+    }
+};
+
+const getDeviation = (blur, { easing }, curve) => {
+    const progress = blur * curve;
+    const out = blur - progress;
+    const deviation = (() => {
+        if (easing == "linear")
+            return blur;
+        if (easing.startsWith("in-out"))
+            return (curve < .5 ? progress : out) * 2;
+        if (easing.startsWith("in"))
+            return progress;
+        return out;
+    })();
+    return Math.max(0, deviation);
+};
+
+const setDeviation = ({ blur, gaussian, easing }, curve) => {
+    const values = blurs.axes.map(axis => getDeviation(blur[axis], easing, curve));
+    gaussian.setAttribute("stdDeviation", values.join());
+};
+
+const normalizeBlur = blur => {
+    const defaults = blurs.axes.reduce((object, axis) => {
+        object[axis] = 0;
+        return object;
+    }, {});
+    return Object.assign(defaults, blur);
+};
+
+const clearBlur = ({ style }, { parentNode: { parentNode: svg } }) => {
+    style.filter = "none";
+    svg.remove();
+};
+
+
+// color conversion
+// ================
+
+const hexPairs = color => {
+    const split = color.split("");
+    const pairs = color.length < 5
+        ? split.map(string => string + string)
+        : split.reduce((array, string, index) => {
+            if (index % 2)
+                array.push(split[index - 1] + string);
+            return array;
+        }, []);
+    if (pairs.length < 4)
+        pairs.push("ff");
+    return pairs;
+};
+
+const convert = color =>
+    hexPairs(color).map(string => parseInt(string, 16));
+
+const rgba = hex => {
+    const color = hex.slice(1);
+    const [r, g, b, a] = convert(color);
     return `rgba(${r}, ${g}, ${b}, ${a / 255})`;
 };
 
-// Easing Equations 
+
+// easing equations
+// ================
+
 const pi2 = Math.PI * 2;
+
 const getOffset = (strength, period) =>
     period / pi2 * Math.asin(1 / strength);
 
-export const easings = {
+const easings = {
     "linear": progress => progress,
 
     "in-cubic": progress => progress ** 3,
@@ -94,12 +191,12 @@ export const easings = {
     }
 };
 
-const decomposeEasing = (value: string) => {
-    const [easing, amplitude = 1, period = .4] = value.trim().split(" ");
+const decomposeEasing = string => {
+    const [easing, amplitude = 1, period = .4] = string.trim().split(" ");
     return { easing, amplitude, period };
 };
 
-const ease = ({ easing, amplitude, period }, progress: number): number =>
+const ease = ({ easing, amplitude, period }, progress) =>
     easings[easing](progress, amplitude, period);
 
 
@@ -107,45 +204,43 @@ const ease = ({ easing, amplitude, period }, progress: number): number =>
 // =====================
 
 const extractRegExp = /-?\d*\.?\d+/g;
-const extractStrings = (value: string): string[] =>
+
+const extractStrings = value =>
     value.split(extractRegExp);
-const extractNumbers = (value: string): number[] =>
+
+const extractNumbers = value =>
     value.match(extractRegExp).map(Number);
-const sanitize = (values: any[]) => values.map(parseColor);
 
-export interface keyframes {
-    property: string,
-    numbers: number[][],
-    strings: string[],
-    round: boolean
-};
+const sanitize = values =>
+    values.map(value => {
+        const string = String(value);
+        return string.startsWith("#") ? rgba(string) : string;
+    });
 
-const propertyKeyframes = (property: string, values: any): keyframes => {
+const addPropertyKeyframes = (property, values) => {
     const animatable = sanitize(values);
-    const strings = extractStrings(animatable[0]);
+    const strings = extractStrings(first(animatable));
     const numbers = animatable.map(extractNumbers);
-    const round = strings[0].startsWith("rgb");
+    const round = first(strings).startsWith("rgb");
     return { property, strings, numbers, round };
 };
 
-const createAnimationKeyframes = (animationProperties: object, index: number) =>
-    Object.entries(animationProperties)
-        .map(([property, values]: [string, any[]]) => {
-            return propertyKeyframes(property, computeValue(values, index))
-        });
+const createAnimationKeyframes = (keyframes, index) =>
+    Object.entries(keyframes).map(([property, values]) =>
+        addPropertyKeyframes(property, computeValue(values, index)));
 
-const getCurrentValue = (from: number, to: number, easing: number) =>
+const getCurrentValue = (from, to, easing) =>
     from + (to - from) * easing;
 
-const recomposeValue = ([from, to]: number[][], strings: string[], round: boolean, easing: number) =>
+const recomposeValue = ([from, to], strings, round, easing) =>
     strings.reduce((style, string, index) => {
         const previous = index - 1;
         const value = getCurrentValue(from[previous], to[previous], easing);
         return style + (round && index < 4 ? Math.round(value) : value) + string;
     });
 
-const createStyles = (keyframes: keyframes[], easing: number) =>
-    keyframes.reduce((styles, { property, numbers, strings, round }: keyframes) => {
+const createStyles = (keyframes, easing) =>
+    keyframes.reduce((styles, { property, numbers, strings, round }) => {
         styles[property] = recomposeValue(numbers, strings, round, easing);
         return styles;
     }, {});
@@ -221,6 +316,11 @@ const addAnimations = (options, resolve) => {
         if (element) {
             if (optimize)
                 accelerate(element, keyframes);
+
+            if (blur) {
+                animation.blur = normalizeBlur(computeValue(blur, index));
+                animation.gaussian = blurs.add(animation);
+            }
         }
 
         if (totalDuration > last.totalDuration) {
@@ -252,6 +352,7 @@ const tick = now => {
             change,
             easing,
             duration,
+            gaussian,
             end,
             options
         } = object;
@@ -269,12 +370,14 @@ const tick = now => {
                     else {
                         all.delete(object);
                         if (optimize && element) accelerate(element);
+                        if (gaussian) clearBlur(element, gaussian);
                     }
                     if (end) end(options);
                     break;
                 default:
                     curve = ease(easing, progress);
             }
+            if (gaussian) setDeviation(object, curve);
             if (change && end) change(curve);
             if (element) Object.assign(element.style, createStyles(keyframes, curve));
             return;
@@ -311,68 +414,23 @@ document.addEventListener("visibilitychange", () => {
 });
 
 
-// blur = null,
-// change = null,
-// Animation Engine
-export interface AnimationOptions {
-    animation: AnimationOptions | object,
-    target: AnimationTarget,
-    direction: string,
-    duration: number,
-    easing: string,
-    loop: boolean,
-    delay: number,
-    speed: number
+// exports
+// =======
+
+export default options =>
+    new Promise(resolve => addAnimations(options, resolve));
+
+export const delay = duration =>
+    new Promise(resolve => rAF.add({
+        duration,
+        end: resolve
+    }));
+
+export const stop = elements => {
+    const { all } = rAF;
+    const nodes = getElements(elements);
+    all.forEach(object => {
+        if (nodes.includes(object.element)) all.delete(object);
+    });
+    return nodes;
 };
-export const DefaultAnimationOptions: AnimationOptions = {
-    easing: "out-elastic",
-    direction: "normal",
-    duration: 1000,
-    animation: {},
-    loop: false,
-    target: "",
-    delay: 0,
-    speed: 1
-};
-
-export class Animation extends Promise<Animation> {
-    /**
-     * Stores the options for the current animation
-     *
-     * @protected
-     * @type AnimationOptions
-     * @memberof Animation
-     */
-    protected options: AnimationOptions;
-
-    /**
-     * An event emitter for an Animation
-     *
-     * @protected
-     * @memberof Animation
-     */
-    protected events = new EventEmitter();
-
-    /**
-     * Creates an instance of Animation.
-     * @param {object} properties
-     * @memberof Animation
-     */
-    constructor(
-        protected properties: AnimationOptions
-    ) {
-        super(resolve => {
-            resolve();
-        });
-        let { animation = {}, ...rest } = properties;
-        this.options = { ...DefaultAnimationOptions, ...properties, ...animation };
-        // const { 
-
-        // }
-        // this.animationProperties = 
-    }
-
-}
-
-export const animate = (targets: AnimationTarget, properties: object, options: AnimationOptions) => { };
-export default animate;
