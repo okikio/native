@@ -501,4 +501,5 @@ export default class PJAX extends Service {
         window.removeEventListener('popstate', this.onStateChange);
     }
 }
+
 //# sourceMappingURL=pjax.js.map

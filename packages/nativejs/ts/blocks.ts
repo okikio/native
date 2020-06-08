@@ -57,12 +57,13 @@ export class InViewBlock extends Block {
         ], {
             duration: 1500,
             delay: 0.15,
+            fill: "forwards",
             easing: "cubic-bezier(0.22, 1, 0.36, 1)" // ease-out-quint
         });
-        animation.onfinish = () => {
-            this.rootElement.style.transform = "translateX(0%)";
-            this.rootElement.style.opacity = "1";
-        };
+        // animation.onfinish = () => {
+        //     // this.rootElement.style.transform = "translateX(0%)";
+        //     // this.rootElement.style.opacity = "1";
+        // };
     }
 
     protected offScreen() {

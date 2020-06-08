@@ -22,4 +22,5 @@ export const mediaTheme = () => {
         return mql.matches ? 'dark' : 'light';
     return null;
 };
+
 //# sourceMappingURL=theme.js.map

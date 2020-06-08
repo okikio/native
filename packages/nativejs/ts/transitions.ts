@@ -18,10 +18,11 @@ export class Fade extends Transition {
                 { opacity: 0 },
             ], {
                 duration,
+                fill: "forwards",
                 easing: "ease"
             });
             animation.onfinish = () => {
-                fromWrapper.style.opacity = "0";
+                // fromWrapper.style.opacity = "0";
                 window.scrollTo(0, 0);
                 resolve();
             };
@@ -37,10 +38,11 @@ export class Fade extends Transition {
                 { opacity: 1 },
             ], {
                 duration,
+                fill: "forwards",
                 easing: "ease"
             });
             animation.onfinish = () => {
-                toWrapper.style.opacity = "1";
+                // toWrapper.style.opacity = "1";
                 resolve();
             };
         });
@@ -65,6 +67,7 @@ export class Slide extends Transition {
                 { transform: `translateX(${this.direction === "left" ? "-" : ""}25%)`, opacity: 0 },
             ], {
                 duration,
+                // fill: "forwards",
                 easing: "cubic-bezier(0.64, 0, 0.78, 0)" // ease-in-quint
             });
             animation.onfinish = () => {
@@ -135,11 +138,12 @@ export class BigTransition extends Transition {
                 { opacity: 0 },
             ], {
                 duration,
+                fill: "forwards",
                 easing: "ease"
             });
-            wrapperAnim.onfinish = () => {
-                fromWrapper.style.opacity = "0";
-            };
+            // wrapperAnim.onfinish = () => {
+            //     fromWrapper.style.opacity = "0";
+            // };
 
             this.mainElement.style.opacity = "1";
             this.mainElement.style.visibility = "visible";
@@ -151,12 +155,13 @@ export class BigTransition extends Transition {
                     { transform: "scaleX(1)" },
                 ], {
                     duration,
+                    fill: "forwards",
                     delay: delay * count,
                     easing: "ease"
                 });
-                animation.onfinish = () => {
-                    el.style.transform = "scaleX(1)";
-                };
+                // animation.onfinish = () => {
+                //     el.style.transform = "scaleX(1)";
+                // };
                 count++;
             }
 
@@ -169,23 +174,25 @@ export class BigTransition extends Transition {
                     { opacity: 1 },
                 ], {
                     duration: loaderDuration,
+                    fill: "forwards",
                     easing: "ease"
                 });
 
                 animation.onfinish = () => {
-                    this.spinnerElement.style.opacity = "1";
+                    // this.spinnerElement.style.opacity = "1";
 
                     let animation = this.spinnerElement.animate([
                         { opacity: 1 },
                         { opacity: 0 },
                     ], {
                         duration: loaderDuration,
+                        fill: "forwards",
                         delay: 3000,
                         easing: "ease"
                     });
 
                     animation.onfinish = () => {
-                        this.spinnerElement.style.opacity = "0";
+                        // this.spinnerElement.style.opacity = "0";
                         this.spinnerElement.style.visibility = "hidden";
                         resolve();
                     };
@@ -203,10 +210,11 @@ export class BigTransition extends Transition {
                 { opacity: 1 },
             ], {
                 duration,
+                fill: "forwards",
                 easing: "ease"
             });
             wrapperAnim.onfinish = () => {
-                toWrapper.style.opacity = "1";
+                // toWrapper.style.opacity = "1";
             };
 
             let count = 1;
@@ -216,11 +224,12 @@ export class BigTransition extends Transition {
                     { transform: "scaleX(0)" },
                 ], {
                     duration,
+                    fill: "forwards",
                     delay: delay * count,
                     easing: "ease"
                 });
                 animation.onfinish = () => {
-                    el.style.transform = "scaleX(0)";
+                    // el.style.transform = "scaleX(0)";
                 };
                 count++;
             }

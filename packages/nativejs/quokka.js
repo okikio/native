@@ -200,12 +200,44 @@ let animProp = createAnimationKeyframes({
 }, 1);
 let { property, numbers, strings, round } = animProp[0];
 
-console.log(
-    recomposeValue(numbers, strings, round, 0.2)
+// console.log(
+//     recomposeValue(numbers, strings, round, 0.2)
 
-);
+// );
 
-console.log(parseInt("ff", 16))
+// console.log(parseInt("ff", 16))
+
+class anim extends Promise {
+    constructor(fn) {
+        // needed for MyPromise.race/all ecc
+        if (fn instanceof Function) {
+            return super(fn);
+        }
+
+        super(resolve => {
+            resolve(10);
+            // setTimeout(resolve, 3000);
+        });
+    }
+
+    // you can also use Symbol.species in order to
+    // return a Promise for then/catch/finally
+    static get [Symbol.species]() {
+        return Promise;
+    }
+
+    // Promise overrides his Symbol.toStringTag
+    get [Symbol.toStringTag]() {
+        return 'MyPromise';
+    }
+
+}
+
+(async () => {
+    let n = new anim();
+    let r = await n;
+    console.log(r);
+})();
 
 /*
     Find: @(returns|type) \{([\w_-]+)\}

@@ -1,16 +1,31 @@
-import { EventEmitter } from "./api.js";
 export const getElements = (selector) => {
     return typeof selector === "string" ? [...document.querySelectorAll(selector)] : [selector];
 };
 export const getTargets = (targets) => {
+    if (Array.isArray(targets))
+        return targets;
     if (typeof targets == "string" || targets instanceof Node)
         return getElements(targets);
     if (targets instanceof NodeList)
         return [...targets];
     return null;
 };
-// Get Value
-export const getValue = (value, input) => typeof value == "function" ? value(input) : value;
+const accelerate = ({ style }, keyframes) => style.willChange = keyframes
+    ? keyframes.map(({ property }) => property).join()
+    : "auto";
+// Compute Value
+export const computeValue = (value, input) => typeof value == "function" ? value(input) : value;
+// Convert all hex color to rgba
+export const parseColor = (value) => {
+    let strValue = String(value);
+    if (!strValue.startsWith("#"))
+        return strValue;
+    let hex = strValue.slice(1);
+    let [r, g, b, a = 255] = hex.length < 5 ?
+        hex.match(/\w/g).map(x => parseInt(x + x, 16)) :
+        hex.match(/\w\w/g).map(x => parseInt(x, 16));
+    return `rgba(${r}, ${g}, ${b}, ${a / 255})`;
+};
 // Easing Equations 
 const pi2 = Math.PI * 2;
 const getOffset = (strength, period) => period / pi2 * Math.asin(1 / strength);
@@ -59,38 +74,50 @@ export const easings = {
             : strength * 2 ** (-10 * (progress -= 1)) * Math.sin((progress - offset) * pi2 / period) * .5 + 1;
     }
 };
-// Convert all hex color to rgb
-export const parseColor = (color) => {
-    if (/^rgb/.test(color))
-        return color;
-    let hex = color.replace("#", "");
-    let [r, g, b] = color.match(/\w/g).map(x => parseInt(hex.length == 3 ? x + x : x, 16));
-    return `rgb(${r},${g},${b})`;
+const decomposeEasing = (value) => {
+    const [easing, amplitude = 1, period = .4] = value.trim().split(" ");
+    return { easing, amplitude, period };
 };
+const ease = ({ easing, amplitude, period }, progress) => easings[easing](progress, amplitude, period);
 ;
 export const DefaultAnimationOptions = {
-    easing: "out-elastic",
-    direction: "normal",
-    duration: 1000,
-    loop: false,
+    animation: {},
+    keyframes: [],
+    loop: 1,
     delay: 0,
-    speed: 1
+    easing: "ease",
+    endDelay: 0,
+    duration: 1000,
+    direction: "normal",
+    fill: "forwards",
 };
-export class Animation extends EventEmitter {
+export class Animation extends Promise {
     /**
      * Creates an instance of Animation.
-     * @param {AnimationTarget} targets
-     * @param {object} properties
-     * @param {AnimationOptions} options
+     * @param {object} options
      * @memberof Animation
      */
-    constructor(targets, properties, options) {
-        super();
-        this.targets = targets;
-        this.properties = properties;
-        this.options = { ...DefaultAnimationOptions, ...options };
+    constructor(
+    /**
+     * Stores the options for the current animation
+     *
+     * @protected
+     * @type AnimationOptions
+     * @memberof Animation
+     */
+    options = DefaultAnimationOptions) {
+        super(resolve => {
+            resolve();
+        });
+        this.options = options;
+        let { animation = {}, ...rest } = options;
+        this.options = { ...DefaultAnimationOptions, ...options, ...animation };
+        // const { 
+        // }
+        // this.animationProperties = 
     }
 }
 export const animate = (targets, properties, options) => { };
 export default animate;
+
 //# sourceMappingURL=animate.js.map

@@ -1,4 +1,4 @@
-import { Service, Manager } from "./api.js";
+import { Service } from "./api.js";
 
 //== Services
 export class Splashscreen extends Service {
@@ -35,10 +35,13 @@ export class Splashscreen extends Service {
             let elInner = this.innerEl.animate([
                 { opacity: '1' },
                 { opacity: '0' },
-            ], 500);
-            elInner.onfinish = () => {
-                this.innerEl.style.opacity = '0';
-            };
+            ], {
+                duration: 500,
+                fill: "forwards"
+            });
+            // elInner.onfinish = () => {
+            //     this.innerEl.style.opacity = '0';
+            // };
 
             this.EventEmitter.emit("START_SPLASHSCREEN_HIDE");
 
@@ -47,12 +50,13 @@ export class Splashscreen extends Service {
                 { transform: "translateY(100%)" }
             ], {
                 duration: 1200,
+                fill: "forwards",
                 easing: "cubic-bezier(0.65, 0, 0.35, 1)" // ease-in-out-cubic
             });
             rootEl.onfinish = () => {
                 this.rootElement.style.visibility = "hidden";
                 this.rootElement.style.pointerEvents = "none";
-                this.rootElement.style.transform = "translateY(100%)";
+                // this.rootElement.style.transform = "translateY(100%)";
                 this.EventEmitter.emit("AFTER_SPLASHSCREEN_HIDE");
 
                 resolve();
@@ -110,12 +114,13 @@ export class IntroAnimation extends Service {
             ], {
                 duration: 1200,
                 delay: 200 * count,
+                fill: "forwards",
                 easing: "cubic-bezier(0.33, 1, 0.68, 1)" // ease-out-cubic
             });
-            animation.onfinish = () => {
-                (el as HTMLElement).style.opacity = '1';
-                (el as HTMLElement).style.transform = "translateY(0)";
-            }
+            // animation.onfinish = () => {
+            //     // (el as HTMLElement).style.opacity = '1';
+            //     // (el as HTMLElement).style.transform = "translateY(0)";
+            // }
             count++;
         }
     }

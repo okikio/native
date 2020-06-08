@@ -57,6 +57,7 @@ export const baseCss = () => {
 export const js = () => {
     return stream(tsProject.src(), {
         pipes: [
+            newer("docs/js"),
             // Sourcemaps Initialize
             init(),
 
@@ -91,9 +92,9 @@ export const watch = () => {
     sentry(["templates/**/*", "pages/**/*"], { delay: 1000 }, html);
     sentry(["sass/**/*.scss", "!sass/app.scss"], { delay: 1000 }, baseCss);
     sentry("sass/app.scss", { delay: 1000 }, appCss);
-    // sentry("ts/**/*.ts", { delay: 1000 }, js);
+    sentry("ts/**/*.ts", { delay: 1000 }, js);
 
     // sentry("docs/**/*.html").on('change', browserSync.reload);
-    sentry("docs/js/**/*.js").on('change', browserSync.reload);
+    sentry("docs/js/*.js").on('change', browserSync.reload);
 };
 export default parallel(html, baseCss, appCss, js);
