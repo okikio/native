@@ -71,7 +71,10 @@ export const js = () => {
     })
 };
 
+export const _default = () => parallel(html, baseCss, appCss, js);
 export const watch = () => {
+    _default();
+
     browserSync.init(
         {
             server: "./",
@@ -97,4 +100,4 @@ export const watch = () => {
     // sentry("docs/**/*.html").on('change', browserSync.reload);
     sentry("docs/js/*.js").on('change', browserSync.reload);
 };
-export default parallel(html, baseCss, appCss, js);
+export default _default();

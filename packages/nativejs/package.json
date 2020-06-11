@@ -4,7 +4,7 @@
     "description": "A pjax miniature library",
     "scripts": {
         "start": "gulp",
-        "watch": "gulp && gulp watch",
+        "watch": "gulp watch",
         "ts": "tsc --watch --project tsconfig.json"
     },
     "main": "api.js",
