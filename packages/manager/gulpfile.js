@@ -47,7 +47,7 @@ task("ts", async () => {
 });
 
 const date = new Date();
-const { name, version, main, min, cjs, umd } = require("./package.json");
+const { name, version, main, min, cjs, umd, es } = require("./package.json");
 const banner = `/*!
  * ${name} v${version}
  * (c) ${date.getFullYear()} Okiki Ojo
@@ -68,6 +68,18 @@ task("js", async () => {
 
     bun.write({
         banner,
+        format: 'es',
+        file: es
+    });
+
+    bun.write({
+        banner,
+        format: 'cjs',
+        file: main,
+    });
+
+    bun.write({
+        banner,
         format: 'cjs',
         file: cjs
     });
@@ -79,15 +91,10 @@ task("js", async () => {
         name
     });
 
-    bun.write({
-        banner,
-        format: 'es',
-        file: main
-    });
-
     return await bun.write({
         banner,
-        format: 'iife',
+        name,
+        format: 'umd',
         file: min,
         plugins: [
             terser({

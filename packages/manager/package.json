@@ -1,11 +1,12 @@
 {
     "name": "managerjs",
-    "version": "1.0.1",
+    "version": "1.0.3",
     "description": "A superset of the Map class called Manager that allows for complex management of data.",
     "cjs": "lib/api.cjs.js",
     "umd": "lib/api.umd.js",
     "min": "lib/api.min.js",
-    "module": "lib/api.js",
+    "es": "lib/api.es.js",
+    "module": "lib/api.es.js",
     "main": "lib/api.js",
     "directories": {
         "lib": "lib"

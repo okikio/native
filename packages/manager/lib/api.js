@@ -1,8 +1,12 @@
 /*!
- * managerjs v1.0.1
+ * managerjs v1.0.3
  * (c) 2020 Okiki Ojo
  * Released under the MIT license
  */
+
+'use strict';
+
+Object.defineProperty(exports, '__esModule', { value: true });
 
 /**
  * Manages complex lists of named data, eg. A page can be stored in a list by of other pages with the url being how the page is stored in the list.
@@ -107,5 +111,5 @@ class Manager extends Map {
     }
 }
 
-export default Manager;
-export { Manager };
+exports.Manager = Manager;
+exports.default = Manager;
