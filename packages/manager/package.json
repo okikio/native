@@ -21,7 +21,7 @@
     },
     "scripts": {
         "build": "gulp",
-        "declare": "gulp && npm publish"
+        "release": "gulp && npm publish"
     },
     "repository": {
         "type": "git",
