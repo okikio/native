@@ -9,19 +9,48 @@ An animation library for the modern web, it utilizes the Web Animation API (WAAP
 ```javascript
 import animate from "walijs";
 
-animate({
-  target: "div",
-  duration: 2000,
-  delay: index => index * 100,
-  transform: ["scale(0)", "scale(1)"]
-})
-.then(animation => animate({
-  animation,
-  transform: ["translate(0%)", "translate(500%)"]
-}));
+let anim = animate({
+    target: "div",
+    /* NOTE: If you turn this on you have to comment out the transform property. The keyframes property is a different format for animation you cannot you both styles of formatting in the same animation */
+    // keyframes: [
+    //     { transform: "translateX(0px)" },
+    //     { transform: "translateX(300px)" }
+    // ],
+    transform: ["translateX(0px)", "translateX(300px)"],
+    easing: "ease-out",
+    duration(i) {
+        return (i + 1) * 500;
+    },
+    loop: 2,
+    speed: 0.5,
+    direction: "alternate",
+    delay(i) {
+        return (i + 1) * 100;
+    },
+    autoplay: true,
+    endDelay(i) {
+        return (i + 1) * 100;
+    }
+});
+
+anim.then(() => {
+    let info = "Done, it was delayed because of the endDelay property.";
+    document.querySelector(".info").textContent = info;
+    console.log(info);
+});
+
+let progressSpan = document.querySelector(".progress");
+anim.on("change", () => {
+    progressSpan.textContent = `${Math.round(anim.getProgress() * 100)}%`;
+});
+
+let body = document.querySelector("body");
+body.addEventListener("click", () => {
+    (anim.getPlayState() === "running" && anim.pause()) || anim.play();
+});
 ```
 
-[Preview this example &#8594;](http://animateplus.com/examples/getting-started/)
+[Preview this example &#8594;](https://codepen.io/okikio/pen/qBbdGaW?editors=0010)
 
 ## Options
 
@@ -29,7 +58,7 @@ animate({
 
 | Default | Type
 | :---    | :---
-| `null`  |  string \| Node \| NodeList \| HTMLElement[] \| any[]
+| `null`  |  string \| Node \| NodeList \| HTMLCollection \| HTMLElement[] \| any[]
 
 Determines the DOM elements to animate. You can either pass it a CSS selector or DOM elements.
 

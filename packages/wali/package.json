@@ -1,0 +1,49 @@
+{
+    "name": "walijs",
+    "version": "1.0.0",
+    "description": "An animation library for the modern web which utilizes the Web Animation API (WAAPI) to create butter smooth animation.",
+    "cjs": "lib/api.cjs.js",
+    "umd": "lib/api.umd.js",
+    "min": "lib/api.min.js",
+    "module": "lib/api.js",
+    "main": "lib/api.js",
+    "directories": {
+        "lib": "lib"
+    },
+    "scripts": {
+        "build": "gulp"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/okikio/wali.git"
+    },
+    "keywords": [
+        "wali",
+        "js",
+        "animation",
+        "library",
+        "web",
+        "api",
+        "css",
+        "smooth"
+    ],
+    "author": "Okiki Ojo <okikio.dev@gmail.com>",
+    "license": "MIT",
+    "bugs": {
+        "url": "https://github.com/okikio/wali/issues"
+    },
+    "homepage": "https://github.com/okikio/wali#readme",
+    "devDependencies": {
+        "@rollup/plugin-node-resolve": "^8.0.1",
+        "eslint": "^7.2.0",
+        "gulp": "^4.0.2",
+        "gulp-size": "^3.0.0",
+        "gulp-typescript": "^6.0.0-alpha.1",
+        "rollup": "^2.16.1",
+        "rollup-plugin-terser": "^6.1.0",
+        "typescript": "^3.9.5"
+    },
+    "dependencies": {
+        "@okikio/event-emitter": "^1.0.1"
+    }
+}
