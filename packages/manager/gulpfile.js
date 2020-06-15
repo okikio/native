@@ -48,7 +48,7 @@ task("ts", async () => {
 const date = new Date();
 const { name, version, main, min, cjs, umd } = require("./package.json");
 const banner = `/*
- * managerjs v${version}
+ * ${name} v${version}
  * (c) ${date.getFullYear()} Okiki Ojo
  * Released under the MIT license
  */
