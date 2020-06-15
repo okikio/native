@@ -1,0 +1,36 @@
+{
+    "name": "event-emitterjs",
+    "version": "1.0.0",
+    "description": "A small Event Emitter written in typescript for performance, and ease of use.",
+    "cjs": "lib/api.cjs.js",
+    "umd": "lib/api.umd.js",
+    "min": "lib/api.min.js",
+    "main": "lib/api.js",
+    "directories": {
+        "lib": "lib"
+    },
+    "scripts": {
+        "build": "node build"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/okikio/event-emitter.git"
+    },
+    "keywords": [
+        "event",
+        "emitter",
+        "small",
+        "js",
+        "typescript",
+        "api"
+    ],
+    "author": "Okiki Ojo <okiko.dev@gmail.com>",
+    "license": "MIT",
+    "bugs": {
+        "url": "https://github.com/okikio/event-emitter/issues"
+    },
+    "homepage": "https://github.com/okikio/event-emitter#readme",
+    "devDependencies": {
+        "cross-fetch": "^3.0.5"
+    }
+}
