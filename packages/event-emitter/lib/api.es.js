@@ -1,11 +1,11 @@
 /*!
- * @okikio/event-emitter v1.0.2
+ * @okikio/event-emitter v1.0.5
  * (c) 2020 Okiki Ojo
  * Released under the MIT license
  */
 
 /*!
- * managerjs v1.0.2
+ * managerjs v1.0.5
  * (c) 2020 Okiki Ojo
  * Released under the MIT license
  */
