@@ -6,7 +6,7 @@
  * @extends {Map<K, V>}
  * @template K
  * @template V
- */
+*/
 export declare class Manager<K, V> extends Map<K, V> {
     /**
      * Creates an instance of Manager.
@@ -21,29 +21,29 @@ export declare class Manager<K, V> extends Map<K, V> {
      * @returns Array<K>
      * @memberof Manager
      */
-    keys(): Array<K>;
+    keys(): any;
     /**
      * Returns the values of all items stored in the Manager as an Array
      *
      * @returns Array<V>
      * @memberof Manager
      */
-    values(): Array<V>;
+    values(): any;
     /**
      * Returns the last item in the Manager who's index is a certain distance from the last item in the Manager
      *
      * @param {number} [distance=1]
-     * @returns V
+     * @returns V | undefined
      * @memberof Manager
      */
-    last(distance?: number): V;
+    last(distance?: number): V | undefined;
     /**
      * Returns the second last item in the Manager
      *
      * @public
-     * @returns V
+     * @returns V | undefined
      */
-    prev(): V;
+    prev(): V | undefined;
     /**
      * Adds a value to Manager, and uses the current size of the Manager as it's key, it works best when all the key in the Manager are numbers
      *

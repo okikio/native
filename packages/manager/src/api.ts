@@ -6,7 +6,7 @@
  * @extends {Map<K, V>}
  * @template K
  * @template V
- */
+*/
 export class Manager<K, V> extends Map<K, V> {
     /**
      * Creates an instance of Manager.
@@ -24,8 +24,7 @@ export class Manager<K, V> extends Map<K, V> {
 	 * @returns Array<K>
      * @memberof Manager
      */
-    // @ts-expect-error
-    public keys(): Array<K> {
+    public keys(): any {
         return Array.from(super.keys.call(this));
     }
 
@@ -35,19 +34,18 @@ export class Manager<K, V> extends Map<K, V> {
 	 * @returns Array<V>
      * @memberof Manager
 	 */
-    // @ts-expect-error
-    public values(): Array<V> {
-        return Array.from(this.values());
+    public values(): any {
+        return Array.from(super.values.call(this));
     }
 
     /**
 	 * Returns the last item in the Manager who's index is a certain distance from the last item in the Manager
      *
      * @param {number} [distance=1]
-     * @returns V
+     * @returns V | undefined
      * @memberof Manager
      */
-    public last(distance: number = 1): V {
+    public last(distance: number = 1): V | undefined {
         let key = this.keys()[this.size - distance];
         return this.get(key);
     }
@@ -56,9 +54,9 @@ export class Manager<K, V> extends Map<K, V> {
 	 * Returns the second last item in the Manager
 	 *
 	 * @public
-	 * @returns V
+	 * @returns V | undefined
 	 */
-    public prev(): V {
+    public prev(): V | undefined {
         return this.last(2);
     }
 
@@ -70,8 +68,7 @@ export class Manager<K, V> extends Map<K, V> {
      * @returns Manager<K, V>
      */
     public add(value: V): Manager<K, V> {
-        // @ts-expect-error
-        this.set(this.size, value);
+        super.set.call(this, this.size, value);
         return this;
     }
 
@@ -85,7 +82,6 @@ export class Manager<K, V> extends Map<K, V> {
 	 */
     public methodCall(method: string, ...args: any): Manager<K, V> {
         this.forEach((item: V) => {
-            // @ts-ignore
             item[method](...args);
         });
         return this;

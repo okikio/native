@@ -1,6 +1,6 @@
 {
     "name": "managerjs",
-    "version": "1.0.5",
+    "version": "1.0.7",
     "description": "A superset of the Map class called Manager that allows for complex management of data.",
     "publishConfig": {
         "access": "public"
@@ -16,11 +16,12 @@
     "source": "src/api.ts",
     "types": "lib/api.d.ts",
     "directories": {
-        "lib": "lib",
-        "src": "src"
+        "lib": "./lib",
+        "src": "./src"
     },
     "scripts": {
-        "build": "gulp"
+        "build": "gulp",
+        "declare": "gulp && npm publish"
     },
     "repository": {
         "type": "git",
