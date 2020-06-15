@@ -1,6 +1,6 @@
 // Import external modules
 const { nodeResolve } = require("@rollup/plugin-node-resolve");
-const { src, dest, task, series, parallel } = require("gulp");
+const { src, dest, task, series } = require("gulp");
 const { terser } = require("rollup-plugin-terser");
 const ts = require("gulp-typescript");
 const { rollup } = require("rollup");
@@ -42,12 +42,6 @@ task("ts", async () => {
             // Compile typescript
             tsProject(),
         ],
-        dest: "lib"
-    });
-});
-
-task("ts-copy", async () => {
-    return stream(tsProject.src(), {
         dest: "lib"
     });
 });
@@ -121,5 +115,5 @@ task("info", () => {
     })
 });
 
-task("build", series("ts", "js", parallel("ts-copy", "info")));
-task("default", series("ts", "js", parallel("ts-copy", "info")));
+task("build", series("ts", "js", "info"));
+task("default", series("ts", "js", "info"));
