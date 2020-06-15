@@ -1,6 +1,6 @@
 {
-    "name": "js-event-emitter",
-    "version": "1.0.0",
+    "name": "@okikio/event-emitter",
+    "version": "1.0.1",
     "description": "A small Event Emitter written in typescript for performance, and ease of use.",
     "cjs": "lib/api.cjs.js",
     "umd": "lib/api.umd.js",
