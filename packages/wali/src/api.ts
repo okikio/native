@@ -375,12 +375,15 @@ export class Animate extends Promise<AnimationOptions> {
      * @memberof Animate
      */
     public play(): Animate {
-        this.mainAnimation.play();
-        this.animationFrame = requestAnimationFrame(this.loop.bind(this));
-        this.animations.forEach(animation => {
-            animation.play();
-        });
-        this.emit("play");
+        // Once the animation is done, it's done, it can only be paused by the reset method
+        if (this.mainAnimation.playState !== "finished") {
+            this.mainAnimation.play();
+            this.animationFrame = requestAnimationFrame(this.loop.bind(this));
+            this.animations.forEach(animation => {
+                if (animation.playState !== "finished") animation.play();
+            });
+            this.emit("play");
+        }
         return this;
     }
 
@@ -391,12 +394,15 @@ export class Animate extends Promise<AnimationOptions> {
      * @memberof Animate
      */
     public pause(): Animate {
-        this.mainAnimation.pause();
-        window.cancelAnimationFrame(this.animationFrame);
-        this.animations.forEach(animation => {
-            animation.pause();
-        });
-        this.emit("pause");
+        // Once the animation is done, it's done, it can only be reset by the reset method
+        if (this.mainAnimation.playState !== "finished") {
+            this.mainAnimation.pause();
+            window.cancelAnimationFrame(this.animationFrame);
+            this.animations.forEach(animation => {
+                if (animation.playState !== "finished") animation.pause();
+            });
+            this.emit("pause");
+        }
         return this;
     }
 

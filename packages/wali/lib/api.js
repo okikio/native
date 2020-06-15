@@ -1,17 +1,21 @@
 /*!
- * walijs v1.0.0
+ * walijs v0.0.0
+ * (c) 2020 Okiki Ojo
+ * Released under the MIT license
+ */
+
+'use strict';
+
+Object.defineProperty(exports, '__esModule', { value: true });
+
+/*!
+ * @okikio/event-emitter v1.0.3
  * (c) 2020 Okiki Ojo
  * Released under the MIT license
  */
 
 /*!
- * @okikio/event-emitter v1.0.1
- * (c) 2020 Okiki Ojo
- * Released under the MIT license
- */
-
-/*
- * managerjs v1.0.0
+ * managerjs v1.0.7
  * (c) 2020 Okiki Ojo
  * Released under the MIT license
  */
@@ -24,7 +28,7 @@
  * @extends {Map<K, V>}
  * @template K
  * @template V
- */
+*/
 class Manager extends Map {
     /**
      * Creates an instance of Manager.
@@ -41,7 +45,6 @@ class Manager extends Map {
      * @returns Array<K>
      * @memberof Manager
      */
-    // @ts-expect-error
     keys() {
         return Array.from(super.keys.call(this));
     }
@@ -51,15 +54,14 @@ class Manager extends Map {
      * @returns Array<V>
      * @memberof Manager
      */
-    // @ts-expect-error
     values() {
-        return Array.from(this.values());
+        return Array.from(super.values.call(this));
     }
     /**
      * Returns the last item in the Manager who's index is a certain distance from the last item in the Manager
      *
      * @param {number} [distance=1]
-     * @returns V
+     * @returns V | undefined
      * @memberof Manager
      */
     last(distance = 1) {
@@ -70,7 +72,7 @@ class Manager extends Map {
      * Returns the second last item in the Manager
      *
      * @public
-     * @returns V
+     * @returns V | undefined
      */
     prev() {
         return this.last(2);
@@ -83,8 +85,7 @@ class Manager extends Map {
      * @returns Manager<K, V>
      */
     add(value) {
-        // @ts-expect-error
-        this.set(this.size, value);
+        super.set.call(this, this.size, value);
         return this;
     }
     /**
@@ -97,7 +98,6 @@ class Manager extends Map {
      */
     methodCall(method, ...args) {
         this.forEach((item) => {
-            // @ts-ignore
             item[method](...args);
         });
         return this;
@@ -658,12 +658,16 @@ class Animate extends Promise {
      * @memberof Animate
      */
     play() {
-        this.mainAnimation.play();
-        this.animationFrame = requestAnimationFrame(this.loop.bind(this));
-        this.animations.forEach(animation => {
-            animation.play();
-        });
-        this.emit("play");
+        // Once the animation is done, it's done, it can only be paused by the reset method
+        if (this.mainAnimation.playState !== "finished") {
+            this.mainAnimation.play();
+            this.animationFrame = requestAnimationFrame(this.loop.bind(this));
+            this.animations.forEach(animation => {
+                if (animation.playState !== "finished")
+                    animation.play();
+            });
+            this.emit("play");
+        }
         return this;
     }
     /**
@@ -673,12 +677,16 @@ class Animate extends Promise {
      * @memberof Animate
      */
     pause() {
-        this.mainAnimation.pause();
-        window.cancelAnimationFrame(this.animationFrame);
-        this.animations.forEach(animation => {
-            animation.pause();
-        });
-        this.emit("pause");
+        // Once the animation is done, it's done, it can only be reset by the reset method
+        if (this.mainAnimation.playState !== "finished") {
+            this.mainAnimation.pause();
+            window.cancelAnimationFrame(this.animationFrame);
+            this.animations.forEach(animation => {
+                if (animation.playState !== "finished")
+                    animation.pause();
+            });
+            this.emit("pause");
+        }
         return this;
     }
     /**
@@ -790,5 +798,12 @@ const animate = (options = {}) => {
     return new Animate(options);
 };
 
-export default animate;
-export { Animate, DefaultAnimationOptions, animate, computeValue, easings, getElements, getTargets, mapObject };
+exports.Animate = Animate;
+exports.DefaultAnimationOptions = DefaultAnimationOptions;
+exports.animate = animate;
+exports.computeValue = computeValue;
+exports.default = animate;
+exports.easings = easings;
+exports.getElements = getElements;
+exports.getTargets = getTargets;
+exports.mapObject = mapObject;

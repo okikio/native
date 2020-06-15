@@ -4,10 +4,6 @@
  * Released under the MIT license
  */
 
-'use strict';
-
-Object.defineProperty(exports, '__esModule', { value: true });
-
 /*!
  * @okikio/event-emitter v1.0.3
  * (c) 2020 Okiki Ojo
@@ -798,12 +794,5 @@ const animate = (options = {}) => {
     return new Animate(options);
 };
 
-exports.Animate = Animate;
-exports.DefaultAnimationOptions = DefaultAnimationOptions;
-exports.animate = animate;
-exports.computeValue = computeValue;
-exports.default = animate;
-exports.easings = easings;
-exports.getElements = getElements;
-exports.getTargets = getTargets;
-exports.mapObject = mapObject;
+export default animate;
+export { Animate, DefaultAnimationOptions, animate, computeValue, easings, getElements, getTargets, mapObject };

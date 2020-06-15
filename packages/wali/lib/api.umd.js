@@ -1,5 +1,5 @@
 /*!
- * walijs v1.0.0
+ * walijs v0.0.0
  * (c) 2020 Okiki Ojo
  * Released under the MIT license
  */
@@ -11,13 +11,13 @@
 }(this, (function (exports) { 'use strict';
 
     /*!
-     * @okikio/event-emitter v1.0.1
+     * @okikio/event-emitter v1.0.3
      * (c) 2020 Okiki Ojo
      * Released under the MIT license
      */
 
-    /*
-     * managerjs v1.0.0
+    /*!
+     * managerjs v1.0.7
      * (c) 2020 Okiki Ojo
      * Released under the MIT license
      */
@@ -30,7 +30,7 @@
      * @extends {Map<K, V>}
      * @template K
      * @template V
-     */
+    */
     class Manager extends Map {
         /**
          * Creates an instance of Manager.
@@ -47,7 +47,6 @@
          * @returns Array<K>
          * @memberof Manager
          */
-        // @ts-expect-error
         keys() {
             return Array.from(super.keys.call(this));
         }
@@ -57,15 +56,14 @@
          * @returns Array<V>
          * @memberof Manager
          */
-        // @ts-expect-error
         values() {
-            return Array.from(this.values());
+            return Array.from(super.values.call(this));
         }
         /**
          * Returns the last item in the Manager who's index is a certain distance from the last item in the Manager
          *
          * @param {number} [distance=1]
-         * @returns V
+         * @returns V | undefined
          * @memberof Manager
          */
         last(distance = 1) {
@@ -76,7 +74,7 @@
          * Returns the second last item in the Manager
          *
          * @public
-         * @returns V
+         * @returns V | undefined
          */
         prev() {
             return this.last(2);
@@ -89,8 +87,7 @@
          * @returns Manager<K, V>
          */
         add(value) {
-            // @ts-expect-error
-            this.set(this.size, value);
+            super.set.call(this, this.size, value);
             return this;
         }
         /**
@@ -103,7 +100,6 @@
          */
         methodCall(method, ...args) {
             this.forEach((item) => {
-                // @ts-ignore
                 item[method](...args);
             });
             return this;
@@ -664,12 +660,16 @@
          * @memberof Animate
          */
         play() {
-            this.mainAnimation.play();
-            this.animationFrame = requestAnimationFrame(this.loop.bind(this));
-            this.animations.forEach(animation => {
-                animation.play();
-            });
-            this.emit("play");
+            // Once the animation is done, it's done, it can only be paused by the reset method
+            if (this.mainAnimation.playState !== "finished") {
+                this.mainAnimation.play();
+                this.animationFrame = requestAnimationFrame(this.loop.bind(this));
+                this.animations.forEach(animation => {
+                    if (animation.playState !== "finished")
+                        animation.play();
+                });
+                this.emit("play");
+            }
             return this;
         }
         /**
@@ -679,12 +679,16 @@
          * @memberof Animate
          */
         pause() {
-            this.mainAnimation.pause();
-            window.cancelAnimationFrame(this.animationFrame);
-            this.animations.forEach(animation => {
-                animation.pause();
-            });
-            this.emit("pause");
+            // Once the animation is done, it's done, it can only be reset by the reset method
+            if (this.mainAnimation.playState !== "finished") {
+                this.mainAnimation.pause();
+                window.cancelAnimationFrame(this.animationFrame);
+                this.animations.forEach(animation => {
+                    if (animation.playState !== "finished")
+                        animation.pause();
+                });
+                this.emit("pause");
+            }
             return this;
         }
         /**
