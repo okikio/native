@@ -1,4 +1,4 @@
-
+import { Manager } from "managerjs";
 
 export type ListenerCallback = (...args: any) => void;
 export interface IListener {
@@ -83,9 +83,9 @@ export class Listener {
  *
  * @export
  * @class Event
- * @extends {Storage<Listener>}
+ * @extends {Manager<number, Listener>}
  */
-export class Event extends Storage<Listener> {
+export class Event extends Manager<number, Listener> {
 	/**
 	 * The name of the event
 	 *
@@ -224,7 +224,7 @@ export class EventEmitter extends Manager<string, Event> {
 
         if (callback) {
             let i = 0,
-                len: number = event.size(),
+                len: number = event.size,
                 value: Listener;
             let listener = new Listener({ name, callback, scope });
             for (; i < len; i++) {
@@ -237,7 +237,7 @@ export class EventEmitter extends Manager<string, Event> {
                     break;
             }
 
-            event.remove(i);
+            event.delete(i);
         }
         return event;
     }
@@ -284,7 +284,7 @@ export class EventEmitter extends Manager<string, Event> {
 
             if (_callback) {
                 this.removeListener(_name, _callback, _scope);
-            } else this.remove(_name);
+            } else this.delete(_name);
         }, this);
         return this;
     }
@@ -351,3 +351,5 @@ export class EventEmitter extends Manager<string, Event> {
         return this;
     }
 }
+
+export default EventEmitter;

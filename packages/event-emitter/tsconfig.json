@@ -1,0 +1,10 @@
+{
+    "compilerOptions": {
+        "target": "ES6",
+        "module": "esnext",
+        "sourceMap": true,
+        "outDir": "lib/js",
+        "isolatedModules": true,
+        "declaration": true
+    }
+}
