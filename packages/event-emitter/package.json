@@ -1,6 +1,6 @@
 {
     "name": "@okikio/event-emitter",
-    "version": "1.0.5",
+    "version": "1.0.3",
     "description": "A small Event Emitter written in typescript for performance, and ease of use.",
     "cjs": "lib/api.cjs.js",
     "umd": "lib/api.umd.js",
@@ -13,11 +13,12 @@
     "source": "src/api.ts",
     "types": "lib/api.d.ts",
     "directories": {
-        "lib": "lib",
-        "src": "src"
+        "lib": "./lib",
+        "src": "./src"
     },
     "scripts": {
-        "build": "gulp"
+        "build": "gulp",
+        "release": "gulp && npm publish"
     },
     "repository": {
         "type": "git",
@@ -48,6 +49,6 @@
         "typescript": "^3.9.5"
     },
     "dependencies": {
-        "managerjs": "^1.0.5"
+        "managerjs": "^1.0.7"
     }
 }
