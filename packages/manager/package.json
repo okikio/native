@@ -9,7 +9,8 @@
     "module": "lib/api.es.js",
     "main": "lib/api.js",
     "directories": {
-        "lib": "lib"
+        "lib": "lib",
+        "src": "src"
     },
     "scripts": {
         "build": "gulp"
