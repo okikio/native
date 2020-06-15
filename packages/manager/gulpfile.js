@@ -1,9 +1,10 @@
 // Import external modules
+const { nodeResolve } = require("@rollup/plugin-node-resolve");
 const { src, dest, task, series } = require("gulp");
 const { terser } = require("rollup-plugin-terser");
 const ts = require("gulp-typescript");
 const { rollup } = require("rollup");
-const size = require('gulp-size');
+const size = require("gulp-size");
 
 // Streamline Gulp Tasks
 const stream = (_src, _opt = {}) => {
@@ -47,7 +48,7 @@ task("ts", async () => {
 
 const date = new Date();
 const { name, version, main, min, cjs, umd } = require("./package.json");
-const banner = `/*
+const banner = `/*!
  * ${name} v${version}
  * (c) ${date.getFullYear()} Okiki Ojo
  * Released under the MIT license
@@ -58,8 +59,10 @@ task("js", async () => {
     console.info('Compiling... 😤');
     const bun = await rollup({
         input: 'lib/api.js',
+        treeshake: true,
         plugins: [
-            ts()
+            ts(),
+            nodeResolve(), // Bundle all Modules
         ]
     });
 
@@ -87,7 +90,11 @@ task("js", async () => {
         format: 'es',
         file: min,
         plugins: [
-            terser()
+            terser({
+                output: {
+                    comments: "some"
+                }
+            })
         ]
     });
 });
