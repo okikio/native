@@ -87,7 +87,7 @@ task("js", async () => {
 
     return await bun.write({
         banner,
-        format: 'es',
+        format: 'iife',
         file: min,
         plugins: [
             terser({

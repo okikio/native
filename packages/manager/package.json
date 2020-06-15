@@ -1,6 +1,6 @@
 {
     "name": "managerjs",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "description": "A superset of the Map class called Manager that allows for complex management of data.",
     "cjs": "lib/api.cjs.js",
     "umd": "lib/api.umd.js",
