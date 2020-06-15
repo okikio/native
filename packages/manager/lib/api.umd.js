@@ -1,5 +1,5 @@
 /*!
- * managerjs v1.0.3
+ * managerjs v1.0.4
  * (c) 2020 Okiki Ojo
  * Released under the MIT license
  */
