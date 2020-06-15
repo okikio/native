@@ -1,9 +1,9 @@
 {
     "compilerOptions": {
-        "target": "ES6",
-        "module": "esnext",
+        "target": "ES2020",
+        "module": "ES6",
         "sourceMap": true,
-        "outDir": "lib/js",
+        "outDir": "lib",
         "isolatedModules": true,
         "declaration": true
     }

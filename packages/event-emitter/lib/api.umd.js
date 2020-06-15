@@ -1,5 +1,5 @@
 /*!
- * @okikio/event-emitter v1.0.1
+ * @okikio/event-emitter v1.0.2
  * (c) 2020 Okiki Ojo
  * Released under the MIT license
  */
@@ -10,8 +10,8 @@
     (global = global || self, factory(global['@okikio/event-emitter'] = {}));
 }(this, (function (exports) { 'use strict';
 
-    /*
-     * managerjs v1.0.0
+    /*!
+     * managerjs v1.0.2
      * (c) 2020 Okiki Ojo
      * Released under the MIT license
      */

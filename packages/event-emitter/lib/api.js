@@ -1,11 +1,15 @@
 /*!
- * @okikio/event-emitter v1.0.1
+ * @okikio/event-emitter v1.0.2
  * (c) 2020 Okiki Ojo
  * Released under the MIT license
  */
 
-/*
- * managerjs v1.0.0
+'use strict';
+
+Object.defineProperty(exports, '__esModule', { value: true });
+
+/*!
+ * managerjs v1.0.2
  * (c) 2020 Okiki Ojo
  * Released under the MIT license
  */
@@ -387,5 +391,7 @@ class EventEmitter extends Manager {
     }
 }
 
-export default EventEmitter;
-export { Event, EventEmitter, Listener };
+exports.Event = Event;
+exports.EventEmitter = EventEmitter;
+exports.Listener = Listener;
+exports.default = EventEmitter;

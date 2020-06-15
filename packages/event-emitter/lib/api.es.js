@@ -4,10 +4,6 @@
  * Released under the MIT license
  */
 
-'use strict';
-
-Object.defineProperty(exports, '__esModule', { value: true });
-
 /*!
  * managerjs v1.0.2
  * (c) 2020 Okiki Ojo
@@ -391,7 +387,5 @@ class EventEmitter extends Manager {
     }
 }
 
-exports.Event = Event;
-exports.EventEmitter = EventEmitter;
-exports.Listener = Listener;
-exports.default = EventEmitter;
+export default EventEmitter;
+export { Event, EventEmitter, Listener };
