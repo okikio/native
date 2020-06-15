@@ -1,5 +1,5 @@
 /*!
- * @okikio/event-emitter v1.0.0
+ * js-event-emitter v1.0.0
  * (c) 2020 Okiki Ojo
  * Released under the MIT license
  */
@@ -7,7 +7,7 @@
 (function (global, factory) {
     typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports) :
     typeof define === 'function' && define.amd ? define(['exports'], factory) :
-    (global = global || self, factory(global['@okikio/event-emitter'] = {}));
+    (global = global || self, factory(global['js-event-emitter'] = {}));
 }(this, (function (exports) { 'use strict';
 
     /*
