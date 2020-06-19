@@ -56,7 +56,6 @@ const banner = `/*!
 `;
 
 task("js", async () => {
-    console.info('Compiling... 😤');
     const bun = await rollup({
         input: 'lib/api.js',
         treeshake: true,

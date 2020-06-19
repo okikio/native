@@ -1,5 +1,5 @@
 /*!
- * managerjs v1.0.8
+ * managerjs v1.0.9
  * (c) 2020 Okiki Ojo
  * Released under the MIT license
  */
@@ -86,7 +86,7 @@
          */
         add(value) {
             // @ts-ignore
-            this.map.set(this.size, value);
+            this.set(this.size, value);
             return this;
         }
         /**
