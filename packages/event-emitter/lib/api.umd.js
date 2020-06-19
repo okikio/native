@@ -1,5 +1,5 @@
 /*!
- * @okikio/event-emitter v1.0.4
+ * @okikio/event-emitter v1.0.5
  * (c) 2020 Okiki Ojo
  * Released under the MIT license
  */
@@ -11,7 +11,7 @@
 }(this, (function (exports) { 'use strict';
 
     /*!
-     * managerjs v1.0.8
+     * managerjs v1.0.9
      * (c) 2020 Okiki Ojo
      * Released under the MIT license
      */
@@ -92,7 +92,7 @@
          */
         add(value) {
             // @ts-ignore
-            this.map.set(this.size, value);
+            this.set(this.size, value);
             return this;
         }
         /**
