@@ -1,4 +1,4 @@
-import { Manager } from "managerjs";
+import Manager from "managerjs";
 
 export type ListenerCallback = (...args: any) => void;
 export interface IListener {
@@ -351,5 +351,3 @@ export class EventEmitter extends Manager<string, Event> {
         return this;
     }
 }
-
-export default EventEmitter;
