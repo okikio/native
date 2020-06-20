@@ -1,6 +1,6 @@
 {
     "name": "walijs",
-    "version": "1.0.2",
+    "version": "1.0.3",
     "description": "An animation library for the modern web which utilizes the Web Animation API (WAAPI) to create butter smooth animation.",
     "cjs": "lib/api.cjs.js",
     "umd": "lib/api.umd.js",
