@@ -1,5 +1,5 @@
 /*!
- * walijs v1.0.1
+ * walijs v1.0.2
  * (c) 2020 Okiki Ojo
  * Released under the MIT license
  */
@@ -954,41 +954,36 @@ const animate = (options = {}) => {
     return new Animate(options);
 };
 
-let anim;
-const play = async () => {
-    anim = animate({
-        target: ".div",
-        transform: ["translateX(0px)", "translateX(300px)"],
-        easing: "out-cubic",
-        opacity(index, total, element) {
-            console.log(element);
-            return [0.05, ((index + 1) / total) + 0.05];
-        },
-        duration(index) {
-            return (index + 1) * 500;
-        },
-        fillMode: "both",
-        loop: 5,
-        speed: 1,
-        direction: "alternate",
-        delay(i) {
-            return i * 200;
-        },
-        autoplay: true,
-        endDelay: 500
-    });
+let anim = animate({
+    target: ".div",
+    transform: ["translateX(0px)", "translateX(300px)"],
+    easing: "out-cubic",
+    opacity(index, total, element) {
+        console.log(element);
+        return [0.05, ((index + 1) / total) + 0.05];
+    },
+    duration(index) {
+        return (index + 1) * 500;
+    },
+    fillMode: "both",
+    loop: 5,
+    speed: 1,
+    direction: "alternate",
+    delay(i) {
+        return i * 200;
+    },
+    autoplay: true,
+    endDelay: 500
+});
 
-    let options = await anim;
-
+anim.then(() => {
     let el = document.querySelector(".info");
     let info = "Done, it was delayed because of the endDelay property.";
     el.textContent = info;
     el.style = "color: red";
 
     console.log(info);
-};
-
-play();
+});
 
 let progressSpan = document.querySelector(".progress");
 anim.on("change", () => {
