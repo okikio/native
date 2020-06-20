@@ -1,5 +1,5 @@
 /*!
- * walijs v1.0.5
+ * walijs v1.0.6
  * (c) 2020 Okiki Ojo
  * Released under the MIT license
  */
@@ -649,14 +649,17 @@ class Animate {
                 delay,
                 fill: fillMode,
             };
-            // Accept keyframes as the keyframes Object
-            animationKeyframe = keyframes.length ?
-                computeValue(keyframes, [i, len, target]) :
+            // Accept keyframes as a keyframes Object, or a method, 
+            // if there are no animations in the keyframes array,
+            // uses css properties from the options object
+            let arrKeyframes = computeValue(keyframes, [i, len, target]);
+            animationKeyframe = arrKeyframes.length ? arrKeyframes :
                 this.properties;
             // Allows the use of functions as the values, for both the keyframes and the animation object
             // It adds the capability of advanced stagger animation, similar to the anime js stagger functions
             animationOptions = mapObject(animationOptions, [i, len, target]);
-            animationKeyframe = mapObject(animationKeyframe, [i, len, target]);
+            if (!(arrKeyframes.length > 0))
+                animationKeyframe = mapObject(animationKeyframe, [i, len, target]);
             // Set the Animate classes duration to be the Animation with the largest totalDuration
             let tempDuration = animationOptions.delay +
                 (animationOptions.duration * animationOptions.iterations) +
@@ -666,7 +669,7 @@ class Animate {
             // Add animation to the Animations Set
             let animation = target.animate(animationKeyframe, animationOptions);
             animation.onfinish = () => {
-                onfinish(i, len, target);
+                onfinish(target, i, len);
             };
             this.animations.set(target, animation);
         }
@@ -956,16 +959,26 @@ const animate = (options = {}) => {
 
 let anim = animate({
     target: ".div",
-    transform: ["translateX(0px)", "translateX(300px)"],
-    easing: "out-cubic",
-    opacity(index, total, element) {
+    keyframes(index, total, element) {
         console.log(element);
-        return [0.05, ((index + 1) / total) + 0.05];
+        return [
+            { transform: "translateX(0px)", opacity: 0 },
+            { transform: "translateX(300px)", opacity: ((index + 1) / total) }
+        ]
     },
+    // transform: ["translateX(0px)", "translateX(300px)"],
+    easing: "out-cubic",
+    // opacity(index, total, element) {
+    //     console.log(element);
+    //     return [0, ((index + 1) / total)];
+    // },
     duration(index) {
         return (index + 1) * 500;
     },
-    fillMode: "both",
+    onfinish(element, index, total) {
+        element.style.opacity = `${((index + 1) / total)}`;
+        element.style.transform = "translateX(300px)";
+    },
     loop: 5,
     speed: 1,
     direction: "alternate",
@@ -973,7 +986,7 @@ let anim = animate({
         return i * 200;
     },
     autoplay: true,
-    endDelay: 500
+    // endDelay: 500
 });
 
 anim.then(() => {

@@ -160,14 +160,17 @@ export class Animate {
                 delay,
                 fill: fillMode,
             };
-            // Accept keyframes as the keyframes Object
-            animationKeyframe = keyframes.length ?
-                computeValue(keyframes, [i, len, target]) :
+            // Accept keyframes as a keyframes Object, or a method, 
+            // if there are no animations in the keyframes array,
+            // uses css properties from the options object
+            let arrKeyframes = computeValue(keyframes, [i, len, target]);
+            animationKeyframe = arrKeyframes.length ? arrKeyframes :
                 this.properties;
             // Allows the use of functions as the values, for both the keyframes and the animation object
             // It adds the capability of advanced stagger animation, similar to the anime js stagger functions
             animationOptions = mapObject(animationOptions, [i, len, target]);
-            animationKeyframe = mapObject(animationKeyframe, [i, len, target]);
+            if (!(arrKeyframes.length > 0))
+                animationKeyframe = mapObject(animationKeyframe, [i, len, target]);
             // Set the Animate classes duration to be the Animation with the largest totalDuration
             let tempDuration = animationOptions.delay +
                 (animationOptions.duration * animationOptions.iterations) +
@@ -177,7 +180,7 @@ export class Animate {
             // Add animation to the Animations Set
             let animation = target.animate(animationKeyframe, animationOptions);
             animation.onfinish = () => {
-                onfinish(i, len, target);
+                onfinish(target, i, len);
             };
             this.animations.set(target, animation);
         }

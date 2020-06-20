@@ -1,16 +1,26 @@
 import { animate } from "../../lib/api.es.js";
 let anim = animate({
     target: ".div",
-    transform: ["translateX(0px)", "translateX(300px)"],
-    easing: "out-cubic",
-    opacity(index, total, element) {
+    keyframes(index, total, element) {
         console.log(element);
-        return [0.05, ((index + 1) / total) + 0.05];
+        return [
+            { transform: "translateX(0px)", opacity: 0 },
+            { transform: "translateX(300px)", opacity: ((index + 1) / total) }
+        ]
     },
+    // transform: ["translateX(0px)", "translateX(300px)"],
+    easing: "out-cubic",
+    // opacity(index, total, element) {
+    //     console.log(element);
+    //     return [0, ((index + 1) / total)];
+    // },
     duration(index) {
         return (index + 1) * 500;
     },
-    fillMode: "both",
+    onfinish(element, index, total) {
+        element.style.opacity = `${((index + 1) / total)}`;
+        element.style.transform = "translateX(300px)";
+    },
     loop: 5,
     speed: 1,
     direction: "alternate",
@@ -18,7 +28,7 @@ let anim = animate({
         return i * 200;
     },
     autoplay: true,
-    endDelay: 500
+    // endDelay: 500
 });
 
 anim.then(() => {

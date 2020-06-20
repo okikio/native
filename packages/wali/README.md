@@ -163,9 +163,26 @@ Determines if the animation should repeat, and how many times it should repeat.
 
 | Default                                                      | Type     |
 | :----------------------------------------------------------- | :------- |
-| `(index: number, total: number, element: HTMLElement) => {}` | Function |
+| `(element: HTMLElement, index: number, total: number) => {}` | Function |
 
-Occurs when the animation for one of the elements completes, meaning when animating many elements that finish at different time this will run multiple times.
+Occurs when the animation for one of the elements completes, meaning when animating many elements that finish at different time this will run multiple times. The method it takes is slightly different.
+
+```javascript
+// Avoid using fillMode, use this instead to commit style changes
+// Do note endDelay delays the onfinish method
+animate({
+    target: "span",
+    opacity: [0, 1],
+    onfinish(element, index, total) {
+        element.style.opacity = 0;
+        console.log(
+            `${
+                index + 1
+            } out of ${total}, elements have finished their animations.`
+        );
+    },
+});
+```
 
 ### autoplay
 
@@ -407,7 +424,7 @@ Wali is available on [unpkg](https://unpkg.com/walijs@latest/lib/api.min.js) and
 
 ```javascript
 // Notice the .es.js file name extension, that represents ES Modules
-// There is also, 
+// There is also,
 //      .min.js - Minified UMD Module
 //      .umd.js - Normal UMD Module
 //      .cjs.js - CommonJS Module

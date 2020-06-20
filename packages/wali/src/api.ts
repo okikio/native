@@ -99,7 +99,7 @@ export interface AnimationOptions {
     keyframes?: object[],
     loop?: number | boolean, // iterations: number,
     options?: AnimationOptions,
-    onfinish?: (...args: any) => any,
+    onfinish?: (element?: HTMLElement, index?: number, total?: number) => any,
     fillMode?: "none" | "forwards" | "backwards" | "both" | "auto",
     direction?: "normal" | "reverse" | "alternate" | "alternate-reverse",
     [property: string]: boolean | object | string | string[] | number | null | (number | null)[] | undefined;
@@ -264,15 +264,18 @@ export class Animate {
                 fill: fillMode,
             };
 
-            // Accept keyframes as the keyframes Object
-            animationKeyframe = (keyframes as Keyframe[]).length ?
-                computeValue((keyframes as Keyframe[]), [i, len, target]) :
+            // Accept keyframes as a keyframes Object, or a method, 
+            // if there are no animations in the keyframes array,
+            // uses css properties from the options object
+            let arrKeyframes = computeValue((keyframes as Keyframe[]), [i, len, target]);
+            animationKeyframe = arrKeyframes.length ? arrKeyframes :
                 (this.properties as PropertyIndexedKeyframes);
 
             // Allows the use of functions as the values, for both the keyframes and the animation object
             // It adds the capability of advanced stagger animation, similar to the anime js stagger functions
             animationOptions = mapObject(animationOptions, [i, len, target]);
-            animationKeyframe = mapObject(animationKeyframe, [i, len, target]);
+            if (!(arrKeyframes.length > 0))
+                animationKeyframe = mapObject(animationKeyframe, [i, len, target]);
 
             // Set the Animate classes duration to be the Animation with the largest totalDuration
             let tempDuration: number =
@@ -284,7 +287,7 @@ export class Animate {
             // Add animation to the Animations Set
             let animation = target.animate(animationKeyframe, animationOptions);
             animation.onfinish = () => {
-                onfinish(i, len, target);
+                onfinish(target, i, len);
             };
             this.animations.set(target, animation);
         }
