@@ -33,49 +33,52 @@ export const mapObject = (obj: object, fn: Function): object => {
 // From: [https://easings.net]
 export const easings = {
     "ease": "ease",
-    "ease-in": "ease-in",
-    "ease-out": "ease-out",
-    "ease-in-out": "ease-in-out",
+    "in": "ease-in",
+    "out": "ease-out",
+    "in-out": "ease-in-out",
 
     // Sine
-    "ease-in-sine": "cubic-bezier(0.47, 0, 0.745, 0.715)",
-    "ease-out-sine": "cubic-bezier(0.39, 0.575, 0.565, 1)",
-    "ease-in-out-sine": "cubic-bezier(0.445, 0.05, 0.55, 0.95)",
+    "in-sine": "cubic-bezier(0.47, 0, 0.745, 0.715)",
+    "out-sine": "cubic-bezier(0.39, 0.575, 0.565, 1)",
+    "in-out-sine": "cubic-bezier(0.445, 0.05, 0.55, 0.95)",
 
     // Quad
-    "ease-in-quad": "cubic-bezier(0.55, 0.085, 0.68, 0.53)",
-    "ease-out-quad": "cubic-bezier(0.25, 0.46, 0.45, 0.94)",
-    "ease-in-out-quad": "cubic-bezier(0.455, 0.03, 0.515, 0.955)",
+    "in-quad": "cubic-bezier(0.55, 0.085, 0.68, 0.53)",
+    "out-quad": "cubic-bezier(0.25, 0.46, 0.45, 0.94)",
+    "in-out-quad": "cubic-bezier(0.455, 0.03, 0.515, 0.955)",
 
     // Cubic
-    "ease-in-cubic": "cubic-bezier(0.55, 0.055, 0.675, 0.19)",
-    "ease-out-cubic": "cubic-bezier(0.215, 0.61, 0.355, 1)",
-    "ease-in-out-cubic": "cubic-bezier(0.645, 0.045, 0.355, 1)",
+    "in-cubic": "cubic-bezier(0.55, 0.055, 0.675, 0.19)",
+    "out-cubic": "cubic-bezier(0.215, 0.61, 0.355, 1)",
+    "in-out-cubic": "cubic-bezier(0.645, 0.045, 0.355, 1)",
 
     // Quart
-    "ease-in-quart": "cubic-bezier(0.895, 0.03, 0.685, 0.22)",
-    "ease-out-quart": "cubic-bezier(0.165, 0.84, 0.44, 1)",
-    "ease-in-out-quart": "cubic-bezier(0.77, 0, 0.175, 1)",
+    "in-quart": "cubic-bezier(0.895, 0.03, 0.685, 0.22)",
+    "out-quart": "cubic-bezier(0.165, 0.84, 0.44, 1)",
+    "in-out-quart": "cubic-bezier(0.77, 0, 0.175, 1)",
 
     // Quint
-    "ease-in-quint": "cubic-bezier(0.755, 0.05, 0.855, 0.06)",
-    "ease-out-quint": "cubic-bezier(0.23, 1, 0.32, 1)",
-    "ease-in-out-quint": "cubic-bezier(0.86, 0, 0.07, 1)",
+    "in-quint": "cubic-bezier(0.755, 0.05, 0.855, 0.06)",
+    "out-quint": "cubic-bezier(0.23, 1, 0.32, 1)",
+    "in-out-quint": "cubic-bezier(0.86, 0, 0.07, 1)",
 
     // Expo
-    "ease-in-expo": "cubic-bezier(0.95, 0.05, 0.795, 0.035)",
-    "ease-out-expo": "cubic-bezier(0.19, 1, 0.22, 1)",
-    "ease-in-out-expo": "cubic-bezier(1, 0, 0, 1)",
+    "in-expo": "cubic-bezier(0.95, 0.05, 0.795, 0.035)",
+    "out-expo": "cubic-bezier(0.19, 1, 0.22, 1)",
+    "in-out-expo": "cubic-bezier(1, 0, 0, 1)",
 
     // Circ
-    "ease-in-circ": "cubic-bezier(0.6, 0.04, 0.98, 0.335)",
-    "ease-out-circ": "cubic-bezier(0.075, 0.82, 0.165, 1)",
-    "ease-in-out-circ": "cubic-bezier(0.785, 0.135, 0.15, 0.86)",
+    "in-circ": "cubic-bezier(0.6, 0.04, 0.98, 0.335)",
+    "out-circ": "cubic-bezier(0.075, 0.82, 0.165, 1)",
+    "in-out-circ": "cubic-bezier(0.785, 0.135, 0.15, 0.86)",
 
     // Back
-    "ease-in-back": "cubic-bezier(0.6, -0.28, 0.735, 0.045)",
-    "ease-out-back": "cubic-bezier(0.175, 0.885, 0.32, 1.275)",
-    "ease-in-out-back": "cubic-bezier(0.68, -0.55, 0.265, 1.55)"
+    "in-back": "cubic-bezier(0.6, -0.28, 0.735, 0.045)",
+    "out-back": "cubic-bezier(0.175, 0.885, 0.32, 1.275)",
+    "in-out-back": "cubic-bezier(0.68, -0.55, 0.265, 1.55)"
+};
+export const getEase = (ease: string) => {
+    return /^(ease|in|out)/.test(ease) ? easings[ease] : ease;
 };
 
 export interface AnimationOptions {
@@ -244,7 +247,7 @@ export class Animate extends Promise<AnimationOptions> {
         for (let i = 0, len = this.targets.length; i < len; i++) {
             let target = this.targets[i];
             let animationOptions = {
-                easing: easing.startsWith("ease") ? easings[easing] : easing,
+                easing: getEase(easing),
                 iterations: loop === true ? Infinity : (loop as number),
                 direction,
                 endDelay,
@@ -523,4 +526,3 @@ export class Animate extends Promise<AnimationOptions> {
 export const animate = (options: AnimationOptions = {}): Animate => {
     return new Animate(options);
 };
-export default animate;

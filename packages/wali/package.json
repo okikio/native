@@ -42,15 +42,18 @@
     "homepage": "https://github.com/okikio/wali#readme",
     "devDependencies": {
         "@rollup/plugin-node-resolve": "^8.0.1",
-        "eslint": "^7.2.0",
+        "browser-sync": "^2.26.7",
+        "eslint": "^7.3.0",
         "gulp": "^4.0.2",
+        "gulp-sass": "^4.1.0",
         "gulp-size": "^3.0.0",
+        "gulp-swig": "^0.9.1",
         "gulp-typescript": "^6.0.0-alpha.1",
-        "rollup": "^2.16.1",
+        "rollup": "^2.17.1",
         "rollup-plugin-terser": "^6.1.0",
         "typescript": "^3.9.5"
     },
     "dependencies": {
-        "@okikio/event-emitter": "^1.0.3"
+        "@okikio/event-emitter": "^1.0.5"
     }
 }

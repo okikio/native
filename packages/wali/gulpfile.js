@@ -1,40 +1,57 @@
 // Import external modules
 const { nodeResolve } = require("@rollup/plugin-node-resolve");
-const { src, dest, task, series } = require("gulp");
 const { terser } = require("rollup-plugin-terser");
 const ts = require("gulp-typescript");
 const { rollup } = require("rollup");
 const size = require("gulp-size");
 
-// Streamline Gulp Tasks
-const stream = (_src, _opt = {}) => {
-    let _end = _opt.end || [];
-    let host = typeof _src !== "string" && !Array.isArray(_src) ? _src : src(_src, _opt.opts),
-        _pipes = _opt.pipes || [],
-        _dest = _opt.dest || ".",
-        _log = _opt.log || (() => { });
+const bs = require("browser-sync");
+const sass = require("gulp-sass");
+const swig = require("gulp-swig");
 
-    return new Promise((resolve, reject) => {
-        _pipes.forEach(val => {
-            if (val !== undefined && val !== null) {
-                host = host.pipe(val).on("error", reject);
-            }
-        });
+// Gulp utilities
+const { stream, task, watch, parallel, series } = require('./util');
 
-        host
-            .on("end", _log)
-            .on("error", reject)
-            .pipe(dest(_dest))
-            .on("end", resolve); // Output
+// Origin folders (source and destination folders)
+const srcFolder = `docs`;
+const destFolder = `test`;
 
-        _end.forEach((val) => {
-            if (val !== undefined && val !== null) {
-                host = host.pipe(val);
-            }
-        });
+// Source file folders
+const libFolder = `lib`;
+const jsFolder = `${srcFolder}/js`;
+const sassFolder = `${srcFolder}/sass`;
+const swigFolder = `${srcFolder}/html`;
+
+// Destination file folders
+const jsDestFolder = `${destFolder}/js`;
+const cssFolder = `${destFolder}/css`;
+const htmlFolder = `${destFolder}`;
+
+// HTML Tasks
+task("html", () => {
+    return stream(`${swigFolder}/pages/**/*.html`, {
+        pipes: [
+            // Compile src html using Swig
+            swig()
+        ],
+        dest: htmlFolder
     });
-};
+});
 
+// CSS Tasks
+const { logError } = sass;
+task("css", () => {
+    return stream(`${sassFolder}/*.scss`, {
+        pipes: [
+            // Minify scss to css
+            sass({ outputStyle: "compressed" }).on("error", logError)
+        ],
+        dest: cssFolder,
+        end: [browserSync.stream()],
+    })
+});
+
+// JS Tasks
 const tsProject = ts.createProject('tsconfig.json');
 task("ts", async () => {
     return stream(tsProject.src(), {
@@ -42,7 +59,7 @@ task("ts", async () => {
             // Compile typescript
             tsProject(),
         ],
-        dest: "lib"
+        dest: libFolder
     });
 });
 
@@ -56,7 +73,6 @@ const banner = `/*!
 `;
 
 task("js", async () => {
-    console.info('Compiling... 😤');
     const bun = await rollup({
         input: 'lib/api.js',
         treeshake: true,
@@ -70,12 +86,6 @@ task("js", async () => {
         banner,
         format: 'es',
         file: es
-    });
-
-    bun.write({
-        banner,
-        format: 'cjs',
-        file: main,
     });
 
     bun.write({
@@ -111,9 +121,50 @@ task("info", () => {
         pipes: [
             size({ gzip: true })
         ],
-        dest: "lib"
+        dest: libFolder
     })
 });
 
-task("build", series("ts", "js", "info"));
-task("default", series("ts", "js", "info"));
+task("test-js", async () => {
+    const bun = await rollup({
+        input: `${jsFolder}/app.js`,
+        treeshake: true,
+        plugins: [
+            ts(),
+            nodeResolve(), // Bundle all Modules
+        ]
+    });
+
+    return await bun.write({
+        format: 'es',
+        file: `${jsDestFolder}/app.js`,
+    });
+});
+
+// Build & Watch Tasks
+const browserSync = bs.create();
+task("build-js", series("ts", "js", parallel("info", "test-js")));
+task("build", parallel("html", "css", "build-js"));
+task("watch", () => {
+    browserSync.init(
+        { server: `./${destFolder}` },
+        (_err, bs) => {
+            bs.addMiddleware("*", (_req, res) => {
+                res.writeHead(302, {
+                    location: `/404.html`
+                });
+
+                res.end("Redirecting!");
+            });
+        }
+    );
+
+    watch(`${swigFolder}/**/*.html`, series("html"));
+    watch([`${sassFolder}/*.scss`], series("css"));
+
+    watch([`src/*.ts`, `docs/js/app.js`], series("build-js"));
+    watch(`${jsDestFolder}/*.js`).on('change', browserSync.reload);
+    watch(`${htmlFolder}/*.html`).on('change', browserSync.reload);
+});
+
+task("default", series("build", "watch"));

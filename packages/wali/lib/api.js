@@ -1,402 +1,8 @@
-/*!
- * walijs v0.0.0
- * (c) 2020 Okiki Ojo
- * Released under the MIT license
- */
-
-'use strict';
-
-Object.defineProperty(exports, '__esModule', { value: true });
-
-/*!
- * @okikio/event-emitter v1.0.3
- * (c) 2020 Okiki Ojo
- * Released under the MIT license
- */
-
-/*!
- * managerjs v1.0.7
- * (c) 2020 Okiki Ojo
- * Released under the MIT license
- */
-
-/**
- * Manages complex lists of named data, eg. A page can be stored in a list by of other pages with the url being how the page is stored in the list.
- *
- * @export
- * @class Manager
- * @extends {Map<K, V>}
- * @template K
- * @template V
-*/
-class Manager extends Map {
-    /**
-     * Creates an instance of Manager.
-     *
-     * @param {...any} args
-     * @memberof Manager
-     */
-    constructor(...args) {
-        super(...args);
-    }
-    /**
-     * Returns the keys of all items stored in the Manager as an Array
-     *
-     * @returns Array<K>
-     * @memberof Manager
-     */
-    keys() {
-        return Array.from(super.keys.call(this));
-    }
-    /**
-     * Returns the values of all items stored in the Manager as an Array
-     *
-     * @returns Array<V>
-     * @memberof Manager
-     */
-    values() {
-        return Array.from(super.values.call(this));
-    }
-    /**
-     * Returns the last item in the Manager who's index is a certain distance from the last item in the Manager
-     *
-     * @param {number} [distance=1]
-     * @returns V | undefined
-     * @memberof Manager
-     */
-    last(distance = 1) {
-        let key = this.keys()[this.size - distance];
-        return this.get(key);
-    }
-    /**
-     * Returns the second last item in the Manager
-     *
-     * @public
-     * @returns V | undefined
-     */
-    prev() {
-        return this.last(2);
-    }
-    /**
-     * Adds a value to Manager, and uses the current size of the Manager as it's key, it works best when all the key in the Manager are numbers
-     *
-     * @public
-     * @param  {V} value
-     * @returns Manager<K, V>
-     */
-    add(value) {
-        super.set.call(this, this.size, value);
-        return this;
-    }
-    /**
-     * Calls a method for all items that are currently in it's list
-     *
-     * @param {string} method
-     * @param {Array<any>} [args=[]]
-     * @returns Manager<K, V>
-     * @memberof Manager
-     */
-    methodCall(method, ...args) {
-        this.forEach((item) => {
-            item[method](...args);
-        });
-        return this;
-    }
-    /**
-     * Asynchronously calls a method for all items that are currently in it's list, similar to methodCall except the loop waits for the asynchronous method to run, before the loop continues on to the the next method
-     *
-     * @param {string} method
-     * @param {Array<any>} [args=[]]
-     * @returns Promise<Manager<K, V>>
-     * @memberof Manager
-     */
-    async asyncMethodCall(method, ...args) {
-        for await (let [, item] of this) {
-            // @ts-ignore
-            await item[method](...args);
-        }
-        return this;
-    }
-}
-
-/**
- * Represents a new event listener consisting of properties like: callback, scope, name
- *
- * @export
- * @class Listener
- */
-class Listener {
-    /**
-     * Creates an instance of Listener.
-     *
-     * @param {IListener} { callback = () => { }, scope = null, name = "event" }
-     * @memberof Listener
-     */
-    constructor({ callback = () => { }, scope = null, name = "event", }) {
-        this.listener = { callback, scope, name };
-    }
-    /**
-     * Returns the callback Function of the Listener
-     *
-     * @returns ListenerCallback
-     * @memberof Listener
-     */
-    getCallback() {
-        return this.listener.callback;
-    }
-    /**
-     * Returns the scope as an Object, from the Listener
-     *
-     * @returns object
-     * @memberof Listener
-     */
-    getScope() {
-        return this.listener.scope;
-    }
-    /**
-     * Returns the event as a String, from the Listener
-     *
-     * @returns string
-     * @memberof Listener
-     */
-    getEventName() {
-        return this.listener.name;
-    }
-    /**
-     * Returns the listener as an Object
-     *
-     * @returns IListener
-     * @memberof Listener
-     */
-    toJSON() {
-        return this.listener;
-    }
-}
-/**
- * Represents a new event listener consisting of properties like: callback, scope, name
- *
- * @export
- * @class Event
- * @extends {Manager<number, Listener>}
- */
-class Event extends Manager {
-    /**
-     * Creates an instance of Event.
-     *
-     * @param {string} [name="event"]
-     * @memberof Event
-     */
-    constructor(name = "event") {
-        super();
-        this.name = name;
-    }
-}
-/**
- * An event emitter
- *
- * @export
- * @class EventEmitter
- * @extends {Manager<string, Event>}
- */
-class EventEmitter extends Manager {
-    /**
-     * Creates an instance of EventEmitter.
-     *
-     * @memberof EventEmitter
-     */
-    constructor() {
-        super();
-    }
-    /**
-     * Gets events, if event doesn't exist create a new Event
-     *
-     * @param {string} name
-     * @returns Event
-     * @memberof EventEmitter
-     */
-    getEvent(name) {
-        let event = this.get(name);
-        if (!(event instanceof Event)) {
-            this.set(name, new Event(name));
-            return this.get(name);
-        }
-        return event;
-    }
-    /**
-     * Creates a new listener and adds it to the event
-     *
-     * @param {string} name
-     * @param {ListenerCallback} callback
-     * @param {object} scope
-     * @returns Event
-     * @memberof EventEmitter
-     */
-    newListener(name, callback, scope) {
-        let event = this.getEvent(name);
-        event.add(new Listener({ name, callback, scope }));
-        return event;
-    }
-    /**
-     * Adds a listener for a given event
-     *
-     * @param {EventInput} events
-     * @param {ListenerCallback} callback
-     * @param {object} scope
-     * @returns
-     * @memberof EventEmitter
-     */
-    on(events, callback, scope) {
-        // If there is no event break
-        if (typeof events == "undefined")
-            return this;
-        // Create a new event every space
-        if (typeof events == "string")
-            events = events.split(/\s/g);
-        let _name;
-        let _callback;
-        let _scope;
-        // Loop through the list of events
-        Object.keys(events).forEach(key => {
-            // Select the name of the event from the list
-            // Remember events can be {String | Object | Array<string>}
-            // Check If events is an Object (JSON like Object, and not an Array)
-            if (typeof events == "object" && !Array.isArray(events)) {
-                _name = key;
-                _callback = events[key];
-                _scope = callback;
-            }
-            else {
-                _name = events[key];
-                _callback = callback;
-                _scope = scope;
-            }
-            this.newListener(_name, _callback, _scope);
-        }, this);
-        return this;
-    }
-    /**
-     * Removes a listener from an event
-     *
-     * @param {string} name
-     * @param {ListenerCallback} [callback]
-     * @param {object} [scope]
-     * @returns Event
-     * @memberof EventEmitter
-     */
-    removeListener(name, callback, scope) {
-        let event = this.getEvent(name);
-        if (callback) {
-            let i = 0, len = event.size, value;
-            let listener = new Listener({ name, callback, scope });
-            for (; i < len; i++) {
-                value = event.get(i);
-                console.log(value);
-                if (value.getCallback() === listener.getCallback() &&
-                    value.getScope() === listener.getScope())
-                    break;
-            }
-            event.delete(i);
-        }
-        return event;
-    }
-    /**
-     * Removes a listener from a given event, or it just completely removes an event
-     *
-     * @param {EventInput} events
-     * @param {ListenerCallback} [callback]
-     * @param {object} [scope]
-     * @returns EventEmitter
-     * @memberof EventEmitter
-     */
-    off(events, callback, scope) {
-        // If there is no event break
-        if (typeof events == "undefined")
-            return this;
-        // Create a new event every space
-        if (typeof events == "string")
-            events = events.split(/\s/g);
-        let _name;
-        let _callback;
-        let _scope;
-        // Loop through the list of events
-        Object.keys(events).forEach((key) => {
-            // Select the name of the event from the list
-            // Remember events can be {String | Object | Array<any>}
-            // Check If events is an Object (JSON like Object, and not an Array)
-            if (typeof events == "object" && !Array.isArray(events)) {
-                _name = key;
-                _callback = events[key];
-                _scope = callback;
-            }
-            else {
-                _name = events[key];
-                _callback = callback;
-                _scope = scope;
-            }
-            if (_callback) {
-                this.removeListener(_name, _callback, _scope);
-            }
-            else
-                this.delete(_name);
-        }, this);
-        return this;
-    }
-    /**
-     * Adds a one time event listener for an event
-     *
-     * @param {EventInput} events
-     * @param {ListenerCallback} callback
-     * @param {object} scope
-     * @returns EventEmitter
-     * @memberof EventEmitter
-     */
-    once(events, callback, scope) {
-        // If there is no event break
-        if (typeof events == "undefined")
-            return this;
-        // Create a new event every space
-        if (typeof events == "string")
-            events = events.split(/\s/g);
-        let onceFn = (...args) => {
-            this.off(events, onceFn, scope);
-            callback.apply(scope, args);
-        };
-        this.on(events, onceFn, scope);
-        return this;
-    }
-    /**
-     * Call all listeners within an event
-     *
-     * @param {(string | Array<any>)} events
-     * @param {...any} args
-     * @returns EventEmitter
-     * @memberof EventEmitter
-     */
-    emit(events, ...args) {
-        // If there is no event break
-        if (typeof events == "undefined")
-            return this;
-        // Create a new event every space
-        if (typeof events == "string")
-            events = events.split(/\s/g);
-        // Loop through the list of events
-        events.forEach((event) => {
-            let listeners = this.getEvent(event);
-            const customEvent = new CustomEvent(event, { detail: args });
-            window.dispatchEvent(customEvent);
-            listeners.forEach((listener) => {
-                let { callback, scope } = listener.toJSON();
-                callback.apply(scope, args);
-            });
-        }, this);
-        return this;
-    }
-}
-
-const getElements = (selector) => {
+import { EventEmitter } from "@okikio/event-emitter";
+export const getElements = (selector) => {
     return typeof selector === "string" ? Array.from(document.querySelectorAll(selector)) : [selector];
 };
-const getTargets = (targets) => {
+export const getTargets = (targets) => {
     if (Array.isArray(targets))
         return targets;
     if (typeof targets == "string" || targets instanceof Node)
@@ -406,8 +12,8 @@ const getTargets = (targets) => {
     return [];
 };
 // VALUES
-const computeValue = (value, ...args) => typeof value == "function" ? value(...args) : value;
-const mapObject = (obj, fn) => {
+export const computeValue = (value, ...args) => typeof value == "function" ? value(...args) : value;
+export const mapObject = (obj, fn) => {
     let keys = Object.keys(obj);
     for (let i = 0, len = keys.length; i < len; i++) {
         let key = keys[i];
@@ -417,45 +23,49 @@ const mapObject = (obj, fn) => {
     return obj;
 };
 // From: [https://easings.net]
-const easings = {
+export const easings = {
     "ease": "ease",
-    "ease-in": "ease-in",
-    "ease-out": "ease-out",
-    "ease-in-out": "ease-in-out",
+    "in": "ease-in",
+    "out": "ease-out",
+    "in-out": "ease-in-out",
     // Sine
-    "ease-in-sine": "cubic-bezier(0.47, 0, 0.745, 0.715)",
-    "ease-out-sine": "cubic-bezier(0.39, 0.575, 0.565, 1)",
-    "ease-in-out-sine": "cubic-bezier(0.445, 0.05, 0.55, 0.95)",
+    "in-sine": "cubic-bezier(0.47, 0, 0.745, 0.715)",
+    "out-sine": "cubic-bezier(0.39, 0.575, 0.565, 1)",
+    "in-out-sine": "cubic-bezier(0.445, 0.05, 0.55, 0.95)",
     // Quad
-    "ease-in-quad": "cubic-bezier(0.55, 0.085, 0.68, 0.53)",
-    "ease-out-quad": "cubic-bezier(0.25, 0.46, 0.45, 0.94)",
-    "ease-in-out-quad": "cubic-bezier(0.455, 0.03, 0.515, 0.955)",
+    "in-quad": "cubic-bezier(0.55, 0.085, 0.68, 0.53)",
+    "out-quad": "cubic-bezier(0.25, 0.46, 0.45, 0.94)",
+    "in-out-quad": "cubic-bezier(0.455, 0.03, 0.515, 0.955)",
     // Cubic
-    "ease-in-cubic": "cubic-bezier(0.55, 0.055, 0.675, 0.19)",
-    "ease-out-cubic": "cubic-bezier(0.215, 0.61, 0.355, 1)",
-    "ease-in-out-cubic": "cubic-bezier(0.645, 0.045, 0.355, 1)",
+    "in-cubic": "cubic-bezier(0.55, 0.055, 0.675, 0.19)",
+    "out-cubic": "cubic-bezier(0.215, 0.61, 0.355, 1)",
+    "in-out-cubic": "cubic-bezier(0.645, 0.045, 0.355, 1)",
     // Quart
-    "ease-in-quart": "cubic-bezier(0.895, 0.03, 0.685, 0.22)",
-    "ease-out-quart": "cubic-bezier(0.165, 0.84, 0.44, 1)",
-    "ease-in-out-quart": "cubic-bezier(0.77, 0, 0.175, 1)",
+    "in-quart": "cubic-bezier(0.895, 0.03, 0.685, 0.22)",
+    "out-quart": "cubic-bezier(0.165, 0.84, 0.44, 1)",
+    "in-out-quart": "cubic-bezier(0.77, 0, 0.175, 1)",
     // Quint
-    "ease-in-quint": "cubic-bezier(0.755, 0.05, 0.855, 0.06)",
-    "ease-out-quint": "cubic-bezier(0.23, 1, 0.32, 1)",
-    "ease-in-out-quint": "cubic-bezier(0.86, 0, 0.07, 1)",
+    "in-quint": "cubic-bezier(0.755, 0.05, 0.855, 0.06)",
+    "out-quint": "cubic-bezier(0.23, 1, 0.32, 1)",
+    "in-out-quint": "cubic-bezier(0.86, 0, 0.07, 1)",
     // Expo
-    "ease-in-expo": "cubic-bezier(0.95, 0.05, 0.795, 0.035)",
-    "ease-out-expo": "cubic-bezier(0.19, 1, 0.22, 1)",
-    "ease-in-out-expo": "cubic-bezier(1, 0, 0, 1)",
+    "in-expo": "cubic-bezier(0.95, 0.05, 0.795, 0.035)",
+    "out-expo": "cubic-bezier(0.19, 1, 0.22, 1)",
+    "in-out-expo": "cubic-bezier(1, 0, 0, 1)",
     // Circ
-    "ease-in-circ": "cubic-bezier(0.6, 0.04, 0.98, 0.335)",
-    "ease-out-circ": "cubic-bezier(0.075, 0.82, 0.165, 1)",
-    "ease-in-out-circ": "cubic-bezier(0.785, 0.135, 0.15, 0.86)",
+    "in-circ": "cubic-bezier(0.6, 0.04, 0.98, 0.335)",
+    "out-circ": "cubic-bezier(0.075, 0.82, 0.165, 1)",
+    "in-out-circ": "cubic-bezier(0.785, 0.135, 0.15, 0.86)",
     // Back
-    "ease-in-back": "cubic-bezier(0.6, -0.28, 0.735, 0.045)",
-    "ease-out-back": "cubic-bezier(0.175, 0.885, 0.32, 1.275)",
-    "ease-in-out-back": "cubic-bezier(0.68, -0.55, 0.265, 1.55)"
+    "in-back": "cubic-bezier(0.6, -0.28, 0.735, 0.045)",
+    "out-back": "cubic-bezier(0.175, 0.885, 0.32, 1.275)",
+    "in-out-back": "cubic-bezier(0.68, -0.55, 0.265, 1.55)"
 };
-const DefaultAnimationOptions = {
+export const getEase = (ease) => {
+    return /^(ease|in|out)/.test(ease) ? easings[ease] : ease;
+};
+;
+export const DefaultAnimationOptions = {
     keyframes: [],
     loop: 1,
     delay: 0,
@@ -468,7 +78,7 @@ const DefaultAnimationOptions = {
     direction: "normal",
 };
 // You can check it out here: https://codepen.io/okikio/pen/qBbdGaW?editors=0011
-class Animate extends Promise {
+export class Animate extends Promise {
     /**
      * Creates an instance of Animate.
      *
@@ -540,7 +150,7 @@ class Animate extends Promise {
         for (let i = 0, len = this.targets.length; i < len; i++) {
             let target = this.targets[i];
             let animationOptions = {
-                easing: easing.startsWith("ease") ? easings[easing] : easing,
+                easing: getEase(easing),
                 iterations: loop === true ? Infinity : loop,
                 direction,
                 endDelay,
@@ -794,16 +404,6 @@ class Animate extends Promise {
     }
 }
 // Creates a new Animate instance
-const animate = (options = {}) => {
+export const animate = (options = {}) => {
     return new Animate(options);
 };
-
-exports.Animate = Animate;
-exports.DefaultAnimationOptions = DefaultAnimationOptions;
-exports.animate = animate;
-exports.computeValue = computeValue;
-exports.default = animate;
-exports.easings = easings;
-exports.getElements = getElements;
-exports.getTargets = getTargets;
-exports.mapObject = mapObject;

@@ -5,35 +5,53 @@
  */
 
 /*!
- * @okikio/event-emitter v1.0.3
+ * @okikio/event-emitter v1.0.5
  * (c) 2020 Okiki Ojo
  * Released under the MIT license
  */
 
 /*!
- * managerjs v1.0.7
+ * managerjs v1.0.9
  * (c) 2020 Okiki Ojo
  * Released under the MIT license
  */
 
 /**
- * Manages complex lists of named data, eg. A page can be stored in a list by of other pages with the url being how the page is stored in the list.
+ * Manages complex lists of named data, eg. A page can be stored in a list by of other pages with the url being how the page is stored in the list. Managers use Maps to store data.
  *
  * @export
  * @class Manager
- * @extends {Map<K, V>}
  * @template K
  * @template V
-*/
-class Manager extends Map {
+ */
+class Manager {
     /**
      * Creates an instance of Manager.
      *
-     * @param {...any} args
+     * @param {Array<[K, V]>} value
      * @memberof Manager
      */
-    constructor(...args) {
-        super(...args);
+    constructor(value) {
+        this.map = new Map(value);
+    }
+    /**
+     * Returns the Manager class's list
+     *
+     * @returns Map<K, V>
+     * @memberof Manager
+     */
+    getMap() {
+        return this.map;
+    }
+    /**
+     * Get a value stored in the Manager
+     *
+     * @public
+     * @param  {K} key - The key to find in the Manager's list
+     * @returns V
+     */
+    get(key) {
+        return this.map.get(key);
     }
     /**
      * Returns the keys of all items stored in the Manager as an Array
@@ -42,7 +60,7 @@ class Manager extends Map {
      * @memberof Manager
      */
     keys() {
-        return Array.from(super.keys.call(this));
+        return [...this.map.keys()];
     }
     /**
      * Returns the values of all items stored in the Manager as an Array
@@ -51,7 +69,40 @@ class Manager extends Map {
      * @memberof Manager
      */
     values() {
-        return Array.from(super.values.call(this));
+        return [...this.map.values()];
+    }
+    /**
+     * Set a value stored in the Manager
+     *
+     * @public
+     * @param  {K} key - The key where the value will be stored
+     * @param  {V} value - The value to store
+     * @returns Manager<K, V>
+     */
+    set(key, value) {
+        this.map.set(key, value);
+        return this;
+    }
+    /**
+     * Adds a value to Manager, and uses the current size of the Manager as it's key, it works best when all the key in the Manager are numbers
+     *
+     * @public
+     * @param  {V} value
+     * @returns Manager<K, V>
+     */
+    add(value) {
+        // @ts-ignore
+        this.set(this.size, value);
+        return this;
+    }
+    /**
+     * Returns the total number of items stored in the Manager
+     *
+     * @public
+     * @returns Number
+     */
+    get size() {
+        return this.map.size;
     }
     /**
      * Returns the last item in the Manager who's index is a certain distance from the last item in the Manager
@@ -74,18 +125,68 @@ class Manager extends Map {
         return this.last(2);
     }
     /**
-     * Adds a value to Manager, and uses the current size of the Manager as it's key, it works best when all the key in the Manager are numbers
+     * Removes a value stored in the Manager, via the key
      *
      * @public
-     * @param  {V} value
+     * @param  {K} key - The key for the key value pair to be removed
      * @returns Manager<K, V>
      */
-    add(value) {
-        super.set.call(this, this.size, value);
+    delete(key) {
+        this.map.delete(key);
         return this;
     }
     /**
-     * Calls a method for all items that are currently in it's list
+     * Clear the Manager of all its contents
+     *
+     * @public
+     * @returns Manager<K, V>
+     */
+    clear() {
+        this.map.clear();
+        return this;
+    }
+    /**
+     * Checks if the Manager contains a certain key
+     *
+     * @public
+     * @param {K} key
+     * @returns boolean
+     */
+    has(key) {
+        return this.map.has(key);
+    }
+    /**
+     * Returns a new Iterator object that contains an array of [key, value] for each element in the Map object in insertion order.
+     *
+     * @public
+     * @returns IterableIterator<[K, V]>
+     */
+    entries() {
+        return this.map.entries();
+    }
+    /**
+     * Iterates through the Managers contents, calling a callback function every iteration
+     *
+     * @param {*} [callback=(...args: any): void => { }]
+     * @param {object} context
+     * @returns Manager<K, V>
+     * @memberof Manager
+     */
+    forEach(callback = (...args) => { }, context) {
+        this.map.forEach(callback, context);
+        return this;
+    }
+    /**
+     * Allows iteration via the for..of, learn more: [https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Iterators_and_Generators]
+     *
+     * @returns
+     * @memberof Manager
+     */
+    [Symbol.iterator]() {
+        return this.entries();
+    }
+    /**
+     * Calls the method of a certain name for all items that are currently installed
      *
      * @param {string} method
      * @param {Array<any>} [args=[]]
@@ -99,7 +200,7 @@ class Manager extends Map {
         return this;
     }
     /**
-     * Asynchronously calls a method for all items that are currently in it's list, similar to methodCall except the loop waits for the asynchronous method to run, before the loop continues on to the the next method
+     * Asynchronously calls the method of a certain name for all items that are currently installed, similar to methodCall
      *
      * @param {string} method
      * @param {Array<any>} [args=[]]
@@ -107,8 +208,7 @@ class Manager extends Map {
      * @memberof Manager
      */
     async asyncMethodCall(method, ...args) {
-        for await (let [, item] of this) {
-            // @ts-ignore
+        for await (let [, item] of this.map) {
             await item[method](...args);
         }
         return this;
@@ -415,41 +515,44 @@ const mapObject = (obj, fn) => {
 // From: [https://easings.net]
 const easings = {
     "ease": "ease",
-    "ease-in": "ease-in",
-    "ease-out": "ease-out",
-    "ease-in-out": "ease-in-out",
+    "in": "ease-in",
+    "out": "ease-out",
+    "in-out": "ease-in-out",
     // Sine
-    "ease-in-sine": "cubic-bezier(0.47, 0, 0.745, 0.715)",
-    "ease-out-sine": "cubic-bezier(0.39, 0.575, 0.565, 1)",
-    "ease-in-out-sine": "cubic-bezier(0.445, 0.05, 0.55, 0.95)",
+    "in-sine": "cubic-bezier(0.47, 0, 0.745, 0.715)",
+    "out-sine": "cubic-bezier(0.39, 0.575, 0.565, 1)",
+    "in-out-sine": "cubic-bezier(0.445, 0.05, 0.55, 0.95)",
     // Quad
-    "ease-in-quad": "cubic-bezier(0.55, 0.085, 0.68, 0.53)",
-    "ease-out-quad": "cubic-bezier(0.25, 0.46, 0.45, 0.94)",
-    "ease-in-out-quad": "cubic-bezier(0.455, 0.03, 0.515, 0.955)",
+    "in-quad": "cubic-bezier(0.55, 0.085, 0.68, 0.53)",
+    "out-quad": "cubic-bezier(0.25, 0.46, 0.45, 0.94)",
+    "in-out-quad": "cubic-bezier(0.455, 0.03, 0.515, 0.955)",
     // Cubic
-    "ease-in-cubic": "cubic-bezier(0.55, 0.055, 0.675, 0.19)",
-    "ease-out-cubic": "cubic-bezier(0.215, 0.61, 0.355, 1)",
-    "ease-in-out-cubic": "cubic-bezier(0.645, 0.045, 0.355, 1)",
+    "in-cubic": "cubic-bezier(0.55, 0.055, 0.675, 0.19)",
+    "out-cubic": "cubic-bezier(0.215, 0.61, 0.355, 1)",
+    "in-out-cubic": "cubic-bezier(0.645, 0.045, 0.355, 1)",
     // Quart
-    "ease-in-quart": "cubic-bezier(0.895, 0.03, 0.685, 0.22)",
-    "ease-out-quart": "cubic-bezier(0.165, 0.84, 0.44, 1)",
-    "ease-in-out-quart": "cubic-bezier(0.77, 0, 0.175, 1)",
+    "in-quart": "cubic-bezier(0.895, 0.03, 0.685, 0.22)",
+    "out-quart": "cubic-bezier(0.165, 0.84, 0.44, 1)",
+    "in-out-quart": "cubic-bezier(0.77, 0, 0.175, 1)",
     // Quint
-    "ease-in-quint": "cubic-bezier(0.755, 0.05, 0.855, 0.06)",
-    "ease-out-quint": "cubic-bezier(0.23, 1, 0.32, 1)",
-    "ease-in-out-quint": "cubic-bezier(0.86, 0, 0.07, 1)",
+    "in-quint": "cubic-bezier(0.755, 0.05, 0.855, 0.06)",
+    "out-quint": "cubic-bezier(0.23, 1, 0.32, 1)",
+    "in-out-quint": "cubic-bezier(0.86, 0, 0.07, 1)",
     // Expo
-    "ease-in-expo": "cubic-bezier(0.95, 0.05, 0.795, 0.035)",
-    "ease-out-expo": "cubic-bezier(0.19, 1, 0.22, 1)",
-    "ease-in-out-expo": "cubic-bezier(1, 0, 0, 1)",
+    "in-expo": "cubic-bezier(0.95, 0.05, 0.795, 0.035)",
+    "out-expo": "cubic-bezier(0.19, 1, 0.22, 1)",
+    "in-out-expo": "cubic-bezier(1, 0, 0, 1)",
     // Circ
-    "ease-in-circ": "cubic-bezier(0.6, 0.04, 0.98, 0.335)",
-    "ease-out-circ": "cubic-bezier(0.075, 0.82, 0.165, 1)",
-    "ease-in-out-circ": "cubic-bezier(0.785, 0.135, 0.15, 0.86)",
+    "in-circ": "cubic-bezier(0.6, 0.04, 0.98, 0.335)",
+    "out-circ": "cubic-bezier(0.075, 0.82, 0.165, 1)",
+    "in-out-circ": "cubic-bezier(0.785, 0.135, 0.15, 0.86)",
     // Back
-    "ease-in-back": "cubic-bezier(0.6, -0.28, 0.735, 0.045)",
-    "ease-out-back": "cubic-bezier(0.175, 0.885, 0.32, 1.275)",
-    "ease-in-out-back": "cubic-bezier(0.68, -0.55, 0.265, 1.55)"
+    "in-back": "cubic-bezier(0.6, -0.28, 0.735, 0.045)",
+    "out-back": "cubic-bezier(0.175, 0.885, 0.32, 1.275)",
+    "in-out-back": "cubic-bezier(0.68, -0.55, 0.265, 1.55)"
+};
+const getEase = (ease) => {
+    return /^(ease|in|out)/.test(ease) ? easings[ease] : ease;
 };
 const DefaultAnimationOptions = {
     keyframes: [],
@@ -536,7 +639,7 @@ class Animate extends Promise {
         for (let i = 0, len = this.targets.length; i < len; i++) {
             let target = this.targets[i];
             let animationOptions = {
-                easing: easing.startsWith("ease") ? easings[easing] : easing,
+                easing: getEase(easing),
                 iterations: loop === true ? Infinity : loop,
                 direction,
                 endDelay,
@@ -794,5 +897,4 @@ const animate = (options = {}) => {
     return new Animate(options);
 };
 
-export default animate;
-export { Animate, DefaultAnimationOptions, animate, computeValue, easings, getElements, getTargets, mapObject };
+export { Animate, DefaultAnimationOptions, animate, computeValue, easings, getEase, getElements, getTargets, mapObject };
