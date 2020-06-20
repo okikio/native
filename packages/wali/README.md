@@ -22,7 +22,7 @@ animate({
     //     { transform: "translateX(300px)" }
     // ],
     transform: ["translateX(0px)", "translateX(300px)"],
-    easing: "ease-out",
+    easing: "out",
     duration(i) {
         return (i + 1) * 500;
     },
