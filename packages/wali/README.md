@@ -1,16 +1,18 @@
 # Web Animation Library (WALI)
 
-An animation library for the modern web, it utilizes the Web Animation API (WAAPI) that's partially where it gets its name from. Inspired by animate plus, and animejs; wali is a JavaScript animation library focusing on performance and ease of use. It aims to deliver butter smooth animation at a small size and weighs less than ## KB (minified and compressed).
+An animation library for the modern web, it utilizes the Web Animation API (WAAPI) that's partially where it gets its name from. Inspired by animate plus, and animejs; wali is a JavaScript animation library focusing on performance and ease of use. It aims to deliver butter smooth animation at a small size and weighs less than 3 KB (minified and compressed).
+
+_Before even getting started, note you will most likely need to polyfill `wali` and if you install this via `npm` you are most likely going to need `rollup`. You can use [web-animations-js](https://github.com/web-animations/web-animations-js), or [polyfill.io](https://polyfill.io/), to create a polyfill.
 
 ## Getting started
 
-`npm install walijs` or `yarn add walijs` and start animating things:
+`npm install walijs`, `yarn add walijs`, or `<script src="https://unpkg.com/">` and start animating things:
 
 ```javascript
-import animate from "walijs";
+import { animate } from "walijs";
 
-let anim = animate({
-    target: "div",
+animate({
+    target: ".div",
     /* NOTE: If you turn this on you have to comment out the transform property. The keyframes property is a different format for animation you cannot you both styles of formatting in the same animation */
     // keyframes: [
     //     { transform: "translateX(0px)" },
@@ -21,9 +23,10 @@ let anim = animate({
     duration(i) {
         return (i + 1) * 500;
     },
-    loop: 2,
-    speed: 0.5,
-    direction: "alternate",
+    loop: 1,
+    speed: 2,
+    fillMode: "both",
+    direction: "normal",
     delay(i) {
         return (i + 1) * 100;
     },
@@ -31,22 +34,11 @@ let anim = animate({
     endDelay(i) {
         return (i + 1) * 100;
     },
-});
-
-anim.then(() => {
-    let info = "Done, it was delayed because of the endDelay property.";
-    document.querySelector(".info").textContent = info;
-    console.log(info);
-});
-
-let progressSpan = document.querySelector(".progress");
-anim.on("change", () => {
-    progressSpan.textContent = `${Math.round(anim.getProgress() * 100)}%`;
-});
-
-let body = document.querySelector("body");
-body.addEventListener("click", () => {
-    (anim.getPlayState() === "running" && anim.pause()) || anim.play();
+}).then((options) => {
+    animate({
+        options,
+        transform: ["translateX(300px)", "translateX(0px)"],
+    });
 });
 ```
 
@@ -71,20 +63,32 @@ animate({
 
 ### easing
 
-| Default | Type   |
-| :------ | :----- |
-| `ease`  | String |
+| Default | Type               |
+| :------ | :----------------- |
+| `ease`  | String \| Function |
 
 Determines the acceleration curve of your animation.
 Base on the easings of [easings.net](https://easings.net)
 
-| constant | accelerate | decelerate  | accelerate-decelerate |
-| :------- | :--------- | :---------- | :-------------------- |
-| linear   | in-cubic   | out-cubic   | in-out-cubic          |
-| ease     | in-quartic | out-quartic | in-out-quartic        |
-|          | in-quintic | out-quintic | in-out-quintic        |
-|          | in-expo    | out-expo    | in-out-expo           |
-|          | in-circ    | out-circ    | in-out-circ           |
+| constant | accelerate | decelerate | accelerate-decelerate |
+| :------- | :--------- | :--------- | :-------------------- |
+| linear   | in-cubic   | out-cubic  | in-out-cubic          |
+| ease     | in-quart   | out-quart  | in-out-quart          |
+|          | in-quint   | out-quint  | in-out-quint          |
+|          | in-expo    | out-expo   | in-out-expo           |
+|          | in-circ    | out-circ   | in-out-circ           |
+|          | in-back    | out-back   | in-out-back           |
+
+You can create your own custom cubic-bezier easing curves. Simislar to css you type `cubic-bezier(...)` with 4 numbers representing the shape of the bezier curve, for example, `cubic-bezier(0.47, 0, 0.745, 0.715)` this is the bezier curve for `in-sine`
+
+```javascript
+// cubic-bezier easing
+animate({
+    target: ".div",
+    easing: "cubic-bezier(0.47, 0, 0.745, 0.715)",
+    transform: ["translate(0px)", "translate(500px)"],
+});
+```
 
 ### duration
 
@@ -99,7 +103,7 @@ and returns a number.
 ```javascript
 // First element fades out in 1s, second element in 2s, etc.
 animate({
-    elements: "span",
+    target: "span",
     easing: "linear",
     duration: (index) => (index + 1) * 1000,
     opacity: [1, 0],
@@ -119,206 +123,278 @@ and returns a number.
 ```javascript
 // First element fades out after 1s, second element after 2s, etc.
 animate({
-    elements: "span",
+    target: "span",
     easing: "linear",
     delay: (index) => (index + 1) * 1000,
     opacity: [1, 0],
 });
 ```
 
+### endDelay
+
+| Default | Type               |
+| :------ | :----------------- |
+| `0`     | Number \| Function |
+
+Similar to delay but it indicates the number of milliseconds to delay after the full animation has played not before.
+
+```javascript
+// First element fades out after 1s, second element after 2s, etc.
+animate({
+    target: "span",
+    easing: "linear",
+    endDelay: (index) => (index + 1) * 1000,
+    opacity: [1, 0],
+});
+```
+
 ### loop
 
-| Default | Type    |
-| :------ | :------ |
-| `false` | Boolean |
+| Default | Type                          |
+| :------ | :---------------------------- |
+| `1`     | Boolean \| Number \| Function |
 
-Determines if the animation should repeat.
+Determines if the animation should repeat, and how many times it should repeat.
+
+### onfinish
+
+| Default                                                      | Type     |
+| :----------------------------------------------------------- | :------- |
+| `(index: number, total: number, element: HTMLElement) => {}` | Function |
+
+Occurs when the animation for one of the elements completes, meaning when animating many elements that finish at different time this will run multiple times.
+
+### autoplay
+
+| Default | Type                |
+| :------ | :------------------ |
+| `true`  | Boolean \| Function |
+
+Determines if should automatically play, immediately after being instantiated.
 
 ### direction
 
-| Default  | Type   |
-| :------- | :----- |
-| `normal` | String |
+| Default  | Type               |
+| :------- | :----------------- |
+| `normal` | String \| Function |
 
 Determines the direction of the animation. `reverse` runs the animation backwards, `alternate`
-switches direction after each iteration if the animation loops.
+switches direction after each iteration if the animation loops. `alternate-reverse` starts the animation at what would be the end of the animation if the direction were `normal` but then when the animation reaches the beginning of the animation it alternates going back to the position it started at.
 
 ### speed
 
-| Default | Type   |
-| :------ | :----- |
-| `1`     | Number |
+| Default | Type               |
+| :------ | :----------------- |
+| `1`     | Number \| Function |
 
 Determines the animation playback rate. Useful in the authoring process to speed up some parts of a
 long sequence (value above 1) or slow down a specific animation to observe it (value below 1).
 
-### optimize
-
-| Default | Type    |
-| :------ | :------ |
-| `false` | Boolean |
-
-Forces hardware acceleration during an animation if set to `true`. Unless you experience performance
-issues, it's recommended to leave it off as hardware acceleration comes with potentially harmful
-side-effects.
-
-### blur
+### fillMode
 
 | Default | Type               |
 | :------ | :----------------- |
-| `null`  | Object \| Function |
+| `auto`  | String \| Function |
 
-Simulates a motion blur effect. Takes an object or a function returning an object that specifies the
-strength of the directional blur on the `x` and `y` axes. A missing axis defaults to `0`, which
-disables the blur on that axis.
+_Be careful when using fillMode, it has some problems when it comes to concurrency of animations read more on [MDN](https://developer.mozilla.org/en-US/docs/Web/API/EffectTiming/fill), if browser support were better I would remove fillMode and use Animation.commitStyles, I'll have to change the way `fillMode` functions later._
 
-```javascript
-animate({
-    elements: "circle",
-    easing: "out-exponential",
-    duration: 2500,
-    loop: true,
-    direction: "alternate",
-    blur: { x: 20, y: 2 },
-    transform: ["translate(0%)", "translate(80%)"],
-});
-```
-
-[Preview this example &#8594;](http://animateplus.com/examples/motion-blur/)
-
-### change
-
-| Default | Type     |
-| :------ | :------- |
-| `null`  | Function |
-
-Defines a callback invoked on every frame of the animation. The callback takes as its argument the
-animation progress (between 0 and 1) and can be used on its own without being tied to `elements`.
-
-```javascript
-// Linearly outputs the percentage increase during 5s
-animate({
-    duration: 5000,
-    easing: "linear",
-    change: (progress) =>
-        (document.body.textContent = `${Math.round(progress * 100)}%`),
-});
-```
+Defines how an element should look after the animation. `none` the animation's effects are only visible while the animation is playing. `forwards` the affected element will continue to be rendered in the state of the final animation frame. `backwards` the animation's effects should be reflected by the element(s) state prior to playing. `both` combining the effects of both forwards and backwards: The animation's effects should be reflected by the element(s) state prior to playing and retained after the animation has completed playing. `auto` if the animation effect fill mode is being applied to is a keyframe effect. "auto" is equivalent to "none". Otherwise, the result is "both". Uou can learn more here on [MDN](https://developer.mozilla.org/en-US/docs/Web/API/EffectTiming/fill).
 
 ## Animations
 
-Animate Plus lets you animate HTML and SVG elements with any property that takes numeric values,
-including hexadecimal colors.
+Wapi lets you animate HTML and SVG elements with any property that takes numeric values, including hexadecimal colors.
 
 ```javascript
 // Animate the radius and fill color of an SVG circle
 animate({
-    elements: "circle",
+    target: "circle",
     r: [0, 50],
     fill: ["#80f", "#fc0"],
 });
 ```
 
-Each property you animate needs an array defining the start and end values. For convenience, you can
-omit everything but the numbers in the end values.
+Each property you animate needs an array defining the start and end values, or an Array of keyframes.
 
 ```javascript
+animate({
+    target: "span",
+    transform: ["translate(0px)", "translate(1000px)"],
+});
+
+// Or
 // Same as ["translate(0px)", "translate(100px)"]
 animate({
-    elements: "span",
-    transform: ["translate(0px)", 100],
+    target: "span",
+    keyframes: [
+        { transform: "translate(0px)" },
+        { transform: "translate(100px)" },
+    ],
 });
 ```
 
-These arrays can optionally be returned by a callback that takes the index of each element, just
-like with [duration](#duration) and [delay](#delay).
+Do note you can only use one of these formats for one animation, and if wapi sees the `keyframes` property, it ignores all other css properties, it will still accept animation properties like `easing`, `duration`, etc...
+
+These arrays can optionally be returned by a callback that takes the index of each element, the total number of elements, and each specific element, just like with other properties.
 
 ```javascript
 // First element translates by 100px, second element by 200px, etc.
 animate({
-    elements: "span",
-    transform: (index) => ["translate(0px)", (index + 1) * 100],
+    target: "span",
+    transform(index) {
+        return ["translate(0px)", `translate(${(index + 1) * 100}px)`];
+    },
+});
+
+// Or
+// Same as above
+animate({
+    target: "span",
+    keyframes(index) {
+        return [
+            { transform: "translate(0px)" },
+            { transform: `translate(${(index + 1) * 100}px)` },
+        ];
+    },
+});
+```
+
+## Methods as Properties
+
+All properties except `target`, with arguments`(index: number, total: number, element: HTMLElement)`. Do note, `keyframes` can also be a method.
+
+```javascript
+/**
+ * @param {number} [index] - index of each element
+ * @param {number} [total] - total number of elements
+ * @param {HTMLElement} [element] - the target element
+ * @returns {any}
+ */
+
+// For example
+animate({
+    target: "span",
+    opacity(index, total, element) {
+        console.log(element);
+        return [0, (index + 1) / total];
+    },
 });
 ```
 
 ## Promise
 
 `animate()` returns a promise which resolves once the animation finishes. The promise resolves to
-the object initially passed to `animate()`, making animation chaining straightforward and
+the options initially passed to `animate()`, making animation chaining straightforward and
 convenient. The [Getting started](#getting-started) section gives you a basic promise example.
 
-Since Animate Plus relies on native promises, you can benefit from all the usual features promises
+Since Wapi relies on native promises, you can benefit from all the usual features promises
 provide, such as `Promise.all`, `Promise.race`, and especially `async/await` which makes animation
 timelines easy to set up.
 
 ```javascript
 const play = async () => {
     const options = await animate({
-        elements: "span",
+        target: "span",
         duration: 3000,
-        transform: ["translateY(-100vh)", 0],
+        transform: ["translateY(-100vh)", "translateY(0vh)"],
     });
 
     await animate({
-        ...options,
-        transform: ["rotate(0turn)", 1],
+        options,
+        transform: ["rotate(0turn)", "rotate(1turn)"],
     });
 
     await animate({
-        ...options,
+        options,
         duration: 800,
-        easing: "in-quintic",
-        transform: ["scale(1)", 0],
+        easing: "in-quint",
+        transform: ["scale(1)", "scale(0)"],
     });
 };
 
 play();
 ```
 
-[Preview this example &#8594;](http://animateplus.com/examples/timeline/)
+## Additional methods
 
-## Additional functions
-
-### stop
+### on, off, once, and emit
 
 Stops the animations on the [elements](#elements) passed as the argument.
 
 ```javascript
-import { stop } from "/animateplus.js";
+import { animate } from "wapijs";
 
-animate({
-    elements: "span",
+let anim = animate({
+    target: "span",
     easing: "linear",
     duration: (index) => 8000 + index * 200,
     loop: true,
-    transform: ["rotate(0deg)", 360],
+    transform: ["rotate(0deg)", "rotate(360deg)"],
 });
 
-document.addEventListener("click", ({ target }) => stop(target));
+// For more info. on what you can do with the Event Emitter go to [https://github.com/okikio/event-emitter], I implemented the `on`, `off`, `emit`, and `once` methods from the Event Emitter on Wapi.
+anim.on("finish", () => {
+    console.log("Finished");
+})
+    .on("change tick", (progress) => {
+        console.log(
+            "Runs every animation frame while the animation is running and not paused."
+        );
+        console.log(`Progress ${progress}%`); // Eg: Progress 10%
+    })
+    .on({
+        play() {
+            console.log("When the animation is played");
+        },
+        pause() {
+            anim.emit("Cool");
+            console.log("When the animation is paused");
+        },
+    });
+
+// Case sensitive
+anim.once("Cool", () => {
+    // Would only run once when the animation is paused, but
+})
+    // because .off removes listeners, it won't
+    .off("Cool");
 ```
 
-[Preview this example &#8594;](http://animateplus.com/examples/stop/)
+### play, pause, and reset
 
-### delay
+They are self explanatory, the `play/pause` methods play/pause animation, while the `reset` method resets the progress of an animation.
 
-Sets a timer in milliseconds. It differentiates from `setTimeout()` by returning a promise and being
-more accurate, consistent and battery-friendly. The [delay](#delay) option relies internally on
-this method.
+### The long list of Get Methods
 
-```javascript
-import { delay } from "/animateplus.js";
+-   `getAnimation(element: HTMLElement)` - Allows you to select a specific animation from an element
+-   `getDuration()` - Returns the total duration of the animation of all elements added together
+-   `getCurrentTime()` - Returns the current time of the animation of all elements
+-   `getProgress()` - Returns the progress of the animation of all elements as a percentage between 0% to 100%.
+-   `getPlayState()` - Returns the current playing state, it can be `"idle" | "running" | "paused" | "finished"`
+-   `getSpeed()` - Return the playback speed of the animation
+-   `getOptions()` - Returns the options that were used to create the animation
 
-delay(500).then((time) => console.log(`${time}ms elapsed`));
-```
+### The almost as long list of Set Methods; these methods are chainable
+
+-   `setCurrentTime(time: number)` - Sets the current time of the animation
+-   `setProgress(percent: number)` - Similar to `setCurrentTime` except it use a number between 0 and 1 to set the current progress of the animation
+-   `setSpeed(speed: number = 1)` - Sets the playback speed of an animation
+
+### then, catch, and finally
+
+They represent the then, catch, and finally methods of a Promise that is resolved when an animation has finished. IT's also what allows the use of the `await/async` keywords for resolving animations.
+
+### toJSON
+
+An alias for `getOptions`
 
 ## Browser support
 
-Animate Plus is provided as a native ES2015 module, which means you may need to transpile it
+Wapi is provided as a native ES2015 module, which means you may need to transpile it
 depending on your browser support policy. The library works as is using `<script type=module>` in
 the following browsers:
 
 -   Chrome 61
--   Safari 11.1
+-   Edge 16
 -   Firefox 60
 
 ## Content delivery networks
@@ -329,12 +405,12 @@ Animate Plus is available on [CDNJS](https://cdnjs.com/libraries/animateplus) an
 import animate from "https://cdn.jsdelivr.net/npm/animateplus@2/animateplus.js";
 
 animate({
-    elements: "div",
+    target: "div",
     transform: ["translate(0%)", 100],
 });
 ```
 
-## Best practices
+## Best practices (from Animate Plus, but they are true for all Animation libraries)
 
 Animations play a major role in the design of good user interfaces. They help connecting actions to
 consequences, make the flow of interactions manifest, and greatly improve the polish and perception
@@ -353,18 +429,3 @@ in the way. Here are a few best practices to keep your animations effective and 
 -   **Restraint**: Tone down your animations and respect user preferences. Animations can rapidly feel
     overwhelming and cause motion sickness, so it's important to keep them subtle and to attenuate
     them even more for users who need reduced motion, for example by using `matchMedia("(prefers-reduced-motion)")` in JavaScript.
-
-## Examples
-
--   [Stress test](http://animateplus.com/examples/stress-test/): 500 elements animated concurrently.
--   [Burst](http://animateplus.com/examples/burst/): Intensive burst animation based on `mousemove`/`touchmove`.
--   [Accordion](http://animateplus.com/examples/accordion/): Animated accordion.
--   [Morphing](http://animateplus.com/examples/clip-path/): CSS polygon morphing using `clip-path`.
--   [Motion path](http://animateplus.com/examples/motion-path/): Animation along a custom path.
--   [Line drawing](http://animateplus.com/examples/line-drawing/): SVG line drawing animation.
--   [Elasticity](http://animateplus.com/examples/elasticity/): SVG circles following your clicks.
--   [External SVG](http://animateplus.com/examples/external-svg/): Animating paths from an external
-    SVG file.
--   [Anchors](http://animateplus.com/examples/anchor-scroll/): Anchor scrolling animation using `change()`.
--   [Progress](http://animateplus.com/examples/progress/): Animation progress using `change()`.
--   [Text](http://animateplus.com/examples/text/): Text splitting animation.

@@ -53,7 +53,7 @@ task("css", () => {
 
 // JS Tasks
 const tsProject = ts.createProject('tsconfig.json');
-task("ts", async () => {
+task("ts", () => {
     return stream(tsProject.src(), {
         pipes: [
             // Compile typescript

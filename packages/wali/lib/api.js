@@ -11,16 +11,23 @@ export const getTargets = (targets) => {
         return Array.from(targets);
     return [];
 };
-// VALUES
-export const computeValue = (value, ...args) => typeof value == "function" ? value(...args) : value;
-export const mapObject = (obj, fn) => {
+export const computeValue = (value, args) => {
+    if (typeof value === "function") {
+        return value(...args);
+    }
+    else {
+        return value;
+    }
+};
+export const mapObject = (obj, args) => {
+    let key, value, result = {};
     let keys = Object.keys(obj);
     for (let i = 0, len = keys.length; i < len; i++) {
-        let key = keys[i];
-        let value = obj[key];
-        obj[key] = fn(value);
+        key = keys[i];
+        value = obj[key];
+        result[key] = computeValue(value, args);
     }
-    return obj;
+    return result;
 };
 // From: [https://easings.net]
 export const easings = {
@@ -74,20 +81,19 @@ export const DefaultAnimationOptions = {
     easing: "ease",
     autoplay: true,
     duration: 1000,
-    fill: "forwards",
+    onfinish() { },
+    fillMode: "auto",
     direction: "normal",
 };
 // You can check it out here: https://codepen.io/okikio/pen/qBbdGaW?editors=0011
-export class Animate extends Promise {
+export class Animate {
     /**
      * Creates an instance of Animate.
      *
      * @param {AnimationOptions} options
      * @memberof Animate
      */
-    constructor(options = {}, finish /* Typescript has some weird bugs, so in order declare a variable
-                   before the super's constructor you have to use it as a parameter */) {
-        super(resolve => { finish = resolve; });
+    constructor(options = {}) {
         /**
          * Stores the options for the current animation
          *
@@ -136,13 +142,9 @@ export class Animate extends Promise {
          * @memberof Animate
          */
         this.emitter = new EventEmitter();
-        this.finish = (...args) => {
-            this.emit("finish", ...args);
-            return finish(...args);
-        };
-        let { animation, ...rest } = options;
+        let { options: animation, ...rest } = options;
         this.options = Object.assign({}, DefaultAnimationOptions, animation, rest);
-        let { loop, delay, speed, easing, endDelay, duration, direction, fill, target, keyframes, autoplay, ...properties } = this.options;
+        let { loop, delay, speed, easing, endDelay, duration, direction, fillMode, onfinish, target, keyframes, autoplay, ...properties } = this.options;
         this.mainElement = document.createElement("span");
         this.targets = getTargets(target);
         this.properties = properties;
@@ -156,17 +158,16 @@ export class Animate extends Promise {
                 endDelay,
                 duration,
                 delay,
-                fill,
+                fill: fillMode,
             };
             // Accept keyframes as the keyframes Object
             animationKeyframe = keyframes.length ?
-                keyframes :
+                computeValue(keyframes, [i, len, target]) :
                 this.properties;
             // Allows the use of functions as the values, for both the keyframes and the animation object
             // It adds the capability of advanced stagger animation, similar to the anime js stagger functions
-            let valueClosure = (value) => computeValue(value, i, len, target);
-            mapObject(animationOptions, valueClosure);
-            mapObject(animationKeyframe, valueClosure);
+            animationOptions = mapObject(animationOptions, [i, len, target]);
+            animationKeyframe = mapObject(animationKeyframe, [i, len, target]);
             // Set the Animate classes duration to be the Animation with the largest totalDuration
             let tempDuration = animationOptions.delay +
                 (animationOptions.duration * animationOptions.iterations) +
@@ -175,6 +176,9 @@ export class Animate extends Promise {
                 this.duration = tempDuration;
             // Add animation to the Animations Set
             let animation = target.animate(animationKeyframe, animationOptions);
+            animation.onfinish = () => {
+                onfinish(i, len, target);
+            };
             this.animations.set(target, animation);
         }
         this.mainAnimation = this.mainElement.animate([
@@ -189,19 +193,62 @@ export class Animate extends Promise {
             this.play();
         else
             this.pause();
+        this.promise = this.newPromise();
         this.mainAnimation.onfinish = () => {
             this.finish(this.options);
             window.cancelAnimationFrame(this.animationFrame);
         };
     }
-    // You can also use Symbol.species in order to
-    // return a Promise for then/catch/finally
-    static get [Symbol.species]() {
-        return Promise;
+    /**
+     * Returns a new Promise that is resolve when this.finish is called
+     *
+     * @protected
+     * @returns {Promise<AnimationOptions>}
+     * @memberof Animate
+     */
+    newPromise() {
+        return new Promise((resolve, reject) => {
+            try {
+                this.finish = (options) => {
+                    this.emit("finish", options);
+                    return resolve(options);
+                };
+            }
+            catch (err) {
+                reject(err);
+            }
+        });
     }
-    // Promise overrides this Symbol.toStringTag
-    get [Symbol.toStringTag]() {
-        return 'MyPromise';
+    /**
+     * Fulfills the this.promise Promise
+     *
+     * @param {(value?: any) => any} [onFulfilled]
+     * @param {(reason?: any) => any} [onRejected]
+     * @returns {Promise<AnimationOptions>}
+     * @memberof Animate
+     */
+    then(onFulfilled, onRejected) {
+        return this.promise.then(onFulfilled, onRejected);
+    }
+    /**
+     * Catches error that occur in the this.promise Promise
+     *
+     * @param {(reason?: any) => any} onRejected
+     * @returns {Promise<AnimationOptions>}
+     * @memberof Animate
+     */
+    catch(onRejected) {
+        return this.promise.catch(onRejected);
+    }
+    /**
+     * If you don't care if the this.promise Promise has either been rejected or resolved
+     *
+     * @param {() => any} onFinally
+     * @returns {Promise<AnimationOptions>}
+     * @memberof Animate
+     */
+    finally(onFinally) {
+        return this.promise.finally(onFinally);
     }
     /**
      * Represents an Animation Frame Loop
@@ -211,7 +258,7 @@ export class Animate extends Promise {
      */
     loop() {
         this.animationFrame = window.requestAnimationFrame(this.loop.bind(this));
-        this.emit("loop change", this.getCurrentTime());
+        this.emit("tick change", this.getCurrentTime());
     }
     /**
      * Adds a listener for a given event
@@ -355,6 +402,15 @@ export class Animate extends Promise {
         return this;
     }
     /**
+     * Return the playback speed of the animation
+     *
+     * @returns {number}
+     * @memberof Animate
+     */
+    getSpeed() {
+        return this.mainAnimation.playbackRate;
+    }
+    /**
      * Set the playback speed of an Animation
      *
      * @param {number} [speed=1]
@@ -375,6 +431,7 @@ export class Animate extends Promise {
      */
     reset() {
         this.setCurrentTime(0);
+        this.promise = this.newPromise();
         if (this.options.autoplay)
             this.play();
         else
@@ -400,7 +457,7 @@ export class Animate extends Promise {
     }
     // Returns the Animate options, as JSON
     toJSON() {
-        return this.options;
+        return this.getOptions();
     }
 }
 // Creates a new Animate instance

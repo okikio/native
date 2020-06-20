@@ -1,6 +1,6 @@
 {
     "name": "walijs",
-    "version": "0.0.0",
+    "version": "1.0.0",
     "description": "An animation library for the modern web which utilizes the Web Animation API (WAAPI) to create butter smooth animation.",
     "cjs": "lib/api.cjs.js",
     "umd": "lib/api.umd.js",
@@ -9,7 +9,7 @@
     "min": "lib/api.min.js",
     "es": "lib/api.es.js",
     "module": "lib/api.es.js",
-    "main": "lib/api.js",
+    "main": "lib/api.cjs.js",
     "source": "src/api.ts",
     "types": "lib/api.d.ts",
     "directories": {
@@ -17,8 +17,9 @@
         "src": "./src"
     },
     "scripts": {
-        "build": "gulp",
-        "release": "gulp && npm publish"
+        "watch": "gulp",
+        "build": "gulp build",
+        "release": "gulp build && npm publish"
     },
     "repository": {
         "type": "git",
