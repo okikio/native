@@ -1,5 +1,5 @@
 /*!
- * walijs v0.0.0
+ * walijs v1.0.0
  * (c) 2020 Okiki Ojo
  * Released under the MIT license
  */
