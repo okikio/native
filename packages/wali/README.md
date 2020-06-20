@@ -405,7 +405,7 @@ the following browsers:
 Wali is available on [unpkg](https://unpkg.com/walijs@latest/lib/api.min.js) and [jsdelivr](https://cdn.jsdelivr.net/npm/walijs@latest/lib/api.min.js), I'll probs add some other later.
 
 ```javascript
-import { animate } from "https://cdn.jsdelivr.net/npm/walijs@1/lib/api.min.js";
+import { animate } from "https://cdn.jsdelivr.net/npm/walijs@1/lib/api.es.js";
 
 animate({
     target: "div",
