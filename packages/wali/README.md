@@ -2,7 +2,7 @@
 
 An animation library for the modern web, it utilizes the Web Animation API (WAAPI) that's partially where it gets its name from. Inspired by animate plus, and animejs; wali is a JavaScript animation library focusing on performance and ease of use. It aims to deliver butter smooth animation at a small size and weighs less than 3 KB (minified and compressed).
 
-_Before even getting started, note you will most likely need to polyfill `wali` and if you install this via `npm` you are most likely going to need `rollup`. You can use [web-animations-js](https://github.com/web-animations/web-animations-js), or [polyfill.io](https://polyfill.io/), to create a polyfill.
+*Before even getting started, note you will most likely need to polyfill `wali` and if you install this via `npm` you are most likely going to need `rollup`. You can use [web-animations-js](https://github.com/web-animations/web-animations-js), or [polyfill.io](https://polyfill.io/), to create a polyfill.*
 
 ## Getting started
 
