@@ -11,6 +11,9 @@ _Before even getting started, note you will most likely need to polyfill `wali` 
 ```javascript
 import { animate } from "walijs";
 
+// Do note, on the web you need to do this, if you installed it via the script tag: 
+// const { animate } = window.walijs;
+
 animate({
     target: ".div",
     /* NOTE: If you turn this on you have to comment out the transform property. The keyframes property is a different format for animation you cannot you both styles of formatting in the same animation */
@@ -402,7 +405,7 @@ the following browsers:
 Wali is available on [unpkg](https://unpkg.com/walijs@latest/lib/api.min.js) and [jsdelivr](https://cdn.jsdelivr.net/npm/walijs@latest/lib/api.min.js), I'll probs add some other later.
 
 ```javascript
-import animate from "https://cdn.jsdelivr.net/npm/walijs@1/lib/api.min.js";
+import { animate } from "https://cdn.jsdelivr.net/npm/walijs@1/lib/api.min.js";
 
 animate({
     target: "div",
