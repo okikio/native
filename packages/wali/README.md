@@ -1,12 +1,12 @@
-# Web Animation Library (WALI)
+# Web Animation Library (wali)
 
 An animation library for the modern web, it utilizes the Web Animation API (WAAPI) that's partially where it gets its name from. Inspired by animate plus, and animejs; wali is a JavaScript animation library focusing on performance and ease of use. It aims to deliver butter smooth animation at a small size and weighs less than 3 KB (minified and compressed).
 
-*Before even getting started, note you will most likely need to polyfill `wali` and if you install this via `npm` you are most likely going to need `rollup`. You can use [web-animations-js](https://github.com/web-animations/web-animations-js), or [polyfill.io](https://polyfill.io/), to create a polyfill.*
+_Before even getting started, note you will most likely need to polyfill `wali` and if you install this via `npm` you are most likely going to need `rollup`. You can use [web-animations-js](https://github.com/web-animations/web-animations-js), or [polyfill.io](https://polyfill.io/), to create a polyfill._
 
 ## Getting started
 
-`npm install walijs`, `yarn add walijs`, or `<script src="https://unpkg.com/">` and start animating things:
+`npm install walijs`, `yarn add walijs`, or `<script src="https://unpkg.com/walijs@latest/lib/api.min.js"></script>` and start animating things:
 
 ```javascript
 import { animate } from "walijs";
@@ -390,7 +390,7 @@ An alias for `getOptions`
 ## Browser support
 
 Wapi is provided as a native ES2015 module, which means you may need to transpile it
-depending on your browser support policy. The library works as is using `<script type=module>` in
+depending on your browser support policy. The library works as is using `<script type="module">` in
 the following browsers:
 
 -   Chrome 61
@@ -399,10 +399,10 @@ the following browsers:
 
 ## Content delivery networks
 
-Animate Plus is available on [CDNJS](https://cdnjs.com/libraries/animateplus) and [jsDelivr](https://www.jsdelivr.com/package/npm/animateplus).
+Wali is available on [unpkg](https://unpkg.com/walijs@latest/lib/api.min.js) and [jsdelivr](https://cdn.jsdelivr.net/npm/walijs@latest/lib/api.min.js), I'll probs add some other later.
 
 ```javascript
-import animate from "https://cdn.jsdelivr.net/npm/animateplus@2/animateplus.js";
+import animate from "https://cdn.jsdelivr.net/npm/walijs@1/lib/api.min.js";
 
 animate({
     target: "div",
