@@ -49,11 +49,11 @@ animate({
 
 ## Options
 
-### elements
+### target
 
-| Default | Type                                                                   |
-| :------ | :--------------------------------------------------------------------- |
-| `null`  | string \| Node \| NodeList \| HTMLCollection \| HTMLElement[] \| any[] |
+| Default | Type                                                                     |
+| :------ | :----------------------------------------------------------------------- |
+| `null`  | string \| Node \| NodeList \| HTMLCollection \| HTMLElement[] \| Array[] |
 
 Determines the DOM elements to animate. You can either pass it a CSS selector or DOM elements.
 
@@ -173,7 +173,7 @@ Occurs when the animation for one of the elements completes, meaning when animat
 | :------ | :------------------ |
 | `true`  | Boolean \| Function |
 
-Determines if should automatically play, immediately after being instantiated.
+Determines if it should automatically play, immediately after being instantiated.
 
 ### direction
 
@@ -235,7 +235,7 @@ animate({
 });
 ```
 
-Do note you can only use one of these formats for one animation, and if wapi sees the `keyframes` property, it ignores all other css properties, it will still accept animation properties like `easing`, `duration`, etc...
+Do note you can only use one of these formats for an animation, and if wapi sees the `keyframes` property, it ignores all other css properties, it will still accept animation properties like `easing`, `duration`, etc...
 
 These arrays can optionally be returned by a callback that takes the index of each element, the total number of elements, and each specific element, just like with other properties.
 
@@ -263,7 +263,7 @@ animate({
 
 ## Methods as Properties
 
-All properties except `target`, with arguments`(index: number, total: number, element: HTMLElement)`. Do note, `keyframes` can also be a method.
+All properties except `target` can be represented by a method with the arguments`(index: number, total: number, element: HTMLElement)`. Do note, `keyframes` can also be a method.
 
 ```javascript
 /**
@@ -334,7 +334,8 @@ let anim = animate({
     transform: ["rotate(0deg)", "rotate(360deg)"],
 });
 
-// For more info. on what you can do with the Event Emitter go to [https://github.com/okikio/event-emitter], I implemented the `on`, `off`, `emit`, and `once` methods from the Event Emitter on Wapi.
+// For more info. on what you can do with the Event Emitter go to [https://github.com/okikio/event-emitter],
+// I implemented the `on`, `off`, `emit`, and `once` methods from the Event Emitter on Wapi.
 anim.on("finish", () => {
     console.log("Finished");
 })
@@ -384,7 +385,7 @@ They are self explanatory, the `play/pause` methods play/pause animation, while 
 
 ### then, catch, and finally
 
-They represent the then, catch, and finally methods of a Promise that is resolved when an animation has finished. IT's also what allows the use of the `await/async` keywords for resolving animations.
+They represent the then, catch, and finally methods of a Promise that is resolved when an animation has finished. It's also what allows the use of the `await/async` keywords for resolving animations.
 
 ### toJSON
 
@@ -392,8 +393,8 @@ An alias for `getOptions`
 
 ## Browser support
 
-Wapi is provided as a native ES2015 module, which means you may need to transpile it
-depending on your browser support policy. The library works as is using `<script type="module">` in
+Wapi is provided as a native ES6 module, which means you may need to transpile it
+depending on your browser support policy. The library works using `<script type="module">` in
 the following browsers:
 
 -   Chrome 61
@@ -402,9 +403,16 @@ the following browsers:
 
 ## Content delivery networks
 
-Wali is available on [unpkg](https://unpkg.com/walijs@latest/lib/api.es.js) and [jsdelivr](https://cdn.jsdelivr.net/npm/walijs@latest/lib/api.es.js), I'll probs add some other later.
+Wali is available on [unpkg](https://unpkg.com/walijs@latest/lib/api.min.js) and [jsdelivr](https://cdn.jsdelivr.net/npm/walijs@latest/lib/api.min.js), I'll probs add some other later.
 
 ```javascript
+// Notice the .es.js file name extension, that represents ES Modules
+// There is also, 
+//      .min.js - Minified UMD Module
+//      .umd.js - Normal UMD Module
+//      .cjs.js - CommonJS Module
+// and
+//      .js - The Fresh JS, it's still using ES Modules but with the expectation of a node.js enviroment
 import { animate } from "https://cdn.jsdelivr.net/npm/walijs@latest/lib/api.es.js";
 
 animate({
