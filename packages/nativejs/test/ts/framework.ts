@@ -1,9 +1,7 @@
-
-import PJAX from "./pjax.js";
-import { App, _URL } from "./api.js";
 import { InViewBlockIntent } from "./blocks.js";
-import { Splashscreen, IntroAnimation } from "./services.js";
+import { PJAX, App, _URL } from "../../lib/core.js";
 import { getTheme, setTheme, mediaTheme } from "./theme.js";
+import { Splashscreen, IntroAnimation } from "./services.js";
 import { Fade, Slide, SlideLeft, SlideRight, BigTransition } from "./transitions.js";
 
 const html = document.querySelector("html");
@@ -73,7 +71,7 @@ app
     }
 
     app.on({
-        "ready": navbarLinks,
-        "go": navbarLinks
+        "READY": navbarLinks,
+        "GO": navbarLinks
     });
 })();

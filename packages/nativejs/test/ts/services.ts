@@ -1,4 +1,5 @@
-import { Service, animate } from "./api.js";
+import { Service } from "../../lib/core.js";
+import { animate } from "walijs";
 
 //== Services
 export class Splashscreen extends Service {

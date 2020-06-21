@@ -5,7 +5,6 @@ import { _URL } from "./url.js";
 
 export type LinkEvent = MouseEvent | TouchEvent;
 export type StateEvent = LinkEvent | PopStateEvent;
-
 export type IgnoreURLsList = Array<RegExp | string>;
 
 /**
@@ -16,9 +15,9 @@ export type IgnoreURLsList = Array<RegExp | string>;
  * @extends {Service}
  */
 // Based on Barba JS and StartingBlocks
-export default class PJAX extends Service {
+export class PJAX extends Service {
     /**
-     * URL's to ignore when prefetching
+     * URLs to ignore when prefetching
      *
      * @private
      * @type boolean
@@ -213,7 +212,7 @@ export default class PJAX extends Service {
         }
 
         let href = this.getHref(el);
-        this.EventEmitter.emit("anchor--click click", event);
+        this.EventEmitter.emit("ANCHOR-CLICK CLICK", event);
         this.go({ href, trigger: el, event });
     }
 
@@ -277,7 +276,7 @@ export default class PJAX extends Service {
 
         let transitionName: string;
         if (event && (event as PopStateEvent).state) {
-            this.EventEmitter.emit("popstate", event);
+            this.EventEmitter.emit("POPSTATE", event);
 
             // If popstate, get back/forward direction.
             let { state }: { state: IState } = event as PopStateEvent;
@@ -301,10 +300,10 @@ export default class PJAX extends Service {
             // Based on the direction of the state change either remove or add a state
             if (trigger === "back") {
                 this.HistoryManager.delete(currentIndex);
-                this.EventEmitter.emit(`popstate--back`, event);
+                this.EventEmitter.emit(`POPSTATE-BACK`, event);
             } else if (trigger === "forward") {
                 this.HistoryManager.addState({ url, transition, data });
-                this.EventEmitter.emit(`popstate--forward`, event);
+                this.EventEmitter.emit(`POPSTATE-FORWARD`, event);
             }
         } else {
             // Add new state
@@ -333,7 +332,7 @@ export default class PJAX extends Service {
 
             this.HistoryManager.add(state);
             this.changeState("push", state);
-            this.EventEmitter.emit("hstory--new-item", event);
+            this.EventEmitter.emit("HISTORY-NEW-ITEM", event);
         }
 
         if (event) {
@@ -341,7 +340,7 @@ export default class PJAX extends Service {
             event.preventDefault();
         }
 
-        this.EventEmitter.emit("go", event);
+        this.EventEmitter.emit("GO", event);
         return this.load({ oldHref: currentURL.getPathname(), href, trigger, transitionName });
     }
 
@@ -385,22 +384,22 @@ export default class PJAX extends Service {
             let oldPage = this.PageManager.get(oldHref);
             let newPage: Page;
 
-            this.EventEmitter.emit("page--loading", { href, oldPage, trigger });
+            this.EventEmitter.emit("PAGE-LOADING", { href, oldPage, trigger });
             try {
                 try {
                     newPage = await this.PageManager.load(href);
                     this.transitionStart();
-                    this.EventEmitter.emit("page--loading-complete", { newPage, oldPage, trigger });
+                    this.EventEmitter.emit("PAGE-LOAD-COMPLETE", { newPage, oldPage, trigger });
                 } catch (err) {
-                    throw `Page loading failed, ${err}`;
+                    throw `[PJAX] Page load error: ${err}`;
                 }
 
                 // --
                 // --
 
-                this.EventEmitter.emit("transition--before", { oldPage, newPage, trigger, transitionName });
+                this.EventEmitter.emit("NAVIGATION-START", { oldPage, newPage, trigger, transitionName });
                 try {
-                    this.EventEmitter.emit("transition--start", transitionName);
+                    this.EventEmitter.emit("TRANSITION-START", transitionName);
                     let transition = await this.TransitionManager.boot({
                         name: transitionName,
                         oldPage,
@@ -408,16 +407,16 @@ export default class PJAX extends Service {
                         trigger
                     });
 
-                    this.EventEmitter.emit("transition--end", { transition });
+                    this.EventEmitter.emit("TRANSITION-END", { transition });
                 } catch (err) {
-                    throw err;
+                    throw `[PJAX] Transition error: ${err}`;
                 }
 
-                this.EventEmitter.emit("transition--after", { oldPage, newPage, trigger, transitionName });
+                this.EventEmitter.emit("NAVIGATION-END", { oldPage, newPage, trigger, transitionName });
                 this.hashAction();
             } catch (err) {
                 this.transitionStop();
-                throw `Transition Error ${err}`;
+                throw err;
             }
 
             this.transitionStop(); // Sets isTransitioning to false
@@ -466,7 +465,7 @@ export default class PJAX extends Service {
     }
 
     /**
-     * When you hover over an anchor, prefech the event target's href
+     * When you hover over an anchor, prefetch the event target's href
      *
      * @param {LinkEvent} event
      * @memberof PJAX
@@ -480,13 +479,13 @@ export default class PJAX extends Service {
         // If Url is ignored or already in cache, don't do any think
         if (this.ignoredURL(url) || this.PageManager.has(urlString)) return;
 
-        this.EventEmitter.emit("anchor--hover hover", event);
+        this.EventEmitter.emit("ANCHOR-HOVER HOVER", event);
 
         (async () => {
             try {
                 await this.PageManager.load(url);
             } catch (err) {
-                console.warn("Prefetch Error", err);
+                console.warn("[PJAX] Prefetch error: ", err);
             }
         })();
     }

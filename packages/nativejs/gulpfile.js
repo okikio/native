@@ -2,19 +2,18 @@
 const { nodeResolve } = require("@rollup/plugin-node-resolve");
 const { terser } = require("rollup-plugin-terser");
 const { init, write } = require("gulp-sourcemaps");
-const autoprefixer = require("autoprefixer");
-const postcss = require("gulp-postcss");
 const ts = require("gulp-typescript");
 const { rollup } = require("rollup");
 const bs = require("browser-sync");
+const size = require("gulp-size");
 const sass = require("gulp-sass");
 const swig = require("gulp-swig");
 
 // Gulp utilities
-const { stream, task, parallelFn, watch, tasks, parallel, series } = require('./util');
+const { stream, task, parallelFn, watch, tasks, parallel, series, seriesFn } = require('./util');
 
 // Origin folders (source and destination folders)
-const srcFolder = `src`;
+const srcFolder = `test`;
 const destFolder = `docs`;
 
 // Source file folders
@@ -46,11 +45,6 @@ tasks([
             pipes: [
                 // Minify scss to css
                 sass({ outputStyle: "compressed" }).on("error", logError),
-                postcss([
-                    // ...
-                    autoprefixer,
-                    // ...
-                ]),
             ],
             dest: cssFolder,
             end: [browserSync.stream()],
@@ -73,52 +67,135 @@ tasks([
 
 // JS Tasks
 const tsProject = ts.createProject('tsconfig.json');
-task("js", () => {
-    return stream(tsProject.src(), {
+task("lib", () => {
+    return stream(`src/*.ts`, {
         pipes: [
             // Sourcemaps Initialize
-            // init(),
+            init(),
 
             // Compile typescript
             tsProject(),
 
             // Sourcemaps Write
-            // write('ts'),
+            write('ts'),
+        ],
+        dest: "lib"
+    });
+});
+
+task("js", () => {
+    return stream(`${tsFolder}/*.ts`, {
+        pipes: [
+            // Sourcemaps Initialize
+            init(),
+
+            // Compile typescript
+            tsProject(),
+
+            // Sourcemaps Write
+            write('ts'),
         ],
         dest: jsFolder
     });
 });
 
-task("web-js", async () => {
-    const bun = await rollup({
-        input: `${jsFolder}/modules.js`,
-        treeshake: true,
-        plugins: [
-            ts(),
-            nodeResolve(), // Bundle all Modules
-        ]
-    });
+const date = new Date();
+const { name, version, min, cjs, umd, es } = require("./package.json");
+const banner = `/*!
+ * ${name} v${version}
+ * (c) ${date.getFullYear()} Okiki Ojo
+ * Released under the MIT license
+ */
+`;
+tasks([
+    ["rollup-lib", async () => {
+        const bun = await rollup({
+            input: `lib/core.js`,
+            treeshake: true,
+            plugins: [
+                ts(),
+                nodeResolve(), // Bundle all Modules
+            ]
+        });
 
-    return await bun.write({
-        format: 'es',
-        file: `${jsFolder}/modules.js`,
-        // plugins: [
-        //     terser({
-        //         output: {
-        //             comments: "some"
-        //         }
-        //     })
-        // ]
-    });
-});
+        bun.write({
+            banner,
+            format: 'es',
+            file: es
+        });
+
+        bun.write({
+            banner,
+            format: 'cjs',
+            file: cjs
+        });
+
+        bun.write({
+            banner,
+            file: umd,
+            format: 'umd',
+            name
+        });
+
+        return await bun.write({
+            banner,
+            name,
+            format: 'umd',
+            file: min,
+            plugins: [
+                terser({
+                    output: {
+                        comments: "some"
+                    }
+                })
+            ]
+        });
+    }],
+
+    ["rollup-js", async () => {
+        const bun = await rollup({
+            input: `${jsFolder}/framework.js`,
+            treeshake: true,
+            plugins: [
+                ts(),
+                nodeResolve({
+                    dedupe: ['@okikio/event-emitter', 'managerjs', 'walijs']
+                }), // Bundle all Modules
+            ]
+        });
+
+        return await bun.write({
+            format: 'es',
+            file: `${jsFolder}/framework.js`,
+            plugins: [
+                terser({
+                    output: {
+                        comments: "some"
+                    }
+                })
+            ]
+        });
+    }],
+
+    ["info", () => {
+        return stream(min, {
+            pipes: [
+                size({ gzip: true })
+            ],
+            dest: "lib"
+        })
+    }],
+
+    ["build-js", seriesFn("lib", "rollup-lib", "info", "js", "rollup-js")]
+]);
 
 
 // Build & Watch Tasks
 const browserSync = bs.create();
-task("build", parallel("html", "css", series("js", "web-js")));
+task("build", parallel("html", "css", "build-js"));
 task("watch", () => {
     browserSync.init(
-        { server: `./${destFolder}` },
+        { server: [`./${destFolder}`, `./lib`, `./src`] },
         (_err, bs) => {
             bs.addMiddleware("*", (_req, res) => {
                 res.writeHead(302, {
@@ -132,10 +209,11 @@ task("watch", () => {
 
     watch(`${swigFolder}/**/*.html`, series("html"));
 
-    watch([`${sassFolder}/blocks/*.scss`, `${sassFolder}/*.scss`], series("app-css"));
+    watch(`${sassFolder}/*.scss`, series("app-css"));
     watch(`${sassFolder}/base/*.scss`, series("base-css"));
 
-    watch(`${tsFolder}/*.ts`, series("js", "web-js"));
+    watch(`src/*.ts`, series("build-js"));
+    watch(`${tsFolder}/*.ts`, series("js", "rollup-js"));
     watch(`${jsFolder}/*.js`).on('change', browserSync.reload);
 });
 

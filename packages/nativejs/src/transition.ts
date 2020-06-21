@@ -174,13 +174,13 @@ export class Transition extends ManagerItem {
      * @returns Promise<Transition>
      * @memberof Transition
      */
-    public async start(EventEmiiter: EventEmitter): Promise<Transition> {
+    public async start(EventEmitter: EventEmitter): Promise<Transition> {
         let fromWrapper = this.oldPage.getWrapper();
         let toWrapper = this.newPage.getWrapper();
         document.title = this.newPage.getTitle();
 
         return new Promise(async finish => {
-            EventEmiiter.emit("BEFORE_TRANSITION_OUT");
+            EventEmitter.emit("BEFORE-TRANSITION-OUT");
             await new Promise(done => {
                 let outMethod: Promise<any> = this.out({
                     from: this.oldPage,
@@ -192,7 +192,7 @@ export class Transition extends ManagerItem {
                     outMethod.then(done);
             });
 
-            EventEmiiter.emit("AFTER_TRANSITION_OUT");
+            EventEmitter.emit("AFTER-TRANSITION-OUT");
 
             await new Promise(done => {
                 fromWrapper.insertAdjacentElement('beforebegin', toWrapper);
@@ -200,7 +200,7 @@ export class Transition extends ManagerItem {
                 done();
             });
 
-            EventEmiiter.emit("BEFORE_TRANSITION_IN");
+            EventEmitter.emit("BEFORE-TRANSITION-IN");
 
             await new Promise(done => {
                 let inMethod: Promise<any> = this.in({
@@ -214,7 +214,7 @@ export class Transition extends ManagerItem {
                     inMethod.then(done);
             });
 
-            EventEmiiter.emit("AFTER_TRANSITION_IN");
+            EventEmitter.emit("AFTER_TRANSITION_IN");
             finish();
         });
     }

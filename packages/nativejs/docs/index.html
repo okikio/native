@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="en" theme="light">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+     <title>Home page</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Latest compiled and minified CSS -->
+    
+    <link rel="stylesheet" href="./css/base.css">
+    <link rel="stylesheet" href="./css/app.css">
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0/css/bootstrap.min.css"
+          integrity="sha256-LA89z+k9fjgMKQ/kq4OO2Mrf8VltYml/VES+Rg0fh20="
+          crossorigin="anonymous"/>
+</head>
+<body class="home-page bg-dark text-white">
+    <div id="splashscreen">
+        <div class="splashscreen-inner">
+            <div class="spinner">
+                <svg viewBox="0 0 66 66" xmlns="http://www.w3.org/2000/svg">
+                    <circle class="length" fill="none" stroke-width="8" stroke-linecap="round" cx="33" cy="33" r="28"></circle>
+                </svg>
+                <svg viewBox="0 0 66 66" xmlns="http://www.w3.org/2000/svg">
+                    <circle fill="none" stroke-width="8" stroke-linecap="round" cx="33" cy="33" r="28"></circle>
+                </svg>
+                <svg viewBox="0 0 66 66" xmlns="http://www.w3.org/2000/svg">
+                    <circle fill="none" stroke-width="8" stroke-linecap="round" cx="33" cy="33" r="28"></circle>
+                </svg>
+                <svg viewBox="0 0 66 66" xmlns="http://www.w3.org/2000/svg">
+                    <circle fill="none" stroke-width="8" stroke-linecap="round" cx="33" cy="33" r="28"></circle>
+                </svg>
+            </div>
+        </div>
+        <div class="splashscreen-bg"></div>
+    </div>
+
+    <div id="big-transition">
+        <div class="spinner">
+            <svg viewBox="0 0 66 66" xmlns="http://www.w3.org/2000/svg">
+                <circle class="length" fill="none" stroke-width="8" stroke-linecap="round" cx="33" cy="33" r="28"></circle>
+            </svg>
+            <svg viewBox="0 0 66 66" xmlns="http://www.w3.org/2000/svg">
+                <circle fill="none" stroke-width="8" stroke-linecap="round" cx="33" cy="33" r="28"></circle>
+            </svg>
+            <svg viewBox="0 0 66 66" xmlns="http://www.w3.org/2000/svg">
+                <circle fill="none" stroke-width="8" stroke-linecap="round" cx="33" cy="33" r="28"></circle>
+            </svg>
+            <svg viewBox="0 0 66 66" xmlns="http://www.w3.org/2000/svg">
+                <circle fill="none" stroke-width="8" stroke-linecap="round" cx="33" cy="33" r="28"></circle>
+            </svg>
+        </div>
+        <div id="big-transition-horizontal">
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+        </div>
+    </div>
+    <nav id="main-nav" class="navbar navbar-expand-md fixed-top navbar-light bg-light">
+    <a class="navbar-brand" href="./index.html">Starting Blocks
+        <small>v4</small>
+    </a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item"><a href="./index.html" class="nav-link active" data-transition="default">Homepage</a></li>
+            <li class="nav-item"><a href="./about.html" class="nav-link" data-transition="slide-left">About</a></li>
+            <li class="nav-item"><a href="./other.html" class="nav-link" data-transition="big">Other</a></li>
+        </ul>
+    </div>
+</nav>
+    
+    <main data-wrapper id="home-page" role="main" id="sb-wrapper">
+        <div id="page-home-page"
+            class="page-content page-content-ajax"
+            data-node-name="home-page"
+            data-is-home="1"
+            data-node-type="HomePage"
+            data-meta-title="Home page">
+            <div class="container">
+                <div class="row">
+                    <div class="col">
+                        <div class="jumbotron jumbotron-fluid my-3 px-1 px-4 px-0 bg-red-500 radius-lg box-shadow text-dark" data-block="IntroBlock">
+                            <div class="container theme-bg-primary">
+                                <h1 class="font-sz-5xl font-sans bg-red-400 font-100">Home page</h1>
+                                <p class="lead">Dynamic blocks example.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col">
+                        <div class="my-3 p-3 bg-white rounded box-shadow  text-dark" data-block="IntroBlock">
+                            <div class="row">
+                                <div class="col-sm-3 mb-3">
+                                    <nav id="in-page-nav" class="nav nav-pills flex-column" role="tablist" aria-orientation="vertical">
+                                        <a href="./index.html" class="nav-link active">Link to homepage</a>
+                                        <a href="./about.html" class="nav-link">Link to the about page</a>
+                                        <a href="#5-image" class="nav-link">Link to fifth image</a>
+                                    </nav>
+                                </div>
+                                <div class="col-sm-9">
+                                    <p>Vivamus dolor massa, aliquet ut leo vel, sodales mattis tortor. Aenean at mauris et ex mollis fringilla.
+                                        Sed volutpat viverra vehicula. Nullam maximus ligula ac nisl aliquam commodo. Donec sed vestibulum orci.
+                                        Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Proin ut porttitor
+                                        lorem, sit amet aliquet dui. Nunc dictum, lorem vitae elementum pharetra, sapien orci dignissim ligula,
+                                        aliquam interdum erat urna a nibh. Morbi quis tellus maximus, pellentesque erat ac, porttitor nulla.
+                                        Curabitur rhoncus urna non magna mattis aliquet. Vestibulum non lobortis turpis. Nunc aliquet velit a
+                                        magna dictum pulvinar vitae laoreet tortor. Duis auctor iaculis arcu ac rutrum. Suspendisse vel odio
+                                        risus.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-6" data-block="IntroBlock">
+                        <div id="inview-00"
+                            data-direction="left"
+                            data-node-type="InViewBlock" data-block="InViewBlock"
+                            class="card my-3 border-light rounded box-shadow page-block ">
+                            <img loading="lazy" id="first-image"
+                                width="747"
+                                class="card-img-top img-fluid"
+                                src="https://images.unsplash.com/photo-1589646609975-cb53c8e5b37a?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=747&q=80"
+                                alt="Normal img">
+                            <div class="card-body text-dark">
+                                <p class="card-text">Normal image.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6" data-block="IntroBlock">
+                        <div id="inview-01"
+                            data-direction="right"
+                            data-node-type="InViewBlock" data-block="InViewBlock"
+                            class="card my-3 border-light rounded box-shadow page-block ">
+                            <picture>
+                                <source data-srcset="/img/test2.webp" type="image/webp" />
+                                <img loading="lazy" class="card-img-top img-fluid lazyload"
+                                    id="snd-image1"
+                                    width="747" loading="lazy"
+                                    src="https://images.unsplash.com/photo-1570506020466-17c74d2f4590?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1500&q=80"
+                                    alt="Lazyloaded img">
+                            </picture>
+                            <div class="card-body text-dark">
+                                <p class="card-text">Lazyloaded picture with webp (for chrome).</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col">
+                        <div class="my-3 p-3">
+                            <div class="row">
+                                <div class="col-sm-6" data-block="IntroBlock">
+                                    <p>Vivamus dolor massa, aliquet ut leo vel, sodales mattis tortor. Aenean at mauris et ex mollis
+                                        fringilla. Sed volutpat viverra vehicula. Nullam maximus ligula ac nisl aliquam commodo. Donec sed
+                                        vestibulum orci. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus
+                                        mus. Proin ut porttitor lorem, sit amet aliquet dui. Nunc dictum, lorem vitae elementum pharetra,
+                                        sapien orci dignissim ligula, aliquam interdum erat urna a nibh. Morbi quis tellus maximus,
+                                        pellentesque erat ac, porttitor nulla. Curabitur rhoncus urna non magna mattis aliquet. Vestibulum
+                                        non lobortis turpis. Nunc aliquet velit a magna dictum pulvinar vitae laoreet tortor. Duis auctor
+                                        iaculis arcu ac rutrum. Suspendisse vel odio risus.</p>
+                                </div>
+                                <div class="col-sm-6" data-block="IntroBlock">
+                                    <p>Vivamus dolor massa, aliquet ut leo vel, sodales mattis tortor. Aenean at mauris et ex mollis
+                                        fringilla. Sed volutpat viverra vehicula. Nullam maximus ligula ac nisl aliquam commodo. Donec sed
+                                        vestibulum orci. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus
+                                        mus. Proin ut porttitor lorem, sit amet aliquet dui. Nunc dictum, lorem vitae elementum pharetra,
+                                        sapien orci dignissim ligula, aliquam interdum erat urna a nibh. Morbi quis tellus maximus,
+                                        pellentesque erat ac, porttitor nulla. Curabitur rhoncus urna non magna mattis aliquet. Vestibulum
+                                        non lobortis turpis. Nunc aliquet velit a magna dictum pulvinar vitae laoreet tortor. Duis auctor
+                                        iaculis arcu ac rutrum. Suspendisse vel odio risus.</p>
+                                </div>
+                                <div class="col-sm-12">
+                                    <div class="page-block" data-block="IntroBlock" data-node-type="DefaultBlock" id="block-1">
+                                        <p>Vivamus dolor massa, aliquet ut leo vel, sodales mattis tortor. Aenean at mauris et ex mollis
+                                            fringilla. Sed volutpat viverra vehicula. Nullam maximus ligula ac nisl aliquam commodo. Donec sed
+                                            vestibulum orci. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus
+                                            mus. Proin ut porttitor lorem, sit amet aliquet dui. Nunc dictum, lorem vitae elementum pharetra,
+                                            sapien orci dignissim ligula, aliquam interdum erat urna a nibh. Morbi quis tellus maximus,
+                                            pellentesque erat ac, porttitor nulla. Curabitur rhoncus urna non magna mattis aliquet. Vestibulum
+                                            non lobortis turpis. Nunc aliquet velit a magna dictum pulvinar vitae laoreet tortor. Duis auctor
+                                            iaculis arcu ac rutrum. Suspendisse vel odio risus.</p>
+                                    </div>
+                                    <div class="page-block" data-node-type="DefaultBlock" id="block-2">
+                                        <p>Vivamus dolor massa, aliquet ut leo vel, sodales mattis tortor. Aenean at mauris et ex mollis
+                                            fringilla. Sed volutpat viverra vehicula. Nullam maximus ligula ac nisl aliquam commodo. Donec sed
+                                            vestibulum orci. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus
+                                            mus. Proin ut porttitor lorem, sit amet aliquet dui. Nunc dictum, lorem vitae elementum pharetra,
+                                            sapien orci dignissim ligula, aliquam interdum erat urna a nibh. Morbi quis tellus maximus,
+                                            pellentesque erat ac, porttitor nulla. Curabitur rhoncus urna non magna mattis aliquet. Vestibulum
+                                            non lobortis turpis. Nunc aliquet velit a magna dictum pulvinar vitae laoreet tortor. Duis auctor
+                                            iaculis arcu ac rutrum. Suspendisse vel odio risus.</p>
+                                        <p>Cras mattis consectetur purus sit amet fermentum. Nulla vitae elit libero, a pharetra augue. Sed
+                                            posuere consectetur est at lobortis. Aenean eu leo quam. Pellentesque ornare sem lacinia quam
+                                            venenatis vestibulum. Vestibulum id ligula porta felis euismod semper. Praesent commodo cursus
+                                            magna, vel scelerisque nisl consectetur et.</p>
+                                        <p>Etiam porta sem malesuada magna mollis euismod. Cum sociis natoque penatibus et magnis dis parturient
+                                            montes, nascetur ridiculus mus. Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor
+                                            auctor. Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem nec
+                                            elit. Integer posuere erat a ante venenatis dapibus posuere velit aliquet. Cras justo odio, dapibus
+                                            ac facilisis in, egestas eget quam.
+
+                                            Donec ullamcorper nulla non metus auctor fringilla. Sed posuere consectetur est at lobortis. Etiam
+                                            porta sem malesuada magna mollis euismod. Donec sed odio dui. Donec id elit non mi porta gravida at
+                                            eget metus. Cras mattis consectetur purus sit amet fermentum.</p>
+
+                                        <p data-block="IntroBlock"><img loading="lazy" class="lazyload img-fluid"
+                                                id="snd-image"
+                                                width="700"
+                                                src="https://images.unsplash.com/photo-1590510325281-54a9164cf0f4?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1502&q=80"
+                                                data-src="/img/test2.jpg"
+                                                alt="Lazyloaded img"></p>
+                                        <p>Vivamus dolor massa, aliquet ut leo vel, sodales mattis tortor. Aenean at mauris et ex mollis
+                                            fringilla. Sed volutpat viverra vehicula. Nullam maximus ligula ac nisl aliquam commodo. Donec sed
+                                            vestibulum orci. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus
+                                            mus. Proin ut porttitor lorem, sit amet aliquet dui. Nunc dictum, lorem vitae elementum pharetra,
+                                            sapien orci dignissim ligula, aliquam interdum erat urna a nibh. Morbi quis tellus maximus,
+                                            pellentesque erat ac, porttitor nulla. Curabitur rhoncus urna non magna mattis aliquet. Vestibulum
+                                            non lobortis turpis. Nunc aliquet velit a magna dictum pulvinar vitae laoreet tortor. Duis auctor
+                                            iaculis arcu ac rutrum. Suspendisse vel odio risus.</p>
+                                        <p>Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Vivamus
+                                            sagittis lacus vel augue laoreet rutrum faucibus dolor auctor. Integer posuere erat a ante venenatis
+                                            dapibus posuere velit aliquet. Curabitur blandit tempus porttitor.
+
+                                            Cras mattis consectetur purus sit amet fermentum. Vestibulum id ligula porta felis euismod semper.
+                                            Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Nulla vitae elit libero, a
+                                            pharetra augue. Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio
+                                            sem nec elit.
+
+                                            Cras justo odio, dapibus ac facilisis in, egestas eget quam. Nulla vitae elit libero, a pharetra
+                                            augue. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Praesent commodo cursus magna,
+                                            vel scelerisque nisl consectetur et.</p>
+                                        <p>Vivamus dolor massa, aliquet ut leo vel, sodales mattis tortor. Aenean at mauris et ex mollis
+                                            fringilla. Sed volutpat viverra vehicula. Nullam maximus ligula ac nisl aliquam commodo. Donec sed
+                                            vestibulum orci. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus
+                                            mus. Proin ut porttitor lorem, sit amet aliquet dui. Nunc dictum, lorem vitae elementum pharetra,
+                                            sapien orci dignissim ligula, aliquam interdum erat urna a nibh. Morbi quis tellus maximus,
+                                            pellentesque erat ac, porttitor nulla. Curabitur rhoncus urna non magna mattis aliquet. Vestibulum
+                                            non lobortis turpis. Nunc aliquet velit a magna dictum pulvinar vitae laoreet tortor. Duis auctor
+                                            iaculis arcu ac rutrum. Suspendisse vel odio risus.</p>
+                                        <p>Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Vivamus
+                                            sagittis lacus vel augue laoreet rutrum faucibus dolor auctor. Integer posuere erat a ante venenatis
+                                            dapibus posuere velit aliquet. Curabitur blandit tempus porttitor.
+
+                                            Cras mattis consectetur purus sit amet fermentum. Vestibulum id ligula porta felis euismod semper.
+                                            Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Nulla vitae elit libero, a
+                                            pharetra augue. Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio
+                                            sem nec elit.
+
+                                            Cras justo odio, dapibus ac facilisis in, egestas eget quam. Nulla vitae elit libero, a pharetra
+                                            augue. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Praesent commodo cursus magna,
+                                            vel scelerisque nisl consectetur et.</p>
+                                        <p>Vivamus dolor massa, aliquet ut leo vel, sodales mattis tortor. Aenean at mauris et ex mollis
+                                            fringilla. Sed volutpat viverra vehicula. Nullam maximus ligula ac nisl aliquam commodo. Donec sed
+                                            vestibulum orci. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus
+                                            mus. Proin ut porttitor lorem, sit amet aliquet dui. Nunc dictum, lorem vitae elementum pharetra,
+                                            sapien orci dignissim ligula, aliquam interdum erat urna a nibh. Morbi quis tellus maximus,
+                                            pellentesque erat ac, porttitor nulla. Curabitur rhoncus urna non magna mattis aliquet. Vestibulum
+                                            non lobortis turpis. Nunc aliquet velit a magna dictum pulvinar vitae laoreet tortor. Duis auctor
+                                            iaculis arcu ac rutrum. Suspendisse vel odio risus.</p>
+                                        <p>Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Vivamus
+                                            sagittis lacus vel augue laoreet rutrum faucibus dolor auctor. Integer posuere erat a ante venenatis
+                                            dapibus posuere velit aliquet. Curabitur blandit tempus porttitor.
+
+                                            Cras mattis consectetur purus sit amet fermentum. Vestibulum id ligula porta felis euismod semper.
+                                            Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Nulla vitae elit libero, a
+                                            pharetra augue. Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio
+                                            sem nec elit.
+
+                                            Cras justo odio, dapibus ac facilisis in, egestas eget quam. Nulla vitae elit libero, a pharetra
+                                            augue. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Praesent commodo cursus magna,
+                                            vel scelerisque nisl consectetur et.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-6">
+                        <div id="in-view-block-1"
+                            class="card my-3 border-light rounded box-shadow page-block"
+                            data-direction="left"
+                            data-node-type="InViewBlock" data-block="InViewBlock">
+                            <img loading="lazy" class="card-img-top lazyload img-fluid"
+                                id="3-image"
+                                src="https://images.unsplash.com/photo-1464553186862-680edae5b2bc?ixlib=rb-1.2.1&auto=format&fit=crop&w=1510&q=80"
+                                width="700"
+                                data-src="/img/test3.jpg"
+                                alt="Lazyloaded img">
+                            <div class="card-body text-dark">
+                                <p class="card-text">Lazyloaded image.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div id="in-view-block-2"
+                            class="card my-3 border-light rounded box-shadow page-block"
+                            data-direction="right"
+                            data-node-type="InViewBlock" data-block="InViewBlock">
+                            <img loading="lazy" class="card-img-top lazyload img-fluid"
+                                id="4-image"
+                                src="https://images.unsplash.com/photo-1590169434951-f1622a03fe93?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=750&q=80"
+                                width="700"
+                                data-src="/img/test4.jpg"
+                                alt="Lazyloaded img">
+                            <div class="card-body text-dark">
+                                <p class="card-text">Lazyloaded image.</p>
+                            </div>
+                        </div>
+                        <div id="in-view-block-3"
+                            class="card my-3 border-light rounded box-shadow page-block"
+                            data-direction="right"
+                            data-node-type="InViewBlock" data-block="InViewBlock">
+                            <img loading="lazy" class="card-img-top lazyload img-fluid"
+                                id="5-image"
+                                src="https://images.unsplash.com/photo-1590071688906-d9df3f7bbd91?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1482&q=80"
+                                width="700"
+                                data-src="/img/test5.jpg"
+                                alt="Lazyloaded img">
+                            <div class="card-body text-dark">
+                                <p class="card-text">Lazyloaded image.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="footer text-dark">
+        <div class="container">
+            Made by <a href="https://github.com/okikio" class="text-muted" target="_blank">Okiki Ojo</a>
+            Based on <a href="https://github.com/rezozero/starting-blocks" class="text-muted" target="_blank">Starting blocks</a>
+        </div>
+    </footer>
+
+    
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
+    <script src="./js/framework.js" type="module"></script>
+</body>
+</html>

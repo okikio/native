@@ -25,5 +25,19 @@
     "peacock.color": "#1857a4",
     "eslint.nodePath": ".vscode/pnpify",
     "typescript.enablePromptUseWorkspaceTsdk": true,
-    "liveServer.settings.host": "localhost"
+    "liveServer.settings.host": "localhost",
+    "cSpell.words": [
+        "Barba",
+        "Gitpod",
+        "ICONFIG",
+        "Rezo",
+        "nativejs",
+        "performant"
+    ],
+    "cSpell.ignoreWords": [
+        "lmatch",
+        "ur",
+        "ur lmatch",
+        "walijs"
+    ]
 }

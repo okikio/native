@@ -1,4 +1,5 @@
-import { Transition, ITransitionData, animate } from "./api.js";
+import { Transition, ITransitionData } from "../../lib/core.js";
+import { animate } from "walijs";
 
 //== Transitions
 export class Fade extends Transition {
@@ -18,7 +19,7 @@ export class Fade extends Transition {
                 target: fromWrapper,
                 opacity: [1, 0],
                 duration,
-                onfinish(el) {
+                onfinish(el: { style: { opacity: string; }; }) {
                     el.style.opacity = '0';
                 }
             });
@@ -36,7 +37,7 @@ export class Fade extends Transition {
             target: toWrapper,
             opacity: [0, 1],
             duration,
-            onfinish(el) {
+            onfinish(el: { style: { opacity: string; }; }) {
                 el.style.opacity = '1';
             }
         });
@@ -63,7 +64,7 @@ export class Slide extends Transition {
             ],
             duration,
             easing: "in-quint",
-            onfinish: el => {
+            onfinish: (el: { style: { opacity: string; transform: string; }; }) => {
                 el.style.opacity = '0';
                 el.style.transform = `translateX(${direction === "left" ? "-" : ""}25%)`;
             }
@@ -81,7 +82,7 @@ export class Slide extends Transition {
             ],
             duration,
             easing: "out-quint",
-            onfinish(el) {
+            onfinish(el: { style: { opacity: string; transform: string; }; }) {
                 el.style.opacity = '1';
                 el.style.transform = `translateX(0%)`;
             }
@@ -131,7 +132,7 @@ export class BigTransition extends Transition {
                 target: fromWrapper,
                 opacity: [1, 0],
                 duration,
-                onfinish(el) {
+                onfinish(el: { style: { opacity: string; }; }) {
                     el.style.opacity = '0';
                 }
             });
@@ -149,7 +150,7 @@ export class BigTransition extends Transition {
                 delay(i: number) {
                     return delay * (i + 1);
                 },
-                onfinish(el) {
+                onfinish(el: { style: { transform: string; }; }) {
                     el.style.transform = `scaleX(1)`;
                 },
                 easing: "out-cubic",
@@ -163,7 +164,7 @@ export class BigTransition extends Transition {
                 target: this.spinnerElement,
                 opacity: [0, 1],
                 duration: loaderDuration,
-                onfinish(el) {
+                onfinish(el: { style: { opacity: string; }; }) {
                     el.style.opacity = `1`;
                 },
             });
@@ -171,7 +172,7 @@ export class BigTransition extends Transition {
             await animate({
                 options,
                 opacity: [1, 0],
-                onfinish(el) {
+                onfinish(el: { style: { opacity: string; }; }) {
                     el.style.opacity = `0`;
                 },
                 delay: 1500
@@ -190,7 +191,7 @@ export class BigTransition extends Transition {
             animate({
                 target: toWrapper,
                 opacity: [0, 1],
-                onfinish(el) {
+                onfinish(el: { style: { opacity: string; }; }) {
                     el.style.opacity = `1`;
                 },
                 duration
@@ -206,7 +207,7 @@ export class BigTransition extends Transition {
                 delay(i: number) {
                     return delay * (i + 1);
                 },
-                onfinish(el) {
+                onfinish(el: { style: { transform: string; }; }) {
                     el.style.transform = `scaleX(0)`;
                 },
                 easing: "out-cubic",

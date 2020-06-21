@@ -178,7 +178,7 @@ export class Page extends ManagerItem {
  */
 export class PageManager extends AdvancedManager<string, Page> {
     /**
-     * Stores all URL's that are currently loading
+     * Stores all URLs that are currently loading
      *
      * @protected
      * @type Manager<string, Promise<string>>
@@ -208,7 +208,7 @@ export class PageManager extends AdvancedManager<string, Page> {
     }
 
     /**
-     * Load from cache or by requesting URL via a fetch request, avoid reqesting for the same thing twice by storing the fetch request in "this.loading"
+     * Load from cache or by requesting URL via a fetch request, avoid requesting for the same thing twice by storing the fetch request in "this.loading"
      *
      * @param {(_URL | string)} [_url=new _URL()]
      * @returns Promise<Page>

@@ -1,4 +1,5 @@
-import { Block, BlockIntent, animate } from "./api.js";
+import { Block, BlockIntent } from "../../lib/core.js";
+import { animate } from "walijs";
 
 //== Blocks
 export class InViewBlock extends Block {
