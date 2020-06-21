@@ -39,7 +39,7 @@ export class App {
         let handler = (() => {
             document.removeEventListener("DOMContentLoaded", handler);
             window.removeEventListener("load", handler);
-            this.emitter.emit("READY");
+            this.emitter.emit("READY ready");
         }).bind(this);
         document.addEventListener("DOMContentLoaded", handler);
         window.addEventListener("load", handler);

@@ -25,7 +25,7 @@ export class CONFIG {
      * @memberof CONFIG
      */
     constructor(config) {
-        this.config = Object.assign(Object.assign({}, CONFIG_DEFAULTS), config);
+        this.config = Object.assign({ ...CONFIG_DEFAULTS }, config);
     }
     /**
      * Converts string into data attributes

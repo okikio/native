@@ -77,9 +77,9 @@ task("lib", () => {
             tsProject(),
 
             // Sourcemaps Write
-            write('ts'),
+            write('ts')
         ],
-        dest: "lib"
+        dest: null
     });
 });
 

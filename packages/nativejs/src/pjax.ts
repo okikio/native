@@ -212,7 +212,7 @@ export class PJAX extends Service {
         }
 
         let href = this.getHref(el);
-        this.EventEmitter.emit("ANCHOR-CLICK CLICK", event);
+        this.EventEmitter.emit("ANCHOR-CLICK CLICK click", event);
         this.go({ href, trigger: el, event });
     }
 
@@ -340,7 +340,7 @@ export class PJAX extends Service {
             event.preventDefault();
         }
 
-        this.EventEmitter.emit("GO", event);
+        this.EventEmitter.emit("GO go", event);
         return this.load({ oldHref: currentURL.getPathname(), href, trigger, transitionName });
     }
 
@@ -479,7 +479,7 @@ export class PJAX extends Service {
         // If Url is ignored or already in cache, don't do any think
         if (this.ignoredURL(url) || this.PageManager.has(urlString)) return;
 
-        this.EventEmitter.emit("ANCHOR-HOVER HOVER", event);
+        this.EventEmitter.emit("ANCHOR-HOVER HOVER hover", event);
 
         (async () => {
             try {

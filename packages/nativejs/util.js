@@ -8,25 +8,24 @@ const stream = (_src, _opt = {}) => {
         _dest = _opt.dest || ".",
         _log = _opt.log || (() => { });
 
-    return new Promise((resolve, reject) => {
-        _pipes.forEach(val => {
-            if (val !== undefined && val !== null) {
-                host = host.pipe(val).on("error", reject);
-            }
-        });
-
-        host
-            .on("end", _log)
-            .on("error", reject)
-            .pipe(dest(_dest))
-            .on("end", resolve); // Output
-
-        _end.forEach((val) => {
-            if (val !== undefined && val !== null) {
-                host = host.pipe(val);
-            }
-        });
+    _pipes.forEach(val => {
+        if (val !== undefined && val !== null) {
+            host = host.pipe(val);
+        }
     });
+
+    if (_opt.dest !== null)
+        host = host.pipe(dest(_dest));
+    host = host
+        .on("end", _log);
+
+    _end.forEach((val) => {
+        if (val !== undefined && val !== null) {
+            host = host.pipe(val);
+        }
+    });
+
+    return host;
 };
 
 // A list of streams

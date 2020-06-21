@@ -37,7 +37,7 @@
          * @memberof CONFIG
          */
         constructor(config) {
-            this.config = Object.assign(Object.assign({}, CONFIG_DEFAULTS), config);
+            this.config = Object.assign({ ...CONFIG_DEFAULTS }, config);
         }
         /**
          * Converts string into data attributes
@@ -1853,7 +1853,7 @@
             let handler = (() => {
                 document.removeEventListener("DOMContentLoaded", handler);
                 window.removeEventListener("load", handler);
-                this.emitter.emit("READY");
+                this.emitter.emit("READY ready");
             }).bind(this);
             document.addEventListener("DOMContentLoaded", handler);
             window.addEventListener("load", handler);
@@ -2373,7 +2373,7 @@
                 return;
             }
             let href = this.getHref(el);
-            this.EventEmitter.emit("ANCHOR-CLICK CLICK", event);
+            this.EventEmitter.emit("ANCHOR-CLICK CLICK click", event);
             this.go({ href, trigger: el, event });
         }
         /**
@@ -2493,7 +2493,7 @@
                 event.stopPropagation();
                 event.preventDefault();
             }
-            this.EventEmitter.emit("GO", event);
+            this.EventEmitter.emit("GO go", event);
             return this.load({ oldHref: currentURL.getPathname(), href, trigger, transitionName });
         }
         /**
@@ -2626,7 +2626,7 @@
             // If Url is ignored or already in cache, don't do any think
             if (this.ignoredURL(url) || this.PageManager.has(urlString))
                 return;
-            this.EventEmitter.emit("ANCHOR-HOVER HOVER", event);
+            this.EventEmitter.emit("ANCHOR-HOVER HOVER hover", event);
             (async () => {
                 try {
                     await this.PageManager.load(url);
