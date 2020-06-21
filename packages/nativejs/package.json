@@ -1,7 +1,7 @@
 {
-    "name": "pjax-api",
+    "name": "nativejs",
     "version": "1.0.0",
-    "description": "A pjax miniature library",
+    "description": "A framework who's goal is to make it easier to create complex, performant, light-weight, web applications using native js api's.",
     "scripts": {
         "start": "gulp",
         "watch": "gulp watch",
@@ -10,24 +10,17 @@
     "main": "api.js",
     "author": "Okiki Ojo",
     "license": "MIT",
-    "private": true,
-    "dependencies": {
-        "@yarnpkg/pnpify": "^2.0.0-rc.22",
-        "autoprefixer": "^9.8.0",
-        "cross-fetch": "^3.0.4",
-        "eslint": "^7.1.0",
-        "esm": "^3.2.25",
-        "gulp-newer": "^1.4.0",
-        "gulp-nunjucks-render": "^2.2.3",
-        "gulp-postcss": "^8.0.0",
-        "gulp-sass": "^4.1.0",
-        "typescript": "^3.9.3"
-    },
     "devDependencies": {
-        "@types/gulp-newer": "0.0.31",
         "browser-sync": "^2.26.7",
         "gulp": "^4.0.2",
         "gulp-sourcemaps": "^2.6.5",
-        "gulp-typescript": "^6.0.0-alpha.1"
+        "gulp-typescript": "^6.0.0-alpha.1",
+        "eslint": "^7.1.0",
+        "gulp-sass": "^4.1.0",
+        "typescript": "^3.9.3"
+    },
+    "dependencies": {
+        "@okikio/event-emitter": "^1.0.5",
+        "managerjs": "^1.0.9"
     }
 }
