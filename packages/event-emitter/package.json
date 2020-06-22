@@ -1,24 +1,28 @@
 {
     "name": "@okikio/event-emitter",
-    "version": "1.0.5",
+    "version": "1.0.6",
     "description": "A small Event Emitter written in typescript for performance, and ease of use.",
-    "cjs": "lib/api.cjs.js",
-    "umd": "lib/api.umd.js",
+    "publishConfig": {
+        "access": "public"
+    },
+    "main": "lib/api.js",
+    "umd:main": "lib/api.umd.js",
     "browser": "lib/api.umd.js",
     "unpkg": "lib/api.umd.js",
-    "min": "lib/api.min.js",
-    "es": "lib/api.es.js",
-    "module": "lib/api.es.js",
-    "main": "lib/api.js",
+    "module": "lib/api.mjs",
     "source": "src/api.ts",
     "types": "lib/api.d.ts",
-    "directories": {
-        "lib": "./lib",
-        "src": "./src"
-    },
+    "files": [
+        "lib",
+        "src"
+    ],
     "scripts": {
-        "build": "gulp",
-        "release": "gulp && npm publish"
+        "build": "microbundle --name @okikio/event-emitter build",
+        "watch": "microbundle --name @okikio/event-emitter watch",
+        "release": "npm run build && npm publish --tag latest",
+        "patch": "npm version patch && npm run release",
+        "minor": "npm version minor && npm run release",
+        "major": "npm version major && npm run release"
     },
     "repository": {
         "type": "git",
@@ -32,23 +36,22 @@
         "typescript",
         "api"
     ],
-    "author": "Okiki Ojo <okiko.dev@gmail.com>",
+    "author": {
+        "name": "Okiki Ojo",
+        "email": "hey@okikio.dev",
+        "url": "https://okikio.dev"
+    },
     "license": "MIT",
     "bugs": {
         "url": "https://github.com/okikio/event-emitter/issues"
     },
     "homepage": "https://github.com/okikio/event-emitter#readme",
     "devDependencies": {
-        "@rollup/plugin-node-resolve": "^8.0.1",
         "eslint": "^7.3.0",
-        "gulp": "^4.0.2",
-        "gulp-size": "^3.0.0",
-        "gulp-typescript": "^6.0.0-alpha.1",
-        "rollup": "^2.17.1",
-        "rollup-plugin-terser": "^6.1.0",
+        "microbundle": "^0.12.2",
         "typescript": "^3.9.5"
     },
     "dependencies": {
-        "managerjs": "^1.0.9"
+        "managerjs": "^1.1.0"
     }
 }
