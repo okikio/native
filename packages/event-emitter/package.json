@@ -9,7 +9,8 @@
     "umd:main": "lib/api.umd.js",
     "browser": "lib/api.umd.js",
     "unpkg": "lib/api.umd.js",
-    "module": "lib/api.mjs",
+    "esmodule": "lib/api.modern.js",
+    "module": "lib/api.es.js",
     "source": "src/api.ts",
     "types": "lib/api.d.ts",
     "files": [
@@ -17,8 +18,8 @@
         "src"
     ],
     "scripts": {
-        "build": "microbundle --name @okikio/event-emitter build",
-        "watch": "microbundle --name @okikio/event-emitter watch",
+        "build": "microbundle build --name @okikio/event-emitter --external natives",
+        "watch": "microbundle watch --name @okikio/event-emitter --external natives",
         "release": "npm run build && npm publish --tag latest",
         "patch": "npm version patch && npm run release",
         "minor": "npm version minor && npm run release",
