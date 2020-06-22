@@ -1,15 +1,14 @@
 {
     "name": "walijs",
-    "version": "1.0.7",
+    "version": "1.0.8",
     "description": "An animation library for the modern web which utilizes the Web Animation API (WAAPI) to create butter smooth animation.",
     "publishConfig": {
         "access": "public"
     },
-    "main": "lib/api.js",
+    "main": "lib/api.modern.js",
     "umd:main": "lib/api.umd.js",
     "browser": "lib/api.umd.js",
     "unpkg": "lib/api.umd.js",
-    "esmodule": "lib/api.modern.js",
     "module": "lib/api.es.js",
     "source": "src/api.ts",
     "types": "lib/api.d.ts",
@@ -18,8 +17,8 @@
         "src"
     ],
     "scripts": {
-        "build": "microbundle build --name @okikio/event-emitter --external natives",
-        "watch": "microbundle watch --name @okikio/event-emitter --external natives",
+        "build": "microbundle build --name @okikio/event-emitter --output lib/api.js --external natives",
+        "watch": "microbundle watch --name @okikio/event-emitter --output lib/api.js --external natives",
         "release": "npm run build && npm publish --tag latest",
         "patch": "npm version patch && npm run release",
         "minor": "npm version minor && npm run release",
@@ -58,12 +57,12 @@
         "gulp": "^4.0.2",
         "gulp-sass": "^4.1.0",
         "gulp-swig": "^0.9.1",
+        "microbundle": "^0.12.2",
         "rollup": "^2.17.1",
         "rollup-plugin-typescript2": "^0.27.1",
         "typescript": "^3.9.5"
     },
     "dependencies": {
-        "@okikio/event-emitter": "^1.0.5",
-        "microbundle": "^0.12.2"
+        "@okikio/event-emitter": "^1.0.5"
     }
 }

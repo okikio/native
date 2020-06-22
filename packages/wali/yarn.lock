@@ -862,9 +862,9 @@
     to-fast-properties "^2.0.0"
 
 "@okikio/event-emitter@^1.0.5":
-  version "1.0.7"
-  resolved "https://registry.yarnpkg.com/@okikio/event-emitter/-/event-emitter-1.0.7.tgz#149f394f91d8d97acdc61c4f0c24f21df3b0b652"
-  integrity sha512-nVLo51vM0W91kJ3MtnHgZXuz6K37yVbwUqbItwh7Ph+jUO4QMk94tzsYvkeizykcAYRKEyHZNxp/sIW+FVJ5Qw==
+  version "1.0.10"
+  resolved "https://registry.yarnpkg.com/@okikio/event-emitter/-/event-emitter-1.0.10.tgz#64ad6054121afb42868b98d24ca03cecd652ba9e"
+  integrity sha512-DczbqkAiMf8asF4IgpALavBWR0CflTaUgaJkRTgFwxJcrmXc1LDrwsB9zoujUbWD2tsmzULORXZV+LpG43qw2w==
   dependencies:
     managerjs "^1.1.0"
 
@@ -4499,9 +4499,9 @@ make-iterator@^1.0.0:
     kind-of "^6.0.2"
 
 managerjs@^1.1.0:
-  version "1.1.2"
-  resolved "https://registry.yarnpkg.com/managerjs/-/managerjs-1.1.2.tgz#2e961eb9da164b87b8bebd936e5ab2ab08725845"
-  integrity sha512-l5PguZEUvvHa9Pvzrlu+J8PakjkRzs5kfm/xBR7Xp6dK/vPQvAjamNQMhHNFV1cVynrVo3noFhhz5k6rqelNdg==
+  version "1.1.4"
+  resolved "https://registry.yarnpkg.com/managerjs/-/managerjs-1.1.4.tgz#25ec28e85f2934f21342f60b2c63aabab9003f61"
+  integrity sha512-c1KqRLYSyVDBJLeHblb5kWXgrauZaDNmoeuXtpEMZJlpg2fIpLAp/4kShJdWleiwpYW0jokXphqSjrL2lK7CVA==
 
 map-cache@^0.2.0, map-cache@^0.2.2:
   version "0.2.2"
