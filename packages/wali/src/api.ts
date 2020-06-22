@@ -90,19 +90,19 @@ export const getEase = (ease: string) => {
 export interface AnimationOptions {
     target?: AnimationTarget,
 
-    speed?: number,
-    delay?: number,
-    easing?: string,
-    endDelay?: number,
-    duration?: number,
-    autoplay?: boolean,
-    keyframes?: object[],
-    loop?: number | boolean, // iterations: number,
-    options?: AnimationOptions,
+    speed?: number | closure,
+    delay?: number | closure,
+    easing?: string | closure,
+    endDelay?: number | closure,
+    duration?: number | closure,
+    autoplay?: boolean | closure,
+    keyframes?: object[] | closure,
+    loop?: number | boolean | closure, // iterations: number,
+    options?: AnimationOptions | closure,
     onfinish?: (element?: HTMLElement, index?: number, total?: number) => any,
-    fillMode?: "none" | "forwards" | "backwards" | "both" | "auto",
-    direction?: "normal" | "reverse" | "alternate" | "alternate-reverse",
-    [property: string]: boolean | object | string | string[] | number | null | (number | null)[] | undefined;
+    fillMode?: "none" | "forwards" | "backwards" | "both" | "auto" | closure,
+    direction?: "normal" | "reverse" | "alternate" | "alternate-reverse" | closure,
+    [property: string]: boolean | object | string | string[] | number | null | (number | null)[] | closure | undefined;
 };
 
 export const DefaultAnimationOptions: AnimationOptions = {

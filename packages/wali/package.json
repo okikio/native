@@ -2,24 +2,30 @@
     "name": "walijs",
     "version": "1.0.6",
     "description": "An animation library for the modern web which utilizes the Web Animation API (WAAPI) to create butter smooth animation.",
-    "cjs": "lib/api.cjs.js",
-    "umd": "lib/api.umd.js",
+    "publishConfig": {
+        "access": "public"
+    },
+    "main": "lib/api.js",
+    "umd:main": "lib/api.umd.js",
     "browser": "lib/api.umd.js",
     "unpkg": "lib/api.umd.js",
-    "min": "lib/api.min.js",
-    "es": "lib/api.es.js",
+    "esmodule": "lib/api.modern.js",
     "module": "lib/api.es.js",
-    "main": "lib/api.cjs.js",
     "source": "src/api.ts",
     "types": "lib/api.d.ts",
-    "directories": {
-        "lib": "./lib",
-        "src": "./src"
-    },
+    "files": [
+        "lib",
+        "src"
+    ],
     "scripts": {
-        "watch": "gulp",
-        "build": "gulp build",
-        "release": "gulp build && npm publish"
+        "build": "microbundle build --name @okikio/event-emitter --external natives",
+        "watch": "microbundle watch --name @okikio/event-emitter --external natives",
+        "release": "npm run build && npm publish --tag latest",
+        "patch": "npm version patch && npm run release",
+        "minor": "npm version minor && npm run release",
+        "major": "npm version major && npm run release",
+        "docs": "gulp build",
+        "test": "gulp"
     },
     "repository": {
         "type": "git",
@@ -35,7 +41,11 @@
         "css",
         "smooth"
     ],
-    "author": "Okiki Ojo <okikio.dev@gmail.com>",
+    "author": {
+        "name": "Okiki Ojo",
+        "email": "hey@okikio.dev",
+        "url": "https://okikio.dev"
+    },
     "license": "MIT",
     "bugs": {
         "url": "https://github.com/okikio/wali/issues"
@@ -47,14 +57,13 @@
         "eslint": "^7.3.0",
         "gulp": "^4.0.2",
         "gulp-sass": "^4.1.0",
-        "gulp-size": "^3.0.0",
         "gulp-swig": "^0.9.1",
-        "gulp-typescript": "^6.0.0-alpha.1",
         "rollup": "^2.17.1",
-        "rollup-plugin-terser": "^6.1.0",
+        "rollup-plugin-typescript2": "^0.27.1",
         "typescript": "^3.9.5"
     },
     "dependencies": {
-        "@okikio/event-emitter": "^1.0.5"
+        "@okikio/event-emitter": "^1.0.5",
+        "microbundle": "^0.12.2"
     }
 }
