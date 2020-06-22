@@ -20,10 +20,10 @@ export default class Manager<K, V> {
     /**
      * Creates an instance of Manager.
      * 
-     * @param {Array<[K, V]>} value
+     * @param {Array<[K, V]>} [value]
      * @memberof Manager
      */
-	constructor(value: Array<[K, V]>) {
+	constructor(value?: Array<[K, V]>) {
 		this.map = new Map(value);
 	}
 
