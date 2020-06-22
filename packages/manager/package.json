@@ -1,15 +1,15 @@
 {
     "name": "managerjs",
-    "version": "1.1.2",
+    "version": "1.1.3",
     "description": "A superset of the Map class called Manager that allows for complex management of data.",
     "publishConfig": {
         "access": "public"
     },
-    "main": "lib/api.js",
+    "main": "lib/api.modern.js",
     "umd:main": "lib/api.umd.js",
     "browser": "lib/api.umd.js",
     "unpkg": "lib/api.umd.js",
-    "module": "lib/api.mjs",
+    "module": "lib/api.es.js",
     "source": "src/api.ts",
     "types": "lib/api.d.ts",
     "files": [
@@ -17,8 +17,8 @@
         "src"
     ],
     "scripts": {
-        "build": "microbundle --name managerjs build --external natives",
-        "watch": "microbundle --name managerjs watch --external natives",
+        "build": "microbundle build --name managerjs --output lib/api.js --external natives",
+        "watch": "microbundle watch --name managerjs --output lib/api.js --external natives",
         "release": "npm run build && npm publish --tag latest",
         "patch": "npm version patch && npm run release",
         "minor": "npm version minor && npm run release",
