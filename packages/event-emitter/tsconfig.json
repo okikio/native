@@ -6,6 +6,7 @@
         "sourceMap": true,
         "outDir": "lib",
         "isolatedModules": true,
+        "incremental": true,
         "declaration": true
     }
 }

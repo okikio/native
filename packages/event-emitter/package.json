@@ -1,15 +1,14 @@
 {
     "name": "@okikio/event-emitter",
-    "version": "1.0.7",
+    "version": "1.0.8",
     "description": "A small Event Emitter written in typescript for performance, and ease of use.",
     "publishConfig": {
         "access": "public"
     },
-    "main": "lib/api.js",
+    "main": "lib/api.modern.js",
     "umd:main": "lib/api.umd.js",
     "browser": "lib/api.umd.js",
     "unpkg": "lib/api.umd.js",
-    "esmodule": "lib/api.modern.js",
     "module": "lib/api.es.js",
     "source": "src/api.ts",
     "types": "lib/api.d.ts",
@@ -18,8 +17,8 @@
         "src"
     ],
     "scripts": {
-        "build": "microbundle build --name @okikio/event-emitter --external natives",
-        "watch": "microbundle watch --name @okikio/event-emitter --external natives",
+        "build": "microbundle build --name @okikio/event-emitter --output lib/api.js --external natives",
+        "watch": "microbundle watch --name @okikio/event-emitter --output lib/api.js --external natives",
         "release": "npm run build && npm publish --tag latest",
         "patch": "npm version patch && npm run release",
         "minor": "npm version minor && npm run release",
