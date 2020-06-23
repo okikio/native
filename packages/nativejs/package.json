@@ -1,6 +1,6 @@
 {
     "name": "nativejs",
-    "version": "1.0.1",
+    "version": "1.1.0",
     "description": "A framework who's goal is to make it easier to create complex, performant, light-weight, web applications using native js apis.",
     "publishConfig": {
         "access": "public"
