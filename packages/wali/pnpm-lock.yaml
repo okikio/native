@@ -1,5 +1,5 @@
 dependencies:
-  '@okikio/event-emitter': 1.1.2
+  '@okikio/event-emitter': 1.1.3
 devDependencies:
   '@rollup/plugin-node-resolve': 8.1.0_rollup@2.18.0
   browser-sync: 2.26.7
@@ -978,12 +978,12 @@ packages:
     dev: true
     resolution:
       integrity: sha512-nZxaJhBXBQ8HVoIcGsf9qWep3Oh3jCENK54V4mRF7qaJabVsAYdbTtmSD8WmAp1R6ytPiu5apMwSXyxB1WlaBA==
-  /@okikio/event-emitter/1.1.2:
+  /@okikio/event-emitter/1.1.3:
     dependencies:
-      managerjs: 1.1.7
+      managerjs: 1.1.8
     dev: false
     resolution:
-      integrity: sha512-7a4axU+mR5gkJE4rjpzUHCOu+HLxj+NvqzENrDFpdMBqMvhFO+1N/VMMeronGrVbyTtGb1ai2z+xNxiU5z7mBQ==
+      integrity: sha512-ln23hHZgr4SdVH7V+gz3Dg3HYW0vghO8ZEoUMBC1zJSVKgRW8HInKGTG0X0Y2bI45nHwnbKXVqENDaQAm3lSog==
   /@rollup/plugin-alias/3.1.1_rollup@1.32.1:
     dependencies:
       rollup: 1.32.1
@@ -4751,10 +4751,10 @@ packages:
       node: '>=0.10.0'
     resolution:
       integrity: sha512-pxiuXh0iVEq7VM7KMIhs5gxsfxCux2URptUQaXo4iZZJxBAzTPOLE2BumO5dbfVYq/hBJFBR/a1mFDmOx5AGmw==
-  /managerjs/1.1.7:
+  /managerjs/1.1.8:
     dev: false
     resolution:
-      integrity: sha512-AqpIl0xcuUCtBIdK12zJ1Vrl/oIVEItr2eu2SWbp7+gvxuRTtnTTzCY+wXabvXAuPtnJ8y+Uq8Mkoe1wtlmSVw==
+      integrity: sha512-XgEGE7hHVIuzbEgywzerZWNlRW1BDwouDpq0aKO1IXKiHneNq5C/EHO0YjFD+W0jpIyhWfMAp+CIdv0RLexlFQ==
   /map-cache/0.2.2:
     dev: true
     engines:
@@ -8022,7 +8022,7 @@ packages:
     resolution:
       integrity: sha1-AI4G2AlDIMNy28L47XagymyKxBk=
 specifiers:
-  '@okikio/event-emitter': ^1.1.2
+  '@okikio/event-emitter': ^1.1.3
   '@rollup/plugin-node-resolve': ^8.1.0
   browser-sync: ^2.26.7
   eslint: ^7.3.1
