@@ -1,4 +1,4 @@
-import Manager from "managerjs/src/api";
+import { Manager } from "managerjs/src/api";
 
 export type ListenerCallback = (...args: any) => void;
 export interface IListener {

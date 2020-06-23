@@ -52,6 +52,6 @@
         "typescript": "^3.9.5"
     },
     "dependencies": {
-        "managerjs": "^1.1.7"
+        "managerjs": "^1.1.8"
     }
 }
