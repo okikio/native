@@ -9,7 +9,7 @@
     "umd:main": "lib/api.umd.js",
     "browser": "lib/api.umd.js",
     "unpkg": "lib/api.umd.js",
-    "module": "lib/api.modern.js",
+    "module": "lib/api.es.js",
     "source": "src/api.ts",
     "types": "lib/api.d.ts",
     "files": [
