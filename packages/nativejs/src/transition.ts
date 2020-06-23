@@ -1,8 +1,8 @@
-import { AdvancedManager, ManagerItem } from "./manager.js";
-import EventEmitter from "@okikio/event-emitter";
-import { Trigger } from "./history.js";
-import { Page } from "./page.js";
-import { App } from "./app.js";
+import { EventEmitter } from "@okikio/event-emitter/src/api";
+import { AdvancedManager, ManagerItem } from "./manager";
+import { Trigger } from "./history";
+import { Page } from "./page";
+import { App } from "./app";
 
 /**
  * The async function type, allows for smooth transition between Promises

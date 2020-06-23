@@ -1,9 +1,9 @@
-import { AdvancedManager, ManagerItem } from "./manager.js";
-import { EventEmitter } from "@okikio/event-emitter";
-import { TransitionManager } from "./transition.js";
-import { HistoryManager } from "./history.js";
-import { PageManager } from "./page.js";
-import { App } from "./app.js";
+import { EventEmitter } from "@okikio/event-emitter/src/api";
+import { AdvancedManager, ManagerItem } from "./manager";
+import { TransitionManager } from "./transition";
+import { HistoryManager } from "./history";
+import { PageManager } from "./page";
+import { App } from "./app";
 
 /**
  * Controls specific kinds of actions that require JS
@@ -19,7 +19,7 @@ export class Service extends ManagerItem {
 	 * @type EventEmitter
 	 * @memberof Service
 	 */
-    protected EventEmitter: EventEmitter;
+	protected EventEmitter: EventEmitter;
 
 	/**
 	 * Stores access to the App class's PageManager
@@ -28,7 +28,7 @@ export class Service extends ManagerItem {
 	 * @type PageManager
 	 * @memberof Service
 	 */
-    protected PageManager: PageManager;
+	protected PageManager: PageManager;
 
 	/**
 	 * Stores access to the App class's HistoryManager
@@ -37,7 +37,7 @@ export class Service extends ManagerItem {
 	 * @type HistoryManager
 	 * @memberof Service
 	 */
-    protected HistoryManager: HistoryManager;
+	protected HistoryManager: HistoryManager;
 
 	/**
 	 * Stores the ServiceManager the service is install on
@@ -46,7 +46,7 @@ export class Service extends ManagerItem {
 	 * @type ServiceManager
 	 * @memberof Service
 	 */
-    protected ServiceManager: ServiceManager;
+	protected ServiceManager: ServiceManager;
 
 	/**
 	 * Stores access to the App's TransitionManager
@@ -55,35 +55,35 @@ export class Service extends ManagerItem {
 	 * @type TransitionManager
 	 * @memberof Service
 	 */
-    protected TransitionManager: TransitionManager;
+	protected TransitionManager: TransitionManager;
 
 	/**
 	 * Method is run once when Service is installed on a ServiceManager
      *
 	 * @memberof Service
 	 */
-    public install(): void {
-        let app = this.manager.getApp();
-        this.PageManager = app.getPages();
-        this.EventEmitter = app.getEmitter();
-        this.HistoryManager = app.getHistory();
-        this.ServiceManager = app.getServices();
-        this.TransitionManager = app.getTransitions();
-    }
+	public install(): void {
+		let app = this.manager.getApp();
+		this.PageManager = app.getPages();
+		this.EventEmitter = app.getEmitter();
+		this.HistoryManager = app.getHistory();
+		this.ServiceManager = app.getServices();
+		this.TransitionManager = app.getTransitions();
+	}
 
-    // Called on start of Service
-    public boot(): void { }
+	// Called on start of Service
+	public boot(): void { }
 
-    // Initialize events
-    public initEvents(): void { }
+	// Initialize events
+	public initEvents(): void { }
 
-    // Stop events
-    public stopEvents(): void { }
+	// Stop events
+	public stopEvents(): void { }
 
-    // Stop services
-    public stop(): void {
-        this.stopEvents();
-    }
+	// Stop services
+	public stop(): void {
+		this.stopEvents();
+	}
 }
 
 /**
@@ -100,9 +100,9 @@ export class ServiceManager extends AdvancedManager<number, Service> {
      * @param {App} app
      * @memberof ServiceManager
      */
-    constructor(app: App) {
-        super(app);
-    }
+	constructor(app: App) {
+		super(app);
+	}
 
 	/**
 	 * Call the boot method for all Services
@@ -110,9 +110,9 @@ export class ServiceManager extends AdvancedManager<number, Service> {
 	 * @returns Promise<void>
 	 * @memberof ServiceManager
 	 */
-    public async boot(): Promise<void> {
-        await this.asyncMethodCall("boot");
-    }
+	public async boot(): Promise<void> {
+		await this.asyncMethodCall("boot");
+	}
 
 	/**
 	 * Call the initEvents method for all Services
@@ -120,10 +120,10 @@ export class ServiceManager extends AdvancedManager<number, Service> {
 	 * @returns ServiceManager
 	 * @memberof ServiceManager
 	 */
-    public initEvents(): ServiceManager {
-        this.methodCall("initEvents");
-        return this;
-    }
+	public initEvents(): ServiceManager {
+		this.methodCall("initEvents");
+		return this;
+	}
 
 	/**
 	 * Call the stopEvents method for all Services
@@ -131,10 +131,10 @@ export class ServiceManager extends AdvancedManager<number, Service> {
 	 * @returns ServiceManager
 	 * @memberof ServiceManager
 	 */
-    public stopEvents(): ServiceManager {
-        this.methodCall("stopEvents");
-        return this;
-    }
+	public stopEvents(): ServiceManager {
+		this.methodCall("stopEvents");
+		return this;
+	}
 
 	/**
 	 * Call the stop method for all Services
@@ -142,8 +142,8 @@ export class ServiceManager extends AdvancedManager<number, Service> {
 	 * @returns ServiceManager
 	 * @memberof ServiceManager
 	 */
-    public stop(): ServiceManager {
-        this.methodCall("stop");
-        return this;
-    }
+	public stop(): ServiceManager {
+		this.methodCall("stop");
+		return this;
+	}
 }

@@ -1,25 +1,30 @@
 {
     "name": "nativejs",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "description": "A framework who's goal is to make it easier to create complex, performant, light-weight, web applications using native js apis.",
-    "cjs": "lib/core.cjs.js",
-    "umd": "lib/core.umd.js",
-    "browser": "lib/core.umd.js",
-    "unpkg": "lib/core.umd.js",
-    "min": "lib/core.min.js",
-    "es": "lib/core.es.js",
-    "module": "lib/core.es.js",
-    "main": "lib/core.cjs.js",
-    "source": "src/core.ts",
-    "types": "lib/core.d.ts",
-    "directories": {
-        "lib": "./lib",
-        "src": "./src"
+    "publishConfig": {
+        "access": "public"
     },
+    "main": "lib/api.js",
+    "umd:main": "lib/api.umd.js",
+    "browser": "lib/api.umd.js",
+    "unpkg": "lib/api.umd.js",
+    "module": "lib/api.es.js",
+    "source": "src/api.ts",
+    "types": "lib/api.d.ts",
+    "files": [
+        "lib",
+        "src"
+    ],
     "scripts": {
-        "watch": "gulp",
-        "build": "gulp build",
-        "release": "gulp build && npm publish"
+        "build": "microbundle build --name nativejs --external natives",
+        "watch": "microbundle watch --name nativejs --external natives",
+        "release": "npm run build && npm publish --tag latest",
+        "patch": "npm version patch && npm run release",
+        "minor": "npm version minor && npm run release",
+        "major": "npm version major && npm run release",
+        "docs": "gulp build",
+        "test": "gulp"
     },
     "repository": {
         "type": "git",
@@ -44,22 +49,21 @@
     },
     "homepage": "https://github.com/okikio/nativejs#readme",
     "devDependencies": {
-        "@rollup/plugin-node-resolve": "^8.0.1",
+        "@rollup/plugin-node-resolve": "^8.1.0",
         "browser-sync": "^2.26.7",
-        "eslint": "^7.1.0",
+        "eslint": "^7.3.1",
         "gulp": "^4.0.2",
         "gulp-sass": "^4.1.0",
-        "gulp-size": "^3.0.0",
-        "gulp-sourcemaps": "^2.6.5",
         "gulp-swig": "^0.9.1",
-        "gulp-typescript": "^6.0.0-alpha.1",
-        "rollup": "^2.17.1",
-        "rollup-plugin-terser": "^6.1.0",
-        "typescript": "^3.9.3",
-        "walijs": "^1.0.6"
+        "microbundle": "^0.12.2",
+        "rollup": "^2.18.0",
+        "rollup-plugin-typescript2": "^0.27.1",
+        "tslib": "^2.0.0",
+        "typescript": "^3.9.5",
+        "walijs": "^1.0.10"
     },
     "dependencies": {
-        "@okikio/event-emitter": "^1.0.5",
-        "managerjs": "^1.0.9"
+        "@okikio/event-emitter": "^1.1.3",
+        "managerjs": "^1.1.8"
     }
 }

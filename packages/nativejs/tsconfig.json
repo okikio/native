@@ -1,12 +1,12 @@
 {
     "compilerOptions": {
         "moduleResolution": "node",
-        "target": "ES2018",
+        "target": "ES2020",
         "module": "ES6",
         "sourceMap": true,
         "outDir": "lib",
         "isolatedModules": true,
-        "declaration": true,
-        "declarationDir": "lib"
+        "incremental": true,
+        "declaration": true
     }
 }

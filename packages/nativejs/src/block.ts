@@ -1,6 +1,6 @@
-import { Service } from "./service.js";
-import { ManagerItem, AdvancedManager } from "./manager.js";
-import { App } from "./app.js";
+import { ManagerItem, AdvancedManager } from "./manager";
+import { Service } from "./service";
+import { App } from "./app";
 
 /**
  * Services that interact with specific Components to achieve certain actions

@@ -1,8 +1,7 @@
 {
     "emmet.showSuggestionsAsSnippets": true,
     "emmet.triggerExpansionOnTab": true,
-    "liveServer.settings.multiRootWorkspaceName": "pjax-api",
-    "typescript.tsdk": ".vscode/pnpify/typescript/lib",
+    "liveServer.settings.multiRootWorkspaceName": "nativejs",
     "liveServer.settings.root": "/",
     "workbench.colorCustomizations": {
         "activityBar.activeBackground": "#1f6fd0",
@@ -23,7 +22,6 @@
         "titleBar.inactiveForeground": "#e7e7e799"
     },
     "peacock.color": "#1857a4",
-    "eslint.nodePath": ".vscode/pnpify",
     "typescript.enablePromptUseWorkspaceTsdk": true,
     "liveServer.settings.host": "localhost",
     "cSpell.words": [
@@ -39,5 +37,6 @@
         "ur",
         "ur lmatch",
         "walijs"
-    ]
+    ],
+    "typescript.tsdk": "node_modules\\typescript\\lib"
 }

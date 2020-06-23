@@ -3,11 +3,11 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-     <title>Home page</title>
+    {% block title %} <title>Home page</title>{% endblock %}
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- Latest compiled and minified CSS -->
-    
+    {# <link rel="stylesheet" href="./css/tailwindcss.css"> #}
     <link rel="stylesheet" href="./css/base/base.css">
     <link rel="stylesheet" href="./css/app.css">
     <link rel="stylesheet"
@@ -58,44 +58,8 @@
             <div></div>
         </div>
     </div>
-    <nav id="main-nav" class="navbar navbar-expand-md fixed-top navbar-light bg-light">
-    <a class="navbar-brand" href="./index.html">Starting Blocks
-        <small>v4</small>
-    </a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        <ul class="navbar-nav mr-auto">
-            <li class="nav-item"><a href="./index.html" class="nav-link active" data-transition="default">Homepage</a></li>
-            <li class="nav-item"><a href="./about.html" class="nav-link" data-transition="slide-left">About</a></li>
-            <li class="nav-item"><a href="./other.html" class="nav-link" data-transition="big">Other</a></li>
-        </ul>
-    </div>
-</nav>
-    
-    <main data-wrapper id="404-page" role="main" id="sb-wrapper">
-        <div id="page-home-page"
-            class="page-content page-content-ajax"
-            data-node-name="home-page"
-            data-is-home="1"
-            data-node-type="HomePage"
-            data-meta-title="Home page">
-            <div class="container">
-                <div class="row">
-                    <div class="col">
-                        <div class="jumbotron jumbotron-fluid my-3 px-4 bg-white rounded box-shadow text-dark">
-                            <div class="container">
-                                <h1 class="display-4"><strong>404 Page</strong></h1>
-                                <p class="lead">Dynamic blocks example.</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </main>
-
+    {% include "../partials/navbar.html" %}
+    {% block content %} {% endblock %}
     <footer class="footer text-dark">
         <div class="container">
             Made by <a href="https://github.com/okikio" class="text-muted" target="_blank">Okiki Ojo</a>
@@ -103,9 +67,9 @@
         </div>
     </footer>
 
-    
+    {# <!-- <script src="../app.js" type="module"></script> --> #}
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
-    
+    {# <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script> #}
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
     <script src="./js/framework.js" type="module"></script>
 </body>

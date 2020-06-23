@@ -1,23 +1,23 @@
-import { Manager } from "./manager.js";
-import { _URL } from "./url.js";
+import { Manager } from "./manager";
+import { _URL } from "./url";
 
 export type Trigger = HTMLAnchorElement | "HistoryManager" | "popstate" | "back" | "forward";
 
 export interface ICoords {
-    readonly x: number;
-    readonly y: number;
+	readonly x: number;
+	readonly y: number;
 }
 
 export interface IStateData {
-    scroll: ICoords;
-    [key: string]: any;
+	scroll: ICoords;
+	[key: string]: any;
 }
 
 export interface IState {
-    url: _URL;
-    index?: number;
-    transition: string;
-    data: IStateData;
+	url: _URL;
+	index?: number;
+	transition: string;
+	data: IStateData;
 }
 
 /**
@@ -28,8 +28,8 @@ export interface IState {
  * @implements {ICoords}
  */
 export class Coords implements ICoords {
-    public x: number;
-    public y: number;
+	public x: number;
+	public y: number;
 
 	/**
 	 * Creates an instance of Coords.
@@ -38,10 +38,10 @@ export class Coords implements ICoords {
 	 * @param {number} [y=window.scrollY]
 	 * @memberof Coords
 	 */
-    constructor(x: number = window.scrollX, y: number = window.scrollY) {
-        this.x = x;
-        this.y = y;
-    }
+	constructor(x: number = window.scrollX, y: number = window.scrollY) {
+		this.x = x;
+		this.y = y;
+	}
 }
 
 /**
@@ -58,7 +58,7 @@ export class State {
 	 * @type IState
 	 * @memberof State
 	 */
-    private state: IState;
+	private state: IState;
 
 	/**
 	 * Creates an instance of State.
@@ -73,17 +73,17 @@ export class State {
 	 *     }
 	 * @memberof State
 	 */
-    constructor(state: IState = {
-        url: new _URL(),
-        index: 0,
-        transition: "default",
-        data: {
-            scroll: new Coords(),
-            trigger: "HistoryManager"
-        }
-    }) {
-        this.state = state;
-    }
+	constructor(state: IState = {
+		url: new _URL(),
+		index: 0,
+		transition: "default",
+		data: {
+			scroll: new Coords(),
+			trigger: "HistoryManager"
+		}
+	}) {
+		this.state = state;
+	}
 
 	/**
 	 * Get state index
@@ -91,9 +91,9 @@ export class State {
 	 * @returns number
 	 * @memberof State
 	 */
-    public getIndex(): number {
-        return this.state.index;
-    }
+	public getIndex(): number {
+		return this.state.index;
+	}
 
 	/**
 	 * Set state index
@@ -102,10 +102,10 @@ export class State {
 	 * @returns State
 	 * @memberof State
 	 */
-    public setIndex(index: number): State {
-        this.state.index = index;
-        return this;
-    }
+	public setIndex(index: number): State {
+		this.state.index = index;
+		return this;
+	}
 
 	/**
 	 * Get state URL
@@ -113,9 +113,9 @@ export class State {
 	 * @returns _URL
 	 * @memberof State
 	 */
-    public getURL(): _URL {
-        return this.state.url;
-    }
+	public getURL(): _URL {
+		return this.state.url;
+	}
 
 	/**
 	 * Get state URL as a string
@@ -123,9 +123,9 @@ export class State {
 	 * @returns string
 	 * @memberof State
 	 */
-    public getURLPathname(): string {
-        return this.state.url.getPathname();
-    }
+	public getURLPathname(): string {
+		return this.state.url.getPathname();
+	}
 
 	/**
 	 * Get state transition
@@ -133,9 +133,9 @@ export class State {
 	 * @returns string
 	 * @memberof State
 	 */
-    public getTransition(): string {
-        return this.state.transition;
-    }
+	public getTransition(): string {
+		return this.state.transition;
+	}
 
 	/**
 	 * Get state data
@@ -143,9 +143,9 @@ export class State {
 	 * @returns IStateData
 	 * @memberof State
 	 */
-    public getData(): IStateData {
-        return this.state.data;
-    }
+	public getData(): IStateData {
+		return this.state.data;
+	}
 
 	/**
 	 * Returns the State as an Object
@@ -153,12 +153,12 @@ export class State {
 	 * @returns object
 	 * @memberof State
 	 */
-    public toJSON(): object {
-        const { url, index, transition, data }: IState = this.state;
-        return {
-            url: url.getFullPath(), index, transition, data
-        };
-    }
+	public toJSON(): object {
+		const { url, index, transition, data }: IState = this.state;
+		return {
+			url: url.getFullPath(), index, transition, data
+		};
+	}
 }
 
 /**
@@ -175,9 +175,9 @@ export class HistoryManager extends Manager<number, State> {
 	 * @memberof HistoryManager
 	 * @constructor
 	 */
-    constructor() {
-        super();
-    }
+	constructor() {
+		super();
+	}
 
 	/**
 	 * Sets the index of the state before adding to HistoryManager
@@ -186,13 +186,13 @@ export class HistoryManager extends Manager<number, State> {
 	 * @returns HistoryManager
 	 * @memberof HistoryManager
 	 */
-    public add(value: State): HistoryManager {
-        let state = value;
-        let index = this.size;
-        super.add(state);
-        state.setIndex(index);
-        return this;
-    }
+	public add(value: State): HistoryManager {
+		let state = value;
+		let index = this.size;
+		super.add(state);
+		state.setIndex(index);
+		return this;
+	}
 
 	/**
 	 * Quick way to add a State to the HistoryManager
@@ -201,9 +201,9 @@ export class HistoryManager extends Manager<number, State> {
 	 * @returns HistoryManager
 	 * @memberof HistoryManager
 	 */
-    public addState(value: IState | State): HistoryManager {
-        let state = value instanceof State ? value : new State(value);
-        this.add(state);
-        return this;
-    }
+	public addState(value: IState | State): HistoryManager {
+		let state = value instanceof State ? value : new State(value);
+		this.add(state);
+		return this;
+	}
 }

@@ -1,6 +1,6 @@
-import { Manager, ManagerItem, AdvancedManager } from "./manager.js";
-import { _URL, URLString } from "./url.js";
-import { App } from "./app.js";
+import { Manager, ManagerItem, AdvancedManager } from "./manager";
+import { _URL, URLString } from "./url";
+import { App } from "./app";
 
 /**
  * Parses strings to DOM

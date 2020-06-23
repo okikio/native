@@ -5,14 +5,13 @@ import { HistoryManager, State, IState } from "./history";
 import { ServiceManager, Service } from "./service";
 import { PageManager, Page } from "./page";
 import { CONFIG, ICONFIG } from "./config";
-
 /**
  * The App class starts the entire process, it controls all managers and all services
  *
  * @export
  * @class App
  */
-export class App {
+export declare class App {
     /**
      * A new instance of the HistoryManager
      *
@@ -21,7 +20,6 @@ export class App {
      * @memberof App
      */
     protected history: HistoryManager;
-
     /**
      * A new instance of the TransitionManager
      *
@@ -30,7 +28,6 @@ export class App {
      * @memberof App
      */
     protected transitions: TransitionManager;
-
     /**
      * A new instance of the ServiceManager
      *
@@ -39,7 +36,6 @@ export class App {
      * @memberof App
      */
     protected services: ServiceManager;
-
     /**
      * A new instance of the BlockManager
      *
@@ -48,7 +44,6 @@ export class App {
      * @memberof App
      */
     protected blocks: BlockManager;
-
     /**
      * A new instance of an EventEmitter
      *
@@ -57,7 +52,6 @@ export class App {
      * @memberof App
      */
     protected emitter: EventEmitter;
-
     /**
      * A new instance of the PageManager
      *
@@ -66,7 +60,6 @@ export class App {
      * @memberof App
      */
     protected pages: PageManager;
-
     /**
      * The current Configuration's for the framework
      *
@@ -75,17 +68,13 @@ export class App {
      * @memberof App
      */
     protected config: CONFIG;
-
     /**
      * Creates an instance of App.
      *
      * @param {(ICONFIG | CONFIG)} [config={}]
      * @memberof App
      */
-    constructor(config: object = {}) {
-        this.register(config);
-    }
-
+    constructor(config?: object);
     /**
      * For registering all managers and the configurations
      *
@@ -93,26 +82,7 @@ export class App {
      * @returns App
      * @memberof App
      */
-    public register(config: ICONFIG | CONFIG = {}): App {
-        this.config = config instanceof CONFIG ? config : new CONFIG(config);
-        this.transitions = new TransitionManager(this);
-        this.services = new ServiceManager(this);
-        this.blocks = new BlockManager(this);
-        this.history = new HistoryManager();
-        this.pages = new PageManager(this);
-        this.emitter = new EventEmitter();
-
-        let handler = (() => {
-            document.removeEventListener("DOMContentLoaded", handler);
-            window.removeEventListener("load", handler);
-            this.emitter.emit("READY ready");
-        }).bind(this);
-
-        document.addEventListener("DOMContentLoaded", handler);
-        window.addEventListener("load", handler);
-        return this;
-    }
-
+    register(config?: ICONFIG | CONFIG): App;
     /**
      * Returns the current configurations for the framework
      *
@@ -120,70 +90,49 @@ export class App {
      * @returns any
      * @memberof App
      */
-    public getConfig(...args: any): any {
-        return this.config.getConfig(...args);
-    }
-
+    getConfig(...args: any): any;
     /**
      * Return the App's EventEmitter
      *
      * @returns EventEmitter
      * @memberof App
      */
-    public getEmitter(): EventEmitter {
-        return this.emitter;
-    }
-
+    getEmitter(): EventEmitter;
     /**
      * Returns the App's BlockManager
      *
      * @returns BlockManager
      * @memberof App
      */
-    public getBlocks(): BlockManager {
-        return this.blocks;
-    }
-
+    getBlocks(): BlockManager;
     /**
      * Return the App's ServiceManager
      *
      * @returns ServiceManager
      * @memberof App
      */
-    public getServices(): ServiceManager {
-        return this.services;
-    }
-
+    getServices(): ServiceManager;
     /**
      * Return the App's PageManager
      *
      * @returns PageManager
      * @memberof App
      */
-    public getPages(): PageManager {
-        return this.pages;
-    }
-
+    getPages(): PageManager;
     /**
      * Return the App's TransitionManager
      *
      * @returns TransitionManager
      * @memberof App
      */
-    public getTransitions(): TransitionManager {
-        return this.transitions;
-    }
-
+    getTransitions(): TransitionManager;
     /**
      * Return the App's HistoryManager
      *
      * @returns HistoryManager
      * @memberof App
      */
-    public getHistory(): HistoryManager {
-        return this.history;
-    }
-
+    getHistory(): HistoryManager;
     /**
      * Returns a Block Intent Object from the App's instance of the BlockManager
      *
@@ -191,10 +140,7 @@ export class App {
      * @returns IBlockIntent
      * @memberof App
      */
-    public getBlock(key: number): BlockIntent {
-        return this.blocks.get(key);
-    }
-
+    getBlock(key: number): BlockIntent;
     /**
      * Returns an instance of a Block from the App's instance of the BlockManager
      *
@@ -202,10 +148,7 @@ export class App {
      * @returns Block
      * @memberof App
      */
-    public getActiveBlock(key: number): Block {
-        return this.blocks.getActiveBlocks().get(key);
-    }
-
+    getActiveBlock(key: number): Block;
     /**
      * Returns a Service from the App's instance of the ServiceManager
      *
@@ -213,10 +156,7 @@ export class App {
      * @returns Service
      * @memberof App
      */
-    public getService(key: number): Service {
-        return this.services.get(key);
-    }
-
+    getService(key: number): Service;
     /**
      * Returns a Transition from the App's instance of the TransitionManager
      *
@@ -224,10 +164,7 @@ export class App {
      * @returns Transition
      * @memberof App
      */
-    public getTransition(key: string): Transition {
-        return this.transitions.get(key);
-    }
-
+    getTransition(key: string): Transition;
     /**
      * Returns a State from the App's instance of the HistoryManager
      *
@@ -235,10 +172,7 @@ export class App {
      * @returns State
      * @memberof App
      */
-    public getState(key: number): State {
-        return this.history.get(key);
-    }
-
+    getState(key: number): State;
     /**
      * Based on the type, it will return either a Transition, a Service, or a State from their respective Managers
      *
@@ -247,26 +181,7 @@ export class App {
      * @returns App
      * @memberof App
      */
-    public get(type: "service" | "transition" | "state" | "block" | string, key: any): App {
-        switch (type.toLowerCase()) {
-            case "service":
-                this.getService(key);
-                break;
-            case "transition":
-                this.getTransition(key);
-                break;
-            case "state":
-                this.getState(key);
-                break;
-            case "block":
-                this.getActiveBlock(key);
-                break;
-            default:
-                throw `Error: can't get type '${type}', it is not a recognized type. Did you spell it correctly.`;
-        }
-        return this;
-    }
-
+    get(type: "service" | "transition" | "state" | "block" | string, key: any): App;
     /**
      * Returns a Page
      *
@@ -274,10 +189,7 @@ export class App {
      * @returns Promise<Page>
      * @memberof App
      */
-    public async loadPage(url: string): Promise<Page> {
-        return await this.pages.load(url);
-    }
-
+    loadPage(url: string): Promise<Page>;
     /**
      * Based on the type, it will return load a Transition, a Service, a State, or a Page from their respective Managers
      *
@@ -286,15 +198,7 @@ export class App {
      * @returns App
      * @memberof App
      */
-    public async load(type: "page" | string, key: any): Promise<any> {
-        switch (type.toLowerCase()) {
-            case "page":
-                return await this.loadPage(key);
-            default:
-                return Promise.resolve(this.get(type, key));
-        }
-    }
-
+    load(type: "page" | string, key: any): Promise<any>;
     /**
      * Adds a Block Intent to the App's instance of the BlockManager
      *
@@ -302,11 +206,7 @@ export class App {
      * @returns App
      * @memberof App
      */
-    public addBlock(blockIntent: BlockIntent): App {
-        this.blocks.add(blockIntent);
-        return this;
-    }
-
+    addBlock(blockIntent: BlockIntent): App;
     /**
      * Adds a Service to the App's instance of the ServiceManager
      *
@@ -314,11 +214,7 @@ export class App {
      * @returns App
      * @memberof App
      */
-    public addService(service: Service): App {
-        this.services.add(service);
-        return this;
-    }
-
+    addService(service: Service): App;
     /**
      * Adds a Transition to the App's instance of the TransitionManager
      *
@@ -326,11 +222,7 @@ export class App {
      * @returns App
      * @memberof App
      */
-    public addTransition(transition: Transition): App {
-        this.transitions.add(transition);
-        return this;
-    }
-
+    addTransition(transition: Transition): App;
     /**
      * Adds a State to the App's instance of the HistoryManager
      *
@@ -338,11 +230,7 @@ export class App {
      * @returns App
      * @memberof App
      */
-    public addState(state: IState | State): App {
-        this.history.addState(state);
-        return this;
-    }
-
+    addState(state: IState | State): App;
     /**
      * Based on the type, it will add either a Transition, a Service, or a State to their respective Managers
      *
@@ -351,66 +239,28 @@ export class App {
      * @returns App
      * @memberof App
      */
-    public add(type: "service" | "transition" | "state" | "block", value: any): App {
-        switch (type.toLowerCase()) {
-            case "service":
-                this.addService(value);
-                break;
-            case "transition":
-                this.addTransition(value);
-                break;
-            case "state":
-                this.addState(value);
-                break;
-            case "block":
-                this.addBlock(value);
-                break;
-            default:
-                throw `Error: can't add type '${type}', it is not a recognized type. Did you spell it correctly.`;
-        }
-        return this;
-    }
-
+    add(type: "service" | "transition" | "state" | "block", value: any): App;
     /**
      * Start the App and the ServiceManager
      *
      * @returns Promise<App>
      * @memberof App
      */
-    public async boot(): Promise<App> {
-        this.blocks.init();
-        await this.services.boot();
-        await this.blocks.boot();
-        this.services.initEvents();
-        this.blocks.initEvents();
-        this.transitions.initEvents();
-        return Promise.resolve(this);
-    }
-
+    boot(): Promise<App>;
     /**
      * Stop the App and the ServiceManager
      *
      * @returns App
      * @memberof App
      */
-    public stop(): App {
-        this.services.stop();
-        this.blocks.stop();
-        this.transitions.stopEvents();
-        return this;
-    }
-
+    stop(): App;
     /**
      * Returns the current page in the PageManager
      *
      * @returns Page
      * @memberof App
      */
-    public currentPage(): Page {
-        let currentState = this.history.last();
-        return this.pages.get(currentState.getURLPathname());
-    }
-
+    currentPage(): Page;
     /**
      * A shortcut to the App EventEmitter on method
      *
@@ -419,11 +269,7 @@ export class App {
      * @returns App
      * @memberof App
      */
-    public on(events: EventInput, callback?: ListenerCallback): App {
-        this.emitter.on(events, callback, this);
-        return this;
-    }
-
+    on(events: EventInput, callback?: ListenerCallback): App;
     /**
      * A shortcut to the App EventEmitter off method
      *
@@ -432,11 +278,7 @@ export class App {
      * @returns App
      * @memberof App
      */
-    public off(events: EventInput, callback?: ListenerCallback): App {
-        this.emitter.off(events, callback, this);
-        return this;
-    }
-
+    off(events: EventInput, callback?: ListenerCallback): App;
     /**
      * A shortcut to the App EventEmitter once method
      *
@@ -445,11 +287,7 @@ export class App {
      * @returns App
      * @memberof App
      */
-    public once(events: string, callback: ListenerCallback): App {
-        this.emitter.once(events, callback, this);
-        return this;
-    }
-
+    once(events: string, callback: ListenerCallback): App;
     /**
      * A shortcut to the App EventEmitter emit method
      *
@@ -458,8 +296,5 @@ export class App {
      * @returns App
      * @memberof App
      */
-    public emit(events: string | any[], ...args: any): App {
-        this.emitter.emit(events, ...args);
-        return this;
-    }
+    emit(events: string | any[], ...args: any): App;
 }

@@ -1,7 +1,7 @@
-import { State, Trigger, IState, Coords } from "./history.js";
-import { Service } from "./service.js";
-import { Page } from "./page.js";
-import { _URL } from "./url.js";
+import { State, Trigger, IState, Coords } from "./history";
+import { Service } from "./service";
+import { Page } from "./page";
+import { _URL } from "./url";
 
 export type LinkEvent = MouseEvent | TouchEvent;
 export type StateEvent = LinkEvent | PopStateEvent;

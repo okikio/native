@@ -1,6 +1,6 @@
-import { ConfigKeys } from "./config.js";
-import Manager from "managerjs";
-import { App } from "./app.js";
+import { Manager } from "managerjs/src/api";
+import { ConfigKeys } from "./config";
+import { App } from "./app";
 
 export type IAdvancedManager = AdvancedManager<any, ManagerItem>;
 
