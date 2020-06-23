@@ -5,7 +5,7 @@
     "publishConfig": {
         "access": "public"
     },
-    "main": "lib/api.modern.js",
+    "main": "lib/api.js",
     "umd:main": "lib/api.umd.js",
     "browser": "lib/api.umd.js",
     "unpkg": "lib/api.umd.js",
@@ -17,8 +17,8 @@
         "src"
     ],
     "scripts": {
-        "build": "microbundle build --name @okikio/event-emitter --output lib/api.js --external natives",
-        "watch": "microbundle watch --name @okikio/event-emitter --output lib/api.js --external natives",
+        "build": "microbundle build --name @okikio/event-emitter --external natives",
+        "watch": "microbundle watch --name @okikio/event-emitter --external natives",
         "release": "npm run build && npm publish --tag latest",
         "patch": "npm version patch && npm run release",
         "minor": "npm version minor && npm run release",
@@ -52,6 +52,6 @@
         "typescript": "^3.9.5"
     },
     "dependencies": {
-        "managerjs": "^1.1.6"
+        "managerjs": "^1.1.7"
     }
 }
