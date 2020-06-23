@@ -1,4 +1,4 @@
-import { EventEmitter, EventInput, ListenerCallback } from "@okikio/event-emitter";
+import { EventEmitter, EventInput, ListenerCallback } from "@okikio/event-emitter/src/api";
 export declare type AnimationTarget = string | Node | NodeList | HTMLCollection | HTMLElement[] | any[];
 export declare const getElements: (selector: string | Node) => Node[];
 export declare const getTargets: (targets: AnimationTarget) => Node[];

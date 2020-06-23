@@ -5,7 +5,7 @@
     "publishConfig": {
         "access": "public"
     },
-    "main": "lib/api.modern.js",
+    "main": "lib/api.js",
     "umd:main": "lib/api.umd.js",
     "browser": "lib/api.umd.js",
     "unpkg": "lib/api.umd.js",
@@ -17,8 +17,8 @@
         "src"
     ],
     "scripts": {
-        "build": "microbundle build --name @okikio/event-emitter --output lib/api.js --external natives",
-        "watch": "microbundle watch --name @okikio/event-emitter --output lib/api.js --external natives",
+        "build": "microbundle build --name @okikio/event-emitter --external natives",
+        "watch": "microbundle watch --name @okikio/event-emitter --external natives",
         "release": "npm run build && npm publish --tag latest",
         "patch": "npm version patch && npm run release",
         "minor": "npm version minor && npm run release",
@@ -51,18 +51,18 @@
     },
     "homepage": "https://github.com/okikio/wali#readme",
     "devDependencies": {
-        "@rollup/plugin-node-resolve": "^8.0.1",
+        "@rollup/plugin-node-resolve": "^8.1.0",
         "browser-sync": "^2.26.7",
-        "eslint": "^7.3.0",
+        "eslint": "^7.3.1",
         "gulp": "^4.0.2",
         "gulp-sass": "^4.1.0",
         "gulp-swig": "^0.9.1",
         "microbundle": "^0.12.2",
-        "rollup": "^2.17.1",
+        "rollup": "^2.18.0",
         "rollup-plugin-typescript2": "^0.27.1",
         "typescript": "^3.9.5"
     },
     "dependencies": {
-        "@okikio/event-emitter": "^1.0.5"
+        "@okikio/event-emitter": "^1.1.2"
     }
 }
