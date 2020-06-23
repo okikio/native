@@ -1,4 +1,4 @@
-import Manager from "managerjs";
+import Manager from "../node_modules/managerjs/src/api";
 
 export type ListenerCallback = (...args: any) => void;
 export interface IListener {
