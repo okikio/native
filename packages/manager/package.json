@@ -5,7 +5,7 @@
     "publishConfig": {
         "access": "public"
     },
-    "main": "lib/api.modern.js",
+    "main": "lib/api.js",
     "umd:main": "lib/api.umd.js",
     "browser": "lib/api.umd.js",
     "unpkg": "lib/api.umd.js",
