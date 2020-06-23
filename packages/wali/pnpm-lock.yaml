@@ -10,6 +10,7 @@ devDependencies:
   microbundle: 0.12.2
   rollup: 2.18.0
   rollup-plugin-typescript2: 0.27.1_rollup@2.18.0+typescript@3.9.5
+  tslib: 2.0.0
   typescript: 3.9.5
 lockfileVersion: 5.1
 packages:
@@ -7447,6 +7448,10 @@ packages:
     dev: true
     resolution:
       integrity: sha512-i/6DQjL8Xf3be4K/E6Wgpekn5Qasl1usyw++dAA35Ue5orEn65VIxOA+YvNNl9HV3qv70T7CNwjODHZrLwvd1Q==
+  /tslib/2.0.0:
+    dev: true
+    resolution:
+      integrity: sha512-lTqkx847PI7xEDYJntxZH89L2/aXInsyF2luSafe/+0fHOMjlBNXdH6th7f70qxLDhul7KZK0zC8V5ZIyHl0/g==
   /tunnel-agent/0.6.0:
     dependencies:
       safe-buffer: 5.2.1
@@ -8027,4 +8032,5 @@ specifiers:
   microbundle: ^0.12.2
   rollup: ^2.18.0
   rollup-plugin-typescript2: ^0.27.1
+  tslib: ^2.0.0
   typescript: ^3.9.5
