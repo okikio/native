@@ -131,7 +131,7 @@ export class Router extends Service {
                 let fromExec = fromRegExp.exec(from);
                 let toExec = toRegExp.exec(to);
 
-                method({ from: fromRegExp, to: toRegExp });
+                method({ from: fromExec, to: toExec });
             }
         });
     }

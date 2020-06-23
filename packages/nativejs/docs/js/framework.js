@@ -2557,7 +2557,7 @@ class Router extends Service {
             if (fromRegExp.test(from) && toRegExp.test(to)) {
                 let fromExec = fromRegExp.exec(from);
                 let toExec = toRegExp.exec(to);
-                method({ from: fromRegExp, to: toRegExp });
+                method({ from: fromExec, to: toExec });
             }
         });
     }
