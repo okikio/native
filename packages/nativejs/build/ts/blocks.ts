@@ -1,4 +1,4 @@
-import { Block, BlockIntent } from "../../src/api";
+import { Block } from "../../src/api";
 import { animate } from "walijs/src/api";
 
 //== Blocks
@@ -88,5 +88,3 @@ export class InViewBlock extends Block {
         this.unobserve();
     }
 }
-
-export const InViewBlockIntent: BlockIntent = new BlockIntent("InViewBlock", InViewBlock);

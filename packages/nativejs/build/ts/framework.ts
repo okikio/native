@@ -1,7 +1,7 @@
-import { InViewBlockIntent } from "./blocks";
-import { PJAX, App, _URL } from "../../src/api";
+import { InViewBlock } from "./blocks";
 import { getTheme, setTheme, mediaTheme } from "./theme";
 import { Splashscreen, IntroAnimation } from "./services";
+import { PJAX, App, _URL, BlockIntent, Router } from "../../src/api";
 import { Fade, Slide, SlideLeft, SlideRight, BigTransition } from "./transitions";
 
 const html = document.querySelector("html");
@@ -39,30 +39,22 @@ window.matchMedia('(prefers-color-scheme: dark)').addListener(e => {
 });
 
 const app = new App();
+const router = new Router();
 app
     .add("service", new PJAX())
     .add("service", new Splashscreen())
     .add("service", new IntroAnimation())
-    .add("block", InViewBlockIntent)
+    .add("service", router)
+
     .add("transition", new Fade())
     .add("transition", new BigTransition())
     .add("transition", new Slide())
     .add("transition", new SlideLeft())
-    .add("transition", new SlideRight());
+    .add("transition", new SlideRight())
+
+    .add("block", new BlockIntent("InViewBlock", InViewBlock));
 
 (async () => {
-    let navbarLinks = () => {
-        let { href } = window.location;
-        let navLink = document.querySelectorAll(".navbar .nav-link");
-
-        for (let item of navLink) {
-            let URLmatch = _URL.equal((item as HTMLAnchorElement).href, href);
-            let isActive = item.classList.contains("active");
-            if (!(URLmatch && isActive)) {
-                item.classList[URLmatch ? "add" : "remove"]("active");
-            }
-        }
-    };
 
     try {
         await app.boot();
@@ -70,8 +62,24 @@ app
         console.warn("App boot failed", err);
     }
 
-    app.on({
-        "READY": navbarLinks,
-        "GO": navbarLinks
-    });
+    // app.on({
+    //     "READY": navbarLinks,
+    //     "GO": navbarLinks
+    // });
+    let navLink = document.querySelectorAll(".navbar .nav-link");
+
+    for (let item of navLink) {
+        let navItem = (item as HTMLAnchorElement);
+        router.add({
+            path: navItem.getAttribute("data-path") || navItem.pathname,
+            method() {
+                let isActive = navItem.classList.contains("active");
+                if (!isActive) navItem.classList.add("active");
+                for (let nav of navLink) {
+                    if (nav !== navItem)
+                        nav.classList.remove("active");
+                }
+            }
+        });
+    }
 })();

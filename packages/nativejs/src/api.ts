@@ -13,6 +13,7 @@ export * from "./block";
 
 export * from "./app";
 export * from "./pjax";
+export * from "./router";
 
 
 

@@ -1,7 +1,6 @@
 import { Service } from "../../src/api";
 import { animate } from "walijs/src/api";
 
-//== Services
 export class Splashscreen extends Service {
     protected rootElement: HTMLElement;
     protected innerEl: HTMLElement;
@@ -26,7 +25,6 @@ export class Splashscreen extends Service {
         }
     }
 
-    // You need to override this method
     public async hide() {
         await new Promise(resolve => {
             window.setTimeout(() => {
