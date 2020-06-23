@@ -7,7 +7,7 @@
  * @template K
  * @template V
  */
-export default class Manager<K, V> {
+export class Manager<K, V> {
 	/**
 	 * The complex list of named data, to which the Manager controls
 	 *
