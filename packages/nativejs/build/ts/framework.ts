@@ -62,12 +62,7 @@ app
         console.warn("App boot failed", err);
     }
 
-    // app.on({
-    //     "READY": navbarLinks,
-    //     "GO": navbarLinks
-    // });
     let navLink = document.querySelectorAll(".navbar .nav-link");
-
     for (let item of navLink) {
         let navItem = (item as HTMLAnchorElement);
         router.add({

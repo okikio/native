@@ -1,19 +1,16 @@
-import { match, MatchFunction } from "path-to-regexp";
 import { Service } from "./service";
 import { Manager } from "./manager";
 
 export type RouteMethod = (...args: any) => any;
+export type RouteStyle = string | RegExp;
 export interface IRouteToFrom {
-    to: string,
-    from: string
+    to: RouteStyle,
+    from: RouteStyle
 }
+export type RoutePath = IRouteToFrom | RouteStyle;
 export interface IRoute {
-    path: IRouteToFrom | string,
+    path: RoutePath,
     method: RouteMethod
-}
-export interface IRoutePath {
-    to: MatchFunction<object>,
-    from: MatchFunction<object>
 }
 
 /**
@@ -28,10 +25,10 @@ export class Router extends Service {
      * List of routes inputted
      *
      * @protected
-     * @type {Manager<IRoutePath, RouteMethod>}
+     * @type {Manager<IRouteToFrom, RouteMethod>}
      * @memberof Router
      */
-    protected routes: Manager<IRoutePath, RouteMethod>;
+    protected routes: Manager<IRouteToFrom, RouteMethod>;
 
     /**
      * Creates an instance of Router.
@@ -63,49 +60,52 @@ export class Router extends Service {
     /**
      * Convert strings into path match functions
      *
-     * @param {string} path
-     * @returns {MatchFunction<object>}
+     * @param {RouteStyle} path
+     * @returns {RegExp}
      * @memberof Router
      */
-    public parsePath(path: string): MatchFunction<object> {
+    public parsePath(path: RouteStyle): RegExp {
         if (typeof path === "string")
-            return match(path, { decode: decodeURIComponent });
-        throw "[Router] only strings are accepted as paths.";
+            return new RegExp(path, "i");
+        else if (path instanceof RegExp)
+            return path;
+        throw "[Router] only regular expressions and strings are accepted as paths.";
     }
 
     /**
      * Determines if a strings counts has a path
      *
-     * @param {string} input
+     * @param {RouteStyle} input
      * @returns boolean
      * @memberof Router
      */
-    public isPath(input: string): boolean {
-        return typeof input === "string";
+    public isPath(input: RouteStyle): boolean {
+        return typeof input === "string" || input instanceof RegExp;
     }
 
     /**
      * Parse the multiple different formats for paths, into a { from, to } object
      *
-     * @param {*} input
-     * @returns {IRoutePath}
+     * @param {RouteStyle} input
+     * @returns {IRouteToFrom}
      * @memberof Router
      */
-    public parse(input: any): IRoutePath {
+    public parse(input: RoutePath): IRouteToFrom {
+        let route = (input as IRouteToFrom);
         let toFromPath: IRouteToFrom = {
-            from: "(.*)",
-            to: "(.*)"
+            from: /(.*)/g,
+            to: /(.*)/g
         };
 
-        if (this.isPath(input))
+        if (this.isPath(input as RouteStyle))
             toFromPath = {
-                from: input,
-                to: "(.*)"
+                from: input as RouteStyle,
+                to: /(.*)/g
             };
-        else if (this.isPath(input.from) && this.isPath(input.to))
-            toFromPath = input;
+        else if (this.isPath(route.from) && this.isPath(route.to))
+            toFromPath = route;
         else
-            throw "[Router] path is neither a string, or a { from, to } object.";
+            throw "[Router] path is neither a string, regular expression, or a { from, to } object.";
 
         let { from, to } = toFromPath;
         return {
@@ -123,12 +123,15 @@ export class Router extends Service {
         let from: string = this.HistoryManager.last().getURLPathname();
         let to: string = window.location.pathname;
 
-        this.routes.forEach((method: RouteMethod, path: IRoutePath) => {
-            let fromMatch = path.from(from);
-            let toMatch = path.to(to);
+        this.routes.forEach((method: RouteMethod, path: IRouteToFrom) => {
+            let fromRegExp = (path.from as RegExp);
+            let toRegExp = (path.to as RegExp);
 
-            if (fromMatch && toMatch) {
-                method({ from: fromMatch, to: toMatch });
+            if (fromRegExp.test(from) && toRegExp.test(to)) {
+                let fromExec = fromRegExp.exec(from);
+                let toExec = toRegExp.exec(to);
+
+                method({ from: fromRegExp, to: toRegExp });
             }
         });
     }

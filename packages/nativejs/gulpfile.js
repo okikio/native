@@ -97,7 +97,7 @@ task("watch", () => {
     watch(`${sassFolder}/*.scss`, series("css"));
     watch(`${tsFolder}/*.ts`, series("js"));
 
-    watch(`${jsFolder}/*.js`).on("change", browserSync.reload);
+    watch([`${jsFolder}/*.js`, `src/*.ts`]).on("change", browserSync.reload);
     watch(`${htmlFolder}/*.html`).on("change", browserSync.reload);
 });
 
