@@ -6,7 +6,7 @@ _Before even getting started, note you will most likely need to polyfill `wali` 
 
 ## Getting started
 
-`npm install walijs`, `yarn add walijs`, or `<script src="https://unpkg.com/walijs@latest/lib/api.min.js"></script>` and start animating things:
+`npm install walijs`, `yarn add walijs`, or `<script src="https://unpkg.com/walijs@latest/lib/api.umd.js"></script>` and start animating things:
 
 ```javascript
 import { animate } from "walijs";
@@ -422,16 +422,17 @@ the following browsers:
 
 ## Content delivery networks
 
-Wali is available on [unpkg](https://unpkg.com/walijs@latest/lib/api.min.js) and [jsdelivr](https://cdn.jsdelivr.net/npm/walijs@latest/lib/api.min.js), I'll probs add some other later.
+Wali is available on [unpkg](https://unpkg.com/walijs@latest/lib/api.umd.js) `https://unpkg.com/walijs@latest/lib/api.umd.js` and [jsdelivr](https://cdn.jsdelivr.net/npm/walijs@latest/lib/api.umd.js) `https://cdn.jsdelivr.net/npm/walijs@latest/lib/api.umd.js`, I'll probs add some other later.
 
 ```javascript
 // Notice the .es.js file name extension, that represents ES Modules
 // There is also,
-//      .min.js - Minified UMD Module
+//      .modern.js - Modern ES Module
 //      .umd.js - Normal UMD Module
 //      .cjs.js - CommonJS Module
+//      .es.js - ES Module
 // and
-//      .js - The Fresh JS, it's still using ES Modules but with the expectation of a node.js enviroment
+//      .js - The Fresh JS, uses UMD.
 import { animate } from "https://cdn.jsdelivr.net/npm/walijs@latest/lib/api.es.js";
 
 animate({
