@@ -10,130 +10,161 @@ The Manager class makes Maps easier to use, as well as adding 5 methods, **last*
 
 All the existing Map methods, and ...
 
--   ```js
-    Manager.prototype.add((value: V));
+#### Manager#getMap
+```js
+Manager.prototype.getMap();
 
-    /**
-     * Adds a value to Manager, and uses the current size of the Manager as it's key, it works best when all the key in the Manager are numbers
-     *
-     * @param  {V} value
-     * @returns Manager<K, V>
-     */
+/**
+ * Returns the Manager class's list
+ *
+ * @returns Map<K, V>
+ * @memberof Manager
+ */
 
-    // Example:
-    const arr = Object.entries([1, 2, 3, 4, 5]);
-    const manager = new Manager(arr);
-    manager.add(6).add(7);
-    console.log(manager.get(5)); //= 6
-    ```
+// Example:
+const arr = Array.from([1, 2, 3, 4, 5].entries());
+const manager = new Manager(arr);
+console.log(manager.getMap()); //= Map(5) { 0 => 1, 1 => 2, 2 => 3, 3 => 4, 4 => 5 }
+```
 
--   ```js
-    Manager.prototype.keys();
+#### Manager#add
+```js
+Manager.prototype.add(value: V);
 
-    /**
-     * Returns the keys of all items stored in the Manager as an Array
-     *
-     * @returns Array<K>
-     * @memberof Manager
-     */
+/**
+ * Adds a value to Manager, and uses the current size of the Manager as it's key, it works best when all the key in the Manager are numbers
+ *
+ * @param  {V} value
+ * @returns Manager<K, V>
+ */
 
-    // Example:
-    const arr = Object.entries([1, 2, 3, 4, 5]);
-    const manager = new Manager(arr);
-    console.log(manager.keys()); //= [0, 1, 2, 3, 4]
-    ```
+// Example:
+const arr = Array.from([1, 2, 3, 4, 5].entries());
+const manager = new Manager(arr);
+manager.add(6).add(7);
+console.log(manager.get(5)); //= 6
+```
 
--   ```js
-    Manager.prototype.values();
 
-    /**
-     * Returns the values of all items stored in the Manager as an Array
-     *
-     * @returns Array<V>
-     * @memberof Manager
-     */
+#### Manager#keys
+```js
+Manager.prototype.keys();
 
-    // Example:
-    const arr = Object.entries([1, 2, 3, 4, 5]);
-    const manager = new Manager(arr);
-    console.log(manager.values()); //= [1, 2, 3, 4, 5]
-    ```
+/**
+ * Returns the keys of all items stored in the Manager as an Array
+ *
+ * @returns Array<K>
+ * @memberof Manager
+ */
 
-*   ```js
-    Manager.prototype.last((distance: number = 1));
+// Example:
+const arr = Array.from([1, 2, 3, 4, 5].entries());
+const manager = new Manager(arr);
+console.log(manager.keys()); //= [0, 1, 2, 3, 4]
+```
 
-    /**
-     * Returns the last item in the Manager who's index is a certain distance from the last item in the Manager
-     *
-     * @param {number} [distance=1]
-     * @returns V
-     * @memberof Manager
-     */
 
-    // Example:
-    const arr = Object.entries([1, 2, 3, 4, 5]);
-    const manager = new Manager(arr);
-    console.log(manager.last()); //= 5
-    console.log(manager.last(3)); //= 3
-    ```
+#### Manager#values
+```js
+Manager.prototype.values();
 
--   ```js
-    Manager.prototype.prev();
+/**
+ * Returns the values of all items stored in the Manager as an Array
+ *
+ * @returns Array<V>
+ * @memberof Manager
+ */
 
-    /**
-     * Returns the second last item in the Manager
-     *
-     * @public
-     * @returns V
-     */
+// Example:
+const arr = Array.from([1, 2, 3, 4, 5].entries());
+const manager = new Manager(arr);
+console.log(manager.values()); //= [1, 2, 3, 4, 5]
+```
 
-    // Example:
-    const arr = Object.entries([1, 2, 3, 4, 5]);
-    const manager = new Manager(arr);
-    console.log(manager.prev()); //= 4
-    ```
 
-*   ```js
-    Manager.prototype.methodCall((method: string), (...args: any));
+#### Manager#last
+```js
+Manager.prototype.last(distance: number = 1);
 
-    /**
-     * Calls a method for all items that are currently in it's list
-     *
-     * @param {string} method
-     * @param {Array<any>} [args=[]]
-     * @returns Manager<K, V>
-     * @memberof Manager
-     */
+/**
+ * Returns the last item in the Manager who's index is a certain distance from the last item in the Manager
+ *
+ * @param {number} [distance=1]
+ * @returns V
+ * @memberof Manager
+ */
 
-    // Example:
-    const manager = new Manager();
-    manager.set("x", { print: console.log });
-    manager.set("y", { print: console.log });
-    manager.methodCall("print", Date.now());
-    ```
+// Example:
+const arr = Array.from([1, 2, 3, 4, 5].entries());
+const manager = new Manager(arr);
+console.log(manager.last()); //= 5
+console.log(manager.last(3)); //= 3
+```
 
--   ```js
-    Manager.prototype.asyncMethodCall((method: string), (...args: any[]));
 
-    /**
-     * Asynchronously calls a method for all items that are currently in it's list, similar to methodCall except the loop waits for the asynchronous method to run, before the loop continues on to the the next method
-     *
-     * @param {string} method
-     * @param {Array<any>} [args=[]]
-     * @returns Promise<Manager<K, V>>
-     * @memberof Manager
-     */
+#### Manager#prev
+```js
+Manager.prototype.prev();
 
-    // Example:
-    const manager = new Manager();
-    let fn = (url = "https://google.com") => {
-        return async () => {
-            let data = await fetch(url);
-            console.log(`(${data.url})`);
-        };
+/**
+ * Returns the second last item in the Manager
+ *
+ * @public
+ * @returns V
+ */
+
+// Example:
+const arr = Array.from([1, 2, 3, 4, 5].entries());
+const manager = new Manager(arr);
+console.log(manager.prev()); //= 4
+```
+
+
+#### Manager#methodCall
+```js
+Manager.prototype.methodCall(method: string, ...args: any);
+
+/**
+ * Calls a method for all items that are currently in it's list
+ *
+ * @param {string} method
+ * @param {Array<any>} [args=[]]
+ * @returns Manager<K, V>
+ * @memberof Manager
+ */
+
+// Example:
+const manager = new Manager();
+manager.set("x", { print: console.log });
+manager.set("y", { print: console.log });
+manager.methodCall("print", Date.now());
+```
+
+
+#### Manager#asyncMethodCall
+```js
+Manager.prototype.asyncMethodCall(method: string, ...args: any[]);
+
+/**
+ * Asynchronously calls a method for all items that are currently in it's list, similar to methodCall except the loop waits for the asynchronous method to run, before the loop continues on to the the next method
+ *
+ * @param {string} method
+ * @param {Array<any>} [args=[]]
+ * @returns Promise<Manager<K, V>>
+ * @memberof Manager
+ */
+
+// Example:
+const manager = new Manager();
+let fn = (url = "https://google.com") => {
+    return async () => {
+        let data = await fetch(url);
+        console.log(`(${data.url})`);
     };
+};
 
-    manager.set("x", { print: fn() });
-    manager.set("y", { print: fn("https://github.com") });
-    manager.asyncMethodCall("print"); //= (https://www.google.com/), (https://github.com/)
-    ```
+manager.set("x", { print: fn() });
+manager.set("y", { print: fn("https://github.com") });
+manager.asyncMethodCall("print"); //= (https://www.google.com/), (https://github.com/)
+```
+

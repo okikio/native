@@ -22,7 +22,8 @@
         "release": "npm run build && npm publish --tag latest",
         "patch": "npm version patch && npm run release",
         "minor": "npm version minor && npm run release",
-        "major": "npm version major && npm run release"
+        "major": "npm version major && npm run release",
+        "test": "mocha"
     },
     "repository": {
         "type": "git",
@@ -48,8 +49,11 @@
     },
     "homepage": "https://github.com/okikio/manager#readme",
     "devDependencies": {
+        "chai": "^4.2.0",
         "eslint": "^7.2.0",
         "microbundle": "^0.12.2",
+        "mocha": "^8.0.1",
+        "node-fetch": "^2.6.0",
         "typescript": "^3.9.5"
     }
 }

@@ -1,2 +1,215 @@
-function n(n){var t;if("undefined"!=typeof Symbol){if(Symbol.asyncIterator&&null!=(t=n[Symbol.asyncIterator]))return t.call(n);if(Symbol.iterator&&null!=(t=n[Symbol.iterator]))return t.call(n)}throw new TypeError("Object is not async iterable")}function t(n,r,i){if(!n.s){if(i instanceof e){if(!i.s)return void(i.o=t.bind(null,n,r));1&r&&(r=i.s),i=i.v}if(i&&i.then)return void i.then(t.bind(null,n,r),t.bind(null,n,2));n.s=r,n.v=i;var u=n.o;u&&u(n)}}var e=function(){function n(){}return n.prototype.then=function(e,r){var i=new n,u=this.s;if(u){var o=1&u?e:r;if(o){try{t(i,1,o(this.v))}catch(n){t(i,2,n)}return i}return this}return this.o=function(n){try{var u=n.v;1&n.s?t(i,1,e?e(u):u):r?t(i,1,r(u)):t(i,2,u)}catch(n){t(i,2,n)}},i},n}();function r(n){return n instanceof e&&1&n.s}function i(n,i,u){for(var o;;){var h=n();if(r(h)&&(h=h.v),!h)return f;if(h.then){o=0;break}var f=u();if(f&&f.then){if(!r(f)){o=1;break}f=f.s}if(i){var a=i();if(a&&a.then&&!r(a)){o=2;break}}}var c=new e,s=t.bind(null,c,2);return(0===o?h.then(v):1===o?f.then(l):a.then(d)).then(void 0,s),c;function l(e){f=e;do{if(i&&(a=i())&&a.then&&!r(a))return void a.then(d).then(void 0,s);if(!(h=n())||r(h)&&!h.v)return void t(c,1,f);if(h.then)return void h.then(v).then(void 0,s);r(f=u())&&(f=f.v)}while(!f||!f.then);f.then(l).then(void 0,s)}function v(n){n?(f=u())&&f.then?f.then(l).then(void 0,s):l(f):t(c,1,f)}function d(){(h=n())?h.then?h.then(v).then(void 0,s):v(h):t(c,1,f)}}function u(n,t){try{var e=n()}catch(n){return t(n)}return e&&e.then?e.then(void 0,t):e}function o(n,t){try{var e=n()}catch(n){return t(!0,n)}return e&&e.then?e.then(t.bind(null,!1),t.bind(null,!0)):t(!1,e)}exports.Manager=function(){function t(n){this.map=new Map(n)}var e,r=t.prototype;return r.getMap=function(){return this.map},r.get=function(n){return this.map.get(n)},r.keys=function(){return[].concat(this.map.keys())},r.values=function(){return[].concat(this.map.values())},r.set=function(n,t){return this.map.set(n,t),this},r.add=function(n){return this.set(this.size,n),this},r.last=function(n){void 0===n&&(n=1);var t=this.keys()[this.size-n];return this.get(t)},r.prev=function(){return this.last(2)},r.delete=function(n){return this.map.delete(n),this},r.clear=function(){return this.map.clear(),this},r.has=function(n){return this.map.has(n)},r.entries=function(){return this.map.entries()},r.forEach=function(n,t){return void 0===n&&(n=function(){}),this.map.forEach(n,t),this},r[Symbol.iterator]=function(){return this.entries()},r.methodCall=function(n){var t=arguments;return this.forEach(function(e){e[n].apply(e,[].slice.call(t,1))}),this},r.asyncMethodCall=function(t){try{var e,r,h,f,a,c=this,s=arguments,l=!0,v=!1,d=o(function(){return u(function(){r=n(c.map);var e=i(function(){return!!Promise.resolve(r.next()).then(function(n){return l=h.done,h=n,Promise.resolve(h.value).then(function(n){return f=n,!l})})},function(){return!!(l=!0)},function(){var n=f[1];return Promise.resolve(n[t].apply(n,[].slice.call(s,1))).then(function(){})});if(e&&e.then)return e.then(function(){})},function(n){v=!0,a=n})},function(n,t){function i(r){if(e)return r;if(n)throw t;return t}var u=o(function(){var n=function(){if(!l&&null!=r.return)return Promise.resolve(r.return()).then(function(){})}();if(n&&n.then)return n.then(function(){})},function(n,t){if(v)throw a;if(n)throw t;return t});return u&&u.then?u.then(i):i(u)});return Promise.resolve(d&&d.then?d.then(function(n){return e?n:c}):e?d:c)}catch(n){return Promise.reject(n)}},(e=[{key:"size",get:function(){return this.map.size}}])&&function(n,t){for(var e=0;e<t.length;e++){var r=t[e];r.enumerable=r.enumerable||!1,r.configurable=!0,"value"in r&&(r.writable=!0),Object.defineProperty(n,r.key,r)}}(t.prototype,e),t}();
+(function (factory) {
+    if (typeof module === "object" && typeof module.exports === "object") {
+        var v = factory(require, exports);
+        if (v !== undefined) module.exports = v;
+    }
+    else if (typeof define === "function" && define.amd) {
+        define(["require", "exports"], factory);
+    }
+})(function (require, exports) {
+    "use strict";
+    Object.defineProperty(exports, "__esModule", { value: true });
+    exports.Manager = void 0;
+    /**
+     * Manages complex lists of named data, eg. A page can be stored in a list by of other pages with the url being how the page is stored in the list. Managers use Maps to store data.
+     *
+     * @export
+     * @class Manager
+     * @template K
+     * @template V
+     */
+    class Manager {
+        /**
+         * Creates an instance of Manager.
+         *
+         * @param {Array<[K, V]>} [value]
+         * @memberof Manager
+         */
+        constructor(value) {
+            this.map = new Map(value);
+        }
+        /**
+         * Returns the Manager class's list
+         *
+         * @returns Map<K, V>
+         * @memberof Manager
+         */
+        getMap() {
+            return this.map;
+        }
+        /**
+         * Get a value stored in the Manager
+         *
+         * @public
+         * @param  {K} key - The key to find in the Manager's list
+         * @returns V
+         */
+        get(key) {
+            return this.map.get(key);
+        }
+        /**
+         * Returns the keys of all items stored in the Manager as an Array
+         *
+         * @returns Array<K>
+         * @memberof Manager
+         */
+        keys() {
+            return Array.from(this.map.keys());
+        }
+        /**
+         * Returns the values of all items stored in the Manager as an Array
+         *
+         * @returns Array<V>
+         * @memberof Manager
+         */
+        values() {
+            return Array.from(this.map.values());
+        }
+        /**
+         * Set a value stored in the Manager
+         *
+         * @public
+         * @param  {K} key - The key where the value will be stored
+         * @param  {V} value - The value to store
+         * @returns Manager<K, V>
+         */
+        set(key, value) {
+            this.map.set(key, value);
+            return this;
+        }
+        /**
+         * Adds a value to Manager, and uses the current size of the Manager as it's key, it works best when all the key in the Manager are numbers
+         *
+         * @public
+         * @param  {V} value
+         * @returns Manager<K, V>
+         */
+        add(value) {
+            // @ts-ignore
+            this.set(this.size, value);
+            return this;
+        }
+        /**
+         * Returns the total number of items stored in the Manager
+         *
+         * @public
+         * @returns Number
+         */
+        get size() {
+            return this.map.size;
+        }
+        /**
+         * Returns the last item in the Manager who's index is a certain distance from the last item in the Manager
+         *
+         * @param {number} [distance=1]
+         * @returns V | undefined
+         * @memberof Manager
+         */
+        last(distance = 1) {
+            let key = this.keys()[this.size - distance];
+            return this.get(key);
+        }
+        /**
+         * Returns the second last item in the Manager
+         *
+         * @public
+         * @returns V
+         */
+        prev() {
+            return this.last(2);
+        }
+        /**
+         * Removes a value stored in the Manager, via the key
+         *
+         * @public
+         * @param  {K} key - The key for the key value pair to be removed
+         * @returns Manager<K, V>
+         */
+        delete(key) {
+            this.map.delete(key);
+            return this;
+        }
+        /**
+         * Clear the Manager of all its contents
+         *
+         * @public
+         * @returns Manager<K, V>
+         */
+        clear() {
+            this.map.clear();
+            return this;
+        }
+        /**
+         * Checks if the Manager contains a certain key
+         *
+         * @public
+         * @param {K} key
+         * @returns boolean
+         */
+        has(key) {
+            return this.map.has(key);
+        }
+        /**
+         * Returns a new Iterator object that contains an array of [key, value] for each element in the Map object in insertion order.
+         *
+         * @public
+         * @returns IterableIterator<[K, V]>
+         */
+        entries() {
+            return this.map.entries();
+        }
+        /**
+         * Iterates through the Managers contents, calling a callback function every iteration
+         *
+         * @param {*} [callback=(...args: any): void => { }]
+         * @param {object} context
+         * @returns Manager<K, V>
+         * @memberof Manager
+         */
+        forEach(callback = (...args) => { }, context) {
+            this.map.forEach(callback, context);
+            return this;
+        }
+        /**
+         * Allows iteration via the for..of, learn more: [https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Iterators_and_Generators]
+         *
+         * @returns
+         * @memberof Manager
+         */
+        [Symbol.iterator]() {
+            return this.entries();
+        }
+        /**
+         * Calls the method of a certain name for all items that are currently installed
+         *
+         * @param {string} method
+         * @param {Array<any>} [args=[]]
+         * @returns Manager<K, V>
+         * @memberof Manager
+         */
+        methodCall(method, ...args) {
+            this.forEach((item) => {
+                // @ts-ignore
+                item[method](...args);
+            });
+            return this;
+        }
+        /**
+         * Asynchronously calls the method of a certain name for all items that are currently installed, similar to methodCall
+         *
+         * @param {string} method
+         * @param {Array<any>} [args=[]]
+         * @returns Promise<Manager<K, V>>
+         * @memberof Manager
+         */
+        async asyncMethodCall(method, ...args) {
+            for await (let [, item] of this.map) {
+                // @ts-ignore
+                await item[method](...args);
+            }
+            return this;
+        }
+    }
+    exports.Manager = Manager;
+});
 //# sourceMappingURL=api.js.map

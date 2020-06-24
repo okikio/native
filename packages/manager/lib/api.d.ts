@@ -87,9 +87,9 @@ export declare class Manager<K, V> {
      * Returns the second last item in the Manager
      *
      * @public
-     * @returns V | undefined
+     * @returns V
      */
-    prev(): V | undefined;
+    prev(): V;
     /**
      * Removes a value stored in the Manager, via the key
      *

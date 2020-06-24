@@ -55,7 +55,7 @@ export class Manager<K, V> {
      * @memberof Manager
      */
 	public keys(): Array<K> {
-		return [...this.map.keys()];
+		return Array.from(this.map.keys());
 	}
 
 	/**
@@ -65,7 +65,7 @@ export class Manager<K, V> {
      * @memberof Manager
 	 */
 	public values(): Array<V> {
-		return [...this.map.values()];
+		return Array.from(this.map.values());
 	}
 
 	/**
@@ -120,9 +120,9 @@ export class Manager<K, V> {
 	 * Returns the second last item in the Manager
 	 *
 	 * @public
-	 * @returns V | undefined
+	 * @returns V
 	 */
-	public prev(): V | undefined {
+	public prev(): V {
 		return this.last(2);
 	}
 
@@ -206,6 +206,7 @@ export class Manager<K, V> {
 	 */
 	public methodCall(method: string, ...args: any): Manager<K, V> {
 		this.forEach((item: V) => {
+			// @ts-ignore
 			item[method](...args);
 		});
 		return this;
@@ -221,6 +222,7 @@ export class Manager<K, V> {
 	 */
 	public async asyncMethodCall(method: string, ...args: any): Promise<Manager<K, V>> {
 		for await (let [, item] of this.map) {
+			// @ts-ignore
 			await item[method](...args);
 		}
 		return this;
