@@ -17,8 +17,8 @@
         "src"
     ],
     "scripts": {
+        "watch": "tsc --watch",
         "build": "microbundle build --name managerjs --output lib/api.js --external natives",
-        "watch": "microbundle watch --name managerjs --output lib/api.js --external natives",
         "release": "npm run build && npm publish --tag latest",
         "patch": "npm version patch && npm run release",
         "minor": "npm version minor && npm run release",

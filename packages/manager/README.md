@@ -1,21 +1,55 @@
 # Manager
 
-A superset of the Map class called Manager that allows for complex management of data.
+A superset of the Map class called Manager that manages complex amounts of data.
+
+## Table of Contents
+- [Manager](#manager)
+  - [Table of Contents](#table-of-contents)
+  - [Installation](#installation)
+  - [Getting started](#getting-started)
+  - [API](#api)
+      - [Manager#getMap()](#managergetmap)
+      - [Manager#add(value)](#manageraddvalue)
+      - [Manager#keys()](#managerkeys)
+      - [Manager#values()](#managervalues)
+      - [Manager#last(distance)](#managerlastdistance)
+      - [Manager#prev()](#managerprev)
+      - [Manager#methodCall(method, ...)](#managermethodcallmethod-)
+      - [Manager#asyncMethodCall(method, ...)](#managerasyncmethodcallmethod-)
+      - [Manager#@@iterator](#manageriterator)
+
+
+## Installation
+You can install Manager from `npm` via `npm i managerjs` or `yarn add managerjs`. You can use Manager on the web via [unpkg](https://unpkg.com/managerjs@latest/lib/api.umd.js) `https://unpkg.com/managerjs@latest/lib/api.umd.js` or [jsdelivr](https://cdn.jsdelivr.net/npm/managerjs@latest/lib/api.umd.js) `https://cdn.jsdelivr.net/npm/managerjs@latest/lib/api.umd.js`.
+
+Once installed it can be used like this:
+```javascript
+import { Manager } from "managerjs";
+import { Manager } from "https://unpkg.com/managerjs@latest/lib/api.umd.js) `https://unpkg.com/managerjs@latest/lib/api.es.js";
+// Or
+import { Manager } from "https://unpkg.com/managerjs@latest/lib/api.umd.js) `https://unpkg.com/managerjs@latest/lib/api.modern.js";
+
+// Via script tag
+<script src="https://unpkg.com/managerjs@latest/lib/api.umd.js"></script>
+// Do note, on the web you need to do this, if you installed it via the script tag:
+const { Manager } = window.managerjs;
+```
+
 
 ## Getting started
 
-The Manager class makes Maps easier to use, as well as adding 5 methods, **last**, **prev**, **methodCall**, **asyncMethodCall**, **add**, **keys** and **values** (the behavior of the keys and values methods are slightly modified, to return an Array of keys/values instead of an iterator).
+The Manager class makes Maps easier to use, as well as adding 6 methods, **getMap**, **last**, **prev**, **methodCall**, **asyncMethodCall**, **add**, **keys** and **values** (the behavior of the keys and values methods are slightly modified, to return an Array of keys/values instead of an iterator).
 
-### Methods
+## API
 
 All the existing Map methods, and ...
 
-#### Manager#getMap
+#### Manager#getMap()
 ```js
 Manager.prototype.getMap();
 
 /**
- * Returns the Manager class's list
+ * Returns the Manager class's Map
  *
  * @returns Map<K, V>
  * @memberof Manager
@@ -27,7 +61,7 @@ const manager = new Manager(arr);
 console.log(manager.getMap()); //= Map(5) { 0 => 1, 1 => 2, 2 => 3, 3 => 4, 4 => 5 }
 ```
 
-#### Manager#add
+#### Manager#add(value)
 ```js
 Manager.prototype.add(value: V);
 
@@ -46,7 +80,7 @@ console.log(manager.get(5)); //= 6
 ```
 
 
-#### Manager#keys
+#### Manager#keys()
 ```js
 Manager.prototype.keys();
 
@@ -64,7 +98,7 @@ console.log(manager.keys()); //= [0, 1, 2, 3, 4]
 ```
 
 
-#### Manager#values
+#### Manager#values()
 ```js
 Manager.prototype.values();
 
@@ -82,7 +116,7 @@ console.log(manager.values()); //= [1, 2, 3, 4, 5]
 ```
 
 
-#### Manager#last
+#### Manager#last(distance)
 ```js
 Manager.prototype.last(distance: number = 1);
 
@@ -102,7 +136,7 @@ console.log(manager.last(3)); //= 3
 ```
 
 
-#### Manager#prev
+#### Manager#prev()
 ```js
 Manager.prototype.prev();
 
@@ -120,7 +154,7 @@ console.log(manager.prev()); //= 4
 ```
 
 
-#### Manager#methodCall
+#### Manager#methodCall(method, ...)
 ```js
 Manager.prototype.methodCall(method: string, ...args: any);
 
@@ -140,13 +174,12 @@ manager.set("y", { print: console.log });
 manager.methodCall("print", Date.now());
 ```
 
-
-#### Manager#asyncMethodCall
+#### Manager#asyncMethodCall(method, ...)
 ```js
 Manager.prototype.asyncMethodCall(method: string, ...args: any[]);
 
 /**
- * Asynchronously calls a method for all items that are currently in it's list, similar to methodCall except the loop waits for the asynchronous method to run, before the loop continues on to the the next method
+ * Asynchronously calls a method for all items that are currently in it's map, similar to methodCall except the loop waits for the asynchronous method to run, before the loop continues on to the the next method
  *
  * @param {string} method
  * @param {Array<any>} [args=[]]
@@ -166,5 +199,22 @@ let fn = (url = "https://google.com") => {
 manager.set("x", { print: fn() });
 manager.set("y", { print: fn("https://github.com") });
 manager.asyncMethodCall("print"); //= (https://www.google.com/), (https://github.com/)
+```
+
+#### Manager#@@iterator
+```js
+/**
+ * Allows iteration via the for..of, learn more: [https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Iterators_and_Generators]
+ *
+ * @returns IterableIterator<[K, V]>
+ * @memberof Manager
+ */
+
+// Example:
+const arr = Array.from([1, 2, 3, 4, 5].entries());
+const manager = new Manager(arr);
+for (let [key, value] of manager) {
+    console.log({ key, value }); //= { key: ..., value: ... }
+}
 ```
 

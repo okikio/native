@@ -2,6 +2,11 @@ const { Manager } = require("../lib/api");
 const fetch = require("node-fetch");
 const { expect } = require("chai");
 
+/*
+    Find: @(returns|type) \{([\w_-{,<[\]\s>]+)\}
+    Replace: @$1 $2
+*/
+
 describe("Manager", () => {
     let arr = [1, 2, 3, 4, 5];
     let entries = Array.from(arr.entries());
@@ -170,6 +175,16 @@ describe("Manager", () => {
                 "https://github.com/favicon.ico",
             ]);
             console.log(list);
+        });
+    });
+
+    describe("#@@iterator", function () {
+        it("test if it can be iterated over", () => {
+            let entries = manager.entries();
+            for (let [key, value] of manager) {
+                let [$key, $value] = entries.next().value;
+                expect([key, value]).to.deep.equal([$key, $value]);
+            }
         });
     });
 });
