@@ -229,7 +229,7 @@ export class EventEmitter extends Manager<string, Event> {
             let listener = new Listener({ name, callback, scope });
             for (; i < len; i++) {
                 value = event.get(i);
-                console.log(value);
+                
                 if (
                     value.getCallback() === listener.getCallback() &&
                     value.getScope() === listener.getScope()
