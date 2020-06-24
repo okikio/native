@@ -1,6 +1,6 @@
 {
     "name": "managerjs",
-    "version": "1.1.9",
+    "version": "1.1.10",
     "description": "A superset of the Map class called Manager that allows for complex management of data.",
     "publishConfig": {
         "access": "public"
