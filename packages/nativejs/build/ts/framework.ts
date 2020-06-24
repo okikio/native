@@ -1,4 +1,4 @@
-import { InViewBlock } from "./blocks";
+import { InViewBlock, IntroBlock } from "./blocks";
 import { getTheme, setTheme, mediaTheme } from "./theme";
 import { Splashscreen, IntroAnimation } from "./services";
 import { PJAX, App, _URL, BlockIntent, Router } from "../../src/api";
@@ -39,12 +39,14 @@ window.matchMedia('(prefers-color-scheme: dark)').addListener(e => {
 });
 
 const app = new App();
-const router = new Router();
+let splashscreen: Splashscreen;
+let router: Router;
+
 app
     .add("service", new PJAX())
-    .add("service", new Splashscreen())
-    .add("service", new IntroAnimation())
-    .add("service", router)
+    .add("service", splashscreen = new Splashscreen())
+    // .add("service", new IntroAnimation())
+    .add("service", router = new Router())
 
     .add("transition", new Fade())
     .add("transition", new BigTransition())
@@ -52,29 +54,36 @@ app
     .add("transition", new SlideLeft())
     .add("transition", new SlideRight())
 
-    .add("block", new BlockIntent("InViewBlock", InViewBlock));
+    .add("block", new BlockIntent({
+        name: "IntroBlock",
+        block: IntroBlock
+    }))
+    .add("block", new BlockIntent({
+        name: "InViewBlock",
+        block: InViewBlock
+    }));
 
 (async () => {
-
     try {
         await app.boot();
-    } catch (err) {
-        console.warn("App boot failed", err);
-    }
 
-    let navLink = document.querySelectorAll(".navbar .nav-link");
-    for (let item of navLink) {
-        let navItem = (item as HTMLAnchorElement);
-        router.add({
-            path: navItem.getAttribute("data-path") || navItem.pathname,
-            method() {
-                let isActive = navItem.classList.contains("active");
-                if (!isActive) navItem.classList.add("active");
-                for (let nav of navLink) {
-                    if (nav !== navItem)
-                        nav.classList.remove("active");
+        let navLink = document.querySelectorAll(".navbar .nav-link");
+        for (let item of navLink) {
+            let navItem = (item as HTMLAnchorElement);
+            router.add({
+                path: navItem.getAttribute("data-path") || navItem.pathname,
+                method() {
+                    let isActive = navItem.classList.contains("active");
+                    if (!isActive) navItem.classList.add("active");
+                    for (let nav of navLink) {
+                        if (nav !== navItem)
+                            nav.classList.remove("active");
+                    }
                 }
-            }
-        });
+            });
+        }
+    } catch (err) {
+        splashscreen.show();
+        console.warn("[App] Boot failed,", err);
     }
 })();

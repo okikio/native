@@ -107,11 +107,12 @@ export class ServiceManager extends AdvancedManager<number, Service> {
 	/**
 	 * Call the boot method for all Services
 	 *
-	 * @returns Promise<void>
+	 * @returns ServiceManager
 	 * @memberof ServiceManager
 	 */
-	public async boot(): Promise<void> {
-		await this.asyncMethodCall("boot");
+	public boot(): ServiceManager {
+		this.methodCall("boot");
+		return this;
 	}
 
 	/**

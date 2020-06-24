@@ -212,7 +212,7 @@ export class PJAX extends Service {
         }
 
         let href = this.getHref(el);
-        this.EventEmitter.emit("ANCHOR-CLICK CLICK click", event);
+        this.EventEmitter.emit("ANCHOR_CLICK CLICK", event);
         this.go({ href, trigger: el, event });
     }
 
@@ -300,10 +300,10 @@ export class PJAX extends Service {
             // Based on the direction of the state change either remove or add a state
             if (trigger === "back") {
                 this.HistoryManager.delete(currentIndex);
-                this.EventEmitter.emit(`POPSTATE-BACK`, event);
+                this.EventEmitter.emit(`POPSTATE_BACK`, event);
             } else if (trigger === "forward") {
                 this.HistoryManager.addState({ url, transition, data });
-                this.EventEmitter.emit(`POPSTATE-FORWARD`, event);
+                this.EventEmitter.emit(`POPSTATE_FORWARD`, event);
             }
         } else {
             // Add new state
@@ -332,7 +332,7 @@ export class PJAX extends Service {
 
             this.HistoryManager.add(state);
             this.changeState("push", state);
-            this.EventEmitter.emit("HISTORY-NEW-ITEM", event);
+            this.EventEmitter.emit("HISTORY_NEW_ITEM", event);
         }
 
         if (event) {
@@ -340,7 +340,7 @@ export class PJAX extends Service {
             event.preventDefault();
         }
 
-        this.EventEmitter.emit("GO go", event);
+        this.EventEmitter.emit("GO", event);
         return this.load({ oldHref: currentURL.getPathname(), href, trigger, transitionName });
     }
 
@@ -384,12 +384,12 @@ export class PJAX extends Service {
             let oldPage = this.PageManager.get(oldHref);
             let newPage: Page;
 
-            this.EventEmitter.emit("PAGE-LOADING", { href, oldPage, trigger });
+            this.EventEmitter.emit("PAGE_LOADING", { href, oldPage, trigger });
             try {
                 try {
                     newPage = await this.PageManager.load(href);
                     this.transitionStart();
-                    this.EventEmitter.emit("PAGE-LOAD-COMPLETE", { newPage, oldPage, trigger });
+                    this.EventEmitter.emit("PAGE_LOAD_COMPLETE", { newPage, oldPage, trigger });
                 } catch (err) {
                     throw `[PJAX] Page load error: ${err}`;
                 }
@@ -397,9 +397,10 @@ export class PJAX extends Service {
                 // --
                 // --
 
-                this.EventEmitter.emit("NAVIGATION-START", { oldPage, newPage, trigger, transitionName });
+                this.EventEmitter.emit("NAVIGATION_START", { oldPage, newPage, trigger, transitionName });
                 try {
-                    this.EventEmitter.emit("TRANSITION-START", transitionName);
+                    this.EventEmitter.emit("TRANSITION_START", transitionName);
+
                     let transition = await this.TransitionManager.boot({
                         name: transitionName,
                         oldPage,
@@ -407,13 +408,13 @@ export class PJAX extends Service {
                         trigger
                     });
 
-                    this.EventEmitter.emit("TRANSITION-END", { transition });
+                    this.hashAction();
+                    this.EventEmitter.emit("TRANSITION_END", { transition });
                 } catch (err) {
                     throw `[PJAX] Transition error: ${err}`;
                 }
 
-                this.EventEmitter.emit("NAVIGATION-END", { oldPage, newPage, trigger, transitionName });
-                this.hashAction();
+                this.EventEmitter.emit("NAVIGATION_END", { oldPage, newPage, trigger, transitionName });
             } catch (err) {
                 this.transitionStop();
                 throw err;
@@ -479,7 +480,7 @@ export class PJAX extends Service {
         // If Url is ignored or already in cache, don't do any think
         if (this.ignoredURL(url) || this.PageManager.has(urlString)) return;
 
-        this.EventEmitter.emit("ANCHOR-HOVER HOVER hover", event);
+        this.EventEmitter.emit("ANCHOR_HOVER HOVER hover", event);
 
         (async () => {
             try {

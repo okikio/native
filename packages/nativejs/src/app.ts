@@ -198,12 +198,13 @@ export class App {
     /**
      * Returns an instance of a Block from the App's instance of the BlockManager
      *
+     * @param {string} name
      * @param {number} key
      * @returns Block
      * @memberof App
      */
-    public getActiveBlock(key: number): Block {
-        return this.blocks.getActiveBlocks().get(key);
+    public getActiveBlock(name: string, key: number): Block {
+        return this.blocks.getActiveBlocks().get(name).get(key);
     }
 
     /**
@@ -242,12 +243,12 @@ export class App {
     /**
      * Based on the type, it will return either a Transition, a Service, or a State from their respective Managers
      *
-     * @param {("service" | "transition" | "state" | "block" | string)} type
+     * @param {("service" | "transition" | "state" | string)} type
      * @param {any} key
      * @returns App
      * @memberof App
      */
-    public get(type: "service" | "transition" | "state" | "block" | string, key: any): App {
+    public get(type: "service" | "transition" | "state" | string, key: any): App {
         switch (type.toLowerCase()) {
             case "service":
                 this.getService(key);
@@ -257,9 +258,6 @@ export class App {
                 break;
             case "state":
                 this.getState(key);
-                break;
-            case "block":
-                this.getActiveBlock(key);
                 break;
             default:
                 throw `Error: can't get type '${type}', it is not a recognized type. Did you spell it correctly.`;
@@ -378,11 +376,13 @@ export class App {
      * @memberof App
      */
     public async boot(): Promise<App> {
-        this.blocks.init();
-        await this.services.boot();
-        await this.blocks.boot();
+        await this.blocks.init();
+        this.services.boot();
         this.services.initEvents();
+
+        this.blocks.boot();
         this.blocks.initEvents();
+
         this.transitions.initEvents();
         return Promise.resolve(this);
     }

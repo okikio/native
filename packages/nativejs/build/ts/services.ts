@@ -46,23 +46,24 @@ export class Splashscreen extends Service {
 
             this.EventEmitter.emit("START_SPLASHSCREEN_HIDE");
 
-            await animate({
-                target: this.rootElement,
-                transform: ["translateY(0%)", "translateY(100%)"],
-                duration: 1200,
-                easing: "in-out-cubic" // in-out-cubic
-            });
-
-            this.rootElement.style.transform = "translateY(100%)";
-            this.rootElement.style.visibility = "hidden";
-            this.rootElement.style.pointerEvents = "none";
-            this.EventEmitter.emit("AFTER_SPLASHSCREEN_HIDE");
-
+            await this.show();
             resolve();
         });
     }
-}
 
+    public async show() {
+        await animate({
+            target: this.rootElement,
+            transform: ["translateY(0%)", "translateY(100%)"],
+            duration: 1200,
+            easing: "in-out-cubic" // in-out-cubic
+        });
+
+        this.rootElement.style.transform = "translateY(100%)";
+        this.rootElement.style.visibility = "hidden";
+        this.rootElement.style.pointerEvents = "none";
+    }
+}
 export class IntroAnimation extends Service {
     protected elements: Array<Element>;
     protected rootElement: HTMLElement;
@@ -84,6 +85,10 @@ export class IntroAnimation extends Service {
     public stopEvents() {
         this.EventEmitter.off("BEFORE_SPLASHSCREEN_HIDE", this.prepareToShow);
         this.EventEmitter.off("START_SPLASHSCREEN_HIDE", this.show);
+        for (let el of this.elements) {
+            (el as HTMLElement).style.transform = "translateY(0px)";
+            (el as HTMLElement).style.opacity = '1';
+        }
     }
 
     public prepareToShow() {

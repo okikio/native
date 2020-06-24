@@ -1,48 +1,39 @@
-$themeColors: (
-    "primary": (
-        "light": #ff3a6b,
+$themeColors: ("primary": ("light": #ff3a6b,
         "dark": #000,
     ),
-    "secondary": (
-        "light": #ff3a6b,
+    "secondary": ("light": #ff3a6b,
         "dark": #ff3a6b,
     ),
-    "tertiary": (
-        "light": #ff3a6b,
+    "tertiary": ("light": #ff3a6b,
         "dark": #ff3a6b,
     ),
-    "background": (
-        "light": #ff3a6b,
+    "background": ("light": #ff3a6b,
         "dark": #ff3a6b,
     ),
 );
 
-$themeFonts: (
-    "title": (
-        "Frank Ruhl Libre",
+$themeFonts: ("title": ("Frank Ruhl Libre",
         serif,
     ),
-    "light": (
-        "Varela Round",
+    "light": ("Varela Round",
         sans-serif,
     ),
-    "icon": (
-        "Material Icons",
+    "icon": ("Material Icons",
         sans-serif,
     ),
-    "default": (
-        "Roboto",
+    "default": ("Roboto",
         sans-serif,
     ),
-    "bold": (
-        "Montserrat",
+    "bold": ("Montserrat",
         sans-serif,
     ),
 );
 
 .theme {
     &-bg {
-        @each $colorName, $color in $themeColors {
+
+        @each $colorName,
+        $color in $themeColors {
             &-#{$colorName} {
                 background-color: map-get($color, "light");
             }
@@ -54,7 +45,9 @@ $themeFonts: (
     }
 
     &-color {
-        @each $colorName, $color in $themeColors {
+
+        @each $colorName,
+        $color in $themeColors {
             &-#{$colorName} {
                 color: map-get($color, "light");
             }
@@ -66,7 +59,9 @@ $themeFonts: (
     }
 
     &-font {
-        @each $fontType, $font in $themeFonts {
+
+        @each $fontType,
+        $font in $themeFonts {
             &-#{$fontType} {
                 font-family: $font;
             }
@@ -81,7 +76,8 @@ html {
 
 html,
 body {
-    overflow-x: hidden; /* Prevent scroll on narrow devices */
+    overflow-x: hidden;
+    /* Prevent scroll on narrow devices */
 }
 
 body {
@@ -207,10 +203,12 @@ body {
         stroke-dasharray: 1, 300;
         stroke-dashoffset: 0;
     }
+
     50% {
         stroke-dasharray: 120, 300;
         stroke-dashoffset: -58.548324585;
     }
+
     100% {
         stroke-dasharray: 120, 300;
         stroke-dashoffset: -175.6449737549;
@@ -222,10 +220,12 @@ body {
         stroke-dasharray: 1, 300;
         stroke-dashoffset: 0;
     }
+
     50% {
         stroke-dasharray: 120, 300;
         stroke-dashoffset: -58.548324585;
     }
+
     100% {
         stroke-dasharray: 120, 300;
         stroke-dashoffset: -175.6449737549;
@@ -277,7 +277,7 @@ body {
     flex-flow: column;
 }
 
-#big-transition #big-transition-horizontal > div {
+#big-transition #big-transition-horizontal>div {
     width: 100%;
     flex: 1 1;
     background: #fff;
@@ -295,3 +295,16 @@ body {
     line-height: 60px;
     background-color: #f5f5f5;
 }
+
+main {
+    overflow: hidden;
+}
+
+// [data-block="IntroBlock"] {
+//     transition: transform .5s ease, opacity .5s ease;
+
+//     &.active {
+//         transform: translateX(0%) !important;
+//         opacity: 1 !important;
+//     }
+// }

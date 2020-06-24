@@ -437,11 +437,6 @@ class _URL extends URL {
         return urlA.equalTo(urlB);
     }
 }
-/**
- * This is the default starting URL, to avoid needless instances of the same class that produce the same value, I defined the default value
- */
-const newURL = new _URL();
-const URLString = newURL.getPathname();
 
 /**
  * A quick snapshot of page coordinates, e.g. scroll positions
@@ -736,6 +731,7 @@ class PageManager extends AdvancedManager {
          * @memberof PageManager
          */
         this.loading = new Manager();
+        let URLString = new _URL().getPathname();
         this.set(URLString, new Page());
     }
     /**
@@ -980,7 +976,6 @@ class EventEmitter extends Manager {
             let listener = new Listener({ name, callback, scope });
             for (; i < len; i++) {
                 value = event.get(i);
-                console.log(value);
                 if (value.getCallback() === listener.getCallback() &&
                     value.getScope() === listener.getScope())
                     break;
@@ -1134,11 +1129,12 @@ class ServiceManager extends AdvancedManager {
     /**
      * Call the boot method for all Services
      *
-     * @returns Promise<void>
+     * @returns ServiceManager
      * @memberof ServiceManager
      */
-    async boot() {
-        await this.asyncMethodCall("boot");
+    boot() {
+        this.methodCall("boot");
+        return this;
     }
     /**
      * Call the initEvents method for all Services
@@ -1289,7 +1285,7 @@ class Transition extends ManagerItem {
         let toWrapper = this.newPage.getWrapper();
         document.title = this.newPage.getTitle();
         return new Promise(async (finish) => {
-            EventEmitter.emit("BEFORE-TRANSITION-OUT");
+            EventEmitter.emit("BEFORE_TRANSITION_OUT");
             await new Promise(done => {
                 let outMethod = this.out({
                     from: this.oldPage,
@@ -1299,13 +1295,13 @@ class Transition extends ManagerItem {
                 if (outMethod.then)
                     outMethod.then(done);
             });
-            EventEmitter.emit("AFTER-TRANSITION-OUT");
+            EventEmitter.emit("AFTER_TRANSITION_OUT");
             await new Promise(done => {
                 fromWrapper.insertAdjacentElement('beforebegin', toWrapper);
                 fromWrapper.remove();
                 done();
             });
-            EventEmitter.emit("BEFORE-TRANSITION-IN");
+            EventEmitter.emit("BEFORE_TRANSITION_IN");
             await new Promise(done => {
                 let inMethod = this.in({
                     from: this.oldPage,
@@ -1398,13 +1394,10 @@ class Block extends Service {
     /**
      * It initializes the Block
      *
-     * @param {string} [name]
-     * @param {HTMLElement} [rootElement]
-     * @param {string} [selector]
-     * @param {number} [index]
+     * @param {IBlockInit} [{ name, rootElement, selector, index }]
      * @memberof Block
      */
-    init(name, rootElement, selector, index) {
+    init({ name, rootElement, selector, index }) {
         this.rootElement = rootElement;
         this.name = name;
         this.selector = selector;
@@ -1438,6 +1431,25 @@ class Block extends Service {
         return this.index;
     }
     /**
+     * Get Block ID
+     *
+     * @returns string
+     * @memberof Block
+     */
+    getID() {
+        return this.id;
+    }
+    /**
+     * Set Block ID
+     *
+     * @returns string
+     * @memberof Block
+     */
+    setID(id) {
+        this.id = id;
+        return this;
+    }
+    /**
      * Get the name of the Block
      *
      * @returns string
@@ -1458,14 +1470,13 @@ class BlockIntent extends ManagerItem {
     /**
      * Creates an instance of BlockIntent.
      *
-     * @param {string} name
-     * @param {typeof Block} block
+     * @param {{ name: string; block: typeof Block; }} { name, block }
      * @memberof BlockIntent
      */
-    constructor(name, block) {
+    constructor({ name, block }) {
         super();
         this.name = name;
-        this.block = block;
+        this.block = block instanceof Promise ? block : Promise.resolve(block);
     }
     /**
      * Getter for name of Block Intent
@@ -1479,7 +1490,7 @@ class BlockIntent extends ManagerItem {
     /**
      * Getter for the Block of the Block Intent
      *
-     * @returns {typeof Block}
+     * @returns {Promise<typeof Block>}
      * @memberof BlockIntent
      */
     getBlock() {
@@ -1502,59 +1513,83 @@ class BlockManager extends AdvancedManager {
      */
     constructor(app) {
         super(app);
-        this.activeBlocks = new AdvancedManager(app);
+        /**
+         * A list of Active Blocks
+         *
+         * @protected
+         * @type {Manager<string, AdvancedManager<string, Block>>}
+         * @memberof BlockManager
+         */
+        this.activeBlocks = new Manager();
+        /**
+         * An Array of ID's
+         *
+         * @protected
+         * @type {Manager<string, string>}
+         * @memberof BlockManager
+         */
+        this.activeIDs = new Manager();
     }
     /**
      * Initialize all Blocks
      *
      * @memberof BlockManager
      */
-    init() {
-        this.forEach((intent) => {
+    async init() {
+        let app = this.getApp();
+        for (let [, intent] of this) {
             let name = intent.getName();
-            let block = intent.getBlock();
             let selector = `[${this.getConfig("blockAttr", false)}="${name}"]`;
-            let rootElements = [...document.querySelectorAll(selector)];
+            let rootElements = [
+                ...document.querySelectorAll(selector),
+            ];
+            let idList = [];
+            let manager = new AdvancedManager(app);
+            let block = await intent.getBlock();
             for (let i = 0, len = rootElements.length; i < len; i++) {
+                let rootElement = rootElements[i];
+                let id = rootElement.id;
                 let newInstance = new block();
-                newInstance.init(name, rootElements[i], selector, i);
-                this.activeBlocks.set(i, newInstance);
+                newInstance.init({ name, rootElement, selector, index: i });
+                newInstance.setID(id);
+                idList[i] = id;
+                manager.set(i, newInstance);
             }
-        });
-    }
-    /**
-     * Getter for activeBlocks in BlockManager
-     *
-     * @returns
-     * @memberof BlockManager
-     */
-    getActiveBlocks() {
-        return this.activeBlocks;
-    }
-    /**
-     * Call the boot method for all Blocks
-     *
-     * @returns Promise<void>
-     * @memberof BlockManager
-     */
-    async boot() {
-        await this.activeBlocks.asyncMethodCall("boot");
+            this.activeIDs[name] = idList;
+            this.activeBlocks.set(name, manager);
+        }
     }
     /**
      * Refreshes DOM Elements
      *
      * @memberof BlockManager
      */
-    refresh() {
-        const EventEmitter = this.getApp().getEmitter();
-        EventEmitter.on("BEFORE_TRANSITION_OUT", () => {
-            this.stop();
-        });
-        EventEmitter.on("AFTER_TRANSITION_IN", () => {
-            this.init();
-            this.boot();
-            // this.activeBlocks.methodCall("initEvents");
-        });
+    async update() {
+        let app = this.getApp();
+        for (let [, intent] of this) {
+            let name = intent.getName();
+            let selector = `[${this.getConfig("blockAttr", false)}="${name}"]`;
+            let rootElements = [
+                ...document.querySelectorAll(selector),
+            ];
+            let idList = [];
+            let manager = new AdvancedManager(app);
+            let block = await intent.getBlock();
+            for (let i = 0, len = rootElements.length; i < len; i++) {
+                let rootElement = rootElements[i];
+                let id = rootElement.id;
+                if (this.activeIDs[name][i] !== id) {
+                    let newInstance = new block();
+                    newInstance.init({ name, rootElement, selector, index: i });
+                    newInstance.setID(id);
+                    newInstance.boot();
+                    idList[i] = id;
+                    manager.set(i, newInstance);
+                }
+            }
+            this.activeIDs[name] = idList;
+            this.activeBlocks.set(name, manager);
+        }
     }
     /**
      * Call the initEvents method for all Blocks
@@ -1563,18 +1598,62 @@ class BlockManager extends AdvancedManager {
      * @memberof BlockManager
      */
     initEvents() {
-        this.activeBlocks.methodCall("initEvents");
-        this.refresh();
+        for (let [, blockManager] of this.activeBlocks) {
+            blockManager.methodCall("initEvents");
+        }
+        let app = this.getApp();
+        let rootElement = app.getPages().last().getWrapper();
+        this.update = this.update.bind(this);
+        this.domObserver = new window.MutationObserver(this.update);
+        this.observe(rootElement);
+        const EventEmitter = app.getEmitter();
+        EventEmitter.on("BEFORE_TRANSITION_IN", async () => {
+            rootElement = app.getPages().last().getWrapper();
+            this.domObserver.disconnect();
+            this.refresh();
+            await this.init();
+            this.boot();
+            this.observe(rootElement);
+        });
         return this;
     }
     /**
-     * Call the stopEvents method for all Blocks
+     * Observe any changes to elements and update based on that
+     *
+     * @param {HTMLElement} rootElement
+     * @memberof BlockManager
+     */
+    observe(rootElement) {
+        this.domObserver.observe(rootElement, {
+            childList: true,
+            attributes: false,
+            characterData: false,
+            subtree: true,
+        });
+    }
+    /**
+     * Call the boot method for all Blocks
      *
      * @returns BlockManager
      * @memberof BlockManager
      */
-    stopEvents() {
-        this.activeBlocks.methodCall("stopEvents");
+    boot() {
+        for (let [, blockManager] of this.activeBlocks) {
+            blockManager.methodCall("boot");
+        }
+        return this;
+    }
+    /**
+     * Refreshes the active blocks list
+     *
+     * @returns {BlockManager}
+     * @memberof BlockManager
+     */
+    refresh() {
+        for (let [, blockManager] of this.activeBlocks) {
+            blockManager.methodCall("stop");
+        }
+        this.activeBlocks.clear();
         return this;
     }
     /**
@@ -1584,9 +1663,30 @@ class BlockManager extends AdvancedManager {
      * @memberof BlockManager
      */
     stop() {
-        this.activeBlocks.methodCall("stop");
-        this.activeBlocks.clear();
+        this.refresh();
+        this.stopEvents();
         return this;
+    }
+    /**
+     * Call the stopEvents method for all Blocks
+     *
+     * @returns BlockManager
+     * @memberof BlockManager
+     */
+    stopEvents() {
+        for (let [, blockManager] of this.activeBlocks) {
+            blockManager.methodCall("stopEvents");
+        }
+        return this;
+    }
+    /**
+     * Getter for activeBlocks in BlockManager
+     *
+     * @returns {Manager<string, AdvancedManager<number, Block>>}
+     * @memberof BlockManager
+     */
+    getActiveBlocks() {
+        return this.activeBlocks;
     }
 }
 
@@ -1707,12 +1807,13 @@ class App {
     /**
      * Returns an instance of a Block from the App's instance of the BlockManager
      *
+     * @param {string} name
      * @param {number} key
      * @returns Block
      * @memberof App
      */
-    getActiveBlock(key) {
-        return this.blocks.getActiveBlocks().get(key);
+    getActiveBlock(name, key) {
+        return this.blocks.getActiveBlocks().get(name).get(key);
     }
     /**
      * Returns a Service from the App's instance of the ServiceManager
@@ -1747,7 +1848,7 @@ class App {
     /**
      * Based on the type, it will return either a Transition, a Service, or a State from their respective Managers
      *
-     * @param {("service" | "transition" | "state" | "block" | string)} type
+     * @param {("service" | "transition" | "state" | string)} type
      * @param {any} key
      * @returns App
      * @memberof App
@@ -1762,9 +1863,6 @@ class App {
                 break;
             case "state":
                 this.getState(key);
-                break;
-            case "block":
-                this.getActiveBlock(key);
                 break;
             default:
                 throw `Error: can't get type '${type}', it is not a recognized type. Did you spell it correctly.`;
@@ -1875,10 +1973,10 @@ class App {
      * @memberof App
      */
     async boot() {
-        this.blocks.init();
-        await this.services.boot();
-        await this.blocks.boot();
+        await this.blocks.init();
+        this.services.boot();
         this.services.initEvents();
+        this.blocks.boot();
         this.blocks.initEvents();
         this.transitions.initEvents();
         return Promise.resolve(this);
@@ -2144,7 +2242,7 @@ class PJAX extends Service {
             return;
         }
         let href = this.getHref(el);
-        this.EventEmitter.emit("ANCHOR-CLICK CLICK click", event);
+        this.EventEmitter.emit("ANCHOR_CLICK CLICK", event);
         this.go({ href, trigger: el, event });
     }
     /**
@@ -2225,11 +2323,11 @@ class PJAX extends Service {
             // Based on the direction of the state change either remove or add a state
             if (trigger === "back") {
                 this.HistoryManager.delete(currentIndex);
-                this.EventEmitter.emit(`POPSTATE-BACK`, event);
+                this.EventEmitter.emit(`POPSTATE_BACK`, event);
             }
             else if (trigger === "forward") {
                 this.HistoryManager.addState({ url, transition, data });
-                this.EventEmitter.emit(`POPSTATE-FORWARD`, event);
+                this.EventEmitter.emit(`POPSTATE_FORWARD`, event);
             }
         }
         else {
@@ -2258,13 +2356,13 @@ class PJAX extends Service {
             }
             this.HistoryManager.add(state);
             this.changeState("push", state);
-            this.EventEmitter.emit("HISTORY-NEW-ITEM", event);
+            this.EventEmitter.emit("HISTORY_NEW_ITEM", event);
         }
         if (event) {
             event.stopPropagation();
             event.preventDefault();
         }
-        this.EventEmitter.emit("GO go", event);
+        this.EventEmitter.emit("GO", event);
         return this.load({ oldHref: currentURL.getPathname(), href, trigger, transitionName });
     }
     /**
@@ -2305,34 +2403,34 @@ class PJAX extends Service {
         try {
             let oldPage = this.PageManager.get(oldHref);
             let newPage;
-            this.EventEmitter.emit("PAGE-LOADING", { href, oldPage, trigger });
+            this.EventEmitter.emit("PAGE_LOADING", { href, oldPage, trigger });
             try {
                 try {
                     newPage = await this.PageManager.load(href);
                     this.transitionStart();
-                    this.EventEmitter.emit("PAGE-LOAD-COMPLETE", { newPage, oldPage, trigger });
+                    this.EventEmitter.emit("PAGE_LOAD_COMPLETE", { newPage, oldPage, trigger });
                 }
                 catch (err) {
                     throw `[PJAX] Page load error: ${err}`;
                 }
                 // --
                 // --
-                this.EventEmitter.emit("NAVIGATION-START", { oldPage, newPage, trigger, transitionName });
+                this.EventEmitter.emit("NAVIGATION_START", { oldPage, newPage, trigger, transitionName });
                 try {
-                    this.EventEmitter.emit("TRANSITION-START", transitionName);
+                    this.EventEmitter.emit("TRANSITION_START", transitionName);
                     let transition = await this.TransitionManager.boot({
                         name: transitionName,
                         oldPage,
                         newPage,
                         trigger
                     });
-                    this.EventEmitter.emit("TRANSITION-END", { transition });
+                    this.hashAction();
+                    this.EventEmitter.emit("TRANSITION_END", { transition });
                 }
                 catch (err) {
                     throw `[PJAX] Transition error: ${err}`;
                 }
-                this.EventEmitter.emit("NAVIGATION-END", { oldPage, newPage, trigger, transitionName });
-                this.hashAction();
+                this.EventEmitter.emit("NAVIGATION_END", { oldPage, newPage, trigger, transitionName });
             }
             catch (err) {
                 this.transitionStop();
@@ -2397,7 +2495,7 @@ class PJAX extends Service {
         // If Url is ignored or already in cache, don't do any think
         if (this.ignoredURL(url) || this.PageManager.has(urlString))
             return;
-        this.EventEmitter.emit("ANCHOR-HOVER HOVER hover", event);
+        this.EventEmitter.emit("ANCHOR_HOVER HOVER hover", event);
         (async () => {
             try {
                 await this.PageManager.load(url);
@@ -2569,7 +2667,7 @@ class Router extends Service {
     initEvents() {
         this.route = this.route.bind(this);
         this.EventEmitter.on("READY", this.route);
-        this.EventEmitter.on("PAGE-LOADING", this.route);
+        this.EventEmitter.on("PAGE_LOADING", this.route);
     }
 }
 
@@ -3052,10 +3150,10 @@ class InViewBlock extends Block {
         this.observerOptions = {
             root: null,
             rootMargin: '0px',
-            threshold: 0.1
+            thresholds: Array.from(Array(20), (_nul, x) => (x + 1) / 20)
         };
         // Create observer
-        this.observer = new IntersectionObserver(entries => {
+        this.observer = new IntersectionObserver((entries) => {
             this.onIntersectionCallback(entries);
         }, this.observerOptions);
         // Prepare values
@@ -3098,20 +3196,58 @@ class InViewBlock extends Block {
         this.rootElement.style.opacity = "0";
     }
     onIntersectionCallback(entries) {
-        if (!this.inView) {
-            for (let entry of entries) {
-                if (entry.intersectionRatio > 0) {
-                    this.onScreen();
-                    this.inView = true;
-                }
-                else {
-                    this.offScreen();
-                }
+        for (let entry of entries) {
+            if (entry.intersectionRatio > 0) {
+                this.onScreen();
+            }
+            else {
+                this.offScreen();
             }
         }
     }
     stopEvents() {
         this.unobserve();
+    }
+}
+class IntroBlock extends Block {
+    initEvents() {
+        // Bind methods
+        this.prepareToShow = this.prepareToShow.bind(this);
+        this.show = this.show.bind(this);
+        this.EventEmitter.on("BEFORE_SPLASHSCREEN_HIDE BEFORE_TRANSITION_IN", this.prepareToShow);
+        this.EventEmitter.on("START_SPLASHSCREEN_HIDE NAVIGATION_END", this.show);
+    }
+    stopEvents() {
+        this.EventEmitter.off("BEFORE_SPLASHSCREEN_HIDE BEFORE_TRANSITION_IN", this.prepareToShow);
+        this.EventEmitter.off("START_SPLASHSCREEN_HIDE NAVIGATION_END", this.show);
+    }
+    stop() {
+        super.stop();
+        this.rootElement.style.transform = "translateY(0px)";
+        this.rootElement.style.opacity = '1';
+    }
+    prepareToShow() {
+        this.rootElement.style.transform = "translateY(200px)";
+        this.rootElement.style.opacity = '0';
+        // this.rootElement.style.transitionDelay = `${200 * (this.index + 1)}ms`;
+    }
+    async show() {
+        // !this.rootElement.classList.contains("active") && this.rootElement.classList.add("active");
+        return await animate({
+            target: this.rootElement,
+            keyframes: [
+                { transform: "translateY(200px)", opacity: 0 },
+                { transform: "translateY(0px)", opacity: 1 },
+            ],
+            // @ts-ignore
+            delay: 200 * (this.index + 1),
+            onfinish(el) {
+                el.style.transform = "translateY(0px)";
+                el.style.opacity = "1";
+            },
+            easing: "out-cubic",
+            duration: 500
+        });
     }
 }
 
@@ -3178,60 +3314,20 @@ class Splashscreen extends Service {
                 }
             });
             this.EventEmitter.emit("START_SPLASHSCREEN_HIDE");
-            await animate({
-                target: this.rootElement,
-                transform: ["translateY(0%)", "translateY(100%)"],
-                duration: 1200,
-                easing: "in-out-cubic" // in-out-cubic
-            });
-            this.rootElement.style.transform = "translateY(100%)";
-            this.rootElement.style.visibility = "hidden";
-            this.rootElement.style.pointerEvents = "none";
-            this.EventEmitter.emit("AFTER_SPLASHSCREEN_HIDE");
+            await this.show();
             resolve();
         });
     }
-}
-class IntroAnimation extends Service {
-    boot() {
-        // Elements
-        this.elements = [...document.querySelectorAll('[data-block="IntroBlock"]')];
-        // Bind methods
-        this.prepareToShow = this.prepareToShow.bind(this);
-        this.show = this.show.bind(this);
-    }
-    initEvents() {
-        this.EventEmitter.on("BEFORE_SPLASHSCREEN_HIDE", this.prepareToShow);
-        this.EventEmitter.on("START_SPLASHSCREEN_HIDE", this.show);
-    }
-    stopEvents() {
-        this.EventEmitter.off("BEFORE_SPLASHSCREEN_HIDE", this.prepareToShow);
-        this.EventEmitter.off("START_SPLASHSCREEN_HIDE", this.show);
-    }
-    prepareToShow() {
-        for (let el of this.elements) {
-            el.style.transform = "translateY(200px)";
-            el.style.opacity = '0';
-        }
-    }
-    show() {
-        animate({
-            target: this.elements,
-            keyframes: [
-                { transform: "translateY(200px)", opacity: 0 },
-                { transform: "translateY(0px)", opacity: 1 },
-            ],
-            // @ts-ignore
-            delay(i) {
-                return 200 * (i + 1);
-            },
-            onfinish(el) {
-                el.style.transform = "translateY(0px)";
-                el.style.opacity = "1";
-            },
-            easing: "out-cubic",
-            duration: 500
+    async show() {
+        await animate({
+            target: this.rootElement,
+            transform: ["translateY(0%)", "translateY(100%)"],
+            duration: 1200,
+            easing: "in-out-cubic" // in-out-cubic
         });
+        this.rootElement.style.transform = "translateY(100%)";
+        this.rootElement.style.visibility = "hidden";
+        this.rootElement.style.pointerEvents = "none";
     }
 }
 
@@ -3466,40 +3562,49 @@ window.matchMedia('(prefers-color-scheme: dark)').addListener(e => {
     themeSet(e.matches ? "dark" : "light");
 });
 const app = new App();
-const router = new Router();
+let splashscreen;
+let router;
 app
     .add("service", new PJAX())
-    .add("service", new Splashscreen())
-    .add("service", new IntroAnimation())
-    .add("service", router)
+    .add("service", splashscreen = new Splashscreen())
+    // .add("service", new IntroAnimation())
+    .add("service", router = new Router())
     .add("transition", new Fade())
     .add("transition", new BigTransition())
     .add("transition", new Slide())
     .add("transition", new SlideLeft())
     .add("transition", new SlideRight())
-    .add("block", new BlockIntent("InViewBlock", InViewBlock));
+    .add("block", new BlockIntent({
+    name: "IntroBlock",
+    block: IntroBlock
+}))
+    .add("block", new BlockIntent({
+    name: "InViewBlock",
+    block: InViewBlock
+}));
 (async () => {
     try {
         await app.boot();
+        let navLink = document.querySelectorAll(".navbar .nav-link");
+        for (let item of navLink) {
+            let navItem = item;
+            router.add({
+                path: navItem.getAttribute("data-path") || navItem.pathname,
+                method() {
+                    let isActive = navItem.classList.contains("active");
+                    if (!isActive)
+                        navItem.classList.add("active");
+                    for (let nav of navLink) {
+                        if (nav !== navItem)
+                            nav.classList.remove("active");
+                    }
+                }
+            });
+        }
     }
     catch (err) {
-        console.warn("App boot failed", err);
-    }
-    let navLink = document.querySelectorAll(".navbar .nav-link");
-    for (let item of navLink) {
-        let navItem = item;
-        router.add({
-            path: navItem.getAttribute("data-path") || navItem.pathname,
-            method() {
-                let isActive = navItem.classList.contains("active");
-                if (!isActive)
-                    navItem.classList.add("active");
-                for (let nav of navLink) {
-                    if (nav !== navItem)
-                        nav.classList.remove("active");
-                }
-            }
-        });
+        splashscreen.show();
+        console.warn("[App] Boot failed,", err);
     }
 })();
 //# sourceMappingURL=framework.js.map

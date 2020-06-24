@@ -1,5 +1,5 @@
 import { Manager, ManagerItem, AdvancedManager } from "./manager";
-import { _URL, URLString } from "./url";
+import { _URL } from "./url";
 import { App } from "./app";
 
 /**
@@ -194,6 +194,7 @@ export class PageManager extends AdvancedManager<string, Page> {
 	 */
     constructor(app: App) {
         super(app);
+        let URLString = new _URL().getPathname();
         this.set(URLString, new Page());
     }
 

@@ -85,9 +85,3 @@ export class _URL extends URL {
         return urlA.equalTo(urlB);
     }
 }
-
-/**
- * This is the default starting URL, to avoid needless instances of the same class that produce the same value, I defined the default value
- */
-export const newURL = new _URL();
-export const URLString = newURL.getPathname();

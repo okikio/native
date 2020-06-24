@@ -144,6 +144,6 @@ export class Router extends Service {
     public initEvents() {
         this.route = this.route.bind(this);
         this.EventEmitter.on("READY", this.route);
-        this.EventEmitter.on("PAGE-LOADING", this.route);
+        this.EventEmitter.on("PAGE_LOADING", this.route);
     }
 }

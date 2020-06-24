@@ -95,9 +95,9 @@ task("watch", () => {
 
     watch(`${swigFolder}/**/*.html`, series("html"));
     watch(`${sassFolder}/*.scss`, series("css"));
-    watch(`${tsFolder}/*.ts`, series("js"));
+    watch([`${tsFolder}/*.ts`, `src/*.ts`], series("js"));
 
-    watch([`${jsFolder}/*.js`, `src/*.ts`]).on("change", browserSync.reload);
+    watch(`${jsFolder}/*.js`).on("change", browserSync.reload);
     watch(`${htmlFolder}/*.html`).on("change", browserSync.reload);
 });
 

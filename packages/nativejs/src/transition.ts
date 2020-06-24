@@ -180,7 +180,7 @@ export class Transition extends ManagerItem {
         document.title = this.newPage.getTitle();
 
         return new Promise(async finish => {
-            EventEmitter.emit("BEFORE-TRANSITION-OUT");
+            EventEmitter.emit("BEFORE_TRANSITION_OUT");
             await new Promise(done => {
                 let outMethod: Promise<any> = this.out({
                     from: this.oldPage,
@@ -192,7 +192,7 @@ export class Transition extends ManagerItem {
                     outMethod.then(done);
             });
 
-            EventEmitter.emit("AFTER-TRANSITION-OUT");
+            EventEmitter.emit("AFTER_TRANSITION_OUT");
 
             await new Promise(done => {
                 fromWrapper.insertAdjacentElement('beforebegin', toWrapper);
@@ -200,7 +200,7 @@ export class Transition extends ManagerItem {
                 done();
             });
 
-            EventEmitter.emit("BEFORE-TRANSITION-IN");
+            EventEmitter.emit("BEFORE_TRANSITION_IN");
 
             await new Promise(done => {
                 let inMethod: Promise<any> = this.in({
