@@ -17,8 +17,8 @@
         "src"
     ],
     "scripts": {
-        "build": "microbundle build --name @okikio/event-emitter --external natives",
-        "watch": "microbundle watch --name @okikio/event-emitter --external natives",
+        "watch": "tsc --watch",
+        "build": "microbundle build --name walijs --external natives",
         "release": "npm run build && npm publish --tag latest",
         "patch": "npm version patch && npm run release",
         "minor": "npm version minor && npm run release",
