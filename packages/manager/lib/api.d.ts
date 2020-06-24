@@ -132,7 +132,7 @@ export declare class Manager<K, V> {
     /**
      * Allows iteration via the for..of, learn more: [https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Iterators_and_Generators]
      *
-     * @returns
+     * @returns IterableIterator<[K, V]>
      * @memberof Manager
      */
     [Symbol.iterator](): IterableIterator<[K, V]>;
