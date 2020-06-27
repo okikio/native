@@ -1,6 +1,6 @@
 {
     "name": "@native/core",
-    "version": "1.0.0",
+    "version": "0.0.1",
     "description": "A framework who's goal is to make it easier to create complex, performant, light-weight, web applications using native js apis.",
     "publishConfig": {
         "access": "public"
@@ -49,6 +49,7 @@
     },
     "homepage": "https://github.com/okikio/native#readme",
     "devDependencies": {
+        "@native/animate": "^0.0.1",
         "@rollup/plugin-node-resolve": "^8.1.0",
         "browser-sync": "^2.26.7",
         "eslint": "^7.3.1",
@@ -59,11 +60,10 @@
         "rollup": "^2.18.0",
         "rollup-plugin-typescript2": "^0.27.1",
         "tslib": "^2.0.0",
-        "typescript": "^3.9.5",
-        "@native/animate": "^1.0.0"
+        "typescript": "^3.9.5"
     },
     "dependencies": {
-        "@native/emitter": "^1.0.0",
-        "@native/manager": "^1.0.0"
+        "@native/emitter": "^0.0.1",
+        "@native/manager": "^0.0.1"
     }
 }

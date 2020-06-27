@@ -1,6 +1,6 @@
 {
     "name": "@native/animate",
-    "version": "1.0.0",
+    "version": "0.0.1",
     "description": "An animation library for the modern web which utilizes the Web Animation API (WAAPI) to create butter smooth animation.",
     "publishConfig": {
         "access": "public"
@@ -64,6 +64,6 @@
         "typescript": "^3.9.5"
     },
     "dependencies": {
-        "@native/emitter": "^1.0.0"
+        "@native/emitter": "^0.0.1"
     }
 }
