@@ -1,6 +1,6 @@
 {
     "name": "@native/emitter",
-    "version": "0.0.1",
+    "version": "0.0.2",
     "description": "A small Event Emitter written in typescript for performance, and ease of use.",
     "publishConfig": {
         "access": "public"
@@ -52,7 +52,7 @@
         "typescript": "^3.9.5"
     },
     "dependencies": {
-        "@native/manager": "^0.0.1"
+        "@native/manager": "^0.0.2"
     },
     "gitHead": "37d2d5063a846575e547fcf5c969c9f3fe497055"
 }
