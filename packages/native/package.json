@@ -1,6 +1,6 @@
 {
     "name": "@okikio/native",
-    "version": "0.0.2",
+    "version": "0.0.3",
     "description": "A framework who's goal is to make it easier to create complex, performant, light-weight, web applications using native js apis.",
     "publishConfig": {
         "access": "public"
@@ -49,7 +49,7 @@
     },
     "homepage": "https://github.com/okikio/native#readme",
     "devDependencies": {
-        "@okikio/animate": "^0.0.2",
+        "@okikio/animate": "^0.0.3",
         "@rollup/plugin-node-resolve": "^8.1.0",
         "browser-sync": "^2.26.7",
         "eslint": "^7.3.1",
@@ -63,8 +63,8 @@
         "typescript": "^3.9.5"
     },
     "dependencies": {
-        "@okikio/emitter": "^0.0.2",
-        "@okikio/manager": "^0.0.2"
+        "@okikio/emitter": "^0.0.3",
+        "@okikio/manager": "^0.0.3"
     },
     "gitHead": "078390f5d8aef9798f55857be320ac64f2f2b27f"
 }
