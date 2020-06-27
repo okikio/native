@@ -55,5 +55,6 @@
         "mocha": "^8.0.1",
         "node-fetch": "^2.6.0",
         "typescript": "^3.9.5"
-    }
+    },
+    "gitHead": "37d2d5063a846575e547fcf5c969c9f3fe497055"
 }

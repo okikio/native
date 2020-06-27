@@ -65,5 +65,6 @@
     "dependencies": {
         "@native/emitter": "^0.0.1",
         "@native/manager": "^0.0.1"
-    }
+    },
+    "gitHead": "37d2d5063a846575e547fcf5c969c9f3fe497055"
 }
