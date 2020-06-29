@@ -14,9 +14,8 @@
         "test:watch": "jest --watch --maxWorkers=1",
         "prepublish": "pnpm run pre-release -r",
         "release": "lerna publish",
-        "release:patch": "lerna version patch && pnpm -r publish --tag latest"
+        "release:pnpm": "lerna version && pnpm -r publish --tag latest"
     },
-    
     "devDependencies": {
         "@rollup/plugin-node-resolve": "^8.1.0",
         "@types/jest": "^26.0.3",
