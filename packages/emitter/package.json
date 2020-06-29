@@ -1,6 +1,6 @@
 {
     "name": "@okikio/emitter",
-    "version": "0.0.3",
+    "version": "0.0.4",
     "description": "A small Event Emitter written in typescript for performance, and ease of use.",
     "publishConfig": {
         "access": "public",
@@ -77,7 +77,7 @@
         "typescript": "^3.9.5"
     },
     "dependencies": {
-        "@okikio/manager": "*"
+        "@okikio/manager": "^0.0.4"
     },
     "gitHead": "078390f5d8aef9798f55857be320ac64f2f2b27f"
 }
