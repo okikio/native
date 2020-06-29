@@ -12,7 +12,7 @@
         "docs:watch": "pnpm run --parallel -r docs:watch",
         "test": "jest --maxWorkers=1",
         "test:watch": "jest --watch --maxWorkers=1",
-        "release": "pnpm run pre-release -r && lerna publish"
+        "release": "pnpm run pre-release -r && pnpm publish -r"
     },
     "devDependencies": {
         "@rollup/plugin-node-resolve": "^8.1.0",
