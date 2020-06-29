@@ -68,6 +68,7 @@
         "eslint": "^7.3.1",
         "jest": "^26.1.0",
         "jest-chain": "^1.1.5",
+        "jest-environment-jsdom-global": "^2.0.4",
         "jest-watch-lerna-packages": "^1.1.0",
         "node-fetch": "^2.6.0",
         "pnpm": "^5.2.6",
@@ -78,8 +79,5 @@
         "tslib": "^2.0.0",
         "typescript": "^3.9.5"
     },
-    "gitHead": "078390f5d8aef9798f55857be320ac64f2f2b27f",
-    "dependencies": {
-        "jest-environment-jsdom-global": "^2.0.4"
-    }
+    "gitHead": "078390f5d8aef9798f55857be320ac64f2f2b27f"
 }

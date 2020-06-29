@@ -13,9 +13,9 @@
         "test": "jest --maxWorkers=1",
         "test:watch": "jest --watch --maxWorkers=1",
         "pre-release": "pnpm run pre-release -r",
-        "release:patch": "pnpm run pre-release && pnpm publish patch -r",
-        "release:minor": "pnpm run pre-release && pnpm publish minor -r",
-        "release:major": "pnpm run pre-release && pnpm publish major -r"
+        "release:patch": "pnpm run pre-release && lerna version patch && pnpm -r publish --tag latest",
+        "release:minor": "pnpm run pre-release && lerna version minor && pnpm -r publish --tag latest",
+        "release:major": "pnpm run pre-release && lerna version major && pnpm -r publish --tag latest"
     },
     "devDependencies": {
         "@rollup/plugin-node-resolve": "^8.1.0",
@@ -23,6 +23,7 @@
         "gulp": "^4.0.2",
         "jest": "^26.1.0",
         "jest-chain": "^1.1.5",
+        "jest-environment-jsdom-global": "^2.0.4",
         "jest-watch-lerna-packages": "^1.1.0",
         "lerna": "^3.22.1",
         "pnpm": "^5.2.6",
@@ -30,8 +31,5 @@
         "rollup-plugin-esbuild": "^2.1.0",
         "ts-jest": "^26.1.1",
         "tslib": "^2.0.0"
-    },
-    "dependencies": {
-        "jest-environment-jsdom-global": "^2.0.4"
     }
 }

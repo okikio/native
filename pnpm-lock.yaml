@@ -1,13 +1,12 @@
 importers:
   .:
-    dependencies:
-      jest-environment-jsdom-global: 2.0.4
     devDependencies:
       '@rollup/plugin-node-resolve': 8.1.0_rollup@2.18.1
       '@types/jest': 26.0.3
       gulp: 4.0.2
       jest: 26.1.0
       jest-chain: 1.1.5
+      jest-environment-jsdom-global: 2.0.4
       jest-watch-lerna-packages: 1.1.0_jest@26.1.0
       lerna: 3.22.1
       pnpm: 5.2.6
@@ -32,7 +31,6 @@ importers:
   packages/animate:
     dependencies:
       '@okikio/emitter': 'link:../emitter'
-      jest-environment-jsdom-global: 2.0.4
     devDependencies:
       '@rollup/plugin-node-resolve': 8.1.0_rollup@2.18.1
       '@types/jest': 26.0.3
@@ -43,6 +41,7 @@ importers:
       gulp-swig: 0.9.1
       jest: 26.1.0
       jest-chain: 1.1.5
+      jest-environment-jsdom-global: 2.0.4
       jest-watch-lerna-packages: 1.1.0_jest@26.1.0
       pnpm: 5.2.6
       rollup: 2.18.1
@@ -52,7 +51,7 @@ importers:
       tslib: 2.0.0
       typescript: 3.9.5
     specifiers:
-      '@okikio/emitter': 'workspace:^0.0.3'
+      '@okikio/emitter': '*'
       '@rollup/plugin-node-resolve': ^8.1.0
       '@types/jest': ^26.0.3
       browser-sync: ^2.26.7
@@ -74,13 +73,13 @@ importers:
   packages/emitter:
     dependencies:
       '@okikio/manager': 'link:../manager'
-      jest-environment-jsdom-global: 2.0.4
     devDependencies:
       '@rollup/plugin-node-resolve': 8.1.0_rollup@2.18.1
       '@types/jest': 26.0.3
       eslint: 7.3.1
       jest: 26.1.0
       jest-chain: 1.1.5
+      jest-environment-jsdom-global: 2.0.4
       jest-watch-lerna-packages: 1.1.0_jest@26.1.0
       pnpm: 5.2.6
       rollup: 2.18.1
@@ -89,7 +88,7 @@ importers:
       tslib: 2.0.0
       typescript: 3.9.5
     specifiers:
-      '@okikio/manager': 'workspace:^0.0.3'
+      '@okikio/manager': '*'
       '@rollup/plugin-node-resolve': ^8.1.0
       '@types/jest': ^26.0.3
       eslint: ^7.3.1
@@ -104,14 +103,13 @@ importers:
       tslib: ^2.0.0
       typescript: ^3.9.5
   packages/manager:
-    dependencies:
-      jest-environment-jsdom-global: 2.0.4
     devDependencies:
       '@rollup/plugin-node-resolve': 8.1.0_rollup@2.18.1
       '@types/jest': 26.0.3
       eslint: 7.3.1
       jest: 26.1.0
       jest-chain: 1.1.5
+      jest-environment-jsdom-global: 2.0.4
       jest-watch-lerna-packages: 1.1.0_jest@26.1.0
       node-fetch: 2.6.0
       pnpm: 5.2.6
@@ -141,7 +139,6 @@ importers:
     dependencies:
       '@okikio/emitter': 'link:../emitter'
       '@okikio/manager': 'link:../manager'
-      jest-environment-jsdom-global: 2.0.4
     devDependencies:
       '@okikio/animate': 'link:../animate'
       '@rollup/plugin-node-resolve': 8.1.0_rollup@2.18.1
@@ -153,6 +150,7 @@ importers:
       gulp-swig: 0.9.1
       jest: 26.1.0
       jest-chain: 1.1.5
+      jest-environment-jsdom-global: 2.0.4
       jest-watch-lerna-packages: 1.1.0_jest@26.1.0
       pnpm: 5.2.6
       rollup: 2.18.1
@@ -162,9 +160,9 @@ importers:
       tslib: 2.0.0
       typescript: 3.9.5
     specifiers:
-      '@okikio/animate': 'workspace:^0.0.3'
-      '@okikio/emitter': 'workspace:^0.0.3'
-      '@okikio/manager': 'workspace:^0.0.3'
+      '@okikio/animate': '*'
+      '@okikio/emitter': '*'
+      '@okikio/manager': '*'
       '@rollup/plugin-node-resolve': ^8.1.0
       '@types/jest': ^26.0.3
       browser-sync: ^2.26.7
@@ -5789,7 +5787,7 @@ packages:
     resolution:
       integrity: sha512-lYiSo4Igr81q6QRsVQq9LIkJW0hZcKxkIkHzNeTMPENYYDw/W/Raq28iJ0sLlNFYz2qxxeLnc5K2gQoFYlu2bA==
   /jest-environment-jsdom-global/2.0.4:
-    dev: false
+    dev: true
     peerDependencies:
       jest-environment-jsdom: 22.x || 23.x || 24.x || 25.x || 26.x
     resolution:

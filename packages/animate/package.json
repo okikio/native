@@ -75,6 +75,7 @@
         "gulp-swig": "^0.9.1",
         "jest": "^26.1.0",
         "jest-chain": "^1.1.5",
+        "jest-environment-jsdom-global": "^2.0.4",
         "jest-watch-lerna-packages": "^1.1.0",
         "pnpm": "^5.2.6",
         "rollup": "^2.18.1",
@@ -85,8 +86,7 @@
         "typescript": "^3.9.5"
     },
     "dependencies": {
-        "@okikio/emitter": "workspace:^0.0.3",
-        "jest-environment-jsdom-global": "^2.0.4"
+        "@okikio/emitter": "*"
     },
     "gitHead": "078390f5d8aef9798f55857be320ac64f2f2b27f"
 }
