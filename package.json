@@ -1,11 +1,34 @@
 {
-  "name": "root",
-  "private": true,
-  "license": "MIT",
-  "workspaces": [
-    "packages/*"
-  ],
-  "devDependencies": {
-    "lerna": "^3.22.1"
-  }
+    "name": "root",
+    "private": true,
+    "license": "MIT",
+    "workspaces": [
+        "packages/*"
+    ],
+    "scripts": {
+        "build": "pnpm run build -r",
+        "watch": "pnpm run --parallel -r watch",
+        "docs:build": "pnpm run -r docs:build",
+        "docs:watch": "pnpm run --parallel -r docs:watch",
+        "test": "jest --maxWorkers=1",
+        "test:watch": "jest --watch --maxWorkers=1",
+        "release": "pnpm run pre-release -r && lerna publish"
+    },
+    "devDependencies": {
+        "@rollup/plugin-node-resolve": "^8.1.0",
+        "@types/jest": "^26.0.3",
+        "gulp": "^4.0.2",
+        "jest": "^26.1.0",
+        "jest-chain": "^1.1.5",
+        "jest-watch-lerna-packages": "^1.1.0",
+        "lerna": "^3.22.1",
+        "pnpm": "^5.2.6",
+        "rollup": "^2.18.1",
+        "rollup-plugin-esbuild": "^2.1.0",
+        "ts-jest": "^26.1.1",
+        "tslib": "^2.0.0"
+    },
+    "dependencies": {
+        "jest-environment-jsdom-global": "^2.0.4"
+    }
 }

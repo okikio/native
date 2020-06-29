@@ -1,12 +1,4 @@
 {
-    "compilerOptions": {
-        "moduleResolution": "node",
-        "target": "ES2020",
-        "module": "ES6",
-        "sourceMap": true,
-        "outDir": "lib",
-        "isolatedModules": true,
-        "incremental": true,
-        "declaration": true
-    }
+    "extends": "../../tsconfig.json",
+    "exclude": ["build/**/*"]
 }

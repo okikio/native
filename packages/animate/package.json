@@ -3,28 +3,43 @@
     "version": "0.0.3",
     "description": "An animation library for the modern web which utilizes the Web Animation API (WAAPI) to create butter smooth animation.",
     "publishConfig": {
-        "access": "public"
+        "access": "public",
+        "main": "lib/api.js",
+        "types": "lib/api.d.ts",
+        "umd:main": "lib/api.umd.js",
+        "browser": "lib/api.umd.js",
+        "unpkg": "lib/api.umd.js",
+        "module": "lib/api.mjs"
     },
-    "main": "lib/api.js",
-    "umd:main": "lib/api.umd.js",
-    "browser": "lib/api.umd.js",
-    "unpkg": "lib/api.umd.js",
-    "module": "lib/api.es.js",
+    "umd:name": "animate",
+    "main": "src/api.ts",
     "source": "src/api.ts",
-    "types": "lib/api.d.ts",
+    "output": [
+        {
+            "file": "lib/api.mjs",
+            "format": "es"
+        },
+        {
+            "file": "lib/api.umd.js",
+            "format": "umd"
+        },
+        {
+            "file": "lib/api.js",
+            "format": "iife"
+        }
+    ],
     "files": [
         "lib",
         "src"
     ],
     "scripts": {
-        "watch": "tsc --watch",
-        "build": "microbundle build --name animate --external natives",
-        "release": "npm run build && npm publish --tag latest",
-        "patch": "npm version patch && npm run release",
-        "minor": "npm version minor && npm run release",
-        "major": "npm version major && npm run release",
-        "docs": "gulp build",
-        "test": "gulp"
+        "build": "rollup --config",
+        "watch": "rollup --config --watch",
+        "test": "jest --maxWorkers=1 --coverage",
+        "test:watch": "jest --maxWorkers=1 --watch",
+        "pre-release": "npm run build && npm run test",
+        "docs:build": "gulp build",
+        "docs:watch": "gulp"
     },
     "repository": {
         "type": "git",
@@ -52,19 +67,26 @@
     "homepage": "https://github.com/okikio/native#readme",
     "devDependencies": {
         "@rollup/plugin-node-resolve": "^8.1.0",
+        "@types/jest": "^26.0.3",
         "browser-sync": "^2.26.7",
         "eslint": "^7.3.1",
         "gulp": "^4.0.2",
         "gulp-sass": "^4.1.0",
         "gulp-swig": "^0.9.1",
-        "microbundle": "^0.12.2",
-        "rollup": "^2.18.0",
+        "jest": "^26.1.0",
+        "jest-chain": "^1.1.5",
+        "jest-watch-lerna-packages": "^1.1.0",
+        "pnpm": "^5.2.6",
+        "rollup": "^2.18.1",
+        "rollup-plugin-esbuild": "^2.1.0",
         "rollup-plugin-typescript2": "^0.27.1",
+        "ts-jest": "^26.1.1",
         "tslib": "^2.0.0",
         "typescript": "^3.9.5"
     },
     "dependencies": {
-        "@okikio/emitter": "^0.0.3"
+        "@okikio/emitter": "workspace:^0.0.3",
+        "jest-environment-jsdom-global": "^2.0.4"
     },
     "gitHead": "078390f5d8aef9798f55857be320ac64f2f2b27f"
 }

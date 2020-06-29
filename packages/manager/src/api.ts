@@ -221,7 +221,7 @@ export class Manager<K, V> {
 	 * @memberof Manager
 	 */
 	public async asyncMethodCall(method: string, ...args: any): Promise<Manager<K, V>> {
-		for await (let [, item] of this.map) {
+		for (let [, item] of this.map) {
 			// @ts-ignore
 			await item[method](...args);
 		}

@@ -1,5 +1,5 @@
 import { Block } from "../../src/api";
-import { animate } from "walijs/src/api";
+import { animate } from "@okikio/animate";
 
 //== Blocks
 export class InViewBlock extends Block {

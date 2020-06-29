@@ -3,27 +3,41 @@
     "version": "0.0.3",
     "description": "A superset of the Map class called Manager that allows for complex management of data.",
     "publishConfig": {
-        "access": "public"
+        "access": "public",
+        "main": "lib/api.js",
+        "types": "lib/api.d.ts",
+        "umd:main": "lib/api.umd.js",
+        "browser": "lib/api.umd.js",
+        "unpkg": "lib/api.umd.js",
+        "module": "lib/api.mjs"
     },
-    "main": "lib/api.js",
-    "umd:main": "lib/api.umd.js",
-    "browser": "lib/api.umd.js",
-    "unpkg": "lib/api.umd.js",
-    "module": "lib/api.es.js",
+    "umd:name": "Manager",
+    "main": "src/api.ts",
     "source": "src/api.ts",
-    "types": "lib/api.d.ts",
+    "output": [
+        {
+            "file": "lib/api.mjs",
+            "format": "es"
+        },
+        {
+            "file": "lib/api.umd.js",
+            "format": "umd"
+        },
+        {
+            "file": "lib/api.js",
+            "format": "iife"
+        }
+    ],
     "files": [
         "lib",
         "src"
     ],
     "scripts": {
-        "watch": "tsc --watch",
-        "build": "microbundle build --name Manager --external natives",
-        "release": "npm run build && npm publish --tag latest",
-        "patch": "npm version patch && npm run release",
-        "minor": "npm version minor && npm run release",
-        "major": "npm version major && npm run release",
-        "test": "mocha"
+        "build": "rollup --config",
+        "watch": "rollup --config --watch",
+        "test": "jest --maxWorkers=1 --coverage",
+        "test:watch": "jest --maxWorkers=1 --watch",
+        "pre-release": "npm run build && npm run test"
     },
     "repository": {
         "type": "git",
@@ -49,12 +63,23 @@
     },
     "homepage": "https://github.com/okikio/native#readme",
     "devDependencies": {
-        "chai": "^4.2.0",
-        "eslint": "^7.2.0",
-        "microbundle": "^0.12.2",
-        "mocha": "^8.0.1",
+        "@rollup/plugin-node-resolve": "^8.1.0",
+        "@types/jest": "^26.0.3",
+        "eslint": "^7.3.1",
+        "jest": "^26.1.0",
+        "jest-chain": "^1.1.5",
+        "jest-watch-lerna-packages": "^1.1.0",
         "node-fetch": "^2.6.0",
+        "pnpm": "^5.2.6",
+        "rollup": "^2.18.1",
+        "rollup-plugin-esbuild": "^2.1.0",
+        "rollup-plugin-typescript2": "^0.27.1",
+        "ts-jest": "^26.1.1",
+        "tslib": "^2.0.0",
         "typescript": "^3.9.5"
     },
-    "gitHead": "078390f5d8aef9798f55857be320ac64f2f2b27f"
+    "gitHead": "078390f5d8aef9798f55857be320ac64f2f2b27f",
+    "dependencies": {
+        "jest-environment-jsdom-global": "^2.0.4"
+    }
 }

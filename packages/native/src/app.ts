@@ -1,4 +1,4 @@
-import { EventEmitter, ListenerCallback, EventInput } from "@okikio/event-emitter/src/api";
+import { EventEmitter, ListenerCallback, EventInput } from "./emitter";
 import { TransitionManager, Transition } from "./transition";
 import { BlockManager, BlockIntent, Block } from "./block";
 import { HistoryManager, State, IState } from "./history";

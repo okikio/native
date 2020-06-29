@@ -1,4 +1,4 @@
-import { Manager } from "managerjs/src/api";
+import { Manager } from "@okikio/manager";
 import { ConfigKeys } from "./config";
 import { App } from "./app";
 

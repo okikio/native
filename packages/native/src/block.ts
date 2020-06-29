@@ -1,7 +1,6 @@
 import { ManagerItem, AdvancedManager, Manager } from "./manager";
 import { Service } from "./service";
 import { App } from "./app";
-import { Page } from "./page";
 
 export interface IBlockInit {
     name?: string;

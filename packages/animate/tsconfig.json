@@ -1,12 +1,4 @@
 {
-    "compilerOptions": {
-        "moduleResolution": "node",
-        "target": "ES2020",
-        "module": "UMD",
-        "sourceMap": true,
-        "outDir": "lib",
-        "incremental": true,
-        "declaration": true,
-        "isolatedModules": true
-    }
+    "extends": "../../tsconfig.json",
+    "exclude": ["build/**/*"]
 }

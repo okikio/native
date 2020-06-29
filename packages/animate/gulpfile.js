@@ -1,6 +1,6 @@
 // Import external modules
 const { nodeResolve } = require("@rollup/plugin-node-resolve");
-const ts = require("rollup-plugin-typescript2");
+const esbuild = require("rollup-plugin-esbuild");
 const { rollup } = require("rollup");
 
 const bs = require("browser-sync");
@@ -29,7 +29,9 @@ task("html", () => {
     return stream(`${swigFolder}/pages/**/*.html`, {
         pipes: [
             // Compile src html using Swig
-            swig(),
+            swig({
+                defaults: { cache: false },
+            }),
         ],
         dest: htmlFolder,
     });
@@ -38,7 +40,7 @@ task("html", () => {
 // CSS Tasks
 const { logError } = sass;
 task("css", () => {
-    return stream(`${sassFolder}/*.scss`, {
+    return stream(`${sassFolder}/**/*.scss`, {
         pipes: [
             // Minify scss to css
             sass({ outputStyle: "compressed" }).on("error", logError),
@@ -49,27 +51,30 @@ task("css", () => {
 });
 
 // JS Tasks
-task("js", async () => {
-    const bun = await rollup({
-        input: `${tsFolder}/app.ts`,
-        treeshake: true,
-        plugins: [
-            ts({
-                tsconfigOverride: {
-                    declaration: false,
-                },
-            }),
-            nodeResolve({
-                dedupe: ["@okikio/event-emitter", "managerjs"],
-            }), // Bundle all Modules
-        ],
-    });
+let js = (watching) => {
+    return async () => {
+        const bundle = await rollup({
+            input: `${tsFolder}/app.ts`,
+            treeshake: true,
+            plugins: [
+                nodeResolve(),
+                esbuild({
+                    watch: watching,
+                    minify: true,
+                    target: "es2020", // default, or 'es20XX', 'esnext'
+                }),
+            ],
+        });
 
-    return await bun.write({
-        format: "es",
-        file: `${jsFolder}/app.js`,
-    });
-});
+        return bundle.write({
+            format: "es",
+            sourcemap: true,
+            file: `${jsFolder}/app.js`,
+        });
+    };
+};
+
+task("js", js());
 
 // Build & Watch Tasks
 const browserSync = bs.create();
@@ -90,7 +95,7 @@ task("watch", () => {
 
     watch(`${swigFolder}/**/*.html`, series("html"));
     watch(`${sassFolder}/*.scss`, series("css"));
-    watch(`${tsFolder}/*.ts`, series("js"));
+    watch([`${tsFolder}/*.ts`, `src/*.ts`], js(true));
 
     watch(`${jsFolder}/*.js`).on("change", browserSync.reload);
     watch(`${htmlFolder}/*.html`).on("change", browserSync.reload);

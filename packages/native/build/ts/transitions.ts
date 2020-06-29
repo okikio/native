@@ -1,5 +1,5 @@
 import { Transition, ITransitionData } from "../../src/api";
-import { animate } from "walijs/src/api";
+import { animate } from "@okikio/animate";
 
 //== Transitions
 export class Fade extends Transition {

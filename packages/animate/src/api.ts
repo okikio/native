@@ -1,4 +1,4 @@
-import { EventEmitter, EventInput, ListenerCallback } from "@okikio/event-emitter/src/api";
+import { EventEmitter, EventInput, ListenerCallback } from "@okikio/emitter";
 
 // DOM
 export type AnimationTarget = string | Node | NodeList | HTMLCollection | HTMLElement[] | any[];

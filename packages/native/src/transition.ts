@@ -1,5 +1,5 @@
-import { EventEmitter } from "@okikio/event-emitter/src/api";
 import { AdvancedManager, ManagerItem } from "./manager";
+import { EventEmitter } from "./emitter";
 import { Trigger } from "./history";
 import { Page } from "./page";
 import { App } from "./app";

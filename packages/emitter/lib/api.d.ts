@@ -1,5 +1,5 @@
-import { Manager } from "managerjs/src/api";
-export declare type ListenerCallback = (...args: any) => void;
+import { Manager } from "@okikio/manager";
+export declare type ListenerCallback = ((...args: any) => void);
 export interface IListener {
     readonly callback: ListenerCallback;
     readonly scope: object;
@@ -117,12 +117,12 @@ export declare class EventEmitter extends Manager<string, Event> {
      * Adds a listener for a given event
      *
      * @param {EventInput} events
-     * @param {ListenerCallback} callback
+     * @param {ListenerCallback | object} callback
      * @param {object} scope
      * @returns
      * @memberof EventEmitter
      */
-    on(events: EventInput, callback?: ListenerCallback, scope?: object): EventEmitter;
+    on(events: EventInput, callback?: ListenerCallback | object, scope?: object): EventEmitter;
     /**
      * Removes a listener from an event
      *
@@ -137,22 +137,24 @@ export declare class EventEmitter extends Manager<string, Event> {
      * Removes a listener from a given event, or it just completely removes an event
      *
      * @param {EventInput} events
-     * @param {ListenerCallback} [callback]
+     * @param {ListenerCallback | object} [callback]
      * @param {object} [scope]
      * @returns EventEmitter
      * @memberof EventEmitter
      */
-    off(events: EventInput, callback?: ListenerCallback, scope?: object): EventEmitter;
+    off(events: EventInput, callback?: ListenerCallback | object, scope?: object): EventEmitter;
     /**
-     * Adds a one time event listener for an event
+     * Adds a one time event listener for an event,
+     * do note, you can't use .off to remove events listeners for the kind of event,
+     * however, you can still remove the entire event
      *
      * @param {EventInput} events
-     * @param {ListenerCallback} callback
-     * @param {object} scope
+     * @param {ListenerCallback | object} [callback]
+     * @param {object} [scope]
      * @returns EventEmitter
      * @memberof EventEmitter
      */
-    once(events: EventInput, callback: ListenerCallback, scope: object): EventEmitter;
+    once(events: EventInput, callback?: ListenerCallback | object, scope?: object): EventEmitter;
     /**
      * Call all listeners within an event
      *

@@ -1,0 +1,14 @@
+{
+    "compilerOptions": {
+        "moduleResolution": "node",
+        "target": "ES2020",
+        "module": "ES6",
+        "sourceMap": true,
+        "outDir": "lib",
+        "declaration": true,
+        "incremental": true,
+        "isolatedModules": true,
+        "esModuleInterop": true
+    },
+    "exclude": ["node_modules", "**/tests/**/*"]
+}
