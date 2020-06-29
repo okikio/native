@@ -316,3 +316,4 @@ export declare class Animate {
     toJSON(): AnimationOptions;
 }
 export declare const animate: (options?: AnimationOptions) => Animate;
+export default animate;

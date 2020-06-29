@@ -380,3 +380,5 @@ export class EventEmitter extends Manager<string, Event> {
         return this;
     }
 }
+
+export default EventEmitter;

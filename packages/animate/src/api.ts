@@ -594,3 +594,5 @@ export class Animate {
 export const animate = (options: AnimationOptions = {}): Animate => {
     return new Animate(options);
 };
+
+export default animate;

@@ -155,3 +155,4 @@ export declare class Manager<K, V> {
      */
     asyncMethodCall(method: string, ...args: any): Promise<Manager<K, V>>;
 }
+export default Manager;

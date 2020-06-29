@@ -228,3 +228,5 @@ export class Manager<K, V> {
 		return this;
 	}
 }
+
+export default Manager;

@@ -165,3 +165,4 @@ export declare class EventEmitter extends Manager<string, Event> {
      */
     emit(events: string | Array<any>, ...args: any): EventEmitter;
 }
+export default EventEmitter;
