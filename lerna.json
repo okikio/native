@@ -8,5 +8,6 @@
       "message": "chore(release): publish",
       "registry": "https://npm.pkg.github.com"
     }
-  }
+  },
+  "useWorkspaces": true
 }
