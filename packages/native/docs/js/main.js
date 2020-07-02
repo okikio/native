@@ -1,3 +1,21 @@
+const getTheme = () => {
+  const theme = window.localStorage.getItem("theme");
+  if (typeof theme === "string")
+    return theme;
+  return null;
+};
+const setTheme = (theme) => {
+  if (typeof theme === "string")
+    window.localStorage.setItem("theme", theme);
+};
+const mediaTheme = () => {
+  const mql = window.matchMedia("(prefers-color-scheme: dark)");
+  const hasMediaQueryPreference = typeof mql.matches === "boolean";
+  if (hasMediaQueryPreference)
+    return mql.matches ? "dark" : "light";
+  return null;
+};
+
 const CONFIG_DEFAULTS = {
   wrapperAttr: "wrapper",
   noAjaxLinkAttr: "no-ajax-link",
@@ -1589,24 +1607,6 @@ class InViewBlock extends Block {
   }
 }
 
-const getTheme = () => {
-  const theme = window.localStorage.getItem("theme");
-  if (typeof theme === "string")
-    return theme;
-  return null;
-};
-const setTheme = (theme) => {
-  if (typeof theme === "string")
-    window.localStorage.setItem("theme", theme);
-};
-const mediaTheme = () => {
-  const mql = window.matchMedia("(prefers-color-scheme: dark)");
-  const hasMediaQueryPreference = typeof mql.matches === "boolean";
-  if (hasMediaQueryPreference)
-    return mql.matches ? "dark" : "light";
-  return null;
-};
-
 class Splashscreen extends Service {
   constructor() {
     super(...arguments);
@@ -1661,6 +1661,7 @@ class Splashscreen extends Service {
     this.rootElement.style.pointerEvents = "none";
   }
 }
+
 class IntroAnimation extends Service {
   init() {
     super.init();
@@ -1754,68 +1755,7 @@ class Fade extends Transition {
     });
   }
 }
-class Slide extends Transition {
-  constructor() {
-    super(...arguments);
-    this.name = "slide";
-    this.duration = 500;
-    this.direction = "right";
-  }
-  out({from}) {
-    let {duration, direction} = this;
-    let fromWrapper = from.getWrapper();
-    window.scroll({
-      top: 0,
-      behavior: "smooth"
-    });
-    return animate({
-      target: fromWrapper,
-      keyframes: [
-        {transform: "translateX(0%)", opacity: 1},
-        {transform: `translateX(${direction === "left" ? "-" : ""}25%)`, opacity: 0}
-      ],
-      duration,
-      easing: "in-quint",
-      onfinish: (el) => {
-        el.style.opacity = "0";
-        el.style.transform = `translateX(${direction === "left" ? "-" : ""}25%)`;
-      }
-    });
-  }
-  in({to}) {
-    let {duration} = this;
-    let toWrapper = to.getWrapper();
-    return animate({
-      target: toWrapper,
-      keyframes: [
-        {transform: `translateX(${this.direction === "right" ? "-" : ""}25%)`, opacity: 0},
-        {transform: "translateX(0%)", opacity: 1}
-      ],
-      duration,
-      easing: "out-quint",
-      onfinish(el) {
-        el.style.opacity = "1";
-        el.style.transform = `translateX(0%)`;
-      }
-    });
-  }
-}
-class SlideLeft extends Slide {
-  constructor() {
-    super(...arguments);
-    this.name = "slide-left";
-    this.duration = 500;
-    this.direction = "left";
-  }
-}
-class SlideRight extends Slide {
-  constructor() {
-    super(...arguments);
-    this.name = "slide-right";
-    this.duration = 500;
-    this.direction = "right";
-  }
-}
+
 class BigTransition extends Transition {
   constructor() {
     super(...arguments);
@@ -1916,6 +1856,69 @@ class BigTransition extends Transition {
       this.mainElement.style.visibility = "hidden";
       resolve();
     });
+  }
+}
+
+class Slide extends Transition {
+  constructor() {
+    super(...arguments);
+    this.name = "slide";
+    this.duration = 500;
+    this.direction = "right";
+  }
+  out({from}) {
+    let {duration, direction} = this;
+    let fromWrapper = from.getWrapper();
+    window.scroll({
+      top: 0,
+      behavior: "smooth"
+    });
+    return animate({
+      target: fromWrapper,
+      keyframes: [
+        {transform: "translateX(0%)", opacity: 1},
+        {transform: `translateX(${direction === "left" ? "-" : ""}25%)`, opacity: 0}
+      ],
+      duration,
+      easing: "in-quint",
+      onfinish: (el) => {
+        el.style.opacity = "0";
+        el.style.transform = `translateX(${direction === "left" ? "-" : ""}25%)`;
+      }
+    });
+  }
+  in({to}) {
+    let {duration} = this;
+    let toWrapper = to.getWrapper();
+    return animate({
+      target: toWrapper,
+      keyframes: [
+        {transform: `translateX(${this.direction === "right" ? "-" : ""}25%)`, opacity: 0},
+        {transform: "translateX(0%)", opacity: 1}
+      ],
+      duration,
+      easing: "out-quint",
+      onfinish(el) {
+        el.style.opacity = "1";
+        el.style.transform = `translateX(0%)`;
+      }
+    });
+  }
+}
+class SlideLeft extends Slide {
+  constructor() {
+    super(...arguments);
+    this.name = "slide-left";
+    this.duration = 500;
+    this.direction = "left";
+  }
+}
+class SlideRight extends Slide {
+  constructor() {
+    super(...arguments);
+    this.name = "slide-right";
+    this.duration = 500;
+    this.direction = "right";
   }
 }
 

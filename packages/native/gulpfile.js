@@ -57,7 +57,7 @@ task("css", () => {
 let js = (watching) => {
     return async () => {
         const bundle = await rollup({
-            input: `${tsFolder}/app.ts`,
+            input: `${tsFolder}/main.ts`,
             treeshake: true,
             preserveEntrySignatures: false,
             plugins: [
@@ -71,8 +71,7 @@ let js = (watching) => {
 
         await bundle.write({
             format: "es",
-            // sourcemap: true,
-            file: `${jsFolder}/app.js`,
+            file: `${jsFolder}/main.js`,
         });
 
         return new Promise((resolve) => {
