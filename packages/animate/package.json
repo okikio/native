@@ -1,6 +1,6 @@
 {
     "name": "@okikio/animate",
-    "version": "0.0.6",
+    "version": "0.0.7",
     "description": "An animation library for the modern web which utilizes the Web Animation API (WAAPI) to create butter smooth animation.",
     "publishConfig": {
         "access": "public",
@@ -87,7 +87,7 @@
         "ultra": "^0.7.2"
     },
     "dependencies": {
-        "@okikio/emitter": "^0.0.6"
+        "@okikio/emitter": "^0.0.7"
     },
     "gitHead": "ad422076cdb57d570426f786886129d5bca2f90f"
 }
