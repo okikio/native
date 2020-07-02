@@ -210,11 +210,11 @@ export class App {
     /**
      * Returns a Service from the App's instance of the ServiceManager
      *
-     * @param {number} key
+     * @param {string} key
      * @returns Service
      * @memberof App
      */
-    public getService(key: number): Service {
+    public getService(key: string): Service {
         return this.services.get(key);
     }
 
@@ -245,24 +245,20 @@ export class App {
      *
      * @param {("service" | "transition" | "state" | string)} type
      * @param {any} key
-     * @returns App
+     * @returns Service | Transition | State
      * @memberof App
      */
-    public get(type: "service" | "transition" | "state" | string, key: any): App {
+    public get(type: "service" | "transition" | "state" | string, key: any): Service | Transition | State {
         switch (type.toLowerCase()) {
             case "service":
-                this.getService(key);
-                break;
+                return this.getService(key);
             case "transition":
-                this.getTransition(key);
-                break;
+                return this.getTransition(key);
             case "state":
-                this.getState(key);
-                break;
+                return this.getState(key);
             default:
                 throw `Error: can't get type '${type}', it is not a recognized type. Did you spell it correctly.`;
         }
-        return this;
     }
 
     /**
@@ -318,6 +314,19 @@ export class App {
     }
 
     /**
+     * Adds a Service to the App's instance of the ServiceManager, with a name
+     *
+     * @param {string} key
+     * @param {Service} service
+     * @returns App
+     * @memberof App
+     */
+    public setService(key: string, service: Service): App {
+        this.services.set(key, service);
+        return this;
+    }
+
+    /**
      * Adds a Transition to the App's instance of the TransitionManager
      *
      * @param {Transition} transition
@@ -344,7 +353,7 @@ export class App {
     /**
      * Based on the type, it will add either a Transition, a Service, or a State to their respective Managers
      *
-     * @param {("service" | "transition" | "state")} type
+     * @param {("service" | "transition" | "state" | "block")} type
      * @param {any} value
      * @returns App
      * @memberof App
@@ -366,25 +375,23 @@ export class App {
             default:
                 throw `Error: can't add type '${type}', it is not a recognized type. Did you spell it correctly.`;
         }
+
         return this;
     }
 
     /**
      * Start the App and the ServiceManager
      *
-     * @returns Promise<App>
+     * @returns App
      * @memberof App
      */
-    public async boot(): Promise<App> {
-        await this.blocks.init();
+    public boot(): App {
+        this.services.init();
         this.services.boot();
-        this.services.initEvents();
 
+        this.blocks.init();
         this.blocks.boot();
-        this.blocks.initEvents();
-
-        this.transitions.initEvents();
-        return Promise.resolve(this);
+        return this;
     }
 
     /**
@@ -396,7 +403,6 @@ export class App {
     public stop(): App {
         this.services.stop();
         this.blocks.stop();
-        this.transitions.stopEvents();
         return this;
     }
 

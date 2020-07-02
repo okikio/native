@@ -1,5 +1,5 @@
 /// <reference types="jest" />
-import { animate } from "../src/api";
+import { Animate } from "../src/api";
 import "jest-chain";
 
 /*
@@ -7,16 +7,77 @@ import "jest-chain";
     Replace: @$1 $2
 */
 
-describe("Manager", () => {
-    let animation;
+describe("Animate", () => {
+    let animation: Animate;
 
-    beforeEach(() => {
-        animation = animate;
-    });
+    // beforeEach(() => {
+    //     animation = new Animate({
+    //         target: ".div",
+    //         keyframes(index: number, total: number, element: HTMLElement) {
+    //             return [
+    //                 { transform: "translateX(0px)", opacity: 0 },
+    //                 { transform: "translateX(300px)", opacity: ((index + 1) / total) }
+    //             ]
+    //         },
+    //         transform: ["translateX(0px)", "translateX(300px)"],
+    //         easing: "out-cubic",
+    //         opacity(index: number, total: number, element: HTMLElement) {
+    //             return [0, ((index + 1) / total)];
+    //         },
+    //         duration(index: number) {
+    //             return (index + 1) * 500;
+    //         },
+    //         onfinish(element: HTMLElement, index: number, total: number) {
+    //             element.style.opacity = `${((index + 1) / total)}`;
+    //             element.style.transform = "translateX(300px)";
+    //         },
+    //         loop: 5,
+    //         speed: 1,
+    //         direction: "alternate",
+    //         delay(index: number) {
+    //             return index * 200;
+    //         },
+    //         autoplay: true,
+    //         endDelay: 500
+    //     });
+    // });
 
-    describe("# WIP ()", () => {
-        test("get index 2 which is expected to be 3", () => {
-            expect(animation).not.toBe(undefined);
+    describe("#constructor()", () => {
+        test("argument and options", () => {
+            let div = {
+                document: true
+            };
+            console.log(div);
+            // expect(animation).toBeInstanceOf(Animate);
+            // expect(animation.getOptions()).toEqual({
+            //     target: ".div",
+            //     keyframes(index: number, total: number, element: HTMLElement) {
+            //         return [
+            //             { transform: "translateX(0px)", opacity: 0 },
+            //             { transform: "translateX(300px)", opacity: ((index + 1) / total) }
+            //         ]
+            //     },
+            //     transform: ["translateX(0px)", "translateX(300px)"],
+            //     easing: "out-cubic",
+            //     opacity(index: number, total: number, element: HTMLElement) {
+            //         return [0, ((index + 1) / total)];
+            //     },
+            //     duration(index: number) {
+            //         return (index + 1) * 500;
+            //     },
+            //     onfinish(element: HTMLElement, index: number, total: number) {
+            //         element.style.opacity = `${((index + 1) / total)}`;
+            //         element.style.transform = "translateX(300px)";
+            //     },
+            //     loop: 5,
+            //     speed: 1,
+            //     direction: "alternate",
+            //     delay(index: number) {
+            //         return index * 200;
+            //     },
+            //     autoplay: true,
+            //     endDelay: 500
+            // });
         });
     });
 

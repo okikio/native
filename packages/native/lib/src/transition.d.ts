@@ -1,6 +1,7 @@
-import { AdvancedManager, ManagerItem } from "./manager";
+import { AdvancedManager } from "./manager";
 import { EventEmitter } from "./emitter";
 import { Trigger } from "./history";
+import { Service } from "./service";
 import { Page } from "./page";
 import { App } from "./app";
 /**
@@ -24,7 +25,7 @@ export interface ITransitionData {
  * @export
  * @class Transition
  */
-export declare class Transition extends ManagerItem {
+export declare class Transition extends Service {
     /**
      * Transition name
      *
@@ -75,10 +76,6 @@ export declare class Transition extends ManagerItem {
      * @memberof Transition
      */
     init({ oldPage, newPage, trigger }: ITransition): Transition;
-    boot(): void;
-    initEvents(): void;
-    stopEvents(): void;
-    stop(): void;
     /**
      * Returns the Transition's name
      *
@@ -156,7 +153,7 @@ export declare class TransitionManager extends AdvancedManager<string, Transitio
      * Runs a transition
      *
      * @param {{ name: string, oldPage: Page, newPage: Page, trigger: Trigger }} { name, oldPage, newPage, trigger }
-     * @returns Promise<void>
+     * @returns Promise<Transition>
      * @memberof TransitionManager
      */
     boot({ name, oldPage, newPage, trigger }: {
@@ -165,18 +162,4 @@ export declare class TransitionManager extends AdvancedManager<string, Transitio
         newPage: Page;
         trigger: Trigger;
     }): Promise<Transition>;
-    /**
-     * Call the initEvents method for all Transitions
-     *
-     * @returns TransitionManager
-     * @memberof TransitionManager
-     */
-    initEvents(): TransitionManager;
-    /**
-     * Call the stopEvents method for all Transitions
-     *
-     * @returns TransitionManager
-     * @memberof TransitionManager
-     */
-    stopEvents(): TransitionManager;
 }

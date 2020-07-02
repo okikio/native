@@ -7,6 +7,7 @@ export interface IBlockInit {
     rootElement?: HTMLElement;
     selector?: string;
     index?: number;
+    length?: number;
 };
 
 /**
@@ -63,16 +64,26 @@ export class Block extends Service {
     protected rootElement: HTMLElement;
 
     /**
+     * Total number of Blocks in a BlockManager
+     *
+     * @protected
+     * @type number
+     * @memberof Block
+     */
+    protected length: number;
+
+    /**
      * It initializes the Block
      *
      * @param {IBlockInit} [{ name, rootElement, selector, index }]
      * @memberof Block
      */
-    public init({ name, rootElement, selector, index }: IBlockInit) {
+    public init({ name, rootElement, selector, index, length }: IBlockInit) {
         this.rootElement = rootElement;
         this.name = name;
         this.selector = selector;
         this.index = index;
+        this.length = length;
     }
 
     /**
@@ -93,6 +104,16 @@ export class Block extends Service {
      */
     public getSelector(): string {
         return this.selector;
+    }
+
+    /**
+     * Returns the total number of a Blocks instantiated
+     *
+     * @returns {number}
+     * @memberof Block
+     */
+    public getLength(): number {
+        return this.length;
     }
 
     /**
@@ -158,10 +179,10 @@ export class BlockIntent extends ManagerItem {
      * The Block Class
      *
      * @protected
-     * @type {Promise<typeof Block>}
+     * @type {typeof Block}
      * @memberof BlockIntent
     */
-    protected block: Promise<typeof Block>;
+    protected block: typeof Block;
 
     /**
      * Creates an instance of BlockIntent.
@@ -169,10 +190,10 @@ export class BlockIntent extends ManagerItem {
      * @param {{ name: string; block: typeof Block; }} { name, block }
      * @memberof BlockIntent
      */
-    constructor({ name, block }: { name: string; block: Promise<typeof Block> | typeof Block; }) {
+    constructor({ name, block }: { name: string; block: typeof Block }) {
         super();
         this.name = name;
-        this.block = block instanceof Promise ? block : Promise.resolve(block);
+        this.block = block;
     }
 
     /**
@@ -188,10 +209,10 @@ export class BlockIntent extends ManagerItem {
     /**
      * Getter for the Block of the Block Intent
      *
-     * @returns {Promise<typeof Block>}
+     * @returns {typeof Block}
      * @memberof BlockIntent
      */
-    public getBlock(): Promise<typeof Block> {
+    public getBlock(): typeof Block {
         return this.block;
     }
 }
@@ -242,11 +263,12 @@ export class BlockManager extends AdvancedManager<number, BlockIntent> {
     }
 
     /**
-     * Initialize all Blocks
+     * Build all Blocks
      *
+     * @param {boolean} [full]
      * @memberof BlockManager
      */
-    public async init() {
+    public build(full?: boolean) {
         let app = this.getApp();
         for (let [, intent] of this) {
             let name: string = intent.getName();
@@ -255,59 +277,38 @@ export class BlockManager extends AdvancedManager<number, BlockIntent> {
                 ...document.querySelectorAll(selector),
             ];
 
-            let idList = [];
+            if (!Array.isArray(this.activeIDs[name]))
+                this.activeIDs[name] = [];
+
             let manager: AdvancedManager<number, Block> = new AdvancedManager(app);
-            let block: typeof Block = await intent.getBlock();
+            let block: typeof Block = intent.getBlock();
             for (let i = 0, len = rootElements.length; i < len; i++) {
                 let rootElement = rootElements[i] as HTMLElement;
                 let id = rootElement.id;
-                let newInstance: Block = new block();
-                newInstance.init({ name, rootElement, selector, index: i });
-                newInstance.setID(id);
 
-                idList[i] = id;
-                manager.set(i, newInstance);
+                let activeID = this.activeIDs[name][i];
+                if ((activeID !== "" && activeID !== id) || full) {
+                    let newInstance: Block = new block();
+                    newInstance.init({ name, rootElement, selector, index: i, length: len });
+                    newInstance.setID(id);
+
+                    this.activeIDs[name][i] = id;
+                    manager.set(i, newInstance);
+                }
             }
 
-            this.activeIDs[name] = idList;
             this.activeBlocks.set(name, manager);
         }
     }
 
     /**
-     * Refreshes DOM Elements
+     * Initialize all Blocks
      *
      * @memberof BlockManager
      */
-    public async update() {
-        let app = this.getApp();
-        for (let [, intent] of this) {
-            let name: string = intent.getName();
-            let selector: string = `[${this.getConfig("blockAttr", false)}="${name}"]`;
-            let rootElements: Node[] = [
-                ...document.querySelectorAll(selector),
-            ];
-
-            let idList = [];
-            let manager: AdvancedManager<number, Block> = new AdvancedManager(app);
-            let block: typeof Block = await intent.getBlock();
-            for (let i = 0, len = rootElements.length; i < len; i++) {
-                let rootElement = rootElements[i] as HTMLElement;
-                let id = rootElement.id;
-                if (this.activeIDs[name][i] !== id) {
-                    let newInstance: Block = new block();
-                    newInstance.init({ name, rootElement, selector, index: i });
-                    newInstance.setID(id);
-                    newInstance.boot();
-
-                    idList[i] = id;
-                    manager.set(i, newInstance);
-                }
-            }
-
-            this.activeIDs[name] = idList;
-            this.activeBlocks.set(name, manager);
-        }
+    public init(): BlockManager {
+        this.build(true);
+        return this;
     }
 
     /**
@@ -317,26 +318,53 @@ export class BlockManager extends AdvancedManager<number, BlockIntent> {
      * @memberof BlockManager
      */
     public initEvents(): BlockManager {
-        for (let [, blockManager] of this.activeBlocks) {
-            blockManager.methodCall("initEvents");
-        }
         let app = this.getApp();
         let rootElement = app.getPages().last().getWrapper();
-
-        this.update = this.update.bind(this);
-        this.domObserver = new window.MutationObserver(this.update);
-        this.observe(rootElement);
-
-        const EventEmitter = app.getEmitter();
-        EventEmitter.on("BEFORE_TRANSITION_IN", async () => {
-            rootElement = app.getPages().last().getWrapper();
-            this.domObserver.disconnect();
-            this.refresh();
-
-            await this.init();
-            this.boot();
-            this.observe(rootElement);
+        this.domObserver = new window.MutationObserver(() => {
+            this.build(false);
         });
+
+        this.observe(rootElement);
+        const EventEmitter = app.getEmitter();
+        EventEmitter.on("CONTENT_REPLACED", this.reload, this);
+        return this;
+    }
+
+    /**
+     * Refreshes the active blocks list
+     *
+     * @returns {BlockManager}
+     * @memberof BlockManager
+     */
+    public flush(): BlockManager {
+        this.activeBlocks.forEach((blockManager: AdvancedManager<number, Block>) => {
+            blockManager.methodCall("stop");
+        });
+
+        this.activeBlocks.clear();
+        return this;
+    }
+
+    /**
+     * Reloads active blocks, it's set to do this on Page changes
+     *
+     * @memberof BlockManager
+     */
+    /**
+     *
+     *
+     * @returns BlockManager
+     * @memberof BlockManager
+     */
+    public reload(): BlockManager {
+        let app = this.getApp();
+        let rootElement = app.getPages().last().getWrapper();
+        this.domObserver.disconnect();
+        this.flush();
+
+        this.init();
+        this.bootBlocks();
+        this.observe(rootElement);
         return this;
     }
 
@@ -356,41 +384,28 @@ export class BlockManager extends AdvancedManager<number, BlockIntent> {
     }
 
     /**
+     * Boot Blocks
+     *
+     * @returns BlockManager
+     * @memberof BlockManager
+     */
+    public bootBlocks(): BlockManager {
+        this.activeBlocks.forEach((blockManager: AdvancedManager<number, Block>) => {
+            blockManager.methodCall("boot");
+        });
+
+        return this;
+    }
+
+    /**
      * Call the boot method for all Blocks
      *
      * @returns BlockManager
      * @memberof BlockManager
      */
     public boot(): BlockManager {
-        for (let [, blockManager] of this.activeBlocks) {
-            blockManager.methodCall("boot");
-        }
-        return this;
-    }
-
-    /**
-     * Refreshes the active blocks list
-     *
-     * @returns {BlockManager}
-     * @memberof BlockManager
-     */
-    public refresh(): BlockManager {
-        for (let [, blockManager] of this.activeBlocks) {
-            blockManager.methodCall("stop");
-        }
-        this.activeBlocks.clear();
-        return this;
-    }
-
-    /**
-     * Call the stop method for all Blocks
-     *
-     * @returns BlockManager
-     * @memberof BlockManager
-     */
-    public stop(): BlockManager {
-        this.refresh();
-        this.stopEvents();
+        this.initEvents();
+        this.bootBlocks();
         return this;
     }
 
@@ -401,9 +416,27 @@ export class BlockManager extends AdvancedManager<number, BlockIntent> {
      * @memberof BlockManager
      */
     public stopEvents(): BlockManager {
-        for (let [, blockManager] of this.activeBlocks) {
+        this.activeBlocks.forEach((blockManager: AdvancedManager<number, Block>) => {
             blockManager.methodCall("stopEvents");
-        }
+        });
+
+        let app = this.getApp();
+        this.domObserver.disconnect();
+
+        const EventEmitter = app.getEmitter();
+        EventEmitter.off("BEFORE_TRANSITION_IN", this.reload, this);
+        return this;
+    }
+
+    /**
+     * Call the stop method for all Blocks
+     *
+     * @returns BlockManager
+     * @memberof BlockManager
+     */
+    public stop(): BlockManager {
+        this.flush();
+        this.stopEvents();
         return this;
     }
 

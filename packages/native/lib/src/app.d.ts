@@ -153,11 +153,11 @@ export declare class App {
     /**
      * Returns a Service from the App's instance of the ServiceManager
      *
-     * @param {number} key
+     * @param {string} key
      * @returns Service
      * @memberof App
      */
-    getService(key: number): Service;
+    getService(key: string): Service;
     /**
      * Returns a Transition from the App's instance of the TransitionManager
      *
@@ -179,10 +179,10 @@ export declare class App {
      *
      * @param {("service" | "transition" | "state" | string)} type
      * @param {any} key
-     * @returns App
+     * @returns Service | Transition | State
      * @memberof App
      */
-    get(type: "service" | "transition" | "state" | string, key: any): App;
+    get(type: "service" | "transition" | "state" | string, key: any): Service | Transition | State;
     /**
      * Returns a Page
      *
@@ -217,6 +217,15 @@ export declare class App {
      */
     addService(service: Service): App;
     /**
+     * Adds a Service to the App's instance of the ServiceManager, with a name
+     *
+     * @param {string} key
+     * @param {Service} service
+     * @returns App
+     * @memberof App
+     */
+    setService(key: string, service: Service): App;
+    /**
      * Adds a Transition to the App's instance of the TransitionManager
      *
      * @param {Transition} transition
@@ -235,7 +244,7 @@ export declare class App {
     /**
      * Based on the type, it will add either a Transition, a Service, or a State to their respective Managers
      *
-     * @param {("service" | "transition" | "state")} type
+     * @param {("service" | "transition" | "state" | "block")} type
      * @param {any} value
      * @returns App
      * @memberof App
@@ -244,10 +253,10 @@ export declare class App {
     /**
      * Start the App and the ServiceManager
      *
-     * @returns Promise<App>
+     * @returns App
      * @memberof App
      */
-    boot(): Promise<App>;
+    boot(): App;
     /**
      * Stop the App and the ServiceManager
      *

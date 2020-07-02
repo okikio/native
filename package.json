@@ -6,19 +6,24 @@
         "packages/*"
     ],
     "scripts": {
-        "build": "pnpm run build -r",
-        "watch": "pnpm run --parallel -r watch",
-        "docs:build": "pnpm run -r docs:build",
+        "build": "ultra -r build",
+        "docs:build": "ultra -r docs:build",
         "docs:watch": "pnpm run --parallel -r docs:watch",
-        "test": "jest --maxWorkers=1",
-        "test:watch": "jest --watch --maxWorkers=1",
-        "prepublish": "pnpm run pre-release -r",
-        "release:pnpm": "lerna version && pnpm -r publish --tag latest"
+        "cy:run": "cypress run --browser edge",
+        "cy:open": "cypress open",
+        "test": "ultra -r test",
+        "test:watch": "pnpm run --parallel -r test:watch",
+        "prepublish": "ultra -r pre-release",
+        "release": "ultra prepublish && lerna version && pnpm -r publish --tag latest"
     },
     "devDependencies": {
+        "@commitlint/cli": "^9.0.1",
+        "@commitlint/config-conventional": "^9.0.1",
         "@rollup/plugin-node-resolve": "^8.1.0",
         "@types/jest": "^26.0.3",
+        "cypress": "^4.9.0",
         "gulp": "^4.0.2",
+        "husky": "^4.2.5",
         "jest": "^26.1.0",
         "jest-chain": "^1.1.5",
         "jest-environment-jsdom-global": "^2.0.4",
@@ -28,6 +33,7 @@
         "rollup": "^2.18.1",
         "rollup-plugin-esbuild": "^2.1.0",
         "ts-jest": "^26.1.1",
-        "tslib": "^2.0.0"
+        "tslib": "^2.0.0",
+        "ultra": "^0.7.2"
     }
 }

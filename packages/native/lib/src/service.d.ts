@@ -57,6 +57,7 @@ export declare class Service extends ManagerItem {
      * @memberof Service
      */
     install(): void;
+    init(...args: any): void;
     boot(): void;
     initEvents(): void;
     stopEvents(): void;
@@ -67,9 +68,9 @@ export declare class Service extends ManagerItem {
  *
  * @export
  * @class ServiceManager
- * @extends {AdvancedManager<number, Service>}
+ * @extends {AdvancedManager<string, Service>}
  */
-export declare class ServiceManager extends AdvancedManager<number, Service> {
+export declare class ServiceManager extends AdvancedManager<string, Service> {
     /**
      * Creates an instance of ServiceManager.
      *
@@ -78,26 +79,19 @@ export declare class ServiceManager extends AdvancedManager<number, Service> {
      */
     constructor(app: App);
     /**
+     * Call the init method for all Services
+     *
+     * @returns ServiceManager
+     * @memberof ServiceManager
+     */
+    init(): ServiceManager;
+    /**
      * Call the boot method for all Services
      *
      * @returns ServiceManager
      * @memberof ServiceManager
      */
     boot(): ServiceManager;
-    /**
-     * Call the initEvents method for all Services
-     *
-     * @returns ServiceManager
-     * @memberof ServiceManager
-     */
-    initEvents(): ServiceManager;
-    /**
-     * Call the stopEvents method for all Services
-     *
-     * @returns ServiceManager
-     * @memberof ServiceManager
-     */
-    stopEvents(): ServiceManager;
     /**
      * Call the stop method for all Services
      *

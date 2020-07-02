@@ -102,7 +102,7 @@ export interface AnimationOptions {
     onfinish?: (element?: HTMLElement, index?: number, total?: number) => any,
     fillMode?: "none" | "forwards" | "backwards" | "both" | "auto" | closure,
     direction?: "normal" | "reverse" | "alternate" | "alternate-reverse" | closure,
-    [property: string]: boolean | object | string | string[] | number | null | (number | null)[] | closure | undefined;
+    [property: string]: closure | boolean | object | string | string[] | number | null | (number | null)[] | undefined;
 };
 
 export const DefaultAnimationOptions: AnimationOptions = {
@@ -230,6 +230,7 @@ export class Animate {
     constructor(options: AnimationOptions = {}) {
         let { options: animation, ...rest } = options;
         this.options = Object.assign({}, DefaultAnimationOptions, animation, rest);
+        this.loop = this.loop.bind(this);
 
         let {
             loop,
@@ -312,6 +313,16 @@ export class Animate {
     }
 
     /**
+     * Returns the Array of targets
+     *
+     * @returns {Node[]}
+     * @memberof Animate
+     */
+    public getTargets(): Node[] {
+        return this.targets;
+    }
+
+    /**
      * Returns a new Promise that is resolve when this.finish is called
      *
      * @protected
@@ -373,7 +384,7 @@ export class Animate {
      * @memberof Animate
      */
     protected loop(): void {
-        this.animationFrame = window.requestAnimationFrame(this.loop.bind(this));
+        this.animationFrame = window.requestAnimationFrame(this.loop);
         this.emit("tick change", this.getCurrentTime());
     }
 
@@ -439,7 +450,7 @@ export class Animate {
         // Once the animation is done, it's done, it can only be paused by the reset method
         if (this.mainAnimation.playState !== "finished") {
             this.mainAnimation.play();
-            this.animationFrame = requestAnimationFrame(this.loop.bind(this));
+            this.animationFrame = requestAnimationFrame(this.loop);
             this.animations.forEach(animation => {
                 if (animation.playState !== "finished") animation.play();
             });
@@ -536,6 +547,7 @@ export class Animate {
     public getSpeed(): number {
         return this.mainAnimation.playbackRate;
     }
+
     /**
      * Set the playback speed of an Animation
      *

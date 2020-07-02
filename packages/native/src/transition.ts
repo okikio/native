@@ -1,6 +1,7 @@
-import { AdvancedManager, ManagerItem } from "./manager";
+import { AdvancedManager } from "./manager";
 import { EventEmitter } from "./emitter";
 import { Trigger } from "./history";
+import { Service } from "./service";
 import { Page } from "./page";
 import { App } from "./app";
 
@@ -26,7 +27,7 @@ export interface ITransitionData {
  * @export
  * @class Transition
  */
-export class Transition extends ManagerItem {
+export class Transition extends Service {
 	/**
 	 * Transition name
 	 *
@@ -89,22 +90,9 @@ export class Transition extends ManagerItem {
         this.oldPage = oldPage;
         this.newPage = newPage;
         this.trigger = trigger;
+        super.init();
         this.boot();
         return this;
-    }
-
-    // Called on start of Transition
-    public boot(): void { }
-
-    // Initialize events
-    public initEvents(): void { }
-
-    // Stop events
-    public stopEvents(): void { }
-
-    // Stop services
-    public stop(): void {
-        this.stopEvents();
     }
 
 	/**
@@ -179,44 +167,43 @@ export class Transition extends ManagerItem {
         let toWrapper = this.newPage.getWrapper();
         document.title = this.newPage.getTitle();
 
-        return new Promise(async finish => {
-            EventEmitter.emit("BEFORE_TRANSITION_OUT");
-            await new Promise(done => {
-                let outMethod: Promise<any> = this.out({
-                    from: this.oldPage,
-                    trigger: this.trigger,
-                    done
-                });
-
-                if (outMethod.then)
-                    outMethod.then(done);
+        EventEmitter.emit("BEFORE_TRANSITION_OUT");
+        await new Promise(done => {
+            let outMethod: Promise<any> = this.out({
+                from: this.oldPage,
+                trigger: this.trigger,
+                done
             });
 
-            EventEmitter.emit("AFTER_TRANSITION_OUT");
-
-            await new Promise(done => {
-                fromWrapper.insertAdjacentElement('beforebegin', toWrapper);
-                fromWrapper.remove();
-                done();
-            });
-
-            EventEmitter.emit("BEFORE_TRANSITION_IN");
-
-            await new Promise(done => {
-                let inMethod: Promise<any> = this.in({
-                    from: this.oldPage,
-                    to: this.newPage,
-                    trigger: this.trigger,
-                    done
-                });
-
-                if (inMethod.then)
-                    inMethod.then(done);
-            });
-
-            EventEmitter.emit("AFTER_TRANSITION_IN");
-            finish();
+            if (outMethod.then)
+                outMethod.then(done);
         });
+
+        EventEmitter.emit("AFTER_TRANSITION_OUT");
+
+        await new Promise(done => {
+            fromWrapper.insertAdjacentElement('beforebegin', toWrapper);
+            fromWrapper.remove();
+            EventEmitter.emit("CONTENT_REPLACED");
+            done();
+        });
+
+        EventEmitter.emit("BEFORE_TRANSITION_IN");
+
+        await new Promise(done => {
+            let inMethod: Promise<any> = this.in({
+                from: this.oldPage,
+                to: this.newPage,
+                trigger: this.trigger,
+                done
+            });
+
+            if (inMethod.then)
+                inMethod.then(done);
+        });
+
+        EventEmitter.emit("AFTER_TRANSITION_IN");
+        return this;
     }
 }
 
@@ -253,7 +240,7 @@ export class TransitionManager extends AdvancedManager<string, Transition> {
      * Runs a transition
      *
      * @param {{ name: string, oldPage: Page, newPage: Page, trigger: Trigger }} { name, oldPage, newPage, trigger }
-     * @returns Promise<void>
+     * @returns Promise<Transition>
      * @memberof TransitionManager
      */
     public async boot({ name, oldPage, newPage, trigger }: { name: string, oldPage: Page, newPage: Page, trigger: Trigger }): Promise<Transition> {
@@ -266,27 +253,5 @@ export class TransitionManager extends AdvancedManager<string, Transition> {
 
         let EventEmitter = this.getApp().getEmitter();
         return await transition.start(EventEmitter);
-    }
-
-	/**
-	 * Call the initEvents method for all Transitions
-	 *
-	 * @returns TransitionManager
-	 * @memberof TransitionManager
-	 */
-    public initEvents(): TransitionManager {
-        this.methodCall("initEvents");
-        return this;
-    }
-
-	/**
-	 * Call the stopEvents method for all Transitions
-	 *
-	 * @returns TransitionManager
-	 * @memberof TransitionManager
-	 */
-    public stopEvents(): TransitionManager {
-        this.methodCall("stopEvents");
-        return this;
     }
 }

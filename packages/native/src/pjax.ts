@@ -105,6 +105,8 @@ export class PJAX extends Service {
      * @memberof PJAX
      */
     public boot() {
+        super.boot();
+
         let current = new State();
         this.HistoryManager.add(current);
         this.changeState("replace", current);
@@ -480,13 +482,13 @@ export class PJAX extends Service {
         // If Url is ignored or already in cache, don't do any think
         if (this.ignoredURL(url) || this.PageManager.has(urlString)) return;
 
-        this.EventEmitter.emit("ANCHOR_HOVER HOVER hover", event);
+        this.EventEmitter.emit("ANCHOR_HOVER HOVER", event);
 
         (async () => {
             try {
                 await this.PageManager.load(url);
             } catch (err) {
-                console.warn("[PJAX] Prefetch error: ", err);
+                console.warn("[PJAX] prefetch error,", err);
             }
         })();
     }

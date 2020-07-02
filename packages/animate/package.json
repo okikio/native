@@ -35,9 +35,9 @@
     "scripts": {
         "build": "rollup --config",
         "watch": "rollup --config --watch",
-        "test": "jest --maxWorkers=1 --coverage",
-        "test:watch": "jest --maxWorkers=1 --watch",
-        "pre-release": "npm run build && npm run test",
+        "test": "jest --maxWorkers=3 --coverage",
+        "test:watch": "jest --maxWorkers=1 --watch --verbose false",
+        "pre-release": "ultra build && ultra docs:build && ultra test",
         "docs:build": "gulp build",
         "docs:watch": "gulp"
     },
@@ -69,6 +69,7 @@
         "@rollup/plugin-node-resolve": "^8.1.0",
         "@types/jest": "^26.0.3",
         "browser-sync": "^2.26.7",
+        "connect-logger": "^0.0.1",
         "eslint": "^7.3.1",
         "gulp": "^4.0.2",
         "gulp-sass": "^4.1.0",
@@ -77,13 +78,13 @@
         "jest-chain": "^1.1.5",
         "jest-environment-jsdom-global": "^2.0.4",
         "jest-watch-lerna-packages": "^1.1.0",
-        "pnpm": "^5.2.6",
         "rollup": "^2.18.1",
         "rollup-plugin-esbuild": "^2.1.0",
         "rollup-plugin-typescript2": "^0.27.1",
         "ts-jest": "^26.1.1",
         "tslib": "^2.0.0",
-        "typescript": "^3.9.5"
+        "typescript": "^3.9.5",
+        "ultra": "^0.7.2"
     },
     "dependencies": {
         "@okikio/emitter": "^0.0.6"

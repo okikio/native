@@ -78,4 +78,10 @@ export declare class Router extends Service {
      * @memberof Router
      */
     initEvents(): void;
+    /**
+     * Remove listeners for PJAX Events
+     *
+     * @memberof Router
+     */
+    stopEvents(): void;
 }

@@ -105,3 +105,6 @@ dist
 
 # Jest
 coverage/
+
+# Ultra
+.ultra.cache.json

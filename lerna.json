@@ -1,14 +1,15 @@
 {
     "version": "0.0.6",
-    "packages": [
-        "packages/*"
-    ],
+    "packages": ["packages/*"],
     "command": {
         "publish": {
             "message": "chore(release): publish",
             "npmClient": "pnpm"
+        },
+        "install": {
+            "npmClient": "pnpm"
         }
     },
-    "npmClient": "pnpm",
+    "npmClient": "npm",
     "useWorkspaces": true
 }

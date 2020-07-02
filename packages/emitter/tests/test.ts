@@ -151,6 +151,27 @@ describe("EventEmitter", () => {
             expect(on.get("test").size).toBe(0);
         });
 
+        test("listen for one event and one listener; emit one event listener; turn off an event listener without context/scope", () => {
+            let test: boolean | any = false;
+            let obj = { bool: false };
+            let fn = function (key, value) {
+                test = [key, value];
+                expect(obj).toHaveProperty("bool");
+                expect(obj.bool).toBe(false);
+            };
+
+            let on: EventEmitter = emitter.on("test", fn);
+
+            on.off("test", fn);
+            on.emit("test", 1, "true");
+
+            expect(on).toBeInstanceOf(EventEmitter);
+            expect(test).not.toEqual([1, "true"]);
+
+            expect(on.get("test")).toBeInstanceOf(Event);
+            expect(on.get("test").size).toBe(0);
+        });
+
         test("listen for multiple events, and one listener; emit multiples events; turn off multiple events", () => {
             let test: boolean | any = false;
             let obj = { bool: false };

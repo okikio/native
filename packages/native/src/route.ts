@@ -142,8 +142,17 @@ export class Router extends Service {
      * @memberof Router
      */
     public initEvents() {
-        this.route = this.route.bind(this);
-        this.EventEmitter.on("READY", this.route);
-        this.EventEmitter.on("PAGE_LOADING", this.route);
+        this.EventEmitter.on("READY", this.route, this);
+        this.EventEmitter.on("PAGE_LOADING", this.route, this);
+    }
+
+    /**
+     * Remove listeners for PJAX Events
+     *
+     * @memberof Router
+     */
+    public stopEvents() {
+        this.EventEmitter.off("READY", this.route, this);
+        this.EventEmitter.off("PAGE_LOADING", this.route, this);
     }
 }

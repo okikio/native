@@ -3,12 +3,14 @@ const { nodeResolve } = require("@rollup/plugin-node-resolve");
 const esbuild = require("rollup-plugin-esbuild");
 const { rollup } = require("rollup");
 
+const logger = require("connect-logger");
 const bs = require("browser-sync");
+
 const sass = require("gulp-sass");
 const swig = require("gulp-swig");
 
 // Gulp utilities
-const { stream, task, watch, parallel, series } = require("./util");
+const { stream, task, watch, parallel, series } = require("../../util");
 
 // Origin folders (source and destination folders)
 const srcFolder = `build`;
@@ -34,6 +36,7 @@ task("html", () => {
             }),
         ],
         dest: htmlFolder,
+        end: browserSync.reload,
     });
 });
 
@@ -56,20 +59,25 @@ let js = (watching) => {
         const bundle = await rollup({
             input: `${tsFolder}/app.ts`,
             treeshake: true,
+            preserveEntrySignatures: false,
             plugins: [
                 nodeResolve(),
                 esbuild({
                     watch: watching,
-                    minify: true,
                     target: "es2020", // default, or 'es20XX', 'esnext'
                 }),
             ],
         });
 
-        return bundle.write({
+        await bundle.write({
             format: "es",
-            sourcemap: true,
+            // sourcemap: true,
             file: `${jsFolder}/app.js`,
+        });
+
+        return new Promise((resolve) => {
+            browserSync.reload();
+            resolve();
         });
     };
 };
@@ -81,24 +89,28 @@ const browserSync = bs.create();
 task("build", parallel("html", "css", "js"));
 task("watch", () => {
     browserSync.init(
-        { server: [`./${destFolder}`, `./lib`, `./src`] },
+        {
+            notify: false,
+            server: destFolder,
+            middleware: [
+                logger({
+                    format: "%date %status %method %url -- %time",
+                }),
+            ],
+        },
         (_err, bs) => {
             bs.addMiddleware("*", (_req, res) => {
                 res.writeHead(302, {
                     location: `/404.html`,
                 });
-
-                res.end("Redirecting!");
+                res.end();
             });
         }
     );
 
     watch(`${swigFolder}/**/*.html`, series("html"));
     watch(`${sassFolder}/*.scss`, series("css"));
-    watch([`${tsFolder}/*.ts`, `src/*.ts`], js(true));
-
-    watch(`${jsFolder}/*.js`).on("change", browserSync.reload);
-    watch(`${htmlFolder}/*.html`).on("change", browserSync.reload);
+    watch([`${tsFolder}/*.ts`, `src/*.ts`, `../**/src/*.ts`], js(true));
 });
 
 task("default", series("build", "watch"));

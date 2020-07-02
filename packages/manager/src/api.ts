@@ -1,4 +1,3 @@
-
 /**
  * Manages complex lists of named data, eg. A page can be stored in a list by of other pages with the url being how the page is stored in the list. Managers use Maps to store data.
  *
@@ -89,8 +88,10 @@ export class Manager<K, V> {
      * @returns Manager<K, V>
      */
 	public add(value: V): Manager<K, V> {
+		let size = this.size;
 		// @ts-ignore
-		this.set(this.size as K, value);
+		let num: K = size as K;
+		this.set(num, value);
 		return this;
 	}
 

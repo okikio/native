@@ -6,6 +6,7 @@ export interface IBlockInit {
     rootElement?: HTMLElement;
     selector?: string;
     index?: number;
+    length?: number;
 }
 /**
  * Services that interact with specific Components to achieve certain actions
@@ -56,12 +57,20 @@ export declare class Block extends Service {
      */
     protected rootElement: HTMLElement;
     /**
+     * Total number of Blocks in a BlockManager
+     *
+     * @protected
+     * @type number
+     * @memberof Block
+     */
+    protected length: number;
+    /**
      * It initializes the Block
      *
      * @param {IBlockInit} [{ name, rootElement, selector, index }]
      * @memberof Block
      */
-    init({ name, rootElement, selector, index }: IBlockInit): void;
+    init({ name, rootElement, selector, index, length }: IBlockInit): void;
     /**
      * Get Root Element
      *
@@ -76,6 +85,13 @@ export declare class Block extends Service {
      * @memberof Block
      */
     getSelector(): string;
+    /**
+     * Returns the total number of a Blocks instantiated
+     *
+     * @returns {number}
+     * @memberof Block
+     */
+    getLength(): number;
     /**
      * Get Index
      *
@@ -125,10 +141,10 @@ export declare class BlockIntent extends ManagerItem {
      * The Block Class
      *
      * @protected
-     * @type {Promise<typeof Block>}
+     * @type {typeof Block}
      * @memberof BlockIntent
     */
-    protected block: Promise<typeof Block>;
+    protected block: typeof Block;
     /**
      * Creates an instance of BlockIntent.
      *
@@ -137,7 +153,7 @@ export declare class BlockIntent extends ManagerItem {
      */
     constructor({ name, block }: {
         name: string;
-        block: Promise<typeof Block> | typeof Block;
+        block: typeof Block;
     });
     /**
      * Getter for name of Block Intent
@@ -149,10 +165,10 @@ export declare class BlockIntent extends ManagerItem {
     /**
      * Getter for the Block of the Block Intent
      *
-     * @returns {Promise<typeof Block>}
+     * @returns {typeof Block}
      * @memberof BlockIntent
      */
-    getBlock(): Promise<typeof Block>;
+    getBlock(): typeof Block;
 }
 /**
  * A Service Manager designed to handle only Block Services, it refreshes on Page Change
@@ -194,17 +210,18 @@ export declare class BlockManager extends AdvancedManager<number, BlockIntent> {
      */
     constructor(app: App);
     /**
+     * Build all Blocks
+     *
+     * @param {boolean} [full]
+     * @memberof BlockManager
+     */
+    build(full?: boolean): void;
+    /**
      * Initialize all Blocks
      *
      * @memberof BlockManager
      */
-    init(): Promise<void>;
-    /**
-     * Refreshes DOM Elements
-     *
-     * @memberof BlockManager
-     */
-    update(): Promise<void>;
+    init(): BlockManager;
     /**
      * Call the initEvents method for all Blocks
      *
@@ -213,12 +230,38 @@ export declare class BlockManager extends AdvancedManager<number, BlockIntent> {
      */
     initEvents(): BlockManager;
     /**
+     * Refreshes the active blocks list
+     *
+     * @returns {BlockManager}
+     * @memberof BlockManager
+     */
+    flush(): BlockManager;
+    /**
+     * Reloads active blocks, it's set to do this on Page changes
+     *
+     * @memberof BlockManager
+     */
+    /**
+     *
+     *
+     * @returns BlockManager
+     * @memberof BlockManager
+     */
+    reload(): BlockManager;
+    /**
      * Observe any changes to elements and update based on that
      *
      * @param {HTMLElement} rootElement
      * @memberof BlockManager
      */
     observe(rootElement: HTMLElement): void;
+    /**
+     * Boot Blocks
+     *
+     * @returns BlockManager
+     * @memberof BlockManager
+     */
+    bootBlocks(): BlockManager;
     /**
      * Call the boot method for all Blocks
      *
@@ -227,12 +270,12 @@ export declare class BlockManager extends AdvancedManager<number, BlockIntent> {
      */
     boot(): BlockManager;
     /**
-     * Refreshes the active blocks list
+     * Call the stopEvents method for all Blocks
      *
-     * @returns {BlockManager}
+     * @returns BlockManager
      * @memberof BlockManager
      */
-    refresh(): BlockManager;
+    stopEvents(): BlockManager;
     /**
      * Call the stop method for all Blocks
      *
@@ -240,13 +283,6 @@ export declare class BlockManager extends AdvancedManager<number, BlockIntent> {
      * @memberof BlockManager
      */
     stop(): BlockManager;
-    /**
-     * Call the stopEvents method for all Blocks
-     *
-     * @returns BlockManager
-     * @memberof BlockManager
-     */
-    stopEvents(): BlockManager;
     /**
      * Getter for activeBlocks in BlockManager
      *

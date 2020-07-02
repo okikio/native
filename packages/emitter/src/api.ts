@@ -179,7 +179,7 @@ export class EventEmitter extends Manager<string, Event> {
         if (typeof events == "undefined") return this;
 
         // Create a new event every space
-        if (typeof events == "string") events = events.split(/\s/g);
+        if (typeof events == "string") events = events.trim().split(/\s/g);
 
         let _name: string;
         let _callback: ListenerCallback;
@@ -222,21 +222,16 @@ export class EventEmitter extends Manager<string, Event> {
     ): Event {
         let event: Event = this.get(name);
         if (event instanceof Event && callback) {
-            let i = 0,
-                len: number = event.size,
-                value: Listener;
             let listener = new Listener({ name, callback, scope });
-            for (; i < len; i++) {
-                value = event.get(i);
 
+            event.forEach((value: Listener, i: number) => {
                 if (
                     value.getCallback() === listener.getCallback() &&
                     value.getScope() === listener.getScope()
-                )
-                    break;
-            }
-
-            event.delete(i);
+                ) {
+                    return event.delete(i);
+                }
+            });
         }
 
         return event;
@@ -260,7 +255,7 @@ export class EventEmitter extends Manager<string, Event> {
         if (typeof events == "undefined") return this;
 
         // Create a new event every space
-        if (typeof events == "string") events = events.split(/\s/g);
+        if (typeof events == "string") events = events.trim().split(/\s/g);
 
         let _name: string;
         let _callback: ListenerCallback;
@@ -282,7 +277,7 @@ export class EventEmitter extends Manager<string, Event> {
                 _name = events[key];
             }
 
-            if (_callback) {
+            if (typeof _callback === "function") {
                 this.removeListener(_name, _callback, _scope);
             } else this.delete(_name);
         }, this);
@@ -309,7 +304,7 @@ export class EventEmitter extends Manager<string, Event> {
         if (typeof events == "undefined") return this;
 
         // Create a new event every space
-        if (typeof events == "string") events = events.split(/\s/g);
+        if (typeof events == "string") events = events.trim().split(/\s/g);
 
         let _name: string;
         let _callback: ListenerCallback;
@@ -364,7 +359,7 @@ export class EventEmitter extends Manager<string, Event> {
         if (typeof events == "undefined") return this;
 
         // Create a new event every space
-        if (typeof events == "string") events = events.split(/\s/g);
+        if (typeof events == "string") events = events.trim().split(/\s/g);
 
         // Loop through the list of events
         events.forEach((event: string) => {

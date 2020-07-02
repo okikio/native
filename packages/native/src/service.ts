@@ -71,8 +71,13 @@ export class Service extends ManagerItem {
 		this.TransitionManager = app.getTransitions();
 	}
 
+	// Called before the start of a Service, represents a constructor of sorts
+	public init(...args: any): void { }
+
 	// Called on start of Service
-	public boot(): void { }
+	public boot(): void {
+		this.initEvents();
+	}
 
 	// Initialize events
 	public initEvents(): void { }
@@ -91,9 +96,9 @@ export class Service extends ManagerItem {
  *
  * @export
  * @class ServiceManager
- * @extends {AdvancedManager<number, Service>}
+ * @extends {AdvancedManager<string, Service>}
  */
-export class ServiceManager extends AdvancedManager<number, Service> {
+export class ServiceManager extends AdvancedManager<string, Service> {
     /**
      * Creates an instance of ServiceManager.
      *
@@ -105,6 +110,17 @@ export class ServiceManager extends AdvancedManager<number, Service> {
 	}
 
 	/**
+	 * Call the init method for all Services
+	 *
+	 * @returns ServiceManager
+	 * @memberof ServiceManager
+	 */
+	public init(): ServiceManager {
+		this.methodCall("init", this.getApp());
+		return this;
+	}
+
+	/**
 	 * Call the boot method for all Services
 	 *
 	 * @returns ServiceManager
@@ -112,28 +128,6 @@ export class ServiceManager extends AdvancedManager<number, Service> {
 	 */
 	public boot(): ServiceManager {
 		this.methodCall("boot");
-		return this;
-	}
-
-	/**
-	 * Call the initEvents method for all Services
-	 *
-	 * @returns ServiceManager
-	 * @memberof ServiceManager
-	 */
-	public initEvents(): ServiceManager {
-		this.methodCall("initEvents");
-		return this;
-	}
-
-	/**
-	 * Call the stopEvents method for all Services
-	 *
-	 * @returns ServiceManager
-	 * @memberof ServiceManager
-	 */
-	public stopEvents(): ServiceManager {
-		this.methodCall("stopEvents");
 		return this;
 	}
 
