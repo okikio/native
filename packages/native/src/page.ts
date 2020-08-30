@@ -194,7 +194,7 @@ export class PageManager extends AdvancedManager<string, Page> {
 	 */
     constructor(app: App) {
         super(app);
-        let URLString = new _URL().getPathname();
+        let URLString = new _URL().pathname;
         this.set(URLString, new Page());
     }
 

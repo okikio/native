@@ -79,20 +79,19 @@ export class Transition extends Service {
 	 * 		newPage,
 	 * 		trigger
 	 * 	}
-     * @returns Transition
+     * @returns void
 	 * @memberof Transition
 	 */
     public init({
         oldPage,
         newPage,
         trigger
-    }: ITransition): Transition {
+    }: ITransition): void {
+        super.init();
         this.oldPage = oldPage;
         this.newPage = newPage;
         this.trigger = trigger;
-        super.init();
         this.boot();
-        return this;
     }
 
 	/**
@@ -166,6 +165,9 @@ export class Transition extends Service {
         let fromWrapper = this.oldPage.getWrapper();
         let toWrapper = this.newPage.getWrapper();
         document.title = this.newPage.getTitle();
+
+        if (!(fromWrapper instanceof Node) || !(toWrapper instanceof Node))
+            throw `[Wrapper] the wrapper from the ${!(toWrapper instanceof Node) ? "next" : "current"} page cannot be found. The wrapper must be an element that has the attribute ${this.getConfig("wrapperAttr")}.`;
 
         EventEmitter.emit("BEFORE_TRANSITION_OUT");
         await new Promise(done => {

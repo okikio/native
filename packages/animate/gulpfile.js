@@ -54,6 +54,21 @@ task("css", () => {
 });
 
 // JS Tasks
+// Rollup warnings are annoying
+let ignoreLog = [
+    "CIRCULAR_DEPENDENCY",
+    "UNRESOLVED_IMPORT",
+    "EXTERNAL_DEPENDENCY",
+    "THIS_IS_UNDEFINED",
+];
+let onwarn = ({ loc, message, code, frame }, warn) => {
+    if (ignoreLog.indexOf(code) > -1) return;
+    if (loc) {
+        warn(`${loc.file} (${loc.line}:${loc.column}) ${message}`);
+        if (frame) warn(frame);
+    } else warn(message);
+};
+
 let js = (watching) => {
     return async () => {
         const bundle = await rollup({
@@ -67,6 +82,7 @@ let js = (watching) => {
                     target: "es2020", // default, or 'es20XX', 'esnext'
                 }),
             ],
+            onwarn
         });
 
         return bundle.write({

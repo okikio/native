@@ -30,21 +30,23 @@ export class IntroAnimation extends Service {
     }
 
     public stop() {
-        for (let el of this.elements) {
-            (el as HTMLElement).style.transform = "translateY(0px)";
-            (el as HTMLElement).style.opacity = '1';
-        }
+        requestAnimationFrame(() => {
+            for (let el of this.elements) {
+                (el as HTMLElement).style.transform = "translateY(0px)";
+                (el as HTMLElement).style.opacity = '1';
+            }
+        });
 
         super.stop();
     }
 
     public prepareToShow() {
-        for (let el of this.elements) {
-            (el as HTMLElement).style.transform = "translateY(200px)";
-            (el as HTMLElement).style.opacity = '0';
-        }
-
-        window.scroll(0, 0);
+        requestAnimationFrame(() => {
+            for (let el of this.elements) {
+                (el as HTMLElement).style.transform = "translateY(200px)";
+                (el as HTMLElement).style.opacity = '0';
+            }
+        });
     }
 
     public async show() {
@@ -56,14 +58,16 @@ export class IntroAnimation extends Service {
             ],
             // @ts-ignore
             delay(i: number) {
-                return 200 * (i + 1);
+                return 300 * (i + 1);
             },
             onfinish(el: { style: { transform: string; opacity: string; }; }) {
-                el.style.transform = "translateY(0px)";
-                el.style.opacity = "1";
+                requestAnimationFrame(() => {
+                    el.style.transform = "translateY(0px)";
+                    el.style.opacity = "1";
+                });
             },
             easing: "out-cubic",
-            duration: 500
+            duration: 650
         });
     }
 }

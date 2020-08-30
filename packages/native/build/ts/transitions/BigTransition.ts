@@ -17,6 +17,7 @@ export class BigTransition extends Transition {
         this.spinnerElement = this.mainElement.querySelector('.spinner');
         this.horizontalElements = [...this.mainElement.querySelector('#big-transition-horizontal').querySelectorAll('div')];
         this.maxLength = this.horizontalElements.length;
+        console.log(this.mainElement);
     }
 
     out({ from }: ITransitionData) {
@@ -24,7 +25,7 @@ export class BigTransition extends Transition {
         let fromWrapper = from.getWrapper();
         window.scroll({
             top: 0,
-            behavior: 'smooth'  // 👈 
+            behavior: 'smooth'  // 👈
         });
 
         return new Promise(async resolve => {
@@ -120,4 +121,3 @@ export class BigTransition extends Transition {
         });
     }
 }
-

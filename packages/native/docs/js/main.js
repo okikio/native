@@ -123,7 +123,7 @@ class Manager {
 class ManagerItem {
   constructor() {
   }
-  getConfig(value, brackets) {
+  getConfig(value, brackets = true) {
     return this.manager.getConfig(value, brackets);
   }
   install() {
@@ -147,8 +147,8 @@ class AdvancedManager extends Manager {
   getApp() {
     return this.app;
   }
-  getConfig(...args) {
-    return this.app.getConfig(...args);
+  getConfig(value, brackets = true) {
+    return this.app.getConfig(value, brackets);
   }
 }
 
@@ -286,7 +286,7 @@ class PageManager extends AdvancedManager {
   constructor(app2) {
     super(app2);
     this.loading = new Manager();
-    let URLString = new _URL().getPathname();
+    let URLString = new _URL().pathname;
     this.set(URLString, new Page());
   }
   getLoading() {
@@ -542,12 +542,11 @@ class Transition extends Service {
     newPage,
     trigger
   }) {
+    super.init();
     this.oldPage = oldPage;
     this.newPage = newPage;
     this.trigger = trigger;
-    super.init();
     this.boot();
-    return this;
   }
   getName() {
     return this.name;
@@ -571,6 +570,8 @@ class Transition extends Service {
     let fromWrapper = this.oldPage.getWrapper();
     let toWrapper = this.newPage.getWrapper();
     document.title = this.newPage.getTitle();
+    if (!(fromWrapper instanceof Node) || !(toWrapper instanceof Node))
+      throw `[Wrapper] the wrapper from the ${!(toWrapper instanceof Node) ? "next" : "current"} page cannot be found. The wrapper must be an element that has the attribute ${this.getConfig("wrapperAttr")}.`;
     EventEmitter2.emit("BEFORE_TRANSITION_OUT");
     await new Promise((done) => {
       let outMethod = this.out({
@@ -707,11 +708,6 @@ class BlockManager extends AdvancedManager {
   }
   initEvents() {
     let app2 = this.getApp();
-    let rootElement = app2.getPages().last().getWrapper();
-    this.domObserver = new window.MutationObserver(() => {
-      this.build(false);
-    });
-    this.observe(rootElement);
     const EventEmitter = app2.getEmitter();
     EventEmitter.on("CONTENT_REPLACED", this.reload, this);
     return this;
@@ -724,22 +720,12 @@ class BlockManager extends AdvancedManager {
     return this;
   }
   reload() {
-    let app2 = this.getApp();
-    let rootElement = app2.getPages().last().getWrapper();
-    this.domObserver.disconnect();
     this.flush();
     this.init();
     this.bootBlocks();
-    this.observe(rootElement);
     return this;
   }
   observe(rootElement) {
-    this.domObserver.observe(rootElement, {
-      childList: true,
-      attributes: false,
-      characterData: false,
-      subtree: true
-    });
   }
   bootBlocks() {
     this.activeBlocks.forEach((blockManager) => {
@@ -757,7 +743,6 @@ class BlockManager extends AdvancedManager {
       blockManager.methodCall("stopEvents");
     });
     let app2 = this.getApp();
-    this.domObserver.disconnect();
     const EventEmitter = app2.getEmitter();
     EventEmitter.off("BEFORE_TRANSITION_IN", this.reload, this);
     return this;
@@ -793,8 +778,8 @@ class App {
     window.addEventListener("load", handler);
     return this;
   }
-  getConfig(...args) {
-    return this.config.getConfig(...args);
+  getConfig(value, brackets = true) {
+    return this.config.getConfig(value, brackets);
   }
   getEmitter() {
     return this.emitter;
@@ -935,6 +920,7 @@ class PJAX extends Service {
     this.stickyScroll = true;
     this.forceOnError = false;
     this.autoScrollOnHash = true;
+    this.dontScroll = true;
   }
   transitionStart() {
     this.isTransitioning = true;
@@ -947,6 +933,9 @@ class PJAX extends Service {
     let current = new State();
     this.HistoryManager.add(current);
     this.changeState("replace", current);
+    if ("scrollRestoration" in window.history) {
+      window.history.scrollRestoration = "manual";
+    }
   }
   getTransitionName(el) {
     if (!el || !el.getAttribute)
@@ -1058,7 +1047,7 @@ class PJAX extends Service {
         transition: transitionName,
         data: {scroll}
       });
-      if (this.stickyScroll) {
+      if (!this.dontScroll && this.stickyScroll) {
         let {x, y} = scroll;
         window.scroll({
           top: y,
@@ -1110,7 +1099,7 @@ class PJAX extends Service {
           this.transitionStart();
           this.EventEmitter.emit("PAGE_LOAD_COMPLETE", {newPage, oldPage, trigger});
         } catch (err) {
-          throw `[PJAX] Page load error: ${err}`;
+          throw `[PJAX] page load error: ${err}`;
         }
         this.EventEmitter.emit("NAVIGATION_START", {oldPage, newPage, trigger, transitionName});
         try {
@@ -1121,10 +1110,9 @@ class PJAX extends Service {
             newPage,
             trigger
           });
-          this.hashAction();
           this.EventEmitter.emit("TRANSITION_END", {transition});
         } catch (err) {
-          throw `[PJAX] Transition error: ${err}`;
+          throw `[PJAX] transition error: ${err}`;
         }
         this.EventEmitter.emit("NAVIGATION_END", {oldPage, newPage, trigger, transitionName});
       } catch (err) {
@@ -1146,10 +1134,10 @@ class PJAX extends Service {
         let el = document.getElementById(hashID);
         if (el) {
           if (el.scrollIntoView) {
-            el.scrollIntoView({behavior: "smooth"});
+            el.scrollIntoView();
           } else {
             let {left, top} = el.getBoundingClientRect();
-            window.scroll({left, top, behavior: "smooth"});
+            window.scroll({left, top});
           }
         }
       }
@@ -1193,6 +1181,7 @@ class PJAX extends Service {
     }
     document.addEventListener("click", this.onClick);
     window.addEventListener("popstate", this.onStateChange);
+    this.EventEmitter.on("CONTENT_REPLACED", this.hashAction, this);
   }
   stopEvents() {
     if (this.prefetchIgnore !== true) {
@@ -1220,12 +1209,12 @@ class Router extends Service {
   parsePath(path) {
     if (typeof path === "string")
       return new RegExp(path, "i");
-    else if (path instanceof RegExp)
+    else if (path instanceof RegExp || typeof path === "boolean")
       return path;
-    throw "[Router] only regular expressions and strings are accepted as paths.";
+    throw "[Router] only regular expressions, strings and booleans are accepted as paths.";
   }
   isPath(input) {
-    return typeof input === "string" || input instanceof RegExp;
+    return typeof input === "string" || input instanceof RegExp || typeof input === "boolean";
   }
   parse(input) {
     let route = input;
@@ -1235,8 +1224,8 @@ class Router extends Service {
     };
     if (this.isPath(input))
       toFromPath = {
-        from: input,
-        to: /(.*)/g
+        from: true,
+        to: input
       };
     else if (this.isPath(route.from) && this.isPath(route.to))
       toFromPath = route;
@@ -1249,25 +1238,31 @@ class Router extends Service {
     };
   }
   route() {
-    let from = this.HistoryManager.last().getURLPathname();
-    let to = window.location.pathname;
+    let from = this.HistoryManager[this.HistoryManager.size > 1 ? "prev" : "last"]().getURL().getFullPath();
+    let to = new _URL().getFullPath();
     this.routes.forEach((method, path) => {
       let fromRegExp = path.from;
       let toRegExp = path.to;
-      if (fromRegExp.test(from) && toRegExp.test(to)) {
-        let fromExec = fromRegExp.exec(from);
-        let toExec = toRegExp.exec(to);
-        method({from: fromExec, to: toExec});
+      if (typeof fromRegExp === "boolean" && typeof toRegExp === "boolean") {
+        throw `[Router] path ({ from: ${fromRegExp}, to: ${toRegExp} }) is not valid, remember paths can only be strings, regular expressions, or a boolean; however, both the from and to paths cannot be both booleans.`;
       }
+      let fromParam = fromRegExp;
+      let toParam = toRegExp;
+      if (fromRegExp instanceof RegExp && fromRegExp.test(from))
+        fromParam = fromRegExp.exec(from);
+      if (toRegExp instanceof RegExp && toRegExp.test(to))
+        toParam = toRegExp.exec(to);
+      if (Array.isArray(toParam) && Array.isArray(fromParam) || Array.isArray(toParam) && (typeof fromParam == "boolean" && fromParam) || Array.isArray(fromParam) && (typeof toParam == "boolean" && toParam))
+        method({from: fromParam, to: toParam, path: {from, to}});
     });
   }
   initEvents() {
     this.EventEmitter.on("READY", this.route, this);
-    this.EventEmitter.on("PAGE_LOADING", this.route, this);
+    this.EventEmitter.on("CONTENT_REPLACED", this.route, this);
   }
   stopEvents() {
     this.EventEmitter.off("READY", this.route, this);
-    this.EventEmitter.off("PAGE_LOADING", this.route, this);
+    this.EventEmitter.off("CONTENT_REPLACED", this.route, this);
   }
 }
 
@@ -1584,14 +1579,18 @@ class InViewBlock extends Block {
       delay: 0.15,
       easing: "out-quint",
       onfinish(el) {
-        el.style.transform = "translateX(0%)";
-        el.style.opacity = "1";
+        requestAnimationFrame(() => {
+          el.style.transform = "translateX(0%)";
+          el.style.opacity = "1";
+        });
       }
     });
   }
   offScreen() {
-    this.rootElement.style.transform = `translateX(${this.xPercent}%)`;
-    this.rootElement.style.opacity = "0";
+    requestAnimationFrame(() => {
+      this.rootElement.style.transform = `translateX(${this.xPercent}%)`;
+      this.rootElement.style.opacity = "0";
+    });
   }
   onIntersectionCallback(entries) {
     for (let entry of entries) {
@@ -1682,18 +1681,21 @@ class IntroAnimation extends Service {
     this.EventEmitter.off("START_SPLASHSCREEN_HIDE BEFORE_TRANSITION_IN", this.show, this);
   }
   stop() {
-    for (let el of this.elements) {
-      el.style.transform = "translateY(0px)";
-      el.style.opacity = "1";
-    }
+    requestAnimationFrame(() => {
+      for (let el of this.elements) {
+        el.style.transform = "translateY(0px)";
+        el.style.opacity = "1";
+      }
+    });
     super.stop();
   }
   prepareToShow() {
-    for (let el of this.elements) {
-      el.style.transform = "translateY(200px)";
-      el.style.opacity = "0";
-    }
-    window.scroll(0, 0);
+    requestAnimationFrame(() => {
+      for (let el of this.elements) {
+        el.style.transform = "translateY(200px)";
+        el.style.opacity = "0";
+      }
+    });
   }
   async show() {
     return await animate({
@@ -1703,14 +1705,16 @@ class IntroAnimation extends Service {
         {transform: "translateY(0px)", opacity: 1}
       ],
       delay(i) {
-        return 200 * (i + 1);
+        return 300 * (i + 1);
       },
       onfinish(el) {
-        el.style.transform = "translateY(0px)";
-        el.style.opacity = "1";
+        requestAnimationFrame(() => {
+          el.style.transform = "translateY(0px)";
+          el.style.opacity = "1";
+        });
       },
       easing: "out-cubic",
-      duration: 500
+      duration: 650
     });
   }
 }
@@ -1724,33 +1728,35 @@ class Fade extends Transition {
   out({from}) {
     let {duration} = this;
     let fromWrapper = from.getWrapper();
-    window.scroll({
-      top: 0,
-      behavior: "smooth"
-    });
     return new Promise(async (resolve) => {
       await animate({
         target: fromWrapper,
         opacity: [1, 0],
         duration,
         onfinish(el) {
-          el.style.opacity = "0";
+          requestAnimationFrame(() => {
+            el.style.opacity = "0";
+          });
         }
       });
-      window.scrollTo(0, 0);
       resolve();
     });
   }
   in({to}) {
     let {duration} = this;
     let toWrapper = to.getWrapper();
-    toWrapper.style.transform = "translateX(0%)";
+    requestAnimationFrame(() => {
+      toWrapper.style.transform = "translateX(0%)";
+    });
     return animate({
       target: toWrapper,
       opacity: [0, 1],
       duration,
       onfinish(el) {
-        el.style.opacity = "1";
+        requestAnimationFrame(() => {
+          el.style.opacity = "1";
+          el.style = {};
+        });
       }
     });
   }
@@ -1768,6 +1774,7 @@ class BigTransition extends Transition {
     this.spinnerElement = this.mainElement.querySelector(".spinner");
     this.horizontalElements = [...this.mainElement.querySelector("#big-transition-horizontal").querySelectorAll("div")];
     this.maxLength = this.horizontalElements.length;
+    console.log(this.mainElement);
   }
   out({from}) {
     let {durationPerAnimation: duration, delay} = this;
@@ -1866,13 +1873,18 @@ class Slide extends Transition {
     this.duration = 500;
     this.direction = "right";
   }
+  init(value) {
+    super.init(value);
+    let trigger = value.trigger;
+    if (trigger instanceof Node && trigger.hasAttribute("data-direction")) {
+      this.direction = trigger.getAttribute("data-direction");
+    } else {
+      this.direction = "right";
+    }
+  }
   out({from}) {
     let {duration, direction} = this;
     let fromWrapper = from.getWrapper();
-    window.scroll({
-      top: 0,
-      behavior: "smooth"
-    });
     return animate({
       target: fromWrapper,
       keyframes: [
@@ -1882,8 +1894,10 @@ class Slide extends Transition {
       duration,
       easing: "in-quint",
       onfinish: (el) => {
-        el.style.opacity = "0";
-        el.style.transform = `translateX(${direction === "left" ? "-" : ""}25%)`;
+        requestAnimationFrame(() => {
+          el.style.opacity = "0";
+          el.style.transform = `translateX(${direction === "left" ? "-" : ""}25%)`;
+        });
       }
     });
   }
@@ -1899,8 +1913,10 @@ class Slide extends Transition {
       duration,
       easing: "out-quint",
       onfinish(el) {
-        el.style.opacity = "1";
-        el.style.transform = `translateX(0%)`;
+        requestAnimationFrame(() => {
+          el.style.opacity = "1";
+          el.style.transform = `translateX(0%)`;
+        });
       }
     });
   }

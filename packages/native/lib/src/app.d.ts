@@ -4,7 +4,7 @@ import { BlockManager, BlockIntent, Block } from "./block";
 import { HistoryManager, State, IState } from "./history";
 import { ServiceManager, Service } from "./service";
 import { PageManager, Page } from "./page";
-import { CONFIG, ICONFIG } from "./config";
+import { CONFIG, ICONFIG, ConfigKeys } from "./config";
 /**
  * The App class starts the entire process, it controls all managers and all services
  *
@@ -86,11 +86,12 @@ export declare class App {
     /**
      * Returns the current configurations for the framework
      *
-     * @param {...any} args
-     * @returns any
+     * @param {ConfigKeys} [value]
+     * @param {boolean} [brackets=true]
+     * @returns {*}
      * @memberof App
      */
-    getConfig(...args: any): any;
+    getConfig(value?: ConfigKeys, brackets?: boolean): any;
     /**
      * Return the App's EventEmitter
      *

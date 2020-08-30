@@ -80,6 +80,16 @@ export class PJAX extends Service {
     protected autoScrollOnHash: boolean = true;
 
     /**
+     * Disables all extra scroll effects of PJAX, however, it won't affect scroll on hash,
+     * since scrolling when an hash is in the URL is the default behavior
+     *
+     * @private
+     * @type boolean
+     * @memberof PJAX
+     */
+    protected dontScroll: boolean = true;
+
+    /**
      * Sets the transition state, sets isTransitioning to true
      *
      * @private
@@ -110,6 +120,11 @@ export class PJAX extends Service {
         let current = new State();
         this.HistoryManager.add(current);
         this.changeState("replace", current);
+
+        if ("scrollRestoration" in window.history) {
+            // Back off, browser, I got this...
+            window.history.scrollRestoration = "manual";
+        }
     }
 
     /**
@@ -295,7 +310,7 @@ export class PJAX extends Service {
                 let { x, y } = data.scroll;
                 window.scroll({
                     top: y, left: x,
-                    behavior: 'smooth'  // 👈 
+                    behavior: 'smooth'  // 👈
                 });
             }
 
@@ -318,17 +333,17 @@ export class PJAX extends Service {
                 data: { scroll }
             });
 
-            if (this.stickyScroll) {
+            if (!this.dontScroll && this.stickyScroll) {
                 // Keep scroll position
                 let { x, y } = scroll;
                 window.scroll({
                     top: y, left: x,
-                    behavior: 'smooth'  // 👈 
+                    behavior: 'smooth'  // 👈
                 });
             } else {
                 window.scroll({
                     top: 0, left: 0,
-                    behavior: 'smooth'  // 👈 
+                    behavior: 'smooth'  // 👈
                 });
             }
 
@@ -393,7 +408,7 @@ export class PJAX extends Service {
                     this.transitionStart();
                     this.EventEmitter.emit("PAGE_LOAD_COMPLETE", { newPage, oldPage, trigger });
                 } catch (err) {
-                    throw `[PJAX] Page load error: ${err}`;
+                    throw `[PJAX] page load error: ${err}`;
                 }
 
                 // --
@@ -410,10 +425,9 @@ export class PJAX extends Service {
                         trigger
                     });
 
-                    this.hashAction();
                     this.EventEmitter.emit("TRANSITION_END", { transition });
                 } catch (err) {
-                    throw `[PJAX] Transition error: ${err}`;
+                    throw `[PJAX] transition error: ${err}`;
                 }
 
                 this.EventEmitter.emit("NAVIGATION_END", { oldPage, newPage, trigger, transitionName });
@@ -444,10 +458,10 @@ export class PJAX extends Service {
 
                 if (el) {
                     if (el.scrollIntoView) {
-                        el.scrollIntoView({ behavior: 'smooth' });
+                        el.scrollIntoView();
                     } else {
                         let { left, top } = el.getBoundingClientRect();
-                        window.scroll({ left, top, behavior: 'smooth' });
+                        window.scroll({ left, top });
                     }
                 }
             }
@@ -532,6 +546,7 @@ export class PJAX extends Service {
 
         document.addEventListener('click', this.onClick);
         window.addEventListener('popstate', this.onStateChange);
+        this.EventEmitter.on("CONTENT_REPLACED", this.hashAction, this);
     }
 
     /**

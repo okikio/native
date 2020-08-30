@@ -319,12 +319,12 @@ export class BlockManager extends AdvancedManager<number, BlockIntent> {
      */
     public initEvents(): BlockManager {
         let app = this.getApp();
-        let rootElement = app.getPages().last().getWrapper();
-        this.domObserver = new window.MutationObserver(() => {
-            this.build(false);
-        });
+        // let rootElement = app.getPages().last().getWrapper();
+        // this.domObserver = new window.MutationObserver(() => {
+        //     this.build(false);
+        // });
 
-        this.observe(rootElement);
+        // this.observe(rootElement);
         const EventEmitter = app.getEmitter();
         EventEmitter.on("CONTENT_REPLACED", this.reload, this);
         return this;
@@ -357,14 +357,14 @@ export class BlockManager extends AdvancedManager<number, BlockIntent> {
      * @memberof BlockManager
      */
     public reload(): BlockManager {
-        let app = this.getApp();
-        let rootElement = app.getPages().last().getWrapper();
-        this.domObserver.disconnect();
+        // let app = this.getApp();
+        // let rootElement = app.getPages().last().getWrapper();
+        // this.domObserver.disconnect();
         this.flush();
 
         this.init();
         this.bootBlocks();
-        this.observe(rootElement);
+        // this.observe(rootElement);
         return this;
     }
 
@@ -375,12 +375,12 @@ export class BlockManager extends AdvancedManager<number, BlockIntent> {
      * @memberof BlockManager
      */
     public observe(rootElement: HTMLElement) {
-        this.domObserver.observe(rootElement, {
-            childList: true,
-            attributes: false,
-            characterData: false,
-            subtree: true,
-        });
+        // this.domObserver.observe(rootElement, {
+        //     childList: true,
+        //     attributes: false,
+        //     characterData: false,
+        //     subtree: true,
+        // });
     }
 
     /**
@@ -421,7 +421,7 @@ export class BlockManager extends AdvancedManager<number, BlockIntent> {
         });
 
         let app = this.getApp();
-        this.domObserver.disconnect();
+        // this.domObserver.disconnect();
 
         const EventEmitter = app.getEmitter();
         EventEmitter.off("BEFORE_TRANSITION_IN", this.reload, this);

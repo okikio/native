@@ -1,4 +1,4 @@
-import { Transition, ITransitionData } from "../../../src/api";
+import { Transition, ITransitionData, ITransition } from "../../../src/api";
 import { animate } from "@okikio/animate";
 
 //== Transitions
@@ -7,13 +7,24 @@ export class Slide extends Transition {
     protected duration = 500;
     protected direction: string = "right";
 
+    init(value: ITransition) {
+        super.init(value);
+
+        let trigger = (value.trigger as HTMLElement);
+        if (trigger instanceof Node && trigger.hasAttribute("data-direction")) {
+            this.direction = trigger.getAttribute("data-direction");
+        } else {
+            this.direction = "right";
+        }
+    }
+
     out({ from }: ITransitionData) {
         let { duration, direction } = this;
         let fromWrapper = from.getWrapper();
-        window.scroll({
-            top: 0,
-            behavior: 'smooth'  // 👈 
-        });
+        // window.scroll({
+        //     top: 0,
+        //     behavior: 'smooth'  // 👈
+        // });
         return animate({
             target: fromWrapper,
             keyframes: [
@@ -23,8 +34,10 @@ export class Slide extends Transition {
             duration,
             easing: "in-quint",
             onfinish: (el: { style: { opacity: string; transform: string; }; }) => {
-                el.style.opacity = '0';
-                el.style.transform = `translateX(${direction === "left" ? "-" : ""}25%)`;
+                requestAnimationFrame(() => {
+                    el.style.opacity = '0';
+                    el.style.transform = `translateX(${direction === "left" ? "-" : ""}25%)`;
+                });
             }
         });
     }
@@ -41,8 +54,10 @@ export class Slide extends Transition {
             duration,
             easing: "out-quint",
             onfinish(el: { style: { opacity: string; transform: string; }; }) {
-                el.style.opacity = '1';
-                el.style.transform = `translateX(0%)`;
+                requestAnimationFrame(() => {
+                    el.style.opacity = '1';
+                    el.style.transform = `translateX(0%)`;
+                });
             }
         });
     }

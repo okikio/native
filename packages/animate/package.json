@@ -5,7 +5,7 @@
     "publishConfig": {
         "access": "public",
         "main": "lib/api.js",
-        "types": "lib/api.d.ts",
+        "types": "lib/src/api.d.ts",
         "umd:main": "lib/api.umd.js",
         "browser": "lib/api.umd.js",
         "unpkg": "lib/api.umd.js",

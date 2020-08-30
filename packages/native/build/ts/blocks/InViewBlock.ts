@@ -62,15 +62,19 @@ export class InViewBlock extends Block {
             delay: 0.15,
             easing: "out-quint",
             onfinish(el) {
-                el.style.transform = "translateX(0%)";
-                el.style.opacity = "1";
+                requestAnimationFrame(() => {
+                    el.style.transform = "translateX(0%)";
+                    el.style.opacity = "1";
+                });
             },
         });
     }
 
     protected offScreen() {
-        this.rootElement.style.transform = `translateX(${this.xPercent}%)`;
-        this.rootElement.style.opacity = "0";
+        requestAnimationFrame(() => {
+            this.rootElement.style.transform = `translateX(${this.xPercent}%)`;
+            this.rootElement.style.opacity = "0";
+        });
     }
 
     public onIntersectionCallback(entries: IntersectionObserverEntry[]) {

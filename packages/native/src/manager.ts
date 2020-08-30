@@ -31,11 +31,11 @@ export class ManagerItem {
      * The getConfig method for accessing the Configuration of the current App
      *
      * @param {ConfigKeys} [value]
-     * @param {boolean} [brackets]
+     * @param {boolean} [brackets=true]
      * @returns any
      * @memberof ManagerItem
      */
-    protected getConfig(value?: ConfigKeys, brackets?: boolean): any {
+    protected getConfig(value?: ConfigKeys, brackets: boolean = true): any {
         return this.manager.getConfig(value, brackets);
     };
 
@@ -118,12 +118,13 @@ export class AdvancedManager<K, V extends ManagerItem> extends Manager<K, V> {
 	/**
 	 * Returns the App config
 	 *
-     * @param {...any} args
-     * @returns any
+     * @param {ConfigKeys} [value]
+     * @param {boolean} [brackets=true]
+     * @returns *
 	 * @memberof AdvancedManager
 	 */
-    public getConfig(...args: any): any {
-        return this.app.getConfig(...args);
+    public getConfig(value?: ConfigKeys, brackets: boolean = true): any {
+        return this.app.getConfig(value, brackets);
     }
 }
 

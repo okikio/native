@@ -13,12 +13,12 @@ const stream = (_src, _opt = {}) => {
 
     _pipes.forEach((val) => {
         if (val !== undefined && val !== null) {
-            host.pipe(val);
+            host = host.pipe(val);
         }
     });
 
-    if (_dest !== null) host.pipe(dest(_dest));
-    host.on("end", (...args) => {
+    if (_dest !== null) host = host.pipe(dest(_dest));
+    host = host.on("end", (...args) => {
         _log(...args);
         if (typeof _end === "function") _end(...args);
     }); // Output
@@ -26,7 +26,7 @@ const stream = (_src, _opt = {}) => {
     if (Array.isArray(_end)) {
         _end.forEach((val) => {
             if (val !== undefined && val !== null) {
-                host.pipe(val);
+                host = host.pipe(val);
             }
         });
     }
@@ -44,7 +44,7 @@ const streamList = (...args) => {
 
 // A list of gulp tasks
 const tasks = (list) => {
-    for (let [name, fn] of list) {
+    for (let [name, fn] of Object.entries(list)) {
         task(name, (...args) => fn(...args));
     }
 };

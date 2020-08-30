@@ -72,10 +72,10 @@ export declare class Transition extends Service {
      * 		newPage,
      * 		trigger
      * 	}
-     * @returns Transition
+     * @returns void
      * @memberof Transition
      */
-    init({ oldPage, newPage, trigger }: ITransition): Transition;
+    init({ oldPage, newPage, trigger }: ITransition): void;
     /**
      * Returns the Transition's name
      *

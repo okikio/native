@@ -9,22 +9,17 @@ export class Fade extends Transition {
     out({ from }: ITransitionData) {
         let { duration } = this;
         let fromWrapper = from.getWrapper();
-        window.scroll({
-            top: 0,
-            behavior: 'smooth'  // 👈 
-        });
-
         return new Promise(async resolve => {
             await animate({
                 target: fromWrapper,
                 opacity: [1, 0],
                 duration,
-                onfinish(el: { style: { opacity: string; }; }) {
-                    el.style.opacity = '0';
+                onfinish(el: { style: { opacity: string } }) {
+                    requestAnimationFrame(() => {
+                        el.style.opacity = "0";
+                    });
                 }
             });
-
-            window.scrollTo(0, 0);
             resolve();
         });
     }
@@ -32,13 +27,19 @@ export class Fade extends Transition {
     in({ to }: ITransitionData) {
         let { duration } = this;
         let toWrapper = to.getWrapper();
-        toWrapper.style.transform = "translateX(0%)";
+        requestAnimationFrame(() => {
+            toWrapper.style.transform = "translateX(0%)";
+        });
+
         return animate({
             target: toWrapper,
             opacity: [0, 1],
             duration,
-            onfinish(el: { style: { opacity: string; }; }) {
-                el.style.opacity = '1';
+            onfinish(el: { style: { opacity?: string } }) {
+                requestAnimationFrame(() => {
+                    el.style.opacity = "1";
+                    el.style = {};
+                });
             }
         });
     }
