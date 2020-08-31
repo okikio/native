@@ -10,15 +10,15 @@ export class Manager<K, V> {
 	/**
 	 * The complex list of named data, to which the Manager controls
 	 *
-	 * @protected
+	 * @public
 	 * @type Map<K, V>
 	 * @memberof Manager
 	 */
-	protected map: Map<K, V>;
+	public map: Map<K, V>;
 
     /**
      * Creates an instance of Manager.
-     * 
+     *
      * @param {Array<[K, V]>} [value]
      * @memberof Manager
      */
@@ -102,6 +102,10 @@ export class Manager<K, V> {
 	 * @returns Number
 	 */
 	public get size(): number {
+		return this.map.size;
+	}
+	
+	public get length(): number {
 		return this.map.size;
 	}
 
@@ -196,38 +200,34 @@ export class Manager<K, V> {
 	public [Symbol.iterator](): IterableIterator<[K, V]> {
 		return this.entries();
 	}
-
-	/**
-	 * Calls the method of a certain name for all items that are currently installed
-	 *
-	 * @param {string} method
-	 * @param {Array<any>} [args=[]]
-	 * @returns Manager<K, V>
-	 * @memberof Manager
-	 */
-	public methodCall(method: string, ...args: any): Manager<K, V> {
-		this.forEach((item: V) => {
-			// @ts-ignore
-			item[method](...args);
-		});
-		return this;
-	}
-
-	/**
-	 * Asynchronously calls the method of a certain name for all items that are currently installed, similar to methodCall
-	 *
-	 * @param {string} method
-	 * @param {Array<any>} [args=[]]
-	 * @returns Promise<Manager<K, V>>
-	 * @memberof Manager
-	 */
-	public async asyncMethodCall(method: string, ...args: any): Promise<Manager<K, V>> {
-		for (let [, item] of this.map) {
-			// @ts-ignore
-			await item[method](...args);
-		}
-		return this;
-	}
 }
+
+/**
+ * Calls the method of a certain name for all items that are currently installed
+ *
+ * @param {Manager<any, any>} manager
+ * @param {string} method
+ * @param {Array<any>} [args=[]]
+ */
+export const methodCall = (manager: Manager<any, any>, method: string, ...args: any): void => {
+	manager.forEach((item) => {
+		// @ts-ignore
+		item[method](...args);
+	});
+};
+
+/**
+ * Asynchronously calls the method of a certain name for all items that are currently installed, similar to methodCall
+ *
+ * @param {Manager<any, any>} manager
+ * @param {string} method
+ * @param {Array<any>} [args=[]]
+ */
+export const asyncMethodCall = async (manager: Manager<any, any>, method: string, ...args: any): Promise<void> => {
+	for (let [, item] of manager) {
+		// @ts-ignore
+		await item[method](...args);
+	}
+};
 
 export default Manager;

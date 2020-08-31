@@ -1,4 +1,4 @@
-import { Manager } from "@okikio/manager";
+import { Manager, methodCall, asyncMethodCall } from "@okikio/manager";
 import { ConfigKeys } from "./config";
 import { App } from "./app";
 
@@ -14,15 +14,15 @@ export class ManagerItem {
     /**
      * The AdvancedManager or AdvancedStorage the ManagerItem is attached to
      *
-     * @protected
+     * @public
      * @type IAdvancedManager
      * @memberof ManagerItem
      */
-    protected manager: IAdvancedManager;
+    public manager: IAdvancedManager;
 
     /**
      * Creates an instance of ManagerItem.
-     * 
+     *
      * @memberof ManagerItem
      */
     constructor() { }
@@ -35,7 +35,7 @@ export class ManagerItem {
      * @returns any
      * @memberof ManagerItem
      */
-    protected getConfig(value?: ConfigKeys, brackets: boolean = true): any {
+    public getConfig(value?: ConfigKeys, brackets: boolean = true): any {
         return this.manager.getConfig(value, brackets);
     };
 
@@ -128,4 +128,4 @@ export class AdvancedManager<K, V extends ManagerItem> extends Manager<K, V> {
     }
 }
 
-export { Manager };
+export { Manager, methodCall, asyncMethodCall };

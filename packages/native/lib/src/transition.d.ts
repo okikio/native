@@ -29,35 +29,35 @@ export declare class Transition extends Service {
     /**
      * Transition name
      *
-     * @protected
+     * @public
      * @type string
      * @memberof Transition
      */
-    protected name: string;
+    public name: string;
     /**
      * The page to transition from
      *
-     * @protected
+     * @public
      * @type Page
      * @memberof Transition
      */
-    protected oldPage: Page;
+    public oldPage: Page;
     /**
      * Page to transition to
      *
-     * @protected
+     * @public
      * @type Page
      * @memberof Transition
      */
-    protected newPage: Page;
+    public newPage: Page;
     /**
      * What triggered the transition to occur
      *
-     * @protected
+     * @public
      * @type Trigger
      * @memberof Transition
      */
-    protected trigger: Trigger;
+    public trigger: Trigger;
     /**
      * Creates an instance of Transition.
      *

@@ -3,12 +3,12 @@ import { animate } from "@okikio/animate";
 
 //== Blocks
 export class InViewBlock extends Block {
-    protected observer: IntersectionObserver;
-    protected observerOptions: { root: any; rootMargin: string; threshold?: number, thresholds?: Array<number>; };
-    protected imgs: HTMLElement[];
-    protected direction: string;
-    protected xPercent: number;
-    protected inView: boolean = false;
+    public observer: IntersectionObserver;
+    public observerOptions: { root: any; rootMargin: string; threshold?: number, thresholds?: Array<number>; };
+    public imgs: HTMLElement[];
+    public direction: string;
+    public xPercent: number;
+    public inView: boolean = false;
 
     public init(value: IBlockInit) {
         super.init(value);
@@ -45,15 +45,15 @@ export class InViewBlock extends Block {
         this.observe();
     }
 
-    protected observe() {
+    public observe() {
         this.observer.observe(this.rootElement);
     }
 
-    protected unobserve() {
+    public unobserve() {
         this.observer.unobserve(this.rootElement);
     }
 
-    protected onScreen() {
+    public onScreen() {
         animate({
             target: this.rootElement,
             transform: [`translateX(${this.xPercent}%)`, "translateX(0%)"],
@@ -70,7 +70,7 @@ export class InViewBlock extends Block {
         });
     }
 
-    protected offScreen() {
+    public offScreen() {
         requestAnimationFrame(() => {
             this.rootElement.style.transform = `translateX(${this.xPercent}%)`;
             this.rootElement.style.opacity = "0";

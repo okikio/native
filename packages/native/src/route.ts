@@ -25,11 +25,11 @@ export class Router extends Service {
     /**
      * List of routes inputted
      *
-     * @protected
+     * @public
      * @type {Manager<IRouteToFrom, RouteMethod>}
      * @memberof Router
      */
-    protected routes: Manager<IRouteToFrom, RouteMethod>;
+    public routes: Manager<IRouteToFrom, RouteMethod>;
 
     /**
      * Creates an instance of Router.

@@ -23,7 +23,7 @@ export class PJAX extends Service {
      * @type boolean
      * @memberof PJAX
      */
-    protected ignoreURLs: IgnoreURLsList = [];
+    public ignoreURLs: IgnoreURLsList = [];
 
     /**
      * Whether or not to disable prefetching
@@ -32,7 +32,7 @@ export class PJAX extends Service {
      *
      * @memberof PJAX
      */
-    protected prefetchIgnore: boolean = false;
+    public prefetchIgnore: boolean = false;
 
     /**
      * Current state or transitions
@@ -41,7 +41,7 @@ export class PJAX extends Service {
      * @type boolean
      * @memberof PJAX
      */
-    protected isTransitioning: boolean = false;
+    public isTransitioning: boolean = false;
 
     /**
      * Ignore extra clicks of an anchor element if a transition has already started
@@ -50,7 +50,7 @@ export class PJAX extends Service {
      * @type boolean
      * @memberof PJAX
      */
-    protected stopOnTransitioning: boolean = false;
+    public stopOnTransitioning: boolean = false;
 
     /**
      * On page change (excluding popstate event) keep current scroll position
@@ -59,7 +59,7 @@ export class PJAX extends Service {
      * @type boolean
      * @memberof PJAX
      */
-    protected stickyScroll: boolean = true;
+    public stickyScroll: boolean = true;
 
     /**
      * Force load a page if an error occurs
@@ -68,16 +68,16 @@ export class PJAX extends Service {
      * @type boolean
      * @memberof PJAX
      */
-    protected forceOnError: boolean = false;
+    public forceOnError: boolean = false;
 
     /**
      * Dictates whether to auto scroll if an hash is present in the window URL
      *
-     * @protected
+     * @public
      * @type boolean
      * @memberof PJAX
      */
-    protected autoScrollOnHash: boolean = true;
+    public autoScrollOnHash: boolean = true;
 
     /**
      * Disables all extra scroll effects of PJAX, however, it won't affect scroll on hash,
@@ -87,7 +87,7 @@ export class PJAX extends Service {
      * @type boolean
      * @memberof PJAX
      */
-    protected dontScroll: boolean = true;
+    public dontScroll: boolean = true;
 
     /**
      * Sets the transition state, sets isTransitioning to true

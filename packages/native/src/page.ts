@@ -180,11 +180,11 @@ export class PageManager extends AdvancedManager<string, Page> {
     /**
      * Stores all URLs that are currently loading
      *
-     * @protected
+     * @public
      * @type Manager<string, Promise<string>>
      * @memberof PageManager
      */
-    protected loading: Manager<string, Promise<string>> = new Manager();
+    public loading: Manager<string, Promise<string>> = new Manager();
 
 	/**
 	 * Creates an instance of the PageManager

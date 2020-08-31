@@ -12,11 +12,11 @@ export declare class ManagerItem {
     /**
      * The AdvancedManager or AdvancedStorage the ManagerItem is attached to
      *
-     * @protected
+     * @public
      * @type IAdvancedManager
      * @memberof ManagerItem
      */
-    protected manager: IAdvancedManager;
+    public manager: IAdvancedManager;
     /**
      * Creates an instance of ManagerItem.
      *
@@ -31,7 +31,7 @@ export declare class ManagerItem {
      * @returns any
      * @memberof ManagerItem
      */
-    protected getConfig(value?: ConfigKeys, brackets?: boolean): any;
+    public getConfig(value?: ConfigKeys, brackets?: boolean): any;
     /**
      * Run after the Manager Item has been registered
      *

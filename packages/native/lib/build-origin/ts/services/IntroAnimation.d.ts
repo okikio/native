@@ -1,7 +1,7 @@
 import { Service } from "../../../src/api";
 export declare class IntroAnimation extends Service {
-    protected elements: Array<Element>;
-    protected rootElement: HTMLElement;
+    public elements: Array<Element>;
+    public rootElement: HTMLElement;
     init(): void;
     newPage(): void;
     initEvents(): void;

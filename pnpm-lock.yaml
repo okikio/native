@@ -54,6 +54,7 @@ importers:
       jest-chain: 1.1.5
       jest-environment-jsdom-global: 2.0.4
       jest-watch-lerna-packages: 1.1.0_jest@26.1.0
+      merge-stream: 2.0.0
       rollup: 2.18.1
       rollup-plugin-esbuild: 2.1.0_rollup@2.18.1
       rollup-plugin-typescript2: 0.27.1_rollup@2.18.1+typescript@3.9.5
@@ -62,7 +63,7 @@ importers:
       typescript: 3.9.5
       ultra: 0.7.2
     specifiers:
-      '@okikio/emitter': ^0.0.6
+      '@okikio/emitter': ^0.0.7
       '@rollup/plugin-node-resolve': ^8.1.0
       '@types/jest': ^26.0.3
       browser-sync: ^2.26.7
@@ -75,6 +76,7 @@ importers:
       jest-chain: ^1.1.5
       jest-environment-jsdom-global: ^2.0.4
       jest-watch-lerna-packages: ^1.1.0
+      merge-stream: ^2.0.0
       rollup: ^2.18.1
       rollup-plugin-esbuild: ^2.1.0
       rollup-plugin-typescript2: ^0.27.1
@@ -166,6 +168,7 @@ importers:
       jest-chain: 1.1.5
       jest-environment-jsdom-global: 2.0.4
       jest-watch-lerna-packages: 1.1.0_jest@26.1.0
+      merge-stream: 2.0.0
       rollup: 2.18.1
       rollup-plugin-esbuild: 2.1.0_rollup@2.18.1
       rollup-plugin-typescript2: 0.27.1_rollup@2.18.1+typescript@3.9.5
@@ -190,6 +193,7 @@ importers:
       jest-chain: ^1.1.5
       jest-environment-jsdom-global: ^2.0.4
       jest-watch-lerna-packages: ^1.1.0
+      merge-stream: ^2.0.0
       rollup: ^2.18.1
       rollup-plugin-esbuild: ^2.1.0
       rollup-plugin-typescript2: ^0.27.1

@@ -3,8 +3,8 @@ import { animate } from "@okikio/animate";
 
 //== Transitions
 export class Fade extends Transition {
-    protected name = "default";
-    protected duration = 500;
+    public name = "default";
+    public duration = 500;
 
     out({ from }: ITransitionData) {
         let { duration } = this;

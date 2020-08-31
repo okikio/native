@@ -1,9 +1,9 @@
 import { Service } from "../../../src/api";
 export declare class Splashscreen extends Service {
-    protected rootElement: HTMLElement;
-    protected innerEl: HTMLElement;
-    protected bgEl: HTMLElement;
-    protected minimalDuration: number;
+    public rootElement: HTMLElement;
+    public innerEl: HTMLElement;
+    public bgEl: HTMLElement;
+    public minimalDuration: number;
     init(): void;
     boot(): void;
     hide(): Promise<void>;

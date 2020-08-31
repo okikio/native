@@ -15,59 +15,59 @@ export declare class App {
     /**
      * A new instance of the HistoryManager
      *
-     * @protected
+     * @public
      * @type HistoryManager
      * @memberof App
      */
-    protected history: HistoryManager;
+    public history: HistoryManager;
     /**
      * A new instance of the TransitionManager
      *
-     * @protected
+     * @public
      * @type TransitionManager
      * @memberof App
      */
-    protected transitions: TransitionManager;
+    public transitions: TransitionManager;
     /**
      * A new instance of the ServiceManager
      *
-     * @protected
+     * @public
      * @type ServiceManager
      * @memberof App
      */
-    protected services: ServiceManager;
+    public services: ServiceManager;
     /**
      * A new instance of the BlockManager
      *
-     * @protected
+     * @public
      * @type BlockManager
      * @memberof App
      */
-    protected blocks: BlockManager;
+    public blocks: BlockManager;
     /**
      * A new instance of an EventEmitter
      *
-     * @protected
+     * @public
      * @type EventEmitter
      * @memberof App
      */
-    protected emitter: EventEmitter;
+    public emitter: EventEmitter;
     /**
      * A new instance of the PageManager
      *
-     * @protected
+     * @public
      * @type PageManager
      * @memberof App
      */
-    protected pages: PageManager;
+    public pages: PageManager;
     /**
      * The current Configuration's for the framework
      *
-     * @protected
+     * @public
      * @type CONFIG
      * @memberof App
      */
-    protected config: CONFIG;
+    public config: CONFIG;
     /**
      * Creates an instance of App.
      *

@@ -3,14 +3,14 @@ import { animate } from "@okikio/animate";
 
 //== Transitions
 export class BigTransition extends Transition {
-    protected name = "big";
-    protected delay = 200;
-    protected durationPerAnimation = 700;
-    protected mainElement: HTMLElement;
-    protected verticalElements: HTMLDivElement[];
-    protected horizontalElements: HTMLDivElement[];
-    protected maxLength: number;
-    protected spinnerElement: HTMLElement;
+    public name = "big";
+    public delay = 200;
+    public durationPerAnimation = 700;
+    public mainElement: HTMLElement;
+    public verticalElements: HTMLDivElement[];
+    public horizontalElements: HTMLDivElement[];
+    public maxLength: number;
+    public spinnerElement: HTMLElement;
 
     public boot() {
         this.mainElement = document.getElementById('big-transition');

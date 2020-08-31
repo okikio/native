@@ -1,6 +1,6 @@
 # Manager
 
-A superset of the Map class called Manager that manages complex amounts of data.
+A superset of the Map class, it makes a Map function more like a normal Object.
 
 ## Table of Contents
 - [Manager](#manager)
@@ -8,33 +8,34 @@ A superset of the Map class called Manager that manages complex amounts of data.
   - [Installation](#installation)
   - [Getting started](#getting-started)
   - [API](#api)
+      - [Manager#length](#managerlength)
       - [Manager#getMap()](#managergetmap)
       - [Manager#add(value)](#manageraddvalue)
       - [Manager#keys()](#managerkeys)
       - [Manager#values()](#managervalues)
       - [Manager#last(distance)](#managerlastdistance)
       - [Manager#prev()](#managerprev)
-      - [Manager#methodCall(method, ...)](#managermethodcallmethod-)
-      - [Manager#asyncMethodCall(method, ...)](#managerasyncmethodcallmethod-)
       - [Manager#@@iterator](#manageriterator)
+      - [#methodCall(method, ...)](#methodcallmethod)
+      - [#asyncMethodCall(method, ...)](#asyncmethodcallmethod)
 
 
 ## Installation
-You can install Manager from `npm` via `npm i managerjs` or `yarn add managerjs`. You can use Manager on the web via [unpkg](https://unpkg.com/managerjs@latest/lib/api.umd.js) `https://unpkg.com/managerjs@latest/lib/api.umd.js` or [jsdelivr](https://cdn.jsdelivr.net/npm/managerjs@latest/lib/api.umd.js) `https://cdn.jsdelivr.net/npm/managerjs@latest/lib/api.umd.js`.
+You can install Manager from `npm` via `npm i @okikio/manager` or `yarn add @okikio/manager`. You can use Manager on the web via [unpkg](https://unpkg.com/@okikio/manager@latest/lib/api.umd.js) `https://unpkg.com/@okikio/manager@latest/lib/api.umd.js`, [skypack](https://cdn.skypack.dev/@okikio/manager) `https://cdn.skypack.dev/@okikio/manager` or [jsdelivr](https://cdn.jsdelivr.net/npm/@okikio/manager@latest/lib/api.umd.js) `https://cdn.jsdelivr.net/npm/@okikio/manager@latest/lib/api.umd.js`.
 
 Once installed it can be used like this:
 ```javascript
-import { Manager } from "managerjs";
-import { Manager } from "https://unpkg.com/managerjs@latest/lib/api.umd.js) `https://unpkg.com/managerjs@latest/lib/api.es.js";
+import { Manager } from "@okikio/manager";
+import { Manager } from "https://unpkg.com/@okikio/manager@latest/lib/api.mjs";
+import { Manager } from "https://cdn.jsdelivr.net/npm/@okikio/manager@latest/lib/api.mjs";
 // Or
-import { Manager } from "https://unpkg.com/managerjs@latest/lib/api.umd.js) `https://unpkg.com/managerjs@latest/lib/api.modern.js";
+import { Manager } from "https://cdn.skypack.dev/@okikio/manager";
 
 // Via script tag
-<script src="https://unpkg.com/managerjs@latest/lib/api.umd.js"></script>
+<script src="https://unpkg.com/@okikio/manager@latest/lib/api.umd.js"></script>
 // Do note, on the web you need to do this, if you installed it via the script tag:
-const { Manager } = window.managerjs;
+const { Manager, methodCall } = window.Manager;
 ```
-
 
 ## Getting started
 
@@ -43,6 +44,25 @@ The Manager class makes Maps easier to use, as well as adding 6 methods, **getMa
 ## API
 
 All the existing Map methods, and ...
+
+#### Manager#length
+```js
+Manager.prototype.length
+
+/**
+ * Returns the total number of items stored in the Manager
+ *
+ * @public
+ * @returns Number
+ */
+
+// Example:
+import Manager from "@okikio/manager";
+
+const arr = Array.from([1, 2, 3, 4, 5].entries());
+const manager = new Manager(arr);
+console.log(manager.length); //= 5
+```
 
 #### Manager#getMap()
 ```js
@@ -56,6 +76,8 @@ Manager.prototype.getMap();
  */
 
 // Example:
+import Manager from "@okikio/manager";
+
 const arr = Array.from([1, 2, 3, 4, 5].entries());
 const manager = new Manager(arr);
 console.log(manager.getMap()); //= Map(5) { 0 => 1, 1 => 2, 2 => 3, 3 => 4, 4 => 5 }
@@ -73,6 +95,8 @@ Manager.prototype.add(value: V);
  */
 
 // Example:
+import Manager from "@okikio/manager";
+
 const arr = Array.from([1, 2, 3, 4, 5].entries());
 const manager = new Manager(arr);
 manager.add(6).add(7);
@@ -92,6 +116,8 @@ Manager.prototype.keys();
  */
 
 // Example:
+import Manager from "@okikio/manager";
+
 const arr = Array.from([1, 2, 3, 4, 5].entries());
 const manager = new Manager(arr);
 console.log(manager.keys()); //= [0, 1, 2, 3, 4]
@@ -110,6 +136,8 @@ Manager.prototype.values();
  */
 
 // Example:
+import Manager from "@okikio/manager";
+
 const arr = Array.from([1, 2, 3, 4, 5].entries());
 const manager = new Manager(arr);
 console.log(manager.values()); //= [1, 2, 3, 4, 5]
@@ -129,6 +157,8 @@ Manager.prototype.last(distance: number = 1);
  */
 
 // Example:
+import Manager from "@okikio/manager";
+
 const arr = Array.from([1, 2, 3, 4, 5].entries());
 const manager = new Manager(arr);
 console.log(manager.last()); //= 5
@@ -148,57 +178,11 @@ Manager.prototype.prev();
  */
 
 // Example:
+import Manager from "@okikio/manager";
+
 const arr = Array.from([1, 2, 3, 4, 5].entries());
 const manager = new Manager(arr);
 console.log(manager.prev()); //= 4
-```
-
-
-#### Manager#methodCall(method, ...)
-```js
-Manager.prototype.methodCall(method: string, ...args: any);
-
-/**
- * Calls a method for all items that are currently in it's list
- *
- * @param {string} method
- * @param {Array<any>} [args=[]]
- * @returns Manager<K, V>
- * @memberof Manager
- */
-
-// Example:
-const manager = new Manager();
-manager.set("x", { print: console.log });
-manager.set("y", { print: console.log });
-manager.methodCall("print", Date.now());
-```
-
-#### Manager#asyncMethodCall(method, ...)
-```js
-Manager.prototype.asyncMethodCall(method: string, ...args: any[]);
-
-/**
- * Asynchronously calls a method for all items that are currently in it's map, similar to methodCall except the loop waits for the asynchronous method to run, before the loop continues on to the the next method
- *
- * @param {string} method
- * @param {Array<any>} [args=[]]
- * @returns Promise<Manager<K, V>>
- * @memberof Manager
- */
-
-// Example:
-const manager = new Manager();
-let fn = (url = "https://google.com") => {
-    return async () => {
-        let data = await fetch(url);
-        console.log(`(${data.url})`);
-    };
-};
-
-manager.set("x", { print: fn() });
-manager.set("y", { print: fn("https://github.com") });
-manager.asyncMethodCall("print"); //= (https://www.google.com/), (https://github.com/)
 ```
 
 #### Manager#@@iterator
@@ -211,6 +195,8 @@ manager.asyncMethodCall("print"); //= (https://www.google.com/), (https://github
  */
 
 // Example:
+import Manager from "@okikio/manager";
+
 const arr = Array.from([1, 2, 3, 4, 5].entries());
 const manager = new Manager(arr);
 for (let [key, value] of manager) {
@@ -218,3 +204,51 @@ for (let [key, value] of manager) {
 }
 ```
 
+#### #methodCall(method, ...)
+```js
+methodCall(method: string, ...args: any);
+
+/**
+ * Calls the method of a certain name for all items that are currently installed
+ *
+ * @param {Manager<any, any>} manager
+ * @param {string} method
+ * @param {Array<any>} [args=[]]
+ */
+
+// Example:
+import { Manager, methodCall } from "@okikio/manager";
+
+const manager = new Manager();
+manager.set("x", { print: console.log });
+manager.set("y", { print: console.log });
+methodCall(manager, "print", Date.now()); // Eg. 1598772789150, 1598772801639
+```
+
+#### #asyncMethodCall(method, ...)
+```js
+asyncMethodCall(method: string, ...args: any[]);
+
+/**
+ * Asynchronously calls the method of a certain name for all items that are currently installed, similar to methodCall
+ *
+ * @param {Manager<any, any>} manager
+ * @param {string} method
+ * @param {Array<any>} [args=[]]
+ */
+
+// Example:
+import { Manager, asyncMethodCall } from "@okikio/manager";
+
+const manager = new Manager();
+let fn = (url = "https://google.com") => {
+    return async () => {
+        let data = await fetch(url);
+        console.log(`(${data.url})`);
+    };
+};
+
+manager.set("x", { print: fn() });
+manager.set("y", { print: fn("https://github.com") });
+asyncMethodCall(manager, "print"); //= (https://www.google.com/), (https://github.com/)
+```

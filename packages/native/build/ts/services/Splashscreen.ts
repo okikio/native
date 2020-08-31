@@ -2,10 +2,10 @@ import { Service } from "../../../src/api";
 import { animate } from "@okikio/animate";
 
 export class Splashscreen extends Service {
-    protected rootElement: HTMLElement;
-    protected innerEl: HTMLElement;
-    protected bgEl: HTMLElement;
-    protected minimalDuration: number = 1000; // ms
+    public rootElement: HTMLElement;
+    public innerEl: HTMLElement;
+    public bgEl: HTMLElement;
+    public minimalDuration: number = 1000; // ms
 
     public init() {
         super.init();

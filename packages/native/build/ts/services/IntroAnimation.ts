@@ -2,8 +2,8 @@ import { Service } from "../../../src/api";
 import { animate } from "@okikio/animate";
 
 export class IntroAnimation extends Service {
-    protected elements: Array<Element>;
-    protected rootElement: HTMLElement;
+    public elements: Array<Element>;
+    public rootElement: HTMLElement;
 
     public init() {
         super.init();

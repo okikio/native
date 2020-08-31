@@ -78,6 +78,7 @@
         "jest-chain": "^1.1.5",
         "jest-environment-jsdom-global": "^2.0.4",
         "jest-watch-lerna-packages": "^1.1.0",
+        "merge-stream": "^2.0.0",
         "rollup": "^2.18.1",
         "rollup-plugin-esbuild": "^2.1.0",
         "rollup-plugin-typescript2": "^0.27.1",

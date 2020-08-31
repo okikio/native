@@ -1,4 +1,4 @@
-import { AdvancedManager, ManagerItem } from "./manager";
+import { AdvancedManager, ManagerItem, methodCall } from "./manager";
 import { TransitionManager } from "./transition";
 import { HistoryManager } from "./history";
 import { EventEmitter } from "./emitter";
@@ -15,47 +15,47 @@ export class Service extends ManagerItem {
 	/**
 	 * Stores access to the App class's EventEmitter
 	 *
-	 * @protected
+	 * @public
 	 * @type EventEmitter
 	 * @memberof Service
 	 */
-	protected EventEmitter: EventEmitter;
+	public EventEmitter: EventEmitter;
 
 	/**
 	 * Stores access to the App class's PageManager
 	 *
-	 * @protected
+	 * @public
 	 * @type PageManager
 	 * @memberof Service
 	 */
-	protected PageManager: PageManager;
+	public PageManager: PageManager;
 
 	/**
 	 * Stores access to the App class's HistoryManager
 	 *
-	 * @protected
+	 * @public
 	 * @type HistoryManager
 	 * @memberof Service
 	 */
-	protected HistoryManager: HistoryManager;
+	public HistoryManager: HistoryManager;
 
 	/**
 	 * Stores the ServiceManager the service is install on
 	 *
-	 * @protected
+	 * @public
 	 * @type ServiceManager
 	 * @memberof Service
 	 */
-	protected ServiceManager: ServiceManager;
+	public ServiceManager: ServiceManager;
 
 	/**
 	 * Stores access to the App's TransitionManager
 	 *
-	 * @protected
+	 * @public
 	 * @type TransitionManager
 	 * @memberof Service
 	 */
-	protected TransitionManager: TransitionManager;
+	public TransitionManager: TransitionManager;
 
 	/**
 	 * Method is run once when Service is installed on a ServiceManager
@@ -116,7 +116,7 @@ export class ServiceManager extends AdvancedManager<string, Service> {
 	 * @memberof ServiceManager
 	 */
 	public init(): ServiceManager {
-		this.methodCall("init", this.getApp());
+		methodCall(this, "init", this.getApp());
 		return this;
 	}
 
@@ -127,7 +127,7 @@ export class ServiceManager extends AdvancedManager<string, Service> {
 	 * @memberof ServiceManager
 	 */
 	public boot(): ServiceManager {
-		this.methodCall("boot");
+		methodCall(this, "boot");
 		return this;
 	}
 
@@ -138,7 +138,7 @@ export class ServiceManager extends AdvancedManager<string, Service> {
 	 * @memberof ServiceManager
 	 */
 	public stop(): ServiceManager {
-		this.methodCall("stop");
+		methodCall(this, "stop");
 		return this;
 	}
 }

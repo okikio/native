@@ -268,7 +268,7 @@ describe("EventEmitter", () => {
         });
     });
 
-    describe("#once(event, function, context) & #emit(event, function, context)", () => {
+    /* describe("#once(event, function, context) & #emit(event, function, context)", () => {
         test("listen for one event and one listener once; emit one event listener once", () => {
             let test: boolean | any = false;
             let obj = { bool: false };
@@ -449,7 +449,7 @@ describe("EventEmitter", () => {
 
             expect(counter).toBe(0);
         });
-    });
+    }); */
 
     describe("#emit(event, function, context) & #on(event, function, context)", () => {
         test("listen for one event and one listener; emit one wrong event listener", () => {

@@ -10,11 +10,11 @@ export declare class Manager<K, V> {
     /**
      * The complex list of named data, to which the Manager controls
      *
-     * @protected
+     * @public
      * @type Map<K, V>
      * @memberof Manager
      */
-    protected map: Map<K, V>;
+    map: Map<K, V>;
     /**
      * Creates an instance of Manager.
      *
@@ -136,23 +136,21 @@ export declare class Manager<K, V> {
      * @memberof Manager
      */
     [Symbol.iterator](): IterableIterator<[K, V]>;
-    /**
-     * Calls the method of a certain name for all items that are currently installed
-     *
-     * @param {string} method
-     * @param {Array<any>} [args=[]]
-     * @returns Manager<K, V>
-     * @memberof Manager
-     */
-    methodCall(method: string, ...args: any): Manager<K, V>;
-    /**
-     * Asynchronously calls the method of a certain name for all items that are currently installed, similar to methodCall
-     *
-     * @param {string} method
-     * @param {Array<any>} [args=[]]
-     * @returns Promise<Manager<K, V>>
-     * @memberof Manager
-     */
-    asyncMethodCall(method: string, ...args: any): Promise<Manager<K, V>>;
 }
+/**
+ * Calls the method of a certain name for all items that are currently installed
+ *
+ * @param {Manager<any, any>} manager
+ * @param {string} method
+ * @param {Array<any>} [args=[]]
+ */
+export declare const methodCall: (manager: Manager<any, any>, method: string, ...args: any) => void;
+/**
+ * Asynchronously calls the method of a certain name for all items that are currently installed, similar to methodCall
+ *
+ * @param {Manager<any, any>} manager
+ * @param {string} method
+ * @param {Array<any>} [args=[]]
+ */
+export declare const asyncMethodCall: (manager: Manager<any, any>, method: string, ...args: any) => Promise<void>;
 export default Manager;

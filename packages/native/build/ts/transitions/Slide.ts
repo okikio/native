@@ -3,9 +3,9 @@ import { animate } from "@okikio/animate";
 
 //== Transitions
 export class Slide extends Transition {
-    protected name = "slide";
-    protected duration = 500;
-    protected direction: string = "right";
+    public name = "slide";
+    public duration = 500;
+    public direction: string = "right";
 
     init(value: ITransition) {
         super.init(value);
@@ -64,13 +64,13 @@ export class Slide extends Transition {
 }
 
 export class SlideLeft extends Slide {
-    protected name = "slide-left";
-    protected duration = 500;
-    protected direction: string = "left";
+    public name = "slide-left";
+    public duration = 500;
+    public direction: string = "left";
 }
 
 export class SlideRight extends Slide {
-    protected name = "slide-right";
-    protected duration = 500;
-    protected direction: string = "right";
+    public name = "slide-right";
+    public duration = 500;
+    public direction: string = "right";
 }

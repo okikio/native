@@ -14,43 +14,43 @@ export declare class Service extends ManagerItem {
     /**
      * Stores access to the App class's EventEmitter
      *
-     * @protected
+     * @public
      * @type EventEmitter
      * @memberof Service
      */
-    protected EventEmitter: EventEmitter;
+    public EventEmitter: EventEmitter;
     /**
      * Stores access to the App class's PageManager
      *
-     * @protected
+     * @public
      * @type PageManager
      * @memberof Service
      */
-    protected PageManager: PageManager;
+    public PageManager: PageManager;
     /**
      * Stores access to the App class's HistoryManager
      *
-     * @protected
+     * @public
      * @type HistoryManager
      * @memberof Service
      */
-    protected HistoryManager: HistoryManager;
+    public HistoryManager: HistoryManager;
     /**
      * Stores the ServiceManager the service is install on
      *
-     * @protected
+     * @public
      * @type ServiceManager
      * @memberof Service
      */
-    protected ServiceManager: ServiceManager;
+    public ServiceManager: ServiceManager;
     /**
      * Stores access to the App's TransitionManager
      *
-     * @protected
+     * @public
      * @type TransitionManager
      * @memberof Service
      */
-    protected TransitionManager: TransitionManager;
+    public TransitionManager: TransitionManager;
     /**
      * Method is run once when Service is installed on a ServiceManager
      *

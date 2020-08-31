@@ -19,7 +19,7 @@ export declare class PJAX extends Service {
      * @type boolean
      * @memberof PJAX
      */
-    protected ignoreURLs: IgnoreURLsList;
+    public ignoreURLs: IgnoreURLsList;
     /**
      * Whether or not to disable prefetching
      *
@@ -27,7 +27,7 @@ export declare class PJAX extends Service {
      *
      * @memberof PJAX
      */
-    protected prefetchIgnore: boolean;
+    public prefetchIgnore: boolean;
     /**
      * Current state or transitions
      *
@@ -35,7 +35,7 @@ export declare class PJAX extends Service {
      * @type boolean
      * @memberof PJAX
      */
-    protected isTransitioning: boolean;
+    public isTransitioning: boolean;
     /**
      * Ignore extra clicks of an anchor element if a transition has already started
      *
@@ -43,7 +43,7 @@ export declare class PJAX extends Service {
      * @type boolean
      * @memberof PJAX
      */
-    protected stopOnTransitioning: boolean;
+    public stopOnTransitioning: boolean;
     /**
      * On page change (excluding popstate event) keep current scroll position
      *
@@ -51,7 +51,7 @@ export declare class PJAX extends Service {
      * @type boolean
      * @memberof PJAX
      */
-    protected stickyScroll: boolean;
+    public stickyScroll: boolean;
     /**
      * Force load a page if an error occurs
      *
@@ -59,15 +59,15 @@ export declare class PJAX extends Service {
      * @type boolean
      * @memberof PJAX
      */
-    protected forceOnError: boolean;
+    public forceOnError: boolean;
     /**
      * Dictates whether to auto scroll if an hash is present in the window URL
      *
-     * @protected
+     * @public
      * @type boolean
      * @memberof PJAX
      */
-    protected autoScrollOnHash: boolean;
+    public autoScrollOnHash: boolean;
     /**
      * Sets the transition state, sets isTransitioning to true
      *

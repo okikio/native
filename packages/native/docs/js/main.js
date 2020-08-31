@@ -106,18 +106,6 @@ class Manager {
   [Symbol.iterator]() {
     return this.entries();
   }
-  methodCall(method, ...args) {
-    this.forEach((item) => {
-      item[method](...args);
-    });
-    return this;
-  }
-  async asyncMethodCall(method, ...args) {
-    for (let [, item] of this.map) {
-      await item[method](...args);
-    }
-    return this;
-  }
 }
 
 class ManagerItem {

@@ -125,105 +125,105 @@ export class Animate {
     /**
      * Stores the options for the current animation
      *
-     * @protected
+     * @public
      * @type AnimationOptions
      * @memberof Animate
      */
-    protected options: AnimationOptions = {};
+    public options: AnimationOptions = {};
 
     /**
      * The Array of Elements to Animate
      *
-     * @protected
+     * @public
      * @type {Node[]}
      * @memberof Animate
      */
-    protected targets: Node[] = [];
+    public targets: Node[] = [];
 
     /**
      * The properties to animate
      *
-     * @protected
+     * @public
      * @type {object}
      * @memberof Animate
      */
-    protected properties: object = {};
+    public properties: object = {};
 
     /**
      * A Set of Animations
      *
-     * @protected
+     * @public
      * @type {Map<HTMLElement, Animation>}
      * @memberof Animate
      */
-    protected animations: Map<HTMLElement, Animation> = new Map();
+    public animations: Map<HTMLElement, Animation> = new Map();
 
     /**
      * The total duration of all Animation's
      *
-     * @protected
+     * @public
      * @type {number}
      * @memberof Animate
      */
-    protected duration: number = 0;
+    public duration: number = 0;
 
     /**
      * The Element the main animation uses
      *
-     * @protected
+     * @public
      * @type {HTMLElement}
      * @memberof Animate
      */
-    protected mainElement: HTMLElement;
+    public mainElement: HTMLElement;
 
     /**
      * Stores an animation that runs on the total duration of the all other Animations, and as such it's the main Animation
      *
-     * @protected
+     * @public
      * @type {Animation}
      * @memberof Animate
      */
-    protected mainAnimation: Animation;
+    public mainAnimation: Animation;
 
     /**
      * Stores request frame calls
      *
-     * @protected
+     * @public
      * @type {number}
      * @memberof Animate
      */
-    protected animationFrame: number;
+    public animationFrame: number;
 
     /**
      * An event emitter
      *
-     * @protected
+     * @public
      * @type {EventEmitter}
      * @memberof Animate
      */
-    protected emitter: EventEmitter = new EventEmitter();
+    public emitter: EventEmitter = new EventEmitter();
 
     /**
      * The finish method, is called when the main animation has finished
      *
-     * @protected
+     * @public
      * @type {*}
      * @memberof Animate
      */
-    protected finish: any;
+    public finish: any;
 
     /**
      * Returns a promise that is fulfilled when the mainAnimation is finished
      *
-     * @protected
+     * @public
      * @type {Promise<AnimationOptions>}
      * @memberof Animate
      */
-    protected promise: Promise<AnimationOptions>;
+    public promise: Promise<AnimationOptions>;
 
     /**
      * Creates an instance of Animate.
-     * 
+     *
      * @param {AnimationOptions} options
      * @memberof Animate
      */
@@ -265,7 +265,7 @@ export class Animate {
                 fill: fillMode,
             };
 
-            // Accept keyframes as a keyframes Object, or a method, 
+            // Accept keyframes as a keyframes Object, or a method,
             // if there are no animations in the keyframes array,
             // uses css properties from the options object
             let arrKeyframes = computeValue((keyframes as Keyframe[]), [i, len, target]);
@@ -325,11 +325,11 @@ export class Animate {
     /**
      * Returns a new Promise that is resolve when this.finish is called
      *
-     * @protected
+     * @public
      * @returns {Promise<AnimationOptions>}
      * @memberof Animate
      */
-    protected newPromise(): Promise<AnimationOptions> {
+    public newPromise(): Promise<AnimationOptions> {
         return new Promise((resolve, reject) => {
             try {
                 this.finish = (options: AnimationOptions) => {
@@ -367,7 +367,7 @@ export class Animate {
     }
 
     /**
-     * If you don't care if the this.promise Promise has either been rejected or resolved  
+     * If you don't care if the this.promise Promise has either been rejected or resolved
      *
      * @param {() => any} onFinally
      * @returns {Promise<AnimationOptions>}
@@ -383,7 +383,7 @@ export class Animate {
      * @private
      * @memberof Animate
      */
-    protected loop(): void {
+    public loop(): void {
         this.animationFrame = window.requestAnimationFrame(this.loop);
         this.emit("tick change", this.getCurrentTime());
     }

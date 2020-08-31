@@ -38,11 +38,11 @@ export class CONFIG {
     /**
      * The current Configuration
      *
-     * @protected
+     * @public
      * @type ICONFIG
      * @memberof CONFIG
      */
-    protected config: ICONFIG;
+    public config: ICONFIG;
 
     /**
      * Creates an instance of CONFIG.

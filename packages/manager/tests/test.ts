@@ -1,5 +1,5 @@
 /// <reference types="jest" />
-import { Manager } from "../src/api";
+import { Manager, methodCall, asyncMethodCall } from "../src/api";
 import fetch from "node-fetch";
 import "jest-chain";
 
@@ -31,9 +31,17 @@ describe("Manager", () => {
         });
     });
 
-    describe("#size", () => {
-        test("set index 5 to be 6, and the set index 6 to be 7; expect the size to be 5", () => {
+    describe("#size or #length", () => {
+        test("expect size/length of manager to be 5", () => {
             expect(manager.size).toBe(5);
+            expect(manager.length).toBe(manager.size);
+        });
+    });
+
+    describe("#has()", () => {
+        test("has index 3 but not 7", () => {
+            expect(manager.has(3)).toBe(true);
+            expect(manager.has(7)).toBe(false);
         });
     });
 
@@ -115,7 +123,7 @@ describe("Manager", () => {
                 let [$key, $value] = entries.next().value;
                 expect([key, value]).toEqual([$key, $value]);
                 expect(obj).toBeInstanceOf(Map).toEqual(manager.getMap());
-                expect(this).not.toHaveProperty("methodCall");
+                expect(this).not.toHaveProperty("clear");
             }, manager);
         });
 
@@ -125,7 +133,7 @@ describe("Manager", () => {
                 let [$key, $value] = entries.next().value;
                 expect([key, value]).toEqual([$key, $value]);
                 expect(obj).toBeInstanceOf(Map).toEqual(manager.getMap());
-                expect(this).toHaveProperty("methodCall");
+                expect(this).toHaveProperty("clear");
                 expect(this.get(key)).toBe(value);
             }, manager);
         });
@@ -142,7 +150,7 @@ describe("Manager", () => {
             manager = new Manager();
             manager.set("x", { print: fn() });
             manager.set("y", { print: fn(3) });
-            manager.methodCall("print", 2);
+            methodCall(manager, "print", 2);
             expect(num).toBe(8);
         });
     });
@@ -162,8 +170,8 @@ describe("Manager", () => {
             manager.set("x", { print: fn() });
             manager.set("y", { print: fn("https://github.com") });
 
-            let x = await manager.asyncMethodCall("print", "/favicon.ico");
-            expect(x).toBeInstanceOf(Manager);
+            let x = await asyncMethodCall(manager, "print", "/favicon.ico");
+            expect(x).toBeUndefined();
             expect(list).toEqual([
                 "https://www.google.com/favicon.ico",
                 "https://github.com/favicon.ico",
