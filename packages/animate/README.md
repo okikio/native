@@ -465,7 +465,7 @@ They represent the then, catch, and finally methods of a Promise that is resolve
 An alias for `getOptions`
 
 ## Example
-[![Web Animation API Library Playground](/assets/Web%20Animation%20API%20Library%20Playground.png)](/assets/Web%20Animation%20API%20Library%20Playground.mp4)
+[![Web Animation API Library Playground](./assets/Web%20Animation%20API%20Library%20Playground.png)](./assets/Web%20Animation%20API%20Library%20Playground.mp4)
 
 [Check out the example on Codepen  &#8594;](https://codepen.io/okikio/pen/qBbdGaW?editors=0010)
 
