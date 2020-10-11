@@ -63,12 +63,12 @@ export class Service extends ManagerItem {
 	 * @memberof Service
 	 */
 	public install(): void {
-		let app = this.manager.getApp();
-		this.PageManager = app.getPages();
-		this.EventEmitter = app.getEmitter();
-		this.HistoryManager = app.getHistory();
-		this.ServiceManager = app.getServices();
-		this.TransitionManager = app.getTransitions();
+		let { app } = this.manager;
+		this.PageManager = app.pages;
+		this.EventEmitter = app.emitter;
+		this.HistoryManager = app.history;
+		this.ServiceManager = app.services;
+		this.TransitionManager = app.transitions;
 	}
 
 	// Called before the start of a Service, represents a constructor of sorts
@@ -116,7 +116,7 @@ export class ServiceManager extends AdvancedManager<string, Service> {
 	 * @memberof ServiceManager
 	 */
 	public init(): ServiceManager {
-		methodCall(this, "init", this.getApp());
+		methodCall(this, "init", this.app);
 		return this;
 	}
 
@@ -127,7 +127,7 @@ export class ServiceManager extends AdvancedManager<string, Service> {
 	 * @memberof ServiceManager
 	 */
 	public boot(): ServiceManager {
-		methodCall(this, "boot");
+		methodCall(this, "boot", this.app);
 		return this;
 	}
 
@@ -138,7 +138,7 @@ export class ServiceManager extends AdvancedManager<string, Service> {
 	 * @memberof ServiceManager
 	 */
 	public stop(): ServiceManager {
-		methodCall(this, "stop");
+		methodCall(this, "stop", this.app);
 		return this;
 	}
 }

@@ -1,5 +1,4 @@
-import { Block, IBlockInit } from "../../../src/api";
-import { animate } from "@okikio/animate";
+import { Block, IBlockInit, animate } from "../../../src/api";
 
 //== Blocks
 export class InViewBlock extends Block {

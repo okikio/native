@@ -1,5 +1,4 @@
-import { Service } from "../../../src/api";
-import { animate } from "@okikio/animate";
+import { Service, animate } from "../../../src/api";
 
 export class Splashscreen extends Service {
     public rootElement: HTMLElement;

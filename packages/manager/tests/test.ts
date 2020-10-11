@@ -101,12 +101,6 @@ describe("Manager", () => {
         });
     });
 
-    describe("#prev()", function () {
-        test("test the 2nd last value", () => {
-            expect(manager.prev()).toBe(4);
-        });
-    });
-
     describe("#entries()", function () {
         test("test Manager#entries()", () => {
             let value = manager.entries();

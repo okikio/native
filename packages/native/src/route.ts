@@ -1,6 +1,6 @@
 import { Service } from "./service";
 import { Manager } from "./manager";
-import { _URL } from "./url";
+import { newURL, getHashedPath } from "./url";
 
 export type RouteMethod = (...args: any) => any;
 export type RouteStyle = string | RegExp | boolean;
@@ -121,8 +121,8 @@ export class Router extends Service {
      * @memberof Router
      */
     public route() {
-        let from: string = this.HistoryManager[this.HistoryManager.size > 1 ? "prev" : "last"]().getURL().getFullPath();
-        let to: string = new _URL().getFullPath();
+        let from: string = getHashedPath(this.HistoryManager[this.HistoryManager.length > 1 ? "prev" : "current"]().url);
+        let to: string = getHashedPath(newURL());
 
         this.routes.forEach((method: RouteMethod, path: IRouteToFrom) => {
             let fromRegExp = (path.from as RegExp | boolean);

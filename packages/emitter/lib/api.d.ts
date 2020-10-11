@@ -9,53 +9,8 @@ export interface IListener {
  * Represents a new event listener consisting of properties like: callback, scope, name
  *
  * @export
- * @class Listener
  */
-export declare class Listener {
-    /**
-     * The current listener data
-     *
-     * @private
-     * @type IListener
-     * @memberof Listener
-     */
-    private listener;
-    /**
-     * Creates an instance of Listener.
-     *
-     * @param {IListener} { callback = () => { }, scope = null, name = "event" }
-     * @memberof Listener
-     */
-    constructor({ callback, scope, name, }: IListener);
-    /**
-     * Returns the callback Function of the Listener
-     *
-     * @returns ListenerCallback
-     * @memberof Listener
-     */
-    getCallback(): ListenerCallback;
-    /**
-     * Returns the scope as an Object, from the Listener
-     *
-     * @returns object
-     * @memberof Listener
-     */
-    getScope(): object;
-    /**
-     * Returns the event as a String, from the Listener
-     *
-     * @returns string
-     * @memberof Listener
-     */
-    getEventName(): string;
-    /**
-     * Returns the listener as an Object
-     *
-     * @returns IListener
-     * @memberof Listener
-     */
-    toJSON(): IListener;
-}
+export declare const newListener: ({ callback, scope, name, }: IListener) => IListener;
 /**
  * Represents a new event listener consisting of properties like: callback, scope, name
  *
@@ -63,7 +18,7 @@ export declare class Listener {
  * @class Event
  * @extends {Manager<number, Listener>}
  */
-export declare class Event extends Manager<number, Listener> {
+export declare class Event extends Manager<number, IListener> {
     /**
      * The name of the event
      *
@@ -119,7 +74,7 @@ export declare class EventEmitter extends Manager<string, Event> {
      * @param {EventInput} events
      * @param {ListenerCallback | object} callback
      * @param {object} scope
-     * @returns
+     * @returns EventEmitter
      * @memberof EventEmitter
      */
     on(events: EventInput, callback?: ListenerCallback | object, scope?: object): EventEmitter;
@@ -143,18 +98,6 @@ export declare class EventEmitter extends Manager<string, Event> {
      * @memberof EventEmitter
      */
     off(events: EventInput, callback?: ListenerCallback | object, scope?: object): EventEmitter;
-    /**
-     * Adds a one time event listener for an event,
-     * do note, you can't use .off to remove events listeners for the kind of event,
-     * however, you can still remove the entire event
-     *
-     * @param {EventInput} events
-     * @param {ListenerCallback | object} [callback]
-     * @param {object} [scope]
-     * @returns EventEmitter
-     * @memberof EventEmitter
-     */
-    once(events: EventInput, callback?: ListenerCallback | object, scope?: object): EventEmitter;
     /**
      * Call all listeners within an event
      *

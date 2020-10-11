@@ -64,32 +64,31 @@
     },
     "homepage": "https://github.com/okikio/native#readme",
     "devDependencies": {
-        "@okikio/animate": "^0.0.7",
-        "@rollup/plugin-node-resolve": "^8.1.0",
-        "@types/jest": "^26.0.3",
-        "browser-sync": "^2.26.7",
-        "connect-logger": "^0.0.1",
-        "eslint": "^7.3.1",
+        "@rollup/plugin-node-resolve": "^9.0.0",
+        "@types/jest": "^26.0.14",
+        "browser-sync": "^2.26.12",
+        "eslint": "^7.11.0",
         "gulp": "^4.0.2",
         "gulp-postcss": "^8.0.0",
         "gulp-sass": "^4.1.0",
         "gulp-swig": "^0.9.1",
-        "jest": "^26.1.0",
+        "jest": "^26.5.2",
         "jest-chain": "^1.1.5",
         "jest-environment-jsdom-global": "^2.0.4",
         "jest-watch-lerna-packages": "^1.1.0",
         "merge-stream": "^2.0.0",
-        "rollup": "^2.18.1",
-        "rollup-plugin-esbuild": "^2.1.0",
-        "rollup-plugin-typescript2": "^0.27.1",
-        "ts-jest": "^26.1.1",
-        "tslib": "^2.0.0",
-        "typescript": "^3.9.5",
-        "ultra": "^0.7.2"
+        "rollup": "^2.29.0",
+        "rollup-plugin-esbuild": "^2.5.2",
+        "rollup-plugin-typescript2": "^0.27.3",
+        "ts-jest": "^26.4.1",
+        "tslib": "^2.0.3",
+        "typescript": "^4.0.3",
+        "ultra-runner": "^3.5.0"
     },
     "dependencies": {
-        "@okikio/emitter": "^0.0.7",
-        "@okikio/manager": "^0.0.7"
+        "@okikio/animate": "workspace:^0.0.7",
+        "@okikio/emitter": "workspace:^0.0.7",
+        "@okikio/manager": "workspace:^0.0.7"
     },
     "gitHead": "ad422076cdb57d570426f786886129d5bca2f90f"
 }

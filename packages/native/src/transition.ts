@@ -94,46 +94,6 @@ export class Transition extends Service {
         this.boot();
     }
 
-	/**
-	 * Returns the Transition's name
-	 *
-	 * @returns string
-	 * @memberof Transition
-	 */
-    public getName(): string {
-        return this.name;
-    }
-
-	/**
-	 * Returns the Transition's old page
-	 *
-	 * @returns Page
-	 * @memberof Transition
-	 */
-    public getOldPage(): Page {
-        return this.oldPage;
-    }
-
-	/**
-	 * Returns the Transition's new page
-	 *
-	 * @returns Page
-	 * @memberof Transition
-	 */
-    public getNewPage(): Page {
-        return this.newPage;
-    }
-
-	/**
-	 * Returns the Transition's trigger
-	 *
-	 * @returns Trigger
-	 * @memberof Transition
-	 */
-    public getTrigger(): Trigger {
-        return this.trigger;
-    }
-
     // Based off the highwayjs Transition class
 	/**
 	 * Transition from current page
@@ -162,9 +122,9 @@ export class Transition extends Service {
      * @memberof Transition
      */
     public async start(EventEmitter: EventEmitter): Promise<Transition> {
-        let fromWrapper = this.oldPage.getWrapper();
-        let toWrapper = this.newPage.getWrapper();
-        document.title = this.newPage.getTitle();
+        let fromWrapper = this.oldPage.wrapper;
+        let toWrapper = this.newPage.wrapper;
+        document.title = this.newPage.title;
 
         if (!(fromWrapper instanceof Node) || !(toWrapper instanceof Node))
             throw `[Wrapper] the wrapper from the ${!(toWrapper instanceof Node) ? "next" : "current"} page cannot be found. The wrapper must be an element that has the attribute ${this.getConfig("wrapperAttr")}.`;
@@ -233,7 +193,7 @@ export class TransitionManager extends AdvancedManager<string, Transition> {
 	 * @memberof TransitionManager
 	 */
     public add(value: Transition): TransitionManager {
-        let name = value.getName();
+        let name = value.name;
         this.set(name, value);
         return this;
     }
@@ -253,7 +213,7 @@ export class TransitionManager extends AdvancedManager<string, Transition> {
             trigger
         });
 
-        let EventEmitter = this.getApp().getEmitter();
+        let EventEmitter = this.app.emitter;
         return await transition.start(EventEmitter);
     }
 }

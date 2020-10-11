@@ -14,7 +14,6 @@ A superset of the Map class, it makes a Map function more like a normal Object.
       - [Manager#keys()](#managerkeys)
       - [Manager#values()](#managervalues)
       - [Manager#last(distance)](#managerlastdistance)
-      - [Manager#prev()](#managerprev)
       - [Manager#@@iterator](#manageriterator)
       - [#methodCall(method, ...)](#methodcallmethod)
       - [#asyncMethodCall(method, ...)](#asyncmethodcallmethod)
@@ -39,7 +38,7 @@ const { Manager, methodCall } = window.Manager;
 
 ## Getting started
 
-The Manager class makes Maps easier to use, as well as adding 6 methods, **getMap**, **last**, **prev**, **methodCall**, **asyncMethodCall**, **add**, **keys** and **values** (the behavior of the keys and values methods are slightly modified, to return an Array of keys/values instead of an iterator).
+The Manager class makes Maps easier to use, as well as adding 6 methods, **getMap**, **last**, **methodCall**, **asyncMethodCall**, **add**, **keys** and **values** (the behavior of the keys and values methods are slightly modified, to return an Array of keys/values instead of an iterator).
 
 ## API
 
@@ -163,26 +162,6 @@ const arr = Array.from([1, 2, 3, 4, 5].entries());
 const manager = new Manager(arr);
 console.log(manager.last()); //= 5
 console.log(manager.last(3)); //= 3
-```
-
-
-#### Manager#prev()
-```js
-Manager.prototype.prev();
-
-/**
- * Returns the second last item in the Manager
- *
- * @public
- * @returns V
- */
-
-// Example:
-import Manager from "@okikio/manager";
-
-const arr = Array.from([1, 2, 3, 4, 5].entries());
-const manager = new Manager(arr);
-console.log(manager.prev()); //= 4
 ```
 
 #### Manager#@@iterator

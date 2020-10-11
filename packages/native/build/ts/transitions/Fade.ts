@@ -1,5 +1,4 @@
-import { Transition, ITransitionData } from "../../../src/api";
-import { animate } from "@okikio/animate";
+import { Transition, ITransitionData, animate } from "../../../src/api";
 
 //== Transitions
 export class Fade extends Transition {
@@ -8,7 +7,7 @@ export class Fade extends Transition {
 
     out({ from }: ITransitionData) {
         let { duration } = this;
-        let fromWrapper = from.getWrapper();
+        let fromWrapper = from.wrapper;
         return new Promise(async resolve => {
             await animate({
                 target: fromWrapper,
@@ -26,7 +25,7 @@ export class Fade extends Transition {
 
     in({ to }: ITransitionData) {
         let { duration } = this;
-        let toWrapper = to.getWrapper();
+        let toWrapper = to.wrapper;
         requestAnimationFrame(() => {
             toWrapper.style.transform = "translateX(0%)";
         });

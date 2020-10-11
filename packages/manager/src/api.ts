@@ -104,7 +104,7 @@ export class Manager<K, V> {
 	public get size(): number {
 		return this.map.size;
 	}
-	
+
 	public get length(): number {
 		return this.map.size;
 	}
@@ -119,16 +119,6 @@ export class Manager<K, V> {
 	public last(distance: number = 1): V | undefined {
 		let key = this.keys()[this.size - distance];
 		return this.get(key);
-	}
-
-	/**
-	 * Returns the second last item in the Manager
-	 *
-	 * @public
-	 * @returns V
-	 */
-	public prev(): V {
-		return this.last(2);
 	}
 
 	/**

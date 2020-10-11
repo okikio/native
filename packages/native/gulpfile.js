@@ -3,7 +3,6 @@ const { nodeResolve } = require("@rollup/plugin-node-resolve");
 const esbuild = require("rollup-plugin-esbuild");
 const { rollup } = require("rollup");
 
-// const logger = require("connect-logger");
 // const postcss = require("gulp-postcss");
 const bs = require("browser-sync");
 

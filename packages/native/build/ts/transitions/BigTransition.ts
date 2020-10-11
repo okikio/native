@@ -1,5 +1,4 @@
-import { Transition, ITransitionData } from "../../../src/api";
-import { animate } from "@okikio/animate";
+import { Transition, ITransitionData, animate } from "../../../src/api";
 
 //== Transitions
 export class BigTransition extends Transition {
@@ -22,7 +21,7 @@ export class BigTransition extends Transition {
 
     out({ from }: ITransitionData) {
         let { durationPerAnimation: duration, delay } = this;
-        let fromWrapper = from.getWrapper();
+        let fromWrapper = from.wrapper;
         window.scroll({
             top: 0,
             behavior: 'smooth'  // 👈
@@ -86,7 +85,7 @@ export class BigTransition extends Transition {
 
     in({ to }: ITransitionData) {
         let { durationPerAnimation: duration, delay } = this;
-        let toWrapper = to.getWrapper();
+        let toWrapper = to.wrapper;
         toWrapper.style.transform = "translateX(0%)";
         return new Promise(async resolve => {
             animate({

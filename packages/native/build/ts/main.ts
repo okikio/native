@@ -1,6 +1,6 @@
 
 import { getTheme, setTheme, mediaTheme } from "./theme";
-import { PJAX, App, _URL, BlockIntent, Router } from "../../src/api";
+import { PJAX, App, BlockIntent, Router } from "../../src/api";
 
 import { InViewBlock } from "./blocks/InViewBlock";
 import { Splashscreen } from "./services/Splashscreen";

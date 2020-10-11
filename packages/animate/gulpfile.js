@@ -3,7 +3,6 @@ const { nodeResolve } = require("@rollup/plugin-node-resolve");
 const esbuild = require("rollup-plugin-esbuild");
 const { rollup } = require("rollup");
 
-// const logger = require("connect-logger");
 const bs = require("browser-sync");
 
 const sass = require("gulp-sass");
@@ -103,11 +102,11 @@ task("watch", () => {
         {
             notify: false,
             server: destFolder,
-            middleware: [
-                logger({
-                    format: "%date %status %method %url -- %time",
-                }),
-            ],
+            // middleware: [
+            //     // logger({
+            //     //     format: "%date %status %method %url -- %time",
+            //     // }),
+            // ],
         },
         (_err, bs) => {
             bs.addMiddleware("*", (_req, res) => {

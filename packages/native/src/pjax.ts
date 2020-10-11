@@ -1,7 +1,7 @@
-import { State, Trigger, IState, Coords } from "./history";
+import { newState, Trigger, IState, newCoords } from "./history";
 import { Service } from "./service";
 import { Page } from "./page";
-import { _URL } from "./url";
+import { newURL, getHashedPath, equal } from "./url";
 
 export type LinkEvent = MouseEvent | TouchEvent;
 export type StateEvent = LinkEvent | PopStateEvent;
@@ -115,16 +115,16 @@ export class PJAX extends Service {
      * @memberof PJAX
      */
     public boot() {
-        super.boot();
-
-        let current = new State();
+        let current = newState();
         this.HistoryManager.add(current);
-        this.changeState("replace", current);
+        this.changeState("replace");
 
         if ("scrollRestoration" in window.history) {
             // Back off, browser, I got this...
             window.history.scrollRestoration = "manual";
         }
+
+        super.boot();
     }
 
     /**
@@ -170,7 +170,7 @@ export class PJAX extends Service {
             el.closest(this.getConfig("preventAllAttr"))
         );
         let prevent = preventSelf && preventAll;
-        let sameURL = new _URL().getFullPath() === new _URL(href).getFullPath();
+        let sameURL = getHashedPath(newURL()) === getHashedPath(newURL(href));
         return !(exists || pushStateSupport || eventMutate || newTab || crossOrigin || download || prevent || sameURL);
     }
 
@@ -283,10 +283,10 @@ export class PJAX extends Service {
             return;
         }
 
-        let url = new _URL(href);
-        let currentState = this.HistoryManager.last();
-        let currentURL = currentState.getURL();
-        if (currentURL.equalTo(url)) {
+        let url = newURL(href);
+        let currentState = this.HistoryManager.current;
+        let currentURL = currentState.url;
+        if (equal(currentURL, url)) {
             this.hashAction(url.hash);
             return;
         }
@@ -298,7 +298,7 @@ export class PJAX extends Service {
             // If popstate, get back/forward direction.
             let { state }: { state: IState } = event as PopStateEvent;
             let { index, transition, data } = state;
-            let currentIndex = currentState.getIndex();
+            let currentIndex = currentState.index;
             let difference = currentIndex - index;
 
             trigger = this.getDirection(difference);
@@ -316,19 +316,19 @@ export class PJAX extends Service {
 
             // Based on the direction of the state change either remove or add a state
             if (trigger === "back") {
-                this.HistoryManager.delete(currentIndex);
+                this.HistoryManager.remove(currentIndex);
                 this.EventEmitter.emit(`POPSTATE_BACK`, event);
             } else if (trigger === "forward") {
-                this.HistoryManager.addState({ url, transition, data });
+                this.HistoryManager.add({ url: href, transition, data });
                 this.EventEmitter.emit(`POPSTATE_FORWARD`, event);
             }
         } else {
             // Add new state
             transitionName = this.getTransitionName(trigger as HTMLAnchorElement) || "default";
-            const scroll = new Coords();
-            const index = this.HistoryManager.size;
-            const state = new State({
-                url, index,
+            const scroll = newCoords();
+            const index = this.HistoryManager.length;
+            const state = newState({
+                url: href, index,
                 transition: transitionName,
                 data: { scroll }
             });
@@ -348,7 +348,7 @@ export class PJAX extends Service {
             }
 
             this.HistoryManager.add(state);
-            this.changeState("push", state);
+            this.changeState("push");
             this.EventEmitter.emit("HISTORY_NEW_ITEM", event);
         }
 
@@ -358,22 +358,21 @@ export class PJAX extends Service {
         }
 
         this.EventEmitter.emit("GO", event);
-        return this.load({ oldHref: currentURL.getPathname(), href, trigger, transitionName });
+        return this.load({ oldHref: newURL(currentURL).pathname, href, trigger, transitionName });
     }
 
     /**
      * Either push or replace history state
      *
      * @param {("push" | "replace")} action
-     * @param {IState} state
+     * @param {IState[]} state
      * @param {_URL} url
      * @memberof PJAX
      */
-    public changeState(action: "push" | "replace", state: State) {
-        let url = state.getURL();
-        let href = url.getFullPath();
-        let json = state.toJSON();
-        let args = [json, '', href];
+    public changeState(action: "push" | "replace") {
+        let { states } = this.HistoryManager;
+        let { url } = this.HistoryManager.current;
+        let args = [{ states: [...states] }, '', url];
         if (window.history) {
             switch (action) {
                 case 'push':
@@ -393,7 +392,6 @@ export class PJAX extends Service {
      * @param {string} href
      * @param {Trigger} trigger
      * @param {string} [transitionName="default"]
-     *
      * @memberof PJAX
      */
     public async load({ oldHref, href, trigger, transitionName = "default" }: { oldHref: string; href: string; trigger: Trigger; transitionName?: string; }): Promise<any> {
@@ -471,11 +469,11 @@ export class PJAX extends Service {
     /**
      * Check to see if the URL is to be ignored, uses either RegExp of Strings to check
      *
-     * @param {_URL} { pathname }
+     * @param {URL} { pathname }
      *
      * @memberof PJAX
      */
-    public ignoredURL({ pathname }: _URL): boolean {
+    public ignoredURL({ pathname }: URL): boolean {
         return this.ignoreURLs.length && this.ignoreURLs.some(url => {
             return typeof url === "string" ? url === pathname : (url as RegExp).exec(pathname) !== null;
         });
@@ -491,8 +489,8 @@ export class PJAX extends Service {
         let el = this.getLink(event);
         if (!el) return;
 
-        const url = new _URL(this.getHref(el));
-        const urlString: string = url.getPathname();
+        const url = newURL(this.getHref(el));
+        const urlString: string = url.pathname;
         // If Url is ignored or already in cache, don't do any think
         if (this.ignoredURL(url) || this.PageManager.has(urlString)) return;
 

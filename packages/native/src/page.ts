@@ -1,5 +1,5 @@
 import { Manager, ManagerItem, AdvancedManager } from "./manager";
-import { _URL } from "./url";
+import { newURL } from "./url";
 import { App } from "./app";
 
 /**
@@ -17,65 +17,59 @@ export class Page extends ManagerItem {
 	/**
 	 * Holds the DOM of the current page
 	 *
-	 * @private
 	 * @type Document
 	 * @memberof Page
 	 */
-    private dom: Document;
+    public dom: Document;
 
 	/**
 	 * Holds the wrapper element to be swapped out of each Page
 	 *
-	 * @private
 	 * @type HTMLElement
 	 * @memberof Page
 	 */
-    private wrapper: HTMLElement;
+    public wrapper: HTMLElement;
 
 	/**
 	 * Holds the title of each page
 	 *
-	 * @private
 	 * @type string
 	 * @memberof Page
 	 */
-    private title: string;
+    public title: string;
 
 	/**
 	 * Holds the head element of each page
 	 *
-	 * @private
 	 * @type Element
 	 * @memberof Page
 	 */
-    private head: Element;
+    public head: Element;
 
 	/**
 	 * Holds the body element of each page
 	 *
-	 * @private
 	 * @type Element
 	 * @memberof Page
 	 */
-    private body: Element;
+    public body: Element;
 
 	/**
 	 * The URL of the current page
 	 *
-	 * @private
-	 * @type _URL
+	 * @type URL
 	 * @memberof Page
 	 */
-    private url: _URL;
+    public url: URL;
 
 	/**
 	 * Creates an instance of Page, it also creates a new page from response text, or a Document Object
 	 *
-	 * @param {_URL} [url=new _URL()]
+	 * @param {URL} [url=newURL()]
 	 * @param {(string | Document)} [dom=document]
 	 * @memberof Page
 	 */
-    constructor(url: _URL = new _URL(), dom: string | Document = document) {
+    constructor(url: URL = newURL(), dom: string | Document = document) {
         super();
         this.url = url;
         if (typeof dom === "string") {
@@ -96,76 +90,6 @@ export class Page extends ManagerItem {
      */
     public install(): void {
         this.wrapper = this.body.querySelector(this.getConfig("wrapperAttr"));
-    }
-
-	/**
-	 * Returns the current page's URL
-	 *
-	 * @returns _URL
-	 * @memberof Page
-	 */
-    public getURL(): _URL {
-        return this.url;
-    }
-
-	/**
-	 * Returns the current page's URL
-	 *
-	 * @returns string
-	 * @memberof Page
-	 */
-    public getPathname(): string {
-        return this.url.pathname;
-    }
-
-	/**
-	 * The page title
-	 *
-	 * @returns string
-	 * @memberof Page
-	 */
-    public getTitle(): string {
-        return this.title;
-    }
-
-	/**
-	 * The page's head element
-	 *
-	 * @returns Element
-	 * @memberof Page
-	 */
-    public getHead(): Element {
-        return this.head;
-    }
-
-	/**
-	 * The page's body element
-	 *
-	 * @returns Element
-	 * @memberof Page
-	 */
-    public getBody(): Element {
-        return this.body;
-    }
-
-	/**
-	 * The page's wrapper element
-	 *
-	 * @returns HTMLElement
-	 * @memberof Page
-	 */
-    public getWrapper(): HTMLElement {
-        return this.wrapper;
-    }
-
-	/**
-	 * The page's document
-	 *
-	 * @returns Document
-	 * @memberof Page
-	 */
-    public getDOM(): Document {
-        return this.dom;
     }
 }
 
@@ -194,7 +118,7 @@ export class PageManager extends AdvancedManager<string, Page> {
 	 */
     constructor(app: App) {
         super(app);
-        let URLString = new _URL().pathname;
+        let URLString = newURL().pathname;
         this.set(URLString, new Page());
     }
 
@@ -211,13 +135,13 @@ export class PageManager extends AdvancedManager<string, Page> {
     /**
      * Load from cache or by requesting URL via a fetch request, avoid requesting for the same thing twice by storing the fetch request in "this.loading"
      *
-     * @param {(_URL | string)} [_url=new _URL()]
+     * @param {(URL | string)} [_url=newURL()]
      * @returns Promise<Page>
      * @memberof PageManager
      */
-    public async load(_url: _URL | string = new _URL()): Promise<Page> {
-        let url: _URL = _url instanceof URL ? _url : new _URL(_url);
-        let urlString: string = url.getPathname();
+    public async load(_url: URL | string = newURL()): Promise<Page> {
+        let url: URL = newURL(_url);
+        let urlString: string = url.pathname;
         let page: Page, request: Promise<string>;
         if (this.has(urlString)) {
             page = this.get(urlString);
@@ -255,7 +179,7 @@ export class PageManager extends AdvancedManager<string, Page> {
             let response = await fetch(url, {
                 mode: 'same-origin',
                 method: "GET",
-                headers: headers,
+                headers,
                 cache: "default",
                 credentials: "same-origin",
             });

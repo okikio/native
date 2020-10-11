@@ -9,9 +9,10 @@ export * from "./emitter";
 export * from "./service";
 
 export * from "./transition";
-export * from "./block";
+// export * from "./block";
 
 export * from "./app";
 export * from "./pjax";
 export * from "./route";
 
+export * from "@okikio/animate";

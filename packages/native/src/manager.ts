@@ -74,11 +74,10 @@ export class AdvancedManager<K, V extends ManagerItem> extends Manager<K, V> {
 	/**
 	 * The instance of the App class, the Manager is instantiated in
 	 *
-	 * @private
 	 * @type App
 	 * @memberof AdvancedManager
 	 */
-    private app: App;
+    public app: App;
 
 	/**
 	 * Creates an instance of AdvancedManager.
@@ -101,18 +100,8 @@ export class AdvancedManager<K, V extends ManagerItem> extends Manager<K, V> {
 	 */
     public set(key: K, value: V) {
         super.set(key, value);
-        typeof value.register === "function" && value.register(this);
+        value.register(this);
         return this;
-    }
-
-	/**
-	 * Returns the instance the App class
-	 *
-	 * @returns App
-	 * @memberof AdvancedManager
-	 */
-    public getApp(): App {
-        return this.app;
     }
 
 	/**

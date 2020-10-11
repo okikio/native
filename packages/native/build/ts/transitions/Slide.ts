@@ -1,5 +1,4 @@
-import { Transition, ITransitionData, ITransition } from "../../../src/api";
-import { animate } from "@okikio/animate";
+import { Transition, ITransitionData, ITransition, animate } from "../../../src/api";
 
 //== Transitions
 export class Slide extends Transition {
@@ -20,7 +19,7 @@ export class Slide extends Transition {
 
     out({ from }: ITransitionData) {
         let { duration, direction } = this;
-        let fromWrapper = from.getWrapper();
+        let fromWrapper = from.wrapper;
         // window.scroll({
         //     top: 0,
         //     behavior: 'smooth'  // 👈
@@ -44,7 +43,7 @@ export class Slide extends Transition {
 
     in({ to }: ITransitionData) {
         let { duration } = this;
-        let toWrapper = to.getWrapper();
+        let toWrapper = to.wrapper;
         return animate({
             target: toWrapper,
             keyframes: [

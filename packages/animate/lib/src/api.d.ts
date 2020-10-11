@@ -62,7 +62,7 @@ export declare class Animate {
      * @type AnimationOptions
      * @memberof Animate
      */
-    public options: AnimationOptions;
+    options: AnimationOptions;
     /**
      * The Array of Elements to Animate
      *
@@ -70,7 +70,7 @@ export declare class Animate {
      * @type {Node[]}
      * @memberof Animate
      */
-    public targets: Node[];
+    targets: Node[];
     /**
      * The properties to animate
      *
@@ -78,7 +78,7 @@ export declare class Animate {
      * @type {object}
      * @memberof Animate
      */
-    public properties: object;
+    properties: object;
     /**
      * A Set of Animations
      *
@@ -86,7 +86,7 @@ export declare class Animate {
      * @type {Map<HTMLElement, Animation>}
      * @memberof Animate
      */
-    public animations: Map<HTMLElement, Animation>;
+    animations: Map<HTMLElement, Animation>;
     /**
      * The total duration of all Animation's
      *
@@ -94,7 +94,7 @@ export declare class Animate {
      * @type {number}
      * @memberof Animate
      */
-    public duration: number;
+    duration: number;
     /**
      * The Element the main animation uses
      *
@@ -102,7 +102,7 @@ export declare class Animate {
      * @type {HTMLElement}
      * @memberof Animate
      */
-    public mainElement: HTMLElement;
+    mainElement: HTMLElement;
     /**
      * Stores an animation that runs on the total duration of the all other Animations, and as such it's the main Animation
      *
@@ -110,7 +110,7 @@ export declare class Animate {
      * @type {Animation}
      * @memberof Animate
      */
-    public mainAnimation: Animation;
+    mainAnimation: Animation;
     /**
      * Stores request frame calls
      *
@@ -118,7 +118,7 @@ export declare class Animate {
      * @type {number}
      * @memberof Animate
      */
-    public animationFrame: number;
+    animationFrame: number;
     /**
      * An event emitter
      *
@@ -126,7 +126,7 @@ export declare class Animate {
      * @type {EventEmitter}
      * @memberof Animate
      */
-    public emitter: EventEmitter;
+    emitter: EventEmitter;
     /**
      * The finish method, is called when the main animation has finished
      *
@@ -134,7 +134,7 @@ export declare class Animate {
      * @type {*}
      * @memberof Animate
      */
-    public finish: any;
+    finish: any;
     /**
      * Returns a promise that is fulfilled when the mainAnimation is finished
      *
@@ -142,7 +142,7 @@ export declare class Animate {
      * @type {Promise<AnimationOptions>}
      * @memberof Animate
      */
-    public promise: Promise<AnimationOptions>;
+    promise: Promise<AnimationOptions>;
     /**
      * Creates an instance of Animate.
      *
@@ -164,7 +164,7 @@ export declare class Animate {
      * @returns {Promise<AnimationOptions>}
      * @memberof Animate
      */
-    public newPromise(): Promise<AnimationOptions>;
+    newPromise(): Promise<AnimationOptions>;
     /**
      * Fulfills the this.promise Promise
      *
@@ -196,7 +196,7 @@ export declare class Animate {
      * @private
      * @memberof Animate
      */
-    public loop(): void;
+    loop(): void;
     /**
      * Adds a listener for a given event
      *
