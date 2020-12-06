@@ -1,8 +1,8 @@
 # Animate
 
-An animation library for the modern web, it utilizes the Web Animation API (WAAPI) that's partially where it gets its name from. Inspired by animate plus, and animejs; animate is a Javascript animation library focusing on performance and ease of use. It aims to deliver butter smooth animations at a small size, it weighs less than 3 KB (minified and compressed).
+An animation library for the modern web, it utilizes the Web Animation API (WAAPI). Inspired by animate plus, and animejs; animate is a Javascript animation library focusing on performance and ease of use. It aims to deliver butter smooth animations at a small size, it weighs less than 3 KB (minified and compressed).
 
-_Before even getting started, note you will most likely need a WAAPI polyfill and if you install this via `npm` you are most likely going to need [rollup](https://rollupjs.org/). You can use [web-animations-js](https://github.com/web-animations/web-animations-js), or [polyfill.io](https://polyfill.io/), to create a polyfill._
+_Before even getting started, note you will most likely need a WAAPI polyfill and if you install this via `npm` you are most likely going to need [rollup](https://rollupjs.org/) or [esbuild](https://esbuild.github.io/). You can use [web-animations-js](https://github.com/web-animations/web-animations-js), or [polyfill.io](https://polyfill.io/), to create a polyfill._
 
 ## Table of Contents
 - [Animate](#animate)
@@ -35,21 +35,21 @@ _Before even getting started, note you will most likely need a WAAPI polyfill an
   - [Example](#example)
   - [Browser support](#browser-support)
   - [Content delivery networks](#content-delivery-networks)
-  - [Best practices (from Animate Plus, but they are true for all Animation libraries)](#best-practices-from-animate-plus-but-they-are-true-for-all-animation-libraries)
+  - [Best practices (these are from Animate Plus, but they are true for all Animation libraries)](#best-practices-these-are-from-animate-plus-but-they-are-true-for-all-animation-libraries)
 
 ## Installation
-You can install Animate from `npm` via `npm i @okikio/animate` or `yarn add @okikio/animate`. You can use Animate on the web via [unpkg](https://unpkg.com/@okikio/animate@latest/lib/api.umd.js) `https://unpkg.com/@okikio/animate@latest/lib/api.umd.js`, [skypack](https://cdn.skypack.dev/@okikio/animate) `https://cdn.skypack.dev/@okikio/animate` or [jsdelivr](https://cdn.jsdelivr.net/npm/@okikio/animate@latest/lib/api.umd.js) `https://cdn.jsdelivr.net/npm/@okikio/animate@latest/lib/api.umd.js`.
+You can install Animate from `npm` via `npm i @okikio/animate` or `yarn add @okikio/animate`. You can use Animate on the web via [unpkg](https://unpkg.com/@okikio/animate@latest/lib/api.js) `https://unpkg.com/@okikio/animate@latest/lib/api.js`, [skypack](https://cdn.skypack.dev/@okikio/animate) `https://cdn.skypack.dev/@okikio/animate` or [jsdelivr](https://cdn.jsdelivr.net/npm/@okikio/animate@latest/lib/api.js) `https://cdn.jsdelivr.net/npm/@okikio/animate@latest/lib/api.js`.
 
 Once installed it can be used like this:
 ```javascript
 import { animate } from "@okikio/animate";
-import { animate } from "https://unpkg.com/@okikio/animate@latest/lib/api.mjs";
-import { animate } from "https://cdn.jsdelivr.net/npm/@okikio/animate@latest/lib/api.mjs";
+import { animate } from "https://unpkg.com/@okikio/animate@latest/lib/api.modern.js";
+import { animate } from "https://cdn.jsdelivr.net/npm/@okikio/animate@latest/lib/api.modern.js";
 // Or
 import { animate } from "https://cdn.skypack.dev/@okikio/animate";
 
 // Via script tag
-<script src="https://unpkg.com/@okikio/animate@latest/lib/api.umd.js"></script>
+<script src="https://unpkg.com/@okikio/animate@latest/lib/api.js"></script>
 // Do note, on the web you need to do this, if you installed it via the script tag:
 const { animate } = window.Animate;
 ```
@@ -480,13 +480,13 @@ the following browsers:
 
 ## Content delivery networks
 
-Animate is available on [unpkg](https://unpkg.com/@okikio/animate@latest/lib/api.umd.js) `https://unpkg.com/@okikio/animate@latest/lib/api.umd.js`, [skypack](https://cdn.skypack.dev/@okikio/animate) `https://cdn.skypack.dev/@okikio/animate` or [jsdelivr](https://cdn.jsdelivr.net/npm/@okikio/animate@latest/lib/api.umd.js) `https://cdn.jsdelivr.net/npm/@okikio/animate@latest/lib/api.umd.js`.
+Animate is available on [unpkg](https://unpkg.com/@okikio/animate@latest/lib/api.js) `https://unpkg.com/@okikio/animate@latest/lib/api.js`, [skypack](https://cdn.skypack.dev/@okikio/animate) `https://cdn.skypack.dev/@okikio/animate` or [jsdelivr](https://cdn.jsdelivr.net/npm/@okikio/animate@latest/lib/api.js) `https://cdn.jsdelivr.net/npm/@okikio/animate@latest/lib/api.js`.
 
 ```javascript
-// Notice the .mjs file name extension, that represents ES Modules
+// Notice the .modern.js file name extension, that represents ES Modules
 // There is also,
-//      .mjs - Modern ES Module
-//      .umd.js - Normal UMD Module
+//      .node.js - Common JS Module
+//      .modern.js - Modern ES Module
 //      .js - The Fresh JS, uses IIFE.
 import { animate } from "https://cdn.skypack.dev/@okikio/animate";
 
@@ -496,7 +496,7 @@ animate({
 });
 ```
 
-## Best practices (from Animate Plus, but they are true for all Animation libraries)
+## Best practices (these are from Animate Plus, but they are true for all Animation libraries)
 
 Animations play a major role in the design of good user interfaces. They help connecting actions to consequences, make the flow of interactions manifest, and greatly improve the polish and perception of a product. However, animations can be damaging and detrimental to the user experience if they get in the way. Here are a few best practices to keep your animations effective and enjoyable:
 

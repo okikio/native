@@ -1,5 +1,5 @@
 # EventEmitter
-A small Event Emitter written in typescript with performance, and ease of use in mind.
+A small Event Emitter written in typescript with performance and ease of use in mind.
 
 ## Table of Contents
 - [EventEmitter](#eventemitter)
@@ -12,18 +12,18 @@ A small Event Emitter written in typescript with performance, and ease of use in
 
 
 ## Installation
-You can install Emitter from `npm` via `npm i @okikio/emitter` or `yarn add @okikio/emitter`. You can use Emitter on the web via [unpkg](https://unpkg.com/@okikio/emitter@latest/lib/api.umd.js) `https://unpkg.com/@okikio/emitter@latest/lib/api.umd.js`, [skypack](https://cdn.skypack.dev/@okikio/emitter) `https://cdn.skypack.dev/@okikio/emitter` or [jsdelivr](https://cdn.jsdelivr.net/npm/@okikio/emitter@latest/lib/api.umd.js) `https://cdn.jsdelivr.net/npm/@okikio/emitter@latest/lib/api.umd.js`.
+You can install Emitter from `npm` via `npm i @okikio/emitter` or `yarn add @okikio/emitter`. You can use Emitter on the web via [unpkg](https://unpkg.com/@okikio/emitter@latest/lib/api.js) `https://unpkg.com/@okikio/emitter@latest/lib/api.js`, [skypack](https://cdn.skypack.dev/@okikio/emitter) `https://cdn.skypack.dev/@okikio/emitter` or [jsdelivr](https://cdn.jsdelivr.net/npm/@okikio/emitter@latest/lib/api.js) `https://cdn.jsdelivr.net/npm/@okikio/emitter@latest/lib/api.js`.
 
 Once installed it can be used like this:
 ```javascript
 import { EventEmitter } from "@okikio/emitter";
-import { EventEmitter } from "https://unpkg.com/@okikio/emitter@latest/lib/api.mjs";
-import { EventEmitter } from "https://cdn.jsdelivr.net/npm/@okikio/emitter@latest/lib/api.mjs";
+import { EventEmitter } from "https://unpkg.com/@okikio/emitter@latest/lib/api.modern.js";
+import { EventEmitter } from "https://cdn.jsdelivr.net/npm/@okikio/emitter@latest/lib/api.modern.js";
 // Or
 import { EventEmitter } from "https://cdn.skypack.dev/@okikio/emitter";
 
 // Via script tag
-<script src="https://unpkg.com/@okikio/emitter@latest/lib/api.umd.js"></script>
+<script src="https://unpkg.com/@okikio/emitter@latest/lib/api.js"></script>
 // Do note, on the web you need to do this, if you installed it via the script tag:
 const { EventEmitter } = window.EventEmitter;
 ```

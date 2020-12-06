@@ -121,7 +121,8 @@ export class Router extends Service {
      * @memberof Router
      */
     public route() {
-        let from: string = getHashedPath(this.HistoryManager[this.HistoryManager.length > 1 ? "prev" : "current"]().url);
+        let history = this.HistoryManager;
+        let from: string = getHashedPath(newURL((history.length > 1 ? history.previous : history.current).url));
         let to: string = getHashedPath(newURL());
 
         this.routes.forEach((method: RouteMethod, path: IRouteToFrom) => {

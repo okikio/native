@@ -16,12 +16,12 @@ export class Manager<K, V> {
 	 */
 	public map: Map<K, V>;
 
-    /**
-     * Creates an instance of Manager.
-     *
-     * @param {Array<[K, V]>} [value]
-     * @memberof Manager
-     */
+	/**
+	 * Creates an instance of Manager.
+	 *
+	 * @param {Array<[K, V]>} [value]
+	 * @memberof Manager
+	 */
 	constructor(value?: Array<[K, V]>) {
 		this.map = new Map(value);
 	}
@@ -51,8 +51,8 @@ export class Manager<K, V> {
 	 * Returns the keys of all items stored in the Manager as an Array
 	 *
 	 * @returns Array<K>
-     * @memberof Manager
-     */
+	 * @memberof Manager
+	 */
 	public keys(): Array<K> {
 		return Array.from(this.map.keys());
 	}
@@ -61,7 +61,7 @@ export class Manager<K, V> {
 	 * Returns the values of all items stored in the Manager as an Array
 	 *
 	 * @returns Array<V>
-     * @memberof Manager
+	 * @memberof Manager
 	 */
 	public values(): Array<V> {
 		return Array.from(this.map.values());
@@ -80,13 +80,13 @@ export class Manager<K, V> {
 		return this;
 	}
 
-    /**
-     * Adds a value to Manager, and uses the current size of the Manager as it's key, it works best when all the key in the Manager are numbers
-     *
-     * @public
-     * @param  {V} value
-     * @returns Manager<K, V>
-     */
+	/**
+	 * Adds a value to Manager, and uses the current size of the Manager as it's key, it works best when all the key in the Manager are numbers
+	 *
+	 * @public
+	 * @param  {V} value
+	 * @returns Manager<K, V>
+	 */
 	public add(value: V): Manager<K, V> {
 		let size = this.size;
 		// @ts-ignore
@@ -109,26 +109,37 @@ export class Manager<K, V> {
 		return this.map.size;
 	}
 
-    /**
+	/**
 	 * Returns the last item in the Manager who's index is a certain distance from the last item in the Manager
-     *
-     * @param {number} [distance=1]
-     * @returns V | undefined
-     * @memberof Manager
-     */
+	 *
+	 * @param {number} [distance=1]
+	 * @returns V | undefined
+	 * @memberof Manager
+	 */
 	public last(distance: number = 1): V | undefined {
 		let key = this.keys()[this.size - distance];
 		return this.get(key);
 	}
 
 	/**
-	 * Removes a value stored in the Manager, via the key
+	 * Removes a value stored in the Manager, via the key, returns true if an element in the Map object existed and has been removed, or false if the element does not exist.
+	 *
+	 * @public
+	 * @param  {K} key - The key for the key value pair to be removed
+	 * @returns boolean
+	 */
+	public delete(key: K): boolean {
+		return this.map.delete(key);
+	}
+
+	/**
+	 * Removes a value stored in the Manager, via the key, returns the Manager class, allowing for chains
 	 *
 	 * @public
 	 * @param  {K} key - The key for the key value pair to be removed
 	 * @returns Manager<K, V>
 	 */
-	public delete(key: K): Manager<K, V> {
+	public remove(key: K): Manager<K, V> {
 		this.map.delete(key);
 		return this;
 	}
@@ -181,12 +192,12 @@ export class Manager<K, V> {
 		return this;
 	}
 
-    /**
-     * Allows iteration via the for..of, learn more: [https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Iterators_and_Generators]
-     *
-     * @returns IterableIterator<[K, V]>
-     * @memberof Manager
-     */
+	/**
+	 * Allows iteration via the for..of, learn more: [https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Iterators_and_Generators]
+	 *
+	 * @returns IterableIterator<[K, V]>
+	 * @memberof Manager
+	 */
 	public [Symbol.iterator](): IterableIterator<[K, V]> {
 		return this.entries();
 	}

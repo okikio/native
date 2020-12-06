@@ -1,5 +1,5 @@
-import { Manager } from "./manager";
-import { newURL, getHashedPath } from "./url";
+// import { Manager } from "./manager";
+// import { newURL, getHashedPath } from "./url";
 
 export type Trigger = HTMLAnchorElement | "HistoryManager" | "popstate" | "back" | "forward";
 export interface ICoords {
@@ -83,7 +83,6 @@ export class HistoryManager {
 	 *
 	 * @param {IState} value
 	 * @returns HistoryManager
-	 * @memberof HistoryManager
 	 */
 	public add(value: IState): HistoryManager {
 		let state = newState(value);
@@ -97,7 +96,7 @@ export class HistoryManager {
 		if (index) {
 			this.states.splice(index, 1);
 		} else {
-		  	this.states.pop();
+			this.states.pop();
 		}
 
 		this.pointer--;
@@ -107,40 +106,32 @@ export class HistoryManager {
 	/**
 	 * Set state by index.
 	 */
-	public set(i: number, state: IStateItem) {
-	  return (this._states[i] = state);
+	public set(i: number, state: IState) {
+		return (this.states[i] = state);
 	}
 
 	/**
 	 * Get the current state.
 	 */
-	get current(): IStateItem {
-	  return this._states[this._pointer];
+	get current(): IState {
+		return this.get(this.pointer);
 	}
 
 	/**
 	 * Get the last state (top of the history stack).
 	 */
-	get last(): IStateItem {
-	  return this._states[this._states.length - 1];
+	get last(): IState {
+		return this.get(this.length - 1);
 	}
 
 	/**
 	 * Get the previous state.
 	 */
-	get previous(): IStateItem | null {
-	  return this.pointer < 1 ? null : this.get(this.pointer - 1);
+	get previous(): IState | null {
+		return this.pointer < 1 ? null : this.get(this.pointer - 1);
 	}
 
 	get length() {
 		return this.states.length;
-	}
-
-	get current() {
-		return this.get(this.length - 1);
-	}
-
-	get prev() {
-		return this.get(this.length - 2);
 	}
 }

@@ -1,6 +1,6 @@
 # Manager
 
-A superset of the Map class, it makes a Map function more like a normal Object.
+A superset of the Map class, it gives Map superpowers.
 
 ## Table of Contents
 - [Manager](#manager)
@@ -8,41 +8,59 @@ A superset of the Map class, it makes a Map function more like a normal Object.
   - [Installation](#installation)
   - [Getting started](#getting-started)
   - [API](#api)
+      - [Existing Map Methods](#existing-map-methods)
       - [Manager#length](#managerlength)
       - [Manager#getMap()](#managergetmap)
       - [Manager#add(value)](#manageraddvalue)
+      - [Manager#remove(key)](#managerremovekey)
       - [Manager#keys()](#managerkeys)
       - [Manager#values()](#managervalues)
       - [Manager#last(distance)](#managerlastdistance)
       - [Manager#@@iterator](#manageriterator)
-      - [#methodCall(method, ...)](#methodcallmethod)
-      - [#asyncMethodCall(method, ...)](#asyncmethodcallmethod)
+      - [#methodCall(method, ...)](#methodcallmethod-)
+      - [#asyncMethodCall(method, ...)](#asyncmethodcallmethod-)
 
 
 ## Installation
-You can install Manager from `npm` via `npm i @okikio/manager` or `yarn add @okikio/manager`. You can use Manager on the web via [unpkg](https://unpkg.com/@okikio/manager@latest/lib/api.umd.js) `https://unpkg.com/@okikio/manager@latest/lib/api.umd.js`, [skypack](https://cdn.skypack.dev/@okikio/manager) `https://cdn.skypack.dev/@okikio/manager` or [jsdelivr](https://cdn.jsdelivr.net/npm/@okikio/manager@latest/lib/api.umd.js) `https://cdn.jsdelivr.net/npm/@okikio/manager@latest/lib/api.umd.js`.
+You can install Manager from `npm` via `npm i @okikio/manager` or `yarn add @okikio/manager`. You can use Manager on the web via [unpkg](https://unpkg.com/@okikio/manager@latest/lib/api.js) `https://unpkg.com/@okikio/manager@latest/lib/api.js`, [skypack](https://cdn.skypack.dev/@okikio/manager) `https://cdn.skypack.dev/@okikio/manager` or [jsdelivr](https://cdn.jsdelivr.net/npm/@okikio/manager@latest/lib/api.js) `https://cdn.jsdelivr.net/npm/@okikio/manager@latest/lib/api.js`.
 
 Once installed it can be used like this:
 ```javascript
 import { Manager } from "@okikio/manager";
-import { Manager } from "https://unpkg.com/@okikio/manager@latest/lib/api.mjs";
-import { Manager } from "https://cdn.jsdelivr.net/npm/@okikio/manager@latest/lib/api.mjs";
+import { Manager } from "https://unpkg.com/@okikio/manager@latest/lib/api.modern.js";
+import { Manager } from "https://cdn.jsdelivr.net/npm/@okikio/manager@latest/lib/api.modern.js";
 // Or
 import { Manager } from "https://cdn.skypack.dev/@okikio/manager";
 
 // Via script tag
-<script src="https://unpkg.com/@okikio/manager@latest/lib/api.umd.js"></script>
+<script src="https://unpkg.com/@okikio/manager@latest/lib/api.js"></script>
 // Do note, on the web you need to do this, if you installed it via the script tag:
 const { Manager, methodCall } = window.Manager;
 ```
 
 ## Getting started
 
-The Manager class makes Maps easier to use, as well as adding 6 methods, **getMap**, **last**, **methodCall**, **asyncMethodCall**, **add**, **keys** and **values** (the behavior of the keys and values methods are slightly modified, to return an Array of keys/values instead of an iterator).
+The Manager class makes Maps easier to use, as well as adding 6 methods, **getMap**, **last**, **methodCall**, **asyncMethodCall**, **add**, **remove**, **keys** and **values**. Note: the behavior of the keys and values methods are slightly modified, to return an Array of keys/values instead of an iterator. You can get the keys and values original effects by using ...getMap().keys() or ...getMap().values().
 
 ## API
 
-All the existing Map methods, and ...
+#### Existing Map Methods
+* Manager.prototype.get(key: K)
+  * Returns a specified element from a Map object. If the value that is associated to the provided key is an object, then you will get a reference to that object and any change made to that object will effectively modify it inside the Map object.
+* Manager.prototype.set(value: V)
+  * Adds or updates an element with a specified key and a value to a Map object.
+  * Note: Techincally the values being returned are different from a normal Map. The Map set returns the Map class while the Manager set return the Manager class, this shouldn't leave much of an effect on use, but should be kept in mind.
+* Manager.prototype.size
+  * Returns the number of elements in a Map object.
+* Manager.prototype.delete(key: K)
+  * Removes the specified element from a Map object by key. Returns true if an element in the Map object existed and has been removed, or false if the element does not exist.
+* Manager.prototype.entries()
+  * Returns a new Iterator object that contains the [key, value] pairs for each element in the Map object in insertion order.
+* Manager.prototype.has()
+  * Returns a boolean indicating whether an element with the specified key exists or not, true if an element with the specified key exists in the Map object; otherwise false.
+* Manager.prototype.forEach(callback: Function,context?: object)
+  * Executes a provided function once per each key/value pair in the Map object, in insertion order.
+  * Returns the Manager class (it is chainable).
 
 #### Manager#length
 ```js
@@ -101,6 +119,28 @@ const manager = new Manager(arr);
 manager.add(6).add(7);
 console.log(manager.get(5)); //= 6
 ```
+
+#### Manager#remove(key)
+```js
+Manager.prototype.remove(key: K);
+
+/**
+ * Removes a value stored in the Manager, via the key, returns the Manager class, allowing for chains
+ *
+ * @public
+ * @param  {K} key - The key for the key value pair to be removed
+ * @returns Manager<K, V>
+ */
+
+// Example:
+import Manager from "@okikio/manager";
+
+const arr = Array.from([1, 2, 3, 4, 5].entries());
+const manager = new Manager(arr);
+manager.remove(2).remove(1);
+console.log(manager.get(1)); //= undefined
+```
+
 
 
 #### Manager#keys()

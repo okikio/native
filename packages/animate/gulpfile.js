@@ -1,24 +1,24 @@
 // Import external modules
-const { nodeResolve } = require("@rollup/plugin-node-resolve");
-const esbuild = require("rollup-plugin-esbuild");
-const { rollup } = require("rollup");
-
+const mode = process.argv.includes("--watch") ? "watch" : "build";
 const bs = require("browser-sync");
 
 const sass = require("gulp-sass");
-const swig = require("gulp-swig");
+const pug = require("gulp-pug");
+const gulpEsBuild = require("gulp-esbuild");
+const { createGulpEsbuild } = gulpEsBuild;
+const esbuild = mode == "watch" ? createGulpEsbuild() : gulpEsBuild;
 
 // Gulp utilities
 const { stream, task, watch, parallel, series } = require("../../util");
 
 // Origin folders (source and destination folders)
-const srcFolder = `build`;
+const srcFolder = `build-src`;
 const destFolder = `docs`;
 
 // Source file folders
 const tsFolder = `${srcFolder}/ts`;
 const sassFolder = `${srcFolder}/sass`;
-const swigFolder = `${srcFolder}/html`;
+const pugFolder = `${srcFolder}/pug`;
 
 // Destination file folders
 const jsFolder = `${destFolder}/js`;
@@ -27,15 +27,14 @@ const htmlFolder = `${destFolder}`;
 
 // HTML Tasks
 task("html", () => {
-    return stream(`${swigFolder}/pages/**/*.html`, {
+    return stream(`${pugFolder}/*.pug`, {
         pipes: [
-            // Compile src html using Swig
-            swig({
-                defaults: { cache: false },
+            pug({
+                basedir: pugFolder,
+                self: true,
             }),
         ],
         dest: htmlFolder,
-        end: browserSync.reload,
     });
 });
 
@@ -53,46 +52,22 @@ task("css", () => {
 });
 
 // JS Tasks
-// Rollup warnings are annoying
-let ignoreLog = [
-    "CIRCULAR_DEPENDENCY",
-    "UNRESOLVED_IMPORT",
-    "EXTERNAL_DEPENDENCY",
-    "THIS_IS_UNDEFINED",
-];
-let onwarn = ({ loc, message, code, frame }, warn) => {
-    if (ignoreLog.indexOf(code) > -1) return;
-    if (loc) {
-        warn(`${loc.file} (${loc.line}:${loc.column}) ${message}`);
-        if (frame) warn(frame);
-    } else warn(message);
-};
-
-let js = (watching) => {
-    return async () => {
-        const bundle = await rollup({
-            input: `${tsFolder}/app.ts`,
-            treeshake: true,
-            plugins: [
-                nodeResolve(),
-                esbuild({
-                    watch: watching,
-                    minify: true,
-                    target: "es2020", // default, or 'es20XX', 'esnext'
-                }),
-            ],
-            onwarn
-        });
-
-        return bundle.write({
-            format: "es",
-            sourcemap: true,
-            file: `${jsFolder}/app.js`,
-        });
-    };
-};
-
-task("js", js());
+task("js", () => {
+    return stream(`${tsFolder}/main.ts`, {
+        pipes: [
+            // Bundle Modules
+            esbuild({
+                bundle: true,
+                minify: true,
+                sourcemap: true,
+                outfile: "main.js",
+                format: "esm",
+                target: ["chrome71"],
+            }),
+        ],
+        dest: jsFolder, // Output
+    });
+});
 
 // Build & Watch Tasks
 const browserSync = bs.create();
@@ -100,13 +75,7 @@ task("build", parallel("html", "css", "js"));
 task("watch", () => {
     browserSync.init(
         {
-            notify: false,
             server: destFolder,
-            // middleware: [
-            //     // logger({
-            //     //     format: "%date %status %method %url -- %time",
-            //     // }),
-            // ],
         },
         (_err, bs) => {
             bs.addMiddleware("*", (_req, res) => {
@@ -118,11 +87,14 @@ task("watch", () => {
         }
     );
 
-    watch(`${swigFolder}/**/*.html`, series("html"));
+    watch(`${pugFolder}/**/*.html`, series("html"));
     watch(`${sassFolder}/*.scss`, series("css"));
-    watch([`${tsFolder}/*.ts`, `src/*.ts`], js(true));
+    watch([`${tsFolder}/*.ts`, `src/*.ts`], series("js"));
 
-    watch(`${jsFolder}/*.js`).on("change", browserSync.reload);
+    watch([`${htmlFolder}/*.html`, `${jsFolder}/*.js`]).on(
+        "change",
+        browserSync.reload
+    );
 });
 
 task("default", series("build", "watch"));

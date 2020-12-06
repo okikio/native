@@ -7,7 +7,6 @@ import "jest-chain";
     Find: @(returns|type) \{([\w_-{,<[\]\s>]+)\}
     Replace: @$1 $2
 */
-
 describe("Manager", () => {
     let arr = [1, 2, 3, 4, 5];
     let entries = Array.from(arr.entries());
@@ -54,7 +53,7 @@ describe("Manager", () => {
 
     describe("#delete()", () => {
         test("delete the first element", () => {
-            expect(manager.delete(0)).toBeInstanceOf(Manager);
+            expect(manager.delete(0)).toBe(true);
             expect(manager.size).toBe(4);
             expect(manager.get(0)).toBe(undefined);
         });
@@ -74,6 +73,15 @@ describe("Manager", () => {
             expect(manager.add(6).add(7)).toBeInstanceOf(Manager);
             expect(manager.size).toBe(7);
             expect(manager.get(5)).toBe(6);
+        });
+    });
+
+    describe("#remove()", () => {
+        test("remove the first and last elements", () => {
+            expect(manager.remove(0).remove(4)).toBeInstanceOf(Manager);
+            expect(manager.size).toBe(3);
+            expect(manager.get(0)).toBe(undefined);
+            expect(manager.get(4)).toBe(undefined);
         });
     });
 

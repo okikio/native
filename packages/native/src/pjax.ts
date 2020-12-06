@@ -155,7 +155,6 @@ export class PJAX extends Service {
         let pushStateSupport = !window.history.pushState;
         let exists = !el || !href;
         let eventMutate =
-            (event as KeyboardEvent).which > 1 ||
             (event as KeyboardEvent).metaKey ||
             (event as KeyboardEvent).ctrlKey ||
             (event as KeyboardEvent).shiftKey ||

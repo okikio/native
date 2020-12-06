@@ -1,43 +1,31 @@
 {
     "name": "@okikio/manager",
     "version": "0.0.7",
-    "description": "A superset of the Map class, it makes a Map function more like a normal Object.",
+    "description": "A superset of the Map class, it gives the Map class superpowers.",
     "publishConfig": {
         "access": "public",
         "main": "lib/api.js",
         "types": "lib/api.d.ts",
-        "umd:main": "lib/api.umd.js",
-        "browser": "lib/api.umd.js",
-        "unpkg": "lib/api.umd.js",
-        "module": "lib/api.mjs"
+        "browser": "lib/api.js",
+        "node": "lib/api.node.js",
+        "unpkg": "lib/api.js",
+        "module": "lib/api.modern.js"
     },
-    "umd:name": "Manager",
     "main": "src/api.ts",
     "source": "src/api.ts",
-    "output": [
-        {
-            "file": "lib/api.mjs",
-            "format": "es"
-        },
-        {
-            "file": "lib/api.umd.js",
-            "format": "umd"
-        },
-        {
-            "file": "lib/api.js",
-            "format": "iife"
-        }
-    ],
+    "directories": {
+        "lib": "lib"
+    },
     "files": [
         "lib",
         "src"
     ],
     "scripts": {
-        "build": "rollup --config",
-        "watch": "rollup --config --watch",
-        "test": "jest --maxWorkers=3 --coverage",
+        "build": "node ./build",
+        "watch": "node ./build --watch",
+        "test": "jest --maxWorkers=1",
         "test:watch": "jest --maxWorkers=1 --watch --verbose false",
-        "pre-release": "ultra build && ultra test"
+        "pre-release": "npm run build && npm test"
     },
     "repository": {
         "type": "git",
@@ -63,21 +51,15 @@
     },
     "homepage": "https://github.com/okikio/native#readme",
     "devDependencies": {
-        "@rollup/plugin-node-resolve": "^8.4.0",
-        "@types/jest": "^26.0.14",
-        "eslint": "^7.11.0",
-        "jest": "^26.5.2",
+        "@types/jest": "^26.0.16",
+        "chokidar": "^3.4.3",
+        "esbuild": "^0.8.20",
+        "esbuild-jest": "^0.3.0",
+        "eslint": "^7.15.0",
+        "jest": "^26.6.3",
         "jest-chain": "^1.1.5",
-        "jest-environment-jsdom-global": "^2.0.4",
-        "jest-watch-lerna-packages": "^1.1.0",
         "node-fetch": "^2.6.1",
-        "rollup": "^2.29.0",
-        "rollup-plugin-esbuild": "^2.5.2",
-        "rollup-plugin-typescript2": "^0.27.3",
-        "ts-jest": "^26.4.1",
-        "tslib": "^2.0.3",
-        "typescript": "^3.9.7",
-        "ultra-runner": "^3.5.0"
+        "ultra-runner": "^3.6.0"
     },
     "gitHead": "ad422076cdb57d570426f786886129d5bca2f90f"
 }
