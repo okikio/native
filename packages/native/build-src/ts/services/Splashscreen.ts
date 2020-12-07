@@ -29,7 +29,7 @@ export class Splashscreen extends Service {
     public async hide() {
         await new Promise(resolve => {
             window.setTimeout(() => {
-                this.EventEmitter.emit("BEFORE_SPLASHSCREEN_HIDE");
+                this.emitter.emit("BEFORE_SPLASHSCREEN_HIDE");
                 resolve();
             }, this.minimalDuration);
         });
@@ -45,7 +45,7 @@ export class Splashscreen extends Service {
                 }
             });
 
-            this.EventEmitter.emit("START_SPLASHSCREEN_HIDE");
+            this.emitter.emit("START_SPLASHSCREEN_HIDE");
 
             await this.show();
             resolve();

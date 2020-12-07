@@ -1,9 +1,9 @@
-# Manager
+# @okikio/manager
 
 A superset of the Map class, it gives Map superpowers.
 
 ## Table of Contents
-- [Manager](#manager)
+- [@okikio/manager](#okikiomanager)
   - [Table of Contents](#table-of-contents)
   - [Installation](#installation)
   - [Getting started](#getting-started)

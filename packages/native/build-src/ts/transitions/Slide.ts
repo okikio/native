@@ -1,29 +1,24 @@
-import { Transition, ITransitionData, ITransition, animate } from "../../../src/api";
+import { ITransition, ITransitionData, animate } from "../../../src/api";
 
 //== Transitions
-export class Slide extends Transition {
-    public name = "slide";
-    public duration = 500;
-    public direction: string = "right";
+export const Slide: ITransition = {
+    name: "slide",
+    duration: 500,
+    direction: "right",
 
-    init(value: ITransition) {
-        super.init(value);
-
-        let trigger = (value.trigger as HTMLElement);
+    init(data: ITransition) {
+        let trigger = (data.trigger as HTMLElement);
         if (trigger instanceof Node && trigger.hasAttribute("data-direction")) {
             this.direction = trigger.getAttribute("data-direction");
         } else {
             this.direction = "right";
         }
-    }
+    },
 
     out({ from }: ITransitionData) {
         let { duration, direction } = this;
         let fromWrapper = from.wrapper;
-        // window.scroll({
-        //     top: 0,
-        //     behavior: 'smooth'  // 👈
-        // });
+
         return animate({
             target: fromWrapper,
             keyframes: [
@@ -39,7 +34,7 @@ export class Slide extends Transition {
                 });
             }
         });
-    }
+    },
 
     in({ to }: ITransitionData) {
         let { duration } = this;
@@ -60,16 +55,18 @@ export class Slide extends Transition {
             }
         });
     }
-}
+};
 
-export class SlideLeft extends Slide {
-    public name = "slide-left";
-    public duration = 500;
-    public direction: string = "left";
-}
+export const SlideLeft: ITransition = {
+    ...Slide,
 
-export class SlideRight extends Slide {
-    public name = "slide-right";
-    public duration = 500;
-    public direction: string = "right";
-}
+    name: "slide-left",
+    direction: "left",
+};
+
+export const SlideRight: ITransition = {
+    ...Slide,
+
+    name: "slide-right",
+    direction: "right",
+};

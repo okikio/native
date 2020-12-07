@@ -17,15 +17,15 @@ export class IntroAnimation extends Service {
     }
 
     public initEvents() {
-        this.EventEmitter.on("BEFORE_SPLASHSCREEN_HIDE", this.prepareToShow, this);
-        this.EventEmitter.on("CONTENT_REPLACED", this.newPage, this);
-        this.EventEmitter.on("START_SPLASHSCREEN_HIDE BEFORE_TRANSITION_IN", this.show, this);
+        this.emitter.on("BEFORE_SPLASHSCREEN_HIDE", this.prepareToShow, this);
+        this.emitter.on("CONTENT_REPLACED", this.newPage, this);
+        this.emitter.on("START_SPLASHSCREEN_HIDE BEFORE_TRANSITION_IN", this.show, this);
     }
 
     public stopEvents() {
-        this.EventEmitter.off("BEFORE_SPLASHSCREEN_HIDE", this.prepareToShow, this);
-        this.EventEmitter.off("CONTENT_REPLACED", this.newPage, this);
-        this.EventEmitter.off("START_SPLASHSCREEN_HIDE BEFORE_TRANSITION_IN", this.show, this);
+        this.emitter.off("BEFORE_SPLASHSCREEN_HIDE", this.prepareToShow, this);
+        this.emitter.off("CONTENT_REPLACED", this.newPage, this);
+        this.emitter.off("START_SPLASHSCREEN_HIDE BEFORE_TRANSITION_IN", this.show, this);
     }
 
     public stop() {

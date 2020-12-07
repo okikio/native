@@ -1,23 +1,18 @@
-import { Transition, ITransitionData, animate } from "../../../src/api";
+import { ITransition, ITransitionData, animate } from "../../../src/api";
 
 //== Transitions
-export class BigTransition extends Transition {
-    public name = "big";
-    public delay = 200;
-    public durationPerAnimation = 700;
-    public mainElement: HTMLElement;
-    public verticalElements: HTMLDivElement[];
-    public horizontalElements: HTMLDivElement[];
-    public maxLength: number;
-    public spinnerElement: HTMLElement;
+export const BigTransition: ITransition = {
+    name: "big",
+    delay: 200,
+    durationPerAnimation: 700,
 
-    public boot() {
+    init() {
         this.mainElement = document.getElementById('big-transition');
         this.spinnerElement = this.mainElement.querySelector('.spinner');
         this.horizontalElements = [...this.mainElement.querySelector('#big-transition-horizontal').querySelectorAll('div')];
         this.maxLength = this.horizontalElements.length;
-        console.log(this.mainElement);
-    }
+        // console.log(this.mainElement);
+    },
 
     out({ from }: ITransitionData) {
         let { durationPerAnimation: duration, delay } = this;
@@ -81,7 +76,7 @@ export class BigTransition extends Transition {
             this.spinnerElement.style.visibility = "hidden";
             resolve();
         });
-    }
+    },
 
     in({ to }: ITransitionData) {
         let { durationPerAnimation: duration, delay } = this;

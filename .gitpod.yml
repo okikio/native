@@ -1,5 +1,7 @@
 tasks:
-    - init: npm install pnpm -g
+    - init: npm install pnpm ultra-runner -g
     - task: pnpm install
+    - task: pnpm build
+    - task: pnpm docs:watch --filter *native
 image:
     file: .gitpod.Dockerfile

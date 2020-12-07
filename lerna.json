@@ -12,6 +12,6 @@
             "npmClient": "pnpm"
         }
     },
-    "npmClient": "npm",
+    "npmClient": "pnpm",
     "useWorkspaces": true
 }

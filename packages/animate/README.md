@@ -1,11 +1,11 @@
-# Animate
+# @okikio/animate
 
 An animation library for the modern web, it utilizes the Web Animation API (WAAPI). Inspired by animate plus, and animejs; animate is a Javascript animation library focusing on performance and ease of use. It aims to deliver butter smooth animations at a small size, it weighs less than 3 KB (minified and compressed).
 
 _Before even getting started, note you will most likely need a WAAPI polyfill and if you install this via `npm` you are most likely going to need [rollup](https://rollupjs.org/) or [esbuild](https://esbuild.github.io/). You can use [web-animations-js](https://github.com/web-animations/web-animations-js), or [polyfill.io](https://polyfill.io/), to create a polyfill._
 
 ## Table of Contents
-- [Animate](#animate)
+- [@okikio/animate](#okikioanimate)
   - [Table of Contents](#table-of-contents)
   - [Installation](#installation)
   - [Getting started](#getting-started)

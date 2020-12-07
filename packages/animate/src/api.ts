@@ -380,7 +380,7 @@ export class Animate {
     /**
      * Represents an Animation Frame Loop
      *
-     * @private
+     * @public
      * @memberof Animate
      */
     public loop(): void {

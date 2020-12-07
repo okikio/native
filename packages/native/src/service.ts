@@ -19,7 +19,7 @@ export class Service extends ManagerItem {
 	 * @type EventEmitter
 	 * @memberof Service
 	 */
-	public EventEmitter: EventEmitter;
+	public emitter: EventEmitter;
 
 	/**
 	 * Stores access to the App class's PageManager
@@ -59,13 +59,12 @@ export class Service extends ManagerItem {
 
 	/**
 	 * Method is run once when Service is installed on a ServiceManager
-     *
+	 *
 	 * @memberof Service
 	 */
 	public install(): void {
 		let { app } = this.manager;
 		this.PageManager = app.pages;
-		this.EventEmitter = app.emitter;
 		this.HistoryManager = app.history;
 		this.ServiceManager = app.services;
 		this.TransitionManager = app.transitions;
@@ -85,9 +84,17 @@ export class Service extends ManagerItem {
 	// Stop events
 	public stopEvents(): void { }
 
+	public uninstall() {
+		this.PageManager = undefined;
+		this.HistoryManager = undefined;
+		this.ServiceManager = undefined;
+		this.TransitionManager = undefined;
+	}
+
 	// Stop services
 	public stop(): void {
 		this.stopEvents();
+		this.unregister();
 	}
 }
 
@@ -99,12 +106,12 @@ export class Service extends ManagerItem {
  * @extends {AdvancedManager<string, Service>}
  */
 export class ServiceManager extends AdvancedManager<string, Service> {
-    /**
-     * Creates an instance of ServiceManager.
-     *
-     * @param {App} app
-     * @memberof ServiceManager
-     */
+	/**
+	 * Creates an instance of ServiceManager.
+	 *
+	 * @param {App} app
+	 * @memberof ServiceManager
+	 */
 	constructor(app: App) {
 		super(app);
 	}

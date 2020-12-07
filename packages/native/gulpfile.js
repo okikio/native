@@ -87,11 +87,11 @@ task("watch", () => {
         }
     );
 
-    watch(`${pugFolder}/**/*.html`, series("html"));
+    watch(`${pugFolder}/**/*.pug`, series("html"));
     watch(`${sassFolder}/*.scss`, series("css"));
-    watch([`${tsFolder}/*.ts`, `src/*.ts`], series("js"));
+    watch([`${tsFolder}/**/*.ts`, `src/*.ts`], series("js"));
 
-    watch([`${htmlFolder}/*.html`, `${jsFolder}/*.js`]).on(
+    watch([`${htmlFolder}/**/*.html`, `${jsFolder}/**/*.js`]).on(
         "change",
         browserSync.reload
     );

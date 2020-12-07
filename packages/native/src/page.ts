@@ -1,5 +1,5 @@
 import { Manager, ManagerItem, AdvancedManager } from "./manager";
-import { newURL } from "./url";
+import { equal, newURL } from "./url";
 import { App } from "./app";
 
 /**
@@ -14,72 +14,90 @@ export const PARSER: DOMParser = new DOMParser();
  * @class Page
  */
 export class Page extends ManagerItem {
-	/**
-	 * Holds the DOM of the current page
-	 *
-	 * @type Document
-	 * @memberof Page
-	 */
+    /**
+     * Holds the DOM of the current page
+     *
+     * @public
+     * @type Document
+     * @memberof Page
+     */
     public dom: Document;
 
-	/**
-	 * Holds the wrapper element to be swapped out of each Page
-	 *
-	 * @type HTMLElement
-	 * @memberof Page
-	 */
+    /**
+     * Holds the wrapper element to be swapped out of each Page
+     *
+     * @public
+     * @type HTMLElement
+     * @memberof Page
+     */
     public wrapper: HTMLElement;
 
-	/**
-	 * Holds the title of each page
-	 *
-	 * @type string
-	 * @memberof Page
-	 */
+    /**
+     * Holds the title of each page
+     *
+     * @public
+     * @type string
+     * @memberof Page
+     */
     public title: string;
 
-	/**
-	 * Holds the head element of each page
-	 *
-	 * @type Element
-	 * @memberof Page
-	 */
+    /**
+     * Holds the head element of each page
+     *
+     * @public
+     * @type Element
+     * @memberof Page
+     */
     public head: Element;
 
-	/**
-	 * Holds the body element of each page
-	 *
-	 * @type Element
-	 * @memberof Page
-	 */
+    /**
+     * Holds the body element of each page
+     *
+     * @public
+     * @type Element
+     * @memberof Page
+     */
     public body: Element;
 
-	/**
-	 * The URL of the current page
-	 *
-	 * @type URL
-	 * @memberof Page
-	 */
+    /**
+     * The URL of the current page
+     *
+     * @public
+     * @type URL
+     * @memberof Page
+     */
     public url: URL;
+    public data: string;
+    public wrapperAttr: string;
 
-	/**
-	 * Creates an instance of Page, it also creates a new page from response text, or a Document Object
-	 *
-	 * @param {URL} [url=newURL()]
-	 * @param {(string | Document)} [dom=document]
-	 * @memberof Page
-	 */
+    /**
+     * Creates an instance of Page, it also creates a new page from response text, or a Document Object
+     *
+     * @param {URL} [url = newURL()]
+     * @param {(string | Document)} [dom=document]
+     * @memberof Page
+     */
     constructor(url: URL = newURL(), dom: string | Document = document) {
         super();
         this.url = url;
-        if (typeof dom === "string") {
-            this.dom = PARSER.parseFromString(dom, "text/html");
-        } else this.dom = dom || document;
 
-        const { title, head, body } = this.dom;
-        this.title = title;
-        this.head = head;
-        this.body = body;
+        if (typeof dom === "string") {
+            this.data = dom;
+        } else this.dom = dom || document;
+    }
+
+    public async build() {
+        if (!(this.dom instanceof Node)) {
+            this.dom = PARSER.parseFromString(this.data, "text/html");
+        }
+
+        if (!(this.body instanceof Node)) {
+            let { title, head, body } = this.dom;
+            this.title = title;
+            this.head = head;
+            this.body = body;
+            this.wrapper = this.body.querySelector(this.wrapperAttr);
+        }
     }
 
     /**
@@ -89,9 +107,21 @@ export class Page extends ManagerItem {
      * @memberof Page
      */
     public install(): void {
-        this.wrapper = this.body.querySelector(this.getConfig("wrapperAttr"));
+        this.wrapperAttr = this.config.getConfig("wrapperAttr");
+    }
+
+    public uninstall() {
+        this.url = undefined;
+        this.title = undefined;
+        this.head = undefined;
+        this.body = undefined;
+        this.dom = undefined;
+        this.wrapper = undefined;
+        this.data = undefined;
+        this.wrapperAttr = undefined;
     }
 }
+
 
 /**
  * Controls which page to be load
@@ -109,27 +139,19 @@ export class PageManager extends AdvancedManager<string, Page> {
      * @memberof PageManager
      */
     public loading: Manager<string, Promise<string>> = new Manager();
+    public maxPages = 5;
 
-	/**
-	 * Creates an instance of the PageManager
-	 *
+    /**
+     * Creates an instance of the PageManager
+     *
      * @param {App} app
-	 * @memberof PageManager
-	 */
+     * @memberof PageManager
+     */
     constructor(app: App) {
         super(app);
         let URLString = newURL().pathname;
         this.set(URLString, new Page());
-    }
-
-    /**
-     * Returns the loading Manager
-     *
-     * @returns Manager<string, Promise<string>>
-     * @memberof PageManager
-     */
-    public getLoading(): Manager<string, Promise<string>> {
-        return this.loading;
+        URLString = undefined;
     }
 
     /**
@@ -158,6 +180,18 @@ export class PageManager extends AdvancedManager<string, Page> {
 
         page = new Page(url, response);
         this.set(urlString, page);
+
+        if (this.size > this.maxPages) {
+            let currentUrl = newURL();
+            let keys = this.keys();
+            let first = equal(currentUrl, keys[0]) ? keys[1] : keys[0];
+            let page = this.get(first);
+            page.unregister();
+            page = undefined;
+            keys = undefined;
+            currentUrl = undefined;
+            first = undefined;
+        }
         return page;
     }
 
@@ -169,11 +203,11 @@ export class PageManager extends AdvancedManager<string, Page> {
      * @memberof PageManager
      */
     public async request(url: string): Promise<string> {
-        const headers = new Headers(this.getConfig("headers"));
+        const headers = new Headers(this.config.getConfig("headers"));
         const timeout = window.setTimeout(() => {
             window.clearTimeout(timeout);
             throw "Request Timed Out!";
-        }, this.getConfig("timeout"));
+        }, this.config.getConfig("timeout"));
 
         try {
             let response = await fetch(url, {

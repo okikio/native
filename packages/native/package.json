@@ -5,7 +5,6 @@
     "publishConfig": {
         "access": "public",
         "main": "lib/api.js",
-        "types": "lib/api.d.ts",
         "browser": "lib/api.js",
         "node": "lib/api.node.js",
         "unpkg": "lib/api.js",
@@ -52,21 +51,16 @@
     },
     "homepage": "https://github.com/okikio/native#readme",
     "devDependencies": {
-        "@rollup/plugin-typescript": "^6.1.0",
         "@types/jest": "^26.0.16",
         "browser-sync": "^2.26.13",
         "esbuild": "^0.8.20",
         "esbuild-jest": "^0.3.0",
         "eslint": "^7.15.0",
         "gulp": "^4.0.2",
-        "gulp-postcss": "^8.0.0",
         "gulp-sass": "^4.1.0",
-        "gulp-swig": "^0.9.1",
         "jest": "^26.6.3",
         "jest-chain": "^1.1.5",
         "merge-stream": "^2.0.0",
-        "rollup": "^2.34.2",
-        "rollup-plugin-typescript2": "^0.27.3",
         "ultra-runner": "^3.6.0"
     },
     "dependencies": {

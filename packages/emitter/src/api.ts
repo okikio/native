@@ -26,21 +26,21 @@ export const newListener = ({
  * @extends {Manager<number, Listener>}
  */
 export class Event extends Manager<number, IListener> {
-	/**
-	 * The name of the event
-	 *
-	 * @private
-	 * @type string
-	 * @memberof Event
-	 */
-    private name: string;
+    /**
+     * The name of the event
+     *
+     * @public
+     * @type string
+     * @memberof Event
+     */
+    public name: string;
 
-	/**
-	 * Creates an instance of Event.
-	 *
-	 * @param {string} [name="event"]
-	 * @memberof Event
-	 */
+    /**
+     * Creates an instance of Event.
+     *
+     * @param {string} [name="event"]
+     * @memberof Event
+     */
     constructor(name: string = "event") {
         super();
         this.name = name;
@@ -57,17 +57,17 @@ export type EventInput = string | object | Array<string>;
  * @extends {Manager<string, Event>}
  */
 export class EventEmitter extends Manager<string, Event> {
-	/**
-	 * Creates an instance of EventEmitter.
-	 *
-	 * @memberof EventEmitter
-	 */
+    /**
+     * Creates an instance of EventEmitter.
+     *
+     * @memberof EventEmitter
+     */
     constructor() {
         super();
     }
 
     /**
-	 * Gets events, if event doesn't exist create a new Event
+     * Gets events, if event doesn't exist create a new Event
      *
      * @param {string} name
      * @returns Event
@@ -82,15 +82,15 @@ export class EventEmitter extends Manager<string, Event> {
 
         return event;
     }
-	/**
-	 * Creates a new listener and adds it to the event
-	 *
-	 * @param {string} name
-	 * @param {ListenerCallback} callback
-	 * @param {object} scope
-	 * @returns Event
-	 * @memberof EventEmitter
-	 */
+    /**
+     * Creates a new listener and adds it to the event
+     *
+     * @param {string} name
+     * @param {ListenerCallback} callback
+     * @param {object} scope
+     * @returns Event
+     * @memberof EventEmitter
+     */
     public newListener(
         name: string,
         callback: ListenerCallback,
@@ -101,15 +101,15 @@ export class EventEmitter extends Manager<string, Event> {
         return event;
     }
 
-	/**
-	 * Adds a listener for a given event
-	 *
-	 * @param {EventInput} events
-	 * @param {ListenerCallback | object} callback
-	 * @param {object} scope
-	 * @returns EventEmitter
-	 * @memberof EventEmitter
-	 */
+    /**
+     * Adds a listener for a given event
+     *
+     * @param {EventInput} events
+     * @param {ListenerCallback | object} callback
+     * @param {object} scope
+     * @returns EventEmitter
+     * @memberof EventEmitter
+     */
     public on(
         events: EventInput,
         callback?: ListenerCallback | object,
@@ -146,15 +146,15 @@ export class EventEmitter extends Manager<string, Event> {
         return this;
     }
 
-	/**
-	 * Removes a listener from an event
-	 *
-	 * @param {string} name
-	 * @param {ListenerCallback} [callback]
-	 * @param {object} [scope]
-	 * @returns Event
-	 * @memberof EventEmitter
-	 */
+    /**
+     * Removes a listener from an event
+     *
+     * @param {string} name
+     * @param {ListenerCallback} [callback]
+     * @param {object} [scope]
+     * @returns Event
+     * @memberof EventEmitter
+     */
     public removeListener(
         name: string,
         callback: ListenerCallback,
@@ -177,15 +177,15 @@ export class EventEmitter extends Manager<string, Event> {
         return event;
     }
 
-	/**
-	 * Removes a listener from a given event, or it just completely removes an event
-	 *
-	 * @param {EventInput} events
-	 * @param {ListenerCallback | object} [callback]
-	 * @param {object} [scope]
-	 * @returns EventEmitter
-	 * @memberof EventEmitter
-	 */
+    /**
+     * Removes a listener from a given event, or it just completely removes an event
+     *
+     * @param {EventInput} events
+     * @param {ListenerCallback | object} [callback]
+     * @param {object} [scope]
+     * @returns EventEmitter
+     * @memberof EventEmitter
+     */
     public off(
         events: EventInput,
         callback?: ListenerCallback | object,
@@ -224,14 +224,14 @@ export class EventEmitter extends Manager<string, Event> {
         return this;
     }
 
-	/**
-	 * Call all listeners within an event
-	 *
-	 * @param {(string | Array<any>)} events
+    /**
+     * Call all listeners within an event
+     *
+     * @param {(string | Array<any>)} events
      * @param {...any} args
-	 * @returns EventEmitter
-	 * @memberof EventEmitter
-	 */
+     * @returns EventEmitter
+     * @memberof EventEmitter
+     */
     public emit(
         events: string | Array<any>,
         ...args: any

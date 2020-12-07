@@ -1,6 +1,7 @@
 import { Manager, methodCall, asyncMethodCall } from "@okikio/manager";
-import { ConfigKeys } from "./config";
+import { CONFIG } from "./config";
 import { App } from "./app";
+import EventEmitter from "@okikio/emitter";
 
 export type IAdvancedManager = AdvancedManager<any, ManagerItem>;
 
@@ -12,7 +13,7 @@ export type IAdvancedManager = AdvancedManager<any, ManagerItem>;
  */
 export class ManagerItem {
     /**
-     * The AdvancedManager or AdvancedStorage the ManagerItem is attached to
+     * The AdvancedManager the ManagerItem is attached to
      *
      * @public
      * @type IAdvancedManager
@@ -21,23 +22,31 @@ export class ManagerItem {
     public manager: IAdvancedManager;
 
     /**
+     * The App the ManagerItem is attached to
+     *
+     * @public
+     * @type App
+     * @memberof ManagerItem
+    */
+    public app: App;
+
+    /**
+     * The Config class of the App the ManagerItem is attached to
+     *
+     * @public
+     * @type CONFIG
+     * @memberof ManagerItem
+    */
+    public config: CONFIG;
+    public emitter: EventEmitter;
+    public key: any;
+
+    /**
      * Creates an instance of ManagerItem.
      *
      * @memberof ManagerItem
      */
     constructor() { }
-
-    /**
-     * The getConfig method for accessing the Configuration of the current App
-     *
-     * @param {ConfigKeys} [value]
-     * @param {boolean} [brackets=true]
-     * @returns any
-     * @memberof ManagerItem
-     */
-    public getConfig(value?: ConfigKeys, brackets: boolean = true): any {
-        return this.manager.getConfig(value, brackets);
-    };
 
     /**
      * Run after the Manager Item has been registered
@@ -54,10 +63,27 @@ export class ManagerItem {
      * @returns ManagerItem
      * @memberof ManagerItem
      */
-    public register(manager: IAdvancedManager): ManagerItem {
+    public register(manager: IAdvancedManager, key: any): ManagerItem {
         this.manager = manager;
+        this.app = manager.app;
+        this.config = manager.config;
+        this.emitter = manager.emitter;
+        this.key = key;
         this.install();
         return this;
+    }
+
+    public uninstall(): any { }
+
+    public unregister() {
+        this.uninstall();
+
+        this.manager.delete(this.key);
+        this.key = undefined;
+        this.manager = undefined;
+        this.app = undefined;
+        this.config = undefined;
+        this.emitter = undefined;
     }
 }
 
@@ -71,49 +97,57 @@ export class ManagerItem {
  * @template V
  */
 export class AdvancedManager<K, V extends ManagerItem> extends Manager<K, V> {
-	/**
-	 * The instance of the App class, the Manager is instantiated in
-	 *
-	 * @type App
-	 * @memberof AdvancedManager
-	 */
+    /**
+     * The instance of the App class, the Manager is instantiated in
+     *
+     * @type App
+     * @memberof AdvancedManager
+     */
     public app: App;
 
-	/**
-	 * Creates an instance of AdvancedManager.
-	 *
-	 * @param {App} app - The instance of the App class, the Manager is instantiated in
-	 * @memberof AdvancedManager
-	 */
+    /**
+     * The Config class of the App the AdvancedManager is attached to
+     *
+     * @public
+     * @type CONFIG
+     * @memberof AdvancedManager
+    */
+    public config: CONFIG;
+
+    /**
+     * The EventEmitter class of the App the AdvancedManager is attached to
+     *
+     * @public
+     * @type EventEmitter
+     * @memberof AdvancedManager
+    */
+    public emitter: EventEmitter;
+
+    /**
+     * Creates an instance of AdvancedManager.
+     *
+     * @param {App} app - The instance of the App class, the Manager is instantiated in
+     * @memberof AdvancedManager
+     */
     constructor(app: App) {
         super();
         this.app = app;
+        this.config = app.config;
+        this.emitter = app.emitter;
     }
 
-	/**
-	 * Set a value stored in the Manager
-	 *
-	 * @public
-	 * @param  {K} key - The key where the value will be stored
-	 * @param  {V} value - The value to store
-	 * @returns AdvancedManager<K, V>
-	 */
+    /**
+     * Set a value stored in the Manager
+     *
+     * @public
+     * @param  {K} key - The key where the value will be stored
+     * @param  {V} value - The value to store
+     * @returns AdvancedManager<K, V>
+     */
     public set(key: K, value: V) {
         super.set(key, value);
-        value.register(this);
+        value.register(this, key);
         return this;
-    }
-
-	/**
-	 * Returns the App config
-	 *
-     * @param {ConfigKeys} [value]
-     * @param {boolean} [brackets=true]
-     * @returns *
-	 * @memberof AdvancedManager
-	 */
-    public getConfig(value?: ConfigKeys, brackets: boolean = true): any {
-        return this.app.getConfig(value, brackets);
     }
 }
 

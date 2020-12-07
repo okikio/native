@@ -25,7 +25,7 @@
         "watch": "node ./build --watch",
         "test": "jest --maxWorkers=1",
         "test:watch": "jest --maxWorkers=1 --watch --verbose false",
-        "pre-release": "npm run build && ultra docs:build && npm test",
+        "pre-release": "npm run build && ultra docs:build",
         "docs:build": "gulp build",
         "docs:watch": "gulp default --watch"
     },

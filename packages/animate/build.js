@@ -14,6 +14,7 @@ const outputs = [
     {
         outfile: "lib/api.node.js",
         platform: "node",
+        target: ["es2020"],
         format: "cjs",
     },
     {

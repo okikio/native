@@ -1,9 +1,9 @@
 import { EventEmitter, ListenerCallback, EventInput } from "./emitter";
-import { TransitionManager, Transition } from "./transition";
+import { ITransition, TransitionManager } from "./transition";
 import { HistoryManager, IState } from "./history";
 import { ServiceManager, Service } from "./service";
 import { PageManager } from "./page";
-import { CONFIG, ICONFIG, ConfigKeys } from "./config";
+import { CONFIG, ICONFIG } from "./config";
 
 /**
  * The App class starts the entire process, it controls all managers and all services
@@ -85,33 +85,21 @@ export class App {
      */
     public register(config: ICONFIG | CONFIG = {}): App {
         this.config = config instanceof CONFIG ? config : new CONFIG(config);
-        this.transitions = new TransitionManager(this);
-        this.services = new ServiceManager(this);
+        this.emitter = new EventEmitter();
         this.history = new HistoryManager();
         this.pages = new PageManager(this);
-        this.emitter = new EventEmitter();
+        this.transitions = new TransitionManager(this);
+        this.services = new ServiceManager(this);
 
         let handler = (() => {
             document.removeEventListener("DOMContentLoaded", handler);
             window.removeEventListener("load", handler);
-            this.emitter.emit("READY");
+            this.emitter.emit("READY ready");
         }).bind(this);
 
         document.addEventListener("DOMContentLoaded", handler);
         window.addEventListener("load", handler);
         return this;
-    }
-
-    /**
-     * Returns the current configurations for the framework
-     *
-     * @param {ConfigKeys} [value]
-     * @param {boolean} [brackets=true]
-     * @returns {*}
-     * @memberof App
-     */
-    public getConfig(value?: ConfigKeys, brackets: boolean = true): any {
-        return this.config.getConfig(value, brackets);
     }
 
     /**
@@ -122,7 +110,7 @@ export class App {
      * @returns Service | Transition | State
      * @memberof App
      */
-    public get(type: "service" | "transition" | "state" | string, key: any): Service | Transition | IState {
+    public get(type: "service" | "transition" | "state" | string, key: any): Service | ITransition | IState {
         switch (type.toLowerCase()) {
             case "service":
                 return this.services.get(key);
@@ -166,6 +154,19 @@ export class App {
     }
 
     /**
+     * Adds a Service to the App's instance of the ServiceManager, with a name
+     *
+     * @param {string} key
+     * @param {ITransition} tranisition
+     * @returns App
+     * @memberof App
+     */
+    public setTransition(key: string, transition: ITransition): App {
+        this.transitions.set(key, transition);
+        return this;
+    }
+
+    /**
      * Based on the type, it will add either a Transition, a Service, or a State to their respective Managers
      *
      * @param {("service" | "transition" | "state")} type
@@ -179,7 +180,7 @@ export class App {
                 this.services.add(value);
                 break;
             case "transition":
-                this.transitions.add(value);
+                this.transitions.set(value.name, value);
                 break;
             case "state":
                 this.history.add(value);

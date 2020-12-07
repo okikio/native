@@ -1,8 +1,8 @@
-# EventEmitter
+# @okikio/emitter
 A small Event Emitter written in typescript with performance and ease of use in mind.
 
 ## Table of Contents
-- [EventEmitter](#eventemitter)
+- [@okikio/emitter](#okikioemitter)
   - [Table of Contents](#table-of-contents)
   - [Installation](#installation)
   - [Getting started](#getting-started)

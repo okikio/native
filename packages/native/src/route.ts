@@ -25,11 +25,11 @@ export class Router extends Service {
     /**
      * List of routes inputted
      *
-     * @public
+     * @protected
      * @type {Manager<IRouteToFrom, RouteMethod>}
      * @memberof Router
      */
-    public routes: Manager<IRouteToFrom, RouteMethod>;
+    protected routes: Manager<IRouteToFrom, RouteMethod>;
 
     /**
      * Creates an instance of Router.
@@ -40,7 +40,7 @@ export class Router extends Service {
     constructor(routes: IRoute[] = []) {
         super();
         this.routes = new Manager();
-        for (const route of routes) {
+        for (let route of routes) {
             this.add(route);
         }
     }
@@ -53,7 +53,7 @@ export class Router extends Service {
      * @memberof Router
      */
     public add({ path, method }: IRoute): Router {
-        const key = this.parse(path);
+        let key = this.parse(path);
         this.routes.set(key, method);
         return this;
     }
@@ -66,8 +66,7 @@ export class Router extends Service {
      * @memberof Router
      */
     public parsePath(path: RouteStyle): RegExp | boolean {
-        if (typeof path === "string")
-            return new RegExp(path, "i");
+        if (typeof path === "string") return new RegExp(path, "i");
         else if (path instanceof RegExp || typeof path === "boolean")
             return path;
         throw "[Router] only regular expressions, strings and booleans are accepted as paths.";
@@ -81,7 +80,11 @@ export class Router extends Service {
      * @memberof Router
      */
     public isPath(input: RouteStyle): boolean {
-        return typeof input === "string" || input instanceof RegExp || typeof input === "boolean";
+        return (
+            typeof input === "string" ||
+            input instanceof RegExp ||
+            typeof input === "boolean"
+        );
     }
 
     /**
@@ -92,16 +95,16 @@ export class Router extends Service {
      * @memberof Router
      */
     public parse(input: RoutePath): IRouteToFrom {
-        let route = (input as IRouteToFrom);
+        let route = input as IRouteToFrom;
         let toFromPath: IRouteToFrom = {
             from: /(.*)/g,
-            to: /(.*)/g
+            to: /(.*)/g,
         };
 
         if (this.isPath(input as RouteStyle))
             toFromPath = {
                 from: true,
-                to: input as RouteStyle
+                to: input as RouteStyle,
             };
         else if (this.isPath(route.from) && this.isPath(route.to as RouteStyle))
             toFromPath = route;
@@ -111,8 +114,8 @@ export class Router extends Service {
         let { from, to } = toFromPath;
         return {
             from: this.parsePath(from),
-            to: this.parsePath(to)
-        }
+            to: this.parsePath(to),
+        };
     }
 
     /**
@@ -126,10 +129,13 @@ export class Router extends Service {
         let to: string = getHashedPath(newURL());
 
         this.routes.forEach((method: RouteMethod, path: IRouteToFrom) => {
-            let fromRegExp = (path.from as RegExp | boolean);
-            let toRegExp = (path.to as RegExp | boolean);
+            let fromRegExp = path.from as RegExp | boolean;
+            let toRegExp = path.to as RegExp | boolean;
 
-            if (typeof fromRegExp === "boolean" && typeof toRegExp === "boolean") {
+            if (
+                typeof fromRegExp === "boolean" &&
+                typeof toRegExp === "boolean"
+            ) {
                 throw `[Router] path ({ from: ${fromRegExp}, to: ${toRegExp} }) is not valid, remember paths can only be strings, regular expressions, or a boolean; however, both the from and to paths cannot be both booleans.`;
             }
 
@@ -143,9 +149,14 @@ export class Router extends Service {
 
             if (
                 (Array.isArray(toParam) && Array.isArray(fromParam)) ||
-                (Array.isArray(toParam) && (typeof fromParam == "boolean" && fromParam)) ||
-                (Array.isArray(fromParam) && (typeof toParam == "boolean" && toParam))
-            ) method({ from: fromParam, to: toParam, path: { from, to } });
+                (Array.isArray(toParam) &&
+                    typeof fromParam == "boolean" &&
+                    fromParam) ||
+                (Array.isArray(fromParam) &&
+                    typeof toParam == "boolean" &&
+                    toParam)
+            )
+                method({ from: fromParam, to: toParam, path: { from, to } });
         });
     }
 
@@ -155,8 +166,8 @@ export class Router extends Service {
      * @memberof Router
      */
     public initEvents() {
-        this.EventEmitter.on("READY", this.route, this);
-        this.EventEmitter.on("CONTENT_REPLACED", this.route, this);
+        this.emitter.on("READY", this.route, this);
+        this.emitter.on("CONTENT_REPLACED", this.route, this);
     }
 
     /**
@@ -165,7 +176,7 @@ export class Router extends Service {
      * @memberof Router
      */
     public stopEvents() {
-        this.EventEmitter.off("READY", this.route, this);
-        this.EventEmitter.off("CONTENT_REPLACED", this.route, this);
+        this.emitter.off("READY", this.route, this);
+        this.emitter.off("CONTENT_REPLACED", this.route, this);
     }
 }

@@ -1,6 +1,6 @@
 const { source } = require("./package.json");
 
-const globalName = "EventEmitter";
+const globalName = "native";
 const { startService } = require("esbuild");
 const { watch } = require("chokidar");
 
@@ -14,6 +14,7 @@ const outputs = [
     {
         outfile: "lib/api.node.js",
         platform: "node",
+        target: ["es2020"],
         format: "cjs",
     },
     {

@@ -1,5 +1,4 @@
-// import { Manager } from "./manager";
-// import { newURL, getHashedPath } from "./url";
+import { getHashedPath, newURL } from "./url";
 
 export type Trigger = HTMLAnchorElement | "HistoryManager" | "popstate" | "back" | "forward";
 export interface ICoords {
@@ -19,6 +18,11 @@ export interface IState {
 	data: IStateData;
 }
 
+export interface IHistoryItem {
+	index: number;
+	states: IState[];
+}
+
 /**
  * A quick snapshot of page coordinates, e.g. scroll positions
  *
@@ -33,18 +37,19 @@ export const newCoords = (x: number = window.scrollX, y: number = window.scrollY
  *
  * @export
  * @param {IState} {
- *         url = new _URL(),
+ *         url = getHashedPath(newURL()),
  *         index = 0,
  *         transition = "default",
  *         data = {
- *             scroll: new StateCoords(),
+ *             scroll: newCoords(),
  *             trigger: "HistoryManager"
  *         }
  *     }
  * @memberof State
 */
 export const newState = (state: IState = {
-	url: "/",
+	url: getHashedPath(newURL()),
+	index: 0,
 	transition: "default",
 	data: {
 		scroll: newCoords(),
@@ -72,6 +77,9 @@ export class HistoryManager {
 	 */
 	constructor() {
 		this.states = [];
+
+		let state = newState();
+		this.add(state, "replace");
 	}
 
 	public get(index: number) {
@@ -84,11 +92,17 @@ export class HistoryManager {
 	 * @param {IState} value
 	 * @returns HistoryManager
 	 */
-	public add(value: IState): HistoryManager {
+	public add(value?: IState, historyAction: "replace" | "push" = "push"): HistoryManager {
 		let state = newState(value);
 		let len = this.length;
-		this.states.push({ ...state, index: len });
+		this.states.push({ ...state });
 		this.pointer = len;
+
+		let item: IHistoryItem = {
+			index: this.pointer,
+			states: [...this.states]
+		};
+		this.changeState(historyAction, state, item);
 		return this;
 	}
 
@@ -100,6 +114,11 @@ export class HistoryManager {
 		}
 
 		this.pointer--;
+		return this;
+	}
+
+	public replace(newStates: IState[]) {
+		this.states = newStates;
 		return this;
 	}
 
@@ -133,5 +152,28 @@ export class HistoryManager {
 
 	get length() {
 		return this.states.length;
+	}
+
+	/**
+	 * Either push or replace history state
+	 *
+	 * @param {("push" | "replace")} action
+	 * @param {IState} state
+	 * @param {_URL} url
+	 * @memberof PJAX
+	 */
+	public changeState(action: "push" | "replace", state: IState, item: object) {
+		let href = getHashedPath(newURL(state.url));
+		let args = [item, "", href];
+		if (window.history) {
+			switch (action) {
+				case "push":
+					window.history.pushState.apply(window.history, args);
+					break;
+				case "replace":
+					window.history.replaceState.apply(window.history, args);
+					break;
+			}
+		}
 	}
 }
