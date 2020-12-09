@@ -1,4 +1,4 @@
-import { newState, Trigger, IState, newCoords, IHistoryItem } from "./history";
+import { newState, Trigger, IState, newCoords, IHistoryItem, changeState } from "./history";
 import { Service } from "./service";
 import { Page } from "./page";
 import { newURL, getHashedPath, equal } from "./url";
@@ -80,14 +80,13 @@ export class PJAX extends Service {
     protected autoScrollOnHash: boolean = true;
 
     /**
-     * Disables all extra scroll effects of PJAX, however, it won't affect scroll on hash,
-     * since scrolling when an hash is in the URL is the default behavior
+     * Disables all extra scroll effects of PJAX
      *
      * @private
      * @type boolean
      * @memberof PJAX
      */
-    protected dontScroll: boolean = true;
+    protected dontScroll: boolean = false;
 
     /**
      * Sets the transition state, sets isTransitioning to true
@@ -339,6 +338,10 @@ export class PJAX extends Service {
 
             trigger = this.getDirection(difference);
 
+            let _state = this.HistoryManager.get(this.HistoryManager.pointer);
+            transitionName = _state.transition;
+            scroll = _state.data.scroll;
+
             // Based on the direction of the state change either remove or add a state
             this.HistoryManager.replace(state.states);
             this.HistoryManager.pointer = index;
@@ -350,35 +353,17 @@ export class PJAX extends Service {
                 this.emitter.emit(`POPSTATE_FORWARD`, event);
             }
 
-            let _state = this.HistoryManager.get(index);
-            transitionName = _state.transition;
-
-            // If the page remains on the same history state DO NOT scroll, it's pointless
-            if (trigger !== "popstate") {
-                // Keep scroll position
-                scroll = _state.data.scroll;
-            }
         } else {
             // Add new state
             transitionName = this.getTransitionName(trigger as HTMLAnchorElement) ||
                 "default";
-            let scrollCoords = newCoords();
 
-            if (!this.dontScroll && this.stickyScroll) {
-                // Keep scroll position
-                let { x, y } = scrollCoords;
-                scroll = { x, y };
-            } else {
-                scroll = {
-                    x: 0,
-                    y: 0
-                };
-            }
+            scroll = newCoords();
 
             let state = newState({
                 url: href,
                 transition: transitionName,
-                data: { scroll: scrollCoords },
+                data: { scroll },
             });
 
             this.HistoryManager.add(state);
@@ -455,6 +440,7 @@ export class PJAX extends Service {
 
                 try {
                     this.emitter.emit("TRANSITION_START", transitionName);
+
                     let transition = await this.TransitionManager.boot(transitionName, {
                         oldPage,
                         newPage,
@@ -463,7 +449,10 @@ export class PJAX extends Service {
                     });
 
                     if (!transition.scrollable) {
-                        if (!/back|popstate|forward/.test(trigger as string)) scroll = hashAction(href);
+                        if (!/back|popstate|forward/.test(trigger as string)) {
+                            scroll = hashAction();
+                        }
+
                         window.scroll(scroll.x, scroll.y);
                     }
 
@@ -585,17 +574,18 @@ export class PJAX extends Service {
  */
 export const hashAction = (hash: string = window.location.hash) => {
     try {
+
         let _hash = hash[0] == "#" ? hash : newURL(hash).hash;
         if (_hash.length > 1) {
-            let el = document.querySelector(_hash) as HTMLElement;
+            let el = document.getElementById(_hash.slice(1)) as HTMLElement;
 
             if (el) {
-                return { x: el.offsetLeft, y: el.offsetTop };
+                return newCoords(el.offsetLeft, el.offsetTop);
             }
         }
     } catch (e) {
         console.warn("hashAction error", e);
     }
 
-    return { x: 0, y: 0 };
+    return newCoords(0, 0);
 };

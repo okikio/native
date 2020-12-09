@@ -1,10 +1,11 @@
-import { ITransition, ITransitionData, animate } from "../../../src/api";
+import { ITransition, ITransitionData, animate, hashAction } from "../../../src/api";
 
 //== Transitions
 export const Slide: ITransition = {
     name: "slide",
     duration: 500,
     direction: "right",
+    scrollable: true,
 
     init(data: ITransition) {
         let trigger = (data.trigger as HTMLElement);
@@ -36,9 +37,12 @@ export const Slide: ITransition = {
         });
     },
 
-    in({ to }: ITransitionData) {
+    in({ to, scroll }: ITransitionData) {
         let { duration } = this;
         let toWrapper = to.wrapper;
+
+        window.scroll(scroll.x, scroll.y);
+
         return animate({
             target: toWrapper,
             keyframes: [

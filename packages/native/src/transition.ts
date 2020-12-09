@@ -4,6 +4,7 @@ import { ICoords, Trigger } from "./history";
 import { Page } from "./page";
 import { App } from "./app";
 import { CONFIG } from "./config";
+import { hashAction } from "./pjax";
 
 /**
  * The async function type, allows for smooth transition between Promises
@@ -81,8 +82,9 @@ export class TransitionManager extends Manager<string, ITransition> {
      * @returns Promise<Transition>
      * @memberof TransitionManager
      */
-    public async boot(name: string, data: { oldPage: Page, newPage: Page, trigger: Trigger, scroll: ICoords }): Promise<ITransition> {
+    public async boot(name: string, data: any): Promise<ITransition> {
         let transition: ITransition = this.get(name);
+        let scroll = data.scroll;
         if (!(data.oldPage instanceof Page) || !(data.newPage instanceof Page))
             throw `[Page] either oldPage or newPage aren't instances of the Page Class.\n ${{
                 newPage: data.newPage,
@@ -103,9 +105,9 @@ export class TransitionManager extends Manager<string, ITransition> {
         this.emitter.emit("BEFORE_TRANSITION_OUT");
         await new Promise((done) => {
             let outMethod: Promise<any> = transition.out.call(transition, {
+                ...data,
                 from: data.oldPage,
                 trigger: data.trigger,
-                scroll,
                 done,
             });
 
@@ -116,6 +118,10 @@ export class TransitionManager extends Manager<string, ITransition> {
         await new Promise((done) => {
             fromWrapper.insertAdjacentElement("beforebegin", toWrapper);
             this.emitter.emit("CONTENT_INSERT");
+
+            if (!/back|popstate|forward/.test(data.trigger as string)) {
+                scroll = hashAction();
+            }
             done();
         });
 
@@ -131,6 +137,7 @@ export class TransitionManager extends Manager<string, ITransition> {
 
         await new Promise((done) => {
             let inMethod: Promise<any> = transition.in.call(transition, {
+                ...data,
                 from: data.oldPage,
                 to: data.newPage,
                 trigger: data.trigger,

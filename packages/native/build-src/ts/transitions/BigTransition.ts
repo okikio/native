@@ -1,10 +1,11 @@
-import { ITransition, ITransitionData, animate } from "../../../src/api";
+import { ITransition, ITransitionData, animate, hashAction } from "../../../src/api";
 
 //== Transitions
 export const BigTransition: ITransition = {
     name: "big",
     delay: 200,
     durationPerAnimation: 700,
+    scrollable: true,
 
     init() {
         this.mainElement = document.getElementById('big-transition');
@@ -17,10 +18,10 @@ export const BigTransition: ITransition = {
     out({ from }: ITransitionData) {
         let { durationPerAnimation: duration, delay } = this;
         let fromWrapper = from.wrapper;
-        window.scroll({
-            top: 0,
-            behavior: 'smooth'  // 👈
-        });
+        // window.scroll({
+        //     top: 0,
+        //     behavior: 'smooth'  // 👈
+        // });
 
         return new Promise(async resolve => {
             animate({
@@ -78,10 +79,13 @@ export const BigTransition: ITransition = {
         });
     },
 
-    in({ to }: ITransitionData) {
+    in({ to, scroll }: ITransitionData) {
         let { durationPerAnimation: duration, delay } = this;
         let toWrapper = to.wrapper;
         toWrapper.style.transform = "translateX(0%)";
+
+        window.scroll(scroll.x, scroll.y);
+
         return new Promise(async resolve => {
             animate({
                 target: toWrapper,

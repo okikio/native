@@ -1,9 +1,10 @@
-import { ITransition, ITransitionData, animate } from "../../../src/api";
+import { ITransition, ITransitionData, animate, hashAction } from "../../../src/api";
 
 //== Transition
 export const Fade: ITransition = {
     name: "default",
     duration: 500,
+    scrollable: true,
 
     out({ from }: ITransitionData) {
         let { duration } = this;
@@ -23,12 +24,14 @@ export const Fade: ITransition = {
         });
     },
 
-    in({ to }: ITransitionData) {
+    in({ to, scroll }: ITransitionData) {
         let { duration } = this;
         let toWrapper = to.wrapper;
         requestAnimationFrame(() => {
             toWrapper.style.transform = "translateX(0%)";
         });
+
+        window.scroll(scroll.x, scroll.y);
 
         return animate({
             target: toWrapper,

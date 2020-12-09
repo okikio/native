@@ -4,6 +4,8 @@ An animation library for the modern web, it utilizes the Web Animation API (WAAP
 
 _Before even getting started, note you will most likely need a WAAPI polyfill and if you install this via `npm` you are most likely going to need [rollup](https://rollupjs.org/) or [esbuild](https://esbuild.github.io/). You can use [web-animations-js](https://github.com/web-animations/web-animations-js), or [polyfill.io](https://polyfill.io/), to create a polyfill._
 
+View a working example: [https://okikio.github.io/native/packages/animate/docs/](https://okikio.github.io/native/packages/animate/docs/).
+
 ## Table of Contents
 - [@okikio/animate](#okikioanimate)
   - [Table of Contents](#table-of-contents)

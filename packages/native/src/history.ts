@@ -102,7 +102,7 @@ export class HistoryManager {
 			index: this.pointer,
 			states: [...this.states]
 		};
-		this.changeState(historyAction, state, item);
+		changeState(historyAction, state, item);
 		return this;
 	}
 
@@ -154,26 +154,27 @@ export class HistoryManager {
 		return this.states.length;
 	}
 
-	/**
-	 * Either push or replace history state
-	 *
-	 * @param {("push" | "replace")} action
-	 * @param {IState} state
-	 * @param {_URL} url
-	 * @memberof PJAX
-	 */
-	public changeState(action: "push" | "replace", state: IState, item: object) {
-		let href = getHashedPath(newURL(state.url));
-		let args = [item, "", href];
-		if (window.history) {
-			switch (action) {
-				case "push":
-					window.history.pushState.apply(window.history, args);
-					break;
-				case "replace":
-					window.history.replaceState.apply(window.history, args);
-					break;
-			}
+}
+
+/**
+ * Either push or replace history state
+ *
+ * @param {("push" | "replace")} action
+ * @param {IState} state
+ * @param {_URL} url
+ * @memberof PJAX
+ */
+export const changeState = (action: "push" | "replace", state: IState, item: object) => {
+	let href = getHashedPath(newURL(state.url));
+	let args = [item, "", href];
+	if (window.history) {
+		switch (action) {
+			case "push":
+				window.history.pushState.apply(window.history, args);
+				break;
+			case "replace":
+				window.history.replaceState.apply(window.history, args);
+				break;
 		}
 	}
-}
+};
