@@ -23,7 +23,7 @@ export const BigTransition: ITransition = {
         //     behavior: 'smooth'  // 👈
         // });
 
-        return new Promise(async resolve => {
+        return new Promise<void>(async resolve => {
             animate({
                 target: fromWrapper,
                 opacity: [1, 0],
@@ -86,7 +86,7 @@ export const BigTransition: ITransition = {
 
         window.scroll(scroll.x, scroll.y);
 
-        return new Promise(async resolve => {
+        return new Promise<void>(async resolve => {
             animate({
                 target: toWrapper,
                 opacity: [0, 1],

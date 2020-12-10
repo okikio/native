@@ -115,7 +115,7 @@ export class TransitionManager extends Manager<string, ITransition> {
         });
 
         this.emitter.emit("AFTER_TRANSITION_OUT");
-        await new Promise((done) => {
+        await new Promise<void>((done) => {
             fromWrapper.insertAdjacentElement("beforebegin", toWrapper);
             this.emitter.emit("CONTENT_INSERT");
 
@@ -125,7 +125,7 @@ export class TransitionManager extends Manager<string, ITransition> {
             done();
         });
 
-        await new Promise((done) => {
+        await new Promise<void>((done) => {
             fromWrapper.remove();
             fromWrapper = undefined;
             toWrapper = undefined;
@@ -135,7 +135,7 @@ export class TransitionManager extends Manager<string, ITransition> {
 
         this.emitter.emit("BEFORE_TRANSITION_IN");
 
-        await new Promise((done) => {
+        await new Promise(async (done) => {
             let inMethod: Promise<any> = transition.in.call(transition, {
                 ...data,
                 from: data.oldPage,

@@ -27,14 +27,14 @@ export class Splashscreen extends Service {
     }
 
     public async hide() {
-        await new Promise(resolve => {
+        await new Promise<void>(resolve => {
             window.setTimeout(() => {
                 this.emitter.emit("BEFORE_SPLASHSCREEN_HIDE");
                 resolve();
             }, this.minimalDuration);
         });
 
-        await new Promise(async resolve => {
+        await new Promise<void>(async resolve => {
             animate({
                 target: this.innerEl,
                 opacity: [1, 0],

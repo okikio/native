@@ -9,7 +9,7 @@ export const Fade: ITransition = {
     out({ from }: ITransitionData) {
         let { duration } = this;
         let fromWrapper = from.wrapper;
-        return new Promise(async resolve => {
+        return new Promise<void>(async resolve => {
             await animate({
                 target: fromWrapper,
                 opacity: [1, 0],

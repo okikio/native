@@ -5,11 +5,12 @@
     "publishConfig": {
         "access": "public",
         "main": "lib/api.js",
-        "types": "lib/api.d.ts",
+        "types": "lib/types/api.d.ts",
         "browser": "lib/api.js",
         "node": "lib/api.node.js",
         "unpkg": "lib/api.js",
-        "module": "lib/api.modern.js"
+        "module": "lib/api.modern.js",
+        "exports": "lib/api.modern.js"
     },
     "main": "src/api.ts",
     "source": "src/api.ts",
@@ -23,9 +24,8 @@
     "scripts": {
         "build": "node ./build",
         "watch": "node ./build --watch",
-        "test": "jest --maxWorkers=1",
-        "test:watch": "jest --maxWorkers=1 --watch --verbose false",
-        "pre-release": "npm run build && ultra docs:build",
+        "dts": "tsc --project dts.tsconfig.json",
+        "pre-release": "npm run build && npm run dts && npm run docs:build",
         "docs:build": "gulp build",
         "docs:watch": "gulp default --watch"
     },
@@ -53,18 +53,19 @@
     },
     "homepage": "https://github.com/okikio/native#readme",
     "devDependencies": {
-        "@types/jest": "^26.0.16",
+        "@types/jest": "^26.0.18",
         "browser-sync": "^2.26.13",
-        "esbuild": "^0.8.20",
+        "esbuild": "^0.8.21",
         "esbuild-jest": "^0.3.0",
         "eslint": "^7.15.0",
         "gulp": "^4.0.2",
-        "gulp-esbuild": "^0.3.2",
+        "gulp-esbuild": "^0.3.4",
         "gulp-pug": "^4.0.1",
         "gulp-sass": "^4.1.0",
         "jest": "^26.6.3",
         "jest-chain": "^1.1.5",
         "merge-stream": "^2.0.0",
+        "typescript": "^4.1.2",
         "ultra-runner": "^3.6.0"
     },
     "dependencies": {
