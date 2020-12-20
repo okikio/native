@@ -53,7 +53,7 @@
     },
     "homepage": "https://github.com/okikio/native/packages/animate#readme",
     "dependencies": {
-        "@okikio/emitter": "workspace:^0.0.7",
+        "@okikio/emitter": "workspace:*",
         "browser-sync": "^2.26.13",
         "chokidar": "^3.4.3",
         "esbuild": "^0.8.25",

@@ -52,7 +52,7 @@
     },
     "homepage": "https://github.com/okikio/native/packages/emitter#readme",
     "dependencies": {
-        "@okikio/manager": "workspace:^0.0.7",
+        "@okikio/manager": "workspace:*",
         "@types/jest": "^26.0.19",
         "chokidar": "^3.4.3",
         "esbuild": "^0.8.25",

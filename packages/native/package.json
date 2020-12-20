@@ -52,9 +52,9 @@
     },
     "homepage": "https://github.com/okikio/native/packages/native#readme",
     "dependencies": {
-        "@okikio/animate": "workspace:^0.0.7",
-        "@okikio/emitter": "workspace:^0.0.7",
-        "@okikio/manager": "workspace:^0.0.7",
+        "@okikio/animate": "workspace:*",
+        "@okikio/emitter": "workspace:*",
+        "@okikio/manager": "workspace:*",
         "browser-sync": "^2.26.13",
         "chokidar": "^3.4.3",
         "esbuild": "^0.8.25",
