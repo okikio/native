@@ -1,9 +1,9 @@
-import { newState, Trigger, newCoords, IHistoryItem, HistoryManager } from "./history";
+import { newState, Trigger, newCoords, IHistoryItem, IHistoryManager } from "./history";
 import { Service } from "./service";
-import { Page, PageManager } from "./page";
+import { IPage, IPageManager } from "./page";
 import { newURL, getHashedPath, equal } from "./url";
 import { getConfig } from "./config";
-import { TransitionManager } from "./transition";
+import { ITransitionManager } from "./transition";
 
 export type LinkEvent = MouseEvent | TouchEvent;
 export type StateEvent = LinkEvent | PopStateEvent;
@@ -324,7 +324,7 @@ export class PJAX extends Service {
             return;
         }
 
-        const history = this.ServiceManager.get("HistoryManager") as HistoryManager;
+        const history = this.ServiceManager.get("HistoryManager") as IHistoryManager;
         let scroll = { x: 0, y: 0 };
         let currentState = history.current;
         let currentURL = currentState.url;
@@ -415,10 +415,10 @@ export class PJAX extends Service {
         scroll: { x: number; y: number };
     }): Promise<any> {
         try {
-            const pages = this.ServiceManager.get("PageManager") as PageManager;
+            const pages = this.ServiceManager.get("PageManager") as IPageManager;
             let oldPage = await pages.load(oldHref);
             await oldPage.build();
-            let newPage: Page;
+            let newPage: IPage;
 
             this.emitter.emit("PAGE_LOADING", { href, oldPage, trigger });
             try {
@@ -446,7 +446,7 @@ export class PJAX extends Service {
                 });
 
                 try {
-                    const TransitionManager = this.ServiceManager.get("TransitionManager") as TransitionManager;
+                    const TransitionManager = this.ServiceManager.get("TransitionManager") as ITransitionManager;
                     this.emitter.emit("TRANSITION_START", transitionName);
 
                     let transition = await TransitionManager.animate(transitionName, {
@@ -516,7 +516,7 @@ export class PJAX extends Service {
         let el = this.getLink(event);
         if (!el || !this.ServiceManager.get("PageManager")) return;
 
-        const pages = this.ServiceManager.get("PageManager") as PageManager;
+        const pages = this.ServiceManager.get("PageManager") as IPageManager;
         let url = newURL(this.getHref(el));
         let urlString: string = url.pathname;
 

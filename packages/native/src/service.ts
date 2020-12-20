@@ -1,6 +1,6 @@
 import { AdvancedManager, ManagerItem, methodCall } from "./manager";
 import { EventEmitter } from "./emitter";
-import { App } from "./app";
+import { IApp } from "./app";
 
 /**
  * Controls specific kinds of actions that require JS
@@ -75,10 +75,10 @@ export class ServiceManager extends AdvancedManager<string, Service> {
 	/**
 	 * Creates an instance of ServiceManager.
 	 *
-	 * @param {App} app
+	 * @param {IApp} app
 	 * @memberof ServiceManager
 	 */
-	constructor(app: App) {
+	constructor(app: IApp) {
 		super(app);
 	}
 

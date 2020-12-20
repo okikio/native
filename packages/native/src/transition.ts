@@ -1,6 +1,6 @@
 import { Manager } from "./manager";
 import { ICoords, Trigger } from "./history";
-import { Page } from "./page";
+import { IPage } from "./page";
 import { getConfig } from "./config";
 import { hashAction } from "./pjax";
 import { Service } from "./service";
@@ -10,8 +10,8 @@ import { Service } from "./service";
  */
 export type asyncFn = (err?: any, value?: any) => void;
 export interface ITransition {
-    oldPage?: Page;
-    newPage?: Page;
+    oldPage?: IPage;
+    newPage?: IPage;
     trigger?: Trigger;
     scroll?: { x: number; y: number };
     scrollable?: boolean;
@@ -20,11 +20,21 @@ export interface ITransition {
     [key: string]: any;
 }
 export interface ITransitionData {
-    from?: Page;
-    to?: Page;
+    from?: IPage;
+    to?: IPage;
     trigger?: Trigger;
     scroll?: ICoords;
     done: asyncFn;
+}
+export interface ITransitionManager extends Service {
+    transitions: Manager<string, ITransition>,
+
+    get(key: string): ITransition,
+    set(key: string, value: ITransition): TransitionManager,
+    add(value: ITransition): TransitionManager,
+
+    boot(): any,
+    animate(name: string, data: any): Promise<ITransition>,
 }
 
 /**
@@ -34,7 +44,7 @@ export interface ITransitionData {
  * @class TransitionManager
  * @extends {Manager<string, ITransition>}
  */
-export class TransitionManager extends Service {
+export class TransitionManager extends Service implements ITransitionManager {
     transitions: Manager<string, ITransition>;
     constructor(transitions?) {
         super();
@@ -59,7 +69,7 @@ export class TransitionManager extends Service {
     public async animate(name: string, data: any): Promise<ITransition> {
         let transition: ITransition = this.transitions.get(name);
         let scroll = data.scroll;
-        if (!(data.oldPage instanceof Page) || !(data.newPage instanceof Page))
+        if (!("wrapper" in data.oldPage) || !("wrapper" in data.newPage))
             throw `[Page] either oldPage or newPage aren't instances of the Page Class.\n ${{
                 newPage: data.newPage,
                 oldPage: data.oldPage,

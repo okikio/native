@@ -1,7 +1,7 @@
 import { Manager, methodCall, asyncMethodCall } from "@okikio/manager";
 import { ICONFIG } from "./config";
-import { App } from "./app";
-import EventEmitter from "@okikio/emitter";
+import { IApp } from "./app";
+import { EventEmitter } from "./emitter";
 
 export type IAdvancedManager = AdvancedManager<any, ManagerItem>;
 
@@ -25,10 +25,10 @@ export class ManagerItem {
      * The App the ManagerItem is attached to
      *
      * @public
-     * @type App
+     * @type IApp
      * @memberof ManagerItem
     */
-    public app: App;
+    public app: IApp;
 
     /**
      * The Config of the App the ManagerItem is attached to
@@ -103,7 +103,7 @@ export class AdvancedManager<K, V extends ManagerItem> extends Manager<K, V> {
      * @type App
      * @memberof AdvancedManager
      */
-    public app: App;
+    public app: IApp;
 
     /**
      * The Config of the App the AdvancedManager is attached to
@@ -129,7 +129,7 @@ export class AdvancedManager<K, V extends ManagerItem> extends Manager<K, V> {
      * @param {App} app - The instance of the App class, the Manager is instantiated in
      * @memberof AdvancedManager
      */
-    constructor(app: App) {
+    constructor(app: IApp) {
         super();
         this.app = app;
         this.config = app.config;

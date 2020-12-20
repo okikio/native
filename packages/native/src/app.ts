@@ -2,13 +2,28 @@ import { EventEmitter, ListenerCallback, EventInput } from "./emitter";
 import { ServiceManager, Service } from "./service";
 import { newConfig, ICONFIG } from "./config";
 
+export interface IApp {
+    services: ServiceManager,
+    emitter: EventEmitter,
+    config: ICONFIG,
+    register(config: ICONFIG): App,
+    get(key: string): Service,
+    set(key: string, service: Service): App,
+    add(value: Service): App,
+     boot(): App,
+    stop(): App,
+    on(events: EventInput, callback?: ListenerCallback): App,
+    off(events: EventInput, callback?: ListenerCallback): App,
+    emit(events: string | any[], ...args: any): App,
+}
+
 /**
  * The App class starts the entire process, it controls all managers and all services
  *
  * @export
  * @class App
  */
-export class App {
+export class App implements IApp {
     /**
      * A new instance of the ServiceManager
      *

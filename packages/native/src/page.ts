@@ -3,6 +3,21 @@ import { equal, newURL } from "./url";
 import { getConfig } from "./config";
 import { Service } from "./service";
 
+export interface IPage extends ManagerItem {
+    dom: Document,
+    wrapper: HTMLElement,
+    title: string,
+    head: Element,
+    body: Element,
+    url: URL,
+    data: string,
+    wrapperAttr: string,
+
+    build(): any,
+    install(): void,
+    uninstall(): any,
+}
+
 /**
  * Parses strings to DOM
  */
@@ -14,7 +29,7 @@ export const PARSER: DOMParser = new DOMParser();
  * @export
  * @class Page
  */
-export class Page extends ManagerItem {
+export class Page extends ManagerItem implements IPage {
     /**
      * Holds the DOM of the current page
      *
@@ -123,6 +138,25 @@ export class Page extends ManagerItem {
     }
 }
 
+export interface IPageManager extends Service {
+    loading: Manager<string, Promise<string>>,
+    maxPages: number,
+    pages: AdvancedManager<string, Page>;
+
+    install(): any,
+
+    get(key): Page,
+    add(value): PageManager,
+    set(key, value): PageManager,
+    remove(key): PageManager,
+    has(key): boolean,
+    clear(): PageManager,
+    size: number,
+    keys(): any[],
+
+    load(_url: URL | string): Promise<Page>,
+    request(url: string): Promise<string>,
+}
 
 /**
  * Controls which page to be load
@@ -131,7 +165,7 @@ export class Page extends ManagerItem {
  * @class PageManager
  * @extends {Service}
  */
-export class PageManager extends Service {
+export class PageManager extends Service implements IPageManager {
     /**
      * Stores all URLs that are currently loading
      *
@@ -141,7 +175,7 @@ export class PageManager extends Service {
      */
     public loading: Manager<string, Promise<string>> = new Manager();
     public maxPages = 5;
-    
+
     pages: AdvancedManager<string, Page>;
 
     install() {

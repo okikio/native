@@ -1,7 +1,7 @@
 import { Service } from "./service";
 import { Manager } from "./manager";
 import { newURL, getHashedPath } from "./url";
-import { HistoryManager } from "./history";
+import { IHistoryManager } from "./history";
 
 export type RouteMethod = (...args: any) => any;
 export type RouteStyle = string | RegExp | boolean;
@@ -126,7 +126,7 @@ export class Router extends Service {
      */
     public route() {
         if (this.ServiceManager.has("HistoryManager")) {
-            let history = this.ServiceManager.get("HistoryManager") as HistoryManager;
+            let history = this.ServiceManager.get("HistoryManager") as IHistoryManager;
             let from: string = getHashedPath(newURL((history.length > 1 ? history.previous : history.current).url));
             let to: string = getHashedPath(newURL());
 

@@ -58,6 +58,22 @@ export const newState = (state: IState = {
 	}
 }): IState => (state);
 
+export interface IHistoryManager extends Service {
+	states: IState[],
+	pointer: number,
+
+	init(): any,
+	get(index: number): IState,
+	add(value?: IState, historyAction?: "replace" | "push"): HistoryManager,
+	remove(index?: number): HistoryManager,
+	replace(newStates: IState[]): HistoryManager,
+	set(i: number, state: IState): IState,
+	current: IState,
+	last: IState,
+	previous: IState | null,
+	length: number,
+
+}
 
 /**
  * History of the site, stores only the State class
@@ -66,7 +82,7 @@ export const newState = (state: IState = {
  * @class HistoryManager
  * @extends {Manager<number, IState>}
  */
-export class HistoryManager extends Service {
+export class HistoryManager extends Service implements IHistoryManager {
 	public states: IState[];
 	public pointer = -1;
 
@@ -163,7 +179,6 @@ export class HistoryManager extends Service {
  * @param {("push" | "replace")} action
  * @param {IState} state
  * @param {_URL} url
- * @memberof PJAX
  */
 export const changeState = (action: "push" | "replace", state: IState, item: object) => {
 	let href = getHashedPath(newURL(state.url));
