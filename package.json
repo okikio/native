@@ -1,6 +1,6 @@
 {
     "name": "root",
-    "private": true,
+    "private": false,
     "license": "MIT",
     "publishConfig": {
       "registry": "http://localhost:4873"
