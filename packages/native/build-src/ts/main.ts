@@ -1,5 +1,4 @@
-import { PJAX, App, Router } from "../../src/api";
-
+import { PJAX, App, TransitionManager, Router, HistoryManager, PageManager } from "../../src/api";
 import { Splashscreen } from "./services/Splashscreen";
 import { IntroAnimation } from "./services/IntroAnimation";
 
@@ -12,18 +11,22 @@ let splashscreen: Splashscreen;
 let router: Router, pjax: PJAX;
 
 app
-    .add("service", new IntroAnimation())
-    .add("service", splashscreen = new Splashscreen())
-    .setService("router", router = new Router())
-    .add("service", pjax = new PJAX())
-    .setTransition("default", Fade)
-    .add("transition", BigTransition)
-    .add("transition", Slide)
-    .add("transition", SlideLeft)
-    .add("transition", SlideRight);
+    .add(new IntroAnimation())
+    .add(splashscreen = new Splashscreen())
+    .set("HistoryManager", new HistoryManager())
+    .set("PageManager", new PageManager())
+    .set("TransitionManager", new TransitionManager([
+        ["default", Fade],
+        ["BigTransition", BigTransition],
+        ["Slide", Slide],
+        ["SlideLeft", SlideLeft],
+        ["SlideRight", SlideRight]
+    ]))
+    .set("router", router = new Router())
+    .add(pjax = new PJAX());
 
 try {
-    router = app.get("service", "router") as Router;
+    router = app.get("router") as Router;
 
     // This isn't nessceary, but it changes the nav link in focus depending on the page
     let navLink = document.querySelectorAll(".navbar .nav-link");

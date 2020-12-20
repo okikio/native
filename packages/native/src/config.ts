@@ -34,55 +34,47 @@ export type ConfigKeys = keyof ICONFIG;
  * @export
  * @class CONFIG
  */
-export class CONFIG {
-    /**
-     * The current Configuration
-     *
-     * @public
-     * @type ICONFIG
-     * @memberof CONFIG
-     */
-    public config: ICONFIG;
 
-    /**
-     * Creates an instance of CONFIG.
-     *
-     * @param {ICONFIG} config
-     * @memberof CONFIG
-     */
-    constructor(config: ICONFIG) {
-        this.config = Object.assign({ ...CONFIG_DEFAULTS }, config);
-    }
+/**
+ * Creates an instance of CONFIG.
+ *
+ * @param {ICONFIG} config
+ * @memberof CONFIG
+ */
+export const newConfig = (config: ICONFIG): ICONFIG => {
+    return Object.assign({ ...CONFIG_DEFAULTS }, config);
+};
 
-    /**
-     * Converts string into data attributes
-     *
-     * @param {string} value
-     * @param {boolean} brackets [brackets=true]
-     * @returns string
-     * @memberof CONFIG
-     */
-    public toAttr(value: string, brackets: boolean = true): string {
-        let { prefix } = this.config;
-        let attr = `data${prefix ? "-" + prefix : ""}-${value}`;
-        return brackets ? `[${attr}]` : attr;
-    }
+/**
+ * Converts string into data attributes
+ *
+ * @param {ICONFIG} config
+ * @param {string} value
+ * @param {boolean} brackets [brackets=true]
+ * @returns string
+ * @memberof CONFIG
+ */
+export const toAttr = (config: ICONFIG, value: string, brackets: boolean = true): string => {
+    let { prefix } = config;
+    let attr = `data${prefix ? "-" + prefix : ""}-${value}`;
+    return brackets ? `[${attr}]` : attr;
+};
 
-    /**
-     * Selects config vars, and formats them for use, or simply returns the current configurations for the framework
-     *
-     * @param {ConfigKeys} value
-     * @param {boolean} [brackets=true]
-     * @returns any
-     * @memberof CONFIG
-     */
-    public getConfig(value?: ConfigKeys, brackets: boolean = true): any {
-        if (typeof value !== "string")
-            return this.config;
-
-        let config = this.config[value];
-        if (typeof config === "string")
-            return this.toAttr(config, brackets);
+/**
+ * Selects config vars, and formats them for use, or simply returns the current configurations for the framework
+ *
+ * @param {ICONFIG} config
+ * @param {ConfigKeys} value
+ * @param {boolean} [brackets=true]
+ * @returns any
+ * @memberof CONFIG
+ */
+export const getConfig = (config: ICONFIG, value?: ConfigKeys, brackets: boolean = true): any => {
+    if (typeof value !== "string")
         return config;
-    }
-}
+
+    let prop = config[value];
+    if (typeof prop === "string")
+        return toAttr(config, prop, brackets);
+    return prop;
+};

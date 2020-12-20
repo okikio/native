@@ -1,8 +1,5 @@
 import { AdvancedManager, ManagerItem, methodCall } from "./manager";
-import { TransitionManager } from "./transition";
-import { HistoryManager } from "./history";
 import { EventEmitter } from "./emitter";
-import { PageManager } from "./page";
 import { App } from "./app";
 
 /**
@@ -22,24 +19,6 @@ export class Service extends ManagerItem {
 	public emitter: EventEmitter;
 
 	/**
-	 * Stores access to the App class's PageManager
-	 *
-	 * @public
-	 * @type PageManager
-	 * @memberof Service
-	 */
-	public PageManager: PageManager;
-
-	/**
-	 * Stores access to the App class's HistoryManager
-	 *
-	 * @public
-	 * @type HistoryManager
-	 * @memberof Service
-	 */
-	public HistoryManager: HistoryManager;
-
-	/**
 	 * Stores the ServiceManager the service is install on
 	 *
 	 * @public
@@ -49,32 +28,22 @@ export class Service extends ManagerItem {
 	public ServiceManager: ServiceManager;
 
 	/**
-	 * Stores access to the App's TransitionManager
-	 *
-	 * @public
-	 * @type TransitionManager
-	 * @memberof Service
-	 */
-	public TransitionManager: TransitionManager;
-
-	/**
 	 * Method is run once when Service is installed on a ServiceManager
 	 *
 	 * @memberof Service
 	 */
 	public install(): void {
 		let { app } = this.manager;
-		this.PageManager = app.pages;
-		this.HistoryManager = app.history;
 		this.ServiceManager = app.services;
-		this.TransitionManager = app.transitions;
 	}
 
 	// Called before the start of a Service, represents a constructor of sorts
-	public init(...args: any): void { }
+	public init(...args: any): any;
+	public init(): any { }
 
 	// Called on start of Service
-	public boot(): void {
+	public boot(...args: any): any;
+	public boot(): any {
 		this.initEvents();
 	}
 
@@ -85,10 +54,7 @@ export class Service extends ManagerItem {
 	public stopEvents(): void { }
 
 	public uninstall() {
-		this.PageManager = undefined;
-		this.HistoryManager = undefined;
 		this.ServiceManager = undefined;
-		this.TransitionManager = undefined;
 	}
 
 	// Stop services

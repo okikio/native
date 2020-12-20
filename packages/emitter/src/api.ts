@@ -169,7 +169,7 @@ export class EventEmitter extends Manager<string, Event> {
                     value.callback === listener.callback &&
                     value.scope === listener.scope
                 ) {
-                    return event.delete(i);
+                    return event.remove(i);
                 }
             });
         }
@@ -219,7 +219,7 @@ export class EventEmitter extends Manager<string, Event> {
 
             if (typeof _callback === "function") {
                 this.removeListener(_name, _callback, _scope);
-            } else this.delete(_name);
+            } else this.remove(_name);
         }, this);
         return this;
     }

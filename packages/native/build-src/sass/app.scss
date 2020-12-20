@@ -1,39 +1,48 @@
-$themeColors: ("primary": ("light": #ff3a6b,
+$themeColors: (
+    "primary": (
+        "light": #ff3a6b,
         "dark": #000,
     ),
-    "secondary": ("light": #ff3a6b,
+    "secondary": (
+        "light": #ff3a6b,
         "dark": #ff3a6b,
     ),
-    "tertiary": ("light": #ff3a6b,
+    "tertiary": (
+        "light": #ff3a6b,
         "dark": #ff3a6b,
     ),
-    "background": ("light": #ff3a6b,
+    "background": (
+        "light": #ff3a6b,
         "dark": #ff3a6b,
     ),
 );
 
-$themeFonts: ("title": ("Frank Ruhl Libre",
+$themeFonts: (
+    "title": (
+        "Frank Ruhl Libre",
         serif,
     ),
-    "light": ("Varela Round",
+    "light": (
+        "Varela Round",
         sans-serif,
     ),
-    "icon": ("Material Icons",
+    "icon": (
+        "Material Icons",
         sans-serif,
     ),
-    "default": ("Roboto",
+    "default": (
+        "Roboto",
         sans-serif,
     ),
-    "bold": ("Montserrat",
+    "bold": (
+        "Montserrat",
         sans-serif,
     ),
 );
 
 .theme {
     &-bg {
-
-        @each $colorName,
-        $color in $themeColors {
+        @each $colorName, $color in $themeColors {
             &-#{$colorName} {
                 background-color: map-get($color, "light");
             }
@@ -45,9 +54,7 @@ $themeFonts: ("title": ("Frank Ruhl Libre",
     }
 
     &-color {
-
-        @each $colorName,
-        $color in $themeColors {
+        @each $colorName, $color in $themeColors {
             &-#{$colorName} {
                 color: map-get($color, "light");
             }
@@ -59,9 +66,7 @@ $themeFonts: ("title": ("Frank Ruhl Libre",
     }
 
     &-font {
-
-        @each $fontType,
-        $font in $themeFonts {
+        @each $fontType, $font in $themeFonts {
             &-#{$fontType} {
                 font-family: $font;
             }
@@ -141,7 +146,6 @@ body {
     height: 66px;
     margin-top: -33px;
     margin-left: -33px;
-    -webkit-animation: contanim 2s linear infinite;
     animation: contanim 2s linear infinite;
 }
 
@@ -162,9 +166,7 @@ body {
     stroke: #84ebbd;
     stroke-dasharray: 1, 300;
     stroke-dashoffset: 0;
-    -webkit-animation: strokeanim 3s calc(0.2s * (1)) ease infinite;
     animation: strokeanim 3s calc(0.2s * (1)) ease infinite;
-    -webkit-transform-origin: center center;
     transform-origin: center center;
 }
 
@@ -172,9 +174,7 @@ body {
     stroke: #4977ec;
     stroke-dasharray: 1, 300;
     stroke-dashoffset: 0;
-    -webkit-animation: strokeanim 3s calc(0.2s * (2)) ease infinite;
     animation: strokeanim 3s calc(0.2s * (2)) ease infinite;
-    -webkit-transform-origin: center center;
     transform-origin: center center;
 }
 
@@ -182,9 +182,7 @@ body {
     stroke: #f6bb67;
     stroke-dasharray: 1, 300;
     stroke-dashoffset: 0;
-    -webkit-animation: strokeanim 3s calc(0.2s * (3)) ease infinite;
     animation: strokeanim 3s calc(0.2s * (3)) ease infinite;
-    -webkit-transform-origin: center center;
     transform-origin: center center;
 }
 
@@ -192,28 +190,26 @@ body {
     stroke: #ff5050;
     stroke-dasharray: 1, 300;
     stroke-dashoffset: 0;
-    -webkit-animation: strokeanim 3s calc(0.2s * (4)) ease infinite;
     animation: strokeanim 3s calc(0.2s * (4)) ease infinite;
-    -webkit-transform-origin: center center;
     transform-origin: center center;
 }
 
-@-webkit-keyframes strokeanim {
-    0% {
-        stroke-dasharray: 1, 300;
-        stroke-dashoffset: 0;
-    }
+// @-webkit-keyframes strokeanim {
+//     0% {
+//         stroke-dasharray: 1, 300;
+//         stroke-dashoffset: 0;
+//     }
 
-    50% {
-        stroke-dasharray: 120, 300;
-        stroke-dashoffset: -58.548324585;
-    }
+//     50% {
+//         stroke-dasharray: 120, 300;
+//         stroke-dashoffset: -58.548324585;
+//     }
 
-    100% {
-        stroke-dasharray: 120, 300;
-        stroke-dashoffset: -175.6449737549;
-    }
-}
+//     100% {
+//         stroke-dasharray: 120, 300;
+//         stroke-dashoffset: -175.6449737549;
+//     }
+// }
 
 @keyframes strokeanim {
     0% {
@@ -232,12 +228,12 @@ body {
     }
 }
 
-@-webkit-keyframes contanim {
-    100% {
-        -webkit-transform: rotate(360deg);
-        transform: rotate(360deg);
-    }
-}
+// @-webkit-keyframes contanim {
+//     100% {
+//         -webkit-transform: rotate(360deg);
+//         transform: rotate(360deg);
+//     }
+// }
 
 @keyframes contanim {
     100% {
@@ -277,7 +273,7 @@ body {
     flex-flow: column;
 }
 
-#big-transition #big-transition-horizontal>div {
+#big-transition #big-transition-horizontal > div {
     width: 100%;
     flex: 1 1;
     background: #fff;

@@ -1,6 +1,8 @@
 # @okikio/manager
 
-A superset of the Map class, it gives Map superpowers.
+A superset of the Map class, it gives Map superpowers, it weighs less than 450 B (minified and compressed).
+
+You will need a Map polyfill for older browsers. If you install `@okikio/animate` via `npm` you are most likely going to need [rollup](https://rollupjs.org/) or [esbuild](https://esbuild.github.io/). You can use [polyfill.io](https://polyfill.io/), or another source to create a polyfill. The minimum feature requirement for a polyfill are Maps e.g. (https://polyfill.io/v3/polyfill.min.js?features=Maps)._
 
 ## Table of Contents
 - [@okikio/manager](#okikiomanager)
@@ -22,7 +24,7 @@ A superset of the Map class, it gives Map superpowers.
 
 
 ## Installation
-You can install Manager from `npm` via `npm i @okikio/manager` or `yarn add @okikio/manager`. You can use Manager on the web via [unpkg](https://unpkg.com/@okikio/manager@latest/lib/api.js) `https://unpkg.com/@okikio/manager@latest/lib/api.js`, [skypack](https://cdn.skypack.dev/@okikio/manager) `https://cdn.skypack.dev/@okikio/manager` or [jsdelivr](https://cdn.jsdelivr.net/npm/@okikio/manager@latest/lib/api.js) `https://cdn.jsdelivr.net/npm/@okikio/manager@latest/lib/api.js`.
+You can install Manager from `npm` via `npm i @okikio/manager` or `yarn add @okikio/manager`. You can use Manager on the web via [unpkg](https://unpkg.com/@okikio/manager@latest/lib/api.modern.js) `https://unpkg.com/@okikio/manager@latest/lib/api.modern.js`, [skypack](https://cdn.skypack.dev/@okikio/manager) `https://cdn.skypack.dev/@okikio/manager` or [jsdelivr](https://cdn.jsdelivr.net/npm/@okikio/manager@latest/lib/api.modern.js) `https://cdn.jsdelivr.net/npm/@okikio/manager@latest/lib/api.modern.js`.
 
 Once installed it can be used like this:
 ```javascript
@@ -35,12 +37,16 @@ import { Manager } from "https://cdn.skypack.dev/@okikio/manager";
 // Via script tag
 <script src="https://unpkg.com/@okikio/manager@latest/lib/api.js"></script>
 // Do note, on the web you need to do this, if you installed it via the script tag:
-const { Manager, methodCall } = window.Manager;
+const { Manager, methodCall } = window.manager;
+// or
+const { default: Manager, methodCall } = window.manager;
 ```
 
 ## Getting started
 
-The Manager class makes Maps easier to use, as well as adding 6 methods, **getMap**, **last**, **methodCall**, **asyncMethodCall**, **add**, **remove**, **keys** and **values**. Note: the behavior of the keys and values methods are slightly modified, to return an Array of keys/values instead of an iterator. You can get the keys and values original effects by using ...getMap().keys() or ...getMap().values().
+The Manager class makes Maps easier to use, as well as adding 7 methods, **getMap**, **last**, **methodCall**, **asyncMethodCall**, **add**, **remove**, **keys** and **values**, (**methodCall**, and **asyncMethodCall** are seperate from the Manager class, so treeshaking can get rid of them if they aren't need).
+
+*Note: the behavior of the keys and values methods are slightly modified, to return an Array of keys/values instead of an iterator. You can get the keys and values original effects by using ...getMap().keys() or ...getMap().values().*
 
 ## API
 
@@ -126,6 +132,7 @@ Manager.prototype.remove(key: K);
 
 /**
  * Removes a value stored in the Manager, via the key, returns the Manager class, allowing for chains
+ * Similar to `Manager.prototype.delete`, except it is chainable, and returns the Manager class.
  *
  * @public
  * @param  {K} key - The key for the key value pair to be removed

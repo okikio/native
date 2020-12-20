@@ -1,11 +1,9 @@
 # Native
 A framework who's goal is to make it easy to create complex, performant, light-weight, web applications using native js api's.
 
-View a working example: [https://okikio.github.io/native/packages/native/docs/](https://okikio.github.io/native/packages/native/docs/).
+> [View a working example  &#8594;](https://okikio.github.io/native/packages/native/docs/)
 
-or
-
-Try an online example with Gitpod:
+You can play with the online example with Gitpod:
 
 [![Gitpod Ready-to-Code](https://img.shields.io/badge/Gitpod-Ready--to--Code-blue?logo=gitpod)](https://gitpod.io/#https://github.com/okikio/native)
 

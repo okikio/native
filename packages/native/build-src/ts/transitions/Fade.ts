@@ -1,4 +1,4 @@
-import { ITransition, ITransitionData, animate, hashAction } from "../../../src/api";
+import { ITransition, ITransitionData, animate } from "../../../src/api";
 
 //== Transition
 export const Fade: ITransition = {
@@ -9,18 +9,17 @@ export const Fade: ITransition = {
     out({ from }: ITransitionData) {
         let { duration } = this;
         let fromWrapper = from.wrapper;
-        return new Promise<void>(async resolve => {
-            await animate({
-                target: fromWrapper,
-                opacity: [1, 0],
-                duration,
-                onfinish(el: { style: { opacity: string } }) {
-                    requestAnimationFrame(() => {
-                        el.style.opacity = "0";
-                    });
-                }
-            });
-            resolve();
+        return animate({
+            target: fromWrapper,
+            opacity: [1, 0],
+            duration,
+            onfinish(el: { style: { opacity: string } }) {
+                requestAnimationFrame(() => {
+                    el.style.opacity = "0";
+                });
+            }
+        }).on("finish", function () {
+            this.stop();
         });
     },
 
@@ -43,48 +42,8 @@ export const Fade: ITransition = {
                     el.style = {};
                 });
             }
+        }).then(function () {
+            this.stop();
         });
     }
 };
-// export class Fade extends Transition {
-//     public name = "default";
-//     public duration = 500;
-
-//     out({ from }: ITransitionData) {
-//         let { duration } = this;
-//         let fromWrapper = from.wrapper;
-//         return new Promise(async resolve => {
-//             await animate({
-//                 target: fromWrapper,
-//                 opacity: [1, 0],
-//                 duration,
-//                 onfinish(el: { style: { opacity: string } }) {
-//                     requestAnimationFrame(() => {
-//                         el.style.opacity = "0";
-//                     });
-//                 }
-//             });
-//             resolve();
-//         });
-//     }
-
-//     in({ to }: ITransitionData) {
-//         let { duration } = this;
-//         let toWrapper = to.wrapper;
-//         requestAnimationFrame(() => {
-//             toWrapper.style.transform = "translateX(0%)";
-//         });
-
-//         return animate({
-//             target: toWrapper,
-//             opacity: [0, 1],
-//             duration,
-//             onfinish(el: { style: { opacity?: string } }) {
-//                 requestAnimationFrame(() => {
-//                     el.style.opacity = "1";
-//                     el.style = {};
-//                 });
-//             }
-//         });
-//     }
-// }

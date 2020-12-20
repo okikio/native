@@ -1,8 +1,10 @@
 const { source } = require("./package.json");
 
-const globalName = "EventEmitter";
+const globalName = "emitter";
 const { startService } = require("esbuild");
 const { watch } = require("chokidar");
+const gzipSize = require("gzip-size");
+const prettyBytes = require("pretty-bytes");
 
 const mode = process.argv.includes("--watch") ? "watch" : "build";
 const outputs = [
@@ -40,6 +42,8 @@ let buildData = {
     logLevel: "info",
 };
 
+const fileSize = async (file = "lib/api.modern.js") =>
+    `=> Gzip size - ${prettyBytes(await gzipSize.file(file))}\n`;
 const printProgress = (timerStart, logs, timerEnd = Date.now()) => {
     console.log(
         `-------------\n\n${logs}Built in ${timerEnd - timerStart}ms.\n`
@@ -68,6 +72,7 @@ if (mode == "watch") {
             );
 
             printProgress(timerStart, logs);
+            console.log(await fileSize());
         } catch (e) {
             // OOPS! ERROR!
             console.error("Opps, something went wrong!", e);
@@ -87,7 +92,9 @@ if (mode == "watch") {
                     promise = promises[i];
                     promises[i] = await promise.rebuild();
                 }
+
                 printProgress(timerStart, logs);
+                console.log(await fileSize());
             } catch (e) {
                 console.error("Opps, something went wrong!", e);
             }
@@ -111,6 +118,7 @@ if (mode == "watch") {
 
             // Get time after build ends
             printProgress(timerStart, logs);
+            console.log(await fileSize());
         } catch (e) {
             // OOPS! ERROR!
             console.error("Opps, something went wrong!", e);

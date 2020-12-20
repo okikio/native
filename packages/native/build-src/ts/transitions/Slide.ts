@@ -1,4 +1,4 @@
-import { ITransition, ITransitionData, animate, hashAction } from "../../../src/api";
+import { ITransition, ITransitionData, animate } from "../../../src/api";
 
 //== Transitions
 export const Slide: ITransition = {
@@ -34,6 +34,8 @@ export const Slide: ITransition = {
                     el.style.transform = `translateX(${direction === "left" ? "-" : ""}25%)`;
                 });
             }
+        }).then(function () {
+            this.stop();
         });
     },
 
@@ -57,6 +59,8 @@ export const Slide: ITransition = {
                     el.style.transform = `translateX(0%)`;
                 });
             }
+        }).then(function () {
+            this.stop();
         });
     }
 };

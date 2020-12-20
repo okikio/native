@@ -1,5 +1,7 @@
 # @okikio/emitter
-A small Event Emitter written in typescript with performance and ease of use in mind.
+A small Event Emitter written in typescript with performance and ease of use in mind, it weighs less than 800 B (minified and compressed).
+
+You will need a Map polyfill for older browsers. If you install `@okikio/animate` via `npm` you are most likely going to need [rollup](https://rollupjs.org/) or [esbuild](https://esbuild.github.io/). You can use [polyfill.io](https://polyfill.io/), or another source to create a polyfill. The minimum feature requirement for a polyfill are Maps e.g. (https://polyfill.io/v3/polyfill.min.js?features=Maps)._
 
 ## Table of Contents
 - [@okikio/emitter](#okikioemitter)
@@ -12,7 +14,7 @@ A small Event Emitter written in typescript with performance and ease of use in 
 
 
 ## Installation
-You can install Emitter from `npm` via `npm i @okikio/emitter` or `yarn add @okikio/emitter`. You can use Emitter on the web via [unpkg](https://unpkg.com/@okikio/emitter@latest/lib/api.js) `https://unpkg.com/@okikio/emitter@latest/lib/api.js`, [skypack](https://cdn.skypack.dev/@okikio/emitter) `https://cdn.skypack.dev/@okikio/emitter` or [jsdelivr](https://cdn.jsdelivr.net/npm/@okikio/emitter@latest/lib/api.js) `https://cdn.jsdelivr.net/npm/@okikio/emitter@latest/lib/api.js`.
+You can install Emitter from `npm` via `npm i @okikio/emitter` or `yarn add @okikio/emitter`. You can use Emitter on the web via [unpkg](https://unpkg.com/@okikio/emitter@latest/lib/api.modern.js) `https://unpkg.com/@okikio/emitter@latest/lib/api.modern.js`, [skypack](https://cdn.skypack.dev/@okikio/emitter) `https://cdn.skypack.dev/@okikio/emitter` or [jsdelivr](https://cdn.jsdelivr.net/npm/@okikio/emitter@latest/lib/api.modern.js) `https://cdn.jsdelivr.net/npm/@okikio/emitter@latest/lib/api.modern.js`.
 
 Once installed it can be used like this:
 ```javascript
@@ -25,7 +27,7 @@ import { EventEmitter } from "https://cdn.skypack.dev/@okikio/emitter";
 // Via script tag
 <script src="https://unpkg.com/@okikio/emitter@latest/lib/api.js"></script>
 // Do note, on the web you need to do this, if you installed it via the script tag:
-const { EventEmitter } = window.EventEmitter;
+const { default: EventEmitter } = window.emitter;
 ```
 
 ## Getting started

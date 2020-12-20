@@ -1,3 +1,4 @@
+import { Service } from "./service";
 import { getHashedPath, newURL } from "./url";
 
 export type Trigger = HTMLAnchorElement | "HistoryManager" | "popstate" | "back" | "forward";
@@ -65,7 +66,7 @@ export const newState = (state: IState = {
  * @class HistoryManager
  * @extends {Manager<number, IState>}
  */
-export class HistoryManager {
+export class HistoryManager extends Service {
 	public states: IState[];
 	public pointer = -1;
 
@@ -75,7 +76,7 @@ export class HistoryManager {
 	 * @memberof HistoryManager
 	 * @constructor
 	 */
-	constructor() {
+	init() {
 		this.states = [];
 
 		let state = newState();

@@ -50,25 +50,24 @@
     "bugs": {
         "url": "https://github.com/okikio/native/issues"
     },
-    "homepage": "https://github.com/okikio/native#readme",
-    "devDependencies": {
-        "@types/jest": "^26.0.18",
-        "browser-sync": "^2.26.13",
-        "esbuild": "^0.8.21",
-        "esbuild-jest": "^0.3.0",
-        "eslint": "^7.15.0",
-        "gulp": "^4.0.2",
-        "gulp-sass": "^4.1.0",
-        "jest": "^26.6.3",
-        "jest-chain": "^1.1.5",
-        "merge-stream": "^2.0.0",
-        "typescript": "^4.1.2",
-        "ultra-runner": "^3.6.0"
-    },
+    "homepage": "https://github.com/okikio/native/packages/native#readme",
     "dependencies": {
         "@okikio/animate": "workspace:^0.0.7",
         "@okikio/emitter": "workspace:^0.0.7",
-        "@okikio/manager": "workspace:^0.0.7"
+        "@okikio/manager": "workspace:^0.0.7",
+        "browser-sync": "^2.26.13",
+        "chokidar": "^3.4.3",
+        "esbuild": "^0.8.24",
+        "eslint": "^7.16.0",
+        "gulp": "^4.0.2",
+        "gulp-esbuild": "^0.3.7",
+        "gulp-pug": "^4.0.1",
+        "gulp-sass": "^4.1.0",
+        "gzip-size": "^6.0.0",
+        "merge-stream": "^2.0.0",
+        "pretty-bytes": "^5.4.1",
+        "typescript": "^4.1.3",
+        "ultra-runner": "^3.7.1"
     },
     "gitHead": "ad422076cdb57d570426f786886129d5bca2f90f"
 }

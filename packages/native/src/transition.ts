@@ -1,10 +1,9 @@
 import { Manager } from "./manager";
-import { EventEmitter } from "./emitter";
 import { ICoords, Trigger } from "./history";
 import { Page } from "./page";
-import { App } from "./app";
-import { CONFIG } from "./config";
+import { getConfig } from "./config";
 import { hashAction } from "./pjax";
+import { Service } from "./service";
 
 /**
  * The async function type, allows for smooth transition between Promises
@@ -35,44 +34,19 @@ export interface ITransitionData {
  * @class TransitionManager
  * @extends {Manager<string, ITransition>}
  */
-export class TransitionManager extends Manager<string, ITransition> {
-    /**
-     * The instance of the App class, the Manager is instantiated in
-     *
-     * @type App
-     * @memberof AdvancedManager
-     */
-    public app: App;
-
-    /**
-     * The Config class of the App the AdvancedManager is attached to
-     *
-     * @public
-     * @type CONFIG
-     * @memberof AdvancedManager
-    */
-    public config: CONFIG;
-
-    /**
-     * The EventEmitter class of the App the AdvancedManager is attached to
-     *
-     * @public
-     * @type EventEmitter
-     * @memberof AdvancedManager
-    */
-    public emitter: EventEmitter;
-
-    /**
-     * Creates an instance of the TransitionManager
-     *
-     * @param {App} app
-     * @memberof TransitionManager
-     */
-    constructor(app: App) {
+export class TransitionManager extends Service {
+    transitions: Manager<string, ITransition>;
+    constructor(transitions?) {
         super();
-        this.app = app;
-        this.config = app.config;
-        this.emitter = app.emitter;
+        this.transitions = new Manager(transitions);
+    }
+
+    get(key: string) { return this.transitions.get(key); }
+    set(key: string, value: ITransition) { this.transitions.set(key, value); return this; }
+    add(value: ITransition) { this.transitions.add(value); return this; }
+
+    boot() {
+        super.boot();
     }
 
     /**
@@ -82,8 +56,8 @@ export class TransitionManager extends Manager<string, ITransition> {
      * @returns Promise<Transition>
      * @memberof TransitionManager
      */
-    public async boot(name: string, data: any): Promise<ITransition> {
-        let transition: ITransition = this.get(name);
+    public async animate(name: string, data: any): Promise<ITransition> {
+        let transition: ITransition = this.transitions.get(name);
         let scroll = data.scroll;
         if (!(data.oldPage instanceof Page) || !(data.newPage instanceof Page))
             throw `[Page] either oldPage or newPage aren't instances of the Page Class.\n ${{
@@ -97,7 +71,7 @@ export class TransitionManager extends Manager<string, ITransition> {
 
         if (!(fromWrapper instanceof Node) || !(toWrapper instanceof Node))
             throw `[Wrapper] the wrapper from the ${!(toWrapper instanceof Node) ? "next" : "current"
-            } page cannot be found. The wrapper must be an element that has the attribute ${this.config.getConfig(
+            } page cannot be found. The wrapper must be an element that has the attribute ${getConfig(this.config,
                 "wrapperAttr"
             )}.`;
         transition.init && transition?.init(data);

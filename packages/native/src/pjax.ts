@@ -1,7 +1,9 @@
-import { newState, Trigger, IState, newCoords, IHistoryItem, changeState } from "./history";
+import { newState, Trigger, newCoords, IHistoryItem, HistoryManager } from "./history";
 import { Service } from "./service";
-import { Page } from "./page";
+import { Page, PageManager } from "./page";
 import { newURL, getHashedPath, equal } from "./url";
+import { getConfig } from "./config";
+import { TransitionManager } from "./transition";
 
 export type LinkEvent = MouseEvent | TouchEvent;
 export type StateEvent = LinkEvent | PopStateEvent;
@@ -145,7 +147,7 @@ export class PJAX extends Service {
     public getTransitionName(el: HTMLAnchorElement): string | null {
         if (!el || !el.getAttribute) return null;
         let transitionAttr = el.getAttribute(
-            this.config.getConfig("transitionAttr", false)
+            getConfig(this.config, "transitionAttr", false)
         );
         if (typeof transitionAttr === "string") return transitionAttr;
         return null;
@@ -179,9 +181,9 @@ export class PJAX extends Service {
             (el as HTMLAnchorElement).protocol !== location.protocol ||
             (el as HTMLAnchorElement).hostname !== location.hostname;
         let download = typeof el.getAttribute("download") === "string";
-        let preventSelf = el.hasAttribute(this.config.getConfig("preventSelfAttr", false));
+        let preventSelf = el.hasAttribute(getConfig(this.config, "preventSelfAttr", false));
         let preventAll = Boolean(
-            el.closest(this.config.getConfig("preventAllAttr"))
+            el.closest(getConfig(this.config, "preventAllAttr"))
         );
         let prevent = preventSelf && preventAll;
         let sameURL = getHashedPath(newURL()) === getHashedPath(newURL(href));
@@ -314,13 +316,17 @@ export class PJAX extends Service {
         event?: StateEvent;
     }): Promise<void> {
         // If transition is already running and the go method is called again, force load page
-        if (this.isTransitioning && this.stopOnTransitioning) {
+        if (this.isTransitioning && this.stopOnTransitioning ||
+            !this.ServiceManager.has("TransitionManager") ||
+            !this.ServiceManager.has("HistoryManager") ||
+            !this.ServiceManager.has("PageManager")) {
             this.force(href);
             return;
         }
 
+        const history = this.ServiceManager.get("HistoryManager") as HistoryManager;
         let scroll = { x: 0, y: 0 };
-        let currentState = this.HistoryManager.current;
+        let currentState = history.current;
         let currentURL = currentState.url;
         if (equal(currentURL, href)) {
             return;
@@ -338,13 +344,13 @@ export class PJAX extends Service {
 
             trigger = this.getDirection(difference);
 
-            let _state = this.HistoryManager.get(this.HistoryManager.pointer);
+            let _state = history.get(history.pointer);
             transitionName = _state.transition;
             scroll = _state.data.scroll;
 
             // Based on the direction of the state change either remove or add a state
-            this.HistoryManager.replace(state.states);
-            this.HistoryManager.pointer = index;
+            history.replace(state.states);
+            history.pointer = index;
             if (trigger === "back") {
                 // this.HistoryManager.remove(currentIndex);
                 this.emitter.emit(`POPSTATE_BACK`, event);
@@ -366,7 +372,7 @@ export class PJAX extends Service {
                 data: { scroll },
             });
 
-            this.HistoryManager.add(state);
+            history.add(state);
             this.emitter.emit("HISTORY_NEW_ITEM", event);
         }
 
@@ -409,14 +415,15 @@ export class PJAX extends Service {
         scroll: { x: number; y: number };
     }): Promise<any> {
         try {
-            let oldPage = await this.PageManager.load(oldHref);
+            const pages = this.ServiceManager.get("PageManager") as PageManager;
+            let oldPage = await pages.load(oldHref);
             await oldPage.build();
             let newPage: Page;
 
             this.emitter.emit("PAGE_LOADING", { href, oldPage, trigger });
             try {
                 try {
-                    newPage = await this.PageManager.load(href);
+                    newPage = await pages.load(href);
                     await newPage.build();
                     this.transitionStart();
                     this.emitter.emit("PAGE_LOAD_COMPLETE", {
@@ -439,9 +446,10 @@ export class PJAX extends Service {
                 });
 
                 try {
+                    const TransitionManager = this.ServiceManager.get("TransitionManager") as TransitionManager;
                     this.emitter.emit("TRANSITION_START", transitionName);
 
-                    let transition = await this.TransitionManager.boot(transitionName, {
+                    let transition = await TransitionManager.animate(transitionName, {
                         oldPage,
                         newPage,
                         trigger,
@@ -506,16 +514,18 @@ export class PJAX extends Service {
      */
     public onHover(event: LinkEvent): Promise<void> {
         let el = this.getLink(event);
-        if (!el) return;
+        if (!el || !this.ServiceManager.get("PageManager")) return;
 
+        const pages = this.ServiceManager.get("PageManager") as PageManager;
         let url = newURL(this.getHref(el));
         let urlString: string = url.pathname;
+
         // If Url is ignored or already in cache, don't do any think
-        if (this.ignoredURL(url) || this.PageManager.has(urlString)) return;
+        if (this.ignoredURL(url) || pages.has(urlString)) return;
         this.emitter.emit("ANCHOR_HOVER HOVER", event);
 
         try {
-            this.PageManager.load(url);
+            pages.load(url);
         } catch (err) {
             console.warn("[PJAX] prefetch error,", err);
         }

@@ -7,6 +7,7 @@
     ],
     "scripts": {
         "build": "ultra --parallel -r build",
+        "watch": "ultra --parallel -r watch",
         "docs:build": "pnpm --parallel -r docs:build",
         "docs:watch": "ultra --parallel -r docs:watch",
         "dts": "ultra -r --parallel --filter \"packages/*\" dts",
@@ -15,20 +16,11 @@
         "pre-release": "ultra -r pre-release",
         "release": "npm run pre-release && lerna version && pnpm -r publish --tag latest"
     },
-    "devDependencies": {
+    "dependencies": {
         "@commitlint/cli": "^11.0.0",
         "@commitlint/config-conventional": "^11.0.0",
-        "@types/jest": "^26.0.18",
-        "browser-sync": "^2.26.13",
-        "esbuild": "^0.8.21",
-        "esbuild-jest": "^0.3.0",
-        "gulp": "^4.0.2",
-        "jest": "^26.6.3",
-        "jest-chain": "^1.1.5",
         "lerna": "^3.22.1",
-        "merge-stream": "^2.0.0",
-        "pnpm": "^5.13.5",
-        "typescript": "^4.1.2",
-        "ultra-runner": "^3.6.0"
+        "pnpm": "^5.13.6",
+        "ultra-runner": "^3.7.1"
     }
 }

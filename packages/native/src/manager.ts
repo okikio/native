@@ -1,5 +1,5 @@
 import { Manager, methodCall, asyncMethodCall } from "@okikio/manager";
-import { CONFIG } from "./config";
+import { ICONFIG } from "./config";
 import { App } from "./app";
 import EventEmitter from "@okikio/emitter";
 
@@ -31,13 +31,13 @@ export class ManagerItem {
     public app: App;
 
     /**
-     * The Config class of the App the ManagerItem is attached to
+     * The Config of the App the ManagerItem is attached to
      *
      * @public
-     * @type CONFIG
+     * @type ICONFIG
      * @memberof ManagerItem
     */
-    public config: CONFIG;
+    public config: ICONFIG;
     public emitter: EventEmitter;
     public key: any;
 
@@ -78,7 +78,7 @@ export class ManagerItem {
     public unregister() {
         this.uninstall();
 
-        this.manager.delete(this.key);
+        this.manager.remove(this.key);
         this.key = undefined;
         this.manager = undefined;
         this.app = undefined;
@@ -106,13 +106,13 @@ export class AdvancedManager<K, V extends ManagerItem> extends Manager<K, V> {
     public app: App;
 
     /**
-     * The Config class of the App the AdvancedManager is attached to
+     * The Config of the App the AdvancedManager is attached to
      *
      * @public
-     * @type CONFIG
+     * @type ICONFIG
      * @memberof AdvancedManager
     */
-    public config: CONFIG;
+    public config: ICONFIG;
 
     /**
      * The EventEmitter class of the App the AdvancedManager is attached to

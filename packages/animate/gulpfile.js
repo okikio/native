@@ -1,12 +1,5 @@
 // Import external modules
 const mode = process.argv.includes("--watch") ? "watch" : "build";
-const bs = require("browser-sync");
-
-const sass = require("gulp-sass");
-const pug = require("gulp-pug");
-const gulpEsBuild = require("gulp-esbuild");
-const { createGulpEsbuild } = gulpEsBuild;
-const esbuild = mode == "watch" ? createGulpEsbuild() : gulpEsBuild;
 
 // Gulp utilities
 const { stream, task, watch, parallel, series } = require("../../util");
@@ -25,8 +18,11 @@ const jsFolder = `${destFolder}/js`;
 const cssFolder = `${destFolder}/css`;
 const htmlFolder = `${destFolder}`;
 
+let browserSync;
+
 // HTML Tasks
-task("html", () => {
+task("html", async () => {
+    const { default: pug } = await import("gulp-pug");
     return stream(`${pugFolder}/*.pug`, {
         pipes: [
             pug({
@@ -39,20 +35,32 @@ task("html", () => {
 });
 
 // CSS Tasks
-const { logError } = sass;
-task("css", () => {
+task("css", async () => {
+    const { default: sass } = await import("gulp-sass");
+    const { logError } = sass;
     return stream(`${sassFolder}/**/*.scss`, {
         pipes: [
             // Minify scss to css
             sass({ outputStyle: "compressed" }).on("error", logError),
         ],
         dest: cssFolder,
-        end: [browserSync.stream()],
+        end: browserSync ? [browserSync.stream()] : null,
     });
 });
 
 // JS Tasks
-task("js", () => {
+task("js", async () => {
+    const [
+        { default: gulpEsBuild, createGulpEsbuild },
+        { default: gzipSize },
+        { default: prettyBytes },
+    ] = await Promise.all([
+        import("gulp-esbuild"),
+        import("gzip-size"),
+        import("pretty-bytes"),
+    ]);
+    const esbuild = mode == "watch" ? createGulpEsbuild() : gulpEsBuild;
+
     return stream(`${tsFolder}/main.ts`, {
         pipes: [
             // Bundle Modules
@@ -66,16 +74,30 @@ task("js", () => {
             }),
         ],
         dest: jsFolder, // Output
+        async end() {
+            console.log(
+                `=> Gzip size - ${prettyBytes(
+                    await gzipSize.file(`${jsFolder}/main.js`)
+                )}\n`
+            );
+        },
     });
 });
 
 // Build & Watch Tasks
-const browserSync = bs.create();
 task("build", parallel("html", "css", "js"));
-task("watch", () => {
+task("watch", async () => {
+    const { default: bs } = await import("browser-sync");
+    browserSync = bs.create();
     browserSync.init(
         {
             server: destFolder,
+            serveStatic: [
+                {
+                    route: "/lib",
+                    dir: ["./lib"],
+                },
+            ],
         },
         (_err, bs) => {
             bs.addMiddleware("*", (_req, res) => {
@@ -88,8 +110,16 @@ task("watch", () => {
     );
 
     watch(`${pugFolder}/**/*.pug`, series("html"));
-    watch(`${sassFolder}/*.scss`, series("css"));
-    watch([`${tsFolder}/**/*.ts`, `src/*.ts`], series("js"));
+    watch(`${sassFolder}/**/*.scss`, series("css"));
+    watch(
+        [
+            `${tsFolder}/**/*.ts`,
+            `src/**/*.ts`,
+            `../manager/src/*.ts`,
+            `../emitter/src/*.ts`,
+        ],
+        series("js")
+    );
 
     watch([`${htmlFolder}/**/*.html`, `${jsFolder}/**/*.js`]).on(
         "change",

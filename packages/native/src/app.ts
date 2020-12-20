@@ -1,9 +1,6 @@
 import { EventEmitter, ListenerCallback, EventInput } from "./emitter";
-import { ITransition, TransitionManager } from "./transition";
-import { HistoryManager, IState } from "./history";
 import { ServiceManager, Service } from "./service";
-import { PageManager } from "./page";
-import { CONFIG, ICONFIG } from "./config";
+import { newConfig, ICONFIG } from "./config";
 
 /**
  * The App class starts the entire process, it controls all managers and all services
@@ -12,24 +9,6 @@ import { CONFIG, ICONFIG } from "./config";
  * @class App
  */
 export class App {
-    /**
-     * A new instance of the HistoryManager
-     *
-     * @public
-     * @type HistoryManager
-     * @memberof App
-     */
-    public history: HistoryManager;
-
-    /**
-     * A new instance of the TransitionManager
-     *
-     * @public
-     * @type TransitionManager
-     * @memberof App
-     */
-    public transitions: TransitionManager;
-
     /**
      * A new instance of the ServiceManager
      *
@@ -49,22 +28,13 @@ export class App {
     public emitter: EventEmitter;
 
     /**
-     * A new instance of the PageManager
-     *
-     * @public
-     * @type PageManager
-     * @memberof App
-     */
-    public pages: PageManager;
-
-    /**
      * The current Configuration's for the framework
      *
      * @public
-     * @type CONFIG
+     * @type ICONFIG
      * @memberof App
      */
-    public config: CONFIG;
+    public config: ICONFIG;
 
     /**
      * Creates an instance of App.
@@ -79,16 +49,13 @@ export class App {
     /**
      * For registering all managers and the configurations
      *
-     * @param {(ICONFIG | CONFIG)} [config={}]
+     * @param {(ICONFIG)} [config={}]
      * @returns App
      * @memberof App
      */
-    public register(config: ICONFIG | CONFIG = {}): App {
-        this.config = config instanceof CONFIG ? config : new CONFIG(config);
+    public register(config: ICONFIG = {}): App {
+        this.config = newConfig(config);
         this.emitter = new EventEmitter();
-        this.history = new HistoryManager();
-        this.pages = new PageManager(this);
-        this.transitions = new TransitionManager(this);
         this.services = new ServiceManager(this);
 
         let handler = (() => {
@@ -105,39 +72,12 @@ export class App {
     /**
      * Based on the type, it will return either a Transition, a Service, or a State from their respective Managers
      *
-     * @param {("service" | "transition" | "state" | string)} type
-     * @param {any} key
+     * @param {string} key
      * @returns Service | Transition | State
      * @memberof App
      */
-    public get(type: "service" | "transition" | "state" | string, key: any): Service | ITransition | IState {
-        switch (type.toLowerCase()) {
-            case "service":
-                return this.services.get(key);
-            case "transition":
-                return this.transitions.get(key);
-            case "state":
-                return this.history.get(key);
-            default:
-                throw `Error: can't get type '${type}', it is not a recognized type. Did you spell it correctly.`;
-        }
-    }
-
-    /**
-     * Based on the type, it will return load either Page a Transition, a Service, a State, or a Page from their respective Managers
-     *
-     * @param {("page" | string)} type
-     * @param {any} key
-     * @returns App
-     * @memberof App
-     */
-    public async load(type: "page" | string, key: any): Promise<any> {
-        switch (type.toLowerCase()) {
-            case "page":
-                return await this.pages.load(key);
-            default:
-                return Promise.resolve(this.get(type, key));
-        }
+    public get(key: string): Service {
+        return this.services.get(key);
     }
 
     /**
@@ -148,47 +88,20 @@ export class App {
      * @returns App
      * @memberof App
      */
-    public setService(key: string, service: Service): App {
+    public set(key: string, service: Service): App {
         this.services.set(key, service);
-        return this;
-    }
-
-    /**
-     * Adds a Service to the App's instance of the ServiceManager, with a name
-     *
-     * @param {string} key
-     * @param {ITransition} tranisition
-     * @returns App
-     * @memberof App
-     */
-    public setTransition(key: string, transition: ITransition): App {
-        this.transitions.set(key, transition);
         return this;
     }
 
     /**
      * Based on the type, it will add either a Transition, a Service, or a State to their respective Managers
      *
-     * @param {("service" | "transition" | "state")} type
-     * @param {any} value
+     * @param {Service} value
      * @returns App
      * @memberof App
      */
-    public add(type: "service" | "transition" | "state", value: any): App {
-        switch (type.toLowerCase()) {
-            case "service":
-                this.services.add(value);
-                break;
-            case "transition":
-                this.transitions.set(value.name, value);
-                break;
-            case "state":
-                this.history.add(value);
-                break;
-            default:
-                throw `Error: can't add type '${type}', it is not a recognized type. Did you spell it correctly.`;
-        }
-
+    public add(value: Service): App {
+        this.services.add(value);
         return this;
     }
 

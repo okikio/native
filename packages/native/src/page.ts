@@ -1,6 +1,7 @@
 import { Manager, ManagerItem, AdvancedManager } from "./manager";
 import { equal, newURL } from "./url";
-import { App } from "./app";
+import { getConfig } from "./config";
+import { Service } from "./service";
 
 /**
  * Parses strings to DOM
@@ -107,7 +108,7 @@ export class Page extends ManagerItem {
      * @memberof Page
      */
     public install(): void {
-        this.wrapperAttr = this.config.getConfig("wrapperAttr");
+        this.wrapperAttr = getConfig(this.config, "wrapperAttr");
     }
 
     public uninstall() {
@@ -128,9 +129,9 @@ export class Page extends ManagerItem {
  *
  * @export
  * @class PageManager
- * @extends {AdvancedManager<string, Page>}
+ * @extends {Service}
  */
-export class PageManager extends AdvancedManager<string, Page> {
+export class PageManager extends Service {
     /**
      * Stores all URLs that are currently loading
      *
@@ -140,19 +141,25 @@ export class PageManager extends AdvancedManager<string, Page> {
      */
     public loading: Manager<string, Promise<string>> = new Manager();
     public maxPages = 5;
+    
+    pages: AdvancedManager<string, Page>;
 
-    /**
-     * Creates an instance of the PageManager
-     *
-     * @param {App} app
-     * @memberof PageManager
-     */
-    constructor(app: App) {
-        super(app);
+    install() {
+        this.pages = new AdvancedManager(this.app);
+
         let URLString = newURL().pathname;
         this.set(URLString, new Page());
         URLString = undefined;
     }
+
+    get(key) { return this.pages.get(key); }
+    add(value) { this.pages.add(value); return this; }
+    set(key, value) { this.pages.set(key, value); return this; }
+    remove(key) { this.pages.remove(key); return this; }
+    has(key) { return this.pages.has(key); }
+    clear() { this.pages.clear(); return this; }
+    get size() { return this.pages.size; }
+    keys() { return this.pages.keys(); }
 
     /**
      * Load from cache or by requesting URL via a fetch request, avoid requesting for the same thing twice by storing the fetch request in "this.loading"
@@ -176,7 +183,7 @@ export class PageManager extends AdvancedManager<string, Page> {
         } else request = this.loading.get(urlString);
 
         let response = await request;
-        this.loading.delete(urlString);
+        this.loading.remove(urlString);
 
         page = new Page(url, response);
         this.set(urlString, page);
@@ -203,11 +210,11 @@ export class PageManager extends AdvancedManager<string, Page> {
      * @memberof PageManager
      */
     public async request(url: string): Promise<string> {
-        const headers = new Headers(this.config.getConfig("headers"));
+        const headers = new Headers(getConfig(this.config, "headers"));
         const timeout = window.setTimeout(() => {
             window.clearTimeout(timeout);
             throw "Request Timed Out!";
-        }, this.config.getConfig("timeout"));
+        }, getConfig(this.config, "timeout"));
 
         try {
             let response = await fetch(url, {

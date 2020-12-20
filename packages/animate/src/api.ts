@@ -229,7 +229,7 @@ export class Animate {
      */
     constructor(options: AnimationOptions = {}) {
         let { options: animation, ...rest } = options;
-        this.options = Object.assign({}, DefaultAnimationOptions, animation, rest);
+        this.options = Object.assign({}, DefaultAnimationOptions, animation instanceof Animate ? animation.getOptions() : animation, rest);
         this.loop = this.loop.bind(this);
 
         let {
@@ -248,12 +248,13 @@ export class Animate {
             ...properties
         } = this.options;
 
-        this.mainElement = document.createElement("span");
+        this.mainElement = document.createElement("div");
         this.targets = getTargets(target);
         this.properties = properties;
 
+        let i = 0, len = this.targets.length
         let animationKeyframe: Keyframe[] | PropertyIndexedKeyframes;
-        for (let i = 0, len = this.targets.length; i < len; i++) {
+        for (; i < len; i++) {
             let target = this.targets[i] as HTMLElement;
             let animationOptions = {
                 easing: getEase(easing),
@@ -307,9 +308,27 @@ export class Animate {
 
         this.promise = this.newPromise();
         this.mainAnimation.onfinish = () => {
-            this.finish(this.options);
             window.cancelAnimationFrame(this.animationFrame);
+            this.finish();
         };
+    }
+
+    /**
+     * Returns a new Promise that is resolve when this.finish is called
+     *
+     * @public
+     * @returns {Promise<AnimationOptions>}
+     * @memberof Animate
+     */
+    public newPromise(): Promise<AnimationOptions> {
+        return new Promise((resolve, reject) => {
+            try {
+                this.finish = () => {
+                    this.emit("finish", this.options);
+                    return resolve(this.options);
+                };
+            } catch (err) { reject(err); }
+        });
     }
 
     /**
@@ -323,58 +342,47 @@ export class Animate {
     }
 
     /**
-     * Returns a new Promise that is resolve when this.finish is called
-     *
-     * @public
-     * @returns {Promise<AnimationOptions>}
-     * @memberof Animate
-     */
-    public newPromise(): Promise<AnimationOptions> {
-        return new Promise((resolve, reject) => {
-            try {
-                this.finish = (options: AnimationOptions) => {
-                    this.emit("finish", options);
-                    return resolve(options);
-                };
-            } catch (err) { reject(err); }
-        });
-    }
-
-    /**
      * Fulfills the this.promise Promise
      *
      * @param {(value?: any) => any} [onFulfilled]
      * @param {(reason?: any) => any} [onRejected]
-     * @returns {Promise<AnimationOptions>}
+     * @returns {Animate}
      * @memberof Animate
      */
     public then(
         onFulfilled?: (value?: any) => any,
         onRejected?: (reason?: any) => any
-    ): Promise<AnimationOptions> {
-        return this.promise.then(onFulfilled, onRejected);
+    ): Animate {
+        onFulfilled = onFulfilled?.bind(this);
+        onRejected = onRejected?.bind(this);
+        this.promise.then(onFulfilled, onRejected);
+        return this;
     }
 
     /**
      * Catches error that occur in the this.promise Promise
      *
      * @param {(reason?: any) => any} onRejected
-     * @returns {Promise<AnimationOptions>}
+     * @returns {Animate}
      * @memberof Animate
      */
-    public catch(onRejected: (reason?: any) => any): Promise<AnimationOptions> {
-        return this.promise.catch(onRejected);
+    public catch(onRejected: (reason?: any) => any): Animate {
+        onRejected = onRejected?.bind(this);
+        this.promise.catch(onRejected);
+        return this;
     }
 
     /**
      * If you don't care if the this.promise Promise has either been rejected or resolved
      *
      * @param {() => any} onFinally
-     * @returns {Promise<AnimationOptions>}
+     * @returns {Animate}
      * @memberof Animate
      */
-    public finally(onFinally: () => any): Promise<AnimationOptions> {
-        return this.promise.finally(onFinally);
+    public finally(onFinally: () => any): Animate {
+        onFinally = onFinally?.bind(this);
+        this.promise.finally(onFinally);
+        return this;
     }
 
     /**
@@ -398,7 +406,7 @@ export class Animate {
      * @memberof Animate
      */
     public on(events: EventInput, callback?: ListenerCallback, scope?: object): Animate {
-        this.emitter.on(events, callback, scope);
+        this.emitter.on(events, callback, scope ?? this);
         return this;
     }
 
@@ -412,7 +420,7 @@ export class Animate {
      * @memberof Animate
      */
     public off(events: EventInput, callback?: ListenerCallback, scope?: object): Animate {
-        this.emitter.off(events, callback, scope);
+        this.emitter.off(events, callback, scope ?? this);
         return this;
     }
 
@@ -531,7 +539,7 @@ export class Animate {
      * @memberof Animate
      */
     public setProgress(percent: number): Animate {
-        this.mainAnimation.currentTime = percent * this.duration;
+        this.mainAnimation.currentTime = (percent / 100) * this.duration;
         this.animations.forEach(animation => {
             animation.currentTime = percent * this.duration;
         });
@@ -599,6 +607,35 @@ export class Animate {
     // Returns the Animate options, as JSON
     public toJSON(): AnimationOptions {
         return this.getOptions();
+    }
+
+    /**
+     * Cancels & Clears all Animations
+     *
+     * @returns {Animate}
+     * @memberof Animate
+     */
+    public stop() {
+        this.animations.forEach((anim) => {
+            anim.cancel();
+        }, this);
+        this.mainAnimation.cancel();
+
+        window.cancelAnimationFrame(this.animationFrame);
+        this.animations.clear();
+        while (this.targets.length) this.targets.pop();
+        this.mainElement = undefined;
+        this.animationFrame = undefined;
+        this.emit("stop");
+    }
+
+    /**
+     * The Symbol.toStringTag well-known symbol is a string valued property that is used
+     * in the creation of the default string description of an object.
+     * It is accessed internally by the Object.prototype.toString() method.
+     */
+    get [Symbol.toStringTag]() {
+        return `Animate`;
     }
 }
 

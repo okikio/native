@@ -1,6 +1,7 @@
 import { Service } from "./service";
 import { Manager } from "./manager";
 import { newURL, getHashedPath } from "./url";
+import { HistoryManager } from "./history";
 
 export type RouteMethod = (...args: any) => any;
 export type RouteStyle = string | RegExp | boolean;
@@ -124,40 +125,44 @@ export class Router extends Service {
      * @memberof Router
      */
     public route() {
-        let history = this.HistoryManager;
-        let from: string = getHashedPath(newURL((history.length > 1 ? history.previous : history.current).url));
-        let to: string = getHashedPath(newURL());
+        if (this.ServiceManager.has("HistoryManager")) {
+            let history = this.ServiceManager.get("HistoryManager") as HistoryManager;
+            let from: string = getHashedPath(newURL((history.length > 1 ? history.previous : history.current).url));
+            let to: string = getHashedPath(newURL());
 
-        this.routes.forEach((method: RouteMethod, path: IRouteToFrom) => {
-            let fromRegExp = path.from as RegExp | boolean;
-            let toRegExp = path.to as RegExp | boolean;
+            this.routes.forEach((method: RouteMethod, path: IRouteToFrom) => {
+                let fromRegExp = path.from as RegExp | boolean;
+                let toRegExp = path.to as RegExp | boolean;
 
-            if (
-                typeof fromRegExp === "boolean" &&
-                typeof toRegExp === "boolean"
-            ) {
-                throw `[Router] path ({ from: ${fromRegExp}, to: ${toRegExp} }) is not valid, remember paths can only be strings, regular expressions, or a boolean; however, both the from and to paths cannot be both booleans.`;
-            }
+                if (
+                    typeof fromRegExp === "boolean" &&
+                    typeof toRegExp === "boolean"
+                ) {
+                    throw `[Router] path ({ from: ${fromRegExp}, to: ${toRegExp} }) is not valid, remember paths can only be strings, regular expressions, or a boolean; however, both the from and to paths cannot be both booleans.`;
+                }
 
-            let fromParam: RegExpExecArray | RegExp | boolean = fromRegExp;
-            let toParam: RegExpExecArray | RegExp | boolean = toRegExp;
+                let fromParam: RegExpExecArray | RegExp | boolean = fromRegExp;
+                let toParam: RegExpExecArray | RegExp | boolean = toRegExp;
 
-            if (fromRegExp instanceof RegExp && fromRegExp.test(from))
-                fromParam = fromRegExp.exec(from);
-            if (toRegExp instanceof RegExp && toRegExp.test(to))
-                toParam = toRegExp.exec(to);
+                if (fromRegExp instanceof RegExp && fromRegExp.test(from))
+                    fromParam = fromRegExp.exec(from);
+                if (toRegExp instanceof RegExp && toRegExp.test(to))
+                    toParam = toRegExp.exec(to);
 
-            if (
-                (Array.isArray(toParam) && Array.isArray(fromParam)) ||
-                (Array.isArray(toParam) &&
-                    typeof fromParam == "boolean" &&
-                    fromParam) ||
-                (Array.isArray(fromParam) &&
-                    typeof toParam == "boolean" &&
-                    toParam)
-            )
-                method({ from: fromParam, to: toParam, path: { from, to } });
-        });
+                if (
+                    (Array.isArray(toParam) && Array.isArray(fromParam)) ||
+                    (Array.isArray(toParam) &&
+                        typeof fromParam == "boolean" &&
+                        fromParam) ||
+                    (Array.isArray(fromParam) &&
+                        typeof toParam == "boolean" &&
+                        toParam)
+                )
+                    method({ from: fromParam, to: toParam, path: { from, to } });
+            });
+        } else {
+            console.warn("[Route] HistoryManager is missing.");
+        }
     }
 
     /**

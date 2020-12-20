@@ -49,7 +49,7 @@ export class IntroAnimation extends Service {
     }
 
     public async show() {
-        return await animate({
+        let anim = animate({
             target: (this.elements as HTMLElement[]),
             keyframes: [
                 { transform: "translateY(200px)", opacity: 0 },
@@ -68,6 +68,9 @@ export class IntroAnimation extends Service {
             easing: "out-cubic",
             duration: 650
         });
+        let result = await anim;
+        anim.stop();
+        return result;
     }
 }
 // import { Block, IBlockInit, animate } from "../../../src/api";

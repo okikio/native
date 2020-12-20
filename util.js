@@ -20,8 +20,8 @@ const stream = (_src, _opt = {}) => {
     });
 
     if (_dest !== null) host = host.pipe(dest(_dest));
+    host = host.on("data", _log);
     host = host.on("end", (...args) => {
-        _log(...args);
         if (typeof _end === "function") _end(...args);
     }); // Output
 
@@ -38,8 +38,7 @@ const stream = (_src, _opt = {}) => {
 // A list of streams
 const streamList = (...args) => {
     //
-    return mergeStream.apply(
-        null,
+    return mergeStream(
         (Array.isArray(args[0]) ? args[0] : args).map((_stream) => {
             return Array.isArray(_stream) ? stream(..._stream) : _stream;
         })

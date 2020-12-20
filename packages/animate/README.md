@@ -1,15 +1,18 @@
 # @okikio/animate
 
-An animation library for the modern web, it utilizes the Web Animation API (WAAPI). Inspired by animate plus, and animejs; animate is a Javascript animation library focusing on performance and ease of use. It aims to deliver butter smooth animations at a small size, it weighs less than 3 KB (minified and compressed).
+An animation library for the modern web, it utilizes the Web Animation API. Inspired by animate plus, and animejs; `animate` is a Javascript animation library focusing on performance and ease of use. It aims to deliver butter smooth animations at a small size, it weighs less than 2.5 KB (minified and compressed).
 
-_Before even getting started, note you will most likely need a WAAPI polyfill and if you install this via `npm` you are most likely going to need [rollup](https://rollupjs.org/) or [esbuild](https://esbuild.github.io/). You can use [web-animations-js](https://github.com/web-animations/web-animations-js), or [polyfill.io](https://polyfill.io/), to create a polyfill._
+_Before even getting started, you will most likely need the Web Animation API polyfill. If you install `@okikio/animate` via `npm` you are most likely going to need [rollup](https://rollupjs.org/) or [esbuild](https://esbuild.github.io/). You can use [web-animations-js](https://github.com/web-animations/web-animations-js), or [polyfill.io](https://polyfill.io/), to create a polyfill. The minimum feature requirement for a polyfill are Maps and a WebAnimations polyfill, e.g. (https://polyfill.io/v3/polyfill.min.js?features=Map%2CWebAnimations)._
 
-View a working example: [https://okikio.github.io/native/packages/animate/docs/](https://okikio.github.io/native/packages/animate/docs/).
+_**Warning**: polyfilling may not fix animation format bugs, e.g. [composite animations](https://developer.mozilla.org/en-US/docs/Web/API/KeyframeEffect/composite) don't work on older browsers, so, if you use `polyfill.io` and set it to check if the browser supports the feature before applying the polyfill, your project might encounter errors, as the browser may only have partial support of the Web Animation API._
+
+To properly understand `@okikio/animate`, please read up on the [Web Animation API](https://developer.mozilla.org/en-US/docs/Web/API/Element/animate) on MDN.
 
 ## Table of Contents
 - [@okikio/animate](#okikioanimate)
   - [Table of Contents](#table-of-contents)
   - [Installation](#installation)
+  - [Demo](#demo)
   - [Getting started](#getting-started)
   - [Options](#options)
     - [target](#target)
@@ -26,7 +29,7 @@ View a working example: [https://okikio.github.io/native/packages/animate/docs/]
     - [options](#options-1)
   - [Animations](#animations)
   - [Methods as Properties](#methods-as-properties)
-  - [Promises](#promises)
+  - [Promises and Promise-Like](#promises-and-promise-like)
   - [Additional methods](#additional-methods)
     - [on, off, and emit](#on-off-and-emit)
     - [play, pause, and reset](#play-pause-and-reset)
@@ -34,13 +37,15 @@ View a working example: [https://okikio.github.io/native/packages/animate/docs/]
     - [The almost as long list of Set Methods; these methods are chainable](#the-almost-as-long-list-of-set-methods-these-methods-are-chainable)
     - [then, catch, and finally](#then-catch-and-finally)
     - [toJSON](#tojson)
+    - [stop](#stop)
   - [Example](#example)
   - [Browser support](#browser-support)
   - [Content delivery networks](#content-delivery-networks)
+  - [Memory Management](#memory-management)
   - [Best practices (these are from Animate Plus, but they are true for all Animation libraries)](#best-practices-these-are-from-animate-plus-but-they-are-true-for-all-animation-libraries)
 
 ## Installation
-You can install Animate from `npm` via `npm i @okikio/animate` or `yarn add @okikio/animate`. You can use Animate on the web via [unpkg](https://unpkg.com/@okikio/animate@latest/lib/api.js) `https://unpkg.com/@okikio/animate@latest/lib/api.js`, [skypack](https://cdn.skypack.dev/@okikio/animate) `https://cdn.skypack.dev/@okikio/animate` or [jsdelivr](https://cdn.jsdelivr.net/npm/@okikio/animate@latest/lib/api.js) `https://cdn.jsdelivr.net/npm/@okikio/animate@latest/lib/api.js`.
+You can install Animate from `npm` via `npm i @okikio/animate` or `yarn add @okikio/animate`. You can use Animate on the web via [unpkg](https://unpkg.com/@okikio/animate@latest/lib/api.modern.js) `https://unpkg.com/@okikio/animate@latest/lib/api.modern.js`, [skypack](https://cdn.skypack.dev/@okikio/animate) `https://cdn.skypack.dev/@okikio/animate` or [jsdelivr](https://cdn.jsdelivr.net/npm/@okikio/animate@latest/lib/api.modern.js) `https://cdn.jsdelivr.net/npm/@okikio/animate@latest/lib/api.modern.js`.
 
 Once installed it can be used like this:
 ```javascript
@@ -53,8 +58,18 @@ import { animate } from "https://cdn.skypack.dev/@okikio/animate";
 // Via script tag
 <script src="https://unpkg.com/@okikio/animate@latest/lib/api.js"></script>
 // Do note, on the web you need to do this, if you installed it via the script tag:
-const { animate } = window.Animate;
+const animate = window.animate.default;
+// or
+const { default: animate } = window.animate;
+// or
+const { default: anime } = window.animate; // LOL
 ```
+
+## Demo
+I built a small demo showing off the abilities of the `@okikio/animate` library. You can find the files for the demo in [./build-src](./build-src) folder.
+
+
+> [Click to view demo &#8594;](https://okikio.github.io/native/packages/animate/docs/)
 
 ## Getting started
 
@@ -139,6 +154,8 @@ You can create your own custom cubic-bezier easing curves. Similar to css you ty
 animate({
     target: ".div",
     easing: "cubic-bezier(0.47, 0, 0.745, 0.715)",
+    // or
+    // easing: "in-sine",
     transform: ["translate(0px)", "translate(500px)"],
 });
 ```
@@ -149,7 +166,7 @@ animate({
 | :------ | :----------------- |
 | `1000`  | Number \| Function |
 
-Determines the duration of your animation in milliseconds. By passing it a callback, you can define a different duration for each element. The callback takes the index of each element as its argument and returns a number.
+Determines the duration of your animation in milliseconds. By passing it a callback, you can define a different duration for each element. The callback takes the index of each element, the target dom element, and the total number of target elements as its argument and returns a number.
 
 ```javascript
 // First element fades out in 1s, second element in 2s, etc.
@@ -168,8 +185,7 @@ animate({
 | `0`     | Number \| Function |
 
 Determines the delay of your animation in milliseconds. By passing it a callback, you can define
-a different delay for each element. The callback takes the index of each element as its argument
-and returns a number.
+a different delay for each element. The callback takes the index of each element, the target dom element, and the total number of target elements as its argument and returns a number.
 
 ```javascript
 // First element starts fading out after 1s, second element after 2s, etc.
@@ -187,7 +203,7 @@ animate({
 | :------ | :----------------- |
 | `0`     | Number \| Function |
 
-Similar to delay but it indicates the number of milliseconds to delay after the full animation has played not before.
+Similar to delay but it indicates the number of milliseconds to delay **after** the full animation has played **not before**.
 
 ```javascript
 // First element fades out but then after 1s finishes, the second element after 2s, etc.
@@ -213,6 +229,8 @@ animate({
     target: "span",
     easing: "linear",
     loop: true,
+    // or
+    // loop: 5, // If you want the animation to loop 5 times
     opacity: [1, 0],
 });
 ```
@@ -224,6 +242,8 @@ animate({
 | `(element: HTMLElement, index: number, total: number) => {}` | Function |
 
 Occurs when the animation for one of the elements completes, meaning when animating many elements that finish at different time this will run multiple times. The method it takes is slightly different.
+
+**Warning**: the order of the callback's arguments are in a different order, with the target element first, and the index second.
 
 ```javascript
 // Avoid using fillMode, use this instead to commit style changes
@@ -267,7 +287,7 @@ Determines the direction of the animation; `reverse` runs the animation backward
 | `1`     | Number \| Function |
 
 Determines the animation playback rate. Useful in the authoring process to speed up some parts of a
-long sequence (value above 1) or slow down a specific animation to observe it (value below 1).
+long sequence (value above 1) or slow down a specific animation to observe it (value between 0 to 1), don't put negative numbers for speed.
 
 ### fillMode
 
@@ -277,7 +297,7 @@ long sequence (value above 1) or slow down a specific animation to observe it (v
 
 _Be careful when using fillMode, it has some problems when it comes to concurrency of animations read more on [MDN](https://developer.mozilla.org/en-US/docs/Web/API/EffectTiming/fill), if browser support were better I would remove fillMode and use Animation.commitStyles, I'll have to change the way `fillMode` functions later. Use the onfinish method to commit styles [onfinish](#onfinish)._
 
-Defines how an element should look after the animation. `none` the animation's effects are only visible while the animation is playing. `forwards` the affected element will continue to be rendered in the state of the final animation frame. `backwards` the animation's effects should be reflected by the element(s) state prior to playing. `both` combining the effects of both forwards and backwards: The animation's effects should be reflected by the element(s) state prior to playing and retained after the animation has completed playing. `auto` if the animation effect fill mode is being applied to is a keyframe effect. "auto" is equivalent to "none". Otherwise, the result is "both". Uou can learn more here on [MDN](https://developer.mozilla.org/en-US/docs/Web/API/EffectTiming/fill).
+Defines how an element should look after the animation. `none` the animation's effects are only visible while the animation is playing. `forwards` the affected element will continue to be rendered in the state of the final animation frame. `backwards` the animation's effects should be reflected by the element(s) state prior to playing. `both` combining the effects of both forwards and backwards: The animation's effects should be reflected by the element(s) state prior to playing and retained after the animation has completed playing. `auto` if the animation effect fill mode is being applied to is a keyframe effect. "auto" is equivalent to "none". Otherwise, the result is "both". You can learn more here on [MDN](https://developer.mozilla.org/en-US/docs/Web/API/EffectTiming/fill).
 
 ### options
 
@@ -285,11 +305,13 @@ Defines how an element should look after the animation. `none` the animation's e
 | :------ | :----- |
 | `{}`    | Object | Animation |
 
-Another way to input options for an animation, it's also used to chain animations. Do note you can't use the property as a method.
+Another way to input options for an animation, it's also used to chain animations.
+
+*Note: you can't use this property as a method.*
 
 ## Animations
 
-Animate lets you animate HTML and SVG elements with any property that takes numeric values, including hexadecimal colors.
+`@okikio/animate` lets you animate HTML and SVG elements with any property that takes numeric values, including hexadecimal colors.
 
 ```javascript
 // Animate the radius and fill color of an SVG circle
@@ -319,7 +341,7 @@ animate({
 });
 ```
 
-Do note you can only use one of these formats for an animation, and if Animate sees the `keyframes` property, it ignores all other css properties, it will still accept animation properties like `easing`, `duration`, etc...
+Do note you can only use one of these formats for an animation, and if Animate sees the `keyframes` property, it ignores all other css properties, in situations where Animate sees the keyframes property it will still accept animation properties like `easing`, `duration`, etc...
 
 These arrays can optionally be returned by a callback that takes the index of each element, the total number of elements, and each specific element, just like with other properties.
 
@@ -347,7 +369,9 @@ animate({
 
 ## Methods as Properties
 
-All properties except `target` can be represented by a method with the arguments`(index: number, total: number, element: HTMLElement)`. Do note, `keyframes` can also be a method.
+All properties except `target` can be represented by a method with the arguments `(index: number, total: number, element: HTMLElement)`.
+
+*Note: the `keyframes` method can also be a method*.
 
 ```javascript
 /**
@@ -367,13 +391,15 @@ animate({
 });
 ```
 
-## Promises
+## Promises and Promise-Like
 
-`animate()` returns a promise which resolves once the animation finishes. The promise resolves to the options initially passed to `animate()`, making animation chaining straightforward and convenient. The [Getting started](#getting-started) section gives you a basic promise example.
+`animate()` is promise-like meaning it has `then`, `catch`, and `finally` methods, but Animate itself isn't a Promise (this is important to keep in mind when dealing with async/await asynchronous  animations). Animate's `then` resolves once the animation finishes. The promise resolves to the options initially passed to `animate()`, making animation chaining straightforward and convenient. The [Getting started](#getting-started) section gives a basic example.
 
 Since Animate relies on native promises, you can benefit from all the usual features promises
-provide, such as `Promise.all`, `Promise.race`, and especially `async/await` which makes animation
-timelines easy to set up.
+provide, such as `Promise.all`, `Promise.race`, and especially `async/await` which makes animation timelines easy to set up.
+
+
+> *An interesting quirk of Promises is that even though Animate is not a Promise, async/await still work with it because it has a `then`, and `catch`.*
 
 ```javascript
 const play = async () => {
@@ -421,9 +447,10 @@ let anim = animate({
 anim.on("finish", () => {
     console.log("Finished");
 })
+    // This is a built in event
     .on("change tick", (progress) => {
         console.log(
-            "Runs every animation frame while the animation is running and not paused."
+            "It runs every animation frame while the animation is running and not paused."
         );
         console.log(`Progress ${progress}%`); // Eg: Progress 10%
     })
@@ -435,6 +462,9 @@ anim.on("finish", () => {
             anim.emit("Cool");
             console.log("When the animation is paused");
         },
+        cool() {
+            console.log("The cool event isn't a built in event, but it will fire when the Animation is paused.");
+        }
     });
 ```
 
@@ -447,7 +477,7 @@ They are self explanatory, the `play/pause` methods play/pause animation, while 
 -   `getAnimation(element: HTMLElement)` - Allows you to select a specific animation from an element
 -   `getDuration()` - Returns the total duration of the animation of all elements added together
 -   `getCurrentTime()` - Returns the current time of the animation of all elements
--   `getProgress()` - Returns the progress of the animation of all elements as a percentage between 0% to 100%.
+-   `getProgress()` - Returns the progress of the animation of all elements as a percentage between 0 to 100.
 -   `getPlayState()` - Returns the current playing state, it can be `"idle" | "running" | "paused" | "finished"`
 -   `getSpeed()` - Return the playback speed of the animation
 -   `getOptions()` - Returns the options that were used to create the animation
@@ -455,16 +485,21 @@ They are self explanatory, the `play/pause` methods play/pause animation, while 
 ### The almost as long list of Set Methods; these methods are chainable
 
 -   `setCurrentTime(time: number)` - Sets the current time of the animation
--   `setProgress(percent: number)` - Similar to `setCurrentTime` except it use a number between 0 and 1 to set the current progress of the animation
+-   `setProgress(percent: number)` - Similar to `setCurrentTime` except it use a number between 0 and 100 to set the current progress of the animation
 -   `setSpeed(speed: number = 1)` - Sets the playback speed of an animation
 
 ### then, catch, and finally
 
-They represent the then, catch, and finally methods of a Promise that is resolved when an animation has finished. It's also what allows the use of the `await/async` keywords for resolving animations.
+They represent the then, catch, and finally methods of a Promise that is resolved when an animation has finished. It's also what allows the use of the `await/async` keywords for resolving animations. The `then` method resolves to the Animations Options, which can then be passed to other `Animate` instances to create animations with similar properties. Then, catch, and finally are chainable, they return the Animate class.
 
 ### toJSON
 
 An alias for `getOptions`
+### stop
+
+Cancels all Animations and de-references them allowing them to be garbage collected in a rush. It also emits a `stop` event to alert you to the animation stoping.
+
+*Warning: if you try to reference properties from the Animate class after stop has been called many things will break. The Animate class cannont and will not recover from stop, it is meant as a final trash run of animations, don't use it if you think you may restart the animation.*
 
 ## Example
 [![Web Animation API Library Playground](./assets/Web%20Animation%20API%20Library%20Playground.png)](./assets/Web%20Animation%20API%20Library%20Playground.mp4)
@@ -474,15 +509,17 @@ An alias for `getOptions`
 ## Browser support
 
 Animate is provided as a native ES6 module, which means you may need to transpile it depending on your browser support policy. The library works using `<script type="module">` in
-the following browsers:
+the following browsers (Animate may support older browsers, but I haven't tested those browsers):
 
--   Chrome 61
--   Edge 16
--   Firefox 60
+-   Chrome > 71
+-   Edge > 79
+-   Firefox > 60
+
+*Note: as it really difficult to get access to older versions of these browsers, I have only tested Chrome 71 and above.*
 
 ## Content delivery networks
 
-Animate is available on [unpkg](https://unpkg.com/@okikio/animate@latest/lib/api.js) `https://unpkg.com/@okikio/animate@latest/lib/api.js`, [skypack](https://cdn.skypack.dev/@okikio/animate) `https://cdn.skypack.dev/@okikio/animate` or [jsdelivr](https://cdn.jsdelivr.net/npm/@okikio/animate@latest/lib/api.js) `https://cdn.jsdelivr.net/npm/@okikio/animate@latest/lib/api.js`.
+`@okikio/animate` is available on [unpkg](https://unpkg.com/@okikio/animate@latest/lib/api.modern.js) `https://unpkg.com/@okikio/animate@latest/lib/api.modern.js`, [skypack](https://cdn.skypack.dev/@okikio/animate) `https://cdn.skypack.dev/@okikio/animate` or [jsdelivr](https://cdn.jsdelivr.net/npm/@okikio/animate@latest/lib/api/modern.js) `https://cdn.jsdelivr.net/npm/@okikio/animate@latest/lib/api.modern.js`.
 
 ```javascript
 // Notice the .modern.js file name extension, that represents ES Modules
@@ -498,6 +535,11 @@ animate({
 });
 ```
 
+
+## Memory Management
+I have found that CSS Animations tend more often than not to be the cause of memory leaks in websites. Javascript has become so efficient that it can effectively garbage collect js animations, however, I have found it is exceptionally difficult to manage looped animation be very careful of memory (CSS and JS Animations), they eat up large ammounts of memory and cpu when left running for long periods of time. I would suggest making all your animations only occurs a couple times and when they are done use the `stop` method to remove the animations from memory, *"if you don't plan on replaying the animation"*. Don't just use the `stop` method, test it first on your site before deploying it in a  production enviroment.
+
+
 ## Best practices (these are from Animate Plus, but they are true for all Animation libraries)
 
 Animations play a major role in the design of good user interfaces. They help connecting actions to consequences, make the flow of interactions manifest, and greatly improve the polish and perception of a product. However, animations can be damaging and detrimental to the user experience if they get in the way. Here are a few best practices to keep your animations effective and enjoyable:
@@ -506,3 +548,5 @@ Animations play a major role in the design of good user interfaces. They help co
 -   **Easing**: The animation curve contributes greatly to a well-crafted animation. The easing "out" option is usually a safe bet as animations kick off promptly, making them react to user interactions instantaneously.
 -   **Performance**: Having no animation is better than animations that stutter. When animating HTML elements, aim for using exclusively `transform` and `opacity` as these are the only properties browsers can animate cheaply.
 -   **Restraint**: Tone down your animations and respect user preferences. Animations can rapidly feel overwhelming and cause motion sickness, so it's important to keep them subtle and to attenuate them even more for users who need reduced motion, for example by using `matchMedia("(prefers-reduced-motion)")` in JavaScript.
+
+If there is something I missed or a mistake, please create an issue, and I'll try to get on it.

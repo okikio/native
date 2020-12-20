@@ -5,6 +5,7 @@ export class Splashscreen extends Service {
     public innerEl: HTMLElement;
     public bgEl: HTMLElement;
     public minimalDuration: number = 1000; // ms
+    spinnerEl: Element[];
 
     public init() {
         super.init();
@@ -14,6 +15,7 @@ export class Splashscreen extends Service {
         if (this.rootElement) {
             this.innerEl = this.rootElement.querySelector('.splashscreen-inner');
             this.bgEl = this.rootElement.querySelector('.splashscreen-bg');
+            this.spinnerEl = [...this.rootElement.querySelectorAll('.spinner')];
         }
 
         this.rootElement.style.visibility = "visible";
@@ -43,22 +45,23 @@ export class Splashscreen extends Service {
                 onfinish(el) {
                     el.style.opacity = "0";
                 }
-            });
+            }).then(function () { this.stop(); });
 
             this.emitter.emit("START_SPLASHSCREEN_HIDE");
-
             await this.show();
             resolve();
         });
     }
 
     public async show() {
-        await animate({
+        let anim = animate({
             target: this.rootElement,
             transform: ["translateY(0%)", "translateY(100%)"],
             duration: 1200,
             easing: "in-out-cubic" // in-out-cubic
         });
+        await anim;
+        anim.stop();
 
         this.rootElement.style.transform = "translateY(100%)";
         this.rootElement.style.visibility = "hidden";
