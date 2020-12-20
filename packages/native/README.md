@@ -14,7 +14,7 @@ Currently many websites rely on older code to make sure they reach as wide an au
 
 `@okikio/native` uses modern browser api's like the Web Animation API, Maps, pushState, etc.... to achieve high efficiency and performance (as these API can be smartly managed by the browser). The browser API's can be difficult to work with, so, I developed `@okikio/manager`, `@okikio/emitter`, and `@okiko/animate` libraries to make them more managable. I developed these libraries to ensure the framework is well optimized and to avoid larges ammounts of npm dependencies.
 
-> [View a working example  &#8594;](https://okikio.github.io/native/packages/native/docs/)
+> [View a working example  &#8594;](https://okikio.github.io/native/packages/native/demo/)
 
 You can play with the online example with Gitpod:
 

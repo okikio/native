@@ -3,12 +3,14 @@ importers:
     dependencies:
       '@commitlint/cli': 11.0.0
       '@commitlint/config-conventional': 11.0.0
+      '@commitlint/config-lerna-scopes': 11.0.0_lerna@3.22.1
       lerna: 3.22.1
       pnpm: 5.13.6
       ultra-runner: 3.7.1
     specifiers:
       '@commitlint/cli': ^11.0.0
       '@commitlint/config-conventional': ^11.0.0
+      '@commitlint/config-lerna-scopes': ^11.0.0
       lerna: ^3.22.1
       pnpm: ^5.13.6
       ultra-runner: ^3.7.1
@@ -17,10 +19,10 @@ importers:
       '@okikio/emitter': 'link:../emitter'
       browser-sync: 2.26.13
       chokidar: 3.4.3
-      esbuild: 0.8.24
+      esbuild: 0.8.25
       eslint: 7.16.0
       gulp: 4.0.2
-      gulp-esbuild: 0.3.7
+      gulp-esbuild: 0.3.8
       gulp-pug: 4.0.1
       gulp-sass: 4.1.0
       gzip-size: 6.0.0
@@ -31,10 +33,10 @@ importers:
       '@okikio/emitter': 'workspace:^0.0.7'
       browser-sync: ^2.26.13
       chokidar: ^3.4.3
-      esbuild: ^0.8.24
+      esbuild: ^0.8.25
       eslint: ^7.16.0
       gulp: ^4.0.2
-      gulp-esbuild: ^0.3.7
+      gulp-esbuild: ^0.3.8
       gulp-pug: ^4.0.1
       gulp-sass: ^4.1.0
       gzip-size: ^6.0.0
@@ -46,8 +48,8 @@ importers:
       '@okikio/manager': 'link:../manager'
       '@types/jest': 26.0.19
       chokidar: 3.4.3
-      esbuild: 0.8.24
-      esbuild-jest: 0.3.0_esbuild@0.8.24
+      esbuild: 0.8.25
+      esbuild-jest: 0.3.0_esbuild@0.8.25
       eslint: 7.16.0
       gzip-size: 6.0.0
       jest: 26.6.3
@@ -59,7 +61,7 @@ importers:
       '@okikio/manager': 'workspace:^0.0.7'
       '@types/jest': ^26.0.19
       chokidar: ^3.4.3
-      esbuild: ^0.8.24
+      esbuild: ^0.8.25
       esbuild-jest: ^0.3.0
       eslint: ^7.16.0
       gzip-size: ^6.0.0
@@ -72,8 +74,8 @@ importers:
     dependencies:
       '@types/jest': 26.0.19
       chokidar: 3.4.3
-      esbuild: 0.8.24
-      esbuild-jest: 0.3.0_esbuild@0.8.24
+      esbuild: 0.8.25
+      esbuild-jest: 0.3.0_esbuild@0.8.25
       eslint: 7.16.0
       gzip-size: 6.0.0
       jest: 26.6.3
@@ -85,7 +87,7 @@ importers:
     specifiers:
       '@types/jest': ^26.0.19
       chokidar: ^3.4.3
-      esbuild: ^0.8.24
+      esbuild: ^0.8.25
       esbuild-jest: ^0.3.0
       eslint: ^7.16.0
       gzip-size: ^6.0.0
@@ -102,10 +104,10 @@ importers:
       '@okikio/manager': 'link:../manager'
       browser-sync: 2.26.13
       chokidar: 3.4.3
-      esbuild: 0.8.24
+      esbuild: 0.8.25
       eslint: 7.16.0
       gulp: 4.0.2
-      gulp-esbuild: 0.3.7
+      gulp-esbuild: 0.3.8
       gulp-pug: 4.0.1
       gulp-sass: 4.1.0
       gzip-size: 6.0.0
@@ -119,10 +121,10 @@ importers:
       '@okikio/manager': 'workspace:^0.0.7'
       browser-sync: ^2.26.13
       chokidar: ^3.4.3
-      esbuild: ^0.8.24
+      esbuild: ^0.8.25
       eslint: ^7.16.0
       gulp: ^4.0.2
-      gulp-esbuild: ^0.3.7
+      gulp-esbuild: ^0.3.8
       gulp-pug: ^4.0.1
       gulp-sass: ^4.1.0
       gzip-size: ^6.0.0
@@ -452,6 +454,19 @@ packages:
       node: '>=v10.22.0'
     resolution:
       integrity: sha512-SNDRsb5gLuDd2PL83yCOQX6pE7gevC79UPFx+GLbLfw6jGnnbO9/tlL76MLD8MOViqGbo7ZicjChO9Gn+7tHhA==
+  /@commitlint/config-lerna-scopes/11.0.0_lerna@3.22.1:
+    dependencies:
+      import-from: 3.0.0
+      lerna: 3.22.1
+      resolve-pkg: 2.0.0
+      semver: 7.3.2
+    dev: false
+    engines:
+      node: '>=v10.22.0'
+    peerDependencies:
+      lerna: ^3.22.1
+    resolution:
+      integrity: sha512-/PjLKefMlnG+Sk27MY3MZo+T/9/PrgDcLk1YCSPVHNkXibXiS2Hb5NEMuNHzPxwts4IvJo0WIOb0YOBx5GBsdA==
   /@commitlint/ensure/11.0.0:
     dependencies:
       '@commitlint/types': 11.0.0
@@ -537,7 +552,7 @@ packages:
       integrity: sha512-37V0V91GSv0aDzMzJioKpCoZw6l0shk7+tRG8RkW1GfZzUIytdg3XqJmM+IaIYpaop0m6BbZtfq+idzUwJnw7g==
   /@commitlint/resolve-extends/11.0.0:
     dependencies:
-      import-fresh: 3.2.2
+      import-fresh: 3.3.0
       lodash: 4.17.20
       resolve-from: 5.0.0
       resolve-global: 1.0.0
@@ -584,7 +599,7 @@ packages:
       espree: 7.3.1
       globals: 12.4.0
       ignore: 4.0.6
-      import-fresh: 3.2.2
+      import-fresh: 3.3.0
       js-yaml: 3.14.1
       lodash: 4.17.20
       minimatch: 3.0.4
@@ -1637,7 +1652,7 @@ packages:
   /@nodelib/fs.walk/1.2.4:
     dependencies:
       '@nodelib/fs.scandir': 2.1.3
-      fastq: 1.9.0
+      fastq: 1.10.0
     dev: false
     engines:
       node: '>= 8'
@@ -1657,10 +1672,10 @@ packages:
     dev: false
     resolution:
       integrity: sha512-9+Xef8nT7OKZglfkOMm7IL6VwxXUQyR7DUSU0LH/F7VNqs8vyd7es5pTfz9E7DwUIx7R3pGscxu1EBhYljyu7Q==
-  /@octokit/openapi-types/2.0.0:
+  /@octokit/openapi-types/2.0.1:
     dev: false
     resolution:
-      integrity: sha512-J4bfM7lf8oZvEAdpS71oTvC1ofKxfEZgU5vKVwzZKi4QPiL82udjpseJwxPid9Pu2FNmyRQOX4iEj6W1iOSnPw==
+      integrity: sha512-9AuC04PUnZrjoLiw3uPtwGh9FE4Q3rTqs51oNlQ0rkwgE8ftYsOC+lsrQyvCvWm85smBbSc0FNRKKumvGyb44Q==
   /@octokit/plugin-enterprise-rest/6.0.1:
     dev: false
     resolution:
@@ -1742,7 +1757,7 @@ packages:
       integrity: sha512-O75k56TYvJ8WpAakWwYRN8Bgu60KrmX0z1KqFp1kNiFNkgW+JW+9EBKZ+S33PU6SLvbihqd+3drvPxKK68Ee8Q==
   /@octokit/types/6.1.1:
     dependencies:
-      '@octokit/openapi-types': 2.0.0
+      '@octokit/openapi-types': 2.0.1
       '@types/node': 14.14.14
     dev: false
     resolution:
@@ -3440,7 +3455,7 @@ packages:
   /cosmiconfig/7.0.0:
     dependencies:
       '@types/parse-json': 4.0.0
-      import-fresh: 3.2.2
+      import-fresh: 3.3.0
       parse-json: 5.1.0
       path-type: 4.0.0
       yaml: 1.10.0
@@ -4037,20 +4052,20 @@ packages:
     dev: false
     resolution:
       integrity: sha512-p5um32HOTO1kP+w7PRnB+5lQ43Z6muuMuIMffvDN8ZB4GcnjLBV6zGStpbASIMk4DCAvEaamhe2zhyCb/QXXsA==
-  /esbuild-jest/0.3.0_esbuild@0.8.24:
+  /esbuild-jest/0.3.0_esbuild@0.8.25:
     dependencies:
-      esbuild: 0.8.24
+      esbuild: 0.8.25
     dev: false
     peerDependencies:
       esbuild: '>=0.8.16'
     resolution:
       integrity: sha512-J1ZHN4IbQiLJAsCMK2XkPYZsTrD8ius+1B09RVqfrvmT+BnwGdR6CLvRq6DGopOaEmdkr4AIk/J6LQUhRQDsSg==
-  /esbuild/0.8.24:
+  /esbuild/0.8.25:
     dev: false
     hasBin: true
     requiresBuild: true
     resolution:
-      integrity: sha512-bqgEa2VemAN+YM52SM1626+/pdLp+p9NyqISB06ixcvauKIJk6akia3UTTsGAgn0oHEdReZ97gL+LYX+UjgwKA==
+      integrity: sha512-c/fe/AIyDb0N+YHQmI7vIykASHK8b6MVyrRi5QUFyw3v4cfDMz6komj/+phQocgXnZwSNGgJn23mXTIn2OX88A==
   /escalade/3.1.1:
     dev: false
     engines:
@@ -4137,7 +4152,7 @@ packages:
       glob-parent: 5.1.1
       globals: 12.4.0
       ignore: 4.0.6
-      import-fresh: 3.2.2
+      import-fresh: 3.3.0
       imurmurhash: 0.1.4
       is-glob: 4.0.1
       js-yaml: 3.14.1
@@ -4412,12 +4427,12 @@ packages:
     dev: false
     resolution:
       integrity: sha1-PYpcZog6FqMMqGQ+hR8Zuqd5eRc=
-  /fastq/1.9.0:
+  /fastq/1.10.0:
     dependencies:
       reusify: 1.0.4
     dev: false
     resolution:
-      integrity: sha512-i7FVWL8HhVY+CTkwFxkN2mk3h+787ixS5S63eb78diVRc1MCssarHq3W5cj0av7YDSwmaV928RNag+U1etRQ7w==
+      integrity: sha512-NL2Qc5L3iQEsyYzweq7qfgy5OtXCmGzGvhElGEd/SoFWEMOEczNh5s5ocaF01HDetxz+p8ecjNPA6cZxxIHmzA==
   /fb-watchman/2.0.1:
     dependencies:
       bser: 2.1.1
@@ -5115,16 +5130,16 @@ packages:
     hasBin: true
     resolution:
       integrity: sha512-zzGBl5fHo0EKSXsHzjspp3y5CONegCm8ErO5Qh0UzFzk2y4tMvzLWhoDokADbarfZRL2pGpRp7yt6gfJX4ph7A==
-  /gulp-esbuild/0.3.7:
+  /gulp-esbuild/0.3.8:
     dependencies:
-      esbuild: 0.8.24
+      esbuild: 0.8.25
       plugin-error: 1.0.1
       vinyl: 2.2.1
     dev: false
     engines:
       node: '>=8.6.0'
     resolution:
-      integrity: sha512-yLdRfCVyedLV5wBTGpUJZ7Q3JEDPFVqtIsxPRRFUW+x3m7J0v5jO373PQJ4lZZXNilCYxh6BgZgMPcq01Rhjhg==
+      integrity: sha512-E+3O6ZlosX36A9ykd2Y/erRcGKIxkOjImBNJ4CLKDiNpSp0S4FTd/gZ/P4XA36b68voCkpkNHloUOBXU2qHlQw==
   /gulp-pug/4.0.1:
     dependencies:
       '@types/pug': 2.0.4
@@ -5457,7 +5472,7 @@ packages:
       node: '>=4'
     resolution:
       integrity: sha1-2BNVwVYS04bGH53dOSLUMEgipUY=
-  /import-fresh/3.2.2:
+  /import-fresh/3.3.0:
     dependencies:
       parent-module: 1.0.1
       resolve-from: 4.0.0
@@ -5465,7 +5480,15 @@ packages:
     engines:
       node: '>=6'
     resolution:
-      integrity: sha512-cTPNrlvJT6twpYy+YmKUKrTSjWFs3bjYjAhCwm+z4EOCubZxAuO+hHpRN64TqjEaYSHs7tJAE0w1CKMGmsG/lw==
+      integrity: sha512-veYYhQa+D1QBKznvhUHxb8faxlrwUnxseDAbAp457E0wLNio2bOSKnjYDhMj+YiAq61xrMGhQk9iXVk5FzgQMw==
+  /import-from/3.0.0:
+    dependencies:
+      resolve-from: 5.0.0
+    dev: false
+    engines:
+      node: '>=8'
+    resolution:
+      integrity: sha512-CiuXOFFSzkU5x/CR0+z7T91Iht4CXgfCxVOFRhh2Zyhg5wOpWvvDLQUsWl+gcN+QscYBjez8hDCt85O7RLDttQ==
   /import-local/2.0.0:
     dependencies:
       pkg-dir: 3.0.0
@@ -8926,6 +8949,14 @@ packages:
       node: '>= 0.10'
     resolution:
       integrity: sha1-MrueOcBtZzONyTeMDW1gdFZq0TE=
+  /resolve-pkg/2.0.0:
+    dependencies:
+      resolve-from: 5.0.0
+    dev: false
+    engines:
+      node: '>=8'
+    resolution:
+      integrity: sha512-+1lzwXehGCXSeryaISr6WujZzowloigEofRB+dj75y9RRa/obVcYgbHJd53tdYw8pvZj8GojXaaENws8Ktw/hQ==
   /resolve-url/0.2.1:
     deprecated: 'https://github.com/lydell/resolve-url#deprecated'
     dev: false

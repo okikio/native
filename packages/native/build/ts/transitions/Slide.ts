@@ -1,4 +1,6 @@
 import { ITransition, ITransitionData, animate } from "../../../src/api";
+// import { ITransition, ITransitionData } from "../../../src/transition";
+// import { animate } from "../../../src/animate";
 
 //== Transitions
 export const Slide: ITransition = {

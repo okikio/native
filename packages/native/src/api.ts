@@ -14,4 +14,4 @@ export * from "./app";
 export * from "./pjax";
 export * from "./route";
 
-export * from "@okikio/animate";
+export * from "./animate";

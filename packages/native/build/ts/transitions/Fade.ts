@@ -1,4 +1,6 @@
 import { ITransition, ITransitionData, animate } from "../../../src/api";
+// import { ITransition, ITransitionData } from "../../../src/transition";
+// import { animate } from "../../../src/animate";
 
 //== Transition
 export const Fade: ITransition = {

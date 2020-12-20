@@ -2,11 +2,11 @@
 const mode = process.argv.includes("--watch") ? "watch" : "build";
 
 // Gulp utilities
-const { stream, task, watch, parallel, series, dest } = require("../../util");
+const { stream, task, watch, parallel, series } = require("../../util");
 
 // Origin folders (source and destination folders)
-const srcFolder = `build-src`;
-const destFolder = `docs`;
+const srcFolder = `build`;
+const destFolder = `demo`;
 
 // Source file folders
 const tsFolder = `${srcFolder}/ts`;
