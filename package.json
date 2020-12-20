@@ -3,13 +3,13 @@
     "private": false,
     "license": "MIT",
     "publishConfig": {
-      "registry": "http://localhost:4873"
+        "registry": "http://localhost:4873"
     },
     "workspaces": [
         "packages/*"
     ],
     "scripts": {
-        "commitmsg": "commitlint -e $GIT_PARAMS",
+        "changeset": "changeset",
         "build": "ultra --parallel -r build",
         "watch": "ultra --parallel -r watch",
         "demo:build": "pnpm --parallel -r demo:build",
@@ -18,14 +18,18 @@
         "test": "ultra -r test",
         "test:watch": "ultra --parallel -r test:watch",
         "pre-release": "ultra -r pre-release",
-        "release": "npm run pre-release && lerna version && lerna publish --tag latest"
+        "release": "npm run pre-release && changeset version && pnpm -r publish --tag latest"
+    },
+    "husky": {
+        "hooks": {
+            "commitmsg": "commitlint -e $GIT_PARAMS"
+        }
     },
     "dependencies": {
+        "@changesets/cli": "^2.12.0",
         "@commitlint/cli": "^11.0.0",
         "@commitlint/config-conventional": "^11.0.0",
-        "@commitlint/config-lerna-scopes": "^11.0.0",
         "husky": "^4.3.6",
-        "lerna": "^3.22.1",
         "pnpm": "^5.13.6",
         "ultra-runner": "^3.7.1"
     }
