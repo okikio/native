@@ -2,10 +2,14 @@
     "name": "root",
     "private": true,
     "license": "MIT",
+    "publishConfig": {
+      "registry": "http://localhost:4873"
+    },
     "workspaces": [
         "packages/*"
     ],
     "scripts": {
+        "commitmsg": "commitlint -e $GIT_PARAMS",
         "build": "ultra --parallel -r build",
         "watch": "ultra --parallel -r watch",
         "demo:build": "pnpm --parallel -r demo:build",
@@ -20,6 +24,7 @@
         "@commitlint/cli": "^11.0.0",
         "@commitlint/config-conventional": "^11.0.0",
         "@commitlint/config-lerna-scopes": "^11.0.0",
+        "husky": "^4.3.6",
         "lerna": "^3.22.1",
         "pnpm": "^5.13.6",
         "ultra-runner": "^3.7.1"
