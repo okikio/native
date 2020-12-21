@@ -5,64 +5,29 @@ import { EventEmitter } from "./emitter";
 
 export type IAdvancedManager = AdvancedManager<any, ManagerItem>;
 
-/**
- * The base class for all AdvancedManager and AdvancedStorage items
- *
- * @export
- * @class ManagerItem
- */
+/** The base class for AdvancedManager items */
 export class ManagerItem {
-    /**
-     * The AdvancedManager the ManagerItem is attached to
-     *
-     * @public
-     * @type IAdvancedManager
-     * @memberof ManagerItem
-     */
+    /** The AdvancedManager the ManagerItem is attached to */
     public manager: IAdvancedManager;
 
-    /**
-     * The App the ManagerItem is attached to
-     *
-     * @public
-     * @type IApp
-     * @memberof ManagerItem
-    */
+    /** The App the ManagerItem is attached to */
     public app: IApp;
 
-    /**
-     * The Config of the App the ManagerItem is attached to
-     *
-     * @public
-     * @type ICONFIG
-     * @memberof ManagerItem
-    */
+    /** The Config of the App the ManagerItem is attached to */
     public config: ICONFIG;
+
+    /** The EventEmitter of the App the ManagerItem is attached to */
     public emitter: EventEmitter;
+
+    /** The key to where ManagerItem is stored in an AdvancedManager */
     public key: any;
 
-    /**
-     * Creates an instance of ManagerItem.
-     *
-     * @memberof ManagerItem
-     */
     constructor() { }
 
-    /**
-     * Run after the Manager Item has been registered
-     *
-     * @returns any
-     * @memberof ManagerItem
-     */
+    // Run after the Manager Item has been registered
     public install(): any { }
 
-    /**
-     * Register the current Manager Item's manager
-     *
-     * @param {IAdvancedManager} manager
-     * @returns ManagerItem
-     * @memberof ManagerItem
-     */
+    /** Register the current Manager Item's manager */
     public register(manager: IAdvancedManager, key: any): ManagerItem {
         this.manager = manager;
         this.app = manager.app;
@@ -75,6 +40,7 @@ export class ManagerItem {
 
     public uninstall(): any { }
 
+    /** Basically removes a ManagerItem, in order to recover the ManagerItem, it needs to be re-added to an AdvancedManager */
     public unregister() {
         this.uninstall();
 
@@ -87,48 +53,18 @@ export class ManagerItem {
     }
 }
 
-/**
- * A tweak to the Manager class that makes it self aware of the App class it's instantiated in
- *
- * @export
- * @class AdvancedManager
- * @extends {Manager<K, V>}
- * @template K
- * @template V
- */
+/** A tweak to the Manager class that makes it self aware of the App class it's instantiated in */
 export class AdvancedManager<K, V extends ManagerItem> extends Manager<K, V> {
-    /**
-     * The instance of the App class, the Manager is instantiated in
-     *
-     * @type App
-     * @memberof AdvancedManager
-     */
+    /** The App the AdvancedManager is attached to */
     public app: IApp;
 
-    /**
-     * The Config of the App the AdvancedManager is attached to
-     *
-     * @public
-     * @type ICONFIG
-     * @memberof AdvancedManager
-    */
+    /** The Config of the App the AdvancedManager is attached to */
     public config: ICONFIG;
 
-    /**
-     * The EventEmitter class of the App the AdvancedManager is attached to
-     *
-     * @public
-     * @type EventEmitter
-     * @memberof AdvancedManager
-    */
+    /** The EventEmitter of the App the AdvancedManager is attached to */
     public emitter: EventEmitter;
 
-    /**
-     * Creates an instance of AdvancedManager.
-     *
-     * @param {App} app - The instance of the App class, the Manager is instantiated in
-     * @memberof AdvancedManager
-     */
+    /** Register App details */
     constructor(app: IApp) {
         super();
         this.app = app;
@@ -136,14 +72,7 @@ export class AdvancedManager<K, V extends ManagerItem> extends Manager<K, V> {
         this.emitter = app.emitter;
     }
 
-    /**
-     * Set a value stored in the Manager
-     *
-     * @public
-     * @param  {K} key - The key where the value will be stored
-     * @param  {V} value - The value to store
-     * @returns AdvancedManager<K, V>
-     */
+    /** Add a ManagerItem to AdvancedManager at a specified key */
     public set(key: K, value: V) {
         super.set(key, value);
         value.register(this, key);

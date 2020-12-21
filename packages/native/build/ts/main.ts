@@ -1,10 +1,4 @@
 import { PJAX, App, TransitionManager, Router, HistoryManager, PageManager } from "../../src/api";
-// import { App } from "../../src/app";
-// import { TransitionManager } from "../../src/transition";
-// import { HistoryManager } from "../../src/history";
-// import { PageManager } from "../../src/page";
-// import { PJAX } from "../../src/pjax";
-// import { Router } from "../../src/route";
 
 import { Splashscreen } from "./services/Splashscreen";
 import { IntroAnimation } from "./services/IntroAnimation";

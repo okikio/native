@@ -1,6 +1,4 @@
 import { Service, animate } from "../../../src/api";
-// import { Service } from "../../../src/service";
-// import { animate } from "../../../src/animate";
 
 export class IntroAnimation extends Service {
     public elements: Array<Element>;

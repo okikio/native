@@ -3,116 +3,44 @@ import { Service } from "./service";
 import { IPage, IPageManager } from "./page";
 import { newURL, getHashedPath, equal } from "./url";
 import { getConfig } from "./config";
-import { ITransitionManager } from "./transition";
+import { hashAction, ITransitionManager } from "./transition";
 
 export type LinkEvent = MouseEvent | TouchEvent;
 export type StateEvent = LinkEvent | PopStateEvent;
 export type IgnoreURLsList = Array<RegExp | string>;
-
 /**
- * Creates a Barba JS like PJAX Service, for the Framework
- *
- * @export
- * @class PJAX
- * @extends {Service}
+ * Creates a Barba JS like PJAX Service, for the native framework
+ * Based on Barba JS and StartingBlocks
  */
-// Based on Barba JS and StartingBlocks
 export class PJAX extends Service {
-    /**
-     * URLs to ignore when prefetching
-     *
-     * @private
-     * @type boolean
-     * @memberof PJAX
-     */
+    /** URLs to ignore when prefetching */
     protected ignoreURLs: IgnoreURLsList = [];
 
-    /**
-     * Whether or not to disable prefetching
-     *
-     * @private
-     *
-     * @memberof PJAX
-     */
+    /** Whether or not to disable prefetching */
     protected prefetchIgnore: boolean = false;
 
-    /**
-     * Current state or transitions
-     *
-     * @public
-     * @type boolean
-     * @memberof PJAX
-     */
+    /** Current state of transitions */
     public isTransitioning: boolean = false;
 
-    /**
-     * Ignore extra clicks of an anchor element if a transition has already started
-     *
-     * @private
-     * @type boolean
-     * @memberof PJAX
-     */
+    /** Ignore extra clicks of an anchor element if a transition has already started */
     protected stopOnTransitioning: boolean = false;
 
-    /**
-     * On page change (excluding popstate event) keep current scroll position
-     *
-     * @private
-     * @type boolean
-     * @memberof PJAX
-     */
+    /** On page change (excluding popstate events) keep current scroll position */
     protected stickyScroll: boolean = false;
 
-    /**
-     * Force load a page if an error occurs
-     *
-     * @private
-     * @type boolean
-     * @memberof PJAX
-     */
+    /** Force load a page if an error occurs */
     protected forceOnError: boolean = false;
 
-    /**
-     * Dictates whether to auto scroll if an hash is present in the window URL
-     *
-     * @protected
-     * @type boolean
-     * @memberof PJAX
-     */
-    protected autoScrollOnHash: boolean = true;
-
-    /**
-     * Disables all extra scroll effects of PJAX
-     *
-     * @private
-     * @type boolean
-     * @memberof PJAX
-     */
-    protected dontScroll: boolean = false;
-
-    /**
-     * Sets the transition state, sets isTransitioning to true
-     *
-     * @private
-     * @memberof PJAX
-     */
+    /** Sets the transition state to either true or false */
     private transitionStart() {
         this.isTransitioning = true;
     }
 
-    /**
-     * Sets the transition state, sets isTransitioning to false
-     *
-     * @private
-     * @memberof PJAX
-     */
     private transitionStop() {
         this.isTransitioning = false;
     }
 
     public init() {
-        super.init();
-
         /**
          * Bind the event listeners to the PJAX class
          *
@@ -123,11 +51,7 @@ export class PJAX extends Service {
         this.onStateChange = this.onStateChange.bind(this);
     }
 
-    /**
-     * Starts the PJAX Service
-     *
-     * @memberof PJAX
-     */
+    /** Starts the PJAX Service */
     public boot() {
         if ("scrollRestoration" in window.history) {
             // Back off, browser, I got this...
@@ -137,31 +61,18 @@ export class PJAX extends Service {
         super.boot();
     }
 
-    /**
-     * Gets the transition to use for a certain anchor
-     *
-     * @param {HTMLAnchorElement} el
-     * @returns {(string | null)}
-     * @memberof PJAX
-     */
+    /** Gets the transition to use for a certain anchor */
     public getTransitionName(el: HTMLAnchorElement): string | null {
         if (!el || !el.getAttribute) return null;
         let transitionAttr = el.getAttribute(
             getConfig(this.config, "transitionAttr", false)
         );
+
         if (typeof transitionAttr === "string") return transitionAttr;
         return null;
     }
 
-    /**
-     * Checks to see if the anchor is valid
-     *
-     * @param {HTMLAnchorElement} el
-     * @param {(LinkEvent | KeyboardEvent)} event
-     * @param {string} href
-     *
-     * @memberof PJAX
-     */
+    /** Checks to see if the anchor is valid */
     public validLink(
         el: HTMLAnchorElement,
         event: LinkEvent | KeyboardEvent,
@@ -199,13 +110,7 @@ export class PJAX extends Service {
         );
     }
 
-    /**
-     * Returns the href or an Anchor element
-     *
-     * @param {HTMLAnchorElement} el
-     * @returns {(string | null)}
-     * @memberof PJAX
-     */
+    /** Returns the href of an Anchor element */
     public getHref(el: HTMLAnchorElement): string | null {
         if (
             el &&
@@ -217,13 +122,7 @@ export class PJAX extends Service {
         return null;
     }
 
-    /**
-     * Check if event target is a valid anchor with an href, if so, return the link
-     *
-     * @param {LinkEvent} event
-     *
-     * @memberof PJAX
-     */
+    /** Check if event target is a valid anchor with an href, if so, return the anchor */
     public getLink(event: LinkEvent): HTMLAnchorElement {
         let el = event.target as HTMLAnchorElement;
         let href: string = this.getHref(el);
@@ -238,16 +137,7 @@ export class PJAX extends Service {
         return el;
     }
 
-    /**
-     * When an element is clicked.
-     *
-     * Get valid anchor element.
-     * Go for a transition.
-     *
-     * @param {LinkEvent} event
-     * @returns
-     * @memberof PJAX
-     */
+    /** When an element is clicked, get valid anchor element, go for a transition */
     public onClick(event: LinkEvent) {
         let el = this.getLink(event);
         if (!el) return;
@@ -263,13 +153,7 @@ export class PJAX extends Service {
         this.go({ href, trigger: el, event });
     }
 
-    /**
-     * Returns the direction of the State change as a String, either the Back button or the Forward button
-     *
-     * @param {number} value
-     *
-     * @memberof PJAX
-     */
+    /** Returns the direction of the State change as a String, either the Back button or the Forward button */
     public getDirection(value: number): Trigger {
         if (Math.abs(value) > 1) {
             // Ex 6-0 > 0 -> forward, 0-6 < 0 -> back
@@ -284,12 +168,7 @@ export class PJAX extends Service {
         }
     }
 
-    /**
-     * Force a page to go to a certain URL
-     *
-     * @param {string} href
-     * @memberof PJAX
-     */
+    /** Force a page to go to a certain URL */
     public force(href: string): void {
         window.location.assign(href);
     }
@@ -297,14 +176,8 @@ export class PJAX extends Service {
     /**
      * If transition is running force load page.
      * Stop if currentURL is the same as new url.
-     * On state change, change the current state history,
-     * to reflect the direction of said state change
+     * On state change, change the current state history, to reflect the direction of said state change
      * Load page and page transition.
-     *
-     * @param {string} href
-     * @param {Trigger} [trigger='HistoryManager']
-     * @param {StateEvent} [event]
-     * @memberof PJAX
      */
     public go({
         href,
@@ -317,14 +190,14 @@ export class PJAX extends Service {
     }): Promise<void> {
         // If transition is already running and the go method is called again, force load page
         if (this.isTransitioning && this.stopOnTransitioning ||
-            !this.ServiceManager.has("TransitionManager") ||
-            !this.ServiceManager.has("HistoryManager") ||
-            !this.ServiceManager.has("PageManager")) {
+            !this.manager.has("TransitionManager") ||
+            !this.manager.has("HistoryManager") ||
+            !this.manager.has("PageManager")) {
             this.force(href);
             return;
         }
 
-        const history = this.ServiceManager.get("HistoryManager") as IHistoryManager;
+        const history = this.manager.get("HistoryManager") as IHistoryManager;
         let scroll = { x: 0, y: 0 };
         let currentState = history.current;
         let currentURL = currentState.url;
@@ -342,22 +215,17 @@ export class PJAX extends Service {
             let currentIndex = currentState.index;
             let difference = currentIndex - index;
 
-            trigger = this.getDirection(difference);
-
             let _state = history.get(history.pointer);
             transitionName = _state.transition;
             scroll = _state.data.scroll;
 
-            // Based on the direction of the state change either remove or add a state
             history.replace(state.states);
             history.pointer = index;
-            if (trigger === "back") {
-                // this.HistoryManager.remove(currentIndex);
-                this.emitter.emit(`POPSTATE_BACK`, event);
-            } else if (trigger === "forward") {
-                // this.HistoryManager.add({ url: href, transition, data });
-                this.emitter.emit(`POPSTATE_FORWARD`, event);
-            }
+
+            trigger = this.getDirection(difference);
+
+            // Based on the direction of the state change either remove or add a state
+            this.emitter.emit(trigger === "back" ? `POPSTATE_BACK` : `POPSTATE_FORWARD`, event);
 
         } else {
             // Add new state
@@ -391,16 +259,7 @@ export class PJAX extends Service {
         });
     }
 
-    /**
-     * Load the new Page as well as a Transition; run the Transition
-     *
-     * @param {string} oldHref
-     * @param {string} href
-     * @param {Trigger} trigger
-     * @param {string} [transitionName="default"]
-     *
-     * @memberof PJAX
-     */
+    /** Load the new Page as well as a Transition; starts the Transition */
     public async load({
         oldHref,
         href,
@@ -415,86 +274,74 @@ export class PJAX extends Service {
         scroll: { x: number; y: number };
     }): Promise<any> {
         try {
-            const pages = this.ServiceManager.get("PageManager") as IPageManager;
-            let oldPage = await pages.load(oldHref);
-            await oldPage.build();
-            let newPage: IPage;
+            const pages = this.manager.get("PageManager") as IPageManager;
+            let newPage: IPage, oldPage: IPage;
 
-            this.emitter.emit("PAGE_LOADING", { href, oldPage, trigger });
+            this.emitter.emit("NAVIGATION_START", {
+                oldHref,
+                href,
+                trigger,
+                transitionName,
+            });
+
+            // Load & Build both the old and new pages
             try {
-                try {
-                    newPage = await pages.load(href);
-                    await newPage.build();
-                    this.transitionStart();
-                    this.emitter.emit("PAGE_LOAD_COMPLETE", {
-                        newPage,
-                        oldPage,
-                        trigger,
-                    });
-                } catch (err) {
-                    console.error(`[PJAX] page load error: ${err}`);
-                }
+                this.transitionStart();
+                oldPage = await pages.load(oldHref);
+                !(oldPage.dom instanceof Element) && oldPage.build();
 
-                // --
-                // --
-
-                this.emitter.emit("NAVIGATION_START", {
-                    oldPage,
+                this.emitter.emit("PAGE_LOADING", { href, oldPage, trigger });
+                newPage = await pages.load(href);
+                await newPage.build();
+                this.emitter.emit("PAGE_LOAD_COMPLETE", {
                     newPage,
-                    trigger,
-                    transitionName,
-                });
-
-                try {
-                    const TransitionManager = this.ServiceManager.get("TransitionManager") as ITransitionManager;
-                    this.emitter.emit("TRANSITION_START", transitionName);
-
-                    let transition = await TransitionManager.animate(transitionName, {
-                        oldPage,
-                        newPage,
-                        trigger,
-                        scroll,
-                    });
-
-                    if (!transition.scrollable) {
-                        if (!/back|popstate|forward/.test(trigger as string)) {
-                            scroll = hashAction();
-                        }
-
-                        window.scroll(scroll.x, scroll.y);
-                    }
-
-                    this.emitter.emit("TRANSITION_END", { transition });
-
-                } catch (err) {
-                    console.error(`[PJAX] transition error: ${err}`);
-                }
-
-                this.emitter.emit("NAVIGATION_END", {
                     oldPage,
-                    newPage,
                     trigger,
-                    transitionName,
                 });
             } catch (err) {
-                this.transitionStop();
-                throw err;
+                throw `[PJAX] page load error: ${err}`;
             }
 
-            this.transitionStop(); // Sets isTransitioning to false
+            // --
+            // --
+
+            // Start Transition
+            try {
+                const TransitionManager = this.manager.get("TransitionManager") as ITransitionManager;
+                this.emitter.emit("TRANSITION_START", transitionName);
+
+                let transition = await TransitionManager.animate(transitionName, {
+                    oldPage,
+                    newPage,
+                    trigger,
+                    scroll,
+                });
+
+                if (!transition.scrollable) {
+                    if (!/back|popstate|forward/.test(trigger as string)) scroll = hashAction();
+                    window.scroll(scroll.x, scroll.y);
+                }
+
+                this.emitter.emit("TRANSITION_END", { transition });
+            } catch (err) {
+                throw `[PJAX] transition error: ${err}`;
+            }
+
+            this.emitter.emit("NAVIGATION_END", {
+                oldPage,
+                newPage,
+                trigger,
+                transitionName,
+            });
         } catch (err) {
             if (this.forceOnError) this.force(href);
-            else console.error(err);
+            else console.warn(err);
+        } finally {
+            this.transitionStop(); // Sets isTransitioning to false
         }
     }
 
-    /**
-     * Check to see if the URL is to be ignored, uses either RegExp of Strings to check
-     *
-     * @param {URL} { pathname }
-     *
-     * @memberof PJAX
-     */
+    /** Check to see if the URL is to be ignored, uses either RegExp of Strings to check */
     public ignoredURL({ pathname }: URL): boolean {
         return (
             this.ignoreURLs.length &&
@@ -506,17 +353,12 @@ export class PJAX extends Service {
         );
     }
 
-    /**
-     * When you hover over an anchor, prefetch the event target's href
-     *
-     * @param {LinkEvent} event
-     * @memberof PJAX
-     */
+    /** When you hover over an anchor, prefetch the event target's href */
     public onHover(event: LinkEvent): Promise<void> {
         let el = this.getLink(event);
-        if (!el || !this.ServiceManager.get("PageManager")) return;
+        if (!el || !this.manager.has("PageManager")) return;
 
-        const pages = this.ServiceManager.get("PageManager") as IPageManager;
+        const pages = this.manager.get("PageManager") as IPageManager;
         let url = newURL(this.getHref(el));
         let urlString: string = url.pathname;
 
@@ -531,24 +373,12 @@ export class PJAX extends Service {
         }
     }
 
-    /**
-     * When History state changes.
-     *
-     * Get url from State
-     * Go for a Barba transition.
-     *
-     * @param {PopStateEvent} event
-     * @memberof PJAX
-     */
+    /** When History state changes, get url from State, go for a Transition. */
     public onStateChange(event: PopStateEvent): void {
         this.go({ href: window.location.href, trigger: "popstate", event });
     }
 
-    /**
-     * Initialize DOM Events
-     *
-     * @memberof PJAX
-     */
+    /** Initialize DOM Events */
     public initEvents() {
         if (this.prefetchIgnore !== true) {
             document.addEventListener("mouseover", this.onHover);
@@ -559,11 +389,7 @@ export class PJAX extends Service {
         window.addEventListener("popstate", this.onStateChange);
     }
 
-    /**
-     * Stop DOM Events
-     *
-     * @memberof PJAX
-     */
+    /** Stop DOM Events */
     public stopEvents() {
         if (this.prefetchIgnore !== true) {
             document.removeEventListener("mouseover", this.onHover);
@@ -574,28 +400,3 @@ export class PJAX extends Service {
         window.removeEventListener("popstate", this.onStateChange);
     }
 }
-
-
-/**
- * Auto scrolls to an elements position if the element has an hash
- *
- * @param {string} [hash=window.location.hash]
- * @memberof PJAX
- */
-export const hashAction = (hash: string = window.location.hash) => {
-    try {
-
-        let _hash = hash[0] == "#" ? hash : newURL(hash).hash;
-        if (_hash.length > 1) {
-            let el = document.getElementById(_hash.slice(1)) as HTMLElement;
-
-            if (el) {
-                return newCoords(el.offsetLeft, el.offsetTop);
-            }
-        }
-    } catch (e) {
-        console.warn("hashAction error", e);
-    }
-
-    return newCoords(0, 0);
-};

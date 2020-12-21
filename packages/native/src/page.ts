@@ -23,76 +23,32 @@ export interface IPage extends ManagerItem {
  */
 export const PARSER: DOMParser = new DOMParser();
 
-/**
- * A page represents the DOM elements that create each page
- *
- * @export
- * @class Page
- */
+/** A page represents the DOM elements that create each page */
 export class Page extends ManagerItem implements IPage {
-    /**
-     * Holds the DOM of the current page
-     *
-     * @public
-     * @type Document
-     * @memberof Page
-     */
+    /** Holds the DOM of the current page */
     public dom: Document;
 
-    /**
-     * Holds the wrapper element to be swapped out of each Page
-     *
-     * @public
-     * @type HTMLElement
-     * @memberof Page
-     */
+    /** Holds the wrapper element to be swapped out of each Page */
     public wrapper: HTMLElement;
 
-    /**
-     * Holds the title of each page
-     *
-     * @public
-     * @type string
-     * @memberof Page
-     */
+    /** Holds the title of each page */
     public title: string;
 
-    /**
-     * Holds the head element of each page
-     *
-     * @public
-     * @type Element
-     * @memberof Page
-     */
+    /** Holds the head element of each page */
     public head: Element;
 
-    /**
-     * Holds the body element of each page
-     *
-     * @public
-     * @type Element
-     * @memberof Page
-     */
+    /** Holds the body element of each page */
     public body: Element;
 
-    /**
-     * The URL of the current page
-     *
-     * @public
-     * @type URL
-     * @memberof Page
-     */
+    /** The URL of the current page */
     public url: URL;
+
+    /** The payload of a page request */
     public data: string;
+
+    /** Attr that identifies the wrapper */
     public wrapperAttr: string;
 
-    /**
-     * Creates an instance of Page, it also creates a new page from response text, or a Document Object
-     *
-     * @param {URL} [url = newURL()]
-     * @param {(string | Document)} [dom=document]
-     * @memberof Page
-     */
     constructor(url: URL = newURL(), dom: string | Document = document) {
         super();
         this.url = url;
@@ -102,7 +58,8 @@ export class Page extends ManagerItem implements IPage {
         } else this.dom = dom || document;
     }
 
-    public async build() {
+    /** Builds the page's dom, and sets the title, head, body, and wrapper properties of the Page class */
+    public build() {
         if (!(this.dom instanceof Node)) {
             this.dom = PARSER.parseFromString(this.data, "text/html");
         }
@@ -116,13 +73,8 @@ export class Page extends ManagerItem implements IPage {
         }
     }
 
-    /**
-     * Runs once the the manager and config have been registered
-     *
-     * @returns void
-     * @memberof Page
-     */
-    public install(): void {
+    /** Runs once the the manager and config have been registered */
+    public install() {
         this.wrapperAttr = getConfig(this.config, "wrapperAttr");
     }
 
@@ -158,26 +110,15 @@ export interface IPageManager extends Service {
     request(url: string): Promise<string>,
 }
 
-/**
- * Controls which page to be load
- *
- * @export
- * @class PageManager
- * @extends {Service}
- */
+/** Controls which page to load */
 export class PageManager extends Service implements IPageManager {
-    /**
-     * Stores all URLs that are currently loading
-     *
-     * @public
-     * @type Manager<string, Promise<string>>
-     * @memberof PageManager
-     */
+    /** Stores all fetch requests that are currently loading */
     public loading: Manager<string, Promise<string>> = new Manager();
     public maxPages = 5;
 
     pages: AdvancedManager<string, Page>;
 
+    /** Instantiate pages, and add the current page to pages */
     install() {
         this.pages = new AdvancedManager(this.app);
 
@@ -195,13 +136,7 @@ export class PageManager extends Service implements IPageManager {
     get size() { return this.pages.size; }
     keys() { return this.pages.keys(); }
 
-    /**
-     * Load from cache or by requesting URL via a fetch request, avoid requesting for the same thing twice by storing the fetch request in "this.loading"
-     *
-     * @param {(URL | string)} [_url=newURL()]
-     * @returns Promise<Page>
-     * @memberof PageManager
-     */
+    /** Load from cache or by requesting URL via a fetch request, avoid requesting for the same thing twice by storing the fetch request in "this.loading" */
     public async load(_url: URL | string = newURL()): Promise<Page> {
         let url: URL = newURL(_url);
         let urlString: string = url.pathname;
@@ -236,13 +171,7 @@ export class PageManager extends Service implements IPageManager {
         return page;
     }
 
-    /**
-     * Starts a fetch request
-     *
-     * @param {string} url
-     * @returns Promise<string>
-     * @memberof PageManager
-     */
+    /** Starts a fetch request */
     public async request(url: string): Promise<string> {
         const headers = new Headers(getConfig(this.config, "headers"));
         const timeout = window.setTimeout(() => {

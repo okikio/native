@@ -24,40 +24,6 @@ export interface IHistoryItem {
 	states: IState[];
 }
 
-/**
- * A quick snapshot of page coordinates, e.g. scroll positions
- *
- * @export
- * @param {number} [x=window.scrollX]
- * @param {number} [y=window.scrollY]
- */
-export const newCoords = (x: number = window.scrollX, y: number = window.scrollY): ICoords => ({ x, y });
-
-/**
- * Represents the current status of the page consisting of properties like: url, transition, and data
- *
- * @export
- * @param {IState} {
- *         url = getHashedPath(newURL()),
- *         index = 0,
- *         transition = "default",
- *         data = {
- *             scroll: newCoords(),
- *             trigger: "HistoryManager"
- *         }
- *     }
- * @memberof State
-*/
-export const newState = (state: IState = {
-	url: getHashedPath(newURL()),
-	index: 0,
-	transition: "default",
-	data: {
-		scroll: newCoords(),
-		trigger: "HistoryManager"
-	}
-}): IState => (state);
-
 export interface IHistoryManager extends Service {
 	states: IState[],
 	pointer: number,
@@ -72,26 +38,29 @@ export interface IHistoryManager extends Service {
 	last: IState,
 	previous: IState | null,
 	length: number,
-
 }
 
-/**
- * History of the site, stores only the State class
- *
- * @export
- * @class HistoryManager
- * @extends {Manager<number, IState>}
- */
+
+/** A quick snapshot of page scroll coordinates */
+export const newCoords = (x: number = window.scrollX, y: number = window.scrollY): ICoords => ({ x, y });
+
+/** Creates a state; a state represents the current status of the page consisting of properties like: url, transition, and data */
+export const newState = (state: IState = {
+	url: getHashedPath(newURL()),
+	index: 0,
+	transition: "default",
+	data: {
+		scroll: newCoords(),
+		trigger: "HistoryManager"
+	}
+}): IState => (state);
+
+/** Keeps a record of the history of the App; it stores only the states of Pages */
 export class HistoryManager extends Service implements IHistoryManager {
 	public states: IState[];
 	public pointer = -1;
 
-	/**
-	 * Creates an instance of the HistoryManager class, which inherits properties and methods from the Storage class.
-	 *
-	 * @memberof HistoryManager
-	 * @constructor
-	 */
+	/** Initializes the states array, and replace the history pushState data with the states array */
 	init() {
 		this.states = [];
 
@@ -99,16 +68,12 @@ export class HistoryManager extends Service implements IHistoryManager {
 		this.add(state, "replace");
 	}
 
+	/** Get a state based on it's index */
 	public get(index: number) {
 		return this.states[index];
 	}
 
-	/**
-	 * Sets the index of the state before adding to HistoryManager
-	 *
-	 * @param {IState} value
-	 * @returns HistoryManager
-	 */
+	/** Add a state to HistoryManager and change the history pushState data based on the historyAction specified */
 	public add(value?: IState, historyAction: "replace" | "push" = "push"): HistoryManager {
 		let state = newState(value);
 		let len = this.length;
@@ -134,35 +99,28 @@ export class HistoryManager extends Service implements IHistoryManager {
 		return this;
 	}
 
+	/** Replaces the states array with another states array, this is later used when going back and forward in page history */
 	public replace(newStates: IState[]) {
 		this.states = newStates;
 		return this;
 	}
 
-	/**
-	 * Set state by index.
-	 */
+	/** Set state by index. */
 	public set(i: number, state: IState) {
 		return (this.states[i] = state);
 	}
 
-	/**
-	 * Get the current state.
-	 */
+	/** Get the current state */
 	get current(): IState {
 		return this.get(this.pointer);
 	}
 
-	/**
-	 * Get the last state (top of the history stack).
-	 */
+	/** Get the last state (top of the history stack). */
 	get last(): IState {
 		return this.get(this.length - 1);
 	}
 
-	/**
-	 * Get the previous state.
-	 */
+	/** Get the previous state. */
 	get previous(): IState | null {
 		return this.pointer < 1 ? null : this.get(this.pointer - 1);
 	}
@@ -173,13 +131,7 @@ export class HistoryManager extends Service implements IHistoryManager {
 
 }
 
-/**
- * Either push or replace history state
- *
- * @param {("push" | "replace")} action
- * @param {IState} state
- * @param {_URL} url
- */
+/** Either push or replace history state */
 export const changeState = (action: "push" | "replace", state: IState, item: object) => {
 	let href = getHashedPath(newURL(state.url));
 	let args = [item, "", href];

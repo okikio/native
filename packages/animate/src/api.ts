@@ -36,7 +36,7 @@ export const mapObject = (obj: object, args: closureArgs): any => {
     return result;
 };
 
-// From: [https://easings.net]
+/** From: [https://easings.net] */
 export const easings = {
     "ease": "ease",
     "in": "ease-in",
@@ -120,113 +120,63 @@ export const DefaultAnimationOptions: AnimationOptions = {
     direction: "normal",
 };
 
-// You can check it out here: https://codepen.io/okikio/pen/qBbdGaW?editors=0011
+/** You can check it out here: https://codepen.io/okikio/pen/qBbdGaW?editors=0011 */
 export class Animate {
     /**
      * Stores the options for the current animation
-     *
-     * @public
-     * @type AnimationOptions
-     * @memberof Animate
      */
     public options: AnimationOptions = {};
 
     /**
      * The Array of Elements to Animate
-     *
-     * @public
-     * @type {Node[]}
-     * @memberof Animate
      */
     public targets: Node[] = [];
 
     /**
      * The properties to animate
-     *
-     * @public
-     * @type {object}
-     * @memberof Animate
      */
     public properties: object = {};
 
     /**
      * A Set of Animations
-     *
-     * @public
-     * @type {Map<HTMLElement, Animation>}
-     * @memberof Animate
      */
     public animations: Map<HTMLElement, Animation> = new Map();
 
     /**
      * The total duration of all Animation's
-     *
-     * @public
-     * @type {number}
-     * @memberof Animate
      */
     public duration: number = 0;
 
     /**
      * The Element the main animation uses
-     *
-     * @public
-     * @type {HTMLElement}
-     * @memberof Animate
      */
     public mainElement: HTMLElement;
 
     /**
      * Stores an animation that runs on the total duration of the all other Animations, and as such it's the main Animation
-     *
-     * @public
-     * @type {Animation}
-     * @memberof Animate
      */
     public mainAnimation: Animation;
 
     /**
      * Stores request frame calls
-     *
-     * @public
-     * @type {number}
-     * @memberof Animate
      */
     public animationFrame: number;
 
     /**
      * An event emitter
-     *
-     * @public
-     * @type {EventEmitter}
-     * @memberof Animate
      */
     public emitter: EventEmitter = new EventEmitter();
 
     /**
      * The finish method, is called when the main animation has finished
-     *
-     * @public
-     * @type {*}
-     * @memberof Animate
      */
     public finish: any;
 
     /**
      * Returns a promise that is fulfilled when the mainAnimation is finished
-     *
-     * @public
-     * @type {Promise<AnimationOptions>}
-     * @memberof Animate
      */
     public promise: Promise<AnimationOptions>;
 
-    /**
-     * Creates an instance of Animate.
-     *
-     * @param {AnimationOptions} options
-     * @memberof Animate
-     */
     constructor(options: AnimationOptions = {}) {
         let { options: animation, ...rest } = options;
         this.options = Object.assign({}, DefaultAnimationOptions, animation instanceof Animate ? animation.getOptions() : animation, rest);
@@ -315,10 +265,6 @@ export class Animate {
 
     /**
      * Returns a new Promise that is resolve when this.finish is called
-     *
-     * @public
-     * @returns {Promise<AnimationOptions>}
-     * @memberof Animate
      */
     public newPromise(): Promise<AnimationOptions> {
         return new Promise((resolve, reject) => {
@@ -333,9 +279,6 @@ export class Animate {
 
     /**
      * Returns the Array of targets
-     *
-     * @returns {Node[]}
-     * @memberof Animate
      */
     public getTargets(): Node[] {
         return this.targets;
@@ -343,11 +286,6 @@ export class Animate {
 
     /**
      * Fulfills the this.promise Promise
-     *
-     * @param {(value?: any) => any} [onFulfilled]
-     * @param {(reason?: any) => any} [onRejected]
-     * @returns {Animate}
-     * @memberof Animate
      */
     public then(
         onFulfilled?: (value?: any) => any,
@@ -361,10 +299,6 @@ export class Animate {
 
     /**
      * Catches error that occur in the this.promise Promise
-     *
-     * @param {(reason?: any) => any} onRejected
-     * @returns {Animate}
-     * @memberof Animate
      */
     public catch(onRejected: (reason?: any) => any): Animate {
         onRejected = onRejected?.bind(this);
@@ -374,10 +308,6 @@ export class Animate {
 
     /**
      * If you don't care if the this.promise Promise has either been rejected or resolved
-     *
-     * @param {() => any} onFinally
-     * @returns {Animate}
-     * @memberof Animate
      */
     public finally(onFinally: () => any): Animate {
         onFinally = onFinally?.bind(this);
@@ -387,9 +317,6 @@ export class Animate {
 
     /**
      * Represents an Animation Frame Loop
-     *
-     * @public
-     * @memberof Animate
      */
     public loop(): void {
         this.animationFrame = window.requestAnimationFrame(this.loop);
@@ -398,12 +325,6 @@ export class Animate {
 
     /**
      * Adds a listener for a given event
-     *
-     * @param {EventInput} events
-     * @param {ListenerCallback} [callback]
-     * @param {object} [scope]
-     * @returns {Animate}
-     * @memberof Animate
      */
     public on(events: EventInput, callback?: ListenerCallback, scope?: object): Animate {
         this.emitter.on(events, callback, scope ?? this);
@@ -412,12 +333,6 @@ export class Animate {
 
     /**
      * Removes a listener from an event
-     *
-     * @param {EventInput} events
-     * @param {ListenerCallback} [callback]
-     * @param {object} [scope]
-     * @returns {Animate}
-     * @memberof Animate
      */
     public off(events: EventInput, callback?: ListenerCallback, scope?: object): Animate {
         this.emitter.off(events, callback, scope ?? this);
@@ -426,11 +341,6 @@ export class Animate {
 
     /**
      * Call all listeners within an event
-     *
-     * @param {(string | any[])} events
-     * @param {...any} args
-     * @returns {Animate}
-     * @memberof Animate
      */
     public emit(events: string | any[], ...args: any): Animate {
         this.emitter.emit(events, ...args);
@@ -439,20 +349,13 @@ export class Animate {
 
     /**
      * Get a specific Animation from an Animate instance
-     *
-     * @param {HTMLElement} element
-     * @returns {Animation}
-     * @memberof Animate
      */
     public getAnimation(element: HTMLElement): Animation {
         return this.animations.get(element);
     }
 
     /**
-     * Play Animation's
-     *
-     * @returns {Animate}
-     * @memberof Animate
+     * Play Animation
      */
     public play(): Animate {
         // Once the animation is done, it's done, it can only be paused by the reset method
@@ -468,10 +371,7 @@ export class Animate {
     }
 
     /**
-     * Pause Animation's
-     *
-     * @returns {Animate}
-     * @memberof Animate
+     * Pause Animation
      */
     public pause(): Animate {
         // Once the animation is done, it's done, it can only be reset by the reset method
@@ -487,10 +387,7 @@ export class Animate {
     }
 
     /**
-     * Returns the total duration of all Animations
-     *
-     * @returns {number}
-     * @memberof Animate
+     * Returns the total duration of Animation
      */
     public getDuration(): number {
         return this.duration;
@@ -498,9 +395,6 @@ export class Animate {
 
     /**
      * Returns the current time of the Main Animation
-     *
-     * @returns {number}
-     * @memberof Animate
      */
     public getCurrentTime(): number {
         return this.mainAnimation.currentTime;
@@ -508,10 +402,6 @@ export class Animate {
 
     /**
      * Set the current time of the Main Animation
-     *
-     * @param {number} time
-     * @returns {Animate}
-     * @memberof Animate
      */
     public setCurrentTime(time: number): Animate {
         this.mainAnimation.currentTime = time;
@@ -523,20 +413,13 @@ export class Animate {
 
     /**
      * Returns the Animation progress as a fraction of the current time / duration
-     *
-     * @returns
-     * @memberof Animate
      */
     public getProgress() {
         return this.getCurrentTime() / this.duration;
     }
 
     /**
-     * Set the Animation progress as a fraction of the current time / duration
-     *
-     * @param {number} percent
-     * @returns {Animate}
-     * @memberof Animate
+     * Set the Animation progress as a value from 0 to 100
      */
     public setProgress(percent: number): Animate {
         this.mainAnimation.currentTime = (percent / 100) * this.duration;
@@ -548,9 +431,6 @@ export class Animate {
 
     /**
      * Return the playback speed of the animation
-     *
-     * @returns {number}
-     * @memberof Animate
      */
     public getSpeed(): number {
         return this.mainAnimation.playbackRate;
@@ -558,10 +438,6 @@ export class Animate {
 
     /**
      * Set the playback speed of an Animation
-     *
-     * @param {number} [speed=1]
-     * @returns {Animate}
-     * @memberof Animate
      */
     public setSpeed(speed: number = 1): Animate {
         this.mainAnimation.playbackRate = speed;
@@ -573,8 +449,6 @@ export class Animate {
 
     /**
      * Reset all Animations
-     *
-     * @memberof Animate
      */
     public reset() {
         this.setCurrentTime(0);
@@ -586,9 +460,6 @@ export class Animate {
 
     /**
      * Returns the current playing state
-     *
-     * @returns {("idle" | "running" | "paused" | "finished")}
-     * @memberof Animate
      */
     public getPlayState(): "idle" | "running" | "paused" | "finished" {
         return this.mainAnimation.playState;
@@ -596,24 +467,18 @@ export class Animate {
 
     /**
      * Get the options of an Animate instance
-     *
-     * @returns {AnimationOptions}
-     * @memberof Animate
      */
     public getOptions(): AnimationOptions {
         return this.options;
     }
 
-    // Returns the Animate options, as JSON
+    /** Returns the Animate options, as JSON  */
     public toJSON(): AnimationOptions {
         return this.getOptions();
     }
 
     /**
      * Cancels & Clears all Animations
-     *
-     * @returns {Animate}
-     * @memberof Animate
      */
     public stop() {
         this.animations.forEach((anim) => {
@@ -639,7 +504,7 @@ export class Animate {
     }
 }
 
-// Creates a new Animate instance
+/** Creates a new Animate instance */
 export const animate = (options: AnimationOptions = {}): Animate => {
     return new Animate(options);
 };

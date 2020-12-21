@@ -55,7 +55,7 @@
         "@okikio/manager": "workspace:*",
         "@types/jest": "^26.0.19",
         "chokidar": "^3.4.3",
-        "esbuild": "^0.8.25",
+        "esbuild": "^0.8.26",
         "esbuild-jest": "^0.3.0",
         "eslint": "^7.16.0",
         "gzip-size": "^6.0.0",

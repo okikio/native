@@ -1,9 +1,9 @@
 import { Manager } from "./manager";
-import { ICoords, Trigger } from "./history";
+import { ICoords, newCoords, Trigger } from "./history";
 import { IPage } from "./page";
 import { getConfig } from "./config";
-import { hashAction } from "./pjax";
 import { Service } from "./service";
+import { newURL } from "./url";
 
 /**
  * The async function type, allows for smooth transition between Promises
@@ -37,13 +37,27 @@ export interface ITransitionManager extends Service {
     animate(name: string, data: any): Promise<ITransition>,
 }
 
-/**
- * Controls which animation between pages to use
- *
- * @export
- * @class TransitionManager
- * @extends {Manager<string, ITransition>}
- */
+
+/** Auto scrolls to an elements position if the element has an hash */
+export const hashAction = (hash: string = window.location.hash) => {
+    try {
+
+        let _hash = hash[0] == "#" ? hash : newURL(hash).hash;
+        if (_hash.length > 1) {
+            let el = document.getElementById(_hash.slice(1)) as HTMLElement;
+
+            if (el) {
+                return newCoords(el.offsetLeft, el.offsetTop);
+            }
+        }
+    } catch (e) {
+        console.warn("hashAction error", e);
+    }
+
+    return newCoords(0, 0);
+};
+
+/** Controls which Transition between pages to use */
 export class TransitionManager extends Service implements ITransitionManager {
     transitions: Manager<string, ITransition>;
     constructor(transitions?) {
@@ -59,13 +73,7 @@ export class TransitionManager extends Service implements ITransitionManager {
         super.boot();
     }
 
-    /**
-     * Runs a transition
-     *
-     * @param {{ name: string, oldPage: Page, newPage: Page, trigger: Trigger }} data
-     * @returns Promise<Transition>
-     * @memberof TransitionManager
-     */
+    /** Starts a transition */
     public async animate(name: string, data: any): Promise<ITransition> {
         let transition: ITransition = this.transitions.get(name);
         let scroll = data.scroll;
@@ -75,18 +83,24 @@ export class TransitionManager extends Service implements ITransitionManager {
                 oldPage: data.oldPage,
             }}`;
 
+        // Replace the title
+        document.title = `` + data.newPage.title;
+
         let fromWrapper = data.oldPage.wrapper;
         let toWrapper = data.newPage.wrapper;
-        document.title = `` + data.newPage.title;
 
         if (!(fromWrapper instanceof Node) || !(toWrapper instanceof Node))
             throw `[Wrapper] the wrapper from the ${!(toWrapper instanceof Node) ? "next" : "current"
             } page cannot be found. The wrapper must be an element that has the attribute ${getConfig(this.config,
                 "wrapperAttr"
             )}.`;
+
+        // Give the Transition all the background data it may require
         transition.init && transition?.init(data);
 
         this.emitter.emit("BEFORE_TRANSITION_OUT");
+
+        // Start the out point of the Transition
         await new Promise((done) => {
             let outMethod: Promise<any> = transition.out.call(transition, {
                 ...data,
@@ -99,6 +113,8 @@ export class TransitionManager extends Service implements ITransitionManager {
         });
 
         this.emitter.emit("AFTER_TRANSITION_OUT");
+
+        // Add the new wrapper before the old one
         await new Promise<void>((done) => {
             fromWrapper.insertAdjacentElement("beforebegin", toWrapper);
             this.emitter.emit("CONTENT_INSERT");
@@ -109,6 +125,7 @@ export class TransitionManager extends Service implements ITransitionManager {
             done();
         });
 
+        // Replace the old wrapper with the new one
         await new Promise<void>((done) => {
             fromWrapper.remove();
             fromWrapper = undefined;
@@ -119,6 +136,7 @@ export class TransitionManager extends Service implements ITransitionManager {
 
         this.emitter.emit("BEFORE_TRANSITION_IN");
 
+        // Start the in point of the Transition (only the in method has access to the hashAction's scroll position)
         await new Promise(async (done) => {
             let inMethod: Promise<any> = transition.in.call(transition, {
                 ...data,

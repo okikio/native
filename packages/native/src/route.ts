@@ -15,29 +15,10 @@ export interface IRoute {
     method: RouteMethod
 }
 
-/**
- * Controls what happens when certain url paths match a set of criteria
- *
- * @export
- * @class Router
- * @extends {Service}
- */
+/** Controls what happens when certain url paths match a set of criteria */
 export class Router extends Service {
-    /**
-     * List of routes inputted
-     *
-     * @protected
-     * @type {Manager<IRouteToFrom, RouteMethod>}
-     * @memberof Router
-     */
+    /** List of routes */
     protected routes: Manager<IRouteToFrom, RouteMethod>;
-
-    /**
-     * Creates an instance of Router.
-     *
-     * @param {Array<IRoute>} [routes=[]]
-     * @memberof Router
-     */
     constructor(routes: IRoute[] = []) {
         super();
         this.routes = new Manager();
@@ -46,26 +27,14 @@ export class Router extends Service {
         }
     }
 
-    /**
-     * Add a new route to watch for
-     *
-     * @param {IRoute} { path, method }
-     * @returns {Router}
-     * @memberof Router
-     */
+    /** Add a new route to watch for */
     public add({ path, method }: IRoute): Router {
         let key = this.parse(path);
         this.routes.set(key, method);
         return this;
     }
 
-    /**
-     * Convert strings into path match functions
-     *
-     * @param {RouteStyle} path
-     * @returns {RegExp | boolean}
-     * @memberof Router
-     */
+    /** Convert strings into path match functions */
     public parsePath(path: RouteStyle): RegExp | boolean {
         if (typeof path === "string") return new RegExp(path, "i");
         else if (path instanceof RegExp || typeof path === "boolean")
@@ -73,13 +42,7 @@ export class Router extends Service {
         throw "[Router] only regular expressions, strings and booleans are accepted as paths.";
     }
 
-    /**
-     * Determines if a strings counts has a path
-     *
-     * @param {RouteStyle} input
-     * @returns boolean
-     * @memberof Router
-     */
+    /** Determines if a strings counts has a path */
     public isPath(input: RouteStyle): boolean {
         return (
             typeof input === "string" ||
@@ -88,13 +51,7 @@ export class Router extends Service {
         );
     }
 
-    /**
-     * Parse the multiple different formats for paths, into a { from, to } object
-     *
-     * @param {RouteStyle} input
-     * @returns {IRouteToFrom}
-     * @memberof Router
-     */
+    /** Parse the multiple different formats for paths, into a { from, to } object */
     public parse(input: RoutePath): IRouteToFrom {
         let route = input as IRouteToFrom;
         let toFromPath: IRouteToFrom = {
@@ -119,14 +76,10 @@ export class Router extends Service {
         };
     }
 
-    /**
-     * Test if route paths are true, if so run their methods
-     *
-     * @memberof Router
-     */
+    /** Test if route paths are true, if so run their methods */
     public route() {
-        if (this.ServiceManager.has("HistoryManager")) {
-            let history = this.ServiceManager.get("HistoryManager") as IHistoryManager;
+        if (this.manager.has("HistoryManager")) {
+            let history = this.manager.get("HistoryManager") as IHistoryManager;
             let from: string = getHashedPath(newURL((history.length > 1 ? history.previous : history.current).url));
             let to: string = getHashedPath(newURL());
 
@@ -165,21 +118,13 @@ export class Router extends Service {
         }
     }
 
-    /**
-     * Add listeners for PJAX Events
-     *
-     * @memberof Router
-     */
+    /** Add listeners for PJAX Events */
     public initEvents() {
         this.emitter.on("READY", this.route, this);
         this.emitter.on("CONTENT_REPLACED", this.route, this);
     }
 
-    /**
-     * Remove listeners for PJAX Events
-     *
-     * @memberof Router
-     */
+    /** Remove listeners for PJAX Events */
     public stopEvents() {
         this.emitter.off("READY", this.route, this);
         this.emitter.off("CONTENT_REPLACED", this.route, this);

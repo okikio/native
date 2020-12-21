@@ -1,21 +1,19 @@
-# Native
+# native
 A framework who's goal is to make it easy to create complex, performant, light-weight, web applications using native js api's.
 
-> [View a working example  &#8594;](https://okikio.github.io/native/packages/native/demo/)
-
-You can play with the online example with Gitpod:
+You can play with `native` using Gitpod:
 
 [![Gitpod Ready-to-Code](https://img.shields.io/badge/Gitpod-Ready--to--Code-blue?logo=gitpod)](https://gitpod.io/#https://github.com/okikio/native)
 
 ## Table of Contents
-- [Native](#native)
+- [native](#native)
   - [Table of Contents](#table-of-contents)
   - [Getting started](#getting-started)
   - [Usage](#usage)
 
 ## Getting started
 
-`Native` is a monorepo with 4 smaller packages within it, they are:
+`native` is a monorepo with 4 smaller packages within it, they are:
 * [@okikio/manager](./packages/manager)
   * A superset of the Map class, it gives Map superpowers. The Map class is the most efficient way to handle large amounts of controlled data, but it has some inconvient quirks that would be annoying to just contantly think about, so I built this package to avoid some of it's quirks.
   * Note: you install it as a seperate package from the rest of the native framework.
@@ -36,4 +34,7 @@ This framework works with the assumtion that the user will use a build tool and 
 
 ## Usage
 
-It is hard to explain how to use the framework, since, it's so encompassing and requires the developer to optimize on their part, but located in [native/build-src](./packages/native/build-src), you will find multiple build files that cna help you create your setup. The pug folder contains `pug` files ([learn about pug](https://pugjs.org/api/getting-started.html)) that format my html in a clean and clear way. The sass folder contains `scss` files ([learn about sass/scss](https://sass-lang.com/guide)) that allow for modern css without the need of polyfill. The ts folder contains `typescript` files ([learn about typescript](https://www.typescriptlang.org/)) that run the framework (typescript is used, because intellisense is better with typescript). Outside the build-src folder, the [gulpfile.js](./packages/native/gulpfile.js) is the tool I used to build this project but other tools should also work, with some amoount of tweaking ([learn about gulp](https://gulpjs.com/)). Explore the files stated above to learn how to get started. Read more in the [@okikio/native readme](./package/native/readm.md).
+Located in [./packages/native/build](./packages/native/build), you will find multiple build files that can help you create your setup. The [pug folder](./packages/native/build/pug) contains [pug](https://pugjs.org/api/getting-started.html) files that format my html in a clean and clear way. The [sass folder](./packages/native/build/sass) contains [scss](https://sass-lang.com/guide) files that allow for modern css without the need of polyfills. The [ts folder](./packages/native/build/ts) contains [typescript](https://www.typescriptlang.org/) files that the framework runs on; typescript is used, because Intellisense is better with typescript. Outside the build folder, the [gulpfile.js](./packages/native/gulpfile.js) file, is part of my [gulp](https://gulpjs.com/) config, and is the tool I use to build the demo, for your project other tools should also work, with some amoount of work. Explore the files stated above to learn how to get started. Read more about `native` in the [@okikio/native README](./package/native/README.md). Explore the other packages as well to learn how they all work together.
+
+
+> [View a demo  &#8594;](https://okikio.github.io/native/packages/native/demo/)

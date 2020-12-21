@@ -66,7 +66,7 @@ const { default: anime } = window.animate; // LOL
 ```
 
 ## Demo
-I built a small demo showing off the abilities of the `@okikio/animate` library. You can find the files for the demo in [./build-src](./build-src) folder.
+I built a small demo showing off the abilities of the `@okikio/animate` library. You can find the files for the demo in [./build](./build) folder.
 
 
 > [Click to view demo &#8594;](https://okikio.github.io/native/packages/animate/demo/)

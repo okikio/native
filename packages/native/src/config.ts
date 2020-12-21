@@ -1,4 +1,3 @@
-// The config variables
 export interface ICONFIG {
     prefix?: string;
     wrapperAttr?: string;
@@ -27,48 +26,18 @@ export const CONFIG_DEFAULTS: ICONFIG = {
 };
 
 export type ConfigKeys = keyof ICONFIG;
-
-/**
- * The Config class
- *
- * @export
- * @class CONFIG
- */
-
-/**
- * Creates an instance of CONFIG.
- *
- * @param {ICONFIG} config
- * @memberof CONFIG
- */
 export const newConfig = (config: ICONFIG): ICONFIG => {
     return Object.assign({ ...CONFIG_DEFAULTS }, config);
 };
 
-/**
- * Converts string into data attributes
- *
- * @param {ICONFIG} config
- * @param {string} value
- * @param {boolean} brackets [brackets=true]
- * @returns string
- * @memberof CONFIG
- */
+/** Converts string into properly formatted data attributes */
 export const toAttr = (config: ICONFIG, value: string, brackets: boolean = true): string => {
     let { prefix } = config;
     let attr = `data${prefix ? "-" + prefix : ""}-${value}`;
     return brackets ? `[${attr}]` : attr;
 };
 
-/**
- * Selects config vars, and formats them for use, or simply returns the current configurations for the framework
- *
- * @param {ICONFIG} config
- * @param {ConfigKeys} value
- * @param {boolean} [brackets=true]
- * @returns any
- * @memberof CONFIG
- */
+/** Selects config vars, and formats them for use, or simply returns the current configurations for the framework */
 export const getConfig = (config: ICONFIG, value?: ConfigKeys, brackets: boolean = true): any => {
     if (typeof value !== "string")
         return config;

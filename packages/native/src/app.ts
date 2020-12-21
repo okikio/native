@@ -10,64 +10,28 @@ export interface IApp {
     get(key: string): Service,
     set(key: string, service: Service): App,
     add(value: Service): App,
-     boot(): App,
+    boot(): App,
     stop(): App,
     on(events: EventInput, callback?: ListenerCallback): App,
     off(events: EventInput, callback?: ListenerCallback): App,
     emit(events: string | any[], ...args: any): App,
 }
 
-/**
- * The App class starts the entire process, it controls all managers and all services
- *
- * @export
- * @class App
- */
+/** The App class starts the entire process, it controls all managers and all services */
 export class App implements IApp {
-    /**
-     * A new instance of the ServiceManager
-     *
-     * @public
-     * @type ServiceManager
-     * @memberof App
-     */
+    /** An instance of the ServiceManager */
     public services: ServiceManager;
 
-    /**
-     * A new instance of an EventEmitter
-     *
-     * @public
-     * @type EventEmitter
-     * @memberof App
-     */
+    /** An instance of an EventEmitter */
     public emitter: EventEmitter;
 
-    /**
-     * The current Configuration's for the framework
-     *
-     * @public
-     * @type ICONFIG
-     * @memberof App
-     */
+    /** The current Configuration's for the App */
     public config: ICONFIG;
-
-    /**
-     * Creates an instance of App.
-     *
-     * @param {(ICONFIG | CONFIG)} [config={}]
-     * @memberof App
-     */
     constructor(config: object = {}) {
         this.register(config);
     }
 
-    /**
-     * For registering all managers and the configurations
-     *
-     * @param {(ICONFIG)} [config={}]
-     * @returns App
-     * @memberof App
-     */
+    /** Create new instances of the ServiceManager, EventEmitter and the configurations */
     public register(config: ICONFIG = {}): App {
         this.config = newConfig(config);
         this.emitter = new EventEmitter();
@@ -84,99 +48,45 @@ export class App implements IApp {
         return this;
     }
 
-    /**
-     * Based on the type, it will return either a Transition, a Service, or a State from their respective Managers
-     *
-     * @param {string} key
-     * @returns Service | Transition | State
-     * @memberof App
-     */
+    /** Shortcuts to adding, setting, and getting Services */
     public get(key: string): Service {
         return this.services.get(key);
     }
 
-    /**
-     * Adds a Service to the App's instance of the ServiceManager, with a name
-     *
-     * @param {string} key
-     * @param {Service} service
-     * @returns App
-     * @memberof App
-     */
     public set(key: string, service: Service): App {
         this.services.set(key, service);
         return this;
     }
 
-    /**
-     * Based on the type, it will add either a Transition, a Service, or a State to their respective Managers
-     *
-     * @param {Service} value
-     * @returns App
-     * @memberof App
-     */
     public add(value: Service): App {
         this.services.add(value);
         return this;
     }
 
-    /**
-     * Start the App and the ServiceManager
-     *
-     * @returns App
-     * @memberof App
-     */
+    /** Initialize and boot all Services */
     public boot(): App {
         this.services.init();
         this.services.boot();
         return this;
     }
 
-    /**
-     * Stop the App and the ServiceManager
-     *
-     * @returns App
-     * @memberof App
-     */
+    /** Stop all Services */
     public stop(): App {
         this.services.stop();
         return this;
     }
 
-    /**
-     * A shortcut to the App EventEmitter on method
-     *
-     * @param {EventInput} events
-     * @param {ListenerCallback} callback
-     * @returns App
-     * @memberof App
-     */
+    /** Shortcuts to the App EventEmitter on, off, and emit methods */
     public on(events: EventInput, callback?: ListenerCallback): App {
         this.emitter.on(events, callback, this);
         return this;
     }
 
-    /**
-     * A shortcut to the App EventEmitter off method
-     *
-     * @param {EventInput} events
-     * @param {ListenerCallback} callback
-     * @returns App
-     * @memberof App
-     */
     public off(events: EventInput, callback?: ListenerCallback): App {
         this.emitter.off(events, callback, this);
         return this;
     }
 
-    /**
-     * A shortcut to the App EventEmitter emit method
-     *
-     * @param {(string | any[])} events
-     * @param {...any} args
-     * @returns App
-     * @memberof App
-     */
     public emit(events: string | any[], ...args: any): App {
         this.emitter.emit(events, ...args);
         return this;
