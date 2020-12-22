@@ -45,6 +45,7 @@ try {
             }
         });
     }
+
     app.boot();
 } catch (err) {
     splashscreen.show();

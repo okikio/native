@@ -2,11 +2,11 @@
 
 An animation library for the modern web, it utilizes the Web Animation API. Inspired by animate plus, and animejs; `animate` is a Javascript animation library focusing on performance and ease of use. It aims to deliver butter smooth animations at a small size, it weighs less than 2.5 KB (minified and compressed).
 
-_Before even getting started, you will most likely need the Web Animation API polyfill. If you install `@okikio/animate` via `npm` you are most likely going to need [rollup](https://rollupjs.org/) or [esbuild](https://esbuild.github.io/). You can use [web-animations-js](https://github.com/web-animations/web-animations-js), or [polyfill.io](https://polyfill.io/), to create a polyfill. The minimum feature requirement for a polyfill are Maps and a WebAnimations polyfill, e.g. (https://polyfill.io/v3/polyfill.min.js?features=Map%2CWebAnimations)._
+*Before even getting started, you will most likely need the Web Animation API polyfill. If you install `@okikio/animate` via `npm` you are most likely going to need [rollup](https://rollupjs.org/) or [esbuild](https://esbuild.github.io/). You can use [web-animations-js](https://github.com/web-animations/web-animations-js), or [polyfill.io](https://polyfill.io/), to create a polyfill. The minimum feature requirement for a polyfill are Maps and a WebAnimations polyfill, e.g. [https://polyfill.io/v3/polyfill.min.js?features=Map%2CWebAnimations](https://polyfill.io/v3/polyfill.min.js?features=Map%2CWebAnimations).*
 
-_**Warning**: polyfilling may not fix animation format bugs, e.g. [composite animations](https://developer.mozilla.org/en-US/docs/Web/API/KeyframeEffect/composite) don't work on older browsers, so, if you use `polyfill.io` and set it to check if the browser supports the feature before applying the polyfill, your project might encounter errors, as the browser may only have partial support of the Web Animation API._
+***Warning**: polyfilling may not fix animation format bugs, e.g. [composite animations](https://developer.mozilla.org/en-US/docs/Web/API/KeyframeEffect/composite) don't work on older browsers, so, if you use `polyfill.io` and set it to check if the browser supports the feature before applying the polyfill, your project might encounter errors, as the browser may only have partial support of the Web Animation API.*
 
-To properly understand `@okikio/animate`, please read up on the [Web Animation API](https://developer.mozilla.org/en-US/docs/Web/API/Element/animate) on MDN.
+***Note**: to properly understand `@okikio/animate`, please read up on the [Web Animation API](https://developer.mozilla.org/en-US/docs/Web/API/Element/animate) on MDN.*
 
 ## Table of Contents
 - [@okikio/animate](#okikioanimate)
@@ -66,7 +66,7 @@ const { default: anime } = window.animate; // LOL
 ```
 
 ## Demo
-I built a small demo showing off the abilities of the `@okikio/animate` library. You can find the files for the demo in [./build](./build) folder.
+I built a small demo showing off the abilities of the `@okikio/animate` library. You can find the files for the demo in [./build](https://github.com/okikio/native/tree/master/packages/animate/build) folder.
 
 
 > [Click to view demo &#8594;](https://okikio.github.io/native/packages/animate/demo/)

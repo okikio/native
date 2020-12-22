@@ -53,8 +53,8 @@ export class App implements IApp {
         return this.services.get(key);
     }
 
-    public set(key: string, service: Service): App {
-        this.services.set(key, service);
+    public set(key: string, value: Service): App {
+        this.services.set(key, value);
         return this;
     }
 
@@ -70,9 +70,10 @@ export class App implements IApp {
         return this;
     }
 
-    /** Stop all Services */
+    /** Stops all Services and clears the even emitter of all events and listeners */
     public stop(): App {
         this.services.stop();
+        this.emitter.clear();
         return this;
     }
 

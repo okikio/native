@@ -34,19 +34,19 @@ export class ServiceManager extends AdvancedManager<string, Service> {
 
 	/** Call the init method for all Services */
 	public init(): ServiceManager {
-		methodCall(this, "init", this.app);
+		methodCall(this, "init");
 		return this;
 	}
 
 	/** Call the boot method for all Services */
 	public boot(): ServiceManager {
-		methodCall(this, "boot", this.app);
+		methodCall(this, "boot");
 		return this;
 	}
 
 	/** Call the stop method for all Services */
 	public stop(): ServiceManager {
-		methodCall(this, "stop", this.app);
+		methodCall(this, "stop");
 		return this;
 	}
 }

@@ -40,7 +40,6 @@ export interface IHistoryManager extends Service {
 	length: number,
 }
 
-
 /** A quick snapshot of page scroll coordinates */
 export const newCoords = (x: number = window.scrollX, y: number = window.scrollY): ICoords => ({ x, y });
 
@@ -128,7 +127,6 @@ export class HistoryManager extends Service implements IHistoryManager {
 	get length() {
 		return this.states.length;
 	}
-
 }
 
 /** Either push or replace history state */

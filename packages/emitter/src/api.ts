@@ -1,4 +1,4 @@
-import { Manager } from "@okikio/manager";
+import { Manager, methodCall } from "@okikio/manager";
 
 export type ListenerCallback = ((...args: any) => void);
 export interface IListener {
@@ -177,6 +177,13 @@ export class EventEmitter extends Manager<string, Event> {
                 });
             }
         }, this);
+        return this;
+    }
+
+    /** Clears events and event listeners */
+    public clear() {
+        methodCall(this, "clear");
+        super.clear();
         return this;
     }
 }

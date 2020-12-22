@@ -2,7 +2,7 @@
 
 A superset of the Map class, it gives Map superpowers, it weighs less than 450 B (minified and compressed).
 
-You will need a Map polyfill for older browsers. If you install `@okikio/manager` via `npm` you are most likely going to need [rollup](https://rollupjs.org/) or [esbuild](https://esbuild.github.io/). You can use [polyfill.io](https://polyfill.io/), or another source to create a polyfill. The minimum feature requirement for a polyfill are Maps e.g. (https://polyfill.io/v3/polyfill.min.js?features=Maps)._
+*You will need a Map polyfill for older browsers. If you install `@okikio/manager` via `npm` you are most likely going to need [rollup](https://rollupjs.org/) or [esbuild](https://esbuild.github.io/). You can use [polyfill.io](https://polyfill.io/), or another source to create a polyfill. The minimum feature requirement for a polyfill are Maps e.g. [https://polyfill.io/v3/polyfill.min.js?features=Maps](https://polyfill.io/v3/polyfill.min.js?features=Maps).*
 
 ## Table of Contents
 - [@okikio/manager](#okikiomanager)
