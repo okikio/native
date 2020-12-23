@@ -57,12 +57,27 @@ export const hashAction = (hash: string = window.location.hash) => {
     return newCoords(0, 0);
 };
 
+// The Default Transition
+const Default: ITransition = {
+    name: "default",
+    scrollable: true,
+
+    out({ done }: ITransitionData) { done(); },
+    in({ scroll, done }: ITransitionData) {
+        window.scroll(scroll.x, scroll.y);
+        done();
+    }
+};
+
 /** Controls which Transition between pages to use */
 export class TransitionManager extends Service implements ITransitionManager {
     transitions: Manager<string, ITransition>;
-    constructor(transitions?) {
+    constructor(transitions: Array<[string, ITransition]> = []) {
         super();
-        this.transitions = new Manager(transitions);
+        // Maps keep the original entry with the same key,
+        // so, concat will only work when there is no default already specified
+        // Using the `set()` method replaces the old [key, value] with the new one
+        this.transitions = new Manager(transitions.concat(["default", Default]));
     }
 
     get(key: string) { return this.transitions.get(key); }

@@ -81,6 +81,7 @@ You can play with `native` using Gitpod:
       - [#newState(state: IState): IState](#newstatestate-istate-istate)
       - [#changeState(action: "push" | "replace", state: IState, item: object): void](#changestateaction-push--replace-state-istate-item-object-void)
       - [Example](#example-4)
+    - [**TransitionManager**](#transitionmanager)
 
 ## Getting Started
 
@@ -1062,3 +1063,172 @@ go({
 }
 // ...
 ```
+
+---
+
+*Note: thus far I have given you a detailed overview of the API's that make up the base classes as well as the `HistoryManager` (as an example of a complex project based class), but from this point onward the difficulty will drastically increaase, but because the next classes are project based classes they will only new to be instantiated into an `App`'s `ServiceManager` using a specific name to be used, with little to no config required on you part. PS. this is getting really tiring to document, so, for the next classes I will skimp out on aspects I feel aren't useful for the type of projects you want or need, if you would like more detail just look through the code for the framework, as well as the [./build/ts/ folder](https://github.com/okikio/native/tree/master/packages/native/build/ts/). Also, note all the rest of the classes are `Service`'s.*
+
+---
+
+### **TransitionManager**
+As the name implies it controls the transitions (as there can be many differing transition animations) between pages. By default the `TransitionManager` has a simple replace transition with no animation and that supports hashes. To understand the `TransitionManager` you have to first understand how to instantiate it. To instantiate the `TransitionManager`,
+```ts
+// ...
+// If no parameters are present the TransitionManager will just use the default transition (the default transition can be overridden)
+const transitionManager = new TransitionManager();
+
+// or
+
+// You can declare transitions as an Array of [key, value] arrays in the parameter (similar to Maps), if you set the key to "default", it will replace the default transition
+
+// A transition object
+const Fade = {
+    name: "default", // This isn't nesscary but it can be nice when debugging transitions, you can use it to identify which transition is occuring
+    duration: 500,
+    scrollable: true,
+
+    out({ from }: ITransitionData) {
+        let { duration } = this;
+        let fromWrapper = from.wrapper;
+        return animate({
+            target: fromWrapper,
+            opacity: [1, 0],
+            duration,
+            onfinish(el: { style: { opacity: string } }) {
+                requestAnimationFrame(() => {
+                    el.style.opacity = "0";
+                });
+            }
+        }).on("finish", function () {
+            this.stop();
+        });
+    },
+
+    in({ to, scroll }: ITransitionData) {
+        let { duration } = this;
+        let toWrapper = to.wrapper;
+        requestAnimationFrame(() => {
+            toWrapper.style.transform = "translateX(0%)";
+        });
+
+        // Support for hashes are built in
+        window.scroll(scroll.x, scroll.y);
+        return animate({
+            target: toWrapper,
+            opacity: [0, 1],
+            duration,
+            onfinish(el: { style: { opacity?: string } }) {
+                requestAnimationFrame(() => {
+                    el.style.opacity = "1";
+                    el.style = {};
+                });
+            }
+        }).then(function () {
+            this.stop();
+        });
+    }
+};
+
+const transitionManager = new TransitionManager([
+    ["default", Fade] // The new default transition is Fade
+    ["fade", Fade] // The new default transition is Fade
+]);
+// ...
+```
+
+export class TransitionManager extends Service implements ITransitionManager {
+    transitions: Manager<string, ITransition>;
+    constructor(transitions: Array<[string, ITransition]> = [["default", Default]]) {
+        super();
+        this.transitions = new Manager(transitions);
+    }
+
+    get(key: string) { return this.transitions.get(key); }
+    set(key: string, value: ITransition) { this.transitions.set(key, value); return this; }
+    add(value: ITransition) { this.transitions.add(value); return this; }
+
+    boot() {
+        super.boot();
+    }
+
+    /** Starts a transition */
+    public async animate(name: string, data: any): Promise<ITransition> {
+        let transition: ITransition = this.transitions.get(name);
+        let scroll = data.scroll;
+        if (!("wrapper" in data.oldPage) || !("wrapper" in data.newPage))
+            throw `[Page] either oldPage or newPage aren't instances of the Page Class.\n ${{
+                newPage: data.newPage,
+                oldPage: data.oldPage,
+            }}`;
+
+        // Replace the title
+        document.title = `` + data.newPage.title;
+
+        let fromWrapper = data.oldPage.wrapper;
+        let toWrapper = data.newPage.wrapper;
+
+        if (!(fromWrapper instanceof Node) || !(toWrapper instanceof Node))
+            throw `[Wrapper] the wrapper from the ${!(toWrapper instanceof Node) ? "next" : "current"
+            } page cannot be found. The wrapper must be an element that has the attribute ${getConfig(this.config,
+                "wrapperAttr"
+            )}.`;
+
+        // Give the Transition all the background data it may require
+        transition.init && transition?.init(data);
+
+        this.emitter.emit("BEFORE_TRANSITION_OUT");
+
+        // Start the out point of the Transition
+        await new Promise((done) => {
+            let outMethod: Promise<any> = transition.out.call(transition, {
+                ...data,
+                from: data.oldPage,
+                trigger: data.trigger,
+                done,
+            });
+
+            if (outMethod.then) outMethod.then(done);
+        });
+
+        this.emitter.emit("AFTER_TRANSITION_OUT");
+
+        // Add the new wrapper before the old one
+        await new Promise<void>((done) => {
+            fromWrapper.insertAdjacentElement("beforebegin", toWrapper);
+            this.emitter.emit("CONTENT_INSERT");
+
+            if (!/back|popstate|forward/.test(data.trigger as string)) {
+                scroll = hashAction();
+            }
+            done();
+        });
+
+        // Replace the old wrapper with the new one
+        await new Promise<void>((done) => {
+            fromWrapper.remove();
+            fromWrapper = undefined;
+            toWrapper = undefined;
+            this.emitter.emit("CONTENT_REPLACED");
+            done();
+        });
+
+        this.emitter.emit("BEFORE_TRANSITION_IN");
+
+        // Start the in point of the Transition (only the in method has access to the hashAction's scroll position)
+        await new Promise(async (done) => {
+            let inMethod: Promise<any> = transition.in.call(transition, {
+                ...data,
+                from: data.oldPage,
+                to: data.newPage,
+                trigger: data.trigger,
+                scroll,
+                done,
+            });
+
+            if (inMethod.then) inMethod.then(done);
+        });
+
+        this.emitter.emit("AFTER_TRANSITION_IN");
+        return transition;
+    }
+}
