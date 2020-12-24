@@ -6,14 +6,14 @@ importers:
       '@commitlint/config-conventional': 11.0.0
       husky: 4.3.6
       pnpm: 5.14.1
-      ultra-runner: 3.7.1
+      ultra-runner: 3.8.0
     specifiers:
       '@changesets/cli': ^2.12.0
       '@commitlint/cli': ^11.0.0
       '@commitlint/config-conventional': ^11.0.0
       husky: ^4.3.6
       pnpm: ^5.14.1
-      ultra-runner: ^3.7.1
+      ultra-runner: ^3.8.0
   packages/animate:
     dependencies:
       '@okikio/emitter': 'link:../emitter'
@@ -28,7 +28,7 @@ importers:
       gzip-size: 6.0.0
       pretty-bytes: 5.5.0
       typescript: 4.1.3
-      ultra-runner: 3.7.1
+      ultra-runner: 3.8.0
     specifiers:
       '@okikio/emitter': 'workspace:*'
       browser-sync: ^2.26.13
@@ -42,7 +42,7 @@ importers:
       gzip-size: ^6.0.0
       pretty-bytes: ^5.5.0
       typescript: ^4.1.3
-      ultra-runner: ^3.7.1
+      ultra-runner: ^3.8.0
   packages/emitter:
     dependencies:
       '@okikio/manager': 'link:../manager'
@@ -56,7 +56,7 @@ importers:
       jest-chain: 1.1.5
       pretty-bytes: 5.5.0
       typescript: 4.1.3
-      ultra-runner: 3.7.1
+      ultra-runner: 3.8.0
     specifiers:
       '@okikio/manager': 'workspace:*'
       '@types/jest': ^26.0.19
@@ -69,7 +69,7 @@ importers:
       jest-chain: ^1.1.5
       pretty-bytes: ^5.5.0
       typescript: ^4.1.3
-      ultra-runner: ^3.7.1
+      ultra-runner: ^3.8.0
   packages/manager:
     dependencies:
       '@types/jest': 26.0.19
@@ -83,7 +83,7 @@ importers:
       node-fetch: 2.6.1
       pretty-bytes: 5.5.0
       typescript: 4.1.3
-      ultra-runner: 3.7.1
+      ultra-runner: 3.8.0
     specifiers:
       '@types/jest': ^26.0.19
       chokidar: ^3.4.3
@@ -96,7 +96,7 @@ importers:
       node-fetch: ^2.6.1
       pretty-bytes: ^5.5.0
       typescript: ^4.1.3
-      ultra-runner: ^3.7.1
+      ultra-runner: ^3.8.0
   packages/native:
     dependencies:
       '@okikio/animate': 'link:../animate'
@@ -114,7 +114,7 @@ importers:
       merge-stream: 2.0.0
       pretty-bytes: 5.5.0
       typescript: 4.1.3
-      ultra-runner: 3.7.1
+      ultra-runner: 3.8.0
     specifiers:
       '@okikio/animate': 'workspace:*'
       '@okikio/emitter': 'workspace:*'
@@ -131,7 +131,7 @@ importers:
       merge-stream: ^2.0.0
       pretty-bytes: ^5.5.0
       typescript: ^4.1.3
-      ultra-runner: ^3.7.1
+      ultra-runner: ^3.8.0
 lockfileVersion: 5.2
 packages:
   /@babel/code-frame/7.12.11:
@@ -3120,17 +3120,15 @@ packages:
       integrity: sha512-YE2xlTKtM035/94llhgsp9qFQxGi47EkQJ1pZ+mLT/98GpIsbjkMGAb7Rmu9hNxVfYFOLf10hP+rPVqnoccLgw==
       registry: 'https://registry.npmjs.com/'
       tarball: 'https://registry.npmjs.com/csv-parse/-/csv-parse-4.14.2.tgz'
-  /csv-stringify/5.5.3:
+  /csv-stringify/5.6.0:
     dev: false
     resolution:
-      integrity: sha512-JKG8vIHpWPzdilp2SAmvjmAiIhD+XGKGdhZBGi8QIECgJAsFr7k5CmJIW2QkSxBBsctvmojM25s+UINzQ5NLTg==
-      registry: 'https://registry.npmjs.com/'
-      tarball: 'https://registry.npmjs.com/csv-stringify/-/csv-stringify-5.5.3.tgz'
+      integrity: sha512-E0LNLevBrwaJ1WKsl4HUPOmK96WyhizTfY79mJgfr2dsIb6zyJd3B9+lToO7gSkTaKi8CIo0Pd0vDGfa0whozg==
   /csv/5.3.2:
     dependencies:
       csv-generate: 3.3.0
       csv-parse: 4.14.2
-      csv-stringify: 5.5.3
+      csv-stringify: 5.6.0
       stream-transform: 2.0.4
     dev: false
     engines:
@@ -5177,7 +5175,7 @@ packages:
       depd: 1.1.2
       inherits: 2.0.3
       setprototypeof: 1.1.0
-      statuses: 1.4.0
+      statuses: 1.5.0
     dev: false
     engines:
       node: '>= 0.6'
@@ -10373,7 +10371,7 @@ packages:
       integrity: sha1-bgkk1r2mta/jSeOabWMoUKD4grc=
       registry: 'https://registry.npmjs.com/'
       tarball: 'https://registry.npmjs.com/uglify-to-browserify/-/uglify-to-browserify-1.0.2.tgz'
-  /ultra-runner/3.7.1:
+  /ultra-runner/3.8.0:
     dependencies:
       ansi-split: 1.0.1
       chalk: 4.1.0
@@ -10396,9 +10394,7 @@ packages:
       node: '>=10.0.0'
     hasBin: true
     resolution:
-      integrity: sha512-+xrZn/OTXoEVyb2k2hwhy1Ie9EPsjz6bnm4dXwuKmeEad1wxUB7Gquj1WYlYrByUXGJzY04jDBEDj251wV72Rw==
-      registry: 'https://registry.npmjs.com/'
-      tarball: 'https://registry.npmjs.com/ultra-runner/-/ultra-runner-3.7.1.tgz'
+      integrity: sha512-bn+m6oRyv2rwp369dFR2kqUv2Q4K8hfg+aLv8QNAybz7YdOizQb6go0V+KkeAF0sRv6ZTyLPoSfd7ZLQYZCxsA==
   /ultron/1.1.1:
     dev: false
     resolution:

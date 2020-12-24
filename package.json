@@ -28,6 +28,6 @@
         "@commitlint/config-conventional": "^11.0.0",
         "husky": "^4.3.6",
         "pnpm": "^5.14.1",
-        "ultra-runner": "^3.7.1"
+        "ultra-runner": "^3.8.0"
     }
 }

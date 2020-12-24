@@ -95,6 +95,7 @@ ultra demo:watch
       - [#changeState(action: "push" | "replace", state: IState, item: object): void](#changestateaction-push--replace-state-istate-item-object-void)
       - [Example](#example-4)
     - [**TransitionManager**](#transitionmanager)
+    - [**PageManager/Page**](#pagemanagerpage)
   - [Contributing](#contributing)
   - [Licence](#licence)
 
@@ -1202,7 +1203,7 @@ const Fade = {
     duration: 500,
     scrollable: true,
 
-    out({ from }: ITransitionData) {
+    out({ from }) {
         let { duration } = this;
         let fromWrapper = from.wrapper;
         return animate({
@@ -1219,7 +1220,7 @@ const Fade = {
         });
     },
 
-    in({ to, scroll }: ITransitionData) {
+    in({ to, scroll }) {
         let { duration } = this;
         let toWrapper = to.wrapper;
         requestAnimationFrame(() => {
@@ -1259,102 +1260,165 @@ const app = new App({
 app.set("TransitionManager", TransitionManager);
 // ...
 ```
-export class TransitionManager extends Service implements ITransitionManager {
-    transitions: Manager<string, ITransition>;
-    constructor(transitions: Array<[string, ITransition]> = [["default", Default]]) {
-        super();
-        this.transitions = new Manager(transitions);
+
+A transition is an object with some methods and properties pre-defined to control page transition animation.
+
+It looks like this:
+```ts
+// ...
+const Fade = {
+    // This is required to let PJAX, know that this transition can also handle scrolling automatically, but if your transition doesn't need to handle scroll then it's not needed
+    scrollable: true,
+
+    // Initialize some data that the transition may needs, it's not necessary. It is called before the transition in() or out() methods
+    /**
+        The init(data: object) methods have a data object paremter
+
+        data is an object with 4 properties
+        * newPage: Page - The new page you are transitioning to
+        * oldPage: Page - The old page you are transitioning from
+        * trigger: HTMLAnchorElement | "HistoryManager" | "popstate" | "back" | "forward" - The trigger for the transition, popstate, HistoryManager, or an anchor element.
+        * scroll: { x: number, y: number } - Stores the scroll position of the page required after transition (except the scroll doesn't take into account hashes)
+        *
+        * E.g.
+        * init(data: {
+            oldPage: Page,
+            newPage: Page,
+            trigger: HTMLAnchorElement | "HistoryManager" | "popstate" | "back" | "forward",
+            scroll: { x: number, y: number },
+        }) {}
+     */
+    init({ oldPage, newPage, trigger, scroll }) {
+        // ...
+        this.mainElement = document.getElementById('big-transition');
+        this.spinnerElement = this.mainElement.querySelector('.spinner');
+        this.horizontalElements = [...this.mainElement.querySelector('#big-transition-horizontal').querySelectorAll('div')];
+        this.maxLength = this.horizontalElements.length;
+        // ...
     }
 
-    get(key: string) { return this.transitions.get(key); }
-    set(key: string, value: ITransition) { this.transitions.set(key, value); return this; }
-    add(value: ITransition) { this.transitions.add(value); return this; }
+    /**
+        The out(data: ITransitionData) & in(data: ITransitionData) methods have a ITransitionData parameter
 
-    boot() {
-        super.boot();
+        ITransitionData is an object with 3 properties and 1 method
+        * to: Page - The Page you are transitioning to
+        * from: Page - The Page you are transitioning from
+        * trigger: HTMLAnchorElement | "HistoryManager" | "popstate" | "back" | "forward" - The trigger for the transition, popstate, HistoryManager, or an anchor element.
+        * scroll: { x: number, y: number } - Stores the scroll position of the page required after transition (so, if a hash is required or going back to previous pages scroll position, etc...),
+        * done(): void - The callback method that has to be called once the animation is done. It doesn't return anything
+    */
+
+    // The out() method dictates what to do when the old page transitions out
+    out({ from, to, scroll, trigger, done }) {
+        let fromWrapper = from.wrapper;
+
+        // done() indicates that the out() transition is done, it can now remove the old page and start the in() transition
+        done();
+    },
+
+    // The in() method dictates what to do when the new page transitions in
+
+    // hashes can only affect the in() scroll ITransitionData. The new page only gets added to the DOM after the out() transition, so to find the scroll position of the element the hash is supposed to represent can only happen in the in() method
+
+    // Try your best to only apply scroll to the in() method
+    in({ to, from, scroll, trigger, done }) {
+        let toWrapper = to.wrapper;
+
+        // Support for hashes are built in
+        window.scroll(scroll.x, scroll.y);
+
+        // done() indicates that the in() transition is done, it can now stop the transition
+        done();
+    }
+};
+
+// or
+// you can also do this
+
+const Fade = {
+    // This is required to let PJAX, know that this transition can also handle scrolling automatically, but if your transition doesn't need to handle scroll then it's not needed
+    scrollable: true,
+
+    // Initialize some data that the transition may needs, it's not necessary. It is called before the transition in() or out() methods
+    /**
+        The init(data: object) methods have a data object paremter
+
+        data is an object with 4 properties
+        * newPage: Page - The new page you are transitioning to
+        * oldPage: Page - The old page you are transitioning from
+        * trigger: HTMLAnchorElement | "HistoryManager" | "popstate" | "back" | "forward" - The trigger for the transition, popstate, HistoryManager, or an anchor element.
+        * scroll: { x: number, y: number } - Stores the scroll position of the page required after transition (except the scroll doesn't take into account hashes)
+        *
+        * E.g.
+        * init(data: {
+            oldPage: Page,
+            newPage: Page,
+            trigger: HTMLAnchorElement | "HistoryManager" | "popstate" | "back" | "forward",
+            scroll: { x: number, y: number },
+        }) {}
+     */
+    init({ oldPage, newPage, trigger, scroll }) {
+        // ...
+        this.mainElement = document.getElementById('big-transition');
+        this.spinnerElement = this.mainElement.querySelector('.spinner');
+        this.horizontalElements = [...this.mainElement.querySelector('#big-transition-horizontal').querySelectorAll('div')];
+        this.maxLength = this.horizontalElements.length;
+        // ...
     }
 
-    /** Starts a transition */
-    public async animate(name: string, data: any): Promise<ITransition> {
-        let transition: ITransition = this.transitions.get(name);
-        let scroll = data.scroll;
-        if (!("wrapper" in data.oldPage) || !("wrapper" in data.newPage))
-            throw `[Page] either oldPage or newPage aren't instances of the Page Class.\n ${{
-                newPage: data.newPage,
-                oldPage: data.oldPage,
-            }}`;
+    /**
+        The out(data: ITransitionData) & in(data: ITransitionData) methods have a ITransitionData parameter
 
-        // Replace the title
-        document.title = `` + data.newPage.title;
+        ITransitionData is an object with 3 properties and 1 method
+        * to: Page - The Page you are transitioning to
+        * from: Page - The Page you are transitioning from
+        * trigger: HTMLAnchorElement | "HistoryManager" | "popstate" | "back" | "forward" - The trigger for the transition, popstate, HistoryManager, or an anchor element.
+        * scroll: { x: number, y: number } - Stores the scroll position of the page required after transition (so, if a hash is required or going back to previous pages scroll position, etc...),
+        * done(): void - The callback method that has to be called once the animation is done. It doesn't return anything
+    */
 
-        let fromWrapper = data.oldPage.wrapper;
-        let toWrapper = data.newPage.wrapper;
-
-        if (!(fromWrapper instanceof Node) || !(toWrapper instanceof Node))
-            throw `[Wrapper] the wrapper from the ${!(toWrapper instanceof Node) ? "next" : "current"
-            } page cannot be found. The wrapper must be an element that has the attribute ${getConfig(this.config,
-                "wrapperAttr"
-            )}.`;
-
-        // Give the Transition all the background data it may require
-        transition.init && transition?.init(data);
-
-        this.emitter.emit("BEFORE_TRANSITION_OUT");
-
-        // Start the out point of the Transition
-        await new Promise((done) => {
-            let outMethod: Promise<any> = transition.out.call(transition, {
-                ...data,
-                from: data.oldPage,
-                trigger: data.trigger,
-                done,
-            });
-
-            if (outMethod.then) outMethod.then(done);
+    // The out() method dictates what to do when the old page transitions out
+    out({ from, to, scroll, trigger, done }) {
+        return new Promise(resolve => {
+            // Once the promise has resolved, the transition moves on to the in() transition method
+            resolve();
         });
+    },
 
-        this.emitter.emit("AFTER_TRANSITION_OUT");
+    // The in() method dictates what to do when the new page transitions in
 
-        // Add the new wrapper before the old one
-        await new Promise<void>((done) => {
-            fromWrapper.insertAdjacentElement("beforebegin", toWrapper);
-            this.emitter.emit("CONTENT_INSERT");
+    // hashes can only affect the in() scroll ITransitionData. The new page only gets added to the DOM after the out() transition, so to find the scroll position of the element the hash is supposed to represent can only happen in the in() method
 
-            if (!/back|popstate|forward/.test(data.trigger as string)) {
-                scroll = hashAction();
-            }
-            done();
+    // Try your best to only apply scroll to the in() method
+    in({ to, from, scroll, trigger, done }) {
+        // Support for hashes are built in
+        window.scroll(scroll.x, scroll.y);
+
+        // Since `@okikio/animate` is promise-like, it will resolve the transition once the animation is done
+        return animate({
+            target: this.horizontalElements,
+            keyframes: [
+                { transform: "scaleX(1)" },
+                { transform: "scaleX(0)" },
+            ],
+            // @ts-ignore
+            delay(i) {
+                return delay * (i + 1);
+            },
+            onfinish(el) {
+                el.style.transform = `scaleX(0)`;
+            },
+            easing: "out-cubic",
+            duration: 500
         });
-
-        // Replace the old wrapper with the new one
-        await new Promise<void>((done) => {
-            fromWrapper.remove();
-            fromWrapper = undefined;
-            toWrapper = undefined;
-            this.emitter.emit("CONTENT_REPLACED");
-            done();
-        });
-
-        this.emitter.emit("BEFORE_TRANSITION_IN");
-
-        // Start the in point of the Transition (only the in method has access to the hashAction's scroll position)
-        await new Promise(async (done) => {
-            let inMethod: Promise<any> = transition.in.call(transition, {
-                ...data,
-                from: data.oldPage,
-                to: data.newPage,
-                trigger: data.trigger,
-                scroll,
-                done,
-            });
-
-            if (inMethod.then) inMethod.then(done);
-        });
-
-        this.emitter.emit("AFTER_TRANSITION_IN");
-        return transition;
     }
-}
+};
+// ...
+```
+
+### **PageManager/Page**
+
+The `PageManager`
 
 
 ## Contributing
