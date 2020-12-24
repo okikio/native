@@ -9,34 +9,48 @@ export type LinkEvent = MouseEvent | TouchEvent;
 export type StateEvent = LinkEvent | PopStateEvent;
 export type IgnoreURLsList = Array<RegExp | string>;
 /**
- * Creates a Barba JS like PJAX Service, for the native framework
- * Based on Barba JS and StartingBlocks
+ * Creates a barbajs like PJAX Service, for the native framework
+ * Based on barbajs and StartingBlocks
  */
 export class PJAX extends Service {
     /** URLs to ignore when prefetching */
-    protected ignoreURLs: IgnoreURLsList = [];
+    public ignoreURLs: IgnoreURLsList;
 
     /** Whether or not to disable prefetching */
-    protected prefetchIgnore: boolean = false;
+    public prefetchIgnore: boolean;
 
     /** Current state of transitions */
-    public isTransitioning: boolean = false;
+    public isTransitioning: boolean;
 
     /** Ignore extra clicks of an anchor element if a transition has already started */
-    protected stopOnTransitioning: boolean = false;
+    public stopOnTransitioning: boolean;
 
     /** On page change (excluding popstate events) keep current scroll position */
-    protected stickyScroll: boolean = false;
+    public stickyScroll: boolean;
 
     /** Force load a page if an error occurs */
-    protected forceOnError: boolean = false;
+    public forceOnError: boolean;
+
+    /** Ignore hash action if set to true */
+    public ignoreHashAction: boolean;
+
+    public install() {
+        super.install();
+
+        this.ignoreURLs = getConfig(this.config, "ignoreURLs") ?? [];
+        this.prefetchIgnore = getConfig(this.config, "prefetchIgnore") ?? false;
+        this.stopOnTransitioning = getConfig(this.config, "stopOnTransitioning") ?? false;
+        this.stickyScroll = getConfig(this.config, "stickyScroll") ?? false;
+        this.forceOnError = getConfig(this.config, "forceOnError") ?? false;
+        this.ignoreHashAction = getConfig(this.config, "ignoreHashAction") ?? false
+    }
 
     /** Sets the transition state to either true or false */
-    private transitionStart() {
+    public transitionStart() {
         this.isTransitioning = true;
     }
 
-    private transitionStop() {
+    public transitionStop() {
         this.isTransitioning = false;
     }
 
@@ -198,7 +212,7 @@ export class PJAX extends Service {
         }
 
         const history = this.manager.get("HistoryManager") as IHistoryManager;
-        let scroll = { x: 0, y: 0 };
+        let scroll = newCoords(0, 0);
         let currentState = history.current;
         let currentURL = currentState.url;
         if (equal(currentURL, href)) {
@@ -229,16 +243,16 @@ export class PJAX extends Service {
 
         } else {
             // Add new state
-            transitionName = this.getTransitionName(trigger as HTMLAnchorElement) ||
-                "default";
+            transitionName = this.getTransitionName(trigger as HTMLAnchorElement);
 
             scroll = newCoords();
-
             let state = newState({
                 url: href,
                 transition: transitionName,
                 data: { scroll },
             });
+
+            !this.stickyScroll && (scroll = newCoords(0, 0));
 
             history.add(state);
             this.emitter.emit("HISTORY_NEW_ITEM", event);
@@ -310,15 +324,16 @@ export class PJAX extends Service {
                 const TransitionManager = this.manager.get("TransitionManager") as ITransitionManager;
                 this.emitter.emit("TRANSITION_START", transitionName);
 
-                let transition = await TransitionManager.animate(transitionName, {
+                let transition = await TransitionManager.animate(TransitionManager.has(transitionName) ? transitionName : "default", {
                     oldPage,
                     newPage,
                     trigger,
                     scroll,
+                    ignoreHashAction: this.ignoreHashAction
                 });
 
                 if (!transition.scrollable) {
-                    if (!/back|popstate|forward/.test(trigger as string)) scroll = hashAction();
+                    if (!this.ignoreHashAction && !/back|popstate|forward/.test(trigger as string)) scroll = hashAction(scroll);
                     window.scroll(scroll.x, scroll.y);
                 }
 

@@ -202,9 +202,9 @@ export class Animate {
         this.targets = getTargets(target);
         this.properties = properties;
 
-        let i = 0, len = this.targets.length
+        let len = this.targets.length
         let animationKeyframe: Keyframe[] | PropertyIndexedKeyframes;
-        for (; i < len; i++) {
+        for (let i = 0; i < len; i++) {
             let target = this.targets[i] as HTMLElement;
             let animationOptions = {
                 easing: getEase(easing),

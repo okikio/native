@@ -4,27 +4,49 @@ A superset of the Map class, it gives Map superpowers, it weighs less than 450 B
 
 *You will need a Map polyfill for older browsers. If you install `@okikio/manager` via `npm` you are most likely going to need [rollup](https://rollupjs.org/) or [esbuild](https://esbuild.github.io/). You can use [polyfill.io](https://polyfill.io/), or another source to create a polyfill. The minimum feature requirement for a polyfill are Maps e.g. [https://polyfill.io/v3/polyfill.min.js?features=Maps](https://polyfill.io/v3/polyfill.min.js?features=Maps).*
 
+
+
+
+
+
+You can play with `@okikio/manager` using Gitpod:
+
+[![Edit with Gitpod](https://gitpod.io/button/open-in-gitpod.svg)](https://gitpod.io/#https://github.com/okikio/native/tree/master/packages/manager)
+
+Once Gitpod has booted up, go to the `./test folder` and start tweaking and testing to your hearts content.
+
+
+*Note: if an error occurs that stops the test script, just type into the terminal*
+```bash
+ultra test:watch
+```
+
 ## Table of Contents
 - [@okikio/manager](#okikiomanager)
   - [Table of Contents](#table-of-contents)
   - [Installation](#installation)
   - [Getting started](#getting-started)
   - [API](#api)
-      - [Existing Map Methods](#existing-map-methods)
-      - [Manager#length](#managerlength)
-      - [Manager#getMap()](#managergetmap)
-      - [Manager#add(value)](#manageraddvalue)
-      - [Manager#remove(key)](#managerremovekey)
-      - [Manager#keys()](#managerkeys)
-      - [Manager#values()](#managervalues)
-      - [Manager#last(distance)](#managerlastdistance)
-      - [Manager#@@iterator](#manageriterator)
-      - [#methodCall(method, ...)](#methodcallmethod-)
-      - [#asyncMethodCall(method, ...)](#asyncmethodcallmethod-)
+    - [Existing Map Methods](#existing-map-methods)
+    - [Manager#length](#managerlength)
+    - [Manager#getMap()](#managergetmap)
+    - [Manager#add(value)](#manageraddvalue)
+    - [Manager#remove(key)](#managerremovekey)
+    - [Manager#keys()](#managerkeys)
+    - [Manager#values()](#managervalues)
+    - [Manager#last(distance)](#managerlastdistance)
+    - [Manager#@@iterator](#manageriterator)
+    - [#methodCall(method, ...)](#methodcallmethod-)
+    - [#asyncMethodCall(method, ...)](#asyncmethodcallmethod-)
+  - [Contributing](#contributing)
+  - [Licence](#licence)
 
 
 ## Installation
-You can install Manager from `npm` via `npm i @okikio/manager` or `yarn add @okikio/manager`. You can use Manager on the web via [unpkg](https://unpkg.com/@okikio/manager@latest/lib/api.modern.js) `https://unpkg.com/@okikio/manager@latest/lib/api.modern.js`, [skypack](https://cdn.skypack.dev/@okikio/manager) `https://cdn.skypack.dev/@okikio/manager` or [jsdelivr](https://cdn.jsdelivr.net/npm/@okikio/manager@latest/lib/api.modern.js) `https://cdn.jsdelivr.net/npm/@okikio/manager@latest/lib/api.modern.js`.
+You can install `@okikio/manager` from `npm` via `npm i @okikio/manager` or `yarn add @okikio/manager`. You can use `@okikio/manager` on the web via:
+* [https://unpkg.com/@okikio/manager@latest/lib/api.modern.js](https://unpkg.com/@okikio/manager@latest/lib/api.modern.js),
+* [https://cdn.skypack.dev/@okikio/manager](https://cdn.skypack.dev/@okikio/manager) or
+* [https://cdn.jsdelivr.net/npm/@okikio/manager@latest/lib/api.modern.js](https://cdn.jsdelivr.net/npm/@okikio/manager@latest/lib/api.modern.js).
 
 Once installed it can be used like this:
 ```javascript
@@ -44,36 +66,37 @@ const { default: Manager, methodCall } = window.manager;
 
 ## Getting started
 
-The Manager class makes Maps easier to use, as well as adding 7 methods, **getMap**, **last**, **methodCall**, **asyncMethodCall**, **add**, **remove**, **keys** and **values**, (**methodCall**, and **asyncMethodCall** are seperate from the Manager class, so treeshaking can get rid of them if they aren't need).
+The `Manager` class makes Maps easier to use, as well as adding 7 methods, **getMap**, **last**, **methodCall**, **asyncMethodCall**, **add**, **remove**, **keys** and **values**, (**methodCall**, and **asyncMethodCall** are seperate methods from the `Manager` class, so treeshaking can get rid of them if they aren't need).
 
 *Note: the behavior of the keys and values methods are slightly modified, to return an Array of keys/values instead of an iterator. You can get the keys and values original effects by using ...getMap().keys() or ...getMap().values().*
 
 ## API
 
-#### Existing Map Methods
-* Manager.prototype.get(key: K)
+### Existing Map Methods
+* Manager.prototype.get(key: K): V
   * Returns a specified element from a Map object. If the value that is associated to the provided key is an object, then you will get a reference to that object and any change made to that object will effectively modify it inside the Map object.
-* Manager.prototype.set(value: V)
+* Manager.prototype.set(value: V): Manager
   * Adds or updates an element with a specified key and a value to a Map object.
-  * Note: Techincally the values being returned are different from a normal Map. The Map set returns the Map class while the Manager set return the Manager class, this shouldn't leave much of an effect on use, but should be kept in mind.
-* Manager.prototype.size
+  * Returns the Manager class (it is chainable).
+  * *Note: techincally the values being returned are different from a normal Map. The Map set() method returns the Map class while the Manager set() method return the Manager class, this shouldn't leave much of an effect on use, but should be kept in mind.*
+* Manager.prototype.size: number
   * Returns the number of elements in a Map object.
-* Manager.prototype.delete(key: K)
+* Manager.prototype.delete(key: K): boolean
   * Removes the specified element from a Map object by key. Returns true if an element in the Map object existed and has been removed, or false if the element does not exist.
-* Manager.prototype.entries()
+* Manager.prototype.entries(): [[K, V], ...]
   * Returns a new Iterator object that contains the [key, value] pairs for each element in the Map object in insertion order.
-* Manager.prototype.has()
+* Manager.prototype.has(): boolean
   * Returns a boolean indicating whether an element with the specified key exists or not, true if an element with the specified key exists in the Map object; otherwise false.
-* Manager.prototype.forEach(callback: Function,context?: object)
+* Manager.prototype.forEach(callback: Function,context?: object): Manager
   * Executes a provided function once per each key/value pair in the Map object, in insertion order.
   * Returns the Manager class (it is chainable).
 
-#### Manager#length
+### Manager#length
 ```js
 Manager.prototype.length
 
 /**
- * Returns the total number of items stored in the Manager
+ * Returns the total number of items stored in the Manager, an alias to Manger.prototype.size
  *
  * @public
  * @returns Number
@@ -87,12 +110,12 @@ const manager = new Manager(arr);
 console.log(manager.length); //= 5
 ```
 
-#### Manager#getMap()
+### Manager#getMap()
 ```js
 Manager.prototype.getMap();
 
 /**
- * Returns the Manager class's Map
+ * Returns the Manager class as a Map
  *
  * @returns Map<K, V>
  * @memberof Manager
@@ -106,12 +129,12 @@ const manager = new Manager(arr);
 console.log(manager.getMap()); //= Map(5) { 0 => 1, 1 => 2, 2 => 3, 3 => 4, 4 => 5 }
 ```
 
-#### Manager#add(value)
+### Manager#add(value)
 ```js
 Manager.prototype.add(value: V);
 
 /**
- * Adds a value to Manager, and uses the current size of the Manager as it's key, it works best when all the key in the Manager are numbers
+ * Adds a value to Manager, and uses the current size of the Manager as it's key, it works best when all the keys in the Manager are numbers
  *
  * @param  {V} value
  * @returns Manager<K, V>
@@ -126,7 +149,7 @@ manager.add(6).add(7);
 console.log(manager.get(5)); //= 6
 ```
 
-#### Manager#remove(key)
+### Manager#remove(key)
 ```js
 Manager.prototype.remove(key: K);
 
@@ -148,9 +171,7 @@ manager.remove(2).remove(1);
 console.log(manager.get(1)); //= undefined
 ```
 
-
-
-#### Manager#keys()
+### Manager#keys()
 ```js
 Manager.prototype.keys();
 
@@ -169,8 +190,7 @@ const manager = new Manager(arr);
 console.log(manager.keys()); //= [0, 1, 2, 3, 4]
 ```
 
-
-#### Manager#values()
+### Manager#values()
 ```js
 Manager.prototype.values();
 
@@ -189,8 +209,7 @@ const manager = new Manager(arr);
 console.log(manager.values()); //= [1, 2, 3, 4, 5]
 ```
 
-
-#### Manager#last(distance)
+### Manager#last(distance)
 ```js
 Manager.prototype.last(distance: number = 1);
 
@@ -211,7 +230,7 @@ console.log(manager.last()); //= 5
 console.log(manager.last(3)); //= 3
 ```
 
-#### Manager#@@iterator
+### Manager#@@iterator
 ```js
 /**
  * Allows iteration via the for..of, learn more: [https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Iterators_and_Generators]
@@ -230,7 +249,7 @@ for (let [key, value] of manager) {
 }
 ```
 
-#### #methodCall(method, ...)
+### #methodCall(method, ...)
 ```js
 methodCall(method: string, ...args: any);
 
@@ -251,7 +270,7 @@ manager.set("y", { print: console.log });
 methodCall(manager, "print", Date.now()); // Eg. 1598772789150, 1598772801639
 ```
 
-#### #asyncMethodCall(method, ...)
+### #asyncMethodCall(method, ...)
 ```js
 asyncMethodCall(method: string, ...args: any[]);
 
@@ -278,3 +297,9 @@ manager.set("x", { print: fn() });
 manager.set("y", { print: fn("https://github.com") });
 asyncMethodCall(manager, "print"); //= (https://www.google.com/), (https://github.com/)
 ```
+
+## Contributing
+If there is something I missed, a mistake, or a feature you would like added please create an issue or a pull request and I'll try to get to it.
+
+## Licence
+See the [LICENSE](./LICENSE) file for license rights and limitations (MIT).

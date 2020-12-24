@@ -27,13 +27,7 @@ export const Slide: ITransition = {
                 { transform: `translateX(${direction === "left" ? "-" : ""}25%)`, opacity: 0 },
             ],
             duration,
-            easing: "in-quint",
-            onfinish: (el: { style: { opacity: string; transform: string; }; }) => {
-                requestAnimationFrame(() => {
-                    el.style.opacity = '0';
-                    el.style.transform = `translateX(${direction === "left" ? "-" : ""}25%)`;
-                });
-            }
+            easing: "in-quint"
         }).then(function () {
             this.stop();
         });
@@ -44,7 +38,6 @@ export const Slide: ITransition = {
         let toWrapper = to.wrapper;
 
         window.scroll(scroll.x, scroll.y);
-
         return animate({
             target: toWrapper,
             keyframes: [
@@ -52,13 +45,7 @@ export const Slide: ITransition = {
                 { transform: "translateX(0%)", opacity: 1 },
             ],
             duration,
-            easing: "out-quint",
-            onfinish(el: { style: { opacity: string; transform: string; }; }) {
-                requestAnimationFrame(() => {
-                    el.style.opacity = '1';
-                    el.style.transform = `translateX(0%)`;
-                });
-            }
+            easing: "out-quint"
         }).then(function () {
             this.stop();
         });

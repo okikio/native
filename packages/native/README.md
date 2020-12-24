@@ -1,10 +1,10 @@
 # @okikio/native
 
-The framework that encourages performance, modern technologies, and great user experiences. The idea behind `@okikio/native` is that it acts as the core to the `native` initiative, it combines all the other package into it a core package that is ~7 KB (minified & compressed).
+`@okikio/native` the framework that encourages performance, modern technologies, and great user experiences. The idea behind `@okikio/native` is that it acts as the core to the `native` initiative, it combines all the other package into it a core package that is ~7 KB (minified & compressed).
 
-`@okikio/native` is a guideline on how to create great web experiences, that integrate into the system in use by the user and feel like a cohesive and native experience.
+`@okikio/native` is a guideline on how to create great web experiences that integrate into the system in a way that feels like a cohesive and native experience.
 
-The idea behind it is that when an application feels native it integrates well into prior systems and `just works` and  works well. So, for example, a dark mode that follows the entire system. The `just works` is the key aspect of the framework, it should work without the user skipping a bit of whatever task they are aiming to complete.
+The idea behind it is that, when an app feels native, it means that it integrates well into the systems and `just works`, so, for example, a dark mode that follows the entire system. The `just works` aspect is key to the framework, it should work without the user skipping a beat.
 
 On the web this boils down to being performant, efficient, and smooth.
 
@@ -14,14 +14,27 @@ Currently many websites rely on older code to make sure they reach as wide an au
 
 `@okikio/native` uses modern browser api's like the Web Animation API, Maps, pushState, etc.... to achieve high efficiency and performance (as these API can be smartly managed by the browser). The browser API's can be difficult to work with, so, I developed `@okikio/manager`, `@okikio/emitter`, and `@okiko/animate` libraries to make them more managable. I developed these libraries to ensure the framework is well optimized and to avoid larges ammounts of npm dependencies.
 
-You can play with `native` using Gitpod:
 
-[![Gitpod Ready-to-Code](https://img.shields.io/badge/Gitpod-Ready--to--Code-blue?logo=gitpod)](https://gitpod.io/#https://github.com/okikio/native)
+
+
+You can play with `@okikio/native` using Gitpod:
+
+[![Edit with Gitpod](https://gitpod.io/button/open-in-gitpod.svg)](https://gitpod.io/#https://github.com/okikio/native/tree/master/packages/native)
+
+Once Gitpod has booted up, go to the `./build folder` and start tweaking and testing to your hearts content.
+
+
+*Note: if an error occurs that stops the build script, just type into the terminal*
+```bash
+ultra demo:watch
+```
+
 
 ## Table of Contents
 - [@okikio/native](#okikionative)
   - [Table of Contents](#table-of-contents)
   - [Getting Started](#getting-started)
+  - [Installation](#installation)
   - [Demo](#demo)
   - [API](#api)
     - [**ManagerItem**](#manageritem)
@@ -82,48 +95,71 @@ You can play with `native` using Gitpod:
       - [#changeState(action: "push" | "replace", state: IState, item: object): void](#changestateaction-push--replace-state-istate-item-object-void)
       - [Example](#example-4)
     - [**TransitionManager**](#transitionmanager)
+  - [Contributing](#contributing)
+  - [Licence](#licence)
 
 ## Getting Started
 
-`native` is a framework who's goal is to make it easier to create complex, performant, light-weight, web applications using native js apis. It was inspired by Rezo Zero's Starting Blocks project, and Barba.js. Both libraries had a major impact on the development of this project. Barba.js is easy to use and elevates the experience of a site with the use of PJAX, while Starting Blocks used native apis to create light-weight but complex web experiences. This project exists as a more flexible alternative to Starting Blocks, but with the same intuitive design and experience (UX/DX) Barba.js provides. It also, allows for web apps to be created without the need of PJAX, and safely switches back to normal HTML controls if JS is disabled.
+`native` is a framework who's goal is to make it easier to create complex, light-weight, and performant web applications using modern js apis. It was inspired by Rezo Zero's Starting Blocks project, and barbajs. Both libraries had a major impact on the development of this project. barbajs is easy to use and elevates the experience of a site with the use of PJAX, while Starting Blocks used modern apis to create performant but complex web experiences. This project exists as a more flexible alternative to Starting Blocks, but with the same intuitive design and experience (UX/DX) barbajs provides. The framework doesn't need PJAX to function, and best of all if PJAX is enabled, it can also safely switch back to normal browser controls if something goes wrong.
 
-This project is called a framework but it is more like a guideline, if all you want is a simple starter project that has PJAX built in then you install the project from `npm` once it becomes available, but otherwise you download the project into you workspace and tweak it to match your projects needs and remove all the extra fluff you don't want (By the way, this project works best with treeshaking, so, for the sake of speed, performance, and weight use Rollup or Webpack; Rollup is preferred).
+This project is called a framework but it is more like a guideline, if all you want is a simple starter project that has PJAX built in then you install the project from `npm` once it becomes available, but otherwise you download the project into you workspace and tweak it to match your projects needs and remove all the extra fluff you don't want (this project works best with treeshaking, so, for the sake of speed, performance, and weight use rollup, webpack, or esbuild; esbuild is preferred).
 
-This package is built for es2020, it expects the user to use a build tool support older versions of browsers, the idea being most people are using evergreen browsers, so, why are web developers piling on polyfill code that most users don't need.
+This package is built for ES2020, it expects the user to use a build tool to support older versions of browsers, the idea being most people are using evergreen browsers, so, why are web developers piling on polyfill code that most users don't need.
+
+## Installation
+You can install `@okikio/native` from `npm` via `npm i @okikio/native` or `yarn add @okikio/native`. You can use `@okikio/native` on the web via:
+* [https://unpkg.com/@okikio/native@latest/lib/api.modern.js](https://unpkg.com/@okikio/native@latest/lib/api.modern.js),
+* [https://cdn.skypack.dev/@okikio/native](https://cdn.skypack.dev/@okikio/native) or
+* [https://cdn.jsdelivr.net/npm/@okikio/native@latest/lib/api.modern.js](https://cdn.jsdelivr.net/npm/@okikio/native@latest/lib/api.modern.js).
+
+Once installed it can be used like this:
+```javascript
+import { App, PJAX } from "@okikio/native";
+import { App, PJAX } from "https://unpkg.com/@okikio/native@latest/lib/api.modern.js";
+import { App, PJAX } from "https://cdn.jsdelivr.net/npm/@okikio/native@latest/lib/api.modern.js";
+// Or
+import { App, PJAX } from "https://cdn.skypack.dev/@okikio/native";
+
+// Via script tag
+<script src="https://unpkg.com/@okikio/native@latest/lib/api.js"></script>
+// Do note, on the web you need to do this, if you installed it via the script tag:
+const { App, PJAX } = window.native;
+```
 
 ## Demo
 
-Located in [./build](https://github.com/okikio/native/tree/master/packages/native/build), you will find multiple build files that can help you create your setup. The [pug folder](https://github.com/okikio/native/tree/master/packages/native/build/pug) contains [pug](https://pugjs.org/api/getting-started.html) files that format my html in a clean and clear way. The [sass folder](https://github.com/okikio/native/tree/master/packages/native/build/sass) contains [scss](https://sass-lang.com/guide) files that allow for modern css without the need of polyfills. The [ts folder](https://github.com/okikio/native/tree/master/packages/native/build/ts) contains [typescript](https://www.typescriptlang.org/) files that the framework runs on; typescript is used, because Intellisense is better with typescript. Outside the build folder, the [gulpfile.js](https://github.com/okikio/native/tree/master/packages/native/gulpfile.js) file, is part of my [gulp](https://gulpjs.com/) config, and is the tool I use to build the demo, for your project other tools should also work, with some amoount of work. Explore the files stated above to learn how to get started.
+Located in [./build](https://github.com/okikio/native/tree/master/packages/native/build), you will find multiple build files that can help you create your setup. The [./pug folder](https://github.com/okikio/native/tree/master/packages/native/build/pug) contains [pug](https://pugjs.org/api/getting-started.html) files that format my html in a clean and clear way. The [./sass folder](https://github.com/okikio/native/tree/master/packages/native/build/sass) contains [scss](https://sass-lang.com/guide) files that allow for modern css without the need of polyfills. The [./ts folder](https://github.com/okikio/native/tree/master/packages/native/build/ts) contains [typescript](https://www.typescriptlang.org/) files that the framework runs on; typescript is used, because Intellisense is better with typescript. Outside the build folder, the [gulpfile.js](https://github.com/okikio/native/tree/master/packages/native/gulpfile.js) file, is part of my [gulp](https://gulpjs.com/) config, and is the tool I use to build the demo, for your project other tools should also work, with some amoount of work. Explore the files stated above to learn how to get started.
 
 
 > [View the Demo  &#8594;](https://okikio.github.io/native/packages/native/demo/)
 
 
 ## API
-`@okikio/native` has `5` base classes, they are:
+`@okikio/native` has `5` base classes and `5` project classes, the base classes are:
 * `ManagerItem`
 * `AdvanncedManager`
 * `Service`
 * `ServiceManager`
 * `App`
 
-There are also `6` project based classes:
+whiel the `5` project classes are:
 * `HistoryManager`
 * `Router`
-* `Page`
-* `PageManager`
+* `PageManager/Page`
 * `TransitionManager`
 * `PJAX`
 
-Project based classes are optional and are based on the type of project you are creating, if they are not used, tree shaking using `rollup`, or `esbuild`, should get rid of them.
+Project classes are optional and are based on the type of project you are creating, if they are not used, tree shaking using `rollup`, `webpack`, or `esbuild` should get rid of them.
 
-The `5 base classes` are mandatory classes that are built into the framework,  tree shaking won't be able to get rid of them.
+The `5 base classes` are mandatory classes that are built into the framework (tree shaking won't be able to get rid of them).
+
+*Note: all classes that aren't base classes are `Service`'s, or they extend the `Service` class in some way.*
 
 ### **ManagerItem**
 
-MangerItem is a class that can only be stored in the `AdvancedManager` class, it posses is self aware of it's envrioment, so things like the manager it's attached to, and the `App` instance that the `AdvancedManager` is attached to. It can also access data from other `ManagerItem`'s via the `AdvancedManager` and `App`. Be very careful with `ManagerItem` as it references, so, many other classes that if you don't properly dispose of a reference you might create a mermory leak unknowingly. When it comes to references it
+`MangerItem` is a class that can only be stored in the `AdvancedManager` class, it is self aware of it's envrioment, so things like the `AdvancedManager` it's stored in, and the `App` instance that the `AdvancedManager` is attached to. It can also access data from other `ManagerItem`'s via the `AdvancedManager` and `App`. Be very careful with `ManagerItem` as it references, so, many other classes that if you don't properly dispose of a reference you might create a mermory leak unknowingly.
 
-`ManagerItem` only gains self awareness after it has been registered with a `AdvancedManager` that has also been instantiated in an `App` (rather non-dynamic isn't it). I didn't use Promises or other dependency injection methods, because it adds complexity and bulk in a way most project don't need. If your project rquires such a dynamic and complex setup you should use WebWorkers and a custom dependency injection setup, this is far out of the scope of this project, so, it will require a custom solution for each project. If in the future `@okikio/native` needs dependency injection I would be willing to build it in.
+`ManagerItem` only gains self awareness after it has been registered with an `AdvancedManager` that has also been instantiated in an `App` (rather non-dynamic isn't it). I didn't use Promises or other dependency injection methods because it adds complexity and bulk in a way most project don't need. If your project requires such a dynamic and complex setup you should use WebWorkers and a custom dependency injection setup, but that is far out of the scope of this framework for now, so, it will require a custom solution for each project. If in the future `@okikio/native` needs dependency injection I would be willing to build it in.
 
 *Note: when working with WebWorkers don't use more than one or 2 at a time, I have found that two is the maximum that lower end hardware can safely use with max performance.*
 
@@ -269,9 +305,9 @@ console.log(item.manager.get("item2")); // => undefined
 
 ### **AdvanncedManager**
 
-The `AdvancedManager` class is an extention of the `Manager` class (as in `AdvancedManager` extends `Manager`). `AdvancedManager` has the ability to share details about the `App` class it's attached to, to the `ManagerItem`'s it stores.
+The `AdvancedManager` class is an extention of the `Manager` class (`AdvancedManager` extends `Manager`). `AdvancedManager` has the ability to share details about the `App` class it's attached to, to the `ManagerItem`'s it stores.
 
-For example, `AdvancedManager` can give access to the `App` classes `ServiceManager` to a `ManagerItem` from another `AdvancedManager`, allowing a `ManagerItem` to access `Service`'s running on the `App` inside `ServiceManager`.
+For example, `AdvancedManager` can give access to the `App` classes `ServiceManager` to a `ManagerItem` from another `AdvancedManager`, allowing a `ManagerItem` to access `Service`'s running on the `App` inside `ServiceManager` (say that 5 time fast, 😂).
 
 #### Example
 ```ts
@@ -297,7 +333,7 @@ console.log(_item.key); // => "item"
 console.log(item.key); // => "item"
 ```
 #### AdvancedManager#....Manager#
-All the properties and methods of the `Manager` class, read `@okikio/manager`'s README to learn more [../manager/README.md](../manager/README.md).
+All the properties and methods of the `Manager` class, read [@okikio/manager's README](../manager/README.md) to learn more.
 
 #### AdvancedManager#app: IApp;
 ```ts
@@ -355,28 +391,30 @@ AdvancedManager.prototype.set(key: K, value: V): AdvancedManager<V extends Manag
  */
 ```
 
-The example above should also work to explain how to use the AdvancedManager API's.
+The example above should also work to explain how to use the `AdvancedManager` API's.
 
 *Note: `ServiceManager` extends `AdvancedManager`, so all the properties and methods present, will also work on `ServiceManager`.*
 
 
 ### **Service**
-`Service` does everything, it is what enables, `PJAX`, `HistoryManager`, `Router`, `PageManager`, `Page`, and `TransitionManager` to function, even though they are seperate from the `App` class.
+`Service` does everything, it is what enables, `PJAX`, `HistoryManager`, `Router`, `PageManager`, and `TransitionManager` to function, even though they are seperate from the `App` class.
 
 `Service` is an extention of `ManagerItem`, that adds extra life-cycle methods for controlling specific kinds of actions that require js.
 
-The life-cycle methods of a `Service` are register, install, init, boot, initEvents, stop, stopEvents, uninstall, and unregister.
+The life-cycle methods of a `Service` are register(), install(), init(), boot(), initEvents(), stop(), stopEvents(), uninstall(), and unregister().
 
 Here is a diagram that may aid in your understanding.
 [![Life Cycle Diagram](./assets/lifecycle.png)](./assets/lifecycle.png)
 
-The lifecycle is controlled by the `ServiceManager`, the `Service`'s themselves have the lifecycle methods, but only the `ServiceManager` can decide when to call the lifecycle methods of all `Service`'s.
+The life-cycle is controlled by the `ServiceManager`, the `Service`'s themselves have the life-cycle methods, but only the `ServiceManager` can decide when to call the life-cycle methods of all `Service`'s.
 
-The `ServiceManager` recieves an instruction from the `App` via a method call, to which the `ServiceManager` then initializes all `Service`'s via the `init()` method after all `Service`'s have been initialized the `ServiceManager` then boots all `Service`'s via the `boot()` method, the `boot()` method then initializes any events the `Service` may have via `initEvents()`, that's the lifecycle for starting a `Service`.
+The `ServiceManager` recieves an instruction from the `App` via a method call, to which the `ServiceManager` then initializes all `Service`'s via the `init()` method, and after all `Service`'s have been initialized the `ServiceManager` then boots all `Service`'s via the `boot()` method, the `boot()` method then initializes any events the `Service` may have via `initEvents()`, that's the life-cycle for starting a `Service`.
 
-To stop `Service`'s the `SeviceManager` calls the `stop()` method, which calls the `stopEvents()` and `unregister()` methods, completely reseting the `Service` to just before it was added to the `ServiceManager`.
+To stop the `Service`'s the `SeviceManager` calls the `stop()` method for all `Service`'s, which calls the `stopEvents()` and `unregister()` methods, completely reseting the `Service` to just before it was added to the `ServiceManager`.
 
 *Note: there also exists an `install()` & `register()` method (inherited from `ManagerItem`) that installs and makes a `Service` self aware on addition to the `ServiceManager`. The `stop()` method removes a `Service`'s self awareness, to make a `Service` self aware again, the Service has to be re-added to `ServiceManger`.*
+
+*Note: all classes that aren't base classes are `Service`'s, or they extend the `Service` class in some way.*
 
 #### Service#init(...args: any): any
 ```ts
@@ -492,7 +530,7 @@ app.boot();
 
 
 ### **ServiceManager**
-The `ServiceManager` controls the lifecycle of all Services in an App. It extends the `AdvancedManager`, so it gains all the abilities, methods, and properties of the `AdvancedManager`, and extends them with some new methods namely `init()`, `boot()`, and `stop()`, they are basically glorified for loops that call the corresponding methods with the same name for all `Service`'s (since all `Services` have these methods).
+The `ServiceManager` controls the life-cycle of all Services in an `App`. It extends the `AdvancedManager`, so it gains all the abilities, methods, and properties of the `AdvancedManager`, and extends them with some new methods namely `init()`, `boot()`, and `stop()`, they are basically glorified for loops that call the corresponding methods with the same name for all `Service`'s (since all `Services` have these methods).
 
 #### ServiceManager/#stop()/#boot()/#init(): ServiceManager
 ```ts
@@ -503,9 +541,9 @@ Service.prototype.init(): ServiceManager;
 
 /**
  * Stop, Boot, & Initialize all Services
- * Note: A Service can call the ServiceManager methods since it's self aware and has access to the ServiceManager, but best not to do that, as it may create unrepairable bugs
+ * Note: A Service can call the ServiceManager methods since it's self aware and has access to the ServiceManager, but best not to do that as it may create hard to find bugs
  *
- * Let the framework handle the ServiceManager methods for the sake of ease of use
+ * Try your best to let the framework handle the ServiceManager methods
  */
 ```
 
@@ -517,7 +555,7 @@ The `App` class starts the entire process, it controls all managers and services
 App.prototype.config: ICONFIG;
 
 /**
- * The current Configuration's for the App, acts like settings, the Config is an object with some preset values set, for all self aware content within an App to access. The default values for Config are:
+ * The current Configuration's for the App, acts like settings for the app. The Config is an object with some preset values set, for all self aware classes within an App to access. The default values for Config are:
  * {
       wrapperAttr: "wrapper",
       noAjaxLinkAttr: "no-ajax-link",
@@ -763,16 +801,31 @@ app.emitter.on("app-stop", finish);
 
 ---
 
-These are the the `5` base classes, but there are also `6` project based classes, namely:
+These are the the `5` base classes as stated above, but there are also `5` project based classes, namely:
 * `HistoryManager`
 * `Router`
-* `Page`
-* `PageManager`
+* `PageManager/Page`
 * `TransitionManager`
 * `PJAX`
 
+These classes are all `Services`, but they have very specific names, so when using them make sure to use the names specified above as their keys in `app.set("...", ...)`.
+
+E.g.
+```ts
+// ...
+app.set("TransitionManager", new TransitionManager(/* ... */));
+app.set("HistoryManager", new HistoryManager());
+app.set("PageManager", new PageManager());
+
+// PJAX relies on HistoryManager, PageManager, and TransitionManager, so, to ensure that nothing breaks, all these classes need to be present with the name stated in the forms they've been stated
+
+// Note: PJAX doesn't need Router to function, Router adds extra functionality that is often needed but not crucial. Router is often used for highlight navbar links to pages that have changed via PJAX, but a custom solution can also be made that is smaller and lighter, so, its not absolutely necessary
+app.set("PJAX", new PJAX());
+// ...
+```
+
 ### **HistoryManager**
-`HistoryManager` is a `Service` that keeps a record of the history of the App; it stores only the states of Pages. A state represents the current status of a page, consisting of properties like: url, transition, and data. `HistoryManager` is an extention of the `Service` class.
+`HistoryManager` is a `Service` that keeps a record of the history of the `App`; it stores only the states of pages. A state represents the current status of a page, consisting of properties like: url, transition, and data. `HistoryManager` is an extention of the `Service` class.
 
 #### HistoryManager#states: IState[]
 ```ts
@@ -976,7 +1029,7 @@ app.set("HistoryManager", new HistoryManager());
 
 *Note: the `HistoryManager` needs to be present in an `App` for the `PJAX` service to function.*
 
-This example is the go method for the `PJAX` service.
+This example is the go() method for the `PJAX` service.
 
 ```ts
 // ...
@@ -985,11 +1038,11 @@ go({
     trigger = "HistoryManager",
     event,
 }) {
-    // If transition is already running and the go method is called again, force load page
+    // If transition is already running and the go() method is called again, force load page
     if (this.isTransitioning && this.stopOnTransitioning ||
-        !this.manager.has("TransitionManager") ||
 
         // The PJAX service will only work if the HistoryManager is set as a Service in the App's ServiceManager
+        !this.manager.has("TransitionManager") ||
         !this.manager.has("HistoryManager") ||
         !this.manager.has("PageManager")) {
         this.force(href);
@@ -1066,7 +1119,7 @@ go({
 
 ---
 
-*Note: thus far I have given you a detailed overview of the API's that make up the base classes as well as the `HistoryManager` (as an example of a complex project based class), but from this point onward the difficulty will drastically increaase, but because the next classes are project based classes they will only new to be instantiated into an `App`'s `ServiceManager` using a specific name to be used, with little to no config required on you part. PS. this is getting really tiring to document, so, for the next classes I will skimp out on aspects I feel aren't useful for the type of projects you want or need, if you would like more detail just look through the code for the framework, as well as the [./build/ts/ folder](https://github.com/okikio/native/tree/master/packages/native/build/ts/). Also, note all the rest of the classes are `Service`'s.*
+*Note: thus far I have given you a detailed overview of the API's that make up the base classes as well as the `HistoryManager` (as an example of a complex project based class), but from this point onward the difficulty will drastically increaase, but because the next classes are project based classes they will only need to be instantiated into an `App`'s `ServiceManager` using a specific name to be used, with little to no config required on you part. PS. this is getting really tiring to document, so, for the next classes I will skimp out on aspects I feel aren't useful for the type of projects you want or need, if you would like more detail just look through the code for the framework, as well as the [./build/ts/ folder](https://github.com/okikio/native/tree/master/packages/native/build/ts/). Also, **all classes that aren't base classes are `Service`'s, or they extend the `Service` class in some way.***
 
 ---
 
@@ -1131,11 +1184,81 @@ const Fade = {
 
 const transitionManager = new TransitionManager([
     ["default", Fade] // The new default transition is Fade
-    ["fade", Fade] // The new default transition is Fade
+    ["fade", Fade] // A Fade transition named "fade"
 ]);
 // ...
 ```
 
+The `TransitionManager` accepts transitions from both the `App` config as well as the arguments it was instantiated with, but by default it will prefer the arguments it was instantiated with.
+
+For example,
+```ts
+// ...
+// You can declare transitions as an Array of [key, value] arrays in the parameter (similar to Maps), if you set the key to "default", it will replace the default transition
+
+// A transition object
+const Fade = {
+    name: "default", // This isn't nesscary but it can be nice when debugging transitions, you can use it to identify which transition is occuring
+    duration: 500,
+    scrollable: true,
+
+    out({ from }: ITransitionData) {
+        let { duration } = this;
+        let fromWrapper = from.wrapper;
+        return animate({
+            target: fromWrapper,
+            opacity: [1, 0],
+            duration,
+            onfinish(el: { style: { opacity: string } }) {
+                requestAnimationFrame(() => {
+                    el.style.opacity = "0";
+                });
+            }
+        }).on("finish", function () {
+            this.stop();
+        });
+    },
+
+    in({ to, scroll }: ITransitionData) {
+        let { duration } = this;
+        let toWrapper = to.wrapper;
+        requestAnimationFrame(() => {
+            toWrapper.style.transform = "translateX(0%)";
+        });
+
+        // Support for hashes are built in
+        window.scroll(scroll.x, scroll.y);
+        return animate({
+            target: toWrapper,
+            opacity: [0, 1],
+            duration,
+            onfinish(el: { style: { opacity?: string } }) {
+                requestAnimationFrame(() => {
+                    el.style.opacity = "1";
+                    el.style = {};
+                });
+            }
+        }).then(function () {
+            this.stop();
+        });
+    }
+};
+
+const transitionManager = new TransitionManager([
+    ["default", Fade] // The new default transition is Fade
+    ["fade", Fade] // A Fade transition named "fade"
+]);
+
+const app = new App({
+    // The TransitionManager will completely ignore this, because it has been instantiated with the transitions, and those are usually the one that is intended for use
+    transitions: [
+        ["default", {}]
+        ["fade", {}]
+    ]
+});
+app.set("TransitionManager", TransitionManager);
+// ...
+```
 export class TransitionManager extends Service implements ITransitionManager {
     transitions: Manager<string, ITransition>;
     constructor(transitions: Array<[string, ITransition]> = [["default", Default]]) {
@@ -1232,3 +1355,10 @@ export class TransitionManager extends Service implements ITransitionManager {
         return transition;
     }
 }
+
+
+## Contributing
+If there is something I missed, a mistake, or a feature you would like added please create an issue or a pull request and I'll try to get to it.
+
+## Licence
+See the [LICENSE](./LICENSE) file for license rights and limitations (MIT).

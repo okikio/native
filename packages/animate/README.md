@@ -1,12 +1,27 @@
 # @okikio/animate
 
-An animation library for the modern web, it utilizes the Web Animation API. Inspired by animate plus, and animejs; `animate` is a Javascript animation library focusing on performance and ease of use. It aims to deliver butter smooth animations at a small size, it weighs less than 2.5 KB (minified and compressed).
+An animation library for the modern web which utilizes the Web Animation API. Inspired by animate plus, and animejs, `@okikio/animate` is a Javascript animation library focusing on performance and ease of use. It aims to deliver butter smooth animations at a small size, it weighs less than 2.5 KB (minified and compressed).
 
-*Before even getting started, you will most likely need the Web Animation API polyfill. If you install `@okikio/animate` via `npm` you are most likely going to need [rollup](https://rollupjs.org/) or [esbuild](https://esbuild.github.io/). You can use [web-animations-js](https://github.com/web-animations/web-animations-js), or [polyfill.io](https://polyfill.io/), to create a polyfill. The minimum feature requirement for a polyfill are Maps and a WebAnimations polyfill, e.g. [https://polyfill.io/v3/polyfill.min.js?features=Map%2CWebAnimations](https://polyfill.io/v3/polyfill.min.js?features=Map%2CWebAnimations).*
+*Before even getting started, you will most likely need the Web Animation API polyfill. If you install `@okikio/animate` via `npm` you are most likely going to need [rollup](https://rollupjs.org/) or [esbuild](https://esbuild.github.io/). You can use [web-animations-js](https://github.com/web-animations/web-animations-js), or [polyfill.io](https://polyfill.io/) to create a polyfill. The minimum feature requirement for a polyfill are Maps and a WebAnimations polyfill, e.g. [https://polyfill.io/v3/polyfill.min.js?features=Map%2CWebAnimations](https://polyfill.io/v3/polyfill.min.js?features=Map%2CWebAnimations).*
 
 ***Warning**: polyfilling may not fix animation format bugs, e.g. [composite animations](https://developer.mozilla.org/en-US/docs/Web/API/KeyframeEffect/composite) don't work on older browsers, so, if you use `polyfill.io` and set it to check if the browser supports the feature before applying the polyfill, your project might encounter errors, as the browser may only have partial support of the Web Animation API.*
 
 ***Note**: to properly understand `@okikio/animate`, please read up on the [Web Animation API](https://developer.mozilla.org/en-US/docs/Web/API/Element/animate) on MDN.*
+
+
+
+
+You can play with `@okikio/animate` using Gitpod:
+
+[![Edit with Gitpod](https://gitpod.io/button/open-in-gitpod.svg)](https://gitpod.io/#https://github.com/okikio/native/tree/master/packages/animate)
+
+Once Gitpod has booted up, go to the `./build folder` and start tweaking and testing to your hearts content.
+
+
+*Note: if an error occurs that stops the build script, just type into the terminal*
+```bash
+ultra demo:watch
+```
 
 ## Table of Contents
 - [@okikio/animate](#okikioanimate)
@@ -43,9 +58,14 @@ An animation library for the modern web, it utilizes the Web Animation API. Insp
   - [Content delivery networks](#content-delivery-networks)
   - [Memory Management](#memory-management)
   - [Best practices (these are from Animate Plus, but they are true for all Animation libraries)](#best-practices-these-are-from-animate-plus-but-they-are-true-for-all-animation-libraries)
+  - [Contributing](#contributing)
+  - [Licence](#licence)
 
 ## Installation
-You can install Animate from `npm` via `npm i @okikio/animate` or `yarn add @okikio/animate`. You can use Animate on the web via [unpkg](https://unpkg.com/@okikio/animate@latest/lib/api.modern.js) `https://unpkg.com/@okikio/animate@latest/lib/api.modern.js`, [skypack](https://cdn.skypack.dev/@okikio/animate) `https://cdn.skypack.dev/@okikio/animate` or [jsdelivr](https://cdn.jsdelivr.net/npm/@okikio/animate@latest/lib/api.modern.js) `https://cdn.jsdelivr.net/npm/@okikio/animate@latest/lib/api.modern.js`.
+You can install `@okikio/animate` from `npm` via `npm i @okikio/animate` or `yarn add @okikio/animate`. You can use `@okikio/animate` on the web via
+* [https://unpkg.com/@okikio/animate@latest/lib/api.modern.js](https://unpkg.com/@okikio/animate@latest/lib/api.modern.js),
+* [https://cdn.skypack.dev/@okikio/animate](https://cdn.skypack.dev/@okikio/animate) or
+* [https://cdn.jsdelivr.net/npm/@okikio/animate@latest/lib/api.modern.js](https://cdn.jsdelivr.net/npm/@okikio/animate@latest/lib/api.modern.js).
 
 Once installed it can be used like this:
 ```javascript
@@ -66,7 +86,7 @@ const { default: anime } = window.animate; // LOL
 ```
 
 ## Demo
-I built a small demo showing off the abilities of the `@okikio/animate` library. You can find the files for the demo in [./build](https://github.com/okikio/native/tree/master/packages/animate/build) folder.
+I built a small demo showing off the abilities of the `@okikio/animate` library. You can find the files for the demo in the [./build](https://github.com/okikio/native/tree/master/packages/animate/build) folder.
 
 
 > [Click to view demo &#8594;](https://okikio.github.io/native/packages/animate/demo/)
@@ -77,7 +97,7 @@ I built a small demo showing off the abilities of the `@okikio/animate` library.
 import animate from "@okikio/animate";
 
 // Do note, on the web you need to do this, if you installed it via the script tag:
-// const { animate } = window.Animate;
+// const { animate } = window.animate;
 
 animate({
     target: ".div",
@@ -312,6 +332,7 @@ Another way to input options for an animation, it's also used to chain animation
 ## Animations
 
 `@okikio/animate` lets you animate HTML and SVG elements with any property that takes numeric values, including hexadecimal colors.
+The `@okikio/animate` module contains a class that controls animatations called `Animate`, to create new instances of the `Animate` class I created the `animate()` function.
 
 ```javascript
 // Animate the radius and fill color of an SVG circle
@@ -340,8 +361,7 @@ animate({
     ],
 });
 ```
-
-Do note you can only use one of these formats for an animation, and if Animate sees the `keyframes` property, it ignores all other css properties, in situations where Animate sees the keyframes property it will still accept animation properties like `easing`, `duration`, etc...
+*Note: you can only use one of these formats for an animation, and if `Animate` sees the `keyframes` property, it ignores all other css properties, in situations where `Animate` sees the keyframes property it will still accept animation properties like `easing`, `duration`, etc...*
 
 These arrays can optionally be returned by a callback that takes the index of each element, the total number of elements, and each specific element, just like with other properties.
 
@@ -393,13 +413,13 @@ animate({
 
 ## Promises and Promise-Like
 
-`animate()` is promise-like meaning it has `then`, `catch`, and `finally` methods, but Animate itself isn't a Promise (this is important to keep in mind when dealing with async/await asynchronous  animations). Animate's `then` resolves once the animation finishes. The promise resolves to the options initially passed to `animate()`, making animation chaining straightforward and convenient. The [Getting started](#getting-started) section gives a basic example.
+`animate()` is promise-like meaning it has `then`, `catch`, and `finally` methods, but `Animate` itself isn't a Promise (this is important to keep in mind when dealing with async/await asynchronous  animations). `Animate`'s `then` resolves once the animation finishes. The promise resolves to the options initially passed to `animate()`, making animation chaining straightforward and convenient. The [Getting started](#getting-started) section gives a basic example.
 
-Since Animate relies on native promises, you can benefit from all the usual features promises
+Since `Animate` relies on native promises, you can benefit from all the usual features promises
 provide, such as `Promise.all`, `Promise.race`, and especially `async/await` which makes animation timelines easy to set up.
 
 
-> *An interesting quirk of Promises is that even though Animate is not a Promise, async/await still work with it because it has a `then`, and `catch`.*
+> *An interesting quirk of Promises is that even though `Animate` is not a Promise, async/await still work with it because it has a `then`, and `catch`.*
 
 ```javascript
 const play = async () => {
@@ -443,7 +463,7 @@ let anim = animate({
 });
 
 // For more info. on what you can do with the Event Emitter go to [https://www.npmjs.com/package/@okikio/emitter],
-// I implemented the `on`, `off`, and `emit` methods from the Event Emitter on Animate.
+// I implemented the `on`, `off`, and `emit` methods from the Event Emitter on `Animate`.
 anim.on("finish", () => {
     console.log("Finished");
 })
@@ -490,7 +510,7 @@ They are self explanatory, the `play/pause` methods play/pause animation, while 
 
 ### then, catch, and finally
 
-They represent the then, catch, and finally methods of a Promise that is resolved when an animation has finished. It's also what allows the use of the `await/async` keywords for resolving animations. The `then` method resolves to the Animations Options, which can then be passed to other `Animate` instances to create animations with similar properties. Then, catch, and finally are chainable, they return the Animate class.
+They represent the then, catch, and finally methods of a Promise that is resolved when an animation has finished. It's also what allows the use of the `await/async` keywords for resolving animations. The `then` method resolves to the Animations Options, which can then be passed to other `Animate` instances to create animations with similar properties. Then, catch, and finally are chainable, they return the `Animate` class.
 
 ### toJSON
 
@@ -499,7 +519,7 @@ An alias for `getOptions`
 
 Cancels all Animations and de-references them allowing them to be garbage collected in a rush. It also emits a `stop` event to alert you to the animation stoping.
 
-*Warning: if you try to reference properties from the Animate class after stop has been called many things will break. The Animate class cannont and will not recover from stop, it is meant as a final trash run of animations, don't use it if you think you may restart the animation.*
+*Warning: if you try to reference properties from the `Animate` class after stop has been called many things will break. The `Animate` class cannont and will not recover from stop, it is meant as a final trash run of animations, don't use it if you think you may restart the animation.*
 
 ## Example
 [![Web Animation API Library Playground](./assets/Web%20Animation%20API%20Library%20Playground.png)](./assets/Web%20Animation%20API%20Library%20Playground.mp4)
@@ -508,8 +528,8 @@ Cancels all Animations and de-references them allowing them to be garbage collec
 
 ## Browser support
 
-Animate is provided as a native ES6 module, which means you may need to transpile it depending on your browser support policy. The library works using `<script type="module">` in
-the following browsers (Animate may support older browsers, but I haven't tested those browsers):
+`@okikio/animate` is provided as a native ES6 module, which means you may need to transpile it depending on your browser support policy. The library works using `<script type="module">` in
+the following browsers (`@okikio/animate` may support older browsers, but I haven't tested those browsers):
 
 -   Chrome > 71
 -   Edge > 79
@@ -535,9 +555,8 @@ animate({
 });
 ```
 
-
 ## Memory Management
-I have found that CSS Animations tend more often than not to be the cause of memory leaks in websites. Javascript has become so efficient that it can effectively garbage collect js animations, however, I have found it is exceptionally difficult to manage looped animation be very careful of memory (CSS and JS Animations), they eat up large ammounts of memory and cpu when left running for long periods of time. I would suggest making all your animations only occurs a couple times and when they are done use the `stop` method to remove the animations from memory, *"if you don't plan on replaying the animation"*. Don't just use the `stop` method, test it first on your site before deploying it in a  production enviroment.
+I have found that CSS Animations tend to be the cause of memory leaks in websites, especially infinite animations. Javascript has become so efficient that it can effectively garbage collect js animations, however, I have found it is exceptionally difficult to manage looped animation so be very careful of memory when dealing with CSS and JS Animation), they eat up large ammounts of memory and CPU when left running for long periods of time. I would suggest making all your animations only occur a couple times and when they are done use the `stop()` method to remove the animations from memory *"if you don't plan on replaying the same animation"*. Don't just use the `stop()` method, test it first on your site before deploying it in a production enviroment.
 
 
 ## Best practices (these are from Animate Plus, but they are true for all Animation libraries)
@@ -549,4 +568,8 @@ Animations play a major role in the design of good user interfaces. They help co
 -   **Performance**: Having no animation is better than animations that stutter. When animating HTML elements, aim for using exclusively `transform` and `opacity` as these are the only properties browsers can animate cheaply.
 -   **Restraint**: Tone down your animations and respect user preferences. Animations can rapidly feel overwhelming and cause motion sickness, so it's important to keep them subtle and to attenuate them even more for users who need reduced motion, for example by using `matchMedia("(prefers-reduced-motion)")` in JavaScript.
 
-If there is something I missed or a mistake, please create an issue, and I'll try to get on it.
+## Contributing
+If there is something I missed, a mistake, or a feature you would like added please create an issue or a pull request and I'll try to get to it.
+
+## Licence
+See the [LICENSE](./LICENSE) file for license rights and limitations (MIT).

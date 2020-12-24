@@ -32,6 +32,7 @@ export interface ITransitionManager extends Service {
     get(key: string): ITransition,
     set(key: string, value: ITransition): TransitionManager,
     add(value: ITransition): TransitionManager,
+    has(key: string): boolean,
 
     boot(): any,
     animate(name: string, data: any): Promise<ITransition>,
@@ -39,9 +40,8 @@ export interface ITransitionManager extends Service {
 
 
 /** Auto scrolls to an elements position if the element has an hash */
-export const hashAction = (hash: string = window.location.hash) => {
+export const hashAction = (coords?: ICoords, hash: string = window.location.hash) => {
     try {
-
         let _hash = hash[0] == "#" ? hash : newURL(hash).hash;
         if (_hash.length > 1) {
             let el = document.getElementById(_hash.slice(1)) as HTMLElement;
@@ -51,10 +51,10 @@ export const hashAction = (hash: string = window.location.hash) => {
             }
         }
     } catch (e) {
-        console.warn("hashAction error", e);
+        console.warn("[hashAction] error", e);
     }
 
-    return newCoords(0, 0);
+    return coords ?? newCoords(0, 0);
 };
 
 // The Default Transition
@@ -62,7 +62,9 @@ const Default: ITransition = {
     name: "default",
     scrollable: true,
 
-    out({ done }: ITransitionData) { done(); },
+    out({ done }: ITransitionData) {
+        done();
+    },
     in({ scroll, done }: ITransitionData) {
         window.scroll(scroll.x, scroll.y);
         done();
@@ -72,26 +74,34 @@ const Default: ITransition = {
 /** Controls which Transition between pages to use */
 export class TransitionManager extends Service implements ITransitionManager {
     transitions: Manager<string, ITransition>;
-    constructor(transitions: Array<[string, ITransition]> = []) {
+    private _arg: Array<[string, ITransition]>;
+    constructor(transitions?: Array<[string, ITransition]>) {
         super();
-        // Maps keep the original entry with the same key,
-        // so, concat will only work when there is no default already specified
-        // Using the `set()` method replaces the old [key, value] with the new one
-        this.transitions = new Manager(transitions.concat(["default", Default]));
+        this._arg = transitions;
+    }
+
+    /** On Service install set Config */
+    public install() {
+        super.install();
+
+        let transitions = this._arg && this._arg.length ? this._arg : (getConfig(this.config, "transitions") ?? []);
+
+        // Manager like Maps use the most recent [key, value] Array it knows, replacing the default transition
+        // With any other transitions called ["default", ...]
+        transitions = [["default", Default]].concat(transitions);
+        this.transitions = new Manager(transitions);
     }
 
     get(key: string) { return this.transitions.get(key); }
     set(key: string, value: ITransition) { this.transitions.set(key, value); return this; }
     add(value: ITransition) { this.transitions.add(value); return this; }
-
-    boot() {
-        super.boot();
-    }
+    has(key: string) { return this.transitions.has(key); }
 
     /** Starts a transition */
     public async animate(name: string, data: any): Promise<ITransition> {
         let transition: ITransition = this.transitions.get(name);
         let scroll = data.scroll;
+        let ignoreHashAction = data.ignoreHashAction;
         if (!("wrapper" in data.oldPage) || !("wrapper" in data.newPage))
             throw `[Page] either oldPage or newPage aren't instances of the Page Class.\n ${{
                 newPage: data.newPage,
@@ -116,16 +126,18 @@ export class TransitionManager extends Service implements ITransitionManager {
         this.emitter.emit("BEFORE_TRANSITION_OUT");
 
         // Start the out point of the Transition
-        await new Promise((done) => {
-            let outMethod: Promise<any> = transition.out.call(transition, {
-                ...data,
-                from: data.oldPage,
-                trigger: data.trigger,
-                done,
-            });
+        if (transition.out) {
+            await new Promise((done) => {
+                let outMethod: Promise<any> = transition.out.call(transition, {
+                    ...data,
+                    from: data.oldPage,
+                    trigger: data.trigger,
+                    done,
+                });
 
-            if (outMethod.then) outMethod.then(done);
-        });
+                outMethod?.then(done);
+            });
+        }
 
         this.emitter.emit("AFTER_TRANSITION_OUT");
 
@@ -134,8 +146,8 @@ export class TransitionManager extends Service implements ITransitionManager {
             fromWrapper.insertAdjacentElement("beforebegin", toWrapper);
             this.emitter.emit("CONTENT_INSERT");
 
-            if (!/back|popstate|forward/.test(data.trigger as string)) {
-                scroll = hashAction();
+            if (!ignoreHashAction && !/back|popstate|forward/.test(data.trigger as string)) {
+                scroll = hashAction(scroll);
             }
             done();
         });
@@ -152,18 +164,20 @@ export class TransitionManager extends Service implements ITransitionManager {
         this.emitter.emit("BEFORE_TRANSITION_IN");
 
         // Start the in point of the Transition (only the in method has access to the hashAction's scroll position)
-        await new Promise(async (done) => {
-            let inMethod: Promise<any> = transition.in.call(transition, {
-                ...data,
-                from: data.oldPage,
-                to: data.newPage,
-                trigger: data.trigger,
-                scroll,
-                done,
-            });
+        if (transition.in) {
+            await new Promise(async (done) => {
+                let inMethod: Promise<any> = transition.in.call(transition, {
+                    ...data,
+                    from: data.oldPage,
+                    to: data.newPage,
+                    trigger: data.trigger,
+                    scroll,
+                    done,
+                });
 
-            if (inMethod.then) inMethod.then(done);
-        });
+                inMethod?.then(done);
+            });
+        }
 
         this.emitter.emit("AFTER_TRANSITION_IN");
         return transition;

@@ -108,3 +108,6 @@ coverage/
 
 # Ultra
 .ultra.cache.json
+
+# VSCode
+.vscode/

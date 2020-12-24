@@ -2,6 +2,6 @@ tasks:
     - init: pnpm install gulp ultra-runner -g
     - task: pnpm install -r
     - task: ultra build
-    - task: ultra pnpm demo:watch --filter *native
+    - task: ultra test:watch
 image:
     file: .gitpod.Dockerfile

@@ -2,7 +2,6 @@ import { animate } from "../../src/api";
 let anim = animate({
     target: ".div",
     keyframes(index, total, element) {
-        console.log(element);
         return [
             { transform: "translateX(0px)", opacity: 0 },
             { transform: "translateX(300px)", opacity: ((index + 1) / total) }

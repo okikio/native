@@ -19,6 +19,7 @@ export const BigTransition: ITransition = {
         let fromWrapper = from.wrapper;
 
         window.scroll(scroll.x, scroll.y);
+        let wrapperStyle = Object.assign({}, fromWrapper.style);
         return new Promise<void>(async resolve => {
             this.mainElement.style.opacity = "1";
             this.mainElement.style.visibility = "visible";
@@ -51,6 +52,8 @@ export const BigTransition: ITransition = {
             });
 
             await anim2;
+            fromWrapper.style.opacity = '1';
+            Object.assign(fromWrapper.style, wrapperStyle);
             this.spinnerElement.style.visibility = "visible";
 
             let loaderDuration = 500;
@@ -85,17 +88,12 @@ export const BigTransition: ITransition = {
     in({ to, scroll }: ITransitionData) {
         let { durationPerAnimation: duration, delay } = this;
         let toWrapper = to.wrapper;
-        toWrapper.style.transform = "translateX(0%)";
 
         window.scroll(scroll.x, scroll.y);
-
         return new Promise<void>(async resolve => {
             let anim1 = animate({
                 target: toWrapper,
                 opacity: [0, 1],
-                onfinish(el: { style: { opacity: string; }; }) {
-                    el.style.opacity = `1`;
-                },
                 duration
             }).then(() => {
                 anim1.stop();

@@ -13,11 +13,6 @@ export const Fade: ITransition = {
             target: fromWrapper,
             opacity: [1, 0],
             duration,
-            onfinish(el: { style: { opacity: string } }) {
-                requestAnimationFrame(() => {
-                    el.style.opacity = "0";
-                });
-            }
         }).on("finish", function () {
             this.stop();
         });
@@ -26,22 +21,12 @@ export const Fade: ITransition = {
     in({ to, scroll }: ITransitionData) {
         let { duration } = this;
         let toWrapper = to.wrapper;
-        requestAnimationFrame(() => {
-            toWrapper.style.transform = "translateX(0%)";
-        });
 
         window.scroll(scroll.x, scroll.y);
-
         return animate({
             target: toWrapper,
             opacity: [0, 1],
-            duration,
-            onfinish(el: { style: { opacity?: string } }) {
-                requestAnimationFrame(() => {
-                    el.style.opacity = "1";
-                    el.style = {};
-                });
-            }
+            duration
         }).then(function () {
             this.stop();
         });

@@ -24,7 +24,7 @@ export class ManagerItem {
 
     constructor() { }
 
-    // Run after the Manager Item has been registered
+    /** Run after the Manager Item has been registered */
     public install(): any { }
 
     /** Register the current Manager Item's manager */
@@ -38,6 +38,7 @@ export class ManagerItem {
         return this;
     }
 
+    /** Run before the ManagerItem has been unregistered */
     public uninstall(): any { }
 
     /** Basically removes a ManagerItem, in order to recover the ManagerItem, it needs to be re-added to an AdvancedManager */

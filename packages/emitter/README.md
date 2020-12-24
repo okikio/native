@@ -1,7 +1,24 @@
 # @okikio/emitter
+
 A small Event Emitter written in typescript with performance and ease of use in mind, it weighs less than 800 B (minified and compressed).
 
 *You will need a Map polyfill for older browsers. If you install `@okikio/emitter` via `npm` you are most likely going to need [rollup](https://rollupjs.org/) or [esbuild](https://esbuild.github.io/). You can use [polyfill.io](https://polyfill.io/), or another source to create a polyfill. The minimum feature requirement for a polyfill are Maps e.g. [https://polyfill.io/v3/polyfill.min.js?features=Maps](https://polyfill.io/v3/polyfill.min.js?features=Maps).*
+
+
+
+
+
+You can play with `@okikio/emitter` using Gitpod:
+
+[![Edit with Gitpod](https://gitpod.io/button/open-in-gitpod.svg)](https://gitpod.io/#https://github.com/okikio/native/tree/master/packages/emitter)
+
+Once Gitpod has booted up, go to the `./test folder` and start tweaking and testing to your hearts content.
+
+
+*Note: if an error occurs that stops the test script, just type into the terminal*
+```bash
+ultra test:watch
+```
 
 ## Table of Contents
 - [@okikio/emitter](#okikioemitter)
@@ -11,10 +28,15 @@ A small Event Emitter written in typescript with performance and ease of use in 
   - [API](#api)
       - [EventEmitter#on(events, callback, scope) & EventEmitter#emit(events, ...args)](#eventemitteronevents-callback-scope--eventemitteremitevents-args)
       - [EventEmitter#off(events, callback, scope)](#eventemitteroffevents-callback-scope)
+  - [Contributing](#contributing)
+  - [Licence](#licence)
 
 
 ## Installation
-You can install Emitter from `npm` via `npm i @okikio/emitter` or `yarn add @okikio/emitter`. You can use Emitter on the web via [unpkg](https://unpkg.com/@okikio/emitter@latest/lib/api.modern.js) `https://unpkg.com/@okikio/emitter@latest/lib/api.modern.js`, [skypack](https://cdn.skypack.dev/@okikio/emitter) `https://cdn.skypack.dev/@okikio/emitter` or [jsdelivr](https://cdn.jsdelivr.net/npm/@okikio/emitter@latest/lib/api.modern.js) `https://cdn.jsdelivr.net/npm/@okikio/emitter@latest/lib/api.modern.js`.
+You can install `@okikio/emitter` from `npm` via `npm i @okikio/emitter` or `yarn add @okikio/emitter`. You can use `@okikio/emitter` on the web via:
+* [https://unpkg.com/@okikio/emitter@latest/lib/api.modern.js](https://unpkg.com/@okikio/emitter@latest/lib/api.modern.js),
+* [https://cdn.skypack.dev/@okikio/emitter](https://cdn.skypack.dev/@okikio/emitter) or
+* [https://cdn.jsdelivr.net/npm/@okikio/emitter@latest/lib/api.modern.js](https://cdn.jsdelivr.net/npm/@okikio/emitter@latest/lib/api.modern.js).
 
 Once installed it can be used like this:
 ```javascript
@@ -32,7 +54,9 @@ const { default: EventEmitter } = window.emitter;
 
 ## Getting started
 
-Event Emitter allows for an easy way to manage events. It inherits properties/methods from [@okiki/manager](https://www.npmjs.com/package/@okikio/manager).
+The `EventEmitter` class is what runs the show for the `@okikio/emitter` library. To use it properly you need to create a new instance of `EventEmitter`, the instance of `EventEmitter` is what allows for event emitting, and listening.
+
+`EventEmitter` allows for an easy way to manage events. It inherits properties/methods from [@okiki/manager](https://www.npmjs.com/package/@okikio/manager).
 
 ```js
 // You need to first initialize a new Event Emitter
@@ -183,3 +207,9 @@ emitter.off("test", fn, scope);
 on.emit("test test1 test2"); // Nothing happens, there are no Events or listeners, so, it can't emit anything
 console.log(counter); //= 0
 ```
+
+## Contributing
+If there is something I missed, a mistake, or a feature you would like added please create an issue or a pull request and I'll try to get to it.
+
+## Licence
+See the [LICENSE](./LICENSE) file for license rights and limitations (MIT).

@@ -8,7 +8,8 @@ export interface ICONFIG {
     preventAllAttr?: string;
     transitionAttr?: string;
     blockAttr?: string;
-    timeout?: number
+    timeout?: number;
+    [key: string]: any;
 }
 
 export const CONFIG_DEFAULTS: ICONFIG = {
