@@ -7,19 +7,19 @@ A superset of the Map class, it gives Map superpowers, it weighs less than 450 B
 
 
 
-
-
 You can play with `@okikio/manager` using Gitpod:
 
-[![Edit with Gitpod](https://gitpod.io/button/open-in-gitpod.svg)](https://gitpod.io/#https://github.com/okikio/native/tree/master/packages/manager)
 
-Once Gitpod has booted up, go to the `./test folder` and start tweaking and testing to your hearts content.
+[![Edit with Gitpod](https://gitpod.io/button/open-in-gitpod.svg)](https://gitpod.io/#https://github.com/okikio/native)
 
+_Start the dev script by typing into the terminal_
 
-*Note: if an error occurs that stops the test script, just type into the terminal*
 ```bash
-ultra test:watch
+ultra pnpm test:watch --filter *manager
 ```
+
+Once Gitpod has booted up, go to the `./packages/manager/test folder` and start tweaking and testing to your hearts content.
+
 
 ## Table of Contents
 - [@okikio/manager](#okikiomanager)

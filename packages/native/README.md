@@ -19,15 +19,16 @@ Currently many websites rely on older code to make sure they reach as wide an au
 
 You can play with `@okikio/native` using Gitpod:
 
-[![Edit with Gitpod](https://gitpod.io/button/open-in-gitpod.svg)](https://gitpod.io/#https://github.com/okikio/native/tree/master/packages/native)
 
-Once Gitpod has booted up, go to the `./build folder` and start tweaking and testing to your hearts content.
+[![Edit with Gitpod](https://gitpod.io/button/open-in-gitpod.svg)](https://gitpod.io/#https://github.com/okikio/native)
 
+_Start the dev script by typing into the terminal_
 
-*Note: if an error occurs that stops the build script, just type into the terminal*
 ```bash
-ultra demo:watch
+ultra pnpm demo:watch --filter *native
 ```
+
+Once Gitpod has booted up, go to the `./packages/native/build folder` and start tweaking and testing to your hearts content.
 
 
 ## Table of Contents

@@ -6,27 +6,27 @@ You can play with `@okikio/native` using Gitpod:
 
 [![Edit with Gitpod](https://gitpod.io/button/open-in-gitpod.svg)](https://gitpod.io/#https://github.com/okikio/native)
 
-Once Gitpod has booted up, go to the `./packages/native/build folder` and start tweaking and testing to your hearts content.
-
-_Note: if an error occurs that stops the build script, just type into the terminal_
+_Start the dev script by typing into the terminal_
 
 ```bash
 ultra pnpm demo:watch --filter *native
 ```
 
+Once Gitpod has booted up, go to the `./packages/native/build folder` and start tweaking and testing to your hearts content.
+
 ## Table of Contents
 
--   [Native](#native)
-    -   [Table of Contents](#table-of-contents)
-    -   [Getting started](#getting-started)
-        -   [@okikio/manager](#okikiomanager)
-        -   [@okikio/emitter](#okikioemitter)
-        -   [@okikio/animate](#okikioanimate)
-        -   [@okikio/native](#okikionative)
-    -   [Usage](#usage)
-    -   [Demo](#demo)
-    -   [Contributing](#contributing)
-    -   [Licence](#licence)
+- [Native](#native)
+  - [Table of Contents](#table-of-contents)
+  - [Getting started](#getting-started)
+    - [@okikio/manager](#okikiomanager)
+    - [@okikio/emitter](#okikioemitter)
+    - [@okikio/animate](#okikioanimate)
+    - [@okikio/native](#okikionative)
+  - [Usage](#usage)
+  - [Demo](#demo)
+  - [Contributing](#contributing)
+  - [Licence](#licence)
 
 ## Getting started
 

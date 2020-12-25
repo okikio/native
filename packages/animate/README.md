@@ -11,17 +11,20 @@ An animation library for the modern web which utilizes the Web Animation API. In
 
 
 
+
 You can play with `@okikio/animate` using Gitpod:
 
-[![Edit with Gitpod](https://gitpod.io/button/open-in-gitpod.svg)](https://gitpod.io/#https://github.com/okikio/native/tree/master/packages/animate)
 
-Once Gitpod has booted up, go to the `./build folder` and start tweaking and testing to your hearts content.
+[![Edit with Gitpod](https://gitpod.io/button/open-in-gitpod.svg)](https://gitpod.io/#https://github.com/okikio/native)
 
+_Start the dev script by typing into the terminal_
 
-*Note: if an error occurs that stops the build script, just type into the terminal*
 ```bash
-ultra demo:watch
+ultra pnpm demo:watch --filter *animate
 ```
+
+Once Gitpod has booted up, go to the `./packages/animate/build folder` and start tweaking and testing to your hearts content.
+
 
 ## Table of Contents
 - [@okikio/animate](#okikioanimate)
