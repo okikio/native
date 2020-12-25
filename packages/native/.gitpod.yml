@@ -1,19 +1,25 @@
 image:
-  file: .gitpod.Dockerfile
+    file: .gitpod.Dockerfile
 
 # List the ports you want to expose and what to do when they are served. See https://www.gitpod.io/docs/43_config_ports/
 ports:
-  - port: 3000
-    onOpen: open-browser
-  - port: 3001
-    onOpen: ignore
+    - port: 3000
+      onOpen: open-browser
+    - port: 3001
+      onOpen: ignore
 
 # List the start up tasks. You can start them in parallel in multiple terminals. See https://www.gitpod.io/docs/44_config_start_tasks/
 tasks:
-  - command: > 
-      ultra build &&
-      ultra demo:watch
+  - init:
+          nvm install 14 &&
+          nvm alias default 14 &&
+          npm install pnpm -g &&
+          pnpm install gulp ultra-runner -g  &&
+          pnpm install -r
+    command: >
+          ultra build &&
+          ultra demo:watch
 
 vscode:
-  extensions:
-    - vivaxy.vscode-conventional-commits@1.13.0:zCJe2ITK+hf+3DCumvNLfA==
+    extensions:
+        - vivaxy.vscode-conventional-commits@1.13.0:zCJe2ITK+hf+3DCumvNLfA==
