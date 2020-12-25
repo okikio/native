@@ -1,7 +1,21 @@
-tasks:
-    - init: pnpm install gulp ultra-runner -g
-    - task: pnpm install -r
-    - task: ultra build
-    - task: ultra demo:watch
 image:
-    file: .gitpod.Dockerfile
+  file: .gitpod.Dockerfile
+
+# List the ports you want to expose and what to do when they are served. See https://www.gitpod.io/docs/43_config_ports/
+ports:
+  - port: 3000
+    onOpen: open-browser
+  - port: 3001
+    onOpen: ignore
+
+# List the start up tasks. You can start them in parallel in multiple terminals. See https://www.gitpod.io/docs/44_config_start_tasks/
+tasks:
+  - command: >
+      pnpm install gulp ultra-runner -g &&
+      pnpm install -r &&
+      ultra build &&
+      ultra demo:watch
+
+vscode:
+  extensions:
+    - vivaxy.vscode-conventional-commits@1.13.0:zCJe2ITK+hf+3DCumvNLfA==

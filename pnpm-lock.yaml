@@ -1923,6 +1923,7 @@ packages:
     dependencies:
       follow-redirects: 1.5.10
       is-buffer: 2.0.5
+    deprecated: 'Critical security vulnerability fixed in v0.21.1. For more information, see https://github.com/axios/axios/pull/3410'
     dev: false
     resolution:
       integrity: sha512-1uvKqKQta3KBxIz14F2v06AEHZ/dIoeKfbTRkK1E5oqjDnuEerLmYTgJB5AiQZHJcljpg1TuRzdjDR06qNk0DQ==
@@ -2961,7 +2962,7 @@ packages:
       JSONStream: 1.3.5
       is-text-path: 1.0.1
       lodash: 4.17.20
-      meow: 8.0.0
+      meow: 8.1.0
       split2: 2.2.0
       through2: 4.0.2
       trim-off-newlines: 1.0.1
@@ -4693,7 +4694,7 @@ packages:
     dependencies:
       dargs: 7.0.0
       lodash.template: 4.5.0
-      meow: 8.0.0
+      meow: 8.1.0
       split2: 2.2.0
       through2: 4.0.2
     dev: false
@@ -5175,7 +5176,7 @@ packages:
       depd: 1.1.2
       inherits: 2.0.3
       setprototypeof: 1.1.0
-      statuses: 1.5.0
+      statuses: 1.4.0
     dev: false
     engines:
       node: '>= 0.6'
@@ -7021,7 +7022,7 @@ packages:
       integrity: sha512-3YffViIt2QWgTy6Pale5QpopX/IvU3LPL03jOTqp6pGj3VjesdO/U8CuHMKpnQr4shCNCM5fd5XFFvIIl6JBHg==
       registry: 'https://registry.npmjs.com/'
       tarball: 'https://registry.npmjs.com/meow/-/meow-6.1.1.tgz'
-  /meow/8.0.0:
+  /meow/8.1.0:
     dependencies:
       '@types/minimist': 1.2.1
       camelcase-keys: 6.2.2
@@ -7038,9 +7039,7 @@ packages:
     engines:
       node: '>=10'
     resolution:
-      integrity: sha512-nbsTRz2fwniJBFgUkcdISq8y/q9n9VbiHYbfwklFh5V4V2uAcxtKQkDc0yCLPM/kP0d+inZBewn3zJqewHE7kg==
-      registry: 'https://registry.npmjs.com/'
-      tarball: 'https://registry.npmjs.com/meow/-/meow-8.0.0.tgz'
+      integrity: sha512-fNWkgM1UVMey2kf24yLiccxLihc5W+6zVus3/N0b+VfnJgxV99E9u04X6NAiKdg6ED7DAQBX5sy36NM0QJZkWA==
   /merge-stream/2.0.0:
     dev: false
     resolution:
