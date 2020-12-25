@@ -11,8 +11,6 @@ ports:
 # List the start up tasks. You can start them in parallel in multiple terminals. See https://www.gitpod.io/docs/44_config_start_tasks/
 tasks:
   - command: >
-      pnpm install gulp ultra-runner -g &&
-      pnpm install -r &&
       ultra build &&
       ultra pnpm demo:watch --filter *native
 

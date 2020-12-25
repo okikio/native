@@ -4,7 +4,9 @@ USER gitpod
 RUN bash -c ". .nvm/nvm.sh \
         && nvm install 14 \
         && nvm alias default 14 \
-        && npm install pnpm -g"
+        && npm install pnpm -g \
+        && pnpm install gulp ultra-runner -g \
+        && pnpm install -r"
 
 # Install custom tools, runtime, etc. using apt-get
 # For example, the command below would install "bastet" - a command line tetris clone:
