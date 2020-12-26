@@ -1,6 +1,6 @@
 {
     "name": "@okikio/native",
-    "version": "0.0.7",
+    "version": "1.0.0",
     "description": "A framework who's goal is to make it easier to create complex, light-weight, and performant web applications using modern js apis.",
     "publishConfig": {
         "access": "public",
@@ -20,8 +20,6 @@
     "files": [
         "lib",
         "src",
-        "tests",
-        "build",
         "demo",
         "assets"
     ],
@@ -74,6 +72,7 @@
         "gulp-pug": "^4.0.1",
         "gulp-sass": "^4.1.0",
         "merge-stream": "^2.0.0",
+        "standard-changelog": "^2.0.27",
         "ultra-runner": "^3.8.0"
     },
     "gitHead": "ad422076cdb57d570426f786886129d5bca2f90f"

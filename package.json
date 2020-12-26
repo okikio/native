@@ -1,6 +1,5 @@
 {
     "name": "root",
-    "version": "0.0.7",
     "private": true,
     "license": "MIT",
     "workspaces": [
@@ -15,7 +14,8 @@
         "test": "ultra -r test",
         "test:watch": "ultra --parallel -r test:watch",
         "pre-release": "ultra -r pre-release",
-        "release": "npm run pre-release && pnpx changeset version && standard-changelog && pnpm -r publish --tag latest"
+        "changelog": "npm run pre-release && changeset && changeset version && ultra -r standard-changelog",
+        "release": " pnpm -r publish --tag latest"
     },
     "husky": {
         "hooks": {
