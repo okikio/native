@@ -15,7 +15,7 @@
         "test": "ultra -r test",
         "test:watch": "ultra --parallel -r test:watch",
         "pre-release": "ultra -r pre-release",
-        "release": "npm run pre-release && standard-version && pnpm -r publish --tag latest"
+        "release": "npm run pre-release && pnpx changeset version && standard-changelog && pnpm -r publish --tag latest"
     },
     "husky": {
         "hooks": {
@@ -27,10 +27,11 @@
         "ultra-runner": "^3.8.0"
     },
     "devDependencies": {
+        "standard-changelog": "^2.0.27",
+        "@changesets/cli": "^2.12.0",
         "@commitlint/cli": "^11.0.0",
         "@commitlint/config-conventional": "^11.0.0",
         "commitizen": "^4.2.2",
-        "husky": "^4.3.6",
-        "standard-version": "^9.0.0"
+        "husky": "^4.3.6"
     }
 }
