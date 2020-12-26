@@ -525,7 +525,7 @@ Cancels all Animations and de-references them allowing them to be garbage collec
 *Warning: if you try to reference properties from the `Animate` class after stop has been called many things will break. The `Animate` class cannont and will not recover from stop, it is meant as a final trash run of animations, don't use it if you think you may restart the animation.*
 
 ## Example
-[![Web Animation API Library Playground](./assets/Web%20Animation%20API%20Library%20Playground.png)](./assets/Web%20Animation%20API%20Library%20Playground.mp4)
+[![Web Animation API Library Playground](./assets/Web%20Animation%20API%20Library%20Playground.png)](https://codepen.io/okikio/pen/qBbdGaW?editors=0010)
 
 [Check out the example on Codepen  &#8594;](https://codepen.io/okikio/pen/qBbdGaW?editors=0010)
 
@@ -573,6 +573,8 @@ Animations play a major role in the design of good user interfaces. They help co
 
 ## Contributing
 If there is something I missed, a mistake, or a feature you would like added please create an issue or a pull request and I'll try to get to it.
+
+*The `native` project uses [Conventional Commits](https://www.conventionalcommits.org/en/v1.0.0/) as the style of commit, we even use the [Commitizen CLI](http://commitizen.github.io/cz-cli/) to make commits easier.*
 
 ## Licence
 See the [LICENSE](./LICENSE) file for license rights and limitations (MIT).

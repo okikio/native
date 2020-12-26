@@ -2,7 +2,6 @@ const { source } = require("./package.json");
 
 const globalName = "manager";
 const { startService } = require("esbuild");
-const { watch } = require("chokidar");
 const gzipSize = require("gzip-size");
 const prettyBytes = require("pretty-bytes");
 
@@ -51,6 +50,7 @@ const printProgress = (timerStart, logs, timerEnd = Date.now()) => {
 };
 
 if (mode == "watch") {
+    const { watch } = require("chokidar");
     const watcher = watch(["src/**/*"]);
     console.log("Watching files... \n");
     (async () => {

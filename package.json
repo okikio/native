@@ -6,7 +6,6 @@
         "packages/*"
     ],
     "scripts": {
-        "changeset": "changeset",
         "build": "ultra --parallel -r build",
         "watch": "ultra --parallel -r watch",
         "demo:build": "pnpm --parallel -r demo:build",
@@ -15,19 +14,22 @@
         "test": "ultra -r test",
         "test:watch": "ultra --parallel -r test:watch",
         "pre-release": "ultra -r pre-release",
-        "release": "npm run pre-release && changeset version && pnpm -r publish --tag latest"
+        "release": "npm run pre-release && standard-version && pnpm -r publish --tag latest"
     },
     "husky": {
         "hooks": {
-            "commitmsg": "commitlint -e $GIT_PARAMS"
+            "commit-msg": "commitlint -E HUSKY_GIT_PARAMS --verbose"
         }
     },
     "dependencies": {
-        "@changesets/cli": "^2.12.0",
-        "@commitlint/cli": "^11.0.0",
-        "@commitlint/config-conventional": "^11.0.0",
-        "husky": "^4.3.6",
         "pnpm": "^5.14.1",
         "ultra-runner": "^3.8.0"
+    },
+    "devDependencies": {
+        "@commitlint/cli": "^11.0.0",
+        "@commitlint/config-conventional": "^11.0.0",
+        "commitizen": "^4.2.2",
+        "husky": "^4.3.6",
+        "standard-version": "^9.0.0"
     }
 }

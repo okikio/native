@@ -301,5 +301,7 @@ asyncMethodCall(manager, "print"); //= (https://www.google.com/), (https://githu
 ## Contributing
 If there is something I missed, a mistake, or a feature you would like added please create an issue or a pull request and I'll try to get to it.
 
+*The `native` project uses [Conventional Commits](https://www.conventionalcommits.org/en/v1.0.0/) as the style of commit, we even use the [Commitizen CLI](http://commitizen.github.io/cz-cli/) to make commits easier.*
+
 ## Licence
 See the [LICENSE](./LICENSE) file for license rights and limitations (MIT).

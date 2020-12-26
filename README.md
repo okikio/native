@@ -1,6 +1,6 @@
 # Native
 
-`native` is a framework which aims to make it easy to create complex, light-weight, and performant web applications using modern js api's.
+`Native` is an initiative which aims to make it easy to create complex, light-weight, and performant web applications using modern js api's.
 
 You can play with `@okikio/native` using Gitpod:
 
@@ -30,32 +30,32 @@ Once Gitpod has booted up, go to the `./packages/native/build folder` and start 
 
 ## Getting started
 
-`native` is a monorepo with 4 smaller packages within it, they are:
+`Native` is a monorepo with 4 smaller packages within it, they are:
 
 ### [@okikio/manager](./packages/manager)
 
 -   A superset of the Map class, it gives Map superpowers. The Map class is the most efficient way to handle large amounts of controlled data, but it has some inconvient quirks that would be annoying to handle, so I built this package to avoid some of it's quirks.
--   _Note: you can install it as a seperate package from the rest of the `native` framework._
+-   _Note: you can install it as a seperate package from the rest of the `@okikio/native` framework._
 -   [Read more...](./packages/manager/README.md)
 
 ### [@okikio/emitter](./packages/emitter)
 
--   A small event emitter written in typescript with performance and ease of use in mind. It's pretty self explanitory, there are millions of event emitters like this one, the only difference is that this one is optimized for use in the `native` framework.
--   _Note: you can install it as a seperate package from the rest of the `native` framework._
+-   A small event emitter written in typescript with performance and ease of use in mind. It's pretty self explanitory, there are millions of event emitters like this one, the only difference is that this one is optimized for use in the `@okikio/native` framework.
+-   _Note: you can install it as a seperate package from the rest of the `@okikio/native` framework._
 -   [Read more...](./packages/emitter/README.md)
 
 ### [@okikio/animate](./packages/animate)
 
 -   A truly native animation library that takes full advantage of the Web Animation API to create amazingly pollished experiences on all devices. The animation library takes this approach because of the connundrum that occured when mobile devices started being built with 120hz screens. Before this point most devices were 60hz, so developers built for 60hz, but this caused many users to lose out on the benefits of their 120hz device. To future proof animation in an easy to use and effiecient manner, I built this library as a light wrapper around the Web Animation API, that takes on conventional means for creating animation today, allowing developers to get started with modern animation today.
--   _Note: you can install it as a seperate package from the rest of the `native` framework._
+-   _Note: you can install it as a seperate package from the rest of the `@okikio/native` framework._
 -   [Read more...](./packages/animate/README.md)
 
 ### [@okikio/native](./packages/native)
 
--   This is the core component of the framework, it bundles all the other packages into iteself. This package encourages the user to download/copy-and-paste the code into their development enviroment of choice, and tweak it to match their projects needs. This package (like all other packages in the `native` framework) is built for ES2020, it expects the user to use a build tool to support older versions of browsers, the idea being most people are using evergreen browsers, so, why are web developers piling on polyfill code that most users don't need.
+-   `@okikio/native` is the framework component of the `native` initiative, it bundles all the other packages into iteself. This package encourages the user to download/copy-and-paste the code into their development enviroment of choice, and tweak it to match their projects needs. This package (like all other packages in the `native` initiative) is built for ES2020, it expects the user to use a build tool to support older versions of browsers, the idea being most people are using evergreen browsers, so, why are web developers piling on polyfill code that most users don't need.
 -   [Read more...](./packages/native/README.md)
 
-This framework works with the assumtion that the user will use a build tool and a polyfill library to ensure all components work in older browser, I suggest `esbuild`, `rollup`, or `webpack`, and for polyfills `babel` or `polyfill.io`.
+This project works with the assumtion that the user will use a build tool and a polyfill library to ensure all components work in older browser, I suggest `esbuild`, `rollup`, or `webpack`, and for polyfills `babel` or `polyfill.io`.
 
 ## Usage
 
@@ -67,7 +67,11 @@ Located in [./packages/native/build](https://github.com/okikio/native/tree/maste
 
 ## Contributing
 
+[![Commitizen friendly](https://img.shields.io/badge/commitizen-friendly-brightgreen.svg)](http://commitizen.github.io/cz-cli/)
+
 If there is something I missed, a mistake, or a feature you would like added please create an issue or a pull request and I'll try to get to it.
+
+*The `native` project uses [Conventional Commits](https://www.conventionalcommits.org/en/v1.0.0/) as the style of commit, we even use the [Commitizen CLI](http://commitizen.github.io/cz-cli/) to make commits easier.*
 
 ## Licence
 

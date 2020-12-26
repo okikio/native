@@ -105,7 +105,7 @@ export class PJAX extends Service {
         let crossOrigin =
             (el as HTMLAnchorElement).protocol !== location.protocol ||
             (el as HTMLAnchorElement).hostname !== location.hostname;
-        let download = typeof el.getAttribute("download") === "string";
+        let download = typeof el.getAttribute("download") !== "undefined";
         let preventSelf = el.hasAttribute(getConfig(this.config, "preventSelfAttr", false));
         let preventAll = Boolean(
             el.closest(getConfig(this.config, "preventAllAttr"))
@@ -240,7 +240,6 @@ export class PJAX extends Service {
 
             // Based on the direction of the state change either remove or add a state
             this.emitter.emit(trigger === "back" ? `POPSTATE_BACK` : `POPSTATE_FORWARD`, event);
-
         } else {
             // Add new state
             transitionName = this.getTransitionName(trigger as HTMLAnchorElement);

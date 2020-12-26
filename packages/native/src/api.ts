@@ -12,6 +12,6 @@ export * from "./transition";
 
 export * from "./app";
 export * from "./pjax";
-export * from "./route";
+export * from "./router";
 
 export * from "./animate";

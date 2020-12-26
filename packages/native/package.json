@@ -1,7 +1,7 @@
 {
     "name": "@okikio/native",
     "version": "0.0.7",
-    "description": "A framework who's goal is to make it easier to create complex, performant, light-weight, web applications using native js apis.",
+    "description": "A framework who's goal is to make it easier to create complex, light-weight, and performant web applications using modern js apis.",
     "publishConfig": {
         "access": "public",
         "main": "lib/api.js",
@@ -19,7 +19,11 @@
     },
     "files": [
         "lib",
-        "src"
+        "src",
+        "tests",
+        "build",
+        "demo",
+        "assets"
     ],
     "scripts": {
         "build": "node ./build",
@@ -35,8 +39,9 @@
     },
     "keywords": [
         "api",
-        "js",
+        "ts",
         "native",
+        "modern",
         "framework",
         "web",
         "pjax"
@@ -55,18 +60,20 @@
         "@okikio/animate": "workspace:*",
         "@okikio/emitter": "workspace:*",
         "@okikio/manager": "workspace:*",
-        "browser-sync": "^2.26.13",
-        "chokidar": "^3.4.3",
         "esbuild": "^0.8.26",
+        "gzip-size": "^6.0.0",
+        "pretty-bytes": "^5.5.0",
+        "typescript": "^4.1.3"
+    },
+    "devDependencies": {
+        "chokidar": "^3.4.3",
+        "browser-sync": "^2.26.13",
         "eslint": "^7.16.0",
         "gulp": "^4.0.2",
         "gulp-esbuild": "^0.3.9",
         "gulp-pug": "^4.0.1",
         "gulp-sass": "^4.1.0",
-        "gzip-size": "^6.0.0",
         "merge-stream": "^2.0.0",
-        "pretty-bytes": "^5.5.0",
-        "typescript": "^4.1.3",
         "ultra-runner": "^3.8.0"
     },
     "gitHead": "ad422076cdb57d570426f786886129d5bca2f90f"

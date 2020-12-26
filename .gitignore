@@ -111,3 +111,6 @@ coverage/
 
 # VSCode
 .vscode/
+
+# Theia
+.theia/

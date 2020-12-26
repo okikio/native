@@ -73,7 +73,6 @@ export class Page extends ManagerItem implements IPage {
         }
     }
 
-    /** Runs once the the manager and config have been registered */
     public install() {
         this.wrapperAttr = getConfig(this.config, "wrapperAttr");
     }
@@ -114,13 +113,14 @@ export interface IPageManager extends Service {
 export class PageManager extends Service implements IPageManager {
     /** Stores all fetch requests that are currently loading */
     public loading: Manager<string, Promise<string>> = new Manager();
-    public maxPages = 5;
+    public maxPages: number;
 
     pages: AdvancedManager<string, Page>;
 
     /** Instantiate pages, and add the current page to pages */
     install() {
         this.pages = new AdvancedManager(this.app);
+        this.maxPages = this.config.maxPages ?? 5;
 
         let URLString = newURL().pathname;
         this.set(URLString, new Page());
