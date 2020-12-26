@@ -15,7 +15,7 @@
         "test:watch": "ultra --parallel -r test:watch",
         "pre-release": "ultra -r pre-release",
         "changelog": "npm run pre-release && changeset && changeset version && ultra -r standard-changelog",
-        "release": " pnpm -r publish --tag latest"
+        "release": " pnpm -r publish --tag v$npm_package_version latest"
     },
     "husky": {
         "hooks": {
