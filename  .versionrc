@@ -1,0 +1,46 @@
+{
+    "packageFiles": [
+        {
+            "filename": "package.json",
+            "type": "json"
+        },
+        {
+            "filename": "packages/manager/package.json",
+            "type": "json"
+        },
+        {
+            "filename": "packages/emitter/package.json",
+            "type": "json"
+        },
+        {
+            "filename": "packages/animate/package.json",
+            "type": "json"
+        },
+        {
+            "filename": "packages/native/package.json",
+            "type": "json"
+        }
+    ],
+    "bumpFiles": [
+        {
+            "filename": "package.json",
+            "type": "json"
+        },
+        {
+            "filename": "packages/manager/package.json",
+            "type": "json"
+        },
+        {
+            "filename": "packages/emitter/package.json",
+            "type": "json"
+        },
+        {
+            "filename": "packages/animate/package.json",
+            "type": "json"
+        },
+        {
+            "filename": "packages/native/package.json",
+            "type": "json"
+        }
+    ]
+}
