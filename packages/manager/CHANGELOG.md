@@ -1,4 +1,10 @@
-# [1.0.0](https://github.com/okikio/native/compare/v0.0.8...v1.0.0) (2020-12-26)
+## [1.0.1](https://github.com/okikio/native/compare/v0.0.8...v1.0.1) (2020-12-26)
+
+## 1.0.1
+
+### Patch Changes
+
+- I messed up the initial release, so, I have to rerelease it
 
 ## 1.0.0
 
