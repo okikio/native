@@ -1,21 +1,21 @@
 {
     "name": "@okikio/emitter",
-    "version": "1.0.1",
+    "version": "1.0.2",
     "description": "A small Event Emitter written in typescript with performance and ease of use in mind.",
     "publishConfig": {
         "access": "public",
-        "main": "lib/api.js",
-        "types": "lib/types/api.d.ts",
-        "browser": "lib/api.js",
-        "node": "lib/api.node.js",
-        "unpkg": "lib/api.js",
-        "module": "lib/api.modern.js",
-        "exports": "lib/api.modern.js"
+        "main": "./lib/api.js",
+        "types": "./lib/types/api.d.ts",
+        "browser": "./lib/api.js",
+        "node": "./lib/api.node.js",
+        "unpkg": "./lib/api.js",
+        "module": "./lib/api.modern.js",
+        "exports": "./lib/api.modern.js"
     },
     "main": "src/api.ts",
     "source": "src/api.ts",
     "directories": {
-        "lib": "lib"
+        "lib": "./lib"
     },
     "files": [
         "lib",

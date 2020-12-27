@@ -1,4 +1,16 @@
+## [1.0.2](https://github.com/okikio/native/compare/v0.0.8...v1.0.2) (2020-12-26)
+
+
+
 ## [1.0.1](https://github.com/okikio/native/compare/v0.0.8...v1.0.1) (2020-12-26)
+
+## 1.0.2
+
+### Patch Changes
+
+- Update the package.json to support es2017+
+- Updated dependencies [undefined]
+  - @okikio/manager@1.0.2
 
 ## 1.0.1
 
