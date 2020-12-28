@@ -29,7 +29,8 @@
         "test": "jest --maxWorkers=1",
         "test:watch": "jest --maxWorkers=1 --watch --verbose false",
         "dts": "tsc --project dts.tsconfig.json",
-        "pre-release": "npm run build && npm test && npm run dts"
+        "pre-release": "npm run build && npm test && npm run dts",
+        "changelog": "standard-version --releaseCommitMessageFormat \"chore(release): @okikio/manager {{currentTag}}\""
     },
     "repository": {
         "type": "git",

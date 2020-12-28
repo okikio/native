@@ -1,6 +1,6 @@
 {
     "name": "@okikio/native",
-    "version": "1.0.4",
+    "version": "1.0.5",
     "description": "A framework who's goal is to make it easier to create complex, light-weight, and performant web applications using modern js apis.",
     "publishConfig": {
         "access": "public",
@@ -29,7 +29,8 @@
         "demo:build": "gulp build",
         "demo:watch": "gulp default --watch",
         "dts": "tsc --project dts.tsconfig.json",
-        "pre-release": "npm run build && npm run dts && npm run demo:build"
+        "pre-release": "npm run build && npm run dts && npm run demo:build",
+        "changelog": "standard-version --releaseCommitMessageFormat \"chore(release): @okikio/native {{currentTag}}\""
     },
     "repository": {
         "type": "git",

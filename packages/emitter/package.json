@@ -1,6 +1,6 @@
 {
     "name": "@okikio/emitter",
-    "version": "1.0.4",
+    "version": "1.0.5",
     "description": "A small Event Emitter written in typescript with performance and ease of use in mind.",
     "publishConfig": {
         "access": "public",
@@ -29,7 +29,8 @@
         "test": "jest --maxWorkers=1",
         "test:watch": "jest --maxWorkers=1 --watch --verbose false",
         "dts": "tsc --project dts.tsconfig.json",
-        "pre-release": "npm run build && npm test && npm run dts"
+        "pre-release": "npm run build && npm test && npm run dts",
+        "changelog": "standard-version --releaseCommitMessageFormat \"chore(release): @okikio/emitter {{currentTag}}\""
     },
     "repository": {
         "type": "git",
