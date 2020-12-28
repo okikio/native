@@ -15,7 +15,7 @@
         "test:watch": "ultra -r test:watch",
         "pre-release": "ultra -r pre-release",
         "changesets": "changeset && changeset version",
-        "changelog": "npm run pre-release && ultra -r standard-version",
+        "changelog": "npm run pre-release && ultra -r standard-version && git push --follow-tags origin master",
         "release": "pnpm -r publish --tag latest"
     },
     "husky": {
