@@ -1,10 +1,20 @@
-## [1.0.2](https://github.com/okikio/native/compare/v0.0.8...v1.0.2) (2020-12-26)
+# Changelog
 
+All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.0.3](https://github.com/okikio/native/compare/v1.0.2...v1.0.3) (2020-12-28)
 
-## [1.0.1](https://github.com/okikio/native/compare/v0.0.8...v1.0.1) (2020-12-26)
+## [1.0.3](https://github.com/okikio/native/compare/v1.0.2...v1.0.3) (2020-12-28)
 
-## 1.0.2
+### Patch Changes
+
+- Fix bugs with typescript definition files and rename types folder to @types
+- Updated dependencies [undefined]
+  - @okikio/animate@1.0.3
+  - @okikio/emitter@1.0.3
+  - @okikio/manager@1.0.3
+
+## [1.0.2](https://github.com/okikio/native/compare/v1.0.1...v1.0.2) (2020-12-26)
 
 ### Patch Changes
 
@@ -14,7 +24,7 @@
   - @okikio/emitter@1.0.2
   - @okikio/manager@1.0.2
 
-## 1.0.1
+## [1.0.1](https://github.com/okikio/native/compare/v0.0.8...v1.0.1) (2020-12-26)
 
 ### Patch Changes
 

@@ -14,7 +14,7 @@
         "test": "ultra -r test",
         "test:watch": "ultra -r test:watch",
         "pre-release": "ultra -r pre-release",
-        "changelog": "npm run pre-release && changeset && changeset version && ultra -r standard-changelog",
+        "changelog": "npm run pre-release && changeset && changeset version && ultra -r standard-version",
         "release": "pnpm -r publish --tag latest"
     },
     "husky": {
@@ -27,7 +27,6 @@
         "ultra-runner": "^3.8.0"
     },
     "devDependencies": {
-        "standard-changelog": "^2.0.27",
         "@changesets/cli": "^2.12.0",
         "@commitlint/cli": "^11.0.0",
         "@commitlint/config-conventional": "^11.0.0",
