@@ -1,6 +1,6 @@
 # @okikio/emitter
 
-A small Event Emitter written in typescript with performance and ease of use in mind, it weighs less than 800 B (minified and compressed).
+A small Event Emitter written in typescript with performance and ease of use in mind, it weighs ~800 B (minified and compressed).
 
 *You will need a Map polyfill for older browsers. If you install `@okikio/emitter` via `npm` you are most likely going to need [rollup](https://rollupjs.org/) or [esbuild](https://esbuild.github.io/). You can use [polyfill.io](https://polyfill.io/), or another source to create a polyfill. The minimum feature requirement for a polyfill are Maps e.g. [https://polyfill.io/v3/polyfill.min.js?features=Maps](https://polyfill.io/v3/polyfill.min.js?features=Maps).*
 

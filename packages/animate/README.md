@@ -1,6 +1,6 @@
 # @okikio/animate
 
-An animation library for the modern web which utilizes the Web Animation API. Inspired by animate plus, and animejs, `@okikio/animate` is a Javascript animation library focusing on performance and ease of use. It aims to deliver butter smooth animations at a small size, it weighs less than 2.5 KB (minified and compressed).
+An animation library for the modern web which utilizes the Web Animation API. Inspired by animate plus, and animejs, `@okikio/animate` is a Javascript animation library focusing on performance and ease of use. It aims to deliver butter smooth animations at a small size, it weighs ~2.5 KB (minified and compressed).
 
 *Before even getting started, you will most likely need the Web Animation API polyfill. If you install `@okikio/animate` via `npm` you are most likely going to need [rollup](https://rollupjs.org/) or [esbuild](https://esbuild.github.io/). You can use [web-animations-js](https://github.com/web-animations/web-animations-js), or [polyfill.io](https://polyfill.io/) to create a polyfill. The minimum feature requirement for a polyfill are Maps and a WebAnimations polyfill, e.g. [https://polyfill.io/v3/polyfill.min.js?features=Map%2CWebAnimations](https://polyfill.io/v3/polyfill.min.js?features=Map%2CWebAnimations).*
 
@@ -525,7 +525,7 @@ Cancels all Animations and de-references them allowing them to be garbage collec
 *Warning: if you try to reference properties from the `Animate` class after stop has been called many things will break. The `Animate` class cannont and will not recover from stop, it is meant as a final trash run of animations, don't use it if you think you may restart the animation.*
 
 ## Example
-[![Web Animation API Library Playground](./assets/Web%20Animation%20API%20Library%20Playground.png)](https://codepen.io/okikio/pen/qBbdGaW?editors=0010)
+[![Web Animation API Library Playground](assets/Web%20Animation%20API%20Library%20Playground.png)](https://codepen.io/okikio/pen/qBbdGaW?editors=0010)
 
 [Check out the example on Codepen  &#8594;](https://codepen.io/okikio/pen/qBbdGaW?editors=0010)
 

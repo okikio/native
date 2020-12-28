@@ -57,6 +57,7 @@ Once Gitpod has booted up, go to the `./packages/native/build folder` and start 
       - [AdvancedManager#constructor(app: IApp): AdvancedManager<K, V extends ManagerItem>](#advancedmanagerconstructorapp-iapp-advancedmanagerk-v-extends-manageritem)
       - [AdvancedManager#set(key: K, value: V): AdvancedManager<K, V extends ManagerItem>](#advancedmanagersetkey-k-value-v-advancedmanagerk-v-extends-manageritem)
     - [**Service**](#service)
+      - [*Life-cycle*](#life-cycle)
       - [Service#init(...args: any): any](#serviceinitargs-any-any)
       - [Service#boot(...args: any): any](#servicebootargs-any-any)
       - [Service#initEvents(): void](#serviceinitevents-void)
@@ -159,7 +160,7 @@ The `5 base classes` are mandatory classes that are built into the framework (tr
 *Note: all classes that aren't base classes are `Service`'s, or they extend the `Service` class in some way.*
 ### *Types*
 
-Many typescript types are used in the docs, for more info about these types go to [./lib/types](https://github.com/okikio/native/tree/master/packages/native/lib/types).
+Many typescript types are used in the docs, for more info about these types go to [./@types](https://github.com/okikio/native/tree/master/packages/native/@types).
 
 ### **ManagerItem**
 
@@ -409,8 +410,9 @@ The example above should also work to explain how to use the `AdvancedManager` A
 
 The life-cycle methods of a `Service` are register(), install(), init(), boot(), initEvents(), stop(), stopEvents(), uninstall(), and unregister().
 
+#### *Life-cycle*
 Here is a diagram that may aid in your understanding.
-[![Life Cycle Diagram](./assets/lifecycle.png)](./assets/lifecycle.png)
+[![Life Cycle Diagram](assets/lifecycle.png)](assets/lifecycle.png)
 
 The life-cycle is controlled by the `ServiceManager`, the `Service`'s themselves have the life-cycle methods, but only the `ServiceManager` can decide when to call the life-cycle methods of all `Service`'s.
 

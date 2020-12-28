@@ -4,13 +4,13 @@
     "description": "A framework who's goal is to make it easier to create complex, light-weight, and performant web applications using modern js apis.",
     "publishConfig": {
         "access": "public",
-        "main": "./lib/api.js",
-        "types": "./lib/types/api.d.ts",
-        "browser": "./lib/api.js",
-        "node": "./lib/api.node.js",
-        "unpkg": "./lib/api.js",
-        "module": "./lib/api.modern.js",
-        "exports": "./lib/api.modern.js"
+        "main": "lib/api.node.js",
+        "types": "@types/api.d.ts",
+        "browser": "lib/api.js",
+        "node": "lib/api.node.js",
+        "unpkg": "lib/api.js",
+        "module": "lib/api.modern.js",
+        "exports": "lib/api.modern.js"
     },
     "main": "src/api.ts",
     "source": "src/api.ts",
@@ -20,16 +20,16 @@
     "files": [
         "lib",
         "src",
-        "demo",
+        "@types",
         "assets"
     ],
     "scripts": {
         "build": "node ./build",
         "watch": "node ./build --watch",
-        "dts": "tsc --project dts.tsconfig.json",
-        "pre-release": "npm run build && npm run dts && npm run demo:build",
         "demo:build": "gulp build",
-        "demo:watch": "gulp default --watch"
+        "demo:watch": "gulp default --watch",
+        "dts": "tsc --project dts.tsconfig.json",
+        "pre-release": "npm run build && npm run dts && npm run demo:build"
     },
     "repository": {
         "type": "git",

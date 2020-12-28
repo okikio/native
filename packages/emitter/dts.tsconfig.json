@@ -1,10 +1,21 @@
 {
-    "extends": "../../dts.tsconfig.json",
+    "compilerOptions": {
+        "moduleResolution": "node",
+        "target": "es2015",
+        "module": "commonjs",
+        "sourceMap": false,
+        "declaration": true,
+        "declarationDir": "@types",
+        "emitDeclarationOnly": true,
+        "esModuleInterop": true
+    },
     "include": [
-        "**/src/**/*"
+        "./src/**/*"
     ],
     "exclude": [
         "node_modules",
-        "**/tests/**/*"
+        "./tests/**/*",
+        "./@types/**/*",
+        "./demo/**/*"
     ]
 }

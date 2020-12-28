@@ -5,13 +5,14 @@
         "module": "ES2020",
         "sourceMap": true,
         "outDir": "lib",
-        "declaration": true,
         "incremental": true,
         "isolatedModules": true,
         "esModuleInterop": true
     },
     "exclude": [
         "node_modules",
-        "**/tests/**/*"
+        "./tests/**/*",
+        "./lib/**/*",
+        "./@types/**/*"
     ]
 }

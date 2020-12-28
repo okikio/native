@@ -8,5 +8,5 @@ export * from "./service";
 export * from "./transition";
 export * from "./app";
 export * from "./pjax";
-export * from "./route";
-export * from "@okikio/animate";
+export * from "./router";
+export * from "./animate";
