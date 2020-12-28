@@ -1,6 +1,6 @@
 {
     "name": "@okikio/emitter",
-    "version": "1.0.3",
+    "version": "1.0.4",
     "description": "A small Event Emitter written in typescript with performance and ease of use in mind.",
     "publishConfig": {
         "access": "public",

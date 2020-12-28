@@ -412,7 +412,7 @@ The life-cycle methods of a `Service` are register(), install(), init(), boot(),
 
 #### *Life-cycle*
 Here is a diagram that may aid in your understanding.
-[![Life Cycle Diagram](assets/lifecycle.png)](assets/lifecycle.png)
+[![Life Cycle Diagram](../../packages/assets/lifecycle.png)](../../packages/native/assets/lifecycle.png)
 
 The life-cycle is controlled by the `ServiceManager`, the `Service`'s themselves have the life-cycle methods, but only the `ServiceManager` can decide when to call the life-cycle methods of all `Service`'s.
 

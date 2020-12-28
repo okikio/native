@@ -525,7 +525,7 @@ Cancels all Animations and de-references them allowing them to be garbage collec
 *Warning: if you try to reference properties from the `Animate` class after stop has been called many things will break. The `Animate` class cannont and will not recover from stop, it is meant as a final trash run of animations, don't use it if you think you may restart the animation.*
 
 ## Example
-[![Web Animation API Library Playground](assets/Web%20Animation%20API%20Library%20Playground.png)](https://codepen.io/okikio/pen/qBbdGaW?editors=0010)
+[![Web Animation API Library Playground](../../packages/animate/assets/Web%20Animation%20API%20Library%20Playground.png)](https://codepen.io/okikio/pen/qBbdGaW?editors=0010)
 
 [Check out the example on Codepen  &#8594;](https://codepen.io/okikio/pen/qBbdGaW?editors=0010)
 
