@@ -2,6 +2,34 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## 1.1.0 (2020-12-28)
+
+
+### Features
+
+* **all:** :construction: finalize design for native package, update documentation and build process ([f9fdb32](https://github.com/okikio/native/commit/f9fdb32e347de2c7e48c9f10908b09242862a4fd))
+* add commitlint/conventional-commits to repo ([6adc3bf](https://github.com/okikio/native/commit/6adc3bf9f4e7567d3758b77fa55a49b3b679b604))
+
+
+### Bug Fixes
+
+* **@okikio/manager:** :art: WIP try to fix/ find cause of esbuild treeshake errors ([9ded385](https://github.com/okikio/native/commit/9ded3855f3abfe944e76bfdaf1ff1a62462d2fa5))
+* **all:** :bug: fix bugs, make pjax and transitionmanager support config as options, fix readme, etc ([2fa6811](https://github.com/okikio/native/commit/2fa6811a98bcaeb45ba4bf8cf1a83e10ca0c9b4c))
+* **all:** :bug: seperate HistoryManager, PageManager, CONFIG, and TransitionManager from Native ([01d8190](https://github.com/okikio/native/commit/01d81908ff9bc78382c2e8d7f1df8ea1100f53cb))
+* **all:** :construction: fix bugs in manger and emitter; use cypress animate and native, jest/jest-jsdom doesn't support Web Animation API; fix tests for manager and emitter; WIP tests using cypress; finalize native js api; WIP Readme for animate and native; delay work till Jabodent is complete. ([42d161a](https://github.com/okikio/native/commit/42d161a5ef3515d9e3067334aebc14d2c6bcc23f))
+* **gitpod:** :bug: fix gitpod docker file ([8e8fdb8](https://github.com/okikio/native/commit/8e8fdb8fd02a5bdfd2b16e601ba94a9f1ed97d85))
+* :bug: fix scrolling bug that stops scrolling during transition, and popstate ([69ba508](https://github.com/okikio/native/commit/69ba508a65155f129648f12702f4a3aecd4eba42))
+* )updated release command ([b27ceb7](https://github.com/okikio/native/commit/b27ceb7de404587fa104da4f8ab662530d405e5a))
+* added default exports, except for native ([b7f37c2](https://github.com/okikio/native/commit/b7f37c2b5d7287b01ecf5c793392f14c5ff3e346))
+* bug fixes ([60d6edd](https://github.com/okikio/native/commit/60d6edd7629ba661d974cdffccbfaf485fe62b9a))
+* forgot to make constructor arguments optional ([905c4a8](https://github.com/okikio/native/commit/905c4a80ad3760ff6b808a8d284ad3a943e9fa1d))
+* lerna publish error fix ([07f86eb](https://github.com/okikio/native/commit/07f86eb7cc442c2e91bb36dbdee9061dded5ccc4))
+* small layout change ([6836c0b](https://github.com/okikio/native/commit/6836c0b8eeed1db8b07ce6394c90d1fe692d830c))
+* still testing lerna with pnpm ([1bcec01](https://github.com/okikio/native/commit/1bcec0121a755099362341057f79ce8fcf8286f9))
+* tring to publish ([ec86224](https://github.com/okikio/native/commit/ec86224e9eaaaa822f53301aa1bc5027a9379f17))
+* update package.json ([99569d5](https://github.com/okikio/native/commit/99569d5f4bfd9c8e443554c43344400b9bf1d1e5))
+* wait till lerna supports workspace protocol ([6b99f8c](https://github.com/okikio/native/commit/6b99f8c2e6803531a1d6890a9708f5c6bedac054))
+
 ### [1.0.6](https://github.com/okikio/native/compare/v1.0.5...v1.0.6) (2020-12-28)
 
 ### [1.0.5](https://github.com/okikio/native/compare/v1.0.4...v1.0.5) (2020-12-28)
