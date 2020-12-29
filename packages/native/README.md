@@ -112,15 +112,15 @@ This package is built for ES2020, it expects the user to use a build tool to sup
 
 ## Installation
 You can install `@okikio/native` from `npm` via `npm i @okikio/native` or `yarn add @okikio/native`. You can use `@okikio/native` on the web via:
-* [https://unpkg.com/@okikio/native@latest/lib/api.modern.js](https://unpkg.com/@okikio/native@latest/lib/api.modern.js),
+* [https://unpkg.com/@okikio/native@latest/lib/api.es.js](https://unpkg.com/@okikio/native@latest/lib/api.es.js),
 * [https://cdn.skypack.dev/@okikio/native](https://cdn.skypack.dev/@okikio/native) or
-* [https://cdn.jsdelivr.net/npm/@okikio/native@latest/lib/api.modern.js](https://cdn.jsdelivr.net/npm/@okikio/native@latest/lib/api.modern.js).
+* [https://cdn.jsdelivr.net/npm/@okikio/native@latest/lib/api.es.js](https://cdn.jsdelivr.net/npm/@okikio/native@latest/lib/api.es.js).
 
 Once installed it can be used like this:
 ```javascript
 import { App, PJAX } from "@okikio/native";
-import { App, PJAX } from "https://unpkg.com/@okikio/native@latest/lib/api.modern.js";
-import { App, PJAX } from "https://cdn.jsdelivr.net/npm/@okikio/native@latest/lib/api.modern.js";
+import { App, PJAX } from "https://unpkg.com/@okikio/native@latest/lib/api.es.js";
+import { App, PJAX } from "https://cdn.jsdelivr.net/npm/@okikio/native@latest/lib/api.es.js";
 // Or
 import { App, PJAX } from "https://cdn.skypack.dev/@okikio/native";
 
@@ -412,7 +412,7 @@ The life-cycle methods of a `Service` are register(), install(), init(), boot(),
 
 #### *Life-cycle*
 Here is a diagram that may aid in your understanding.
-[![Life Cycle Diagram](../../packages/assets/lifecycle.png)](../../packages/native/assets/lifecycle.png)
+[![Life Cycle Diagram](https://raw.githubusercontent.com/okikio/native/master/packages/native/assets/lifecycle.png)](https://github.com/okikio/native/tree/master/packages/native/assets/lifecycle.png)
 
 The life-cycle is controlled by the `ServiceManager`, the `Service`'s themselves have the life-cycle methods, but only the `ServiceManager` can decide when to call the life-cycle methods of all `Service`'s.
 

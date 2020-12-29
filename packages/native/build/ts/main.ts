@@ -7,10 +7,9 @@ import { Fade } from "./transitions/Fade";
 import { BigTransition } from "./transitions/BigTransition";
 import { Slide, SlideLeft, SlideRight } from "./transitions/Slide";
 
-const app: App = new App();
 let splashscreen: Splashscreen;
 let router: Router, pjax: PJAX;
-
+const app: App = new App();
 app
     .add(new IntroAnimation())
     .add(splashscreen = new Splashscreen())

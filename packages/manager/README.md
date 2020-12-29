@@ -44,15 +44,15 @@ Once Gitpod has booted up, go to the `./packages/manager/test folder` and start 
 
 ## Installation
 You can install `@okikio/manager` from `npm` via `npm i @okikio/manager` or `yarn add @okikio/manager`. You can use `@okikio/manager` on the web via:
-* [https://unpkg.com/@okikio/manager@latest/lib/api.modern.js](https://unpkg.com/@okikio/manager@latest/lib/api.modern.js),
+* [https://unpkg.com/@okikio/manager@latest/lib/api.es.js](https://unpkg.com/@okikio/manager@latest/lib/api.es.js),
 * [https://cdn.skypack.dev/@okikio/manager](https://cdn.skypack.dev/@okikio/manager) or
-* [https://cdn.jsdelivr.net/npm/@okikio/manager@latest/lib/api.modern.js](https://cdn.jsdelivr.net/npm/@okikio/manager@latest/lib/api.modern.js).
+* [https://cdn.jsdelivr.net/npm/@okikio/manager@latest/lib/api.es.js](https://cdn.jsdelivr.net/npm/@okikio/manager@latest/lib/api.es.js).
 
 Once installed it can be used like this:
 ```javascript
 import { Manager } from "@okikio/manager";
-import { Manager } from "https://unpkg.com/@okikio/manager@latest/lib/api.modern.js";
-import { Manager } from "https://cdn.jsdelivr.net/npm/@okikio/manager@latest/lib/api.modern.js";
+import { Manager } from "https://unpkg.com/@okikio/manager@latest/lib/api.es.js";
+import { Manager } from "https://cdn.jsdelivr.net/npm/@okikio/manager@latest/lib/api.es.js";
 // Or
 import { Manager } from "https://cdn.skypack.dev/@okikio/manager";
 

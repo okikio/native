@@ -8,12 +8,12 @@ const prettyBytes = require("pretty-bytes");
 const mode = process.argv.includes("--watch") ? "watch" : "build";
 const outputs = [
     {
-        outfile: "lib/api.modern.js",
+        outfile: "lib/api.es.js",
         format: "esm",
         target: ["es2020"],
     },
     {
-        outfile: "lib/api.node.js",
+        outfile: "lib/api.cjs.js",
         platform: "node",
         target: ["es2020"],
         format: "cjs",
@@ -41,7 +41,7 @@ let buildData = {
     logLevel: "info",
 };
 
-const fileSize = async (file = "lib/api.modern.js") =>
+const fileSize = async (file = "lib/api.es.js") =>
     `=> Gzip size - ${prettyBytes(await gzipSize.file(file))}\n`;
 const printProgress = (timerStart, logs, timerEnd = Date.now()) => {
     console.log(

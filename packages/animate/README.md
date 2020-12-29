@@ -66,15 +66,15 @@ Once Gitpod has booted up, go to the `./packages/animate/build folder` and start
 
 ## Installation
 You can install `@okikio/animate` from `npm` via `npm i @okikio/animate` or `yarn add @okikio/animate`. You can use `@okikio/animate` on the web via
-* [https://unpkg.com/@okikio/animate@latest/lib/api.modern.js](https://unpkg.com/@okikio/animate@latest/lib/api.modern.js),
+* [https://unpkg.com/@okikio/animate@latest/lib/api.es.js](https://unpkg.com/@okikio/animate@latest/lib/api.es.js),
 * [https://cdn.skypack.dev/@okikio/animate](https://cdn.skypack.dev/@okikio/animate) or
-* [https://cdn.jsdelivr.net/npm/@okikio/animate@latest/lib/api.modern.js](https://cdn.jsdelivr.net/npm/@okikio/animate@latest/lib/api.modern.js).
+* [https://cdn.jsdelivr.net/npm/@okikio/animate@latest/lib/api.es.js](https://cdn.jsdelivr.net/npm/@okikio/animate@latest/lib/api.es.js).
 
 Once installed it can be used like this:
 ```javascript
 import { animate } from "@okikio/animate";
-import { animate } from "https://unpkg.com/@okikio/animate@latest/lib/api.modern.js";
-import { animate } from "https://cdn.jsdelivr.net/npm/@okikio/animate@latest/lib/api.modern.js";
+import { animate } from "https://unpkg.com/@okikio/animate@latest/lib/api.es.js";
+import { animate } from "https://cdn.jsdelivr.net/npm/@okikio/animate@latest/lib/api.es.js";
 // Or
 import { animate } from "https://cdn.skypack.dev/@okikio/animate";
 
@@ -525,7 +525,7 @@ Cancels all Animations and de-references them allowing them to be garbage collec
 *Warning: if you try to reference properties from the `Animate` class after stop has been called many things will break. The `Animate` class cannont and will not recover from stop, it is meant as a final trash run of animations, don't use it if you think you may restart the animation.*
 
 ## Example
-[![Web Animation API Library Playground](../../packages/animate/assets/Web%20Animation%20API%20Library%20Playground.png)](https://codepen.io/okikio/pen/qBbdGaW?editors=0010)
+[![Web Animation API Library Playground](https://raw.githubusercontent.com/okikio/native/master/packages/animate/assets/Web%20Animation%20API%20Library%20Playground.png)](https://codepen.io/okikio/pen/qBbdGaW?editors=0010)
 
 [Check out the example on Codepen  &#8594;](https://codepen.io/okikio/pen/qBbdGaW?editors=0010)
 
@@ -542,13 +542,13 @@ the following browsers (`@okikio/animate` may support older browsers, but I have
 
 ## Content delivery networks
 
-`@okikio/animate` is available on [unpkg](https://unpkg.com/@okikio/animate@latest/lib/api.modern.js) `https://unpkg.com/@okikio/animate@latest/lib/api.modern.js`, [skypack](https://cdn.skypack.dev/@okikio/animate) `https://cdn.skypack.dev/@okikio/animate` or [jsdelivr](https://cdn.jsdelivr.net/npm/@okikio/animate@latest/lib/api/modern.js) `https://cdn.jsdelivr.net/npm/@okikio/animate@latest/lib/api.modern.js`.
+`@okikio/animate` is available on [unpkg](https://unpkg.com/@okikio/animate@latest/lib/api.es.js) `https://unpkg.com/@okikio/animate@latest/lib/api.es.js`, [skypack](https://cdn.skypack.dev/@okikio/animate) `https://cdn.skypack.dev/@okikio/animate` or [jsdelivr](https://cdn.jsdelivr.net/npm/@okikio/animate@latest/lib/api.es.js) `https://cdn.jsdelivr.net/npm/@okikio/animate@latest/lib/api.es.js`.
 
 ```javascript
-// Notice the .modern.js file name extension, that represents ES Modules
+// Notice the .es.js file name extension, that represents ES Modules
 // There is also,
-//      .node.js - Common JS Module
-//      .modern.js - Modern ES Module
+//      .cjs.js - Common JS Module
+//      .es.js - Modern ES Module
 //      .js - The Fresh JS, uses IIFE.
 import { animate } from "https://cdn.skypack.dev/@okikio/animate";
 

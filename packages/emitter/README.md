@@ -35,15 +35,15 @@ Once Gitpod has booted up, go to the `./packages/emitter/test folder` and start 
 
 ## Installation
 You can install `@okikio/emitter` from `npm` via `npm i @okikio/emitter` or `yarn add @okikio/emitter`. You can use `@okikio/emitter` on the web via:
-* [https://unpkg.com/@okikio/emitter@latest/lib/api.modern.js](https://unpkg.com/@okikio/emitter@latest/lib/api.modern.js),
+* [https://unpkg.com/@okikio/emitter@latest/lib/api.es.js](https://unpkg.com/@okikio/emitter@latest/lib/api.es.js),
 * [https://cdn.skypack.dev/@okikio/emitter](https://cdn.skypack.dev/@okikio/emitter) or
-* [https://cdn.jsdelivr.net/npm/@okikio/emitter@latest/lib/api.modern.js](https://cdn.jsdelivr.net/npm/@okikio/emitter@latest/lib/api.modern.js).
+* [https://cdn.jsdelivr.net/npm/@okikio/emitter@latest/lib/api.es.js](https://cdn.jsdelivr.net/npm/@okikio/emitter@latest/lib/api.es.js).
 
 Once installed it can be used like this:
 ```javascript
 import { EventEmitter } from "@okikio/emitter";
-import { EventEmitter } from "https://unpkg.com/@okikio/emitter@latest/lib/api.modern.js";
-import { EventEmitter } from "https://cdn.jsdelivr.net/npm/@okikio/emitter@latest/lib/api.modern.js";
+import { EventEmitter } from "https://unpkg.com/@okikio/emitter@latest/lib/api.es.js";
+import { EventEmitter } from "https://cdn.jsdelivr.net/npm/@okikio/emitter@latest/lib/api.es.js";
 // Or
 import { EventEmitter } from "https://cdn.skypack.dev/@okikio/emitter";
 

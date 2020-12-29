@@ -4,15 +4,24 @@
     "description": "A framework who's goal is to make it easier to create complex, light-weight, and performant web applications using modern js apis.",
     "publishConfig": {
         "access": "public",
-        "main": "lib/api.node.js",
-        "types": "@types/api.d.ts",
-        "browser": "lib/api.js",
-        "node": "lib/api.node.js",
-        "unpkg": "lib/api.js",
-        "module": "lib/api.modern.js",
-        "exports": "lib/api.modern.js"
+        "main": "lib/api.cjs.js",
+        "types": "@types/api.d.ts"
     },
     "main": "src/api.ts",
+    "browser": "lib/api.es.js",
+    "module": "lib/api.es.js",
+    "exports": {
+        ".": {
+            "require": "./lib/api.cjs.js",
+            "default": "./lib/api.es.js"
+        },
+        "./ts": "./src/api.ts",
+        "./src": "./src/",
+        "./": "./lib/",
+        "./es": "./lib/api.es.js",
+        "./cjs": "./lib/api.cjs.js",
+        "./iife": "./lib/api.js"
+    },
     "source": "src/api.ts",
     "directories": {
         "lib": "./lib"
