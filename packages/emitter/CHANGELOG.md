@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.1.1](https://github.com/okikio/native/compare/@okikio/emitter@1.1.0...@okikio/emitter@1.1.1) (2020-12-29)
+
+
+### Bug Fixes
+
+* **all:** :bug: fix package.json browserfield breaking module exports ([d8e9054](https://github.com/okikio/native/commit/d8e90547ee0184d103f9fa09e04676ea91759a8c))
+
 ## 1.1.0 (2020-12-28)
 
 
