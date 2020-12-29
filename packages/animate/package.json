@@ -29,8 +29,7 @@
     "files": [
         "lib",
         "src",
-        "@types",
-        "assets"
+        "@types"
     ],
     "scripts": {
         "build": "node ./build",
