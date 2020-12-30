@@ -9,10 +9,10 @@ You can play with `@okikio/native` using Gitpod:
 _Start the dev script by typing into the terminal_
 
 ```bash
-ultra pnpm demo:watch --filter *native
+ultra demo:watch
 ```
 
-Once Gitpod has booted up, go to the `./packages/native/build folder` and start tweaking and testing to your hearts content.
+Once Gitpod has booted up, go to the `./build folder` and start tweaking and testing to your hearts content.
 
 ## Table of Contents
 
@@ -59,11 +59,11 @@ This project works with the assumtion that the user will use a build tool and a 
 
 ## Usage
 
-Located in [./packages/native/build](https://github.com/okikio/native/tree/master/packages/native/build), you will find multiple build files that can help you create your setup. The [/pug folder](https://github.com/okikio/native/tree/master/packages/native/build/pug) contains [pug](https://pugjs.org/api/getting-started.html) files that format my html in a clean and clear way. The [/sass folder](https://github.com/okikio/native/tree/master/packages/native/build/sass) contains [scss](https://sass-lang.com/guide) files that allow for modern css without the need of polyfills. The [/ts folder](https://github.com/okikio/native/tree/master/packages/native/build/ts) contains [typescript](https://www.typescriptlang.org/) files that the framework runs on; typescript is used because Intellisense is better with typescript. Outside the build folder, the [gulpfile.js](https://github.com/okikio/native/tree/master/packages/native/gulpfile.js) file, is part of my [gulp](https://gulpjs.com/) config, and is the tool I use to build the demo. For your project other tools should also work with some tweaks. Explore the files stated above to learn how to get started. Read more about `native` in the [@okikio/native README](./packages/native/README.md). Explore the other packages as well to learn how they all work together.
+Located in [./build](https://github.com/okikio/native/tree/master/build), you will find multiple build files that can help you create your setup. The [/pug folder](https://github.com/okikio/native/tree/master/build/pug) contains [pug](https://pugjs.org/api/getting-started.html) files that format my html in a clean and clear way. The [/sass folder](https://github.com/okikio/native/tree/master/build/sass) contains [scss](https://sass-lang.com/guide) files that allow for modern css without the need of polyfills. The [/ts folder](https://github.com/okikio/native/tree/master/build/ts) contains [typescript](https://www.typescriptlang.org/) files that the framework runs on; typescript is used because Intellisense is better with typescript. Outside the build folder, the [gulpfile.js](https://github.com/okikio/native/tree/master/gulpfile.js) file, is part of my [gulp](https://gulpjs.com/) config, and is the tool I use to build the demo. For your project other tools should also work with some tweaks. Explore the files stated above to learn how to get started. Read more about `native` in the [@okikio/native README](./packages/native/README.md). Explore the other packages as well to learn how they all work together.
 
 ## Demo
 
-> [View a demo &#8594;](https://okikio.github.io/native/packages/native/demo/)
+> [View a demo &#8594;](https://okikio.github.io/native/demo/)
 
 ## Contributing
 

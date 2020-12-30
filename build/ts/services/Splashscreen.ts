@@ -1,4 +1,4 @@
-import { Service, animate } from "../../../src/api";
+import { Service, animate } from "../../../packages/native/src/api";
 
 export class Splashscreen extends Service {
     public rootElement: HTMLElement;

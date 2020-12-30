@@ -10,6 +10,13 @@ block content
               .container
                 h1.font-sz-5xl.font-sans.font-100 Homepage.
                 p.lead Dynamic example.
+
+        .animation-container.jumbotron.jumbotron-fluid.my-2.p-4.radius-lg.box-shadow.text-dark.intro-animation
+          p.info Click here to toggle between play/pause
+          span.progress 0%
+          - for (let i = 0; i < 10; i ++) {
+            .div
+          - }
         .row
           .col
             .my-3.p-3.bg-white.rounded.box-shadow.text-dark.intro-animation

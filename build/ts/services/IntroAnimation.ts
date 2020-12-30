@@ -1,4 +1,4 @@
-import { Service, animate } from "../../../src/api";
+import { Service, animate } from "../../../packages/native/src/api";
 
 export class IntroAnimation extends Service {
     public elements: Array<Element>;

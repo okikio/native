@@ -23,10 +23,10 @@ You can play with `@okikio/native` using Gitpod:
 _Start the dev script by typing into the terminal_
 
 ```bash
-ultra pnpm demo:watch --filter *native
+ultra demo:watch
 ```
 
-Once Gitpod has booted up, go to the `./packages/native/build folder` and start tweaking and testing to your hearts content.
+Once Gitpod has booted up, go to the `./build folder` and start tweaking and testing to your hearts content.
 
 
 ## Table of Contents
@@ -132,10 +132,10 @@ const { App, PJAX } = window.native;
 
 ## Demo
 
-Located in [./build](https://github.com/okikio/native/tree/master/packages/native/build), you will find multiple build files that can help you create your setup. The [./pug folder](https://github.com/okikio/native/tree/master/packages/native/build/pug) contains [pug](https://pugjs.org/api/getting-started.html) files that format my html in a clean and clear way. The [./sass folder](https://github.com/okikio/native/tree/master/packages/native/build/sass) contains [scss](https://sass-lang.com/guide) files that allow for modern css without the need of polyfills. The [./ts folder](https://github.com/okikio/native/tree/master/packages/native/build/ts) contains [typescript](https://www.typescriptlang.org/) files that the framework runs on; typescript is used, because Intellisense is better with typescript. Outside the build folder, the [gulpfile.js](https://github.com/okikio/native/tree/master/packages/native/gulpfile.js) file, is part of my [gulp](https://gulpjs.com/) config, and is the tool I use to build the demo, for your project other tools should also work, with some amoount of work. Explore the files stated above to learn how to get started.
+Located in [./build](https://github.com/okikio/native/tree/master/build), you will find multiple build files that can help you create your setup. The [./pug folder](https://github.com/okikio/native/tree/master/build/pug) contains [pug](https://pugjs.org/api/getting-started.html) files that format my html in a clean and clear way. The [./sass folder](https://github.com/okikio/native/tree/master/build/sass) contains [scss](https://sass-lang.com/guide) files that allow for modern css without the need of polyfills. The [./ts folder](https://github.com/okikio/native/tree/master/build/ts) contains [typescript](https://www.typescriptlang.org/) files that the framework runs on; typescript is used, because Intellisense is better with typescript. Outside the build folder, the [gulpfile.js](https://github.com/okikio/native/tree/master/gulpfile.js) file, is part of my [gulp](https://gulpjs.com/) config, and is the tool I use to build the demo, for your project other tools should also work, with some amoount of work. Explore the files stated above to learn how to get started.
 
 
-> [View the Demo  &#8594;](https://okikio.github.io/native/packages/native/demo/)
+> [View the Demo  &#8594;](https://okikio.github.io/native/demo/)
 
 
 ## API
@@ -1133,7 +1133,7 @@ go({
 
 ---
 
-*Note: thus far I have given you a detailed overview of the API's that make up the base classes as well as the `HistoryManager` (as an example of a complex project based class), but from this point onward the difficulty will drastically increaase, but because the next classes are project based classes they will only need to be instantiated into an `App`'s `ServiceManager` using a specific name to be used, with little to no config required on you part. PS. this is getting really tiring to document, so, for the next classes I will skimp out on aspects I feel aren't useful for the type of projects you want or need, if you would like more detail just look through the code for the framework, as well as the [./build/ts folder](https://github.com/okikio/native/tree/master/packages/native/build/ts/). Also, **all classes that aren't base classes are `Service`'s, or they extend the `Service` class in some way.***
+*Note: thus far I have given you a detailed overview of the API's that make up the base classes as well as the `HistoryManager` (as an example of a complex project based class), but from this point onward the difficulty will drastically increaase, but because the next classes are project based classes they will only need to be instantiated into an `App`'s `ServiceManager` using a specific name to be used, with little to no config required on you part. PS. this is getting really tiring to document, so, for the next classes I will skimp out on aspects I feel aren't useful for the type of projects you want or need, if you would like more detail just look through the code for the framework, as well as the [./build/ts folder](https://github.com/okikio/native/tree/master/build/ts/). Also, **all classes that aren't base classes are `Service`'s, or they extend the `Service` class in some way.***
 
 ---
 

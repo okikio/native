@@ -20,10 +20,10 @@ You can play with `@okikio/animate` using Gitpod:
 _Start the dev script by typing into the terminal_
 
 ```bash
-ultra pnpm demo:watch --filter *animate
+ultra demo:watch
 ```
 
-Once Gitpod has booted up, go to the `./packages/animate/build folder` and start tweaking and testing to your hearts content.
+Once Gitpod has booted up, go to the `./build folder` and start tweaking and testing to your hearts content.
 
 
 ## Table of Contents
@@ -89,10 +89,10 @@ const { default: anime } = window.animate; // LOL
 ```
 
 ## Demo
-I built a small demo showing off the abilities of the `@okikio/animate` library. You can find the files for the demo in the [./build](https://github.com/okikio/native/tree/master/packages/animate/build) folder.
+I built a small demo showing off the abilities of the `@okikio/animate` library. You can find the files for the demo in the [./build](https://github.com/okikio/native/tree/master/build) folder.
 
 
-> [Click to view demo &#8594;](https://okikio.github.io/native/packages/animate/demo/)
+> [Click to view demo &#8594;](https://okikio.github.io/native/demo)
 
 ## Getting started
 

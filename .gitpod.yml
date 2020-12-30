@@ -16,7 +16,8 @@ tasks:
           npm install pnpm -g &&
           pnpm install gulp ultra-runner -g  &&
           pnpm install -r &&
-          ultra build
+          ultra build &&
+          ultra demo:watch
 
 vscode:
     extensions:

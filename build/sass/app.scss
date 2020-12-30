@@ -40,6 +40,15 @@ $themeFonts: (
     ),
 );
 
+.div {
+    --size: 8vmin;
+    width: var(--size);
+    height: var(--size);
+    /*     transform: scale(1); */
+    border-radius: 8%;
+    background: #616aff;
+}
+
 .theme {
     &-bg {
         @each $colorName, $color in $themeColors {

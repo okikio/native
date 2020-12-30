@@ -1,4 +1,4 @@
-import { ITransition, ITransitionData, animate } from "../../../src/api";
+import { ITransition, ITransitionData, animate } from "../../../packages/native/src/api";
 
 //== Transitions
 export const BigTransition: ITransition = {
