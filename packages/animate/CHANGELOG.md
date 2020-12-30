@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.2.0](https://github.com/okikio/native/compare/@okikio/animate@1.1.2...@okikio/animate@1.2.0) (2020-12-30)
+
+
+### Features
+
+* **@okikio/animate:** :sparkles: ([738c4b3](https://github.com/okikio/native/commit/738c4b3beddb8139ec821c4648771e757ddb22f1))
+
 ### [1.1.2](https://github.com/okikio/native/compare/@okikio/animate@1.1.1...@okikio/animate@1.1.2) (2020-12-29)
 
 ### [1.1.1](https://github.com/okikio/native/compare/@okikio/animate@1.1.0...@okikio/animate@1.1.1) (2020-12-29)
