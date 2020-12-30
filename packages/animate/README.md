@@ -260,11 +260,13 @@ animate({
 
 ### onfinish
 
-| Default                                                      | Type     |
-| :----------------------------------------------------------- | :------- |
-| `(element: HTMLElement, index: number, total: number) => {}` | Function |
+| Default                                                                            | Type     |
+| :--------------------------------------------------------------------------------- | :------- |
+| `(element: HTMLElement, index: number, total: number, animation: Animation) => {}` | Function |
 
-Occurs when the animation for one of the elements completes, meaning when animating many elements that finish at different time this will run multiple times. The method it takes is slightly different.
+Occurs when the animation for one of the elements completes, meaning when animating many elements that finish at different times this will run multiple times. The method it takes is slightly different.
+
+The animation argument represents the animation for the current element.
 
 **Warning**: the order of the callback's arguments are in a different order, with the target element first, and the index second.
 
@@ -275,13 +277,13 @@ animate({
     target: "span",
     opacity: [0, 1],
 
-    // Note the order of the arguments, it's different from other properties
-    onfinish(element, index, total) {
+    // Note the order of the arguments -- it's different from other properties
+    onfinish(element, index, total, animation) {
         element.style.opacity = 0;
         console.log(
             `${
                 index + 1
-            } out of ${total}, elements have finished their animations.`
+            } out of ${total}, elements have finished their animations. Animation playback speed is ${animation.playbackRate}`
         );
     },
 });

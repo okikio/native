@@ -49,7 +49,7 @@ export interface AnimationOptions {
     keyframes?: object[] | closure;
     loop?: number | boolean | closure;
     options?: AnimationOptions | closure;
-    onfinish?: (element?: HTMLElement, index?: number, total?: number) => any;
+    onfinish?: (element?: HTMLElement, index?: number, total?: number, animation?: Animation) => any;
     fillMode?: "none" | "forwards" | "backwards" | "both" | "auto" | closure;
     direction?: "normal" | "reverse" | "alternate" | "alternate-reverse" | closure;
     [property: string]: closure | boolean | object | string | string[] | number | null | (number | null)[] | undefined;

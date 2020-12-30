@@ -46,10 +46,7 @@ try {
     }
 
     router.add({
-        path: {
-            from: /(.*)/g,
-            to: /\/index.html/,
-        },
+        path: /\/index.html/,
         method() {
             let anim = animate({
                 target: ".div",
@@ -94,18 +91,22 @@ try {
             });
 
             let progressSpan = document.querySelector(".progress");
-            anim.on("change", () => {
-                progressSpan.textContent = `${Math.round(anim.getProgress() * 100)}%`;
-            });
+            if (progressSpan) {
+                anim.on("change", () => {
+                    progressSpan.textContent = `${Math.round(anim.getProgress() * 100)}%`;
+                });
+            }
 
             let container = document.querySelector(".animation-container");
-            container.addEventListener("click", () => {
-                let state = anim.getPlayState();
-                if (state === "running") anim.pause();
-                else if (state === "finished") anim.reset();
-                else anim.play();
-                console.log(state);
-            });
+            if (container) {
+                container.addEventListener("click", () => {
+                    let state = anim.getPlayState();
+                    if (state === "running") anim.pause();
+                    else if (state === "finished") anim.reset();
+                    else anim.play();
+                    console.log(state);
+                });
+            }
         }
     });
 

@@ -16,7 +16,7 @@
         "pre-release": "ultra -r pre-release",
         "package-check": "ultra -r package-check",
         "changesets": "changeset && changeset version",
-        "changelog": "pnpm run pre-release && ultra -r --concurrency 1 changelog && git push --follow-tags origin master",
+        "changelog": "pnpm run pre-release && pnpm run demo:build && ultra -r --concurrency 1 changelog && git push --follow-tags origin master",
         "release": "pnpm -r publish --tag latest"
     },
     "husky": {

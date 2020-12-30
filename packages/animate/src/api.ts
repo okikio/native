@@ -99,7 +99,7 @@ export interface AnimationOptions {
     keyframes?: object[] | closure,
     loop?: number | boolean | closure, // iterations: number,
     options?: AnimationOptions | closure,
-    onfinish?: (element?: HTMLElement, index?: number, total?: number) => any,
+    onfinish?: (element?: HTMLElement, index?: number, total?: number, animation?: Animation) => any,
     fillMode?: "none" | "forwards" | "backwards" | "both" | "auto" | closure,
     direction?: "normal" | "reverse" | "alternate" | "alternate-reverse" | closure,
     [property: string]: closure | boolean | object | string | string[] | number | null | (number | null)[] | undefined;
@@ -239,7 +239,7 @@ export class Animate {
             // Add animation to the Animations Set
             let animation = target.animate(animationKeyframe, animationOptions);
             animation.onfinish = () => {
-                onfinish(target, i, len);
+                onfinish(target, i, len, animation);
             };
             this.animations.set(target, animation);
         }
