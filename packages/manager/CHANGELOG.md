@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.3.0](https://github.com/okikio/native/compare/@okikio/manager@1.2.0...@okikio/manager@1.3.0) (2021-01-04)
+
+
+### Features
+
+* **@okikio/animate:** :sparkles: fix bugs, ([e1d2825](https://github.com/okikio/native/commit/e1d2825619103a4385c88da0b8b99f08fb7e06ba))
+
 ## [1.2.0](https://github.com/okikio/native/compare/@okikio/manager@1.1.2...@okikio/manager@1.2.0) (2020-12-30)
 
 
