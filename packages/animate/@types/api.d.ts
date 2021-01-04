@@ -1,14 +1,14 @@
 import { EventEmitter, EventInput, ListenerCallback } from "@okikio/emitter";
-export declare type AnimationTarget = string | Node | NodeList | HTMLCollection | HTMLElement[] | any[];
+import { Manager } from "@okikio/manager";
+export declare type AnimationTarget = string | Node | NodeList | HTMLCollection | HTMLElement[] | AnimationTarget[];
 export declare const getElements: (selector: string | Node) => Node[];
 export declare const getTargets: (targets: AnimationTarget) => Node[];
 export declare type closureArgs = [number, number, HTMLElement];
 export declare type closure = ((index?: number, total?: number, element?: HTMLElement) => any) | any;
-export declare const computeValue: (value: closure, args: closureArgs) => any;
-export declare const mapObject: (obj: object, args: closureArgs) => any;
+export declare const computeValue: (value: closure, args: closureArgs, context: AnimationOptions) => any;
+export declare const mapObject: (obj: object, args: closureArgs, options: AnimationOptions) => any;
 /** From: [https://easings.net] */
 export declare const easings: {
-    ease: string;
     in: string;
     out: string;
     "in-out": string;
@@ -40,21 +40,23 @@ export declare const easings: {
 export declare const getEase: (ease: string) => any;
 export interface AnimationOptions {
     target?: AnimationTarget;
-    speed?: number | closure;
+    speed?: number;
+    autoplay?: boolean;
+    options?: AnimationOptions;
     delay?: number | closure;
     easing?: string | closure;
     endDelay?: number | closure;
     duration?: number | closure;
-    autoplay?: boolean | closure;
     keyframes?: object[] | closure;
     loop?: number | boolean | closure;
-    options?: AnimationOptions | closure;
     onfinish?: (element?: HTMLElement, index?: number, total?: number, animation?: Animation) => any;
     fillMode?: "none" | "forwards" | "backwards" | "both" | "auto" | closure;
     direction?: "normal" | "reverse" | "alternate" | "alternate-reverse" | closure;
+    extend?: EffectTiming;
     [property: string]: closure | boolean | object | string | string[] | number | null | (number | null)[] | undefined;
 }
 export declare const DefaultAnimationOptions: AnimationOptions;
+export declare type AnimationEvents = "update" | "play" | "pause" | "start" | "begin" | "complete" | "finish" | "error" | "stop";
 /** You can check it out here: https://codepen.io/okikio/pen/qBbdGaW?editors=0011 */
 export declare class Animate {
     /**
@@ -70,13 +72,21 @@ export declare class Animate {
      */
     properties: object;
     /**
-     * A Set of Animations
+     * A Manager of Animations
      */
-    animations: Map<HTMLElement, Animation>;
+    animations: Manager<HTMLElement, Animation>;
     /**
      * The total duration of all Animation's
      */
-    duration: number;
+    totalDuration: number;
+    /**
+     * The smallest delay out of all Animation's
+     */
+    minDelay: number;
+    /**
+     * The options for individual animations
+     */
+    computedOptions: Manager<Animation, AnimationOptions>;
     /**
      * The Element the main animation uses
      */
@@ -94,10 +104,6 @@ export declare class Animate {
      */
     emitter: EventEmitter;
     /**
-     * The finish method, is called when the main animation has finished
-     */
-    finish: any;
-    /**
      * Returns a promise that is fulfilled when the mainAnimation is finished
      */
     promise: Promise<AnimationOptions>;
@@ -106,10 +112,6 @@ export declare class Animate {
      * Returns a new Promise that is resolve when this.finish is called
      */
     newPromise(): Promise<AnimationOptions>;
-    /**
-     * Returns the Array of targets
-     */
-    getTargets(): Node[];
     /**
      * Fulfills the this.promise Promise
      */
@@ -127,21 +129,13 @@ export declare class Animate {
      */
     loop(): void;
     /**
-     * Adds a listener for a given event
-     */
-    on(events: EventInput, callback?: ListenerCallback, scope?: object): Animate;
+     * Calls a method that affects all animations including the mainAnimation; the method only allows the animation parameter
+    */
+    all(method: (animation: Animation) => void): this;
     /**
-     * Removes a listener from an event
+     * Register the begin event
      */
-    off(events: EventInput, callback?: ListenerCallback, scope?: object): Animate;
-    /**
-     * Call all listeners within an event
-     */
-    emit(events: string | any[], ...args: any): Animate;
-    /**
-     * Get a specific Animation from an Animate instance
-     */
-    getAnimation(element: HTMLElement): Animation;
+    protected beginEvent(): void;
     /**
      * Play Animation
      */
@@ -151,37 +145,50 @@ export declare class Animate {
      */
     pause(): Animate;
     /**
+     * Reset all Animations
+     */
+    reset(): this;
+    /**
+     * Cancels all Animations
+     */
+    cancel(): this;
+    /**
+     * Force complete all Animations
+     */
+    finish(): this;
+    /**
+     * Cancels & Clears all Animations
+     */
+    stop(): void;
+    /**
+     * Returns an Array of targets
+     */
+    getTargets(): Node[];
+    /**
+     * Get a specific Animation from an Animate instance
+     */
+    getAnimation(element: HTMLElement): Animation;
+    /**
+     * Returns the timings of an Animation, given a target
+     * E.g. { duration, endDelay, delay, iterations, iterationStart, direction, easing, fill, etc... }
+     */
+    getTiming(target: HTMLElement | Animation): AnimationOptions & EffectTiming;
+    /**
      * Returns the total duration of Animation
      */
-    getDuration(): number;
+    getTotalDuration(): number;
     /**
      * Returns the current time of the Main Animation
      */
     getCurrentTime(): number;
     /**
-     * Set the current time of the Main Animation
-     */
-    setCurrentTime(time: number): Animate;
-    /**
-     * Returns the Animation progress as a fraction of the current time / duration
+     * Returns the Animation progress as a fraction of the current time / duration * 100
      */
     getProgress(): number;
-    /**
-     * Set the Animation progress as a value from 0 to 100
-     */
-    setProgress(percent: number): Animate;
     /**
      * Return the playback speed of the animation
      */
     getSpeed(): number;
-    /**
-     * Set the playback speed of an Animation
-     */
-    setSpeed(speed?: number): Animate;
-    /**
-     * Reset all Animations
-     */
-    reset(): void;
     /**
      * Returns the current playing state
      */
@@ -190,12 +197,32 @@ export declare class Animate {
      * Get the options of an Animate instance
      */
     getOptions(): AnimationOptions;
+    /**
+     * Set the current time of the Main Animation
+     */
+    setCurrentTime(time: number): Animate;
+    /**
+     * Set the Animation progress as a value from 0 to 100
+     */
+    setProgress(percent: number): Animate;
+    /**
+     * Set the playback speed of an Animation
+     */
+    setSpeed(speed?: number): Animate;
+    /**
+     * Adds a listener for a given event
+     */
+    on(events: AnimationEvents | EventInput, callback?: ListenerCallback, scope?: object): Animate;
+    /**
+     * Removes a listener from an event
+     */
+    off(events: AnimationEvents | EventInput, callback?: ListenerCallback, scope?: object): Animate;
+    /**
+     * Call all listeners within an event
+     */
+    emit(events: AnimationEvents | string | any[], ...args: any): Animate;
     /** Returns the Animate options, as JSON  */
     toJSON(): AnimationOptions;
-    /**
-     * Cancels & Clears all Animations
-     */
-    stop(): void;
     /**
      * The Symbol.toStringTag well-known symbol is a string valued property that is used
      * in the creation of the default string description of an object.

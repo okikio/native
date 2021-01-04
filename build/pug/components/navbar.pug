@@ -8,7 +8,9 @@ mixin navbar()
     #navbarSupportedContent.collapse.navbar-collapse
       ul.navbar-nav.mr-auto
         li.nav-item
-          a.nav-link.active(href='./index.html' data-path='/(index|)(.html)?' data-transition='default') Homepage
+          a.nav-link.active(href='./animate.html' data-prevent="self") @okikio/animate (prevent-pjax)
+        li.nav-item
+          a.nav-link(href='./index.html' data-path='(index|\/$)(\.html)?' data-transition='default') Homepage
         li.nav-item
           a.nav-link(href='./about.html' data-path='/about(.html)?' data-transition='SlideLeft') About
         li.nav-item

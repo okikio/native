@@ -1,3 +1,1770 @@
-var Tt={wrapperAttr:"wrapper",noAjaxLinkAttr:"no-ajax-link",noPrefetchAttr:"no-prefetch",headers:[["x-partial","true"]],preventSelfAttr:'prevent="self"',preventAllAttr:'prevent="all"',transitionAttr:"transition",blockAttr:"block",timeout:3e4},It=t=>Object.assign({...Tt},t),St=(t,e,i=!0)=>{let{prefix:r}=t,s=`data${r?"-"+r:""}-${e}`;return i?`[${s}]`:s},g=(t,e,i=!0)=>{if(typeof e!="string")return t;let r=t[e];return typeof r=="string"?St(t,r,i):r},R=class{constructor(t){this.map=new Map(t)}getMap(){return this.map}get(t){return this.map.get(t)}keys(){return Array.from(this.map.keys())}values(){return Array.from(this.map.values())}set(t,e){return this.map.set(t,e),this}add(t){let e=this.size,i=e;return this.set(i,t),this}get size(){return this.map.size}get length(){return this.map.size}last(t=1){let e=this.keys()[this.size-t];return this.get(e)}delete(t){return this.map.delete(t)}remove(t){return this.map.delete(t),this}clear(){return this.map.clear(),this}has(t){return this.map.has(t)}entries(){return this.map.entries()}forEach(t=(...i)=>{},e){return this.map.forEach(t,e),this}[Symbol.iterator](){return this.entries()}},q=(t,e,...i)=>{t.forEach(r=>{r[e](...i)})},K=class{constructor(){}install(){}register(t,e){return this.manager=t,this.app=t.app,this.config=t.config,this.emitter=t.emitter,this.key=e,this.install(),this}uninstall(){}unregister(){this.uninstall(),this.manager.remove(this.key),this.key=void 0,this.manager=void 0,this.app=void 0,this.config=void 0,this.emitter=void 0}},X=class extends R{constructor(t){super();this.app=t,this.config=t.config,this.emitter=t.emitter}set(t,e){return super.set(t,e),e.register(this,t),this}},m=(t=window.location.href)=>t instanceof URL?t:new URL(t,window.location.origin),S=t=>`${t.pathname}${t.hash}`,B=t=>t.toString().replace(/(\/#.*|\/|#.*)$/,""),Y=(t,e)=>{let i=m(t),r=m(e);return B(i)===B(r)},k=class extends K{init(){}boot(){this.initEvents()}initEvents(){}stopEvents(){}stop(){this.stopEvents(),this.unregister()}},Pt=class extends X{constructor(t){super(t)}init(){return q(this,"init"),this}boot(){return q(this,"boot"),this}stop(){return q(this,"stop"),this}},P=(t=window.scrollX,e=window.scrollY)=>({x:t,y:e}),U=(t={url:S(m()),index:0,transition:"default",data:{scroll:P(),trigger:"HistoryManager"}})=>t,W=class extends k{constructor(){super(...arguments);this.pointer=-1}init(){this.states=[];let t=U();this.add(t,"replace")}get(t){return this.states[t]}add(t,e="push"){let i=U(t),r=this.length;this.states.push({...i}),this.pointer=r;let s={index:this.pointer,states:[...this.states]};return xt(e,i,s),this}remove(t){return t?this.states.splice(t,1):this.states.pop(),this.pointer--,this}replace(t){return this.states=t,this}set(t,e){return this.states[t]=e}get current(){return this.get(this.pointer)}get last(){return this.get(this.length-1)}get previous(){return this.pointer<1?null:this.get(this.pointer-1)}get length(){return this.states.length}},xt=(t,e,i)=>{let r=S(m(e.url)),s=[i,"",r];if(window.history)switch(t){case"push":window.history.pushState.apply(window.history,s);break;case"replace":window.history.replaceState.apply(window.history,s);break}},kt=new DOMParser,V=class extends K{constructor(t=m(),e=document){super();this.url=t,typeof e=="string"?this.data=e:this.dom=e||document}build(){if(this.dom instanceof Node||(this.dom=kt.parseFromString(this.data,"text/html")),!(this.body instanceof Node)){let{title:t,head:e,body:i}=this.dom;this.title=t,this.head=e,this.body=i,this.wrapper=this.body.querySelector(this.wrapperAttr)}}install(){this.wrapperAttr=g(this.config,"wrapperAttr")}uninstall(){this.url=void 0,this.title=void 0,this.head=void 0,this.body=void 0,this.dom=void 0,this.wrapper=void 0,this.data=void 0,this.wrapperAttr=void 0}},J=class extends k{constructor(){super(...arguments);this.loading=new R}install(){var e;this.pages=new X(this.app),this.maxPages=(e=this.config.maxPages)!=null?e:5;let t=m().pathname;this.set(t,new V),t=void 0}get(t){return this.pages.get(t)}add(t){return this.pages.add(t),this}set(t,e){return this.pages.set(t,e),this}remove(t){return this.pages.remove(t),this}has(t){return this.pages.has(t)}clear(){return this.pages.clear(),this}get size(){return this.pages.size}keys(){return this.pages.keys()}async load(t=m()){let e=m(t),i=e.pathname,r,s;if(this.has(i))return r=this.get(i),Promise.resolve(r);this.loading.has(i)?s=this.loading.get(i):(s=this.request(i),this.loading.set(i,s));let n=await s;if(this.loading.remove(i),r=new V(e,n),this.set(i,r),this.size>this.maxPages){let o=m(),a=this.keys(),h=Y(o,a[0])?a[1]:a[0],c=this.get(h);c.unregister(),c=void 0,a=void 0,o=void 0,h=void 0}return r}async request(t){let e=new Headers(g(this.config,"headers")),i=window.setTimeout(()=>{throw window.clearTimeout(i),"Request Timed Out!"},g(this.config,"timeout"));try{let r=await fetch(t,{mode:"same-origin",method:"GET",headers:e,cache:"default",credentials:"same-origin"});if(window.clearTimeout(i),r.status>=200&&r.status<300)return await r.text();let s=new Error(r.statusText||""+r.status);throw s}catch(r){throw window.clearTimeout(i),r}}},Q=class{constructor(t){this.map=new Map(t)}getMap(){return this.map}get(t){return this.map.get(t)}keys(){return Array.from(this.map.keys())}values(){return Array.from(this.map.values())}set(t,e){return this.map.set(t,e),this}add(t){let e=this.size,i=e;return this.set(i,t),this}get size(){return this.map.size}get length(){return this.map.size}last(t=1){let e=this.keys()[this.size-t];return this.get(e)}delete(t){return this.map.delete(t)}remove(t){return this.map.delete(t),this}clear(){return this.map.clear(),this}has(t){return this.map.has(t)}entries(){return this.map.entries()}forEach(t=(...i)=>{},e){return this.map.forEach(t,e),this}[Symbol.iterator](){return this.entries()}},Rt=(t,e,...i)=>{t.forEach(r=>{r[e](...i)})},Z=({callback:t=()=>{},scope:e=null,name:i="event"})=>({callback:t,scope:e,name:i}),L=class extends Q{constructor(t="event"){super();this.name=t}},Lt=class extends Q{constructor(){super()}getEvent(t){let e=this.get(t);return e instanceof L?e:(this.set(t,new L(t)),this.get(t))}newListener(t,e,i){let r=this.getEvent(t);return r.add(Z({name:t,callback:e,scope:i})),r}on(t,e,i){if(typeof t=="undefined")return this;typeof t=="string"&&(t=t.trim().split(/\s/g));let r,s,n=typeof t=="object"&&!Array.isArray(t),o=n?e:i;return n||(s=e),Object.keys(t).forEach(a=>{n?(r=a,s=t[a]):r=t[a],this.newListener(r,s,o)},this),this}removeListener(t,e,i){let r=this.get(t);if(r instanceof L&&e){let s=Z({name:t,callback:e,scope:i});r.forEach((n,o)=>{if(n.callback===s.callback&&n.scope===s.scope)return r.remove(o)})}return r}off(t,e,i){if(typeof t=="undefined")return this;typeof t=="string"&&(t=t.trim().split(/\s/g));let r,s,n=typeof t=="object"&&!Array.isArray(t),o=n?e:i;return n||(s=e),Object.keys(t).forEach(a=>{n?(r=a,s=t[a]):r=t[a],typeof s=="function"?this.removeListener(r,s,o):this.remove(r)},this),this}emit(t,...e){return typeof t=="undefined"?this:(typeof t=="string"&&(t=t.trim().split(/\s/g)),t.forEach(i=>{let r=this.get(i);r instanceof L&&r.forEach(s=>{let{callback:n,scope:o}=s;n.apply(o,e)})},this),this)}clear(){return Rt(this,"clear"),super.clear(),this}},tt=(t,e=window.location.hash)=>{try{let i=e[0]=="#"?e:m(e).hash;if(i.length>1){let r=document.getElementById(i.slice(1));if(r)return P(r.offsetLeft,r.offsetTop)}}catch(i){console.warn("[hashAction] error",i)}return t!=null?t:P(0,0)},Mt={name:"default",scrollable:!0,out({done:t}){t()},in({scroll:t,done:e}){window.scroll(t.x,t.y),e()}},et=class extends k{constructor(t){super();this._arg=t}install(){var e;super.install();let t=this._arg&&this._arg.length?this._arg:(e=g(this.config,"transitions"))!=null?e:[];t=[["default",Mt]].concat(t),this.transitions=new R(t)}get(t){return this.transitions.get(t)}set(t,e){return this.transitions.set(t,e),this}add(t){return this.transitions.add(t),this}has(t){return this.transitions.has(t)}async animate(t,e){let i=this.transitions.get(t),r=e.scroll,s=e.ignoreHashAction;if(!("wrapper"in e.oldPage)||!("wrapper"in e.newPage))throw`[Page] either oldPage or newPage aren't instances of the Page Class.
- ${{newPage:e.newPage,oldPage:e.oldPage}}`;document.title=""+e.newPage.title;let n=e.oldPage.wrapper,o=e.newPage.wrapper;if(!(n instanceof Node)||!(o instanceof Node))throw`[Wrapper] the wrapper from the ${o instanceof Node?"current":"next"} page cannot be found. The wrapper must be an element that has the attribute ${g(this.config,"wrapperAttr")}.`;return i.init&&(i==null||i.init(e)),this.emitter.emit("BEFORE_TRANSITION_OUT"),i.out&&await new Promise(a=>{let h=i.out.call(i,{...e,from:e.oldPage,trigger:e.trigger,done:a});h==null||h.then(a)}),this.emitter.emit("AFTER_TRANSITION_OUT"),await new Promise(a=>{n.insertAdjacentElement("beforebegin",o),this.emitter.emit("CONTENT_INSERT"),!s&&!/back|popstate|forward/.test(e.trigger)&&(r=tt(r)),a()}),await new Promise(a=>{n.remove(),n=void 0,o=void 0,this.emitter.emit("CONTENT_REPLACED"),a()}),this.emitter.emit("BEFORE_TRANSITION_IN"),i.in&&await new Promise(async a=>{let h=i.in.call(i,{...e,from:e.oldPage,to:e.newPage,trigger:e.trigger,scroll:r,done:a});h==null||h.then(a)}),this.emitter.emit("AFTER_TRANSITION_IN"),i}},it=class{constructor(t={}){this.register(t)}register(t={}){this.config=It(t),this.emitter=new Lt,this.services=new Pt(this);let e=(()=>{document.removeEventListener("DOMContentLoaded",e),window.removeEventListener("load",e),this.emitter.emit("READY ready")}).bind(this);return document.addEventListener("DOMContentLoaded",e),window.addEventListener("load",e),this}get(t){return this.services.get(t)}set(t,e){return this.services.set(t,e),this}add(t){return this.services.add(t),this}boot(){return this.services.init(),this.services.boot(),this}stop(){return this.services.stop(),this.emitter.clear(),this}on(t,e){return this.emitter.on(t,e,this),this}off(t,e){return this.emitter.off(t,e,this),this}emit(t,...e){return this.emitter.emit(t,...e),this}},rt=class extends k{install(){var t,e,i,r,s,n;super.install(),this.ignoreURLs=(t=g(this.config,"ignoreURLs"))!=null?t:[],this.prefetchIgnore=(e=g(this.config,"prefetchIgnore"))!=null?e:!1,this.stopOnTransitioning=(i=g(this.config,"stopOnTransitioning"))!=null?i:!1,this.stickyScroll=(r=g(this.config,"stickyScroll"))!=null?r:!1,this.forceOnError=(s=g(this.config,"forceOnError"))!=null?s:!1,this.ignoreHashAction=(n=g(this.config,"ignoreHashAction"))!=null?n:!1}transitionStart(){this.isTransitioning=!0}transitionStop(){this.isTransitioning=!1}init(){this.onHover=this.onHover.bind(this),this.onClick=this.onClick.bind(this),this.onStateChange=this.onStateChange.bind(this)}boot(){"scrollRestoration"in window.history&&(window.history.scrollRestoration="manual"),super.boot()}getTransitionName(t){if(!t||!t.getAttribute)return null;let e=t.getAttribute(g(this.config,"transitionAttr",!1));return typeof e=="string"?e:null}validLink(t,e,i){let r=!window.history.pushState,s=!t||!i,n=e.metaKey||e.ctrlKey||e.shiftKey||e.altKey,o=t.hasAttribute("target")&&t.target==="_blank",a=t.protocol!==location.protocol||t.hostname!==location.hostname,h=typeof t.getAttribute("download")=="string",c=t.hasAttribute(g(this.config,"preventSelfAttr",!1)),w=Boolean(t.closest(g(this.config,"preventAllAttr"))),v=c&&w,y=S(m())===S(m(i));return!(s||r||n||o||a||h||v||y)}getHref(t){return t&&t.tagName&&t.tagName.toLowerCase()==="a"&&typeof t.href=="string"?t.href:null}getLink(t){let e=t.target,i=this.getHref(e);for(;e&&!i;)e=e.parentNode,i=this.getHref(e);return!e||!this.validLink(e,t,i)?void 0:e}onClick(t){let e=this.getLink(t);if(!e)return;if(this.isTransitioning&&this.stopOnTransitioning){t.preventDefault(),t.stopPropagation();return}let i=this.getHref(e);this.emitter.emit("ANCHOR_CLICK CLICK",t),this.go({href:i,trigger:e,event:t})}getDirection(t){return Math.abs(t)>1?t>0?"forward":"back":t===0?"popstate":t>0?"back":"forward"}force(t){window.location.assign(t)}go({href:t,trigger:e="HistoryManager",event:i}){if(this.isTransitioning&&this.stopOnTransitioning||!(this.manager.has("TransitionManager")&&this.manager.has("HistoryManager")&&this.manager.has("PageManager"))){this.force(t);return}let r=this.manager.get("HistoryManager"),s=P(0,0),n=r.current,o=n.url;if(Y(o,t))return;let a;if(i&&i.state){this.emitter.emit("POPSTATE",i);let{state:h}=i,{index:c}=h,w=n.index,v=w-c,y=r.get(r.pointer);a=y.transition,s=y.data.scroll,r.replace(h.states),r.pointer=c,e=this.getDirection(v),this.emitter.emit(e==="back"?"POPSTATE_BACK":"POPSTATE_FORWARD",i)}else{a=this.getTransitionName(e),s=P();let h=U({url:t,transition:a,data:{scroll:s}});!this.stickyScroll&&(s=P(0,0)),r.add(h),this.emitter.emit("HISTORY_NEW_ITEM",i)}return i&&(i.stopPropagation(),i.preventDefault()),this.emitter.emit("GO",i),this.load({oldHref:o,href:t,trigger:e,transitionName:a,scroll:s})}async load({oldHref:t,href:e,trigger:i,transitionName:r="default",scroll:s={x:0,y:0}}){try{let n=this.manager.get("PageManager"),o,a;this.emitter.emit("NAVIGATION_START",{oldHref:t,href:e,trigger:i,transitionName:r});try{this.transitionStart(),a=await n.load(t),!(a.dom instanceof Element)&&a.build(),this.emitter.emit("PAGE_LOADING",{href:e,oldPage:a,trigger:i}),o=await n.load(e),await o.build(),this.emitter.emit("PAGE_LOAD_COMPLETE",{newPage:o,oldPage:a,trigger:i})}catch(h){throw`[PJAX] page load error: ${h}`}try{let h=this.manager.get("TransitionManager");this.emitter.emit("TRANSITION_START",r);let c=await h.animate(h.has(r)?r:"default",{oldPage:a,newPage:o,trigger:i,scroll:s,ignoreHashAction:this.ignoreHashAction});c.scrollable||(!this.ignoreHashAction&&!/back|popstate|forward/.test(i)&&(s=tt(s)),window.scroll(s.x,s.y)),this.emitter.emit("TRANSITION_END",{transition:c})}catch(h){throw`[PJAX] transition error: ${h}`}this.emitter.emit("NAVIGATION_END",{oldPage:a,newPage:o,trigger:i,transitionName:r})}catch(n){this.forceOnError?this.force(e):console.warn(n)}finally{this.transitionStop()}}ignoredURL({pathname:t}){return this.ignoreURLs.length&&this.ignoreURLs.some(e=>typeof e=="string"?e===t:e.exec(t)!==null)}onHover(t){let e=this.getLink(t);if(!e||!this.manager.has("PageManager"))return;let i=this.manager.get("PageManager"),r=m(this.getHref(e)),s=r.pathname;if(this.ignoredURL(r)||i.has(s))return;this.emitter.emit("ANCHOR_HOVER HOVER",t);try{i.load(r)}catch(n){console.warn("[PJAX] prefetch error,",n)}}onStateChange(t){this.go({href:window.location.href,trigger:"popstate",event:t})}initEvents(){this.prefetchIgnore!==!0&&(document.addEventListener("mouseover",this.onHover),document.addEventListener("touchstart",this.onHover)),document.addEventListener("click",this.onClick),window.addEventListener("popstate",this.onStateChange)}stopEvents(){this.prefetchIgnore!==!0&&(document.removeEventListener("mouseover",this.onHover),document.removeEventListener("touchstart",this.onHover)),document.removeEventListener("click",this.onClick),window.removeEventListener("popstate",this.onStateChange)}},st=class extends k{constructor(t=[]){super();this.routes=new R;for(let e of t)this.add(e)}add({path:t,method:e}){let i=this.parse(t);return this.routes.set(i,e),this}parsePath(t){if(typeof t=="string")return new RegExp(t,"i");if(t instanceof RegExp||typeof t=="boolean")return t;throw"[Router] only regular expressions, strings and booleans are accepted as paths."}isPath(t){return typeof t=="string"||t instanceof RegExp||typeof t=="boolean"}parse(t){let e=t,i={from:/(.*)/g,to:/(.*)/g};if(this.isPath(t))i={from:!0,to:t};else if(this.isPath(e.from)&&this.isPath(e.to))i=e;else throw"[Router] path is neither a string, regular expression, or a { from, to } object.";let{from:r,to:s}=i;return{from:this.parsePath(r),to:this.parsePath(s)}}route(){if(this.manager.has("HistoryManager")){let t=this.manager.get("HistoryManager"),e=S(m((t.length>1?t.previous:t.current).url)),i=S(m());this.routes.forEach((r,s)=>{let n=s.from,o=s.to;if(typeof n=="boolean"&&typeof o=="boolean")throw`[Router] path ({ from: ${n}, to: ${o} }) is not valid, remember paths can only be strings, regular expressions, or a boolean; however, both the from and to paths cannot be both booleans.`;let a=n,h=o;n instanceof RegExp&&n.test(e)&&(a=n.exec(e)),o instanceof RegExp&&o.test(i)&&(h=o.exec(i)),(Array.isArray(h)&&Array.isArray(a)||Array.isArray(h)&&typeof a=="boolean"&&a||Array.isArray(a)&&typeof h=="boolean"&&h)&&r({from:a,to:h,path:{from:e,to:i}})})}else console.warn("[Route] HistoryManager is missing.")}initEvents(){this.emitter.on("READY",this.route,this),this.emitter.on("CONTENT_REPLACED",this.route,this)}stopEvents(){this.emitter.off("READY",this.route,this),this.emitter.off("CONTENT_REPLACED",this.route,this)}},nt=class{constructor(t){this.map=new Map(t)}getMap(){return this.map}get(t){return this.map.get(t)}keys(){return Array.from(this.map.keys())}values(){return Array.from(this.map.values())}set(t,e){return this.map.set(t,e),this}add(t){let e=this.size,i=e;return this.set(i,t),this}get size(){return this.map.size}get length(){return this.map.size}last(t=1){let e=this.keys()[this.size-t];return this.get(e)}delete(t){return this.map.delete(t)}remove(t){return this.map.delete(t),this}clear(){return this.map.clear(),this}has(t){return this.map.has(t)}entries(){return this.map.entries()}forEach(t=(...i)=>{},e){return this.map.forEach(t,e),this}[Symbol.iterator](){return this.entries()}},Ot=(t,e,...i)=>{t.forEach(r=>{r[e](...i)})},at=({callback:t=()=>{},scope:e=null,name:i="event"})=>({callback:t,scope:e,name:i}),M=class extends nt{constructor(t="event"){super();this.name=t}},Ht=class extends nt{constructor(){super()}getEvent(t){let e=this.get(t);return e instanceof M?e:(this.set(t,new M(t)),this.get(t))}newListener(t,e,i){let r=this.getEvent(t);return r.add(at({name:t,callback:e,scope:i})),r}on(t,e,i){if(typeof t=="undefined")return this;typeof t=="string"&&(t=t.trim().split(/\s/g));let r,s,n=typeof t=="object"&&!Array.isArray(t),o=n?e:i;return n||(s=e),Object.keys(t).forEach(a=>{n?(r=a,s=t[a]):r=t[a],this.newListener(r,s,o)},this),this}removeListener(t,e,i){let r=this.get(t);if(r instanceof M&&e){let s=at({name:t,callback:e,scope:i});r.forEach((n,o)=>{if(n.callback===s.callback&&n.scope===s.scope)return r.remove(o)})}return r}off(t,e,i){if(typeof t=="undefined")return this;typeof t=="string"&&(t=t.trim().split(/\s/g));let r,s,n=typeof t=="object"&&!Array.isArray(t),o=n?e:i;return n||(s=e),Object.keys(t).forEach(a=>{n?(r=a,s=t[a]):r=t[a],typeof s=="function"?this.removeListener(r,s,o):this.remove(r)},this),this}emit(t,...e){return typeof t=="undefined"?this:(typeof t=="string"&&(t=t.trim().split(/\s/g)),t.forEach(i=>{let r=this.get(i);r instanceof M&&r.forEach(s=>{let{callback:n,scope:o}=s;n.apply(o,e)})},this),this)}clear(){return Ot(this,"clear"),super.clear(),this}},Ct=t=>typeof t=="string"?Array.from(document.querySelectorAll(t)):[t],Nt=t=>Array.isArray(t)?t:typeof t=="string"||t instanceof Node?Ct(t):t instanceof NodeList||t instanceof HTMLCollection?Array.from(t):[],ot=(t,e)=>typeof t=="function"?t(...e):t,ht=(t,e)=>{let i,r,s={},n=Object.keys(t);for(let o=0,a=n.length;o<a;o++)i=n[o],r=t[i],s[i]=ot(r,e);return s},zt={ease:"ease",in:"ease-in",out:"ease-out","in-out":"ease-in-out","in-sine":"cubic-bezier(0.47, 0, 0.745, 0.715)","out-sine":"cubic-bezier(0.39, 0.575, 0.565, 1)","in-out-sine":"cubic-bezier(0.445, 0.05, 0.55, 0.95)","in-quad":"cubic-bezier(0.55, 0.085, 0.68, 0.53)","out-quad":"cubic-bezier(0.25, 0.46, 0.45, 0.94)","in-out-quad":"cubic-bezier(0.455, 0.03, 0.515, 0.955)","in-cubic":"cubic-bezier(0.55, 0.055, 0.675, 0.19)","out-cubic":"cubic-bezier(0.215, 0.61, 0.355, 1)","in-out-cubic":"cubic-bezier(0.645, 0.045, 0.355, 1)","in-quart":"cubic-bezier(0.895, 0.03, 0.685, 0.22)","out-quart":"cubic-bezier(0.165, 0.84, 0.44, 1)","in-out-quart":"cubic-bezier(0.77, 0, 0.175, 1)","in-quint":"cubic-bezier(0.755, 0.05, 0.855, 0.06)","out-quint":"cubic-bezier(0.23, 1, 0.32, 1)","in-out-quint":"cubic-bezier(0.86, 0, 0.07, 1)","in-expo":"cubic-bezier(0.95, 0.05, 0.795, 0.035)","out-expo":"cubic-bezier(0.19, 1, 0.22, 1)","in-out-expo":"cubic-bezier(1, 0, 0, 1)","in-circ":"cubic-bezier(0.6, 0.04, 0.98, 0.335)","out-circ":"cubic-bezier(0.075, 0.82, 0.165, 1)","in-out-circ":"cubic-bezier(0.785, 0.135, 0.15, 0.86)","in-back":"cubic-bezier(0.6, -0.28, 0.735, 0.045)","out-back":"cubic-bezier(0.175, 0.885, 0.32, 1.275)","in-out-back":"cubic-bezier(0.68, -0.55, 0.265, 1.55)"},Dt=t=>/^(ease|in|out)/.test(t)?zt[t]:t,_t={keyframes:[],loop:1,delay:0,speed:1,endDelay:0,easing:"ease",autoplay:!0,duration:1e3,onfinish(){},fillMode:"auto",direction:"normal"},lt=class{constructor(t={}){this.options={},this.targets=[],this.properties={},this.animations=new Map,this.duration=0,this.emitter=new Ht;let{options:e,...i}=t;this.options=Object.assign({},_t,e instanceof lt?e.getOptions():e,i),this.loop=this.loop.bind(this);let{loop:r,delay:s,speed:n,easing:o,endDelay:a,duration:h,direction:c,fillMode:w,onfinish:v,target:y,keyframes:d,autoplay:_,...F}=this.options;this.mainElement=document.createElement("div"),this.targets=Nt(y),this.properties=F;let b=this.targets.length,A;for(let p=0;p<b;p++){let f=this.targets[p],u={easing:Dt(o),iterations:r===!0?Infinity:r,direction:c,endDelay:a,duration:h,delay:s,fill:w},T=ot(d,[p,b,f]);A=T.length?T:this.properties,u=ht(u,[p,b,f]),T.length>0||(A=ht(A,[p,b,f]));let x=u.delay+u.duration*u.iterations+u.endDelay;this.duration<x&&(this.duration=x);let I=f.animate(A,u);I.onfinish=()=>{v(f,p,b,I)},this.animations.set(f,I)}this.mainAnimation=this.mainElement.animate([{opacity:"0"},{opacity:"1"}],{duration:this.duration,easing:"linear"}),this.setSpeed(n),_?this.play():this.pause(),this.promise=this.newPromise(),this.mainAnimation.onfinish=()=>{window.cancelAnimationFrame(this.animationFrame),this.finish()}}newPromise(){return new Promise((t,e)=>{try{this.finish=()=>(this.emit("finish",this.options),t(this.options))}catch(i){e(i)}})}getTargets(){return this.targets}then(t,e){return t=t==null?void 0:t.bind(this),e=e==null?void 0:e.bind(this),this.promise.then(t,e),this}catch(t){return t=t==null?void 0:t.bind(this),this.promise.catch(t),this}finally(t){return t=t==null?void 0:t.bind(this),this.promise.finally(t),this}loop(){this.animationFrame=window.requestAnimationFrame(this.loop),this.emit("tick change",this.getCurrentTime())}on(t,e,i){return this.emitter.on(t,e,i!=null?i:this),this}off(t,e,i){return this.emitter.off(t,e,i!=null?i:this),this}emit(t,...e){return this.emitter.emit(t,...e),this}getAnimation(t){return this.animations.get(t)}play(){return this.mainAnimation.playState!=="finished"&&(this.mainAnimation.play(),this.animationFrame=requestAnimationFrame(this.loop),this.animations.forEach(t=>{t.playState!=="finished"&&t.play()}),this.emit("play")),this}pause(){return this.mainAnimation.playState!=="finished"&&(this.mainAnimation.pause(),window.cancelAnimationFrame(this.animationFrame),this.animations.forEach(t=>{t.playState!=="finished"&&t.pause()}),this.emit("pause")),this}getDuration(){return this.duration}getCurrentTime(){return this.mainAnimation.currentTime}setCurrentTime(t){return this.mainAnimation.currentTime=t,this.animations.forEach(e=>{e.currentTime=t}),this}getProgress(){return this.getCurrentTime()/this.duration}setProgress(t){return this.mainAnimation.currentTime=t/100*this.duration,this.animations.forEach(e=>{e.currentTime=t*this.duration}),this}getSpeed(){return this.mainAnimation.playbackRate}setSpeed(t=1){return this.mainAnimation.playbackRate=t,this.animations.forEach(e=>{e.playbackRate=t}),this}reset(){this.setCurrentTime(0),this.promise=this.newPromise(),this.options.autoplay?this.play():this.pause()}getPlayState(){return this.mainAnimation.playState}getOptions(){return this.options}toJSON(){return this.getOptions()}stop(){for(this.animations.forEach(t=>{t.cancel()},this),this.mainAnimation.cancel(),window.cancelAnimationFrame(this.animationFrame),this.animations.clear();this.targets.length;)this.targets.pop();this.mainElement=void 0,this.animationFrame=void 0,this.emit("stop")}get[Symbol.toStringTag](){return"Animate"}},ct=(t={})=>new lt(t);var O=class{constructor(t){this.map=new Map(t)}getMap(){return this.map}get(t){return this.map.get(t)}keys(){return Array.from(this.map.keys())}values(){return Array.from(this.map.values())}set(t,e){return this.map.set(t,e),this}add(t){let e=this.size,i=e;return this.set(i,t),this}get size(){return this.map.size}get length(){return this.map.size}last(t=1){let e=this.keys()[this.size-t];return this.get(e)}delete(t){return this.map.delete(t)}remove(t){return this.map.delete(t),this}clear(){return this.map.clear(),this}has(t){return this.map.has(t)}entries(){return this.map.entries()}forEach(t=(...i)=>{},e){return this.map.forEach(t,e),this}[Symbol.iterator](){return this.entries()}},H=class{constructor(){}install(){}register(e,i){return this.manager=e,this.app=e.app,this.config=e.config,this.emitter=e.emitter,this.key=i,this.install(),this}uninstall(){}unregister(){this.uninstall(),this.manager.remove(this.key),this.key=void 0,this.manager=void 0,this.app=void 0,this.config=void 0,this.emitter=void 0}};var E=class extends H{init(){}boot(){this.initEvents()}initEvents(){}stopEvents(){}stop(){this.stopEvents(),this.unregister()}};var ge=new DOMParser;var fe=class{constructor(t){this.map=new Map(t)}getMap(){return this.map}get(t){return this.map.get(t)}keys(){return Array.from(this.map.keys())}values(){return Array.from(this.map.values())}set(t,e){return this.map.set(t,e),this}add(t){let e=this.size,i=e;return this.set(i,t),this}get size(){return this.map.size}get length(){return this.map.size}last(t=1){let e=this.keys()[this.size-t];return this.get(e)}delete(t){return this.map.delete(t)}remove(t){return this.map.delete(t),this}clear(){return this.map.clear(),this}has(t){return this.map.has(t)}entries(){return this.map.entries()}forEach(t=(...i)=>{},e){return this.map.forEach(t,e),this}[Symbol.iterator](){return this.entries()}};var mt=class{constructor(t){this.map=new Map(t)}getMap(){return this.map}get(t){return this.map.get(t)}keys(){return Array.from(this.map.keys())}values(){return Array.from(this.map.values())}set(t,e){return this.map.set(t,e),this}add(t){let e=this.size,i=e;return this.set(i,t),this}get size(){return this.map.size}get length(){return this.map.size}last(t=1){let e=this.keys()[this.size-t];return this.get(e)}delete(t){return this.map.delete(t)}remove(t){return this.map.delete(t),this}clear(){return this.map.clear(),this}has(t){return this.map.has(t)}entries(){return this.map.entries()}forEach(t=(...i)=>{},e){return this.map.forEach(t,e),this}[Symbol.iterator](){return this.entries()}},Gt=(t,e,...i)=>{t.forEach(r=>{r[e](...i)})},gt=({callback:t=()=>{},scope:e=null,name:i="event"})=>({callback:t,scope:e,name:i}),N=class extends mt{constructor(t="event"){super();this.name=t}},$t=class extends mt{constructor(){super()}getEvent(t){let e=this.get(t);return e instanceof N?e:(this.set(t,new N(t)),this.get(t))}newListener(t,e,i){let r=this.getEvent(t);return r.add(gt({name:t,callback:e,scope:i})),r}on(t,e,i){if(typeof t=="undefined")return this;typeof t=="string"&&(t=t.trim().split(/\s/g));let r,s,n=typeof t=="object"&&!Array.isArray(t),o=n?e:i;return n||(s=e),Object.keys(t).forEach(a=>{n?(r=a,s=t[a]):r=t[a],this.newListener(r,s,o)},this),this}removeListener(t,e,i){let r=this.get(t);if(r instanceof N&&e){let s=gt({name:t,callback:e,scope:i});r.forEach((n,o)=>{if(n.callback===s.callback&&n.scope===s.scope)return r.remove(o)})}return r}off(t,e,i){if(typeof t=="undefined")return this;typeof t=="string"&&(t=t.trim().split(/\s/g));let r,s,n=typeof t=="object"&&!Array.isArray(t),o=n?e:i;return n||(s=e),Object.keys(t).forEach(a=>{n?(r=a,s=t[a]):r=t[a],typeof s=="function"?this.removeListener(r,s,o):this.remove(r)},this),this}emit(t,...e){return typeof t=="undefined"?this:(typeof t=="string"&&(t=t.trim().split(/\s/g)),t.forEach(i=>{let r=this.get(i);r instanceof N&&r.forEach(s=>{let{callback:n,scope:o}=s;n.apply(o,e)})},this),this)}clear(){return Gt(this,"clear"),super.clear(),this}},Kt=t=>typeof t=="string"?Array.from(document.querySelectorAll(t)):[t],Xt=t=>Array.isArray(t)?t:typeof t=="string"||t instanceof Node?Kt(t):t instanceof NodeList||t instanceof HTMLCollection?Array.from(t):[],dt=(t,e)=>typeof t=="function"?t(...e):t,ft=(t,e)=>{let i,r,s={},n=Object.keys(t);for(let o=0,a=n.length;o<a;o++)i=n[o],r=t[i],s[i]=dt(r,e);return s},Bt={ease:"ease",in:"ease-in",out:"ease-out","in-out":"ease-in-out","in-sine":"cubic-bezier(0.47, 0, 0.745, 0.715)","out-sine":"cubic-bezier(0.39, 0.575, 0.565, 1)","in-out-sine":"cubic-bezier(0.445, 0.05, 0.55, 0.95)","in-quad":"cubic-bezier(0.55, 0.085, 0.68, 0.53)","out-quad":"cubic-bezier(0.25, 0.46, 0.45, 0.94)","in-out-quad":"cubic-bezier(0.455, 0.03, 0.515, 0.955)","in-cubic":"cubic-bezier(0.55, 0.055, 0.675, 0.19)","out-cubic":"cubic-bezier(0.215, 0.61, 0.355, 1)","in-out-cubic":"cubic-bezier(0.645, 0.045, 0.355, 1)","in-quart":"cubic-bezier(0.895, 0.03, 0.685, 0.22)","out-quart":"cubic-bezier(0.165, 0.84, 0.44, 1)","in-out-quart":"cubic-bezier(0.77, 0, 0.175, 1)","in-quint":"cubic-bezier(0.755, 0.05, 0.855, 0.06)","out-quint":"cubic-bezier(0.23, 1, 0.32, 1)","in-out-quint":"cubic-bezier(0.86, 0, 0.07, 1)","in-expo":"cubic-bezier(0.95, 0.05, 0.795, 0.035)","out-expo":"cubic-bezier(0.19, 1, 0.22, 1)","in-out-expo":"cubic-bezier(1, 0, 0, 1)","in-circ":"cubic-bezier(0.6, 0.04, 0.98, 0.335)","out-circ":"cubic-bezier(0.075, 0.82, 0.165, 1)","in-out-circ":"cubic-bezier(0.785, 0.135, 0.15, 0.86)","in-back":"cubic-bezier(0.6, -0.28, 0.735, 0.045)","out-back":"cubic-bezier(0.175, 0.885, 0.32, 1.275)","in-out-back":"cubic-bezier(0.68, -0.55, 0.265, 1.55)"},Yt=t=>/^(ease|in|out)/.test(t)?Bt[t]:t,Wt={keyframes:[],loop:1,delay:0,speed:1,endDelay:0,easing:"ease",autoplay:!0,duration:1e3,onfinish(){},fillMode:"auto",direction:"normal"},yt=class{constructor(t={}){this.options={},this.targets=[],this.properties={},this.animations=new Map,this.duration=0,this.emitter=new $t;let{options:e,...i}=t;this.options=Object.assign({},Wt,e instanceof yt?e.getOptions():e,i),this.loop=this.loop.bind(this);let{loop:r,delay:s,speed:n,easing:o,endDelay:a,duration:h,direction:c,fillMode:w,onfinish:v,target:y,keyframes:d,autoplay:_,...F}=this.options;this.mainElement=document.createElement("div"),this.targets=Xt(y),this.properties=F;let b=this.targets.length,A;for(let p=0;p<b;p++){let f=this.targets[p],u={easing:Yt(o),iterations:r===!0?Infinity:r,direction:c,endDelay:a,duration:h,delay:s,fill:w},T=dt(d,[p,b,f]);A=T.length?T:this.properties,u=ft(u,[p,b,f]),T.length>0||(A=ft(A,[p,b,f]));let x=u.delay+u.duration*u.iterations+u.endDelay;this.duration<x&&(this.duration=x);let I=f.animate(A,u);I.onfinish=()=>{v(f,p,b,I)},this.animations.set(f,I)}this.mainAnimation=this.mainElement.animate([{opacity:"0"},{opacity:"1"}],{duration:this.duration,easing:"linear"}),this.setSpeed(n),_?this.play():this.pause(),this.promise=this.newPromise(),this.mainAnimation.onfinish=()=>{window.cancelAnimationFrame(this.animationFrame),this.finish()}}newPromise(){return new Promise((t,e)=>{try{this.finish=()=>(this.emit("finish",this.options),t(this.options))}catch(i){e(i)}})}getTargets(){return this.targets}then(t,e){return t=t==null?void 0:t.bind(this),e=e==null?void 0:e.bind(this),this.promise.then(t,e),this}catch(t){return t=t==null?void 0:t.bind(this),this.promise.catch(t),this}finally(t){return t=t==null?void 0:t.bind(this),this.promise.finally(t),this}loop(){this.animationFrame=window.requestAnimationFrame(this.loop),this.emit("tick change",this.getCurrentTime())}on(t,e,i){return this.emitter.on(t,e,i!=null?i:this),this}off(t,e,i){return this.emitter.off(t,e,i!=null?i:this),this}emit(t,...e){return this.emitter.emit(t,...e),this}getAnimation(t){return this.animations.get(t)}play(){return this.mainAnimation.playState!=="finished"&&(this.mainAnimation.play(),this.animationFrame=requestAnimationFrame(this.loop),this.animations.forEach(t=>{t.playState!=="finished"&&t.play()}),this.emit("play")),this}pause(){return this.mainAnimation.playState!=="finished"&&(this.mainAnimation.pause(),window.cancelAnimationFrame(this.animationFrame),this.animations.forEach(t=>{t.playState!=="finished"&&t.pause()}),this.emit("pause")),this}getDuration(){return this.duration}getCurrentTime(){return this.mainAnimation.currentTime}setCurrentTime(t){return this.mainAnimation.currentTime=t,this.animations.forEach(e=>{e.currentTime=t}),this}getProgress(){return this.getCurrentTime()/this.duration}setProgress(t){return this.mainAnimation.currentTime=t/100*this.duration,this.animations.forEach(e=>{e.currentTime=t*this.duration}),this}getSpeed(){return this.mainAnimation.playbackRate}setSpeed(t=1){return this.mainAnimation.playbackRate=t,this.animations.forEach(e=>{e.playbackRate=t}),this}reset(){this.setCurrentTime(0),this.promise=this.newPromise(),this.options.autoplay?this.play():this.pause()}getPlayState(){return this.mainAnimation.playState}getOptions(){return this.options}toJSON(){return this.getOptions()}stop(){for(this.animations.forEach(t=>{t.cancel()},this),this.mainAnimation.cancel(),window.cancelAnimationFrame(this.animationFrame),this.animations.clear();this.targets.length;)this.targets.pop();this.mainElement=void 0,this.animationFrame=void 0,this.emit("stop")}get[Symbol.toStringTag](){return"Animate"}},l=(t={})=>new yt(t);var j=class extends E{constructor(){super(...arguments);this.minimalDuration=1e3}init(){super.init(),this.rootElement=document.getElementById("splashscreen"),this.rootElement&&(this.innerEl=this.rootElement.querySelector(".splashscreen-inner"),this.bgEl=this.rootElement.querySelector(".splashscreen-bg"),this.spinnerEl=[...this.rootElement.querySelectorAll(".spinner")]),this.rootElement.style.visibility="visible",this.rootElement.style.pointerEvents="auto"}boot(){this.rootElement&&this.hide()}async hide(){await new Promise(e=>{window.setTimeout(()=>{this.emitter.emit("BEFORE_SPLASHSCREEN_HIDE"),e()},this.minimalDuration)}),await new Promise(async e=>{l({target:this.innerEl,opacity:[1,0],autoplay:!0,duration:500,onfinish(i){i.style.opacity="0"}}).then(function(){this.stop()}),this.emitter.emit("START_SPLASHSCREEN_HIDE"),await this.show(),e()})}async show(){let e=l({target:this.rootElement,transform:["translateY(0%)","translateY(100%)"],duration:1200,easing:"in-out-cubic"});await e,e.stop(),this.rootElement.style.transform="translateY(100%)",this.rootElement.style.visibility="hidden",this.rootElement.style.pointerEvents="none"}},G=class extends E{init(){super.init(),this.elements=[...document.querySelectorAll(".intro-animation")]}newPage(){this.init(),this.prepareToShow()}initEvents(){this.emitter.on("BEFORE_SPLASHSCREEN_HIDE",this.prepareToShow,this),this.emitter.on("CONTENT_REPLACED",this.newPage,this),this.emitter.on("START_SPLASHSCREEN_HIDE BEFORE_TRANSITION_IN",this.show,this)}stopEvents(){this.emitter.off("BEFORE_SPLASHSCREEN_HIDE",this.prepareToShow,this),this.emitter.off("CONTENT_REPLACED",this.newPage,this),this.emitter.off("START_SPLASHSCREEN_HIDE BEFORE_TRANSITION_IN",this.show,this)}stop(){requestAnimationFrame(()=>{for(let e of this.elements)e.style.transform="translateY(0px)",e.style.opacity="1"}),super.stop()}prepareToShow(){requestAnimationFrame(()=>{for(let e of this.elements)e.style.transform="translateY(200px)",e.style.opacity="0"})}async show(){let e=l({target:this.elements,keyframes:[{transform:"translateY(200px)",opacity:0},{transform:"translateY(0px)",opacity:1}],delay(r){return 300*(r+1)},onfinish(r){requestAnimationFrame(()=>{r.style.transform="translateY(0px)",r.style.opacity="1"})},easing:"out-cubic",duration:650}),i=await e;return e.stop(),i}},bt={name:"default",duration:500,scrollable:!0,out({from:t}){let{duration:e}=this,i=t.wrapper;return l({target:i,opacity:[1,0],duration:e}).on("finish",function(){this.stop()})},in({to:t,scroll:e}){let{duration:i}=this,r=t.wrapper;return window.scroll(e.x,e.y),l({target:r,opacity:[0,1],duration:i}).then(function(){this.stop()})}},wt={name:"big",delay:200,durationPerAnimation:700,scrollable:!0,init(){this.mainElement=document.getElementById("big-transition"),this.spinnerElement=this.mainElement.querySelector(".spinner"),this.horizontalElements=[...this.mainElement.querySelector("#big-transition-horizontal").querySelectorAll("div")],this.maxLength=this.horizontalElements.length},out({from:t,scroll:e}){let{durationPerAnimation:i,delay:r}=this,s=t.wrapper;window.scroll(e.x,e.y);let n=Object.assign({},s.style);return new Promise(async o=>{this.mainElement.style.opacity="1",this.mainElement.style.visibility="visible";let a=l({target:s,opacity:[1,0],duration:i,onfinish(d){d.style.opacity="0"}});a.then(function(){this.stop()});let h=l({target:this.horizontalElements,keyframes:[{transform:"scaleX(0)"},{transform:"scaleX(1)"}],delay(d){return r*(d+1)},onfinish(d){d.style.transform="scaleX(1)"},easing:"out-cubic",duration:500});await h,s.style.opacity="1",Object.assign(s.style,n),this.spinnerElement.style.visibility="visible";let c=500,w=l({target:this.spinnerElement,opacity:[0,1],duration:c,onfinish(d){d.style.opacity="1"}}),v=await w,y=l({options:v,opacity:[1,0],onfinish(d){d.style.opacity="0"},delay:1500});await y,this.spinnerElement.style.visibility="hidden",w.stop(),y.stop(),o()})},in({to:t,scroll:e}){let{durationPerAnimation:i,delay:r}=this,s=t.wrapper;return window.scroll(e.x,e.y),new Promise(async n=>{let o=l({target:s,opacity:[0,1],duration:i}).then(()=>{o.stop()}),a=l({target:this.horizontalElements,keyframes:[{transform:"scaleX(1)"},{transform:"scaleX(0)"}],delay(h){return r*(h+1)},onfinish(h){h.style.transform="scaleX(0)"},easing:"out-cubic",duration:500});await a,this.mainElement.style.opacity="0",this.mainElement.style.visibility="hidden",a.stop(),n()})}},z={name:"slide",duration:500,direction:"right",scrollable:!0,init(t){let e=t.trigger;e instanceof Node&&e.hasAttribute("data-direction")?this.direction=e.getAttribute("data-direction"):this.direction="right"},out({from:t}){let{duration:e,direction:i}=this,r=t.wrapper;return l({target:r,keyframes:[{transform:"translateX(0%)",opacity:1},{transform:`translateX(${i==="left"?"-":""}25%)`,opacity:0}],duration:e,easing:"in-quint"}).then(function(){this.stop()})},in({to:t,scroll:e}){let{duration:i}=this,r=t.wrapper;return window.scroll(e.x,e.y),l({target:r,keyframes:[{transform:`translateX(${this.direction==="right"?"-":""}25%)`,opacity:0},{transform:"translateX(0%)",opacity:1}],duration:i,easing:"out-quint"}).then(function(){this.stop()})}},Et={...z,name:"slide-left",direction:"left"},vt={...z,name:"slide-right",direction:"right"},At,D,Vt,$=new it;$.add(new G).add(At=new j).set("HistoryManager",new W).set("PageManager",new J).set("TransitionManager",new et([["default",bt],["BigTransition",wt],["Slide",z],["SlideLeft",Et],["SlideRight",vt]])).set("router",D=new st).add(Vt=new rt);try{D=$.get("router");let t=document.querySelectorAll(".navbar .nav-link");for(let e of t){let i=e;D.add({path:i.getAttribute("data-path")||i.pathname,method(){let r=i.classList.contains("active");r||i.classList.add("active");for(let s of t)s!==i&&s.classList.remove("active")}})}D.add({path:/\/index.html/,method(){let e=ct({target:".div",keyframes(s,n){return[{transform:"translateX(0px)",opacity:0},{transform:"translateX(300px)",opacity:(s+1)/n}]},easing:"out-cubic",duration(s){return(s+1)*500},onfinish(s,n,o){s.style.opacity=`${(n+1)/o}`,s.style.transform="translateX(300px)"},loop:5,speed:1,direction:"alternate",delay(s){return s*200},autoplay:!0});e.then(()=>{let s=document.querySelector(".info"),n="Done.";s.textContent=n,s.style.color="red",console.log(n)});let i=document.querySelector(".progress");i&&e.on("change",()=>{i.textContent=`${Math.round(e.getProgress()*100)}%`});let r=document.querySelector(".animation-container");r&&r.addEventListener("click",()=>{let s=e.getPlayState();s==="running"?e.pause():s==="finished"?e.reset():e.play(),console.log(s)})}}),$.boot()}catch(t){At.show(),console.warn("[App] boot failed,",t)}
-//# sourceMappingURL=main.js.map
+// packages/native/src/config.ts
+var CONFIG_DEFAULTS = {
+  wrapperAttr: "wrapper",
+  noAjaxLinkAttr: "no-ajax-link",
+  noPrefetchAttr: "no-prefetch",
+  headers: [
+    ["x-partial", "true"]
+  ],
+  preventSelfAttr: `prevent="self"`,
+  preventAllAttr: `prevent="all"`,
+  transitionAttr: "transition",
+  blockAttr: `block`,
+  timeout: 3e4
+};
+var newConfig = (config) => {
+  return Object.assign({...CONFIG_DEFAULTS}, config);
+};
+var toAttr = (config, value, brackets = true) => {
+  let {prefix} = config;
+  let attr = `data${prefix ? "-" + prefix : ""}-${value}`;
+  return brackets ? `[${attr}]` : attr;
+};
+var getConfig = (config, value, brackets = true) => {
+  if (typeof value !== "string")
+    return config;
+  let prop = config[value];
+  if (typeof prop === "string")
+    return toAttr(config, prop, brackets);
+  return prop;
+};
+
+// packages/manager/src/api.ts
+var Manager = class {
+  constructor(value) {
+    this.map = new Map(value);
+  }
+  getMap() {
+    return this.map;
+  }
+  get(key) {
+    return this.map.get(key);
+  }
+  keys() {
+    return Array.from(this.map.keys());
+  }
+  values() {
+    return Array.from(this.map.values());
+  }
+  set(key, value) {
+    this.map.set(key, value);
+    return this;
+  }
+  add(value) {
+    let size = this.size;
+    let num = size;
+    this.set(num, value);
+    return this;
+  }
+  get size() {
+    return this.map.size;
+  }
+  get length() {
+    return this.map.size;
+  }
+  last(distance = 1) {
+    let key = this.keys()[this.size - distance];
+    return this.get(key);
+  }
+  delete(key) {
+    return this.map.delete(key);
+  }
+  remove(key) {
+    this.map.delete(key);
+    return this;
+  }
+  clear() {
+    this.map.clear();
+    return this;
+  }
+  has(key) {
+    return this.map.has(key);
+  }
+  entries() {
+    return this.map.entries();
+  }
+  forEach(callback, context) {
+    this.map.forEach(callback, context);
+    return this;
+  }
+  [Symbol.iterator]() {
+    return this.entries();
+  }
+};
+var methodCall = (manager, method, ...args) => {
+  manager.forEach((item) => {
+    item[method](...args);
+  });
+};
+
+// packages/native/src/manager.ts
+var ManagerItem = class {
+  constructor() {
+  }
+  install() {
+  }
+  register(manager, key) {
+    this.manager = manager;
+    this.app = manager.app;
+    this.config = manager.config;
+    this.emitter = manager.emitter;
+    this.key = key;
+    this.install();
+    return this;
+  }
+  uninstall() {
+  }
+  unregister() {
+    this.uninstall();
+    this.manager.remove(this.key);
+    this.key = void 0;
+    this.manager = void 0;
+    this.app = void 0;
+    this.config = void 0;
+    this.emitter = void 0;
+  }
+};
+var AdvancedManager = class extends Manager {
+  constructor(app2) {
+    super();
+    this.app = app2;
+    this.config = app2.config;
+    this.emitter = app2.emitter;
+  }
+  set(key, value) {
+    super.set(key, value);
+    value.register(this, key);
+    return this;
+  }
+};
+
+// packages/native/src/url.ts
+var newURL = (url = window.location.href) => {
+  return url instanceof URL ? url : new URL(url, window.location.origin);
+};
+var getHashedPath = (url) => `${url.pathname}${url.hash}`;
+var clean = (url) => url.toString().replace(/(\/#.*|\/|#.*)$/, "");
+var equal = (a, b) => {
+  let urlA = newURL(a);
+  let urlB = newURL(b);
+  return clean(urlA) === clean(urlB);
+};
+
+// packages/native/src/service.ts
+var Service = class extends ManagerItem {
+  init() {
+  }
+  boot() {
+    this.initEvents();
+  }
+  initEvents() {
+  }
+  stopEvents() {
+  }
+  stop() {
+    this.stopEvents();
+    this.unregister();
+  }
+};
+var ServiceManager = class extends AdvancedManager {
+  constructor(app2) {
+    super(app2);
+  }
+  init() {
+    methodCall(this, "init");
+    return this;
+  }
+  boot() {
+    methodCall(this, "boot");
+    return this;
+  }
+  stop() {
+    methodCall(this, "stop");
+    return this;
+  }
+};
+
+// packages/native/src/history.ts
+var newCoords = (x = window.scrollX, y = window.scrollY) => ({x, y});
+var newState = (state = {
+  url: getHashedPath(newURL()),
+  index: 0,
+  transition: "default",
+  data: {
+    scroll: newCoords(),
+    trigger: "HistoryManager"
+  }
+}) => state;
+var HistoryManager = class extends Service {
+  constructor() {
+    super(...arguments);
+    this.pointer = -1;
+  }
+  init() {
+    this.states = [];
+    let state = newState();
+    this.add(state, "replace");
+  }
+  get(index) {
+    return this.states[index];
+  }
+  add(value, historyAction = "push") {
+    let state = newState(value);
+    let len = this.length;
+    this.states.push({...state});
+    this.pointer = len;
+    let item = {
+      index: this.pointer,
+      states: [...this.states]
+    };
+    changeState(historyAction, state, item);
+    return this;
+  }
+  remove(index) {
+    if (index) {
+      this.states.splice(index, 1);
+    } else {
+      this.states.pop();
+    }
+    this.pointer--;
+    return this;
+  }
+  replace(newStates) {
+    this.states = newStates;
+    return this;
+  }
+  set(i, state) {
+    return this.states[i] = state;
+  }
+  get current() {
+    return this.get(this.pointer);
+  }
+  get last() {
+    return this.get(this.length - 1);
+  }
+  get previous() {
+    return this.pointer < 1 ? null : this.get(this.pointer - 1);
+  }
+  get length() {
+    return this.states.length;
+  }
+};
+var changeState = (action, state, item) => {
+  let href = getHashedPath(newURL(state.url));
+  let args = [item, "", href];
+  if (window.history) {
+    switch (action) {
+      case "push":
+        window.history.pushState.apply(window.history, args);
+        break;
+      case "replace":
+        window.history.replaceState.apply(window.history, args);
+        break;
+    }
+  }
+};
+
+// packages/native/src/page.ts
+var PARSER = new DOMParser();
+var Page = class extends ManagerItem {
+  constructor(url = newURL(), dom = document) {
+    super();
+    this.url = url;
+    if (typeof dom === "string") {
+      this.data = dom;
+    } else
+      this.dom = dom || document;
+  }
+  build() {
+    if (!(this.dom instanceof Node)) {
+      this.dom = PARSER.parseFromString(this.data, "text/html");
+    }
+    if (!(this.body instanceof Node)) {
+      let {title, head, body} = this.dom;
+      this.title = title;
+      this.head = head;
+      this.body = body;
+      this.wrapper = this.body.querySelector(this.wrapperAttr);
+    }
+  }
+  install() {
+    this.wrapperAttr = getConfig(this.config, "wrapperAttr");
+  }
+  uninstall() {
+    this.url = void 0;
+    this.title = void 0;
+    this.head = void 0;
+    this.body = void 0;
+    this.dom = void 0;
+    this.wrapper = void 0;
+    this.data = void 0;
+    this.wrapperAttr = void 0;
+  }
+};
+var PageManager = class extends Service {
+  constructor() {
+    super(...arguments);
+    this.loading = new Manager();
+  }
+  install() {
+    var _a;
+    this.pages = new AdvancedManager(this.app);
+    this.maxPages = (_a = this.config.maxPages) != null ? _a : 5;
+    let URLString = newURL().pathname;
+    this.set(URLString, new Page());
+    URLString = void 0;
+  }
+  get(key) {
+    return this.pages.get(key);
+  }
+  add(value) {
+    this.pages.add(value);
+    return this;
+  }
+  set(key, value) {
+    this.pages.set(key, value);
+    return this;
+  }
+  remove(key) {
+    this.pages.remove(key);
+    return this;
+  }
+  has(key) {
+    return this.pages.has(key);
+  }
+  clear() {
+    this.pages.clear();
+    return this;
+  }
+  get size() {
+    return this.pages.size;
+  }
+  keys() {
+    return this.pages.keys();
+  }
+  async load(_url = newURL()) {
+    let url = newURL(_url);
+    let urlString = url.pathname;
+    let page, request;
+    if (this.has(urlString)) {
+      page = this.get(urlString);
+      return Promise.resolve(page);
+    }
+    if (!this.loading.has(urlString)) {
+      request = this.request(urlString);
+      this.loading.set(urlString, request);
+    } else
+      request = this.loading.get(urlString);
+    let response = await request;
+    this.loading.remove(urlString);
+    page = new Page(url, response);
+    this.set(urlString, page);
+    if (this.size > this.maxPages) {
+      let currentUrl = newURL();
+      let keys = this.keys();
+      let first = equal(currentUrl, keys[0]) ? keys[1] : keys[0];
+      let page2 = this.get(first);
+      page2.unregister();
+      page2 = void 0;
+      keys = void 0;
+      currentUrl = void 0;
+      first = void 0;
+    }
+    return page;
+  }
+  async request(url) {
+    const headers = new Headers(getConfig(this.config, "headers"));
+    const timeout = window.setTimeout(() => {
+      window.clearTimeout(timeout);
+      throw "Request Timed Out!";
+    }, getConfig(this.config, "timeout"));
+    try {
+      let response = await fetch(url, {
+        mode: "same-origin",
+        method: "GET",
+        headers,
+        cache: "default",
+        credentials: "same-origin"
+      });
+      window.clearTimeout(timeout);
+      if (response.status >= 200 && response.status < 300) {
+        return await response.text();
+      }
+      const err = new Error(response.statusText || "" + response.status);
+      throw err;
+    } catch (err) {
+      window.clearTimeout(timeout);
+      throw err;
+    }
+  }
+};
+
+// packages/emitter/src/api.ts
+var newListener = ({
+  callback = () => {
+  },
+  scope = null,
+  name = "event"
+}) => ({callback, scope, name});
+var Event = class extends Manager {
+  constructor(name = "event") {
+    super();
+    this.name = name;
+  }
+};
+var EventEmitter = class extends Manager {
+  constructor() {
+    super();
+  }
+  getEvent(name) {
+    let event = this.get(name);
+    if (!(event instanceof Event)) {
+      this.set(name, new Event(name));
+      return this.get(name);
+    }
+    return event;
+  }
+  newListener(name, callback, scope) {
+    let event = this.getEvent(name);
+    event.add(newListener({name, callback, scope}));
+    return event;
+  }
+  on(events, callback, scope) {
+    if (typeof events == "undefined")
+      return this;
+    if (typeof events == "string")
+      events = events.trim().split(/\s/g);
+    let _name;
+    let _callback;
+    let isObject = typeof events == "object" && !Array.isArray(events);
+    let _scope = isObject ? callback : scope;
+    if (!isObject)
+      _callback = callback;
+    Object.keys(events).forEach((key) => {
+      if (isObject) {
+        _name = key;
+        _callback = events[key];
+      } else {
+        _name = events[key];
+      }
+      this.newListener(_name, _callback, _scope);
+    }, this);
+    return this;
+  }
+  removeListener(name, callback, scope) {
+    let event = this.get(name);
+    if (event instanceof Event && callback) {
+      let listener = newListener({name, callback, scope});
+      event.forEach((value, i) => {
+        if (value.callback === listener.callback && value.scope === listener.scope) {
+          return event.remove(i);
+        }
+      });
+    }
+    return event;
+  }
+  off(events, callback, scope) {
+    if (typeof events == "undefined")
+      return this;
+    if (typeof events == "string")
+      events = events.trim().split(/\s/g);
+    let _name;
+    let _callback;
+    let isObject = typeof events == "object" && !Array.isArray(events);
+    let _scope = isObject ? callback : scope;
+    if (!isObject)
+      _callback = callback;
+    Object.keys(events).forEach((key) => {
+      if (isObject) {
+        _name = key;
+        _callback = events[key];
+      } else {
+        _name = events[key];
+      }
+      if (typeof _callback === "function") {
+        this.removeListener(_name, _callback, _scope);
+      } else
+        this.remove(_name);
+    }, this);
+    return this;
+  }
+  emit(events, ...args) {
+    if (typeof events == "undefined")
+      return this;
+    if (typeof events == "string")
+      events = events.trim().split(/\s/g);
+    events.forEach((event) => {
+      let _event = this.get(event);
+      if (_event instanceof Event) {
+        _event.forEach((listener) => {
+          let {callback, scope} = listener;
+          callback.apply(scope, args);
+        });
+      }
+    }, this);
+    return this;
+  }
+  clear() {
+    methodCall(this, "clear");
+    super.clear();
+    return this;
+  }
+};
+
+// packages/native/src/transition.ts
+var hashAction = (coords, hash = window.location.hash) => {
+  try {
+    let _hash = hash[0] == "#" ? hash : newURL(hash).hash;
+    if (_hash.length > 1) {
+      let el = document.getElementById(_hash.slice(1));
+      if (el) {
+        return newCoords(el.offsetLeft, el.offsetTop);
+      }
+    }
+  } catch (e) {
+    console.warn("[hashAction] error", e);
+  }
+  return coords != null ? coords : newCoords(0, 0);
+};
+var Default = {
+  name: "default",
+  scrollable: true,
+  out({done}) {
+    done();
+  },
+  in({scroll, done}) {
+    window.scroll(scroll.x, scroll.y);
+    done();
+  }
+};
+var TransitionManager = class extends Service {
+  constructor(transitions) {
+    super();
+    this._arg = transitions;
+  }
+  install() {
+    var _a;
+    super.install();
+    let transitions = this._arg && this._arg.length ? this._arg : (_a = getConfig(this.config, "transitions")) != null ? _a : [];
+    transitions = [["default", Default]].concat(transitions);
+    this.transitions = new Manager(transitions);
+  }
+  get(key) {
+    return this.transitions.get(key);
+  }
+  set(key, value) {
+    this.transitions.set(key, value);
+    return this;
+  }
+  add(value) {
+    this.transitions.add(value);
+    return this;
+  }
+  has(key) {
+    return this.transitions.has(key);
+  }
+  async animate(name, data) {
+    let transition = this.transitions.get(name);
+    let scroll = data.scroll;
+    let ignoreHashAction = data.ignoreHashAction;
+    if (!("wrapper" in data.oldPage) || !("wrapper" in data.newPage))
+      throw `[Page] either oldPage or newPage aren't instances of the Page Class.
+ ${{
+        newPage: data.newPage,
+        oldPage: data.oldPage
+      }}`;
+    document.title = `` + data.newPage.title;
+    let fromWrapper = data.oldPage.wrapper;
+    let toWrapper = data.newPage.wrapper;
+    if (!(fromWrapper instanceof Node) || !(toWrapper instanceof Node))
+      throw `[Wrapper] the wrapper from the ${!(toWrapper instanceof Node) ? "next" : "current"} page cannot be found. The wrapper must be an element that has the attribute ${getConfig(this.config, "wrapperAttr")}.`;
+    transition.init && (transition == null ? void 0 : transition.init(data));
+    this.emitter.emit("BEFORE_TRANSITION_OUT");
+    if (transition.out) {
+      await new Promise((done) => {
+        let outMethod = transition.out.call(transition, {
+          ...data,
+          from: data.oldPage,
+          trigger: data.trigger,
+          done
+        });
+        outMethod == null ? void 0 : outMethod.then(done);
+      });
+    }
+    this.emitter.emit("AFTER_TRANSITION_OUT");
+    await new Promise((done) => {
+      fromWrapper.insertAdjacentElement("beforebegin", toWrapper);
+      this.emitter.emit("CONTENT_INSERT");
+      if (!ignoreHashAction && !/back|popstate|forward/.test(data.trigger)) {
+        scroll = hashAction(scroll);
+      }
+      done();
+    });
+    await new Promise((done) => {
+      fromWrapper.remove();
+      fromWrapper = void 0;
+      toWrapper = void 0;
+      this.emitter.emit("CONTENT_REPLACED");
+      done();
+    });
+    this.emitter.emit("BEFORE_TRANSITION_IN");
+    if (transition.in) {
+      await new Promise(async (done) => {
+        let inMethod = transition.in.call(transition, {
+          ...data,
+          from: data.oldPage,
+          to: data.newPage,
+          trigger: data.trigger,
+          scroll,
+          done
+        });
+        inMethod == null ? void 0 : inMethod.then(done);
+      });
+    }
+    this.emitter.emit("AFTER_TRANSITION_IN");
+    return transition;
+  }
+};
+
+// packages/native/src/app.ts
+var App = class {
+  constructor(config = {}) {
+    this.register(config);
+  }
+  register(config = {}) {
+    this.config = newConfig(config);
+    this.emitter = new EventEmitter();
+    this.services = new ServiceManager(this);
+    let handler = (() => {
+      document.removeEventListener("DOMContentLoaded", handler);
+      window.removeEventListener("load", handler);
+      this.emitter.emit("READY ready");
+    }).bind(this);
+    document.addEventListener("DOMContentLoaded", handler);
+    window.addEventListener("load", handler);
+    return this;
+  }
+  get(key) {
+    return this.services.get(key);
+  }
+  set(key, value) {
+    this.services.set(key, value);
+    return this;
+  }
+  add(value) {
+    this.services.add(value);
+    return this;
+  }
+  boot() {
+    this.services.init();
+    this.services.boot();
+    return this;
+  }
+  stop() {
+    this.services.stop();
+    this.emitter.clear();
+    return this;
+  }
+  on(events, callback) {
+    this.emitter.on(events, callback, this);
+    return this;
+  }
+  off(events, callback) {
+    this.emitter.off(events, callback, this);
+    return this;
+  }
+  emit(events, ...args) {
+    this.emitter.emit(events, ...args);
+    return this;
+  }
+};
+
+// packages/native/src/pjax.ts
+var PJAX = class extends Service {
+  install() {
+    var _a, _b, _c, _d, _e, _f;
+    super.install();
+    this.ignoreURLs = (_a = getConfig(this.config, "ignoreURLs")) != null ? _a : [];
+    this.prefetchIgnore = (_b = getConfig(this.config, "prefetchIgnore")) != null ? _b : false;
+    this.stopOnTransitioning = (_c = getConfig(this.config, "stopOnTransitioning")) != null ? _c : false;
+    this.stickyScroll = (_d = getConfig(this.config, "stickyScroll")) != null ? _d : false;
+    this.forceOnError = (_e = getConfig(this.config, "forceOnError")) != null ? _e : false;
+    this.ignoreHashAction = (_f = getConfig(this.config, "ignoreHashAction")) != null ? _f : false;
+  }
+  transitionStart() {
+    this.isTransitioning = true;
+  }
+  transitionStop() {
+    this.isTransitioning = false;
+  }
+  init() {
+    this.onHover = this.onHover.bind(this);
+    this.onClick = this.onClick.bind(this);
+    this.onStateChange = this.onStateChange.bind(this);
+  }
+  boot() {
+    if ("scrollRestoration" in window.history) {
+      window.history.scrollRestoration = "manual";
+    }
+    super.boot();
+  }
+  getTransitionName(el) {
+    if (!el || !el.getAttribute)
+      return null;
+    let transitionAttr = el.getAttribute(getConfig(this.config, "transitionAttr", false));
+    if (typeof transitionAttr === "string")
+      return transitionAttr;
+    return null;
+  }
+  validLink(el, event, href) {
+    let pushStateSupport = !window.history.pushState;
+    let exists = !el || !href;
+    let eventMutate = event.metaKey || event.ctrlKey || event.shiftKey || event.altKey;
+    let newTab = el.hasAttribute("target") && el.target === "_blank";
+    let crossOrigin = el.protocol !== location.protocol || el.hostname !== location.hostname;
+    let download = typeof el.getAttribute("download") === "string";
+    let preventSelf = el.matches(getConfig(this.config, "preventSelfAttr"));
+    let preventAll = Boolean(el.closest(getConfig(this.config, "preventAllAttr")));
+    let sameURL = getHashedPath(newURL()) === getHashedPath(newURL(href));
+    return !(exists || pushStateSupport || eventMutate || newTab || crossOrigin || download || preventSelf || preventAll || sameURL);
+  }
+  getHref(el) {
+    if (el && el.tagName && el.tagName.toLowerCase() === "a" && typeof el.href === "string")
+      return el.href;
+    return null;
+  }
+  getLink(event) {
+    let el = event.target;
+    let href = this.getHref(el);
+    while (el && !href) {
+      el = el.parentNode;
+      href = this.getHref(el);
+    }
+    if (!el || !this.validLink(el, event, href))
+      return;
+    return el;
+  }
+  onClick(event) {
+    let el = this.getLink(event);
+    if (!el)
+      return;
+    if (this.isTransitioning && this.stopOnTransitioning) {
+      event.preventDefault();
+      event.stopPropagation();
+      return;
+    }
+    let href = this.getHref(el);
+    this.emitter.emit("ANCHOR_CLICK CLICK", event);
+    this.go({href, trigger: el, event});
+  }
+  getDirection(value) {
+    if (Math.abs(value) > 1) {
+      return value > 0 ? "forward" : "back";
+    } else {
+      if (value === 0) {
+        return "popstate";
+      } else {
+        return value > 0 ? "back" : "forward";
+      }
+    }
+  }
+  force(href) {
+    window.location.assign(href);
+  }
+  go({
+    href,
+    trigger = "HistoryManager",
+    event
+  }) {
+    if (this.isTransitioning && this.stopOnTransitioning || !(this.manager.has("TransitionManager") && this.manager.has("HistoryManager") && this.manager.has("PageManager"))) {
+      this.force(href);
+      return;
+    }
+    const history = this.manager.get("HistoryManager");
+    let scroll = newCoords(0, 0);
+    let currentState = history.current;
+    let currentURL = currentState.url;
+    if (equal(currentURL, href)) {
+      return;
+    }
+    let transitionName;
+    if (event && event.state) {
+      this.emitter.emit("POPSTATE", event);
+      let {state} = event;
+      let {index} = state;
+      let currentIndex = currentState.index;
+      let difference = currentIndex - index;
+      let _state = history.get(history.pointer);
+      transitionName = _state.transition;
+      scroll = _state.data.scroll;
+      history.replace(state.states);
+      history.pointer = index;
+      trigger = this.getDirection(difference);
+      this.emitter.emit(trigger === "back" ? `POPSTATE_BACK` : `POPSTATE_FORWARD`, event);
+    } else {
+      transitionName = this.getTransitionName(trigger);
+      scroll = newCoords();
+      let state = newState({
+        url: href,
+        transition: transitionName,
+        data: {scroll}
+      });
+      !this.stickyScroll && (scroll = newCoords(0, 0));
+      history.add(state);
+      this.emitter.emit("HISTORY_NEW_ITEM", event);
+    }
+    if (event) {
+      event.stopPropagation();
+      event.preventDefault();
+    }
+    this.emitter.emit("GO", event);
+    return this.load({
+      oldHref: currentURL,
+      href,
+      trigger,
+      transitionName,
+      scroll
+    });
+  }
+  async load({
+    oldHref,
+    href,
+    trigger,
+    transitionName = "default",
+    scroll = {x: 0, y: 0}
+  }) {
+    try {
+      const pages = this.manager.get("PageManager");
+      let newPage, oldPage;
+      this.emitter.emit("NAVIGATION_START", {
+        oldHref,
+        href,
+        trigger,
+        transitionName
+      });
+      try {
+        this.transitionStart();
+        oldPage = await pages.load(oldHref);
+        !(oldPage.dom instanceof Element) && oldPage.build();
+        this.emitter.emit("PAGE_LOADING", {href, oldPage, trigger});
+        newPage = await pages.load(href);
+        await newPage.build();
+        this.emitter.emit("PAGE_LOAD_COMPLETE", {
+          newPage,
+          oldPage,
+          trigger
+        });
+      } catch (err) {
+        throw `[PJAX] page load error: ${err}`;
+      }
+      try {
+        const TransitionManager2 = this.manager.get("TransitionManager");
+        this.emitter.emit("TRANSITION_START", transitionName);
+        let transition = await TransitionManager2.animate(TransitionManager2.has(transitionName) ? transitionName : "default", {
+          oldPage,
+          newPage,
+          trigger,
+          scroll,
+          ignoreHashAction: this.ignoreHashAction
+        });
+        if (!transition.scrollable) {
+          if (!this.ignoreHashAction && !/back|popstate|forward/.test(trigger))
+            scroll = hashAction(scroll);
+          window.scroll(scroll.x, scroll.y);
+        }
+        this.emitter.emit("TRANSITION_END", {transition});
+      } catch (err) {
+        throw `[PJAX] transition error: ${err}`;
+      }
+      this.emitter.emit("NAVIGATION_END", {
+        oldPage,
+        newPage,
+        trigger,
+        transitionName
+      });
+    } catch (err) {
+      if (this.forceOnError)
+        this.force(href);
+      else
+        console.warn(err);
+    } finally {
+      this.transitionStop();
+    }
+  }
+  ignoredURL({pathname}) {
+    return this.ignoreURLs.length && this.ignoreURLs.some((url) => {
+      return typeof url === "string" ? url === pathname : url.exec(pathname) !== null;
+    });
+  }
+  onHover(event) {
+    let el = this.getLink(event);
+    if (!el || !this.manager.has("PageManager"))
+      return;
+    const pages = this.manager.get("PageManager");
+    let url = newURL(this.getHref(el));
+    let urlString = url.pathname;
+    if (this.ignoredURL(url) || pages.has(urlString))
+      return;
+    this.emitter.emit("ANCHOR_HOVER HOVER", event);
+    try {
+      pages.load(url);
+    } catch (err) {
+      console.warn("[PJAX] prefetch error,", err);
+    }
+  }
+  onStateChange(event) {
+    this.go({href: window.location.href, trigger: "popstate", event});
+  }
+  initEvents() {
+    if (this.prefetchIgnore !== true) {
+      document.addEventListener("mouseover", this.onHover);
+      document.addEventListener("touchstart", this.onHover);
+    }
+    document.addEventListener("click", this.onClick);
+    window.addEventListener("popstate", this.onStateChange);
+  }
+  stopEvents() {
+    if (this.prefetchIgnore !== true) {
+      document.removeEventListener("mouseover", this.onHover);
+      document.removeEventListener("touchstart", this.onHover);
+    }
+    document.removeEventListener("click", this.onClick);
+    window.removeEventListener("popstate", this.onStateChange);
+  }
+};
+
+// packages/native/src/router.ts
+var Router = class extends Service {
+  constructor(routes = []) {
+    super();
+    this.routes = new Manager();
+    for (let route of routes) {
+      this.add(route);
+    }
+  }
+  add({path, method}) {
+    let key = this.parse(path);
+    this.routes.set(key, method);
+    return this;
+  }
+  parsePath(path) {
+    if (typeof path === "string")
+      return new RegExp(path, "i");
+    else if (path instanceof RegExp || typeof path === "boolean")
+      return path;
+    throw "[Router] only regular expressions, strings and booleans are accepted as paths.";
+  }
+  isPath(input) {
+    return typeof input === "string" || input instanceof RegExp || typeof input === "boolean";
+  }
+  parse(input) {
+    let route = input;
+    let toFromPath = {
+      from: /(.*)/g,
+      to: /(.*)/g
+    };
+    if (this.isPath(input))
+      toFromPath = {
+        from: true,
+        to: input
+      };
+    else if (this.isPath(route.from) && this.isPath(route.to))
+      toFromPath = route;
+    else
+      throw "[Router] path is neither a string, regular expression, or a { from, to } object.";
+    let {from, to} = toFromPath;
+    return {
+      from: this.parsePath(from),
+      to: this.parsePath(to)
+    };
+  }
+  route() {
+    if (this.manager.has("HistoryManager")) {
+      let history = this.manager.get("HistoryManager");
+      let from = getHashedPath(newURL((history.length > 1 ? history.previous : history.current).url));
+      let to = getHashedPath(newURL());
+      this.routes.forEach((method, path) => {
+        let fromRegExp = path.from;
+        let toRegExp = path.to;
+        if (typeof fromRegExp === "boolean" && typeof toRegExp === "boolean") {
+          throw `[Router] path ({ from: ${fromRegExp}, to: ${toRegExp} }) is not valid, remember paths can only be strings, regular expressions, or a boolean; however, both the from and to paths cannot be both booleans.`;
+        }
+        let fromParam = fromRegExp;
+        let toParam = toRegExp;
+        if (fromRegExp instanceof RegExp && fromRegExp.test(from))
+          fromParam = fromRegExp.exec(from);
+        if (toRegExp instanceof RegExp && toRegExp.test(to))
+          toParam = toRegExp.exec(to);
+        if (Array.isArray(toParam) && Array.isArray(fromParam) || Array.isArray(toParam) && typeof fromParam == "boolean" && fromParam || Array.isArray(fromParam) && typeof toParam == "boolean" && toParam)
+          method({from: fromParam, to: toParam, path: {from, to}});
+      });
+    } else {
+      console.warn("[Route] HistoryManager is missing.");
+    }
+  }
+  initEvents() {
+    this.emitter.on("READY", this.route, this);
+    this.emitter.on("CONTENT_REPLACED", this.route, this);
+  }
+  stopEvents() {
+    this.emitter.off("READY", this.route, this);
+    this.emitter.off("CONTENT_REPLACED", this.route, this);
+  }
+};
+
+// packages/animate/src/api.ts
+var getElements = (selector) => {
+  return typeof selector === "string" ? Array.from(document.querySelectorAll(selector)) : [selector];
+};
+var flatten = (arr) => [].concat(...arr);
+var getTargets = (targets) => {
+  if (Array.isArray(targets)) {
+    return flatten(targets.map(getTargets));
+  }
+  if (typeof targets == "string" || targets instanceof Node)
+    return getElements(targets);
+  if (targets instanceof NodeList || targets instanceof HTMLCollection)
+    return Array.from(targets);
+  return [];
+};
+var computeValue = (value, args, context) => {
+  if (typeof value === "function") {
+    return value.apply(context, args);
+  } else {
+    return value;
+  }
+};
+var mapObject = (obj, args, options) => {
+  let key, value, result = {};
+  let keys = Object.keys(obj);
+  for (let i = 0, len = keys.length; i < len; i++) {
+    key = keys[i];
+    value = obj[key];
+    result[key] = computeValue(value, args, options);
+  }
+  return result;
+};
+var easings = {
+  in: "ease-in",
+  out: "ease-out",
+  "in-out": "ease-in-out",
+  "in-sine": "cubic-bezier(0.47, 0, 0.745, 0.715)",
+  "out-sine": "cubic-bezier(0.39, 0.575, 0.565, 1)",
+  "in-out-sine": "cubic-bezier(0.445, 0.05, 0.55, 0.95)",
+  "in-quad": "cubic-bezier(0.55, 0.085, 0.68, 0.53)",
+  "out-quad": "cubic-bezier(0.25, 0.46, 0.45, 0.94)",
+  "in-out-quad": "cubic-bezier(0.455, 0.03, 0.515, 0.955)",
+  "in-cubic": "cubic-bezier(0.55, 0.055, 0.675, 0.19)",
+  "out-cubic": "cubic-bezier(0.215, 0.61, 0.355, 1)",
+  "in-out-cubic": "cubic-bezier(0.645, 0.045, 0.355, 1)",
+  "in-quart": "cubic-bezier(0.895, 0.03, 0.685, 0.22)",
+  "out-quart": "cubic-bezier(0.165, 0.84, 0.44, 1)",
+  "in-out-quart": "cubic-bezier(0.77, 0, 0.175, 1)",
+  "in-quint": "cubic-bezier(0.755, 0.05, 0.855, 0.06)",
+  "out-quint": "cubic-bezier(0.23, 1, 0.32, 1)",
+  "in-out-quint": "cubic-bezier(0.86, 0, 0.07, 1)",
+  "in-expo": "cubic-bezier(0.95, 0.05, 0.795, 0.035)",
+  "out-expo": "cubic-bezier(0.19, 1, 0.22, 1)",
+  "in-out-expo": "cubic-bezier(1, 0, 0, 1)",
+  "in-circ": "cubic-bezier(0.6, 0.04, 0.98, 0.335)",
+  "out-circ": "cubic-bezier(0.075, 0.82, 0.165, 1)",
+  "in-out-circ": "cubic-bezier(0.785, 0.135, 0.15, 0.86)",
+  "in-back": "cubic-bezier(0.6, -0.28, 0.735, 0.045)",
+  "out-back": "cubic-bezier(0.175, 0.885, 0.32, 1.275)",
+  "in-out-back": "cubic-bezier(0.68, -0.55, 0.265, 1.55)"
+};
+var getEase = (ease) => {
+  return /^(in|out)/.test(ease) ? easings[ease] : ease;
+};
+var DefaultAnimationOptions = {
+  keyframes: [],
+  loop: 1,
+  delay: 0,
+  speed: 1,
+  endDelay: 0,
+  easing: "ease",
+  autoplay: true,
+  duration: 1e3,
+  fillMode: "auto",
+  direction: "normal",
+  extend: {}
+};
+var Animate = class {
+  constructor(options = {}) {
+    this.options = {};
+    this.targets = [];
+    this.properties = {};
+    this.animations = new Manager();
+    this.totalDuration = 0;
+    this.minDelay = 0;
+    this.computedOptions = new Manager();
+    this.emitter = new EventEmitter();
+    var _a;
+    try {
+      let {options: animation, ...rest} = options;
+      let oldOptions = animation instanceof Animate ? animation.getOptions() : Array.isArray(animation) ? (_a = animation == null ? void 0 : animation[0]) == null ? void 0 : _a.getOptions() : animation;
+      this.options = Object.assign({}, DefaultAnimationOptions, oldOptions, rest);
+      this.loop = this.loop.bind(this);
+      let {
+        loop,
+        delay,
+        speed,
+        easing,
+        endDelay,
+        duration,
+        direction,
+        fillMode,
+        onfinish,
+        target,
+        keyframes,
+        autoplay,
+        extend,
+        ...properties
+      } = this.options;
+      this.mainElement = document.createElement("div");
+      this.targets = getTargets(target);
+      this.properties = properties;
+      let delays = [];
+      let len = this.targets.length;
+      let animationKeyframe;
+      for (let i = 0; i < len; i++) {
+        let target2 = this.targets[i];
+        let animationOptions = {
+          easing: typeof easing == "string" ? getEase(easing) : easing,
+          iterations: loop === true ? Infinity : loop,
+          direction,
+          endDelay,
+          duration,
+          delay,
+          fill: fillMode,
+          ...extend
+        };
+        let arrKeyframes = computeValue(keyframes, [i, len, target2], animationOptions);
+        animationKeyframe = arrKeyframes.length ? arrKeyframes : this.properties;
+        animationOptions = mapObject(animationOptions, [i, len, target2], animationOptions);
+        if (!(arrKeyframes.length > 0))
+          animationKeyframe = mapObject(animationKeyframe, [i, len, target2], animationOptions);
+        let tempDurations = animationOptions.delay + animationOptions.duration * animationOptions.iterations + animationOptions.endDelay;
+        if (this.totalDuration < tempDurations)
+          this.totalDuration = tempDurations;
+        let animation2 = target2.animate(animationKeyframe, animationOptions);
+        animation2.onfinish = () => {
+          typeof onfinish == "function" && onfinish.call(this, target2, i, len, animation2);
+          this.emit("finish", target2, i, len, animation2);
+        };
+        this.computedOptions.set(animation2, animationOptions);
+        this.animations.set(target2, animation2);
+        delays.push(animationOptions.delay);
+      }
+      this.mainAnimation = this.mainElement.animate([
+        {opacity: "0"},
+        {opacity: "1"}
+      ], {
+        duration: this.totalDuration,
+        easing: "linear"
+      });
+      this.minDelay = Math.min(...delays);
+      this.setSpeed(speed);
+      if (autoplay)
+        this.play();
+      else
+        this.pause();
+      this.promise = this.newPromise();
+      this.mainAnimation.onfinish = () => {
+        this.emit("complete", this);
+        window.cancelAnimationFrame(this.animationFrame);
+      };
+    } catch (err) {
+      this.emit("error", err);
+    }
+  }
+  newPromise() {
+    return new Promise((resolve, reject) => {
+      this.on("complete", () => resolve([this]));
+      this.on("error", (err) => reject(err));
+    });
+  }
+  then(onFulfilled, onRejected) {
+    onFulfilled = onFulfilled == null ? void 0 : onFulfilled.bind(this);
+    onRejected = onRejected == null ? void 0 : onRejected.bind(this);
+    this.promise.then(onFulfilled, onRejected);
+    return this;
+  }
+  catch(onRejected) {
+    onRejected = onRejected == null ? void 0 : onRejected.bind(this);
+    this.promise.catch(onRejected);
+    return this;
+  }
+  finally(onFinally) {
+    onFinally = onFinally == null ? void 0 : onFinally.bind(this);
+    this.promise.finally(onFinally);
+    return this;
+  }
+  loop() {
+    this.animationFrame = window.requestAnimationFrame(this.loop);
+    this.emit("update", this.getProgress(), this);
+  }
+  all(method) {
+    method(this.mainAnimation);
+    this.animations.forEach((animation) => method(animation));
+    return this;
+  }
+  beginEvent() {
+    if (this.getProgress() == 0) {
+      let timer = window.setTimeout(() => {
+        this.emit("begin", this);
+        timer = window.clearTimeout(timer);
+      }, this.minDelay);
+    }
+  }
+  play() {
+    let playstate = this.getPlayState();
+    if (playstate !== "finished") {
+      this.beginEvent();
+      this.animationFrame = requestAnimationFrame(this.loop);
+      this.all((anim) => anim.playState == "paused" && anim.play());
+      this.emit("play", playstate, this);
+    }
+    return this;
+  }
+  pause() {
+    let playstate = this.getPlayState();
+    if (playstate !== "finished") {
+      this.all((anim) => anim.playState == "running" && anim.pause());
+      window.cancelAnimationFrame(this.animationFrame);
+      this.emit("pause", playstate, this);
+    }
+    return this;
+  }
+  reset() {
+    this.setProgress(0);
+    this.beginEvent();
+    if (this.options.autoplay)
+      this.play();
+    else
+      this.pause();
+    return this;
+  }
+  cancel() {
+    this.all((anim) => anim.cancel());
+    window.cancelAnimationFrame(this.animationFrame);
+    return this;
+  }
+  finish() {
+    this.all((anim) => anim.finish());
+    window.cancelAnimationFrame(this.animationFrame);
+    return this;
+  }
+  stop() {
+    this.cancel();
+    this.animations.clear();
+    while (this.targets.length)
+      this.targets.pop();
+    this.mainElement = void 0;
+    this.emit("stop");
+  }
+  getTargets() {
+    return this.targets;
+  }
+  getAnimation(element) {
+    return this.animations.get(element);
+  }
+  getTiming(target) {
+    var _a, _b, _c;
+    let animation = target instanceof Animation ? target : this.getAnimation(target);
+    let keyframeOptions = (_a = this.computedOptions.get(animation)) != null ? _a : {};
+    let timings = (_c = (_b = animation.effect) == null ? void 0 : _b.getTiming()) != null ? _c : {};
+    let options = this.getOptions();
+    return {...DefaultAnimationOptions, ...options, ...timings, ...keyframeOptions};
+  }
+  getTotalDuration() {
+    return this.totalDuration;
+  }
+  getCurrentTime() {
+    return this.mainAnimation.currentTime;
+  }
+  getProgress() {
+    return this.getCurrentTime() / this.totalDuration * 100;
+  }
+  getSpeed() {
+    return this.mainAnimation.playbackRate;
+  }
+  getPlayState() {
+    return this.mainAnimation.playState;
+  }
+  getOptions() {
+    return this.options;
+  }
+  setCurrentTime(time) {
+    this.all((anim) => {
+      anim.currentTime = time;
+    });
+    this.emit("update", this.getProgress());
+    return this;
+  }
+  setProgress(percent) {
+    let time = percent / 100 * this.totalDuration;
+    this.setCurrentTime(time);
+    return this;
+  }
+  setSpeed(speed = 1) {
+    this.all((anim) => {
+      anim.playbackRate = speed;
+    });
+    return this;
+  }
+  on(events, callback, scope) {
+    this.emitter.on(events, callback, scope != null ? scope : this);
+    return this;
+  }
+  off(events, callback, scope) {
+    this.emitter.off(events, callback, scope != null ? scope : this);
+    return this;
+  }
+  emit(events, ...args) {
+    this.emitter.emit(events, ...args);
+    return this;
+  }
+  toJSON() {
+    return this.getOptions();
+  }
+  get [Symbol.toStringTag]() {
+    return `Animate`;
+  }
+};
+var animate = (options = {}) => {
+  return new Animate(options);
+};
+
+// build/ts/services/Splashscreen.ts
+var Splashscreen = class extends Service {
+  constructor() {
+    super(...arguments);
+    this.minimalDuration = 1e3;
+  }
+  init() {
+    super.init();
+    this.rootElement = document.getElementById("splashscreen");
+    if (this.rootElement) {
+      this.innerEl = this.rootElement.querySelector(".splashscreen-inner");
+      this.bgEl = this.rootElement.querySelector(".splashscreen-bg");
+      this.spinnerEl = [...this.rootElement.querySelectorAll(".spinner")];
+    }
+    this.rootElement.style.visibility = "visible";
+    this.rootElement.style.pointerEvents = "auto";
+  }
+  boot() {
+    if (this.rootElement) {
+      this.hide();
+    }
+  }
+  async hide() {
+    await new Promise((resolve) => {
+      window.setTimeout(() => {
+        this.emitter.emit("BEFORE_SPLASHSCREEN_HIDE");
+        resolve();
+      }, this.minimalDuration);
+    });
+    await new Promise(async (resolve) => {
+      animate({
+        target: this.innerEl,
+        opacity: [1, 0],
+        autoplay: true,
+        duration: 500,
+        onfinish(el) {
+          el.style.opacity = "0";
+        }
+      }).then(function() {
+        this.stop();
+      });
+      this.emitter.emit("START_SPLASHSCREEN_HIDE");
+      await this.show();
+      resolve();
+    });
+  }
+  async show() {
+    let [anim] = await animate({
+      target: this.rootElement,
+      transform: ["translateY(0%)", "translateY(100%)"],
+      duration: 1200,
+      easing: "in-out-cubic"
+    });
+    this.emitter.emit("AFTER_SPLASHSCREEN_HIDE");
+    anim.stop();
+    this.rootElement.style.transform = "translateY(100%)";
+    this.rootElement.style.visibility = "hidden";
+    this.rootElement.style.pointerEvents = "none";
+  }
+};
+
+// build/ts/services/IntroAnimation.ts
+var IntroAnimation = class extends Service {
+  init() {
+    super.init();
+    this.elements = [...document.querySelectorAll(".intro-animation")];
+  }
+  newPage() {
+    this.init();
+    this.prepareToShow();
+  }
+  initEvents() {
+    this.emitter.on("BEFORE_SPLASHSCREEN_HIDE", this.prepareToShow, this);
+    this.emitter.on("CONTENT_REPLACED", this.newPage, this);
+    this.emitter.on("START_SPLASHSCREEN_HIDE BEFORE_TRANSITION_IN", this.show, this);
+  }
+  stopEvents() {
+    this.emitter.off("BEFORE_SPLASHSCREEN_HIDE", this.prepareToShow, this);
+    this.emitter.off("CONTENT_REPLACED", this.newPage, this);
+    this.emitter.off("START_SPLASHSCREEN_HIDE BEFORE_TRANSITION_IN", this.show, this);
+  }
+  stop() {
+    requestAnimationFrame(() => {
+      for (let el of this.elements) {
+        el.style.transform = "translateY(0px)";
+        el.style.opacity = "1";
+      }
+    });
+    super.stop();
+  }
+  prepareToShow() {
+    requestAnimationFrame(() => {
+      for (let el of this.elements) {
+        el.style.transform = "translateY(200px)";
+        el.style.opacity = "0";
+      }
+    });
+  }
+  async show() {
+    let [anim] = await animate({
+      target: this.elements,
+      keyframes: [
+        {transform: "translateY(200px)", opacity: 0},
+        {transform: "translateY(0px)", opacity: 1}
+      ],
+      delay(i) {
+        return 300 * (i + 1);
+      },
+      onfinish(el) {
+        requestAnimationFrame(() => {
+          el.style.transform = "translateY(0px)";
+          el.style.opacity = "1";
+        });
+      },
+      easing: "out-cubic",
+      duration: 650
+    });
+    anim.stop();
+    return anim;
+  }
+};
+
+// build/ts/transitions/Fade.ts
+var Fade = {
+  name: "default",
+  duration: 500,
+  scrollable: true,
+  out({from}) {
+    let {duration} = this;
+    let fromWrapper = from.wrapper;
+    return animate({
+      target: fromWrapper,
+      opacity: [1, 0],
+      duration
+    }).on("finish", function() {
+      this.stop();
+    });
+  },
+  in({to, scroll}) {
+    let {duration} = this;
+    let toWrapper = to.wrapper;
+    window.scroll(scroll.x, scroll.y);
+    return animate({
+      target: toWrapper,
+      opacity: [0, 1],
+      duration
+    }).then(function() {
+      this.stop();
+    });
+  }
+};
+
+// build/ts/transitions/BigTransition.ts
+var BigTransition = {
+  name: "big",
+  delay: 200,
+  durationPerAnimation: 700,
+  scrollable: true,
+  init() {
+    this.mainElement = document.getElementById("big-transition");
+    this.spinnerElement = this.mainElement.querySelector(".spinner");
+    this.horizontalElements = [...this.mainElement.querySelector("#big-transition-horizontal").querySelectorAll("div")];
+    this.maxLength = this.horizontalElements.length;
+  },
+  out({from, scroll}) {
+    let {durationPerAnimation: duration, delay} = this;
+    let fromWrapper = from.wrapper;
+    window.scroll(scroll.x, scroll.y);
+    let wrapperStyle = Object.assign({}, fromWrapper.style);
+    return new Promise(async (resolve) => {
+      this.mainElement.style.opacity = "1";
+      this.mainElement.style.visibility = "visible";
+      let anim1 = animate({
+        target: fromWrapper,
+        opacity: [1, 0],
+        duration,
+        onfinish(el) {
+          el.style.opacity = "0";
+        }
+      });
+      anim1.then(function() {
+        this.stop();
+      });
+      let [anim2] = await animate({
+        target: this.horizontalElements,
+        keyframes: [
+          {transform: "scaleX(0)"},
+          {transform: "scaleX(1)"}
+        ],
+        delay(i) {
+          return delay * (i + 1);
+        },
+        onfinish(el) {
+          el.style.transform = `scaleX(1)`;
+        },
+        easing: "out-cubic",
+        duration: 500
+      });
+      fromWrapper.style.opacity = "1";
+      Object.assign(fromWrapper.style, wrapperStyle);
+      this.spinnerElement.style.visibility = "visible";
+      let loaderDuration = 500;
+      let [anim3] = await animate({
+        target: this.spinnerElement,
+        opacity: [0, 1],
+        duration: loaderDuration,
+        onfinish(el) {
+          el.style.opacity = `1`;
+        }
+      });
+      let [anim4] = await animate({
+        options: anim3,
+        opacity: [1, 0],
+        onfinish(el) {
+          el.style.opacity = `0`;
+        },
+        delay: 1500
+      });
+      this.spinnerElement.style.visibility = "hidden";
+      anim3.stop();
+      anim4.stop();
+      resolve();
+    });
+  },
+  in({to, scroll}) {
+    let {durationPerAnimation: duration, delay} = this;
+    let toWrapper = to.wrapper;
+    window.scroll(scroll.x, scroll.y);
+    return new Promise(async (resolve) => {
+      let anim1 = animate({
+        target: toWrapper,
+        opacity: [0, 1],
+        duration
+      }).then(() => {
+        anim1.stop();
+      });
+      let [anim2] = await animate({
+        target: this.horizontalElements,
+        keyframes: [
+          {transform: "scaleX(1)"},
+          {transform: "scaleX(0)"}
+        ],
+        delay(i) {
+          return delay * (i + 1);
+        },
+        onfinish(el) {
+          el.style.transform = `scaleX(0)`;
+        },
+        easing: "out-cubic",
+        duration: 500
+      });
+      this.mainElement.style.opacity = "0";
+      this.mainElement.style.visibility = "hidden";
+      anim2.stop();
+      resolve();
+    });
+  }
+};
+
+// build/ts/transitions/Slide.ts
+var Slide = {
+  name: "slide",
+  duration: 500,
+  direction: "right",
+  scrollable: true,
+  init(data) {
+    let trigger = data.trigger;
+    if (trigger instanceof Node && trigger.hasAttribute("data-direction")) {
+      this.direction = trigger.getAttribute("data-direction");
+    } else {
+      this.direction = "right";
+    }
+  },
+  out({from}) {
+    let {duration, direction} = this;
+    let fromWrapper = from.wrapper;
+    return animate({
+      target: fromWrapper,
+      keyframes: [
+        {transform: "translateX(0%)", opacity: 1},
+        {transform: `translateX(${direction === "left" ? "-" : ""}25%)`, opacity: 0}
+      ],
+      duration,
+      easing: "in-quint"
+    }).then(function() {
+      this.stop();
+    });
+  },
+  in({to, scroll}) {
+    let {duration} = this;
+    let toWrapper = to.wrapper;
+    window.scroll(scroll.x, scroll.y);
+    return animate({
+      target: toWrapper,
+      keyframes: [
+        {transform: `translateX(${this.direction === "right" ? "-" : ""}25%)`, opacity: 0},
+        {transform: "translateX(0%)", opacity: 1}
+      ],
+      duration,
+      easing: "out-quint"
+    }).then(function() {
+      this.stop();
+    });
+  }
+};
+var SlideLeft = {
+  ...Slide,
+  name: "slide-left",
+  direction: "left"
+};
+var SlideRight = {
+  ...Slide,
+  name: "slide-right",
+  direction: "right"
+};
+
+// build/ts/main.ts
+var splashscreen;
+var router;
+var pjax;
+var app = new App();
+app.add(new IntroAnimation()).add(splashscreen = new Splashscreen()).set("HistoryManager", new HistoryManager()).set("PageManager", new PageManager()).set("TransitionManager", new TransitionManager([
+  ["default", Fade],
+  ["BigTransition", BigTransition],
+  ["Slide", Slide],
+  ["SlideLeft", SlideLeft],
+  ["SlideRight", SlideRight]
+])).set("router", router = new Router()).add(pjax = new PJAX());
+try {
+  router = app.get("router");
+  let navLink = document.querySelectorAll(".navbar .nav-link");
+  for (let item of navLink) {
+    let navItem = item;
+    router.add({
+      path: navItem.getAttribute("data-path") || navItem.pathname,
+      method() {
+        let isActive = navItem.classList.contains("active");
+        if (!isActive)
+          navItem.classList.add("active");
+        for (let nav of navLink) {
+          if (nav !== navItem)
+            nav.classList.remove("active");
+        }
+      }
+    });
+  }
+  let anim;
+  router.add({
+    path: /(index|\/$)(\.html)?/,
+    method() {
+      anim = animate({
+        target: ".div",
+        keyframes(index, total) {
+          return [
+            {transform: "translateX(0px)", opacity: 0.1},
+            {transform: "translateX(300px)", opacity: 0.2 + (index + 1) / total}
+          ];
+        },
+        fillMode: "both",
+        easing: "out-cubic",
+        duration(index) {
+          return (index + 1) * 500;
+        },
+        loop: 5,
+        speed: 1.5,
+        direction: "alternate",
+        delay(index) {
+          return (index + 1) * 500 / 2;
+        },
+        autoplay: false
+      });
+      let el = document.querySelector(".info");
+      let backupInfo = el.textContent;
+      let info = backupInfo;
+      anim.on({
+        begin() {
+          if (el) {
+            info = backupInfo;
+            el.textContent = info;
+            el.style.color = "initial";
+          }
+        }
+      });
+      anim.on("complete", () => {
+        if (el) {
+          info = "Done.";
+          el.textContent = info;
+          el.style.color = "red";
+          console.log(info);
+        }
+      });
+      let scrub = document.getElementById("scrub");
+      scrub.addEventListener("input", (e) => {
+        var percent = +e.target.value;
+        anim.setProgress(percent);
+        anim.pause();
+      });
+      let progressSpan = document.querySelector(".progress");
+      anim.on("update", (progress) => {
+        scrub.value = `` + progress;
+        progressSpan && (progressSpan.textContent = `${Math.round(progress)}%`);
+      });
+      scrub.addEventListener("change", () => {
+        if (Math.round(anim.getProgress()) >= 100) {
+          anim.finish();
+          return false;
+        }
+        anim.play();
+      });
+      let playtoggle = document.querySelector(".playtoggle");
+      if (playtoggle) {
+        playtoggle.addEventListener("click", () => {
+          let state = anim.getPlayState();
+          if (state === "running")
+            anim.pause();
+          else if (state === "finished")
+            anim.reset();
+          else
+            anim.play();
+          console.log(state);
+        });
+      }
+    }
+  });
+  app.on("AFTER_SPLASHSCREEN_HIDE", () => {
+    anim == null ? void 0 : anim.play();
+  });
+  app.boot();
+} catch (err) {
+  splashscreen.show();
+  console.warn("[App] boot failed,", err);
+}

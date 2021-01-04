@@ -1,0 +1,58 @@
+extends /layouts/layout.pug
+
+block content
+  main#home-page(data-wrapper='' role='main')
+    .container
+      .jumbotron.jumbotron-fluid.my-3.px-4.radius-lg.box-shadow.text-dark.bg-warning
+          h1.font-sz-5xl.font-sans.font-100 @okikio/animate
+          p.lead Dynamic example's based off of animejs to get you started.
+
+      h2.font-sz-3xl.font-sans.font-400 Target
+      .animation-containers.jumbotron.jumbotron-fluid.my-2.p-4.radius-lg.box-shadow.text-dark.bg-warning
+        .animation-container.css-selector-demo
+          h3.font-sz-xl.font-sans.font-400 CSS Selector
+          .contain
+            .el
+            .el-initial
+
+        .animation-container.dom-node-demo
+          h3.font-sz-xl.font-sans.font-400 DOM Node / Nodelist
+          - for (let i = 0; i < 5; i ++) {
+            .contain
+              .el
+              .el-initial
+          - }
+
+        .animation-container.array-demo
+          h3.font-sz-xl.font-sans.font-400 Array
+          - for (let i = 0; i < 3; i ++) {
+            .contain
+              .el(class=`el-0${i + 1}`)
+              .el-initial
+          - }
+
+
+      h2.font-sz-3xl.font-sans.font-400 Properties
+      .animation-containers.jumbotron.jumbotron-fluid.my-2.p-4.radius-lg.box-shadow.text-dark.bg-warning
+        .animation-container.css-properties-demo
+          h3.font-sz-xl.font-sans.font-400 CSS Properties
+          .contain
+            .el
+            .el-initial
+
+        .animation-container.css-transform-demo
+          h3.font-sz-xl.font-sans.font-400 CSS Transforms
+          .contain
+            .el
+            .el-initial
+
+        .animation-container.svg-attributes-demo
+          h3.font-sz-xl.font-sans.font-400 SVG Attributes
+          .contain
+            svg.svg(xmlns='http://www.w3.org/2000/svg' width='500px' height='300px' viewbox='0 0 1310 680')
+              path(d='M53,234c143.452,-81.953,313.407,-167.554,430,-107c116.592,45.554,70.404,361.126,236,472c235.595,95.873,447.977,-197.535,477,-306' style='stroke:red;fill:none;stroke-width:5px;')
+
+
+
+block script
+  script(src="./js/animate.js" type="module")

@@ -18,7 +18,3 @@ tasks:
           pnpm install -r &&
           ultra build &&
           ultra demo:watch
-
-vscode:
-    extensions:
-        - vivaxy.vscode-conventional-commits@1.13.0:zCJe2ITK+hf+3DCumvNLfA==

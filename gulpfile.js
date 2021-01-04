@@ -22,9 +22,13 @@ let browserSync;
 
 // HTML Tasks
 task("html", async () => {
-    const { default: pug } = await import("gulp-pug");
+    const [{ default: pug }, { default: plumber }] = await Promise.all([
+        import("gulp-pug"),
+        import("gulp-plumber"),
+    ]);
     return stream(`${pugFolder}/*.pug`, {
         pipes: [
+            plumber(),
             pug({
                 basedir: pugFolder,
                 self: true,
@@ -54,24 +58,24 @@ task("js", async () => {
         { default: gulpEsBuild, createGulpEsbuild },
         { default: gzipSize },
         { default: prettyBytes },
+        { default: rename },
     ] = await Promise.all([
         import("gulp-esbuild"),
         import("gzip-size"),
         import("pretty-bytes"),
+        import("gulp-rename"),
     ]);
 
-    const esbuild = mode == "watch" ? createGulpEsbuild() : gulpEsBuild;
-    return stream(`${tsFolder}/main.ts`, {
+    const esbuild = gulpEsBuild; // mode == "watch" ? createGulpEsbuild() :
+    return stream(`${tsFolder}/*.ts`, {
         pipes: [
             // Bundle Modules
             esbuild({
                 bundle: true,
-                minify: true,
-                sourcemap: true,
-                outfile: "main.js",
                 format: "esm",
                 target: ["chrome71"],
             }),
+            rename({ extname: ".js" }), // Rename
         ],
         dest: jsFolder, // Output
         async end() {
@@ -114,10 +118,10 @@ task("watch", async () => {
     watch(
         [
             `${tsFolder}/**/*.ts`,
-            `src/**/*.ts`,
-            `../animate/src/*.ts`,
-            `../manager/src/*.ts`,
-            `../emitter/src/*.ts`,
+            `packages/native/src/**/*.ts`,
+            `packages/animate/src/**/*.ts`,
+            `packages/manager/src/**/*.ts`,
+            `packages/emitter/src/**/*.ts`,
         ],
         series("js")
     );

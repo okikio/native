@@ -5,24 +5,24 @@
     "publishConfig": {
         "access": "public",
         "main": "lib/api.cjs.js",
-        "types": "@types/api.d.ts"
+        "types": "@types/api.d.ts",
+        "browser": "lib/api.es.js",
+        "module": "lib/api.es.js",
+        "exports": {
+            ".": {
+                "require": "./lib/api.cjs.js",
+                "import": "./lib/api.es.js",
+                "default": "./lib/api.es.js"
+            },
+            "./src/*": "./src/*.ts",
+            "./lib/*": "./lib/*.js",
+            "./ts": "./src/api.ts",
+            "./es": "./lib/api.es.js",
+            "./cjs": "./lib/api.cjs.js",
+            "./iife": "./lib/api.js"
+        }
     },
     "main": "src/api.ts",
-    "browser": "lib/api.es.js",
-    "module": "lib/api.es.js",
-    "exports": {
-        ".": {
-            "require": "./lib/api.cjs.js",
-            "import": "./lib/api.es.js",
-            "default": "./lib/api.es.js"
-        },
-        "./src/*": "./src/*.ts",
-        "./lib/*": "./lib/*.js",
-        "./ts": "./src/api.ts",
-        "./es": "./lib/api.es.js",
-        "./cjs": "./lib/api.cjs.js",
-        "./iife": "./lib/api.js"
-    },
     "source": "src/api.ts",
     "directories": {
         "lib": "./lib"
@@ -66,18 +66,16 @@
     "homepage": "https://github.com/okikio/native/packages/emitter#readme",
     "dependencies": {
         "@okikio/manager": "workspace:*",
-        "esbuild": "^0.8.27",
+        "esbuild": "^0.8.29",
         "gzip-size": "^6.0.0",
         "pretty-bytes": "^5.5.0",
         "standard-version": "^9.1.0",
         "typescript": "^4.1.3"
     },
     "devDependencies": {
-        "@skypack/package-check": "^0.2.2",
         "@types/jest": "^26.0.19",
         "chokidar": "^3.4.3",
         "esbuild-jest": "^0.3.0",
-        "eslint": "^7.16.0",
         "jest": "^26.6.3",
         "jest-chain": "^1.1.5",
         "ultra-runner": "^3.8.0"

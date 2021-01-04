@@ -32,7 +32,7 @@ export declare class Manager<K, V> {
     /** Returns a new Iterator object that contains an array of [key, value] for each element in the Map object in insertion order. */
     entries(): IterableIterator<[K, V]>;
     /** Iterates through the Managers contents, calling a callback function every iteration */
-    forEach(callback?: any, context?: object): Manager<K, V>;
+    forEach(callback: (value?: V, key?: K, map?: Map<K, V>) => void, context?: object): Manager<K, V>;
     /** Allows for iteration via for..of, learn more: [https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Iterators_and_Generators] */
     [Symbol.iterator](): IterableIterator<[K, V]>;
 }

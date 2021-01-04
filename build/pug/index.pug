@@ -11,10 +11,15 @@ block content
                 h1.font-sz-5xl.font-sans.font-100 Homepage.
                 p.lead Dynamic example.
 
-        .animation-container.jumbotron.jumbotron-fluid.my-2.p-4.radius-lg.box-shadow.text-dark.intro-animation
-          p.info Click here to toggle between play/pause
-          span.progress 0%
-          - for (let i = 0; i < 10; i ++) {
+        .jumbotron.jumbotron-fluid.my-2.p-4.radius-lg.box-shadow.text-dark.intro-animation
+          label(for='scrub') @okikio/animate
+          input#scrub(type='range' value='0' min='0' max='100' step='0.01')
+          button(type="button").btn.btn-dark.playtoggle Play/Pause/Reset
+          p.support Requires native Web Animation Support (latest Firefox, Chrome, Opera)
+
+          p.info This is pretty cool right
+          p.fix.progress 0%
+          - for (let i = 0; i < 5; i ++) {
             .div
           - }
         .row

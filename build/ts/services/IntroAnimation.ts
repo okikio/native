@@ -49,7 +49,7 @@ export class IntroAnimation extends Service {
     }
 
     public async show() {
-        let anim = animate({
+        let [anim] = await animate({
             target: (this.elements as HTMLElement[]),
             keyframes: [
                 { transform: "translateY(200px)", opacity: 0 },
@@ -68,8 +68,7 @@ export class IntroAnimation extends Service {
             easing: "out-cubic",
             duration: 650
         });
-        let result = await anim;
         anim.stop();
-        return result;
+        return anim;
     }
 }

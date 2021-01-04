@@ -106,11 +106,10 @@ export class PJAX extends Service {
             (el as HTMLAnchorElement).protocol !== location.protocol ||
             (el as HTMLAnchorElement).hostname !== location.hostname;
         let download = typeof el.getAttribute("download") === "string";
-        let preventSelf = el.hasAttribute(getConfig(this.config, "preventSelfAttr", false));
+        let preventSelf = el.matches(getConfig(this.config, "preventSelfAttr"));
         let preventAll = Boolean(
             el.closest(getConfig(this.config, "preventAllAttr"))
         );
-        let prevent = preventSelf && preventAll;
         let sameURL = getHashedPath(newURL()) === getHashedPath(newURL(href));
         return !(
             exists ||
@@ -119,7 +118,8 @@ export class PJAX extends Service {
             newTab ||
             crossOrigin ||
             download ||
-            prevent ||
+            preventSelf ||
+            preventAll ||
             sameURL
         );
     }

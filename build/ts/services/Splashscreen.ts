@@ -45,7 +45,9 @@ export class Splashscreen extends Service {
                 onfinish(el) {
                     el.style.opacity = "0";
                 }
-            }).then(function () { this.stop(); });
+            }).then(function () {
+                this.stop();
+            });
 
             this.emitter.emit("START_SPLASHSCREEN_HIDE");
             await this.show();
@@ -54,13 +56,13 @@ export class Splashscreen extends Service {
     }
 
     public async show() {
-        let anim = animate({
+        let [anim] = await animate({
             target: this.rootElement,
             transform: ["translateY(0%)", "translateY(100%)"],
             duration: 1200,
             easing: "in-out-cubic" // in-out-cubic
         });
-        await anim;
+        this.emitter.emit("AFTER_SPLASHSCREEN_HIDE");
         anim.stop();
 
         this.rootElement.style.transform = "translateY(100%)";

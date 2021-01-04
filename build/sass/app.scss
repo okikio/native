@@ -49,6 +49,74 @@ $themeFonts: (
     background: #616aff;
 }
 
+.el,
+.el-initial {
+    --size: 4vmin;
+    width: var(--size);
+    height: var(--size);
+    /*     transform: scale(1); */
+    // border-radius: 8%;
+    margin: 5px;
+    background: #616aff;
+    position: relative;
+}
+
+.svg {
+    margin: auto;
+    display: block;
+    width: 500px;
+    height: 300px;
+    max-height: 100vh;
+    max-width: 100%;
+
+    & path {
+        stroke: #fff2b1;
+        stroke-dasharray: 400 400;
+        stroke-dashoffset: 0;
+    }
+}
+
+.el-initial {
+    opacity: 0.6;
+    position: absolute;
+    display: block;
+    margin-top: 0;
+    top: 0;
+}
+
+.animation-container {
+    transition: background-color 0.5s ease;
+    background-color: rgba(0, 0, 0, 0.085);
+    border-radius: 5px;
+    padding: 5px;
+    cursor: pointer;
+
+    &:hover {
+        background-color: rgba(255, 255, 255, 0.25);
+    }
+}
+
+.contain {
+    position: relative;
+}
+
+.animation-container + .animation-container {
+    margin-top: 2em;
+}
+
+input[type="range"] {
+    width: 100%;
+    padding: 0;
+    margin: 0;
+}
+html:not(.unsupported) .support {
+    display: none;
+}
+
+p.fix {
+    line-height: 1;
+}
+
 .theme {
     &-bg {
         @each $colorName, $color in $themeColors {

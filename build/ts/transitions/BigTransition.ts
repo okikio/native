@@ -32,9 +32,9 @@ export const BigTransition: ITransition = {
                 }
             });
 
-            anim1.then(function () { this.stop() });
+            anim1.then(function () { this.stop(); });
 
-            let anim2 = animate({
+            let [anim2] = await animate({
                 target: this.horizontalElements,
                 keyframes: [
                     { transform: "scaleX(0)" },
@@ -51,13 +51,12 @@ export const BigTransition: ITransition = {
                 duration: 500
             });
 
-            await anim2;
             fromWrapper.style.opacity = '1';
             Object.assign(fromWrapper.style, wrapperStyle);
             this.spinnerElement.style.visibility = "visible";
 
             let loaderDuration = 500;
-            let anim3 = animate({
+            let [anim3] = await animate({
                 target: this.spinnerElement,
                 opacity: [0, 1],
                 duration: loaderDuration,
@@ -66,17 +65,14 @@ export const BigTransition: ITransition = {
                 },
             });
 
-            let options = await anim3;
-            let anim4 = animate({
-                options,
+            let [anim4] = await animate({
+                options: anim3,
                 opacity: [1, 0],
                 onfinish(el: { style: { opacity: string; }; }) {
                     el.style.opacity = `0`;
                 },
                 delay: 1500
             });
-
-            await anim4;
             this.spinnerElement.style.visibility = "hidden";
             // anim2.stop() // -> anim2.stop() Breaks the Animation
             anim3.stop();
@@ -99,7 +95,7 @@ export const BigTransition: ITransition = {
                 anim1.stop();
             });
 
-            let anim2 = animate({
+            let [anim2] = await animate({
                 target: this.horizontalElements,
                 keyframes: [
                     { transform: "scaleX(1)" },
@@ -115,8 +111,6 @@ export const BigTransition: ITransition = {
                 easing: "out-cubic",
                 duration: 500
             });
-
-            await anim2;
 
             this.mainElement.style.opacity = "0";
             this.mainElement.style.visibility = "hidden";

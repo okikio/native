@@ -86,7 +86,7 @@ export class Manager<K, V> {
 
 	/** Iterates through the Managers contents, calling a callback function every iteration */
 	public forEach(
-		callback: any = (...args: any): void => { },
+		callback: (value?: V, key?: K, map?: Map<K, V>) => void,
 		context?: object
 	): Manager<K, V> {
 		this.map.forEach(callback, context);

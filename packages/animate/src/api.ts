@@ -1,13 +1,17 @@
 import { EventEmitter, EventInput, ListenerCallback } from "@okikio/emitter";
+import { Manager } from "@okikio/manager";
 
 // DOM
-export type AnimationTarget = string | Node | NodeList | HTMLCollection | HTMLElement[] | any[];
+export type AnimationTarget = string | Node | NodeList | HTMLCollection | HTMLElement[] | AnimationTarget[];
 export const getElements = (selector: string | Node): Node[] => {
     return typeof selector === "string" ? Array.from(document.querySelectorAll(selector as string)) : [selector];
 };
 
+const flatten = (arr: AnimationTarget[]) => [].concat(...arr);
 export const getTargets = (targets: AnimationTarget): Node[] => {
-    if (Array.isArray(targets)) return targets;
+    if (Array.isArray(targets)) {
+        return flatten((targets as AnimationTarget[]).map(getTargets));
+    }
     if (typeof targets == "string" || targets instanceof Node)
         return getElements(targets);
     if (targets instanceof NodeList || targets instanceof HTMLCollection)
@@ -18,19 +22,19 @@ export const getTargets = (targets: AnimationTarget): Node[] => {
 // VALUES
 export type closureArgs = [number, number, HTMLElement];
 export type closure = ((index?: number, total?: number, element?: HTMLElement) => any) | any;
-export const computeValue = (value: closure, args: closureArgs) => {
+export const computeValue = (value: closure, args: closureArgs, context: AnimationOptions) => {
     if (typeof value === "function") {
-        return value(...args);
+        return value.apply(context, args);
     } else { return value; }
 };
 
-export const mapObject = (obj: object, args: closureArgs): any => {
-    let key, value, result = {};
+export const mapObject = (obj: object, args: closureArgs, options: AnimationOptions): any => {
+    let key: string, value: any, result = {};
     let keys = Object.keys(obj);
     for (let i = 0, len = keys.length; i < len; i++) {
         key = keys[i];
         value = obj[key];
-        result[key] = computeValue(value, args);
+        result[key] = computeValue(value, args, options);
     }
 
     return result;
@@ -38,7 +42,6 @@ export const mapObject = (obj: object, args: closureArgs): any => {
 
 /** From: [https://easings.net] */
 export const easings = {
-    "ease": "ease",
     "in": "ease-in",
     "out": "ease-out",
     "in-out": "ease-in-out",
@@ -83,25 +86,27 @@ export const easings = {
     "out-back": "cubic-bezier(0.175, 0.885, 0.32, 1.275)",
     "in-out-back": "cubic-bezier(0.68, -0.55, 0.265, 1.55)"
 };
+
 export const getEase = (ease: string) => {
-    return /^(ease|in|out)/.test(ease) ? easings[ease] : ease;
+    return /^(in|out)/.test(ease) ? easings[ease] : ease;
 };
 
 export interface AnimationOptions {
     target?: AnimationTarget,
 
-    speed?: number | closure,
+    speed?: number,
+    autoplay?: boolean,
+    options?: AnimationOptions,
     delay?: number | closure,
     easing?: string | closure,
     endDelay?: number | closure,
     duration?: number | closure,
-    autoplay?: boolean | closure,
     keyframes?: object[] | closure,
     loop?: number | boolean | closure, // iterations: number,
-    options?: AnimationOptions | closure,
     onfinish?: (element?: HTMLElement, index?: number, total?: number, animation?: Animation) => any,
     fillMode?: "none" | "forwards" | "backwards" | "both" | "auto" | closure,
     direction?: "normal" | "reverse" | "alternate" | "alternate-reverse" | closure,
+    extend?: EffectTiming,
     [property: string]: closure | boolean | object | string | string[] | number | null | (number | null)[] | undefined;
 };
 
@@ -115,10 +120,12 @@ export const DefaultAnimationOptions: AnimationOptions = {
     easing: "ease",
     autoplay: true,
     duration: 1000,
-    onfinish() { },
     fillMode: "auto",
     direction: "normal",
+    extend: {}
 };
+
+export type AnimationEvents = "update" | "play" | "pause" | "start" | "begin" | "complete" | "finish" | "error" | "stop";
 
 /** You can check it out here: https://codepen.io/okikio/pen/qBbdGaW?editors=0011 */
 export class Animate {
@@ -138,14 +145,24 @@ export class Animate {
     public properties: object = {};
 
     /**
-     * A Set of Animations
+     * A Manager of Animations
      */
-    public animations: Map<HTMLElement, Animation> = new Map();
+    public animations: Manager<HTMLElement, Animation> = new Manager();
 
     /**
      * The total duration of all Animation's
      */
-    public duration: number = 0;
+    public totalDuration: number = 0;
+
+    /**
+     * The smallest delay out of all Animation's
+     */
+    public minDelay: number = 0;
+
+    /**
+     * The options for individual animations
+     */
+    public computedOptions: Manager<Animation, AnimationOptions> = new Manager();
 
     /**
      * The Element the main animation uses
@@ -168,99 +185,109 @@ export class Animate {
     public emitter: EventEmitter = new EventEmitter();
 
     /**
-     * The finish method, is called when the main animation has finished
-     */
-    public finish: any;
-
-    /**
      * Returns a promise that is fulfilled when the mainAnimation is finished
      */
     public promise: Promise<AnimationOptions>;
-
     constructor(options: AnimationOptions = {}) {
-        let { options: animation, ...rest } = options;
-        this.options = Object.assign({}, DefaultAnimationOptions, animation instanceof Animate ? animation.getOptions() : animation, rest);
-        this.loop = this.loop.bind(this);
+        try {
+            let { options: animation, ...rest } = options;
+            let oldOptions = animation instanceof Animate ? animation.getOptions() : (Array.isArray(animation) ? animation?.[0]?.getOptions() : animation);
+            this.options = Object.assign({}, DefaultAnimationOptions, oldOptions, rest);
+            this.loop = this.loop.bind(this);
 
-        let {
-            loop,
-            delay,
-            speed,
-            easing,
-            endDelay,
-            duration,
-            direction,
-            fillMode,
-            onfinish,
-            target,
-            keyframes,
-            autoplay,
-            ...properties
-        } = this.options;
-
-        this.mainElement = document.createElement("div");
-        this.targets = getTargets(target);
-        this.properties = properties;
-
-        let len = this.targets.length
-        let animationKeyframe: Keyframe[] | PropertyIndexedKeyframes;
-        for (let i = 0; i < len; i++) {
-            let target = this.targets[i] as HTMLElement;
-            let animationOptions = {
-                easing: getEase(easing),
-                iterations: loop === true ? Infinity : (loop as number),
-                direction,
+            let {
+                loop,
+                delay,
+                speed,
+                easing,
                 endDelay,
                 duration,
-                delay,
-                fill: fillMode,
+                direction,
+                fillMode,
+                onfinish,
+                target,
+                keyframes,
+                autoplay,
+                extend,
+                ...properties
+            } = this.options;
+
+            this.mainElement = document.createElement("div");
+            this.targets = getTargets(target);
+            this.properties = properties;
+
+            let delays = [];
+            let len = this.targets.length;
+            let animationKeyframe: Keyframe[] | PropertyIndexedKeyframes;
+            for (let i = 0; i < len; i++) {
+                let target = this.targets[i] as HTMLElement;
+                let animationOptions: AnimationOptions = {
+                    easing: typeof easing == "string" ? getEase(easing) : easing,
+                    iterations: loop === true ? Infinity : (loop as number),
+                    direction,
+                    endDelay,
+                    duration,
+                    delay,
+                    fill: fillMode,
+                    ...extend
+                };
+
+                // Accept keyframes as a keyframes Object, or a method,
+                // if there are no animations in the keyframes array,
+                // uses css properties from the options object
+                let arrKeyframes = computeValue((keyframes as Keyframe[]), [i, len, target], animationOptions);
+                animationKeyframe = arrKeyframes.length ? arrKeyframes :
+                    (this.properties as PropertyIndexedKeyframes);
+
+                // Allows the use of functions as the values, for both the keyframes and the animation object
+                // It adds the capability of advanced stagger animation, similar to the anime js stagger functions
+                animationOptions = mapObject(animationOptions, [i, len, target], animationOptions);
+                if (!(arrKeyframes.length > 0))
+                    animationKeyframe = mapObject(animationKeyframe, [i, len, target], animationOptions);
+
+                // Set the Animate classes duration to be the Animation with the largest totalDuration
+                let tempDurations = animationOptions.delay +
+                    (animationOptions.duration * animationOptions.iterations) +
+                    animationOptions.endDelay;
+                if (this.totalDuration < tempDurations) this.totalDuration = tempDurations;
+
+                // Add animation to the Animations Set
+                let animation = target.animate(animationKeyframe, animationOptions);
+
+                // Support for on finish
+                animation.onfinish = () => {
+                    typeof onfinish == "function" && onfinish.call(this, target, i, len, animation);
+                    this.emit("finish", target, i, len, animation);
+                };
+
+                // The calculated options for each individual option
+                this.computedOptions.set(animation, animationOptions);
+                this.animations.set(target, animation);
+                delays.push(animationOptions.delay);
+            }
+
+            this.mainAnimation = this.mainElement.animate([
+                { opacity: "0" },
+                { opacity: "1" }
+            ], {
+                // Why waste performance on an animation no one can see?
+                duration: this.totalDuration,
+                easing: "linear"
+            });
+
+            this.minDelay = Math.min(...delays);
+            this.setSpeed(speed);
+            if (autoplay) this.play();
+            else this.pause();
+
+            this.promise = this.newPromise();
+            this.mainAnimation.onfinish = () => {
+                this.emit("complete", this);
+                window.cancelAnimationFrame(this.animationFrame);
             };
-
-            // Accept keyframes as a keyframes Object, or a method,
-            // if there are no animations in the keyframes array,
-            // uses css properties from the options object
-            let arrKeyframes = computeValue((keyframes as Keyframe[]), [i, len, target]);
-            animationKeyframe = arrKeyframes.length ? arrKeyframes :
-                (this.properties as PropertyIndexedKeyframes);
-
-            // Allows the use of functions as the values, for both the keyframes and the animation object
-            // It adds the capability of advanced stagger animation, similar to the anime js stagger functions
-            animationOptions = mapObject(animationOptions, [i, len, target]);
-            if (!(arrKeyframes.length > 0))
-                animationKeyframe = mapObject(animationKeyframe, [i, len, target]);
-
-            // Set the Animate classes duration to be the Animation with the largest totalDuration
-            let tempDuration: number =
-                animationOptions.delay +
-                (animationOptions.duration * animationOptions.iterations) +
-                animationOptions.endDelay;
-            if (this.duration < tempDuration) this.duration = tempDuration;
-
-            // Add animation to the Animations Set
-            let animation = target.animate(animationKeyframe, animationOptions);
-            animation.onfinish = () => {
-                onfinish(target, i, len, animation);
-            };
-            this.animations.set(target, animation);
+        } catch (err) {
+            this.emit("error", err);
         }
-
-        this.mainAnimation = this.mainElement.animate([
-            { opacity: "0" },
-            { opacity: "1" }
-        ], {
-            duration: this.duration,
-            easing: "linear"
-        });
-
-        this.setSpeed(speed);
-        if (autoplay) this.play();
-        else this.pause();
-
-        this.promise = this.newPromise();
-        this.mainAnimation.onfinish = () => {
-            window.cancelAnimationFrame(this.animationFrame);
-            this.finish();
-        };
     }
 
     /**
@@ -268,20 +295,15 @@ export class Animate {
      */
     public newPromise(): Promise<AnimationOptions> {
         return new Promise((resolve, reject) => {
-            try {
-                this.finish = () => {
-                    this.emit("finish", this.options);
-                    return resolve(this.options);
-                };
-            } catch (err) { reject(err); }
+            /*
+                Note that the `this` keyword is in an Array when it is resolved,
+                this is due to Promises not wanting to resolve references,
+                so, you can't resolve `this` directly, so, I chose to resolve `this` in an
+                Array
+            */
+            this.on("complete", () => resolve([this]));
+            this.on("error", err => reject(err));
         });
-    }
-
-    /**
-     * Returns the Array of targets
-     */
-    public getTargets(): Node[] {
-        return this.targets;
     }
 
     /**
@@ -320,31 +342,103 @@ export class Animate {
      */
     public loop(): void {
         this.animationFrame = window.requestAnimationFrame(this.loop);
-        this.emit("tick change", this.getCurrentTime());
+        this.emit("update", this.getProgress(), this);
     }
 
     /**
-     * Adds a listener for a given event
-     */
-    public on(events: EventInput, callback?: ListenerCallback, scope?: object): Animate {
-        this.emitter.on(events, callback, scope ?? this);
+     * Calls a method that affects all animations including the mainAnimation; the method only allows the animation parameter
+    */
+    public all(method: (animation: Animation) => void) {
+        method(this.mainAnimation);
+        this.animations.forEach(animation => method(animation));
         return this;
     }
 
     /**
-     * Removes a listener from an event
+     * Register the begin event
      */
-    public off(events: EventInput, callback?: ListenerCallback, scope?: object): Animate {
-        this.emitter.off(events, callback, scope ?? this);
+    protected beginEvent() {
+        if (this.getProgress() == 0) {
+            let timer: number | void = window.setTimeout(() => {
+                this.emit("begin", this);
+                timer = window.clearTimeout(timer as number);
+            }, this.minDelay);
+        }
+    }
+
+    /**
+     * Play Animation
+     */
+    public play(): Animate {
+        let playstate = this.getPlayState();
+        if (playstate !== "finished") {
+            this.beginEvent();
+            this.animationFrame = requestAnimationFrame(this.loop);
+            this.all(anim => anim.playState == "paused" && anim.play());
+            this.emit("play", playstate, this);
+        }
         return this;
     }
 
     /**
-     * Call all listeners within an event
+     * Pause Animation
      */
-    public emit(events: string | any[], ...args: any): Animate {
-        this.emitter.emit(events, ...args);
+    public pause(): Animate {
+        let playstate = this.getPlayState();
+        if (playstate !== "finished") {
+            this.all(anim => anim.playState == "running" && anim.pause());
+            window.cancelAnimationFrame(this.animationFrame);
+            this.emit("pause", playstate, this);
+        }
         return this;
+    }
+
+    /**
+     * Reset all Animations
+     */
+    public reset() {
+        this.setProgress(0);
+        this.beginEvent();
+
+        if (this.options.autoplay) this.play();
+        else this.pause();
+        return this;
+    }
+
+    /**
+     * Cancels all Animations
+     */
+    public cancel() {
+        this.all(anim => anim.cancel());
+        window.cancelAnimationFrame(this.animationFrame);
+        return this;
+    }
+
+    /**
+     * Force complete all Animations
+     */
+    public finish() {
+        this.all(anim => anim.finish());
+        window.cancelAnimationFrame(this.animationFrame);
+        return this;
+    }
+
+    /**
+     * Cancels & Clears all Animations
+     */
+    public stop() {
+        this.cancel();
+        this.animations.clear();
+        while (this.targets.length) this.targets.pop();
+        this.mainElement = undefined;
+        this.emit("stop");
+    }
+
+    /**
+     * Returns an Array of targets
+     */
+    public getTargets(): Node[] {
+        return this.targets;
     }
 
     /**
@@ -355,42 +449,23 @@ export class Animate {
     }
 
     /**
-     * Play Animation
+     * Returns the timings of an Animation, given a target
+     * E.g. { duration, endDelay, delay, iterations, iterationStart, direction, easing, fill, etc... }
      */
-    public play(): Animate {
-        // Once the animation is done, it's done, it can only be paused by the reset method
-        if (this.mainAnimation.playState !== "finished") {
-            this.mainAnimation.play();
-            this.animationFrame = requestAnimationFrame(this.loop);
-            this.animations.forEach(animation => {
-                if (animation.playState !== "finished") animation.play();
-            });
-            this.emit("play");
-        }
-        return this;
-    }
+    public getTiming(target: HTMLElement | Animation): AnimationOptions & EffectTiming {
+        let animation = target instanceof Animation ? target : this.getAnimation(target);
+        let keyframeOptions = this.computedOptions.get(animation) ?? {};
+        let timings = animation.effect?.getTiming() ?? {};
+        let options = this.getOptions();
 
-    /**
-     * Pause Animation
-     */
-    public pause(): Animate {
-        // Once the animation is done, it's done, it can only be reset by the reset method
-        if (this.mainAnimation.playState !== "finished") {
-            this.mainAnimation.pause();
-            window.cancelAnimationFrame(this.animationFrame);
-            this.animations.forEach(animation => {
-                if (animation.playState !== "finished") animation.pause();
-            });
-            this.emit("pause");
-        }
-        return this;
+        return { ...DefaultAnimationOptions, ...options, ...timings, ...keyframeOptions };
     }
 
     /**
      * Returns the total duration of Animation
      */
-    public getDuration(): number {
-        return this.duration;
+    public getTotalDuration(): number {
+        return this.totalDuration;
     }
 
     /**
@@ -401,32 +476,10 @@ export class Animate {
     }
 
     /**
-     * Set the current time of the Main Animation
-     */
-    public setCurrentTime(time: number): Animate {
-        this.mainAnimation.currentTime = time;
-        this.animations.forEach(animation => {
-            animation.currentTime = time;
-        });
-        return this;
-    }
-
-    /**
-     * Returns the Animation progress as a fraction of the current time / duration
+     * Returns the Animation progress as a fraction of the current time / duration * 100
      */
     public getProgress() {
-        return this.getCurrentTime() / this.duration;
-    }
-
-    /**
-     * Set the Animation progress as a value from 0 to 100
-     */
-    public setProgress(percent: number): Animate {
-        this.mainAnimation.currentTime = (percent / 100) * this.duration;
-        this.animations.forEach(animation => {
-            animation.currentTime = percent * this.duration;
-        });
-        return this;
+        return (this.getCurrentTime() / this.totalDuration) * 100;
     }
 
     /**
@@ -434,28 +487,6 @@ export class Animate {
      */
     public getSpeed(): number {
         return this.mainAnimation.playbackRate;
-    }
-
-    /**
-     * Set the playback speed of an Animation
-     */
-    public setSpeed(speed: number = 1): Animate {
-        this.mainAnimation.playbackRate = speed;
-        this.animations.forEach(animation => {
-            animation.playbackRate = speed;
-        });
-        return this;
-    }
-
-    /**
-     * Reset all Animations
-     */
-    public reset() {
-        this.setCurrentTime(0);
-        this.promise = this.newPromise();
-
-        if (this.options.autoplay) this.play();
-        else this.pause();
     }
 
     /**
@@ -472,26 +503,60 @@ export class Animate {
         return this.options;
     }
 
-    /** Returns the Animate options, as JSON  */
-    public toJSON(): AnimationOptions {
-        return this.getOptions();
+    /**
+     * Set the current time of the Main Animation
+     */
+    public setCurrentTime(time: number): Animate {
+        this.all(anim => { anim.currentTime = time; });
+        this.emit("update", this.getProgress());
+        return this;
     }
 
     /**
-     * Cancels & Clears all Animations
+     * Set the Animation progress as a value from 0 to 100
      */
-    public stop() {
-        this.animations.forEach((anim) => {
-            anim.cancel();
-        }, this);
-        this.mainAnimation.cancel();
+    public setProgress(percent: number): Animate {
+        let time = (percent / 100) * this.totalDuration;
+        this.setCurrentTime(time);
+        return this;
+    }
 
-        window.cancelAnimationFrame(this.animationFrame);
-        this.animations.clear();
-        while (this.targets.length) this.targets.pop();
-        this.mainElement = undefined;
-        this.animationFrame = undefined;
-        this.emit("stop");
+    /**
+     * Set the playback speed of an Animation
+     */
+    public setSpeed(speed: number = 1): Animate {
+        this.all(anim => { anim.playbackRate = speed; });
+        return this;
+    }
+
+    /**
+     * Adds a listener for a given event
+     */
+    public on(events: AnimationEvents | EventInput, callback?: ListenerCallback, scope?: object): Animate {
+        this.emitter.on(events, callback, scope ?? this);
+        return this;
+    }
+
+    /**
+     * Removes a listener from an event
+     */
+    public off(events: AnimationEvents | EventInput, callback?: ListenerCallback, scope?: object): Animate {
+        this.emitter.off(events, callback, scope ?? this);
+        return this;
+    }
+
+    /**
+     * Call all listeners within an event
+     */
+    public emit(events: AnimationEvents | string | any[], ...args: any): Animate {
+        this.emitter.emit(events, ...args);
+        return this;
+    }
+
+
+    /** Returns the Animate options, as JSON  */
+    public toJSON(): AnimationOptions {
+        return this.getOptions();
     }
 
     /**

@@ -1,4 +1,4 @@
-import { PJAX, App, TransitionManager, Router, HistoryManager, PageManager, animate } from "@okikio/native";
+import { PJAX, App, TransitionManager, Router, HistoryManager, PageManager, animate, Animate } from "@okikio/native";
 
 import { Splashscreen } from "./services/Splashscreen";
 import { IntroAnimation } from "./services/IntroAnimation";
@@ -45,61 +45,92 @@ try {
         });
     }
 
+    let anim: Animate;
     router.add({
-        path: /\/index.html/,
+        path: /(index|\/$)(\.html)?/,
         method() {
-            let anim = animate({
+            anim = animate({
                 target: ".div",
                 keyframes(index, total) {
                     return [
-                        { transform: "translateX(0px)", opacity: 0 },
-                        { transform: "translateX(300px)", opacity: ((index + 1) / total) }
+                        { transform: "translateX(0px)", opacity: 0.1 },
+                        { transform: "translateX(300px)", opacity: 0.2 + ((index + 1) / total) }
                     ]
                 },
 
                 /* You can uncomment this out, and comment the keyframes options above and still get the same animation */
                 // transform: ["translateX(0px)", "translateX(300px)"],
                 // opacity(index, total, element) {
-                //     console.log(element);
                 //     return [0, ((index + 1) / total)];
+                // },
+
+                // It is best to use the onfinish() method, but in this situation fillMode works best
+                fillMode: "both",
+                // onfinish(element, index, total) {
+                //     element.style.opacity = `${((index + 1) / total)}`;
+                //     element.style.transform = "translateX(300px)";
                 // },
 
                 easing: "out-cubic",
                 duration(index: number) {
                     return (index + 1) * 500;
                 },
-                onfinish(element, index, total) {
-                    element.style.opacity = `${((index + 1) / total)}`;
-                    element.style.transform = "translateX(300px)";
-                },
                 loop: 5,
-                speed: 1,
+                speed: 1.5,
                 direction: "alternate",
-                delay(i: number) {
-                    return i * 200;
+                delay(index: number) {
+                    return ((index + 1) * 500) / 2;
                 },
-                autoplay: true
+                autoplay: false
             });
 
-            anim.then(() => {
-                let el: HTMLElement = document.querySelector(".info");
-                let info = "Done.";
-                el.textContent = info;
-                el.style.color = "red";
+            let el: HTMLElement = document.querySelector(".info");
+            let backupInfo = el.textContent;
+            let info = backupInfo;
+            anim.on({
+                begin() {
+                    if (el) {
+                        info = backupInfo;
+                        el.textContent = info;
+                        el.style.color = "initial";
+                    }
+                }
+            })
+            anim.on("complete", () => {
+                if (el) {
+                    info = "Done.";
+                    el.textContent = info;
+                    el.style.color = "red";
 
-                console.log(info);
+                    console.log(info);
+                }
+            });
+
+            let scrub = document.getElementById('scrub') as HTMLInputElement;
+            scrub.addEventListener('input', e => {
+                var percent = +(e.target as HTMLInputElement).value;
+                anim.setProgress(percent);
+                anim.pause();
             });
 
             let progressSpan = document.querySelector(".progress");
-            if (progressSpan) {
-                anim.on("change", () => {
-                    progressSpan.textContent = `${Math.round(anim.getProgress() * 100)}%`;
-                });
-            }
+            anim.on("update", progress => {
+                scrub.value = `` + progress;
+                progressSpan && (progressSpan.textContent = `${Math.round(progress)}%`);
+            });
 
-            let container = document.querySelector(".animation-container");
-            if (container) {
-                container.addEventListener("click", () => {
+            scrub.addEventListener('change', () => {
+                if (Math.round(anim.getProgress()) >= 100) {
+                    anim.finish();
+                    return false;
+                }
+                anim.play();
+            });
+
+
+            let playtoggle = document.querySelector(".playtoggle");
+            if (playtoggle) {
+                playtoggle.addEventListener("click", () => {
                     let state = anim.getPlayState();
                     if (state === "running") anim.pause();
                     else if (state === "finished") anim.reset();
@@ -108,6 +139,10 @@ try {
                 });
             }
         }
+    });
+
+    app.on("AFTER_SPLASHSCREEN_HIDE", () => {
+        anim?.play();
     });
 
     app.boot();

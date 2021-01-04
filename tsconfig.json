@@ -3,16 +3,16 @@
         "moduleResolution": "node",
         "target": "ES2020",
         "module": "ES2020",
+        "lib": [
+            "ES2019",
+            "DOM"
+        ],
         "sourceMap": true,
         "outDir": "lib",
-        "incremental": true,
         "isolatedModules": true,
         "esModuleInterop": true
     },
     "exclude": [
-        "node_modules",
-        "./tests/**/*",
-        "./lib/**/*",
-        "./@types/**/*"
+        "node_modules"
     ]
 }
