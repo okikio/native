@@ -66,14 +66,14 @@
         "@okikio/animate": "workspace:*",
         "@okikio/emitter": "workspace:*",
         "@okikio/manager": "workspace:*",
-        "esbuild": "^0.8.29",
+        "esbuild": "^0.8.30",
         "gzip-size": "^6.0.0",
         "pretty-bytes": "^5.5.0",
         "standard-version": "^9.1.0",
         "typescript": "^4.1.3"
     },
     "devDependencies": {
-        "chokidar": "^3.4.3"
+        "chokidar": "^3.5.0"
     },
     "gitHead": "ad422076cdb57d570426f786886129d5bca2f90f"
 }
