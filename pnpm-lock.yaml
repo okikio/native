@@ -3,9 +3,9 @@ importers:
     dependencies:
       '@okikio/native': 'link:packages/native'
       browser-sync: 2.26.13
-      esbuild: 0.8.30
+      esbuild: 0.8.31
       gulp: 4.0.2
-      gulp-esbuild: 0.3.13
+      gulp-esbuild: 0.3.14
       gulp-plumber: 1.2.1
       gulp-pug: 4.0.1
       gulp-rename: 2.0.0
@@ -21,7 +21,7 @@ importers:
       '@commitlint/cli': 11.0.0
       '@commitlint/config-conventional': 11.0.0
       commitizen: 4.2.2
-      husky: 4.3.6
+      husky: 4.3.7
     specifiers:
       '@changesets/cli': ^2.12.0
       '@commitlint/cli': ^11.0.0
@@ -29,15 +29,15 @@ importers:
       '@okikio/native': 'workspace:*'
       browser-sync: ^2.26.13
       commitizen: ^4.2.2
-      esbuild: ^0.8.30
+      esbuild: ^0.8.31
       gulp: ^4.0.2
-      gulp-esbuild: ^0.3.13
+      gulp-esbuild: ^0.3.14
       gulp-plumber: ^1.2.1
       gulp-pug: ^4.0.1
       gulp-rename: ^2.0.0
       gulp-sass: ^4.1.0
       gzip-size: ^6.0.0
-      husky: ^4.3.6
+      husky: ^4.3.7
       merge-stream: ^2.0.0
       pnpm: ^5.14.3
       pretty-bytes: ^5.5.0
@@ -47,7 +47,7 @@ importers:
     dependencies:
       '@okikio/emitter': 'link:../emitter'
       '@okikio/manager': 'link:../manager'
-      esbuild: 0.8.30
+      esbuild: 0.8.31
       gzip-size: 6.0.0
       pretty-bytes: 5.5.0
       standard-version: 9.1.0
@@ -58,7 +58,7 @@ importers:
       '@okikio/emitter': 'workspace:*'
       '@okikio/manager': 'workspace:*'
       chokidar: ^3.5.0
-      esbuild: ^0.8.30
+      esbuild: ^0.8.31
       gzip-size: ^6.0.0
       pretty-bytes: ^5.5.0
       standard-version: ^9.1.0
@@ -66,23 +66,23 @@ importers:
   packages/emitter:
     dependencies:
       '@okikio/manager': 'link:../manager'
-      esbuild: 0.8.30
+      esbuild: 0.8.31
       gzip-size: 6.0.0
       pretty-bytes: 5.5.0
       standard-version: 9.1.0
       typescript: 4.1.3
     devDependencies:
-      '@types/jest': 26.0.19
+      '@types/jest': 26.0.20
       chokidar: 3.5.0
-      esbuild-jest: 0.3.0_esbuild@0.8.30
+      esbuild-jest: 0.3.0_esbuild@0.8.31
       jest: 26.6.3
       jest-chain: 1.1.5
       ultra-runner: 3.8.0
     specifiers:
       '@okikio/manager': 'workspace:*'
-      '@types/jest': ^26.0.19
+      '@types/jest': ^26.0.20
       chokidar: ^3.5.0
-      esbuild: ^0.8.30
+      esbuild: ^0.8.31
       esbuild-jest: ^0.3.0
       gzip-size: ^6.0.0
       jest: ^26.6.3
@@ -93,23 +93,23 @@ importers:
       ultra-runner: ^3.8.0
   packages/manager:
     dependencies:
-      esbuild: 0.8.30
+      esbuild: 0.8.31
       gzip-size: 6.0.0
       pretty-bytes: 5.5.0
       standard-version: 9.1.0
       typescript: 4.1.3
     devDependencies:
-      '@types/jest': 26.0.19
+      '@types/jest': 26.0.20
       chokidar: 3.5.0
-      esbuild-jest: 0.3.0_esbuild@0.8.30
+      esbuild-jest: 0.3.0_esbuild@0.8.31
       jest: 26.6.3
       jest-chain: 1.1.5
       node-fetch: 2.6.1
       ultra-runner: 3.8.0
     specifiers:
-      '@types/jest': ^26.0.19
+      '@types/jest': ^26.0.20
       chokidar: ^3.5.0
-      esbuild: ^0.8.30
+      esbuild: ^0.8.31
       esbuild-jest: ^0.3.0
       gzip-size: ^6.0.0
       jest: ^26.6.3
@@ -124,7 +124,7 @@ importers:
       '@okikio/animate': 'link:../animate'
       '@okikio/emitter': 'link:../emitter'
       '@okikio/manager': 'link:../manager'
-      esbuild: 0.8.30
+      esbuild: 0.8.31
       gzip-size: 6.0.0
       pretty-bytes: 5.5.0
       standard-version: 9.1.0
@@ -136,7 +136,7 @@ importers:
       '@okikio/emitter': 'workspace:*'
       '@okikio/manager': 'workspace:*'
       chokidar: ^3.5.0
-      esbuild: ^0.8.30
+      esbuild: ^0.8.31
       gzip-size: ^6.0.0
       pretty-bytes: ^5.5.0
       standard-version: ^9.1.0
@@ -1196,15 +1196,13 @@ packages:
       integrity: sha512-nwKNbvnwJ2/mndE9ItP/zc2TCzw6uuodnF4EHYWD+gCQDVBuRQL5UzbZD0/ezy1iKsFU2ZQiDqg4M9dN4+wZgA==
       registry: 'https://registry.npmjs.com/'
       tarball: 'https://registry.npmjs.com/@types/istanbul-reports/-/istanbul-reports-3.0.0.tgz'
-  /@types/jest/26.0.19:
+  /@types/jest/26.0.20:
     dependencies:
       jest-diff: 26.6.2
       pretty-format: 26.6.2
     dev: true
     resolution:
-      integrity: sha512-jqHoirTG61fee6v6rwbnEuKhpSKih0tuhqeFbCmMmErhtu3BYlOZaXWjffgOstMM4S/3iQD31lI5bGLTrs97yQ==
-      registry: 'https://registry.npmjs.com/'
-      tarball: 'https://registry.npmjs.com/@types/jest/-/jest-26.0.19.tgz'
+      integrity: sha512-9zi2Y+5USJRxd0FsahERhBwlcvFh6D2GLQnY2FH2BzK8J9s9omvNHIbvABwIluXa0fD8XVKMLTO0aOEuUfACAA==
   /@types/minimist/1.2.1:
     resolution:
       integrity: sha512-fZQQafSREFyuZcdWFAExYjBiCL7AUCdgsk80iO0q4yihYYdcIiH28CcuPTGFgLOCC8RlW49GSQxdHwZP+I7CNg==
@@ -1338,7 +1336,7 @@ packages:
       fast-deep-equal: 3.1.3
       fast-json-stable-stringify: 2.1.0
       json-schema-traverse: 0.4.1
-      uri-js: 4.4.0
+      uri-js: 4.4.1
     resolution:
       integrity: sha512-j3fVLgvTo527anyYyJOGTYJbG+vnnQYvE0m5mmkc1TK+nxAppkCLMIL0aZ4dblVCNoGShhm+kzE4ZUykBoMg4g==
   /align-text/0.1.4:
@@ -1714,13 +1712,14 @@ packages:
   /aws4/1.11.0:
     resolution:
       integrity: sha512-xh1Rl34h6Fi1DC2WWKfxUTVqRsNnr6LsKz2+hfwDxQJWmrx8+c7ylaqBMcHfl1U1r2dsifOvKX3LQuLNZ+XSvA==
-  /axios/0.19.0:
+  /axios/0.21.1_debug@4.3.1:
     dependencies:
-      follow-redirects: 1.5.10
-      is-buffer: 2.0.5
+      follow-redirects: 1.13.1_debug@4.3.1
     dev: false
+    peerDependencies:
+      debug: '*'
     resolution:
-      integrity: sha512-1uvKqKQta3KBxIz14F2v06AEHZ/dIoeKfbTRkK1E5oqjDnuEerLmYTgJB5AiQZHJcljpg1TuRzdjDR06qNk0DQ==
+      integrity: sha512-dKQiRHxGD9PPRIUNIWvZhPTPpl1rf/OxTYKsqKUDjBwYylTvV7SjSHJb9ratfyzM6wCdLCOYLzs73qpg5c4iGA==
   /babel-jest/26.6.3_@babel+core@7.12.10:
     dependencies:
       '@babel/core': 7.12.10
@@ -2028,7 +2027,7 @@ packages:
       fs-extra: 3.0.1
       http-proxy: 1.18.1
       immutable: 3.8.2
-      localtunnel: 2.0.0
+      localtunnel: 2.0.1
       micromatch: 4.0.2
       opn: 5.3.0
       portscanner: 2.1.1
@@ -2101,13 +2100,13 @@ packages:
       node: '>=6'
     resolution:
       integrity: sha512-VvxA0xhNqIIfg0V9AmJkDg91DaJwryutH5rVEZAhcNi4iJFj9f+QxmAjgK1LT9I8OgToX27fypX6/MeCXVbBjQ==
-  /call-bind/1.0.0:
+  /call-bind/1.0.1:
     dependencies:
       function-bind: 1.1.1
       get-intrinsic: 1.0.2
     dev: false
     resolution:
-      integrity: sha512-AEXsYIyyDY3MCzbwdhzG3Jx1R0J2wetQyUynn6dYHAO+bg8l1k7jwZtRv4ryryFs7EP+NDlikJlVe59jr0cM2w==
+      integrity: sha512-tvAvUwNcRikl3RVF20X9lsYmmepsovzTWeJiXjO0PkJp15uy/6xKFZOQtuiSULwYW+6ToZBprphCgWXC2dSgcQ==
   /callsite/1.0.0:
     dev: false
     resolution:
@@ -2701,7 +2700,7 @@ packages:
       handlebars: 4.7.6
       json-stringify-safe: 5.0.1
       lodash: 4.17.20
-      meow: 8.1.0
+      meow: 8.1.2
       semver: 6.3.0
       split: 1.0.1
       through2: 4.0.2
@@ -2747,7 +2746,7 @@ packages:
       JSONStream: 1.3.5
       is-text-path: 1.0.1
       lodash: 4.17.20
-      meow: 8.1.0
+      meow: 8.1.2
       split2: 2.2.0
       through2: 4.0.2
       trim-off-newlines: 1.0.1
@@ -2764,7 +2763,7 @@ packages:
       conventional-commits-parser: 3.2.0
       git-raw-commits: 2.0.0
       git-semver-tags: 4.1.1
-      meow: 8.1.0
+      meow: 8.1.2
       q: 1.5.1
     dev: false
     engines:
@@ -2981,17 +2980,9 @@ packages:
     dev: false
     resolution:
       integrity: sha512-OX8XqP7/1a9cqkxYw2yXss15f26NKWBpDXQd0/uK/KPqdQhxbPa994hnzjcE2VqQpDslf55723cKPUOGSmMY3g==
-  /debug/4.1.1:
-    dependencies:
-      ms: 2.1.3
-    deprecated: 'Debug versions >=3.2.0 <3.2.7 || >=4 <4.3.1 have a low-severity ReDos regression when used in a Node.js environment. It is recommended you upgrade to 3.2.7 or 4.3.1. (https://github.com/visionmedia/debug/issues/797)'
-    dev: false
-    resolution:
-      integrity: sha512-pYAIzeRo8J6KPEaJ0VWOh5Pzkbw/RetuzehGM7QRRX5he4fPHx2rdKMB256ehJCkX+XRQm16eZLqLNS8RSZXZw==
   /debug/4.3.1:
     dependencies:
       ms: 2.1.2
-    dev: true
     engines:
       node: '>=6.0'
     peerDependencies:
@@ -3364,9 +3355,9 @@ packages:
     dev: false
     resolution:
       integrity: sha512-p5um32HOTO1kP+w7PRnB+5lQ43Z6muuMuIMffvDN8ZB4GcnjLBV6zGStpbASIMk4DCAvEaamhe2zhyCb/QXXsA==
-  /esbuild-jest/0.3.0_esbuild@0.8.30:
+  /esbuild-jest/0.3.0_esbuild@0.8.31:
     dependencies:
-      esbuild: 0.8.30
+      esbuild: 0.8.31
     dev: true
     peerDependencies:
       esbuild: '>=0.8.16'
@@ -3374,12 +3365,12 @@ packages:
       integrity: sha512-J1ZHN4IbQiLJAsCMK2XkPYZsTrD8ius+1B09RVqfrvmT+BnwGdR6CLvRq6DGopOaEmdkr4AIk/J6LQUhRQDsSg==
       registry: 'https://registry.npmjs.com/'
       tarball: 'https://registry.npmjs.com/esbuild-jest/-/esbuild-jest-0.3.0.tgz'
-  /esbuild/0.8.30:
+  /esbuild/0.8.31:
     dev: false
     hasBin: true
     requiresBuild: true
     resolution:
-      integrity: sha512-gCJQYUMO9QNrfpNOIiCnFoX41nWiPFCvURBQF+qWckyJ7gmw2xCShdKCXvS+RZcQ5krcxEOLIkzujqclePKhfw==
+      integrity: sha512-7EIU0VdUxltwivjVezX3HgeNzeIVR1snkrAo57WdUnuBMykdzin5rTrxwCDM6xQqj0RL/HjOEm3wFr2ijHKeaA==
   /escalade/3.1.1:
     engines:
       node: '>=6'
@@ -3764,14 +3755,14 @@ packages:
       node: '>=10'
     resolution:
       integrity: sha512-78/PXT1wlLLDgTzDs7sjq9hzz0vXD+zn+7wypEe4fXQxCmdmqfGsEPQxmiCSQI3ajFV91bVSsvNtrJRiW6nGng==
-  /find-versions/3.2.0:
+  /find-versions/4.0.0:
     dependencies:
-      semver-regex: 2.0.0
+      semver-regex: 3.1.2
     dev: true
     engines:
-      node: '>=6'
+      node: '>=10'
     resolution:
-      integrity: sha512-P8WRou2S+oe222TOCHitLy8zj+SIsVJh52VP4lvXkaFVnOFFdoWv1H1Jjvel1aI6NCFOAaeAVm8qrI0odiLcww==
+      integrity: sha512-wgpWy002tA+wgmO27buH/9KzyEOQnKsG/R0yrcjPT9BOFm0zRBVQbZ95nRGXWMywS8YR5knRbpohio0bcJABxQ==
   /find-yarn-workspace-root2/1.2.16:
     dependencies:
       micromatch: 4.0.2
@@ -3825,7 +3816,9 @@ packages:
     dev: false
     resolution:
       integrity: sha512-3Z4XhFZ3992uIq0XOqb9AreonueSYphE6oYbpt5+3u06JWklbsPkNv3ZKkP9Bz/r+1MWCaMoSQ28P85+1Yc77w==
-  /follow-redirects/1.13.1:
+  /follow-redirects/1.13.1_debug@4.3.1:
+    dependencies:
+      debug: 4.3.1
     dev: false
     engines:
       node: '>=4.0'
@@ -3836,14 +3829,6 @@ packages:
         optional: true
     resolution:
       integrity: sha512-SSG5xmZh1mkPGyKzjZP8zLjltIfpW32Y5QpdNJyjcfGxK3qo3NDDkZOZSFiGn1A6SclQxY9GzEwAHQ3dmYRWpg==
-  /follow-redirects/1.5.10:
-    dependencies:
-      debug: 3.1.0
-    dev: false
-    engines:
-      node: '>=4.0'
-    resolution:
-      integrity: sha512-0V5l4Cizzvqt5D44aTXbFZz+FtyXV1vrDN6qrelxtfYQKW0KO0W2T/hkE8xvGa/540LkZlkaUjO4ailYTFtHVQ==
   /for-in/1.0.2:
     engines:
       node: '>=0.10.0'
@@ -4105,7 +4090,7 @@ packages:
     dependencies:
       dargs: 7.0.0
       lodash.template: 4.5.0
-      meow: 8.1.0
+      meow: 8.1.2
       split2: 3.2.2
       through2: 4.0.2
     engines:
@@ -4124,7 +4109,7 @@ packages:
       integrity: sha1-UoJlna4hBxRaERJhEq0yFuxfpl8=
   /git-semver-tags/4.1.1:
     dependencies:
-      meow: 8.1.0
+      meow: 8.1.2
       semver: 6.3.0
     dev: false
     engines:
@@ -4316,16 +4301,16 @@ packages:
     hasBin: true
     resolution:
       integrity: sha512-zzGBl5fHo0EKSXsHzjspp3y5CONegCm8ErO5Qh0UzFzk2y4tMvzLWhoDokADbarfZRL2pGpRp7yt6gfJX4ph7A==
-  /gulp-esbuild/0.3.13:
+  /gulp-esbuild/0.3.14:
     dependencies:
-      esbuild: 0.8.30
+      esbuild: 0.8.31
       plugin-error: 1.0.1
       vinyl: 2.2.1
     dev: false
     engines:
       node: '>=8.6.0'
     resolution:
-      integrity: sha512-5AmhT5VreULUuhRD9PkvFzPDZTUnY7gwPa95pAr6ued2JrMZo229ifpkZz+txqxi0t60y7ae6Q4gvqsgoxDrJA==
+      integrity: sha512-t07JZxkeRgZnX3cmKFCqTPI/lWIkhHs4n90nD9AG+YJGPF/HMsKGFtoqzuVnvXoolobmu+bS5EGVSJIKo9Pmcw==
   /gulp-plumber/1.2.1:
     dependencies:
       chalk: 1.1.3
@@ -4570,7 +4555,7 @@ packages:
   /http-proxy/1.18.1:
     dependencies:
       eventemitter3: 4.0.7
-      follow-redirects: 1.13.1
+      follow-redirects: 1.13.1_debug@4.3.1
       requires-port: 1.0.0
     dev: false
     engines:
@@ -4597,15 +4582,15 @@ packages:
       node: '>=8.12.0'
     resolution:
       integrity: sha512-SEQu7vl8KjNL2eoGBLF3+wAjpsNfA9XMlXAYj/3EdaNfAlxKthD1xjEQfGOUhllCGGJVNY34bRr6lPINhNjyZw==
-  /husky/4.3.6:
+  /husky/4.3.7:
     dependencies:
       chalk: 4.1.0
       ci-info: 2.0.0
       compare-versions: 3.6.0
       cosmiconfig: 7.0.0
-      find-versions: 3.2.0
+      find-versions: 4.0.0
       opencollective-postinstall: 2.0.3
-      pkg-dir: 4.2.0
+      pkg-dir: 5.0.0
       please-upgrade-node: 3.2.0
       slash: 3.0.0
       which-pm-runs: 1.0.0
@@ -4615,9 +4600,7 @@ packages:
     hasBin: true
     requiresBuild: true
     resolution:
-      integrity: sha512-o6UjVI8xtlWRL5395iWq9LKDyp/9TE7XMOTvIpEVzW638UcGxTmV5cfel6fsk/jbZSTlvfGVJf2svFtybcIZag==
-      registry: 'https://registry.npmjs.com/'
-      tarball: 'https://registry.npmjs.com/husky/-/husky-4.3.6.tgz'
+      integrity: sha512-0fQlcCDq/xypoyYSJvEuzbDPHFf8ZF9IXKJxlrnvxABTSzK1VPT2RKYQKrcgJ+YD39swgoB6sbzywUqFxUiqjw==
   /iconv-lite/0.4.24:
     dependencies:
       safer-buffer: 2.1.2
@@ -4794,12 +4777,6 @@ packages:
   /is-buffer/1.1.6:
     resolution:
       integrity: sha512-NcdALwpXkTm5Zvvbk7owOUSvVvBKDgKP5/ewfXEznmQFfs4ZRmanOeKBTjRVjka3QFoN6XJ+9F3USqfHqTaU5w==
-  /is-buffer/2.0.5:
-    dev: false
-    engines:
-      node: '>=4'
-    resolution:
-      integrity: sha512-i2R6zNFDwgEHJyQUtJEk0XFi1i0dPFn/oqjK3/vPCcDeJvW5NQ83V8QbicfF1SupOaB0h8ntgBC2YiE7dfyctQ==
   /is-ci/2.0.0:
     dependencies:
       ci-info: 2.0.0
@@ -5925,18 +5902,18 @@ packages:
       node: '>=6'
     resolution:
       integrity: sha512-OfCBkGEw4nN6JLtgRidPX6QxjBQGQf72q3si2uvqyFEMbycSFFHwAZeXx6cJgFM9wmLrf9zBwCP3Ivqa+LLZPw==
-  /localtunnel/2.0.0:
+  /localtunnel/2.0.1:
     dependencies:
-      axios: 0.19.0
-      debug: 4.1.1
+      axios: 0.21.1_debug@4.3.1
+      debug: 4.3.1
       openurl: 1.1.1
-      yargs: 13.3.0
+      yargs: 16.2.0
     dev: false
     engines:
       node: '>=8.3.0'
     hasBin: true
     resolution:
-      integrity: sha512-g6E0aLgYYDvQDxIjIXkgJo2+pHj3sGg4Wz/XP3h2KtZnRsWPbOQY+hw1H8Z91jep998fkcVE9l+kghO+97vllg==
+      integrity: sha512-LiaI5wZdz0xFkIQpXbNI62ZnNn8IMsVhwxHmhA+h4vj8R9JG/07bQHWwQlyy7b95/5fVOCHJfIHv+a5XnkvaJA==
   /locate-path/2.0.0:
     dependencies:
       p-locate: 2.0.0
@@ -6156,7 +6133,7 @@ packages:
       node: '>=8'
     resolution:
       integrity: sha512-3YffViIt2QWgTy6Pale5QpopX/IvU3LPL03jOTqp6pGj3VjesdO/U8CuHMKpnQr4shCNCM5fd5XFFvIIl6JBHg==
-  /meow/8.1.0:
+  /meow/8.1.2:
     dependencies:
       '@types/minimist': 1.2.1
       camelcase-keys: 6.2.2
@@ -6172,7 +6149,7 @@ packages:
     engines:
       node: '>=10'
     resolution:
-      integrity: sha512-fNWkgM1UVMey2kf24yLiccxLihc5W+6zVus3/N0b+VfnJgxV99E9u04X6NAiKdg6ED7DAQBX5sy36NM0QJZkWA==
+      integrity: sha512-r85E3NdZ+mpYk1C6RjPFEMSE+s1iZMuHtsHAqY0DT3jZczl0diWUZ8g6oU7h0M9cD2EL+PzaYghhCLzR0ZNn5Q==
   /merge-stream/2.0.0:
     resolution:
       integrity: sha512-abv/qOcuPfk3URPfDzmZU1LKmuw8kT+0nIHvKrKgFrwifol/doWcdA4ZqsWQ8ENrFKkd67Mfpo/LovbIUsbt3w==
@@ -6307,13 +6284,8 @@ packages:
     resolution:
       integrity: sha1-VgiurfwAvmwpAd9fmGF4jeDVl8g=
   /ms/2.1.2:
-    dev: true
     resolution:
       integrity: sha512-sGkPx+VjMtmA6MX27oA4FBFELFCZZ4S4XqeGOXCv68tT+jb3vk/RyaKWP0PTKyWtmLSM0b+adUTEvbs1PEaH2w==
-  /ms/2.1.3:
-    dev: false
-    resolution:
-      integrity: sha512-6FlzubTLZG3J2a/NVCAleEhjzq5oxgHyaCU9yYXvcLsvoVaHJq/s5xXI6/XXP6tz7R9xAOtHnSO/tXtF3WRTlA==
   /mute-stdout/1.0.1:
     dev: false
     engines:
@@ -6573,7 +6545,7 @@ packages:
       integrity: sha1-95xEk68MU3e1n+OdOV5BBC3QRbs=
   /object.assign/4.1.2:
     dependencies:
-      call-bind: 1.0.0
+      call-bind: 1.0.1
       define-properties: 1.1.3
       has-symbols: 1.0.1
       object-keys: 1.1.1
@@ -7044,6 +7016,14 @@ packages:
       node: '>=8'
     resolution:
       integrity: sha512-HRDzbaKjC+AOWVXxAU/x54COGeIv9eb+6CkDSQoNTt4XyWoIJvuPsXizxu/Fr23EiekbtZwmh1IcIG/l/a10GQ==
+  /pkg-dir/5.0.0:
+    dependencies:
+      find-up: 5.0.0
+    dev: true
+    engines:
+      node: '>=10'
+    resolution:
+      integrity: sha512-NPE8TDbzl/3YQYY7CSS228s3g2ollTFnc+Qi3tqmqJp9Vg2ovUpixcJEo2HJScN2Ez+kEaal6y70c0ehqJBJeA==
   /please-upgrade-node/3.2.0:
     dependencies:
       semver-compare: 1.0.0
@@ -7855,12 +7835,12 @@ packages:
       node: '>= 0.10'
     resolution:
       integrity: sha1-E+jCZYq5aRywzXEJMkAoDTb3els=
-  /semver-regex/2.0.0:
+  /semver-regex/3.1.2:
     dev: true
     engines:
-      node: '>=6'
+      node: '>=8'
     resolution:
-      integrity: sha512-mUdIBBvdn0PLOeP3TEkMH7HHeUP3GjsXCwKarjv/kGmUFOYg1VqEemKhoQpWMu6X2I8kHeuVdGibLGkVK+/5Qw==
+      integrity: sha512-bXWyL6EAKOJa81XG1OZ/Yyuq+oT0b2YLlxx7c+mrdYPaPbnj6WgVULXhinMIeZGufuUBu/eVRqXEhiv4imfwxA==
   /semver/5.3.0:
     dev: false
     hasBin: true
@@ -8101,7 +8081,7 @@ packages:
       indexof: 0.0.1
       parseqs: 0.0.6
       parseuri: 0.0.6
-      socket.io-parser: 3.3.1
+      socket.io-parser: 3.3.2
       to-array: 0.1.4
     dev: false
     resolution:
@@ -8114,14 +8094,14 @@ packages:
     dev: false
     resolution:
       integrity: sha512-FYiBx7rc/KORMJlgsXysflWx/RIvtqZbyGLlHZvjfmPTPeuD/I8MaW7cfFrj5tRltICJdgwflhfZ3NVVbVLFQA==
-  /socket.io-parser/3.3.1:
+  /socket.io-parser/3.3.2:
     dependencies:
       component-emitter: 1.3.0
       debug: 3.1.0
       isarray: 2.0.1
     dev: false
     resolution:
-      integrity: sha512-1QLvVAe8dTz+mKmZ07Swxt+LAo4Y1ff50rlyoEx00TQmDFVQYPfcqGvIDJLGaBdhdNCecXtyKpD+EgKGcmmbuQ==
+      integrity: sha512-FJvDBuOALxdCI9qwRrO/Rfp9yfndRtc1jSgVgV8FDraihmSP/MLGD5PEuJrNfjALvcQ+vMDM/33AWOYP/JSjDg==
   /socket.io/2.1.1:
     dependencies:
       debug: 3.1.0
@@ -9043,11 +9023,11 @@ packages:
       node: '>=4'
     resolution:
       integrity: sha512-aZwGpamFO61g3OlfT7OQCHqhGnW43ieH9WZeP7QxN/G/jS4jfqUkZxoryvJgVPEcrl5NL/ggHsSmLMHuH64Lhg==
-  /uri-js/4.4.0:
+  /uri-js/4.4.1:
     dependencies:
       punycode: 2.1.1
     resolution:
-      integrity: sha512-B0yRTzYdUCCn9n+F4+Gh4yIDtMQcaJsmYBDsTSG8g/OejKBodLQ2IHfN3bM7jUsRXndopT7OIXWdYqc1fjmV6g==
+      integrity: sha512-7rKUyy33Q1yc98pQ1DAmLtwX109F7TIfWlW1Ydo8Wl1ii1SeHieeh0HHfPeL2fMXK6z0s8ecKs9frCuLJvndBg==
   /urix/0.1.0:
     deprecated: 'Please see https://github.com/lydell/urix#deprecated'
     resolution:
@@ -9494,21 +9474,6 @@ packages:
     dev: false
     resolution:
       integrity: sha512-T69y4Ps64LNesYxeYGYPvfoMTt/7y1XtfpIslUeK4um+9Hu7hlGoRtaDLvdXb7+/tfq4opVa2HRY5xGip022rQ==
-  /yargs/13.3.0:
-    dependencies:
-      cliui: 5.0.0
-      find-up: 3.0.0
-      get-caller-file: 2.0.5
-      require-directory: 2.1.1
-      require-main-filename: 2.0.0
-      set-blocking: 2.0.0
-      string-width: 3.1.0
-      which-module: 2.0.0
-      y18n: 4.0.1
-      yargs-parser: 13.1.2
-    dev: false
-    resolution:
-      integrity: sha512-2eehun/8ALW8TLoIl7MVaRUrg+yCnenu8B4kBlRxj3GJGDKU1Og7sMXPNm1BYyM1DOJmTZ4YeN/Nwxv+8XJsUA==
   /yargs/13.3.2:
     dependencies:
       cliui: 5.0.0
