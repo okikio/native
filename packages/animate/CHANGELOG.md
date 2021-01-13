@@ -2,6 +2,20 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.0.0](https://github.com/okikio/native/compare/@okikio/animate@1.3.0...@okikio/animate@2.0.0) (2021-01-13)
+
+
+### ⚠ BREAKING CHANGES
+
+* **@okikio/animate:** Pause & Play will work the native way regardless of current player state (this may
+cause unexpected errors)
+
+...
+
+### Bug Fixes
+
+* **@okikio/animate:** fix pause not working on looping animations ([20adbec](https://github.com/okikio/native/commit/20adbec8c18da39b80894c03a8ffd88aa5b11f40))
+
 ## [1.3.0](https://github.com/okikio/native/compare/@okikio/animate@1.2.0...@okikio/animate@1.3.0) (2021-01-04)
 
 
