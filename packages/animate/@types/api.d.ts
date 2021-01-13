@@ -4,9 +4,9 @@ export declare type AnimationTarget = string | Node | NodeList | HTMLCollection 
 export declare const getElements: (selector: string | Node) => Node[];
 export declare const getTargets: (targets: AnimationTarget) => Node[];
 export declare type closureArgs = [number, number, HTMLElement];
-export declare type closure = ((index?: number, total?: number, element?: HTMLElement) => any) | any;
-export declare const computeValue: (value: closure, args: closureArgs, context: AnimationOptions) => any;
-export declare const mapObject: (obj: object, args: closureArgs, options: AnimationOptions) => any;
+export declare type closure = ((index?: number, total?: number, element?: HTMLElement) => (genericTypes[] | void)) | any;
+export declare const computeValue: (value: closure, args: closureArgs, context: Animate) => any;
+export declare const mapObject: (obj: object, args: closureArgs, options: Animate) => any;
 /** From: [https://easings.net] */
 export declare const easings: {
     in: string;
@@ -38,6 +38,7 @@ export declare const easings: {
     "in-out-back": string;
 };
 export declare const getEase: (ease: string) => any;
+export declare type genericTypes = genericTypes[] | boolean | object | string | number | closure | null | undefined;
 export interface AnimationOptions {
     target?: AnimationTarget;
     speed?: number;
@@ -47,13 +48,13 @@ export interface AnimationOptions {
     easing?: string | closure;
     endDelay?: number | closure;
     duration?: number | closure;
-    keyframes?: object[] | closure;
+    keyframes?: Keyframe[] | object[] | closure;
     loop?: number | boolean | closure;
     onfinish?: (element?: HTMLElement, index?: number, total?: number, animation?: Animation) => any;
     fillMode?: "none" | "forwards" | "backwards" | "both" | "auto" | closure;
     direction?: "normal" | "reverse" | "alternate" | "alternate-reverse" | closure;
     extend?: EffectTiming;
-    [property: string]: closure | boolean | object | string | string[] | number | null | (number | null)[] | undefined;
+    [property: string]: genericTypes;
 }
 export declare const DefaultAnimationOptions: AnimationOptions;
 export declare type AnimationEvents = "update" | "play" | "pause" | "start" | "begin" | "complete" | "finish" | "error" | "stop";

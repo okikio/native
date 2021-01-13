@@ -21,14 +21,14 @@ export const getTargets = (targets: AnimationTarget): Node[] => {
 
 // VALUES
 export type closureArgs = [number, number, HTMLElement];
-export type closure = ((index?: number, total?: number, element?: HTMLElement) => any) | any;
-export const computeValue = (value: closure, args: closureArgs, context: AnimationOptions) => {
+export type closure = ((index?: number, total?: number, element?: HTMLElement) => (genericTypes[] | void)) | any;
+export const computeValue = (value: closure, args: closureArgs, context: Animate) => {
     if (typeof value === "function") {
         return value.apply(context, args);
     } else { return value; }
 };
 
-export const mapObject = (obj: object, args: closureArgs, options: AnimationOptions): any => {
+export const mapObject = (obj: object, args: closureArgs, options: Animate): any => {
     let key: string, value: any, result = {};
     let keys = Object.keys(obj);
     for (let i = 0, len = keys.length; i < len; i++) {
@@ -91,6 +91,7 @@ export const getEase = (ease: string) => {
     return /^(in|out)/.test(ease) ? easings[ease] : ease;
 };
 
+export type genericTypes = genericTypes[] | boolean | object | string | number | closure | null | undefined;
 export interface AnimationOptions {
     target?: AnimationTarget,
 
@@ -101,13 +102,13 @@ export interface AnimationOptions {
     easing?: string | closure,
     endDelay?: number | closure,
     duration?: number | closure,
-    keyframes?: object[] | closure,
+    keyframes?: Keyframe[] | object[] | closure,
     loop?: number | boolean | closure, // iterations: number,
     onfinish?: (element?: HTMLElement, index?: number, total?: number, animation?: Animation) => any,
     fillMode?: "none" | "forwards" | "backwards" | "both" | "auto" | closure,
     direction?: "normal" | "reverse" | "alternate" | "alternate-reverse" | closure,
     extend?: EffectTiming,
-    [property: string]: closure | boolean | object | string | string[] | number | null | (number | null)[] | undefined;
+    [property: string]: genericTypes;
 };
 
 export const DefaultAnimationOptions: AnimationOptions = {
@@ -235,15 +236,15 @@ export class Animate {
                 // Accept keyframes as a keyframes Object, or a method,
                 // if there are no animations in the keyframes array,
                 // uses css properties from the options object
-                let arrKeyframes = computeValue((keyframes as Keyframe[]), [i, len, target], animationOptions);
+                let arrKeyframes = computeValue((keyframes as Keyframe[]), [i, len, target], this);
                 animationKeyframe = arrKeyframes.length ? arrKeyframes :
                     (this.properties as PropertyIndexedKeyframes);
 
                 // Allows the use of functions as the values, for both the keyframes and the animation object
                 // It adds the capability of advanced stagger animation, similar to the anime js stagger functions
-                animationOptions = mapObject(animationOptions, [i, len, target], animationOptions);
+                animationOptions = mapObject(animationOptions, [i, len, target], this);
                 if (!(arrKeyframes.length > 0))
-                    animationKeyframe = mapObject(animationKeyframe, [i, len, target], animationOptions);
+                    animationKeyframe = mapObject(animationKeyframe, [i, len, target], this);
 
                 // Set the Animate classes duration to be the Animation with the largest totalDuration
                 let tempDurations = animationOptions.delay +
@@ -252,7 +253,7 @@ export class Animate {
                 if (this.totalDuration < tempDurations) this.totalDuration = tempDurations;
 
                 // Add animation to the Animations Set
-                let animation = target.animate(animationKeyframe, animationOptions);
+                let animation = target.animate(animationKeyframe, animationOptions as KeyframeAnimationOptions);
 
                 // Support for on finish
                 animation.onfinish = () => {
@@ -371,12 +372,10 @@ export class Animate {
      */
     public play(): Animate {
         let playstate = this.getPlayState();
-        if (playstate !== "finished") {
-            this.beginEvent();
-            this.animationFrame = requestAnimationFrame(this.loop);
-            this.all(anim => anim.playState == "paused" && anim.play());
-            this.emit("play", playstate, this);
-        }
+        this.beginEvent();
+        this.animationFrame = requestAnimationFrame(this.loop);
+        this.all(anim => anim.play());
+        this.emit("play", playstate, this);
         return this;
     }
 
@@ -385,11 +384,9 @@ export class Animate {
      */
     public pause(): Animate {
         let playstate = this.getPlayState();
-        if (playstate !== "finished") {
-            this.all(anim => anim.playState == "running" && anim.pause());
-            window.cancelAnimationFrame(this.animationFrame);
-            this.emit("pause", playstate, this);
-        }
+        this.all(anim => anim.pause());
+        window.cancelAnimationFrame(this.animationFrame);
+        this.emit("pause", playstate, this);
         return this;
     }
 

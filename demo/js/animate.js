@@ -308,11 +308,11 @@ var Animate = class {
           fill: fillMode,
           ...extend
         };
-        let arrKeyframes = computeValue(keyframes, [i, len, target2], animationOptions);
+        let arrKeyframes = computeValue(keyframes, [i, len, target2], this);
         animationKeyframe = arrKeyframes.length ? arrKeyframes : this.properties;
-        animationOptions = mapObject(animationOptions, [i, len, target2], animationOptions);
+        animationOptions = mapObject(animationOptions, [i, len, target2], this);
         if (!(arrKeyframes.length > 0))
-          animationKeyframe = mapObject(animationKeyframe, [i, len, target2], animationOptions);
+          animationKeyframe = mapObject(animationKeyframe, [i, len, target2], this);
         let tempDurations = animationOptions.delay + animationOptions.duration * animationOptions.iterations + animationOptions.endDelay;
         if (this.totalDuration < tempDurations)
           this.totalDuration = tempDurations;
@@ -388,21 +388,17 @@ var Animate = class {
   }
   play() {
     let playstate = this.getPlayState();
-    if (playstate !== "finished") {
-      this.beginEvent();
-      this.animationFrame = requestAnimationFrame(this.loop);
-      this.all((anim) => anim.playState == "paused" && anim.play());
-      this.emit("play", playstate, this);
-    }
+    this.beginEvent();
+    this.animationFrame = requestAnimationFrame(this.loop);
+    this.all((anim) => anim.play());
+    this.emit("play", playstate, this);
     return this;
   }
   pause() {
     let playstate = this.getPlayState();
-    if (playstate !== "finished") {
-      this.all((anim) => anim.playState == "running" && anim.pause());
-      window.cancelAnimationFrame(this.animationFrame);
-      this.emit("pause", playstate, this);
-    }
+    this.all((anim) => anim.pause());
+    window.cancelAnimationFrame(this.animationFrame);
+    this.emit("pause", playstate, this);
     return this;
   }
   reset() {

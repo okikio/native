@@ -34,10 +34,10 @@
         "gulp-sass": "^4.1.0",
         "gzip-size": "^6.0.0",
         "merge-stream": "^2.0.0",
-        "pnpm": "^5.14.3",
+        "pnpm": "^5.15.0",
         "pretty-bytes": "^5.5.0",
         "standard-version": "^9.1.0",
-        "ultra-runner": "^3.8.0"
+        "ultra-runner": "^3.9.0"
     },
     "devDependencies": {
         "@changesets/cli": "^2.12.0",
