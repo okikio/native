@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [2.0.1](https://github.com/okikio/native/compare/@okikio/animate@2.0.0...@okikio/animate@2.0.1) (2021-01-14)
+
+
+### Bug Fixes
+
+* :bug: fix cancel animation frame bug ([6e7e7d2](https://github.com/okikio/native/commit/6e7e7d2546229ef816cde68a2ae6cfd98a656b1b))
+
 ## [2.0.0](https://github.com/okikio/native/compare/@okikio/animate@1.3.0...@okikio/animate@2.0.0) (2021-01-13)
 
 
