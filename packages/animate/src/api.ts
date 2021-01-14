@@ -284,7 +284,7 @@ export class Animate {
             this.promise = this.newPromise();
             this.mainAnimation.onfinish = () => {
                 this.emit("complete", this);
-                window.cancelAnimationFrame(this.animationFrame);
+                this.stopLoop();
             };
         } catch (err) {
             this.emit("error", err);
@@ -342,8 +342,16 @@ export class Animate {
      * Represents an Animation Frame Loop
      */
     public loop(): void {
-        this.animationFrame = window.requestAnimationFrame(this.loop);
+        this.stopLoop();
         this.emit("update", this.getProgress(), this);
+        this.animationFrame = window.requestAnimationFrame(this.loop);
+    }
+
+    /**
+     * Cancels animation frame
+     */
+    public stopLoop() {
+        window.cancelAnimationFrame(this.animationFrame);
     }
 
     /**
@@ -373,9 +381,9 @@ export class Animate {
     public play(): Animate {
         let playstate = this.getPlayState();
         this.beginEvent();
-        this.animationFrame = requestAnimationFrame(this.loop);
         this.all(anim => anim.play());
         this.emit("play", playstate, this);
+        this.loop();
         return this;
     }
 
@@ -383,10 +391,11 @@ export class Animate {
      * Pause Animation
      */
     public pause(): Animate {
-        window.cancelAnimationFrame(this.animationFrame);
         let playstate = this.getPlayState();
         this.all(anim => anim.pause());
         this.emit("pause", playstate, this);
+        this.stopLoop();
+        this.animationFrame = undefined;
         return this;
     }
 
@@ -407,7 +416,7 @@ export class Animate {
      */
     public cancel() {
         this.all(anim => anim.cancel());
-        window.cancelAnimationFrame(this.animationFrame);
+        this.stopLoop();
         return this;
     }
 
@@ -416,7 +425,7 @@ export class Animate {
      */
     public finish() {
         this.all(anim => anim.finish());
-        window.cancelAnimationFrame(this.animationFrame);
+        this.stopLoop();
         return this;
     }
 
