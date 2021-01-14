@@ -2,6 +2,8 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [2.0.2](https://github.com/okikio/native/compare/@okikio/emitter@2.0.1...@okikio/emitter@2.0.2) (2021-01-14)
+
 ### [2.0.1](https://github.com/okikio/native/compare/@okikio/emitter@2.0.0...@okikio/emitter@2.0.1) (2021-01-14)
 
 
