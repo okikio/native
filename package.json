@@ -14,7 +14,8 @@
         "test": "ultra -r test",
         "test:watch": "ultra -r test:watch",
         "pre-release": "ultra -r pre-release && pnpm run demo:build",
-        "release": "ultra -r --concurrency 1 changelog && git push --follow-tags origin master && pnpm -r publish --tag latest"
+        "changelog": "ultra -r --concurrency 1 changelog && git push --follow-tags origin master",
+        "release": "pnpm -r publish --tag latest"
     },
     "husky": {
         "hooks": {
