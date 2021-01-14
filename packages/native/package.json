@@ -66,7 +66,7 @@
         "@okikio/animate": "workspace:*",
         "@okikio/emitter": "workspace:*",
         "@okikio/manager": "workspace:*",
-        "esbuild": "^0.8.31",
+        "esbuild": "^0.8.32",
         "gzip-size": "^6.0.0",
         "pretty-bytes": "^5.5.0",
         "standard-version": "^9.1.0",

@@ -383,9 +383,9 @@ export class Animate {
      * Pause Animation
      */
     public pause(): Animate {
+        window.cancelAnimationFrame(this.animationFrame);
         let playstate = this.getPlayState();
         this.all(anim => anim.pause());
-        window.cancelAnimationFrame(this.animationFrame);
         this.emit("pause", playstate, this);
         return this;
     }

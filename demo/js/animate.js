@@ -395,9 +395,9 @@ var Animate = class {
     return this;
   }
   pause() {
+    window.cancelAnimationFrame(this.animationFrame);
     let playstate = this.getPlayState();
     this.all((anim) => anim.pause());
-    window.cancelAnimationFrame(this.animationFrame);
     this.emit("pause", playstate, this);
     return this;
   }
@@ -616,5 +616,8 @@ var animate = (options = {}) => {
       anim.pause();
     else
       anim.play();
+  });
+  anim.on("update", () => {
+    console.log("Go");
   });
 })();

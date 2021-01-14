@@ -134,4 +134,8 @@ import { animate } from "@okikio/native";
         if (anim.getPlayState() === "running") anim.pause();
         else anim.play();
     });
+
+    anim.on("update", () => {
+        console.log("Go")
+    });
 })();
