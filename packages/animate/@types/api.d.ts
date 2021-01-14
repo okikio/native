@@ -130,6 +130,10 @@ export declare class Animate {
      */
     loop(): void;
     /**
+     * Cancels animation frame
+     */
+    stopLoop(): void;
+    /**
      * Calls a method that affects all animations including the mainAnimation; the method only allows the animation parameter
     */
     all(method: (animation: Animation) => void): this;

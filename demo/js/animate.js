@@ -341,7 +341,7 @@ var Animate = class {
       this.promise = this.newPromise();
       this.mainAnimation.onfinish = () => {
         this.emit("complete", this);
-        window.cancelAnimationFrame(this.animationFrame);
+        this.stopLoop();
       };
     } catch (err) {
       this.emit("error", err);
@@ -370,8 +370,12 @@ var Animate = class {
     return this;
   }
   loop() {
-    this.animationFrame = window.requestAnimationFrame(this.loop);
+    this.stopLoop();
     this.emit("update", this.getProgress(), this);
+    this.animationFrame = window.requestAnimationFrame(this.loop);
+  }
+  stopLoop() {
+    window.cancelAnimationFrame(this.animationFrame);
   }
   all(method) {
     method(this.mainAnimation);
@@ -389,16 +393,17 @@ var Animate = class {
   play() {
     let playstate = this.getPlayState();
     this.beginEvent();
-    this.animationFrame = requestAnimationFrame(this.loop);
     this.all((anim) => anim.play());
     this.emit("play", playstate, this);
+    this.loop();
     return this;
   }
   pause() {
-    window.cancelAnimationFrame(this.animationFrame);
     let playstate = this.getPlayState();
     this.all((anim) => anim.pause());
     this.emit("pause", playstate, this);
+    this.stopLoop();
+    this.animationFrame = void 0;
     return this;
   }
   reset() {
@@ -412,12 +417,12 @@ var Animate = class {
   }
   cancel() {
     this.all((anim) => anim.cancel());
-    window.cancelAnimationFrame(this.animationFrame);
+    this.stopLoop();
     return this;
   }
   finish() {
     this.all((anim) => anim.finish());
-    window.cancelAnimationFrame(this.animationFrame);
+    this.stopLoop();
     return this;
   }
   stop() {
