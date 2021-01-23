@@ -14,12 +14,7 @@
                 "import": "./lib/api.es.js",
                 "default": "./lib/api.es.js"
             },
-            "./src/*": "./src/*.ts",
-            "./lib/*": "./lib/*.js",
-            "./ts": "./src/api.ts",
-            "./es": "./lib/api.es.js",
-            "./cjs": "./lib/api.cjs.js",
-            "./iife": "./lib/api.js"
+            "./lib/*": "./lib/*.js"
         }
     },
     "main": "src/api.ts",
