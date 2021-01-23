@@ -1,5 +1,4 @@
-const { source } = require("./package.json");
-
+const source = "src/api.ts";
 const globalName = "manager";
 const { startService } = require("esbuild");
 const gzipSize = require("gzip-size");

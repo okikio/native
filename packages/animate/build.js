@@ -1,5 +1,4 @@
-const { source } = require("./package.json");
-
+const source = "src/api.ts";
 const globalName = "animate";
 const { startService } = require("esbuild");
 const gzipSize = require("gzip-size");
