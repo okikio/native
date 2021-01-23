@@ -17,6 +17,17 @@
         "changelog": "ultra -r --concurrency 1 changelog && git push --follow-tags origin master",
         "release": "pnpm -r publish --tag latest"
     },
+    "changelog": {
+        "repo": "okikio/native",
+        "labels": {
+          "breaking": ":boom: Breaking Change",
+          "enhancement": ":rocket: Enhancement",
+          "bug": ":bug: Bug Fix",
+          "documentation": ":memo: Documentation",
+          "internal": ":house: Internal"
+        },
+        "cacheDir": ".changelog"
+    },
     "husky": {
         "hooks": {
             "commit-msg": "commitlint -E HUSKY_GIT_PARAMS --verbose"
@@ -39,6 +50,7 @@
         "gulp-sass": "^4.1.0",
         "gzip-size": "^6.0.0",
         "husky": "^4.3.8",
+        "lerna-changelog": "^1.0.1",
         "merge-stream": "^2.0.0",
         "pnpm": "^5.15.2",
         "pretty-bytes": "^5.5.0",
