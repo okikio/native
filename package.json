@@ -14,7 +14,7 @@
         "test": "ultra -r test",
         "test:watch": "ultra -r test:watch",
         "pre-release": "ultra -r pre-release && pnpm run demo:build",
-        "changelog": "ultra -r --concurrency 1 changelog && git push --follow-tags origin master",
+        "changelog": "ultra -r --concurrency 1 changelog && lerna-changelog && git push --follow-tags origin master",
         "release": "pnpm -r publish --tag latest"
     },
     "changelog": {
