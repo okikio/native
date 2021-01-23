@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [2.0.3](https://github.com/okikio/native/compare/@okikio/manager@2.0.2...@okikio/manager@2.0.3) (2021-01-23)
+
+
+### Bug Fixes
+
+* **package.json:** fix skypack and bundlephobia's issues with source field and dependencies ([5b6d057](https://github.com/okikio/native/commit/5b6d057c3ca8f36b01d64dacbdde087065abdd3d))
+
 ### [2.0.2](https://github.com/okikio/native/compare/@okikio/manager@2.0.1...@okikio/manager@2.0.2) (2021-01-14)
 
 ### [2.0.1](https://github.com/okikio/native/compare/@okikio/manager@2.0.0...@okikio/manager@2.0.1) (2021-01-14)
