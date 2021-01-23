@@ -66,7 +66,7 @@ task("js", async () => {
         import("gulp-rename"),
     ]);
 
-    const esbuild = gulpEsBuild; // mode == "watch" ? createGulpEsbuild() :
+    const esbuild = mode == "watch" ? createGulpEsbuild() : gulpEsBuild; //
     return stream(`${tsFolder}/*.ts`, {
         pipes: [
             // Bundle Modules
@@ -95,13 +95,30 @@ task("watch", async () => {
     browserSync = bs.create();
     browserSync.init(
         {
-            server: destFolder,
+            // server: destFolder,
+            notify: true,
+            server: {
+                baseDir: destFolder,
+                serveStaticOptions: {
+                    extensions: ["html"],
+                },
+            },
             serveStatic: [
                 {
                     route: "/lib",
                     dir: ["./lib"],
                 },
             ],
+            cors: true,
+            online: true,
+            reloadOnRestart: true,
+            scrollThrottle: 250,
+            middleware: function (req, res, next) {
+                res.setHeader("Access-Control-Allow-Origin", "*");
+                res.setHeader("Access-Control-Allow-Methods", "GET");
+                res.setHeader("Access-Control-Allow-Headers", "Content-Type");
+                next();
+            },
         },
         (_err, bs) => {
             bs.addMiddleware("*", (_req, res) => {

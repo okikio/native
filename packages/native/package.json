@@ -23,7 +23,6 @@
         }
     },
     "main": "src/api.ts",
-    "source": "src/api.ts",
     "directories": {
         "lib": "./lib"
     },
@@ -65,15 +64,15 @@
     "dependencies": {
         "@okikio/animate": "workspace:*",
         "@okikio/emitter": "workspace:*",
-        "@okikio/manager": "workspace:*",
-        "esbuild": "^0.8.32",
+        "@okikio/manager": "workspace:*"
+    },
+    "devDependencies": {
+        "chokidar": "^3.5.1",
+        "esbuild": "^0.8.34",
         "gzip-size": "^6.0.0",
         "pretty-bytes": "^5.5.0",
         "standard-version": "^9.1.0",
         "typescript": "^4.1.3"
-    },
-    "devDependencies": {
-        "chokidar": "^3.5.0"
     },
     "gitHead": "ad422076cdb57d570426f786886129d5bca2f90f"
 }
