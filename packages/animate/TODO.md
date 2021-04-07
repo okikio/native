@@ -2,8 +2,9 @@
 
 * [x] Update README.md
 * [x] Create TODO.md
+* [ ] Add the `.is()` method for testing states, e.g. running, paused 
 * [ ] Use Cypress to automate Demo tests 
-* [ ] Add Timeline Class and method
+* [ ] Add Timeline Class and methods
 * [ ] Support events before, after, and during loop
 * [ ] Fix inconsistencies with Web Animation API
 * [ ] Make smaller and faster
