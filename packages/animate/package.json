@@ -1,6 +1,7 @@
 {
     "name": "@okikio/animate",
     "version": "2.0.4",
+    "type": "module",
     "description": "An animation library for the modern web which utilizes the Web Animation API (WAAPI) to create butter smooth animation.",
     "publishConfig": {
         "access": "public",
@@ -30,7 +31,7 @@
         "build": "node ./build",
         "watch": "node ./build --watch",
         "dts": "tsc --project dts.tsconfig.json",
-        "pre-release": "npm run build && npm run dts",
+        "pre-release": "pnpm build && pnpm dts",
         "changelog": "standard-version --releaseCommitMessageFormat --tag-prefix \"@okikio/animate@\" \"chore(release): @okikio/animate@{{currentTag}}\""
     },
     "repository": {
@@ -61,12 +62,10 @@
         "@okikio/manager": "workspace:*"
     },
     "devDependencies": {
-        "chokidar": "^3.5.1",
-        "esbuild": "^0.8.34",
-        "gzip-size": "^6.0.0",
-        "pretty-bytes": "^5.5.0",
-        "standard-version": "^9.1.0",
-        "typescript": "^4.1.3"
+        "esbuild": "^0.11.12",
+        "pnpm": "^6.0.2",
+        "standard-version": "^9.2.0",
+        "typescript": "^4.2.4"
     },
     "gitHead": "ad422076cdb57d570426f786886129d5bca2f90f"
 }

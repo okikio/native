@@ -1,6 +1,6 @@
-const jestBase = require("../../jest.config.js");
+import jestBase from "../../jest.config.js";
 
-module.exports = {
+export default {
     ...jestBase,
     testEnvironment: "node",
 };

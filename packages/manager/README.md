@@ -15,10 +15,10 @@ You can play with `@okikio/manager` using Gitpod:
 _Start the dev script by typing into the terminal_
 
 ```bash
-ultra pnpm test:watch --filter *manager
+pnpm test-dev --filter "@okikio/manager"
 ```
 
-Once Gitpod has booted up, go to the `./packages/manager/test folder` and start tweaking and testing to your hearts content.
+Once Gitpod has booted up, go to [`./packages/manager/test/test.ts`](https://github.com/okikio/native/tree/master/packages/manager/tests/test.ts) and start tweaking and testing to your hearts content.
 
 
 ## Table of Contents

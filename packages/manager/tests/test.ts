@@ -7,6 +7,7 @@ import "jest-chain";
     Find: @(returns|type) \{([\w_-{,<[\]\s>]+)\}
     Replace: @$1 $2
 */
+
 describe("Manager", () => {
     let arr = [1, 2, 3, 4, 5];
     let entries = Array.from(arr.entries());

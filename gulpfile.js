@@ -2,7 +2,9 @@
 const mode = process.argv.includes("--watch") ? "watch" : "build";
 
 // Gulp utilities
-const { stream, task, watch, parallel, series } = require("./util");
+import { gulpSass as sass, watch, task, series, parallel, stream } from "./util.js";
+import { createRequire } from 'module';
+const require = createRequire(import.meta.url);
 
 // Origin folders (source and destination folders)
 const srcFolder = `build`;
@@ -40,12 +42,27 @@ task("html", async () => {
 
 // CSS Tasks
 task("css", async () => {
-    const { default: sass } = await import("gulp-sass");
+    const [
+        { default: postcss },
+        { default: autoprefixer },
+        { default: tailwind },
+        { default: csso }
+    ] = await Promise.all([
+        import("gulp-postcss"),
+        import("autoprefixer"),
+        import("tailwindcss"),
+        import("postcss-csso")
+    ]);
     const { logError } = sass;
     return stream(`${sassFolder}/**/*.scss`, {
         pipes: [
             // Minify scss to css
             sass({ outputStyle: "compressed" }).on("error", logError),
+            postcss([
+                tailwind("./tailwind.cjs"),
+                csso(),
+                autoprefixer(),
+            ])
         ],
         dest: cssFolder,
         end: browserSync ? [browserSync.stream()] : null,
@@ -58,12 +75,10 @@ task("js", async () => {
         { default: gulpEsBuild, createGulpEsbuild },
         { default: gzipSize },
         { default: prettyBytes },
-        { default: rename },
     ] = await Promise.all([
         import("gulp-esbuild"),
         import("gzip-size"),
         import("pretty-bytes"),
-        import("gulp-rename"),
     ]);
 
     const esbuild = mode == "watch" ? createGulpEsbuild() : gulpEsBuild; //
@@ -72,10 +87,10 @@ task("js", async () => {
             // Bundle Modules
             esbuild({
                 bundle: true,
+                minify: true,
                 format: "esm",
                 target: ["chrome71"],
             }),
-            rename({ extname: ".js" }), // Rename
         ],
         dest: jsFolder, // Output
         async end() {
@@ -95,11 +110,11 @@ task("watch", async () => {
     browserSync = bs.create();
     browserSync.init(
         {
-            // server: destFolder,
             notify: true,
             server: {
                 baseDir: destFolder,
                 serveStaticOptions: {
+                    cacheControl: false,
                     extensions: ["html"],
                 },
             },
@@ -109,21 +124,14 @@ task("watch", async () => {
                     dir: ["./lib"],
                 },
             ],
-            cors: true,
             online: true,
             reloadOnRestart: true,
-            scrollThrottle: 250,
-            middleware: function (req, res, next) {
-                res.setHeader("Access-Control-Allow-Origin", "*");
-                res.setHeader("Access-Control-Allow-Methods", "GET");
-                res.setHeader("Access-Control-Allow-Headers", "Content-Type");
-                next();
-            },
+            scrollThrottle: 250
         },
         (_err, bs) => {
             bs.addMiddleware("*", (_req, res) => {
                 res.writeHead(302, {
-                    location: `/404.html`,
+                    location: `/404`,
                 });
                 res.end();
             });

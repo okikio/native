@@ -9,7 +9,7 @@ You can play with `@okikio/native` using Gitpod:
 _Start the dev script by typing into the terminal_
 
 ```bash
-ultra demo:watch
+pnpm demo
 ```
 
 Once Gitpod has booted up, go to the `./build folder` and start tweaking and testing to your hearts content.

@@ -1,6 +1,7 @@
 {
     "name": "@okikio/manager",
     "version": "2.0.4",
+    "type": "module",
     "description": "A superset of the Map class, it gives the Map class superpowers.",
     "publishConfig": {
         "access": "public",
@@ -30,7 +31,7 @@
         "build": "node ./build",
         "watch": "node ./build --watch",
         "test": "jest --maxWorkers=1",
-        "test:watch": "jest --maxWorkers=1 --watch --verbose false",
+        "test-dev": "jest --maxWorkers=1 --watch --verbose false",
         "dts": "tsc --project dts.tsconfig.json",
         "pre-release": "npm run build && npm test && npm run dts",
         "changelog": "standard-version --releaseCommitMessageFormat --tag-prefix \"@okikio/manager@\" \"chore(release): @okikio/manager@{{currentTag}}\""
@@ -58,18 +59,16 @@
     },
     "homepage": "https://github.com/okikio/native/packages/manager#readme",
     "devDependencies": {
-        "@types/jest": "^26.0.20",
-        "chokidar": "^3.5.1",
-        "esbuild": "^0.8.34",
-        "esbuild-jest": "^0.3.0",
-        "gzip-size": "^6.0.0",
+        "@types/jest": "^26.0.22",
+        "esbuild": "^0.11.12",
+        "esbuild-jest": "^0.5.0",
         "jest": "^26.6.3",
         "jest-chain": "^1.1.5",
         "node-fetch": "^2.6.1",
-        "pretty-bytes": "^5.5.0",
-        "standard-version": "^9.1.0",
-        "typescript": "^4.1.3",
-        "ultra-runner": "^3.9.0"
+        "pnpm": "^6.0.2",
+        "standard-version": "^9.2.0",
+        "typescript": "^4.2.4",
+        "ultra-runner": "^3.10.5"
     },
     "gitHead": "ad422076cdb57d570426f786886129d5bca2f90f"
 }

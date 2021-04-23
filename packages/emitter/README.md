@@ -15,10 +15,10 @@ You can play with `@okikio/emitter` using Gitpod:
 _Start the dev script by typing into the terminal_
 
 ```bash
-ultra pnpm test:watch --filter *emitter
+pnpm test-dev --filter "@okikio/emitter"
 ```
 
-Once Gitpod has booted up, go to the `./packages/emitter/test folder` and start tweaking and testing to your hearts content.
+Once Gitpod has booted up, go to [`./packages/emitter/test/test.ts`](https://github.com/okikio/native/tree/master/packages/emitter/tests/test.ts) and start tweaking and testing to your hearts content.
 
 
 ## Table of Contents

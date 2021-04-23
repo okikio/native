@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     setupFilesAfterEnv: ["jest-chain"],
     testEnvironment: "node",
     resetMocks: true,
