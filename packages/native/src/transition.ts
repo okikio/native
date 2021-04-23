@@ -38,16 +38,21 @@ export interface ITransitionManager extends Service {
     animate(name: string, data: any): Promise<ITransition>,
 }
 
-
 /** Auto scrolls to an elements position if the element has an hash */
 export const hashAction = (coords?: ICoords, hash: string = window.location.hash) => {
     try {
         let _hash = hash[0] == "#" ? hash : newURL(hash).hash;
         if (_hash.length > 1) {
-            let el = document.getElementById(_hash.slice(1)) as HTMLElement;
-
+            let el = document.getElementById(_hash.slice(1));
             if (el) {
-                return newCoords(el.offsetLeft, el.offsetTop);
+                let { left, top } = el.getBoundingClientRect();
+                let scrollLeft = window.pageXOffset;
+                let scrollTop = window.pageYOffset;
+                let x = left + scrollLeft;
+                let y = top + scrollTop;
+
+                console.log(x, y);
+                return newCoords(x, y);
             }
         }
     } catch (e) {

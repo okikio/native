@@ -4,7 +4,7 @@ image:
 # List the ports you want to expose and what to do when they are served. See https://www.gitpod.io/docs/43_config_ports/
 ports:
   - port: 3000
-    onOpen: open-browser
+    onOpen: open-preview
   - port: 3001
     onOpen: ignore
 
@@ -15,6 +15,6 @@ tasks:
       nvm alias default 16 &&
       npm install pnpm -g &&
       pnpm install gulp ultra-runner commitizen -g  &&
-      pnpm install -r &&
+      pnpm install &&
       pnpm build &&
       pnpm demo

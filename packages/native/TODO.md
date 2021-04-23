@@ -10,4 +10,5 @@
 * [ ] Catch weird errors and bugs
 * [ ] Clear documentation
 * [ ] Make lighter and faster
-* [ ] Switch to tailwindcss for Demo
+* [x] Make more consistent and reliable
+* [x] Switch to tailwindcss for Demo

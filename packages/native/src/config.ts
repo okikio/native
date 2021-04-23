@@ -9,10 +9,11 @@ export interface ICONFIG {
     transitionAttr?: string;
     blockAttr?: string;
     timeout?: number;
+    maxPages?: number;
     [key: string]: any;
 }
 
-export const CONFIG_DEFAULTS: ICONFIG = {
+export const CONFIG_DEFAULTS = {
     wrapperAttr: "wrapper",
     noAjaxLinkAttr: "no-ajax-link",
     noPrefetchAttr: "no-prefetch",
@@ -23,10 +24,11 @@ export const CONFIG_DEFAULTS: ICONFIG = {
     preventAllAttr: `prevent="all"`,
     transitionAttr: "transition",
     blockAttr: `block`,
-    timeout: 30000
+    timeout: 30000,
+    maxPages: 5
 };
 
-export type ConfigKeys = keyof ICONFIG;
+export type ConfigKeys = keyof typeof CONFIG_DEFAULTS | string;
 export const newConfig = (config: ICONFIG): ICONFIG => {
     return Object.assign({ ...CONFIG_DEFAULTS }, config);
 };

@@ -57,6 +57,7 @@ export const SlideLeft: ITransition = {
 
     name: "slide-left",
     direction: "left",
+    init(data: ITransition) { }
 };
 
 export const SlideRight: ITransition = {
@@ -64,4 +65,5 @@ export const SlideRight: ITransition = {
 
     name: "slide-right",
     direction: "right",
+    init(data: ITransition) { }
 };

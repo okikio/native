@@ -88,6 +88,7 @@ task("js", async () => {
             esbuild({
                 bundle: true,
                 minify: true,
+                sourcemap: true,
                 format: "esm",
                 target: ["chrome71"],
             }),

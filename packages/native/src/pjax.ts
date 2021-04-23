@@ -229,14 +229,15 @@ export class PJAX extends Service {
             let currentIndex = currentState.index;
             let difference = currentIndex - index;
 
-            let _state = history.get(history.pointer);
-            transitionName = _state.transition;
-            scroll = _state.data.scroll;
-
             history.replace(state.states);
             history.pointer = index;
 
+            let _state = history.get(index);
+            transitionName = _state.transition;
+            scroll = _state.data.scroll;
+
             trigger = this.getDirection(difference);
+            console.log(trigger == "forward" && history)
 
             // Based on the direction of the state change either remove or add a state
             this.emitter.emit(trigger === "back" ? `POPSTATE_BACK` : `POPSTATE_FORWARD`, event);
@@ -289,7 +290,6 @@ export class PJAX extends Service {
         try {
             const pages = this.manager.get("PageManager") as IPageManager;
             let newPage: IPage, oldPage: IPage;
-
             this.emitter.emit("NAVIGATION_START", {
                 oldHref,
                 href,
@@ -312,13 +312,10 @@ export class PJAX extends Service {
                     trigger,
                 });
             } catch (err) {
-                throw `[PJAX] page load error: ${err}`;
+                console.warn(`[PJAX] Page load error: ${err}`);
             }
 
-            // --
-            // --
-
-            // Start Transition
+            // Transition Between Pages
             try {
                 const TransitionManager = this.manager.get("TransitionManager") as ITransitionManager;
                 this.emitter.emit("TRANSITION_START", transitionName);
@@ -338,9 +335,10 @@ export class PJAX extends Service {
 
                 this.emitter.emit("TRANSITION_END", { transition });
             } catch (err) {
-                throw `[PJAX] transition error: ${err}`;
+                console.warn(`[PJAX] Transition error: ${err}`);
             }
 
+            // Navigation is over
             this.emitter.emit("NAVIGATION_END", {
                 oldPage,
                 newPage,

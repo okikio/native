@@ -131,7 +131,7 @@ export class HistoryManager extends Service implements IHistoryManager {
 
 /** Either push or replace history state */
 export const changeState = (action: "push" | "replace", state: IState, item: object) => {
-	let href = getHashedPath(newURL(state.url));
+	let href = getHashedPath(state.url);
 	let args = [item, "", href];
 	if (window.history) {
 		switch (action) {
