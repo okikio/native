@@ -111,7 +111,7 @@ button, a {
 }
 
 .navbar-toggle {
-    @apply sm:hidden border border-gray-300 border-solid rounded-md;
+    @apply sm:hidden rounded-md;
     @apply w-10 h-10 text-blue-500 hover:ring-4 hover:ring-blue-500 hover:ring-opacity-50;
     @apply focus:border-blue-600 focus:ring-4 focus:rounded-md;
 }
