@@ -2,9 +2,7 @@
 const mode = process.argv.includes("--watch") ? "watch" : "build";
 
 // Gulp utilities
-import { gulpSass as sass, watch, task, series, parallel, stream } from "./util.js";
-import { createRequire } from 'module';
-const require = createRequire(import.meta.url);
+import { watch, task, series, parallel, stream } from "./util.js";
 
 // Origin folders (source and destination folders)
 const srcFolder = `build`;
@@ -44,22 +42,48 @@ task("html", async () => {
 task("css", async () => {
     const [
         { default: postcss },
-        { default: autoprefixer },
         { default: tailwind },
-        { default: csso }
+        { default: scss },
+        { default: sass },
+        { default: rename }
     ] = await Promise.all([
         import("gulp-postcss"),
-        import("autoprefixer"),
         import("tailwindcss"),
-        import("postcss-csso")
+        import("postcss-scss"),
+        import("@csstools/postcss-sass"),
+        import("gulp-rename")
     ]);
-    const { logError } = sass;
+
     return stream(`${sassFolder}/**/*.scss`, {
         pipes: [
             // Minify scss to css
-            sass({ outputStyle: "compressed" }).on("error", logError),
             postcss([
+                sass({ outputStyle: "compressed" }),
                 tailwind("./tailwind.cjs"),
+            ], { syntax: scss }),
+
+            rename({ extname: ".css" }),
+        ],
+        dest: cssFolder,
+        end: browserSync ? [browserSync.stream()] : null,
+    });
+});
+
+task("minify-css", async () => {
+    const [
+        { default: postcss },
+        { default: autoprefixer },
+        { default: csso },
+    ] = await Promise.all([
+        import("gulp-postcss"),
+        import("autoprefixer"),
+        import("postcss-csso"),
+    ]);
+
+    return stream(`${cssFolder}/**/*.css`, {
+        pipes: [
+            // Minify scss to css
+            postcss([
                 csso(),
                 autoprefixer(),
             ])
@@ -105,7 +129,7 @@ task("js", async () => {
 });
 
 // Build & Watch Tasks
-task("build", parallel("html", "css", "js"));
+task("build", parallel("html", series("css", "minify-css"), "js"));
 task("watch", async () => {
     const { default: bs } = await import("browser-sync");
     browserSync = bs.create();
@@ -140,7 +164,7 @@ task("watch", async () => {
     );
 
     watch(`${pugFolder}/**/*.pug`, series("html"));
-    watch(`${sassFolder}/**/*.scss`, series("css"));
+    watch([`${sassFolder}/**/*.scss`, `./tailwind.cjs`], series("css"));
     watch(
         [
             `${tsFolder}/**/*.ts`,

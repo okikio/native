@@ -110,7 +110,7 @@ coverage/
 .ultra.cache.json
 
 # VSCode
-.vscode/
+# .vscode/
 
 # Theia
 .theia/

@@ -3,6 +3,18 @@ extends /layouts/layout.pug
 block content
   main#home-page(data-wrapper='' role='main')
     .container
+      .jumbotron.jumbotron-fluid.my-2.p-4.rounded-lg.box-shadow.text-dark.intro-animation
+        label(for='scrub') @okikio/animate
+        input#scrub(type='range' value='0' min='0' max='100' step='0.01')
+        button(type="button").btn.btn-dark.playtoggle Play/Pause/Reset
+        p.support Requires native Web Animation Support (latest Firefox, Chrome, Opera)
+
+        p.info This is pretty cool right
+        p.fix.progress 0%
+        - for (let i = 0; i < 5; i ++) {
+          .div
+        - }
+        
       .jumbotron.jumbotron-fluid.my-3.px-4.rounded-lg.box-shadow.text-dark.bg-warning
           h1.font-sz-5xl.font-sans.font-100 @okikio/animate
           p.lead Dynamic example's based off of animejs to get you started.
@@ -52,7 +64,4 @@ block content
             svg.svg(xmlns='http://www.w3.org/2000/svg' width='500px' height='300px' viewbox='0 0 1310 680')
               path(d='M53,234c143.452,-81.953,313.407,-167.554,430,-107c116.592,45.554,70.404,361.126,236,472c235.595,95.873,447.977,-197.535,477,-306' style='stroke:red;fill:none;stroke-width:5px;')
 
-
-
-block script
-  script(src="./js/animate.js" type="module")
+//- script(src="./js/animate.js" type="module")
