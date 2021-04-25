@@ -1,17 +1,20 @@
-mixin navbar()
-  nav#main-nav.navbar.navbar-expand-md.fixed-top.navbar-light.bg-light
-    a.navbar-brand(href='./index.html')
-      | Starting Blocks
-      small v4
-    button.navbar-toggler(type='button' data-toggle='collapse' data-target='#navbarSupportedContent' aria-controls='navbarSupportedContent' aria-expanded='false' aria-label='Toggle navigation')
-      span.navbar-toggler-icon
-    #navbarSupportedContent.collapse.navbar-collapse
-      ul.navbar-nav.mr-auto
-        li.nav-item
-          a.nav-link.active(href='./animate.html' data-prevent="self") @okikio/animate (prevent-pjax)
-        li.nav-item
-          a.nav-link(href='./index.html' data-path='(index|\/$)(\.html)?' data-transition='default') Homepage
-        li.nav-item
-          a.nav-link(href='./about.html' data-path='/about(.html)?' data-transition='SlideLeft') About
-        li.nav-item
-          a.nav-link(href='./other.html' data-path='/other(.html)?' data-transition='BigTransition') Other
+mixin nav-list
+  ul.navbar-list
+    a.active(href='./index.html' data-path='(index|\/$)(\.html)?' data-transition='default') Home
+    a(href='./about.html' data-path='/about(.html)?' data-transition='SlideLeft') About
+    a(href='./docs.html' data-path='/docs(.html)?' data-transition='BigTransition') Docs
+
+mixin navbar
+  nav.navbar
+    .container
+      .navbar-bg
+      .navbar-frame
+        .navbar-shadow
+        .navbar-border
+        a.navbar-logo(href='./index.html') @okikio/native
+        button.navbar-toggle(type='button')
+          span.icon menu
+        .navbar-collapse.collapse.mobile
+          +nav-list
+        .navbar-collapse.desktop
+          +nav-list

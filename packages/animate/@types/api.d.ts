@@ -136,7 +136,7 @@ export declare class Animate {
     /**
      * Calls a method that affects all animations including the mainAnimation; the method only allows the animation parameter
     */
-    all(method: (animation: Animation) => void): this;
+    all(method: (animation?: Animation, target?: HTMLElement) => void): this;
     /**
      * Register the begin event
      */
@@ -237,4 +237,12 @@ export declare class Animate {
 }
 /** Creates a new Animate instance */
 export declare const animate: (options?: AnimationOptions) => Animate;
+export declare class Timeline extends Animate {
+    /**
+     * A Manager of Animations
+     */
+    animations: Manager<HTMLElement, Animation>;
+    constructor(options?: AnimationOptions);
+    add(options: AnimationOptions): this;
+}
 export default animate;

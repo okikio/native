@@ -11,7 +11,7 @@
         "build": "pnpm -r build",
         "watch": "pnpm -r watch --parallel",
         "demo": "gulp default --watch",
-        "demo-build": "gulp default --watch",
+        "demo-build": "gulp build",
         "dts": "ultra -r dts",
         "test": "ultra -r test",
         "test-dev": "ultra -r test-dev",
@@ -41,6 +41,7 @@
     "devDependencies": {
         "@commitlint/cli": "^12.1.1",
         "@commitlint/config-conventional": "^12.1.1",
+        "@csstools/postcss-sass": "^4.0.0",
         "autoprefixer": "^10.2.5",
         "browser-sync": "^2.26.14",
         "chalk": "^4.1.1",
@@ -56,19 +57,15 @@
         "gzip-size": "^6.0.0",
         "husky": "^6.0.0",
         "lerna-changelog": "^1.0.1",
-        "lodash-es": "^4.17.21",
-        "plugin-error": "^1.0.1",
         "pnpm": "^6.0.2",
         "postcss": "^8.2.12",
+        "postcss-cli": "^8.3.1",
         "postcss-csso": "^5.0.1",
+        "postcss-scss": "^3.0.5",
         "pretty-bytes": "^5.6.0",
-        "replace-ext": "^2.0.0",
         "sass": "^1.32.11",
         "standard-version": "^9.2.0",
-        "strip-ansi": "^7.0.0",
-        "tailwindcss": "^2.1.1",
-        "through2": "^4.0.2",
-        "ultra-runner": "^3.10.5",
-        "vinyl-sourcemaps-apply": "^0.2.1"
+        "tailwindcss": "^2.1.2",
+        "ultra-runner": "^3.10.5"
     }
 }
