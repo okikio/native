@@ -15,6 +15,6 @@ tasks:
       nvm alias default 16 &&
       npm install pnpm -g &&
       pnpm install gulp ultra-runner commitizen -g  &&
-      pnpm install &&
+      pnpm update &&
       pnpm build &&
       pnpm demo

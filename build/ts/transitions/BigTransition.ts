@@ -1,4 +1,5 @@
 import { ITransition, ITransitionData, animate } from "../../../packages/native/src/api";
+import toArr from "../toArr";
 
 //== Transitions
 export const BigTransition: ITransition = {
@@ -9,8 +10,8 @@ export const BigTransition: ITransition = {
 
     init() {
         this.mainElement = document.getElementById('big-transition');
-        this.spinnerElement = this.mainElement.querySelector('.spinner');
-        this.horizontalElements = [...this.mainElement.querySelector('#big-transition-horizontal').querySelectorAll('div')];
+        this.logoElement = this.mainElement.querySelector('.logo');
+        this.horizontalElements = toArr(this.mainElement.querySelectorAll('#big-transition-horizontal div'));
         this.maxLength = this.horizontalElements.length;
     },
 
@@ -53,11 +54,11 @@ export const BigTransition: ITransition = {
 
             fromWrapper.style.opacity = '1';
             Object.assign(fromWrapper.style, wrapperStyle);
-            this.spinnerElement.style.visibility = "visible";
+            this.logoElement.style.visibility = "visible";
 
             let loaderDuration = 500;
             let [anim3] = await animate({
-                target: this.spinnerElement,
+                target: this.logoElement,
                 opacity: [0, 1],
                 duration: loaderDuration,
                 onfinish(el: { style: { opacity: string; }; }) {
@@ -73,7 +74,7 @@ export const BigTransition: ITransition = {
                 },
                 delay: 1500
             });
-            this.spinnerElement.style.visibility = "hidden";
+            this.logoElement.style.visibility = "hidden";
             // anim2.stop() // -> anim2.stop() Breaks the Animation
             anim3.stop();
             anim4.stop();

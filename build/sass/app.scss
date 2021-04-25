@@ -39,7 +39,7 @@ a {
 
 button, a {    
     transition: color .2s ease-out, box-shadow .2s ease-out;
-    @apply focus:ring-4 focus:ring-blue-500 focus:ring-opacity-50;
+    @apply focus-visible:ring-4 focus-visible:ring-blue-500 focus-visible:ring-opacity-50;
     @apply focus:outline-none focus:rounded-sm;
     
     -webkit-tap-highlight-color: transparent;
@@ -49,9 +49,37 @@ button, a {
     @apply fixed top-0 left-0 w-full z-50;
 
     .container {
-        @apply bg-white border-b border-gray-200;
-        @apply flex flex-wrap items-center justify-between;
-        @apply lg:max-w-screen-xl px-5 py-2;
+        @apply sm:max-w-screen-xl px-5;
+    }
+
+    .navbar-bg {
+        @apply absolute top-0 left-0 w-full h-full bg-white z-10;
+    }
+
+    .navbar-frame {
+        @apply flex flex-wrap items-center justify-between relative;
+        @apply w-full py-2;  
+    } 
+    
+    .navbar-shadow {  
+        transition: opacity ease 0.25s;
+        @apply absolute top-0 left-0 w-full h-full bg-white;
+        @apply opacity-0;
+    }
+
+    &.shadow .navbar-shadow {  
+        box-shadow: 0 4px 15px rgb(0 0 50 / 8%);
+        @apply opacity-100;
+    }
+
+    .navbar-border {  
+        transition: border-color ease 0.25s;
+        @apply absolute top-0 left-0 w-full h-full z-10;
+        @apply border-b border-gray-200 border-opacity-0;
+    }
+
+    &:not(.shadow) .navbar-border {
+        @apply border-opacity-100;
     }
 }
 
@@ -62,12 +90,30 @@ button, a {
 .navbar-collapse {
     @apply items-center;
 
+    @screen sm {
+        &.desktop {
+            display: block;
+        }
+
+        &.mobile {
+            display: none;
+        }
+    }
+
     @screen lt-sm {
         --height: 100vh;
         transition: height ease-out 0.25s;
-        overflow: hidden;
         @apply flex-grow;
         flex-basis: 100%;
+        overflow-y: hidden;
+
+        &.mobile {
+            display: block;
+        }
+
+        &.desktop {
+            display: none;
+        }
 
         &.show {
             height: 100%;
@@ -81,11 +127,11 @@ button, a {
 }
 
 .navbar-list {
-    @apply flex lt-sm:flex-col flex-nowrap;
+    @apply flex lt-sm:flex-col flex-nowrap px-1;
 }
 
 .navbar-logo  {
-    @apply text-xl font-bold;
+    @apply text-xl font-semibold ml-1;
 }
 
 .navbar-list a {
@@ -94,10 +140,14 @@ button, a {
 
 .navbar-logo,
 .navbar-list a {
-    @apply px-3 py-2 rounded-md no-underline hover:text-blue-400;
+    @apply px-3 py-2 rounded-md no-underline hover:bg-gray-200;
 
     &.active {
-        @apply bg-blue-600 text-white;
+        @apply bg-blue-600 text-white hover:bg-blue-700;
+    }
+
+    &:hover {
+        @apply bg-opacity-60;
     }
 }
 
@@ -107,19 +157,69 @@ button, a {
     transition: 
         background-color .15s ease-out, color .15s ease-out, 
         border-color .2s ease-out, box-shadow .2s ease-out;
-
+    @apply z-20;
 }
 
 .navbar-toggle {
     @apply sm:hidden rounded-md;
-    @apply w-10 h-10 text-blue-500 hover:ring-4 hover:ring-blue-500 hover:ring-opacity-50;
-    @apply focus:border-blue-600 focus:ring-4 focus:rounded-md;
+    @apply mr-1 w-10 h-10 text-blue-500 hover:bg-gray-100;
+    @apply focus-visible:border-blue-600 focus-visible:ring-4 focus-visible:rounded-md;
 }
 
 .btn {
-    @apply px-3 py-2 rounded-md no-underline;
+    @apply px-3 py-2 rounded-md no-underline hover:bg-gray-200;
 
     &.active {
-        @apply bg-blue-600 text-white;
+        @apply bg-blue-600 text-white hover:bg-blue-700;
     }
+
+    &:hover {
+        @apply bg-opacity-60;
+    }
+}
+
+#big-transition {
+    position: fixed;
+    z-index: 2000;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display: flex;
+    opacity: 0;
+    visibility: hidden;
+}
+
+#big-transition .logo {
+    opacity: 0;
+    visibility: hidden;
+}
+
+#big-transition #big-transition-horizontal {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display: flex;
+}
+
+#big-transition #big-transition-horizontal {
+    flex-flow: column;
+}
+
+#big-transition #big-transition-horizontal > div {
+    width: 100%;
+    flex: 1 1;
+    @apply bg-gray-200;
+    transform-origin: 0 0;
+    transform: scaleX(0);
+}
+
+.logo {
+    position: absolute;
+    z-index: 12;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
 }

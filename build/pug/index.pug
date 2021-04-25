@@ -1,18 +1,18 @@
 extends /layouts/layout.pug
 
 block content
-  .container.py-5(class="lg:max-w-screen-xl")
-    .m-5.px-12.py-24.bg-white.rounded-lg.border.border-gray-200.intro-animation
+  .container.px-5.py-2(class="sm:max-w-screen-xl")
+    .my-5.px-12.py-24.bg-gray-200.rounded-lg.intro-animation
       h1.text-5xl.mb-2 Homepage
       p.font-light.text-lg Dynamic example.
 
-    .grid.grid-cols-12.gap-6.m-5.p-5.bg-white.rounded-lg.border.border-gray-200.intro-animation
-      .col-span-3
-        ul.flex.flex-col(role='tablist' aria-orientation='vertical')
+    div(class="sm:grid-cols-12").grid.gap-6.my-5.p-5.bg-white.rounded-lg.border.border-gray-200.intro-animation
+      .col-span-12(class="sm:col-span-3")
+        ul.flex.flex-col.space-y-1(role='tablist' aria-orientation='vertical')
           a.btn.active(href='./index.html') Link to homepage
           a.btn(href='./about.html') Link to the about page
           a.btn(href='./about.html#5-image') Link to fifth image
-      .col-span-9
+      .col-span-12(class="sm:col-span-9")
         p
           | Vivamus dolor massa, aliquet ut leo vel, sodales mattis tortor. Aenean at mauris et ex mollis fringilla.
           | Sed volutpat viverra vehicula. Nullam maximus ligula ac nisl aliquam commodo. Donec sed vestibulum orci.
@@ -23,7 +23,7 @@ block content
           | magna dictum pulvinar vitae laoreet tortor. Duis auctor iaculis arcu ac rutrum. Suspendisse vel odio
           | risus.
     
-    .grid.grid-cols-12.gap-6.m-5
+    div(class="sm:grid-cols-12").grid.gap-6.my-5
       .col-span-6.bg-white.rounded-lg.overflow-hidden.border.border-gray-200.intro-animation
         img(loading='eager' width='747' src='https://images.unsplash.com/photo-1589646609975-cb53c8e5b37a?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=747&q=80' alt='Normal img')
         p.p-5 Normal image.
@@ -34,123 +34,103 @@ block content
           img(loading='lazy' width='747' src='https://images.unsplash.com/photo-1570506020466-17c74d2f4590?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1500&q=80' alt='Lazyloaded img')
         p.p-5 Lazyloaded picture.
 
-    .grid.grid-cols-12.gap-6
-      .col-span-6.intro-animation
-        p
-          | Vivamus dolor massa, aliquet ut leo vel, sodales mattis tortor. Aenean at mauris et ex mollis
-          | fringilla. Sed volutpat viverra vehicula. Nullam maximus ligula ac nisl aliquam commodo. Donec sed
-          | vestibulum orci. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus
-          | mus. Proin ut porttitor lorem, sit amet aliquet dui. Nunc dictum, lorem vitae elementum pharetra,
-          | sapien orci dignissim ligula, aliquam interdum erat urna a nibh. Morbi quis tellus maximus,
-          | pellentesque erat ac, porttitor nulla. Curabitur rhoncus urna non magna mattis aliquet. Vestibulum
-          | non lobortis turpis. Nunc aliquet velit a magna dictum pulvinar vitae laoreet tortor. Duis auctor
-          | iaculis arcu ac rutrum. Suspendisse vel odio risus.
-      .col-span-6.intro-animation
-        p
-          | Vivamus dolor massa, aliquet ut leo vel, sodales mattis tortor. Aenean at mauris et ex mollis
-          | fringilla. Sed volutpat viverra vehicula. Nullam maximus ligula ac nisl aliquam commodo. Donec sed
-          | vestibulum orci. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus
-          | mus. Proin ut porttitor lorem, sit amet aliquet dui. Nunc dictum, lorem vitae elementum pharetra,
-          | sapien orci dignissim ligula, aliquam interdum erat urna a nibh. Morbi quis tellus maximus,
-          | pellentesque erat ac, porttitor nulla. Curabitur rhoncus urna non magna mattis aliquet. Vestibulum
-          | non lobortis turpis. Nunc aliquet velit a magna dictum pulvinar vitae laoreet tortor. Duis auctor
-          | iaculis arcu ac rutrum. Suspendisse vel odio risus.
-      .col-span-12.space-y-6
-        p.intro-animation
-          | Vivamus dolor massa, aliquet ut leo vel, sodales mattis tortor. Aenean at mauris et ex mollis
-          | fringilla. Sed volutpat viverra vehicula. Nullam maximus ligula ac nisl aliquam commodo. Donec sed
-          | vestibulum orci. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus
-          | mus. Proin ut porttitor lorem, sit amet aliquet dui. Nunc dictum, lorem vitae elementum pharetra,
-          | sapien orci dignissim ligula, aliquam interdum erat urna a nibh. Morbi quis tellus maximus,
-          | pellentesque erat ac, porttitor nulla. Curabitur rhoncus urna non magna mattis aliquet. Vestibulum
-          | non lobortis turpis. Nunc aliquet velit a magna dictum pulvinar vitae laoreet tortor. Duis auctor
-          | iaculis arcu ac rutrum. Suspendisse vel odio risus.
-        p.intro-animation
-          | Vivamus dolor massa, aliquet ut leo vel, sodales mattis tortor. Aenean at mauris et ex mollis
-          | fringilla. Sed volutpat viverra vehicula. Nullam maximus ligula ac nisl aliquam commodo. Donec sed
-          | vestibulum orci. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus
-          | mus. Proin ut porttitor lorem, sit amet aliquet dui. Nunc dictum, lorem vitae elementum pharetra,
-          | sapien orci dignissim ligula, aliquam interdum erat urna a nibh. Morbi quis tellus maximus,
-          | pellentesque erat ac, porttitor nulla. Curabitur rhoncus urna non magna mattis aliquet. Vestibulum
-          | non lobortis turpis. Nunc aliquet velit a magna dictum pulvinar vitae laoreet tortor. Duis auctor
-          | iaculis arcu ac rutrum. Suspendisse vel odio risus.
-        p.intro-animation
-          | Cras mattis consectetur purus sit amet fermentum. Nulla vitae elit libero, a pharetra augue. Sed
-          | posuere consectetur est at lobortis. Aenean eu leo quam. Pellentesque ornare sem lacinia quam
-          | venenatis vestibulum. Vestibulum id ligula porta felis euismod semper. Praesent commodo cursus
-          | magna, vel scelerisque nisl consectetur et.
-        p.intro-animation
-          | Etiam porta sem malesuada magna mollis euismod. Cum sociis natoque penatibus et magnis dis parturient
-          | montes, nascetur ridiculus mus. Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor
-          | auctor. Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem nec
-          | elit. Integer posuere erat a ante venenatis dapibus posuere velit aliquet. Cras justo odio, dapibus
-          | ac facilisis in, egestas eget quam.
-          | Donec ullamcorper nulla non metus auctor fringilla. Sed posuere consectetur est at lobortis. Etiam
-          | porta sem malesuada magna mollis euismod. Donec sed odio dui. Donec id elit non mi porta gravida at
-          | eget metus. Cras mattis consectetur purus sit amet fermentum.
-        img.m-5.intro-animation(loading='eager' width='700' src='https://images.unsplash.com/photo-1590510325281-54a9164cf0f4?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1502&q=80'  alt='Lazyloaded img')
-        p.intro-animation
-          | Vivamus dolor massa, aliquet ut leo vel, sodales mattis tortor. Aenean at mauris et ex mollis
-          | fringilla. Sed volutpat viverra vehicula. Nullam maximus ligula ac nisl aliquam commodo. Donec sed
-          | vestibulum orci. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus
-          | mus. Proin ut porttitor lorem, sit amet aliquet dui. Nunc dictum, lorem vitae elementum pharetra,
-          | sapien orci dignissim ligula, aliquam interdum erat urna a nibh. Morbi quis tellus maximus,
-          | pellentesque erat ac, porttitor nulla. Curabitur rhoncus urna non magna mattis aliquet. Vestibulum
-          | non lobortis turpis. Nunc aliquet velit a magna dictum pulvinar vitae laoreet tortor. Duis auctor
-          | iaculis arcu ac rutrum. Suspendisse vel odio risus.
-        p.intro-animation
-          | Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Vivamus
-          | sagittis lacus vel augue laoreet rutrum faucibus dolor auctor. Integer posuere erat a ante venenatis
-          | dapibus posuere velit aliquet. Curabitur blandit tempus porttitor.
-          | Cras mattis consectetur purus sit amet fermentum. Vestibulum id ligula porta felis euismod semper.
-          | Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Nulla vitae elit libero, a
-          | pharetra augue. Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio
-          | sem nec elit.
-          | Cras justo odio, dapibus ac facilisis in, egestas eget quam. Nulla vitae elit libero, a pharetra
-          | augue. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Praesent commodo cursus magna,
-          | vel scelerisque nisl consectetur et.
-        p.intro-animation
-          | Vivamus dolor massa, aliquet ut leo vel, sodales mattis tortor. Aenean at mauris et ex mollis
-          | fringilla. Sed volutpat viverra vehicula. Nullam maximus ligula ac nisl aliquam commodo. Donec sed
-          | vestibulum orci. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus
-          | mus. Proin ut porttitor lorem, sit amet aliquet dui. Nunc dictum, lorem vitae elementum pharetra,
-          | sapien orci dignissim ligula, aliquam interdum erat urna a nibh. Morbi quis tellus maximus,
-          | pellentesque erat ac, porttitor nulla. Curabitur rhoncus urna non magna mattis aliquet. Vestibulum
-          | non lobortis turpis. Nunc aliquet velit a magna dictum pulvinar vitae laoreet tortor. Duis auctor
-          | iaculis arcu ac rutrum. Suspendisse vel odio risus.
-        p.intro-animation
-          | Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Vivamus
-          | sagittis lacus vel augue laoreet rutrum faucibus dolor auctor. Integer posuere erat a ante venenatis
-          | dapibus posuere velit aliquet. Curabitur blandit tempus porttitor.
-          | Cras mattis consectetur purus sit amet fermentum. Vestibulum id ligula porta felis euismod semper.
-          | Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Nulla vitae elit libero, a
-          | pharetra augue. Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio
-          | sem nec elit.
-          | Cras justo odio, dapibus ac facilisis in, egestas eget quam. Nulla vitae elit libero, a pharetra
-          | augue. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Praesent commodo cursus magna,
-          | vel scelerisque nisl consectetur et.
-        p.intro-animation
-          | Vivamus dolor massa, aliquet ut leo vel, sodales mattis tortor. Aenean at mauris et ex mollis
-          | fringilla. Sed volutpat viverra vehicula. Nullam maximus ligula ac nisl aliquam commodo. Donec sed
-          | vestibulum orci. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus
-          | mus. Proin ut porttitor lorem, sit amet aliquet dui. Nunc dictum, lorem vitae elementum pharetra,
-          | sapien orci dignissim ligula, aliquam interdum erat urna a nibh. Morbi quis tellus maximus,
-          | pellentesque erat ac, porttitor nulla. Curabitur rhoncus urna non magna mattis aliquet. Vestibulum
-          | non lobortis turpis. Nunc aliquet velit a magna dictum pulvinar vitae laoreet tortor. Duis auctor
-          | iaculis arcu ac rutrum. Suspendisse vel odio risus.
-        p.intro-animation
-          | Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Vivamus
-          | sagittis lacus vel augue laoreet rutrum faucibus dolor auctor. Integer posuere erat a ante venenatis
-          | dapibus posuere velit aliquet. Curabitur blandit tempus porttitor.
-          | Cras mattis consectetur purus sit amet fermentum. Vestibulum id ligula porta felis euismod semper.
-          | Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Nulla vitae elit libero, a
-          | pharetra augue. Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio
-          | sem nec elit.
-          | Cras justo odio, dapibus ac facilisis in, egestas eget quam. Nulla vitae elit libero, a pharetra
-          | augue. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Praesent commodo cursus magna,
-          | vel scelerisque nisl consectetur et.
+  
+    .space-y-6
+      p.intro-animation
+        | Vivamus dolor massa, aliquet ut leo vel, sodales mattis tortor. Aenean at mauris et ex mollis
+        | fringilla. Sed volutpat viverra vehicula. Nullam maximus ligula ac nisl aliquam commodo. Donec sed
+        | vestibulum orci. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus
+        | mus. Proin ut porttitor lorem, sit amet aliquet dui. Nunc dictum, lorem vitae elementum pharetra,
+        | sapien orci dignissim ligula, aliquam interdum erat urna a nibh. Morbi quis tellus maximus,
+        | pellentesque erat ac, porttitor nulla. Curabitur rhoncus urna non magna mattis aliquet. Vestibulum
+        | non lobortis turpis. Nunc aliquet velit a magna dictum pulvinar vitae laoreet tortor. Duis auctor
+        | iaculis arcu ac rutrum. Suspendisse vel odio risus.
+      p.intro-animation
+        | Vivamus dolor massa, aliquet ut leo vel, sodales mattis tortor. Aenean at mauris et ex mollis
+        | fringilla. Sed volutpat viverra vehicula. Nullam maximus ligula ac nisl aliquam commodo. Donec sed
+        | vestibulum orci. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus
+        | mus. Proin ut porttitor lorem, sit amet aliquet dui. Nunc dictum, lorem vitae elementum pharetra,
+        | sapien orci dignissim ligula, aliquam interdum erat urna a nibh. Morbi quis tellus maximus,
+        | pellentesque erat ac, porttitor nulla. Curabitur rhoncus urna non magna mattis aliquet. Vestibulum
+        | non lobortis turpis. Nunc aliquet velit a magna dictum pulvinar vitae laoreet tortor. Duis auctor
+        | iaculis arcu ac rutrum. Suspendisse vel odio risus.
+      p.intro-animation
+        | Cras mattis consectetur purus sit amet fermentum. Nulla vitae elit libero, a pharetra augue. Sed
+        | posuere consectetur est at lobortis. Aenean eu leo quam. Pellentesque ornare sem lacinia quam
+        | venenatis vestibulum. Vestibulum id ligula porta felis euismod semper. Praesent commodo cursus
+        | magna, vel scelerisque nisl consectetur et.
+      p.intro-animation
+        | Etiam porta sem malesuada magna mollis euismod. Cum sociis natoque penatibus et magnis dis parturient
+        | montes, nascetur ridiculus mus. Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor
+        | auctor. Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem nec
+        | elit. Integer posuere erat a ante venenatis dapibus posuere velit aliquet. Cras justo odio, dapibus
+        | ac facilisis in, egestas eget quam.
+        | Donec ullamcorper nulla non metus auctor fringilla. Sed posuere consectetur est at lobortis. Etiam
+        | porta sem malesuada magna mollis euismod. Donec sed odio dui. Donec id elit non mi porta gravida at
+        | eget metus. Cras mattis consectetur purus sit amet fermentum.
+      img.my-5.intro-animation(loading='lazy' width='1502' src='https://images.unsplash.com/photo-1590510325281-54a9164cf0f4?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1502&q=80'  alt='Lazyloaded img')
+      p.intro-animation
+        | Vivamus dolor massa, aliquet ut leo vel, sodales mattis tortor. Aenean at mauris et ex mollis
+        | fringilla. Sed volutpat viverra vehicula. Nullam maximus ligula ac nisl aliquam commodo. Donec sed
+        | vestibulum orci. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus
+        | mus. Proin ut porttitor lorem, sit amet aliquet dui. Nunc dictum, lorem vitae elementum pharetra,
+        | sapien orci dignissim ligula, aliquam interdum erat urna a nibh. Morbi quis tellus maximus,
+        | pellentesque erat ac, porttitor nulla. Curabitur rhoncus urna non magna mattis aliquet. Vestibulum
+        | non lobortis turpis. Nunc aliquet velit a magna dictum pulvinar vitae laoreet tortor. Duis auctor
+        | iaculis arcu ac rutrum. Suspendisse vel odio risus.
+      p.intro-animation
+        | Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Vivamus
+        | sagittis lacus vel augue laoreet rutrum faucibus dolor auctor. Integer posuere erat a ante venenatis
+        | dapibus posuere velit aliquet. Curabitur blandit tempus porttitor.
+        | Cras mattis consectetur purus sit amet fermentum. Vestibulum id ligula porta felis euismod semper.
+        | Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Nulla vitae elit libero, a
+        | pharetra augue. Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio
+        | sem nec elit.
+        | Cras justo odio, dapibus ac facilisis in, egestas eget quam. Nulla vitae elit libero, a pharetra
+        | augue. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Praesent commodo cursus magna,
+        | vel scelerisque nisl consectetur et.
+      p.intro-animation
+        | Vivamus dolor massa, aliquet ut leo vel, sodales mattis tortor. Aenean at mauris et ex mollis
+        | fringilla. Sed volutpat viverra vehicula. Nullam maximus ligula ac nisl aliquam commodo. Donec sed
+        | vestibulum orci. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus
+        | mus. Proin ut porttitor lorem, sit amet aliquet dui. Nunc dictum, lorem vitae elementum pharetra,
+        | sapien orci dignissim ligula, aliquam interdum erat urna a nibh. Morbi quis tellus maximus,
+        | pellentesque erat ac, porttitor nulla. Curabitur rhoncus urna non magna mattis aliquet. Vestibulum
+        | non lobortis turpis. Nunc aliquet velit a magna dictum pulvinar vitae laoreet tortor. Duis auctor
+        | iaculis arcu ac rutrum. Suspendisse vel odio risus.
+      p.intro-animation
+        | Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Vivamus
+        | sagittis lacus vel augue laoreet rutrum faucibus dolor auctor. Integer posuere erat a ante venenatis
+        | dapibus posuere velit aliquet. Curabitur blandit tempus porttitor.
+        | Cras mattis consectetur purus sit amet fermentum. Vestibulum id ligula porta felis euismod semper.
+        | Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Nulla vitae elit libero, a
+        | pharetra augue. Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio
+        | sem nec elit.
+        | Cras justo odio, dapibus ac facilisis in, egestas eget quam. Nulla vitae elit libero, a pharetra
+        | augue. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Praesent commodo cursus magna,
+        | vel scelerisque nisl consectetur et.
+      p.intro-animation
+        | Vivamus dolor massa, aliquet ut leo vel, sodales mattis tortor. Aenean at mauris et ex mollis
+        | fringilla. Sed volutpat viverra vehicula. Nullam maximus ligula ac nisl aliquam commodo. Donec sed
+        | vestibulum orci. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus
+        | mus. Proin ut porttitor lorem, sit amet aliquet dui. Nunc dictum, lorem vitae elementum pharetra,
+        | sapien orci dignissim ligula, aliquam interdum erat urna a nibh. Morbi quis tellus maximus,
+        | pellentesque erat ac, porttitor nulla. Curabitur rhoncus urna non magna mattis aliquet. Vestibulum
+        | non lobortis turpis. Nunc aliquet velit a magna dictum pulvinar vitae laoreet tortor. Duis auctor
+        | iaculis arcu ac rutrum. Suspendisse vel odio risus.
+      p.intro-animation
+        | Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Vivamus
+        | sagittis lacus vel augue laoreet rutrum faucibus dolor auctor. Integer posuere erat a ante venenatis
+        | dapibus posuere velit aliquet. Curabitur blandit tempus porttitor.
+        | Cras mattis consectetur purus sit amet fermentum. Vestibulum id ligula porta felis euismod semper.
+        | Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Nulla vitae elit libero, a
+        | pharetra augue. Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio
+        | sem nec elit.
+        | Cras justo odio, dapibus ac facilisis in, egestas eget quam. Nulla vitae elit libero, a pharetra
+        | augue. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Praesent commodo cursus magna,
+        | vel scelerisque nisl consectetur et.
 
-    .grid.grid-cols-12.gap-6.mt-8.mb-5
+    div(class="sm:grid-cols-12").grid.gap-6.mt-8.mb-5
       .col-span-6.bg-white.rounded-lg.overflow-hidden.border.border-gray-200.intro-animation
         img(loading='lazy' width='1510' src='https://images.unsplash.com/photo-1464553186862-680edae5b2bc?ixlib=rb-1.2.1&auto=format&fit=crop&w=1510&q=80' alt='Lazyloaded img')
         p.p-5 Lazyloaded image.

@@ -1,6 +1,6 @@
 import { EventEmitter, ListenerCallback, EventInput } from "./emitter";
 import { ServiceManager, Service } from "./service";
-import { newConfig, ICONFIG } from "./config";
+import { newConfig, ICONFIG, getConfig } from "./config";
 
 export interface IApp {
     services: ServiceManager,
@@ -27,7 +27,13 @@ export class App implements IApp {
 
     /** The current Configuration's for the App */
     public config: ICONFIG;
+
+    private canResize = true;
+    private canScroll = true;
     constructor(config: object = {}) {
+        this._resize = this._resize.bind(this);
+        this._scroll = this._scroll.bind(this);
+        this._ready = this._ready.bind(this);
         this.register(config);
     }
 
@@ -37,15 +43,47 @@ export class App implements IApp {
         this.emitter = new EventEmitter();
         this.services = new ServiceManager(this);
 
-        let handler = (() => {
-            document.removeEventListener("DOMContentLoaded", handler);
-            window.removeEventListener("load", handler);
-            this.emitter.emit("READY ready");
-        }).bind(this);
-
-        document.addEventListener("DOMContentLoaded", handler);
-        window.addEventListener("load", handler);
+        document.addEventListener("DOMContentLoaded", this._ready);
+        window.addEventListener("load", this._ready);
+        window.addEventListener("resize", this._resize, { passive: true });
+        window.addEventListener("scroll", this._scroll, { passive: true });
         return this;
+    }
+
+    private _ready() {
+        document.removeEventListener("DOMContentLoaded", this._ready);
+        window.removeEventListener("load", this._ready);
+        this.emitter.emit("READY ready");
+    }
+
+    private _resize() {
+        if (this.canResize) {
+            let timer: number | void, raf: number | void;
+            this.canResize = false;
+            raf = window.requestAnimationFrame(() => {
+                this.emitter.emit("RESIZE resize");
+
+                // set a timeout to un-throttle
+                timer = window.setTimeout(() => {
+                    this.canResize = true;
+                    timer = window.clearTimeout(timer as number);
+                    raf = window.cancelAnimationFrame(raf as number);
+                }, getConfig(this.config, "resizeDelay"));
+            });
+        }
+    }
+
+    private _scroll() {
+        if (this.canScroll) {
+            let raf: number | void;
+            this.canScroll = false;
+            raf = requestAnimationFrame(() => {
+                this.emitter.emit("SCROLL scroll");
+
+                this.canScroll = true;
+                raf = window.cancelAnimationFrame(raf as number);
+            });
+        }
     }
 
     /** Shortcuts to adding, setting, and getting Services */

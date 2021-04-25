@@ -12,12 +12,12 @@ export class Navbar extends Service {
     public init() {
         // Elements
         this.navbar = document.querySelector(".navbar") as HTMLElement;
-        this.collapseSection = this.navbar.querySelector(".navbar-collapse") as HTMLElement;
+        this.collapseSection = this.navbar.querySelector(".navbar-collapse.mobile") as HTMLElement;
         this.navbarList = this.navbar.querySelector(".navbar-list") as HTMLElement;
         this.elements = toArr(this.navbar.querySelectorAll(".navbar-list a"));
         this.menu = this.navbar.querySelector(".navbar-toggle") as HTMLElement;
-
         this.toggleStatus = false;
+
         this.toggleClick = this.toggleClick.bind(this);
     }
 
@@ -45,14 +45,20 @@ export class Navbar extends Service {
         this.collapseSection.classList.toggle("show", this.toggleStatus);
     }
 
+    public scroll() {
+        this.navbar.classList.toggle("shadow", window.scrollY >= 5);
+    }
+
     public initEvents() {
         this.menu.addEventListener("click", this.toggleClick);
+        this.emitter.on("scroll", this.scroll, this);
         this.emitter.on("READY", this.activateLink, this);
         this.emitter.on("GO", this.activateLink, this);
     }
 
     public stopEvents() {
         this.navbar.removeEventListener("click", this.toggleClick);
+        this.emitter.off("scroll", this.scroll, this);
         this.emitter.off("READY", this.activateLink, this);
         this.emitter.off("GO", this.activateLink, this);
     }

@@ -163,7 +163,7 @@ task("watch", async () => {
         }
     );
 
-    watch(`${pugFolder}/**/*.pug`, series("html"));
+    watch(`${pugFolder}/**/*.pug`, parallel("html", "css"));
     watch([`${sassFolder}/**/*.scss`, `./tailwind.cjs`], series("css"));
     watch(
         [

@@ -10,10 +10,11 @@ export interface ICONFIG {
     blockAttr?: string;
     timeout?: number;
     maxPages?: number;
+    resizeDelay?: number;
     [key: string]: any;
 }
 
-export const CONFIG_DEFAULTS = {
+export const CONFIG_DEFAULTS: ICONFIG = {
     wrapperAttr: "wrapper",
     noAjaxLinkAttr: "no-ajax-link",
     noPrefetchAttr: "no-prefetch",
@@ -25,7 +26,8 @@ export const CONFIG_DEFAULTS = {
     transitionAttr: "transition",
     blockAttr: `block`,
     timeout: 30000,
-    maxPages: 5
+    maxPages: 5,
+    resizeDelay: 100
 };
 
 export type ConfigKeys = keyof typeof CONFIG_DEFAULTS | string;

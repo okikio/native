@@ -1,11 +1,20 @@
-mixin navbar()
+mixin nav-list
+  ul.navbar-list
+    a.active(href='./index.html' data-path='(index|\/$)(\.html)?' data-transition='default') Home
+    a(href='./about.html' data-path='/about(.html)?' data-transition='SlideLeft') About
+    a(href='./docs.html' data-path='/docs(.html)?' data-transition='BigTransition') Docs
+
+mixin navbar
   nav.navbar
     .container
-      a.navbar-logo(href='./index.html') @okikio/native
-      button.navbar-toggle(type='button')
-        span.icon menu
-      .navbar-collapse.collapse
-        ul.navbar-list
-          a.active(href='./index.html' data-path='(index|\/$)(\.html)?' data-transition='default') Home
-          a(href='./about.html' data-path='/about(.html)?' data-transition='SlideLeft') About
-          a(href='./other.html' data-path='/other(.html)?' data-transition='BigTransition'  data-prevent="self") Docs (prevent-pjax)
+      .navbar-bg
+      .navbar-frame
+        .navbar-shadow
+        .navbar-border
+        a.navbar-logo(href='./index.html') @okikio/native
+        button.navbar-toggle(type='button')
+          span.icon menu
+        .navbar-collapse.collapse.mobile
+          +nav-list
+        .navbar-collapse.desktop
+          +nav-list
