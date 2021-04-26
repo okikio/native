@@ -7,7 +7,7 @@ export class Navbar extends Service {
     public menu: HTMLElement;
     public collapseSection: HTMLElement;
     public navbarList: HTMLElement;
-    toggleStatus: boolean;
+    public toggleStatus: boolean;
 
     public init() {
         // Elements
@@ -18,6 +18,7 @@ export class Navbar extends Service {
         this.menu = this.navbar.querySelector(".navbar-toggle") as HTMLElement;
         this.toggleStatus = false;
 
+        this.fixTabindex();
         this.toggleClick = this.toggleClick.bind(this);
     }
 
@@ -36,6 +37,16 @@ export class Navbar extends Service {
                 el.classList.toggle("active", URLmatch);
             }
         }
+
+        if (this.toggleStatus) {
+            this.toggleClick();
+        }
+    }
+
+    public fixTabindex() {
+        for (let el of this.elements) {
+            el.setAttribute("tabindex", `${this.toggleStatus ? 0 : -1}`);
+        }
     }
 
     public toggleClick() {
@@ -43,6 +54,7 @@ export class Navbar extends Service {
         this.toggleStatus = !this.toggleStatus;
         this.collapseSection.classList.toggle("collapse", !this.toggleStatus);
         this.collapseSection.classList.toggle("show", this.toggleStatus);
+        this.fixTabindex();
     }
 
     public scroll() {

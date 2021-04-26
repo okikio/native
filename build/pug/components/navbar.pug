@@ -1,20 +1,30 @@
 mixin nav-list
   ul.navbar-list
-    a.active(href='./index.html' data-path='(index|\/$)(\.html)?' data-transition='default') Home
+    a(href='./index.html' data-path='(index|\/$)(\.html)?' data-transition='default') Home
     a(href='./about.html' data-path='/about(.html)?' data-transition='SlideLeft') About
     a(href='./docs.html' data-path='/docs(.html)?' data-transition='BigTransition') Docs
+    block
 
 mixin navbar
   nav.navbar
-    .container
-      .navbar-bg
-      .navbar-frame
+    .navbar-bg
+      .container
         .navbar-shadow
+    .navbar-bg
+      .container
         .navbar-border
+    .container
+      .navbar-frame
         a.navbar-logo(href='./index.html') @okikio/native
-        button.navbar-toggle(type='button')
-          span.icon menu
+        .mobile
+          button.theme-toggle(type='button')
+            span.icon dark_mode
+          button.navbar-toggle(type='button')
+            span.icon menu
         .navbar-collapse.collapse.mobile
           +nav-list
-        .navbar-collapse.desktop
-          +nav-list
+        .desktop
+          .navbar-collapse
+            +nav-list
+              button.theme-toggle(type='button')
+                span.icon dark_mode

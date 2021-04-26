@@ -129,7 +129,6 @@ task("js", async () => {
 });
 
 // Build & Watch Tasks
-task("build", parallel("html", series("css", "minify-css"), "js"));
 task("watch", async () => {
     const { default: bs } = await import("browser-sync");
     browserSync = bs.create();
@@ -182,4 +181,5 @@ task("watch", async () => {
     );
 });
 
-task("default", series("build", "watch"));
+task("build", parallel("html", series("css", "minify-css"), "js"));
+task("default", series(parallel("html", "css", "js"), "watch"));

@@ -12,10 +12,11 @@ head
   meta(name="color-scheme" content="dark light")
   meta(name='viewport' content='width=device-width, initial-scale=1')
 
-  
+
   link(rel='stylesheet' href='./css/app.css' async)
   link(rel='preconnect' href='https://fonts.gstatic.com')
-  link(href='https://fonts.googleapis.com/icon?family=Material+Icons' rel='stylesheet' async)
+  link(href='https://fonts.googleapis.com/css2?family=Material+Icons&family=Material+Icons+Round&display=swap' rel='stylesheet' async)
+  script(src='./js/theme.js' type='module' async)
 
 body
   +navbar
@@ -25,5 +26,5 @@ body
   main(data-wrapper)
     block content
 
-  +footer 
-  script(src='./js/main.js' type='module')
+  +footer
+  script(src='./js/main.js' type='module' async)

@@ -14,6 +14,7 @@ export const Fade: ITransition = {
             opacity: [1, 0],
             duration,
         }).on("finish", function () {
+            window.scroll(0, 0);
             this.stop();
         });
     },

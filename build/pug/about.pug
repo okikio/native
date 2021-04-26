@@ -1,7 +1,7 @@
 extends /layouts/layout.pug
 
 block title
-  title About 
+  title About
 
 block content
   .container.px-5.py-2(class="sm:px-10 sm:max-w-screen-xl")
@@ -16,13 +16,13 @@ block content
       | nisl, sed volutpat purus. Sed auctor convallis sapien sed hendrerit. Vivamus et neque facilisis,
       | ultrices ex non, faucibus velit. Aliquam laoreet sed turpis a blandit. Nulla fringilla massa non
       | fermentum rutrum.
-    
-    .bg-white.my-5.rounded-lg.overflow-hidden.border.border-gray-200.intro-animation
-      img(loading='lazy' width='1500' src='https://images.unsplash.com/photo-1570506020466-17c74d2f4590?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1500&q=80' alt='Lazyloaded img')
+
+    .bg-white(class="dark:bg-quaternary dark:border-quaternary").my-5.rounded-lg.overflow-hidden.border.border-gray-200.intro-animation
+      img(loading='eager' width='1500' src='https://images.unsplash.com/photo-1570506020466-17c74d2f4590?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1500&q=80' alt='Lazyloaded img')
       p.p-5 Lazyloaded picture.
-    
+
     div(class="md:grid-cols-12").grid.gap-6.my-3
-      div(class="md:col-span-6").p-5.rounded-lg.border.border-gray-200.bg-white.col-span-12.intro-animation
+      div(class="md:col-span-6 dark:bg-quaternary dark:border-quaternary").p-5.rounded-lg.border.border-gray-200.bg-white.col-span-12.intro-animation
         p
           | Vivamus dolor massa, aliquet ut leo vel, sodales mattis tortor. Aenean at mauris et ex mollis
           | fringilla. Sed volutpat viverra vehicula. Nullam maximus ligula ac nisl aliquam commodo. Donec sed
@@ -42,7 +42,7 @@ block content
           | pellentesque erat ac, porttitor nulla. Curabitur rhoncus urna non magna mattis aliquet. Vestibulum
           | non lobortis turpis. Nunc aliquet velit a magna dictum pulvinar vitae laoreet tortor. Duis auctor
           | iaculis arcu ac rutrum. Suspendisse vel odio risus.
-      
+
     .space-y-5
       p.intro-animation
         | Vivamus dolor massa, aliquet ut leo vel, sodales mattis tortor. Aenean at mauris et
@@ -199,8 +199,8 @@ block content
         | augue. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Praesent
         | commodo cursus magna,
         | vel scelerisque nisl consectetur et.
-      img#4-image(loading='lazy' width='1534' src='https://images.unsplash.com/photo-1590233183655-79cd23bd56db?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1534&q=80' alt='Lazyloaded img')
-      img#5-image(loading='lazy' width='1502' src='https://images.unsplash.com/photo-1590305840667-d7b021e86fd6?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1502&q=80' alt='Lazyloaded img')
+      img#4-image(loading='eager' width='1534' src='https://images.unsplash.com/photo-1590233183655-79cd23bd56db?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1534&q=80' alt='Lazyloaded img')
+      img#5-image(loading='eager' width='1502' src='https://images.unsplash.com/photo-1590305840667-d7b021e86fd6?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1502&q=80' alt='Lazyloaded img')
       p
         | Vivamus dolor massa, aliquet ut leo vel, sodales mattis tortor. Aenean at mauris et ex mollis
         | fringilla. Sed volutpat viverra vehicula. Nullam maximus ligula ac nisl aliquam commodo. Donec sed
@@ -210,7 +210,7 @@ block content
         | pellentesque erat ac, porttitor nulla. Curabitur rhoncus urna non magna mattis aliquet. Vestibulum
         | non lobortis turpis. Nunc aliquet velit a magna dictum pulvinar vitae laoreet tortor. Duis auctor
         | iaculis arcu ac rutrum. Suspendisse vel odio risus.
-      
+
       p
         | Vivamus dolor massa, aliquet ut leo vel, sodales mattis tortor. Aenean at mauris et ex mollis
         | fringilla. Sed volutpat viverra vehicula. Nullam maximus ligula ac nisl aliquam commodo. Donec sed
@@ -220,4 +220,4 @@ block content
         | pellentesque erat ac, porttitor nulla. Curabitur rhoncus urna non magna mattis aliquet. Vestibulum
         | non lobortis turpis. Nunc aliquet velit a magna dictum pulvinar vitae laoreet tortor. Duis auctor
         | iaculis arcu ac rutrum. Suspendisse vel odio risus.
-      img#snd-image(loading='lazy' width='1541' src='https://images.unsplash.com/photo-1589979812000-4eab44f02c30?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1541&q=80' alt='Lazyloaded img')
+      img#snd-image(loading='eager' width='1541' src='https://images.unsplash.com/photo-1589979812000-4eab44f02c30?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1541&q=80' alt='Lazyloaded img')
