@@ -23,9 +23,14 @@ export declare class App implements IApp {
     emitter: EventEmitter;
     /** The current Configuration's for the App */
     config: ICONFIG;
+    private canResize;
+    private canScroll;
     constructor(config?: object);
     /** Create new instances of the ServiceManager, EventEmitter and the configurations */
     register(config?: ICONFIG): App;
+    private _ready;
+    private _resize;
+    private _scroll;
     /** Shortcuts to adding, setting, and getting Services */
     get(key: string): Service;
     set(key: string, value: Service): App;

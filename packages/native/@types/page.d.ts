@@ -43,7 +43,6 @@ export declare class Page extends ManagerItem implements IPage {
 }
 export interface IPageManager extends Service {
     loading: Manager<string, Promise<string>>;
-    maxPages: number;
     pages: AdvancedManager<string, Page>;
     install(): any;
     get(key: any): Page;
@@ -61,7 +60,6 @@ export interface IPageManager extends Service {
 export declare class PageManager extends Service implements IPageManager {
     /** Stores all fetch requests that are currently loading */
     loading: Manager<string, Promise<string>>;
-    maxPages: number;
     pages: AdvancedManager<string, Page>;
     /** Instantiate pages, and add the current page to pages */
     install(): void;

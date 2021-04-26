@@ -46,8 +46,8 @@ export const hashAction = (coords?: ICoords, hash: string = window.location.hash
             let el = document.getElementById(_hash.slice(1));
             if (el) {
                 let { left, top } = el.getBoundingClientRect();
-                let scrollLeft = window.pageXOffset;
-                let scrollTop = window.pageYOffset;
+                let scrollLeft = window.scrollX;
+                let scrollTop = window.scrollY;
                 let x = left + scrollLeft;
                 let y = top + scrollTop;
 

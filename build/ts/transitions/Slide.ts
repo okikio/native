@@ -20,7 +20,7 @@ export const Slide: ITransition = {
         let { duration, direction } = this;
         let fromWrapper = from.wrapper;
 
-        return animate({
+        let anim = animate({
             target: fromWrapper,
             keyframes: [
                 { transform: "translateX(0%)", opacity: 1 },
@@ -28,6 +28,10 @@ export const Slide: ITransition = {
             ],
             duration,
             easing: "in-quint"
+        });
+
+        return anim.on("begin", () => {
+            document.body.classList.add("no-overflow-x");
         }).then(function () {
             this.stop();
         });
@@ -38,7 +42,7 @@ export const Slide: ITransition = {
         let toWrapper = to.wrapper;
 
         window.scroll(scroll.x, scroll.y);
-        return animate({
+        let anim = animate({
             target: toWrapper,
             keyframes: [
                 { transform: `translateX(${this.direction === "right" ? "-" : ""}25%)`, opacity: 0 },
@@ -46,7 +50,10 @@ export const Slide: ITransition = {
             ],
             duration,
             easing: "out-quint"
-        }).then(function () {
+        })
+
+        return anim.then(function () {
+            document.body.classList.remove("no-overflow-x");
             this.stop();
         });
     }

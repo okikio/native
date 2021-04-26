@@ -1,4 +1,5 @@
 module.exports = {
+    darkMode: 'class',
     mode: "jit",
     purge: [
         './build/pug/**/*.pug'
@@ -6,6 +7,14 @@ module.exports = {
 
     theme: {
         extend: {
+            colors: {
+                "elevated": "#1C1C1E",
+                "elevated-2": "#262628",
+                "label": "#ddd",
+                "secondary": "#bbb",
+                "tertiary": "#555",
+                "quaternary": "#333",
+            },
             screens: {
                 'lt-2xl': { 'max': '1535px' },
                 // => @media (max-width: 1535px) { ... }

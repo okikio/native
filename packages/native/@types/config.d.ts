@@ -9,10 +9,12 @@ export interface ICONFIG {
     transitionAttr?: string;
     blockAttr?: string;
     timeout?: number;
+    maxPages?: number;
+    resizeDelay?: number;
     [key: string]: any;
 }
 export declare const CONFIG_DEFAULTS: ICONFIG;
-export declare type ConfigKeys = keyof ICONFIG;
+export declare type ConfigKeys = keyof typeof CONFIG_DEFAULTS | string;
 export declare const newConfig: (config: ICONFIG) => ICONFIG;
 /** Converts string into properly formatted data attributes */
 export declare const toAttr: (config: ICONFIG, value: string, brackets?: boolean) => string;

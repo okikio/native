@@ -10,7 +10,7 @@ export const BigTransition: ITransition = {
 
     init() {
         this.mainElement = document.getElementById('big-transition');
-        this.logoElement = this.mainElement.querySelector('.logo');
+        this.logoElement = this.mainElement.querySelector('#logo');
         this.horizontalElements = toArr(this.mainElement.querySelectorAll('#big-transition-horizontal div'));
         this.maxLength = this.horizontalElements.length;
     },
@@ -19,7 +19,6 @@ export const BigTransition: ITransition = {
         let { durationPerAnimation: duration, delay } = this;
         let fromWrapper = from.wrapper;
 
-        window.scroll(scroll.x, scroll.y);
         let wrapperStyle = Object.assign({}, fromWrapper.style);
         return new Promise<void>(async resolve => {
             this.mainElement.style.opacity = "1";

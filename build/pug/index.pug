@@ -2,11 +2,11 @@ extends /layouts/layout.pug
 
 block content
   .container.px-5.py-2(class="sm:max-w-screen-xl")
-    .my-5.px-12.py-24.bg-gray-200.rounded-lg.intro-animation
-      h1.text-5xl.mb-2 Homepage
-      p.font-light.text-lg Dynamic example.
+    .my-5.px-12.py-24.bg-gray-200(class="dark:bg-quaternary").rounded-lg.intro-animation
+      h1.text-5xl.font-semibold.mb-2 Homepage
+      p.text-lg Dynamic example.
 
-    div(class="sm:grid-cols-12").grid.gap-6.my-5.p-5.bg-white.rounded-lg.border.border-gray-200.intro-animation
+    div(class="sm:grid-cols-12 dark:bg-black dark:border-quaternary").grid.gap-6.my-5.p-5.bg-white.rounded-lg.border.border-gray-200.intro-animation
       .col-span-12(class="sm:col-span-3")
         ul.flex.flex-col.space-y-1(role='tablist' aria-orientation='vertical')
           a.btn.active(href='./index.html') Link to homepage
@@ -22,19 +22,19 @@ block content
           | Curabitur rhoncus urna non magna mattis aliquet. Vestibulum non lobortis turpis. Nunc aliquet velit a
           | magna dictum pulvinar vitae laoreet tortor. Duis auctor iaculis arcu ac rutrum. Suspendisse vel odio
           | risus.
-    
+
     div(class="sm:grid-cols-12").grid.gap-6.my-5
-      .col-span-6.bg-white.rounded-lg.overflow-hidden.border.border-gray-200.intro-animation
+      .col-span-6.bg-white(class="dark:bg-quaternary dark:border-quaternary").rounded-lg.overflow-hidden.border.border-gray-200.intro-animation
         img(loading='eager' width='747' src='https://images.unsplash.com/photo-1589646609975-cb53c8e5b37a?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=747&q=80' alt='Normal img')
         p.p-5 Normal image.
 
-      .col-span-6.bg-white.rounded-lg.overflow-hidden.border.border-gray-200.intro-animation
+      .col-span-6.bg-white(class="dark:bg-quaternary dark:border-quaternary").rounded-lg.overflow-hidden.border.border-gray-200.intro-animation
         picture
           source(data-srcset='/img/test2.webp' type='image/webp')
           img(loading='lazy' width='747' src='https://images.unsplash.com/photo-1570506020466-17c74d2f4590?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1500&q=80' alt='Lazyloaded img')
         p.p-5 Lazyloaded picture.
 
-  
+
     .space-y-6
       p.intro-animation
         | Vivamus dolor massa, aliquet ut leo vel, sodales mattis tortor. Aenean at mauris et ex mollis
@@ -131,14 +131,14 @@ block content
         | vel scelerisque nisl consectetur et.
 
     div(class="sm:grid-cols-12").grid.gap-6.mt-8.mb-5
-      .col-span-6.bg-white.rounded-lg.overflow-hidden.border.border-gray-200.intro-animation
+      .col-span-6.bg-white(class="dark:bg-quaternary dark:border-quaternary").rounded-lg.overflow-hidden.border.border-gray-200.intro-animation
         img(loading='lazy' width='1510' src='https://images.unsplash.com/photo-1464553186862-680edae5b2bc?ixlib=rb-1.2.1&auto=format&fit=crop&w=1510&q=80' alt='Lazyloaded img')
         p.p-5 Lazyloaded image.
 
-      .col-span-6.bg-white.rounded-lg.overflow-hidden.border.border-gray-200.intro-animation
+      .col-span-6.bg-white(class="dark:bg-quaternary dark:border-quaternary").rounded-lg.overflow-hidden.border.border-gray-200.intro-animation
         img(loading='lazy' width='750' src='https://images.unsplash.com/photo-1590169434951-f1622a03fe93?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=750&q=80' alt='Lazyloaded img')
         p.p-5 Lazyloaded image.
 
-      .col-span-6.bg-white.rounded-lg.overflow-hidden.border.border-gray-200.intro-animation
+      .col-span-6.bg-white(class="dark:bg-quaternary dark:border-quaternary").rounded-lg.overflow-hidden.border.border-gray-200.intro-animation
         img(loading='lazy' width='1482' src='https://images.unsplash.com/photo-1590071688906-d9df3f7bbd91?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1482&q=80' alt='Lazyloaded img')
         p.p-5 Lazyloaded image.
