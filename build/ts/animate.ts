@@ -1,94 +1,100 @@
 import { animate } from "@okikio/native";
+let anim = animate({
+    target: ".div",
+    keyframes(index, total) {
+        return [
+            { transform: "translateX(0px)", opacity: 0.1 },
+            { transform: "translateX(300px)", opacity: 0.2 + ((index + 1) / total) }
+        ]
+    },
+    // transform: ["translateX(0px)", "translateX(300px)"],
+    // opacity(index, total, element) {
+    //     return [0, ((index + 1) / total)];
+    // },
 
-/*
-    anim = animate({
-        target: ".div",
-        keyframes(index, total) {
-            return [
-                { transform: "translateX(0px)", opacity: 0.1 },
-                { transform: "translateX(300px)", opacity: 0.2 + ((index + 1) / total) }
-            ]
-        },
-        // transform: ["translateX(0px)", "translateX(300px)"],
-        // opacity(index, total, element) {
-        //     return [0, ((index + 1) / total)];
-        // },
+    // It is best to use the onfinish() method, but in this situation fillMode works best
+    fillMode: "both",
+    // onfinish(element, index, total) {
+    //     element.style.opacity = `${((index + 1) / total)}`;
+    //     element.style.transform = "translateX(300px)";
+    // },
 
-        // It is best to use the onfinish() method, but in this situation fillMode works best
-        fillMode: "both",
-            // onfinish(element, index, total) {
-            //     element.style.opacity = `${((index + 1) / total)}`;
-            //     element.style.transform = "translateX(300px)";
-            // },
+    easing: "out-cubic",
+    duration(index: number) {
+        return (index + 1) * 500;
+    },
+    loop: 5,
+    speed: 1.5,
+    direction: "alternate",
+    delay(index: number) {
+        return ((index + 1) * 500) / 2;
+    },
+    autoplay: true
+});
 
-            easing: "out-cubic",
-                duration(index: number) {
-            return (index + 1) * 500;
-        },
-        loop: 5,
-            speed: 1.5,
-                direction: "alternate",
-                    delay(index: number) {
-            return ((index + 1) * 500) / 2;
-        },
-        autoplay: false
-    });
+let el: HTMLElement = document.querySelector(".info");
+let backupInfo = el.textContent;
+let info = backupInfo;
+anim.on({
+    begin() {
+        if (el) {
+            info = backupInfo;
+            el.textContent = info;
+            el.style.color = "initial";
+        }
+    }
+})
+anim.on("complete", () => {
+    if (el) {
+        info = "Done.";
+        el.textContent = info;
+        el.style.color = "red";
 
-    let el: HTMLElement = document.querySelector(".info");
-    let backupInfo = el.textContent;
-    let info = backupInfo;
-    anim.on({
-        begin() {
-            if (el) {
-                info = backupInfo;
-                el.textContent = info;
-                el.style.color = "initial";
-            }
+        console.log(info);
+    }
+});
+
+let scrub = document.getElementById('scrub') as HTMLInputElement;
+scrub.addEventListener('input', e => {
+    var percent = +(e.target as HTMLInputElement).value;
+    anim.setProgress(percent);
+    anim.pause();
+});
+
+let progressSpan = document.querySelector(".progress");
+anim.on("update", progress => {
+    scrub.value = `` + progress;
+    progressSpan && (progressSpan.textContent = `${Math.round(progress)}%`);
+});
+
+scrub.addEventListener('change', () => {
+    let progress = anim.getProgress();
+    anim.all((a) => {
+        if (a.playState != "finished" && progress < 100) {
+            console.log({ playstate: a.playState, currentTime: a.currentTime, progress });
+            console.log(a.timeline);
         }
     })
-    anim.on("complete", () => {
-        if (el) {
-            info = "Done.";
-            el.textContent = info;
-            el.style.color = "red";
+    // if (Math.round(anim.getProgress()) >= 100) {
+    //     anim.finish();
+    //     return false;
+    // }
+    // anim.play();
+});
 
-            console.log(info);
+
+let playtoggle = document.querySelector(".playtoggle");
+if (playtoggle) {
+    playtoggle.addEventListener("click", () => {
+        let state = anim.getPlayState();
+        if (state === "running") anim.pause();
+        else if (state === "finished") anim.reset();
+        else {
+            anim.play();
         }
+        console.log(state);
     });
-
-    let scrub = document.getElementById('scrub') as HTMLInputElement;
-    scrub.addEventListener('input', e => {
-        var percent = +(e.target as HTMLInputElement).value;
-        anim.setProgress(percent);
-        anim.pause();
-    });
-
-    let progressSpan = document.querySelector(".progress");
-    anim.on("update", progress => {
-        scrub.value = `` + progress;
-        progressSpan && (progressSpan.textContent = `${Math.round(progress)}%`);
-    });
-
-    scrub.addEventListener('change', () => {
-        if (Math.round(anim.getProgress()) >= 100) {
-            anim.finish();
-            return false;
-        }
-        anim.play();
-    });
-
-
-    let playtoggle = document.querySelector(".playtoggle");
-    if (playtoggle) {
-        playtoggle.addEventListener("click", () => {
-            let state = anim.getPlayState();
-            if (state === "running") anim.pause();
-            else if (state === "finished") anim.reset();
-            else anim.play();
-            console.log(state);
-        });
-    }
-*/
+}
 
 /* Target Section */
 // CSS Selector Demo

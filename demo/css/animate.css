@@ -1,0 +1,9 @@
+.div {
+    position: relative;
+    margin: 0.5rem;
+    height: 2.5rem;
+    width: 2.5rem;
+    border-radius: 0.25rem;
+    --tw-bg-opacity: 1;
+    background-color: rgba(96, 165, 250, var(--tw-bg-opacity))
+}

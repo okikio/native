@@ -1,4 +1,4 @@
-import { ITransition, ITransitionData, animate } from "../../../packages/native/src/api";
+import { ITransition, ITransitionData, animate } from "@okikio/native";
 import toArr from "../toArr";
 
 //== Transitions

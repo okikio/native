@@ -1,4 +1,4 @@
-import { Service, animate } from "../../../packages/native/src/api";
+import { Service, animate } from "@okikio/native";
 import toArr from "../toArr";
 
 export class IntroAnimation extends Service {
@@ -54,9 +54,7 @@ export class IntroAnimation extends Service {
                 return 300 * (i + 1);
             },
             onfinish(el: { style: { transform: string; opacity: string; }; }) {
-                requestAnimationFrame(() => {
-                    el.style.opacity = "1";
-                });
+                el.style.opacity = "1";
             },
             easing: "ease",
             duration: 850

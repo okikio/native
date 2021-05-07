@@ -148,7 +148,6 @@ task("watch", async () => {
                     dir: ["./lib"],
                 },
             ],
-            online: true,
             reloadOnRestart: true,
             scrollThrottle: 250
         },
@@ -162,7 +161,7 @@ task("watch", async () => {
         }
     );
 
-    watch(`${pugFolder}/**/*.pug`, parallel("html", "css"));
+    watch(`${pugFolder}/**/*.pug`, series("html"));
     watch([`${sassFolder}/**/*.scss`, `./tailwind.cjs`], series("css"));
     watch(
         [
@@ -181,5 +180,5 @@ task("watch", async () => {
     );
 });
 
-task("build", parallel("html", series("css", "minify-css"), "js"));
+task("build", series(parallel("html", "css", "js"), "minify-css"));
 task("default", series(parallel("html", "css", "js"), "watch"));

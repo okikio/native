@@ -4,5 +4,6 @@
     "scss.validate": false,
     "conventionalCommits.scopes": [
         "demo"
-    ]
+    ],
+    "npm.packageManager": "pnpm"
 }

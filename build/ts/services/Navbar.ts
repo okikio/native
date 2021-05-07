@@ -1,4 +1,4 @@
-import { Service, animate } from "../../../packages/native/src/api";
+import { Service } from "@okikio/native";
 import { toArr } from "../toArr";
 
 export class Navbar extends Service {
