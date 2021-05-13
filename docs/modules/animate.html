@@ -1,0 +1,1954 @@
+<!doctype html>
+<html class="default no-js">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>animate | native</title>
+	<meta name="description" content="Documentation for native">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="../assets/css/main.css">
+	<script async src="../assets/js/search.js" id="search-script"></script>
+</head>
+<body>
+<header>
+	<div class="tsd-page-toolbar">
+		<div class="container">
+			<div class="table-wrap">
+				<div class="table-cell" id="tsd-search" data-index="../assets/js/search.json" data-base="..">
+					<div class="field">
+						<label for="tsd-search-field" class="tsd-widget search no-caption">Search</label>
+						<input id="tsd-search-field" type="text" />
+					</div>
+					<ul class="results">
+						<li class="state loading">Preparing search index...</li>
+						<li class="state failure">The search index is not available</li>
+					</ul>
+					<a href="../index.html" class="title">native</a>
+				</div>
+				<div class="table-cell" id="tsd-widgets">
+					<div id="tsd-filter">
+						<a href="#" class="tsd-widget options no-caption" data-toggle="options">Options</a>
+						<div class="tsd-filter-group">
+							<div class="tsd-select" id="tsd-filter-visibility">
+								<span class="tsd-select-label">All</span>
+								<ul class="tsd-select-list">
+									<li data-value="public">Public</li>
+									<li data-value="protected">Public/Protected</li>
+									<li data-value="private" class="selected">All</li>
+								</ul>
+							</div>
+							<input type="checkbox" id="tsd-filter-inherited" checked />
+							<label class="tsd-widget" for="tsd-filter-inherited">Inherited</label>
+							<input type="checkbox" id="tsd-filter-externals" checked />
+							<label class="tsd-widget" for="tsd-filter-externals">Externals</label>
+						</div>
+					</div>
+					<a href="#" class="tsd-widget menu no-caption" data-toggle="menu">Menu</a>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="tsd-page-title">
+		<div class="container">
+			<ul class="tsd-breadcrumb">
+				<li>
+					<a href="../index.html">native</a>
+				</li>
+				<li>
+					<a href="animate.html">animate</a>
+				</li>
+			</ul>
+			<h1>Module animate</h1>
+		</div>
+	</div>
+</header>
+<div class="container container-main">
+	<div class="row">
+		<div class="col-8 col-content">
+			<section class="tsd-panel tsd-comment">
+				<div class="tsd-comment tsd-typography">
+					<a href="#okikioanimate" id="okikioanimate" style="color: inherit; text-decoration: none;">
+						<h1>@okikio/animate</h1>
+					</a>
+					<p>An animation library for the modern web, which. Inspired by animate plus, and animejs, <a href="https://www.skypack.dev/view/@okikio/animate">@okikio/animate</a> is a Javascript animation library focused on performance and ease of use. It  utilizes the Web Animation API to deliver butter smooth animations at a small size, it weighs ~3 KB (minified and gzipped).</p>
+					<p><em>Before even getting started, you will most likely need the Web Animation API, Promise, and Map polyfills. If you install <a href="https://www.skypack.dev/view/@okikio/animate">@okikio/animate</a> via <a href="https://www.npmjs.com/package/@okikio/animate">npm</a> you are most likely going to need <a href="https://rollupjs.org/">rollup</a> or <a href="https://esbuild.github.io/">esbuild</a>. You can use <a href="https://github.com/web-animations/web-animations-js">web-animations-js</a>, or <a href="https://polyfill.io/">polyfill.io</a> to create a polyfill. The minimum feature requirement for a polyfill are Maps, Promises, and a WebAnimation polyfill, e.g. <a href="https://cdn.polyfill.io/v3/polyfill.min.js?features=default,es2015,es2018,Array.prototype.includes,Map,Promise,WebAnimations">https://cdn.polyfill.io/v3/polyfill.min.js?features=default,es2015,es2018,Array.prototype.includes,Map,Promise,WebAnimations</a>.</em></p>
+					<p><em><strong>Warning</strong>: polyfilling may not fix animation format bugs, e.g. <a href="https://developer.mozilla.org/en-US/docs/Web/API/KeyframeEffect/composite">composite animations</a> don&#39;t work on older browsers, so, if you use <code>polyfill.io</code> and set it to check if the browser supports the feature before applying the polyfill, your project might encounter errors, as the browser may only have partial support of the Web Animation API.</em></p>
+					<p><em><strong>Note</strong>: to properly understand <code>@okikio/animate</code>, please read up on the <a href="https://developer.mozilla.org/en-US/docs/Web/API/Element/animate">Web Animation API</a> on MDN.</em></p>
+					<p>You can try out <code>@okikio/animate</code> using Gitpod:</p>
+					<p><a href="https://gitpod.io/#https://github.com/okikio/native/blob/master/packages/animate/README.md"><img src="https://gitpod.io/button/open-in-gitpod.svg" alt="Open In Gitpod"></a></p>
+					<p>By default Gitpod will start the dev script for you, but if you need to restart the dev script you can do so by typing into the terminal.</p>
+					<pre><code class="language-bash"><span style="color: #000000">pnpm demo</span>
+</code></pre>
+					<p>Once Gitpod has booted up, click on the <code>@okikio/animate (no-pjax)</code> button in the preview, then go to <a href="../../build/pug/animate.pug">../../build/pug/animate.pug</a> and <a href="../../build/ts/animate.ts">../../build/ts/animate.ts</a> and start tweaking and testing to your hearts content.</p>
+					<a href="#table-of-contents" id="table-of-contents" style="color: inherit; text-decoration: none;">
+						<h2>Table of Contents</h2>
+					</a>
+					<ul>
+						<li><a href="#okikioanimate">@okikio/animate</a><ul>
+								<li><a href="#table-of-contents">Table of Contents</a></li>
+								<li><a href="#installation">Installation</a></li>
+								<li><a href="#demo">Demo</a></li>
+								<li><a href="#getting-started">Getting started</a></li>
+								<li><a href="#options">Options</a><ul>
+										<li><a href="#targets">target(s)</a></li>
+										<li><a href="#easing">easing</a></li>
+										<li><a href="#duration">duration</a></li>
+										<li><a href="#delay">delay</a></li>
+										<li><a href="#enddelay">endDelay</a></li>
+										<li><a href="#loop">loop</a></li>
+										<li><a href="#onfinish">onfinish</a></li>
+										<li><a href="#oncancel">oncancel</a></li>
+										<li><a href="#autoplay">autoplay</a></li>
+										<li><a href="#direction">direction</a></li>
+										<li><a href="#speed">speed</a></li>
+										<li><a href="#fillmode">fillMode</a></li>
+										<li><a href="#options-1">options</a></li>
+										<li><a href="#extend">extend</a></li>
+									</ul>
+								</li>
+								<li><a href="#animations">Animations</a><ul>
+										<li><a href="#css--svg-animations">CSS &amp; SVG Animations</a></li>
+									</ul>
+								</li>
+								<li><a href="#options--properties-as-methods">Options &amp; Properties as Methods</a></li>
+								<li><a href="#promises-and-promise-like">Promises and Promise-Like</a></li>
+								<li><a href="#events">Events</a></li>
+								<li><a href="#additional-methods--properties">Additional methods &amp; properties</a><ul>
+										<li><a href="#mainanimation-animation">mainAnimation: Animation</a></li>
+										<li><a href="#animations-managerhtmlelement-animation">animations: Manager&lt;HTMLElement, Animation&gt;</a></li>
+										<li><a href="#computedoptions-manageranimation-animationoptions">computedOptions: Manager&lt;Animation, AnimationOptions&gt;</a></li>
+										<li><a href="#mindelay-number">minDelay: number</a></li>
+										<li><a href="#maxspeed-number">maxSpeed: number</a></li>
+										<li><a href="#on-off-and-emit">on(...), off(...), and emit(...)</a></li>
+										<li><a href="#play-pause-and-reset">play(), pause(), and reset()</a></li>
+										<li><a href="#the-long-list-of-get-methods">The long list of Get Methods</a></li>
+										<li><a href="#the-almost-as-long-list-of-set-methods-these-methods-are-chainable">The almost as long list of Set Methods; these methods are chainable</a></li>
+										<li><a href="#then-catch-and-finally">then(...), catch(...), and finally(...)</a></li>
+										<li><a href="#tojson">toJSON()</a></li>
+										<li><a href="#allmethod-animation-animation--void">all(method: (animation: Animation) =&gt; void)</a></li>
+										<li><a href="#finish">finish()</a></li>
+										<li><a href="#cancel">cancel()</a></li>
+										<li><a href="#stop">stop()</a></li>
+									</ul>
+								</li>
+								<li><a href="#examples">Examples</a></li>
+								<li><a href="#browser-support">Browser support</a></li>
+								<li><a href="#content-delivery-networks">Content delivery networks</a></li>
+								<li><a href="#memory-management">Memory Management</a></li>
+								<li><a href="#best-practices-these-are-from-animate-plus-but-they-are-true-for-all-animation-libraries">Best practices (these are from Animate Plus, but they are true for all Animation libraries)</a></li>
+								<li><a href="#contributing">Contributing</a></li>
+								<li><a href="#licence">Licence</a></li>
+							</ul>
+						</li>
+					</ul>
+					<a href="#installation" id="installation" style="color: inherit; text-decoration: none;">
+						<h2>Installation</h2>
+					</a>
+					<p>You can install <a href="https://www.skypack.dev/view/@okikio/animate">@okikio/animate</a> from <a href="https://www.npmjs.com/package/@okikio/animate">npm</a> via <code>npm i @okikio/animate</code>, <code>pnpm i @okikio/animate</code> or <code>yarn add @okikio/animate</code>.</p>
+					<p>You can use <code>@okikio/animate</code> on the web via</p>
+					<ul>
+						<li><a href="https://unpkg.com/@okikio/animate/lib/api.es.js">https://unpkg.com/@okikio/animate/lib/api.es.js</a>,</li>
+						<li><a href="https://cdn.skypack.dev/@okikio/animate">https://cdn.skypack.dev/@okikio/animate</a> or</li>
+						<li><a href="https://cdn.jsdelivr.net/npm/@okikio/animate/lib/api.es.js">https://cdn.jsdelivr.net/npm/@okikio/animate/lib/api.es.js</a>.</li>
+					</ul>
+					<p>Once installed it can be used like this:</p>
+					<pre><code class="language-typescript"><span style="color: #AF00DB">import</span><span style="color: #000000"> { </span><span style="color: #001080">animate</span><span style="color: #000000"> } </span><span style="color: #AF00DB">from</span><span style="color: #000000"> </span><span style="color: #A31515">&quot;@okikio/animate&quot;</span><span style="color: #000000">;</span>
+<span style="color: #AF00DB">import</span><span style="color: #000000"> { </span><span style="color: #001080">animate</span><span style="color: #000000"> } </span><span style="color: #AF00DB">from</span><span style="color: #000000"> </span><span style="color: #A31515">&quot;https://unpkg.com/@okikio/animate/lib/api.es.js&quot;</span><span style="color: #000000">;</span>
+<span style="color: #AF00DB">import</span><span style="color: #000000"> { </span><span style="color: #001080">animate</span><span style="color: #000000"> } </span><span style="color: #AF00DB">from</span><span style="color: #000000"> </span><span style="color: #A31515">&quot;https://cdn.jsdelivr.net/npm/@okikio/animate/lib/api.es.js&quot;</span><span style="color: #000000">;</span>
+<span style="color: #008000">// Or</span>
+<span style="color: #AF00DB">import</span><span style="color: #000000"> { </span><span style="color: #001080">animate</span><span style="color: #000000"> } </span><span style="color: #AF00DB">from</span><span style="color: #000000"> </span><span style="color: #A31515">&quot;https://cdn.skypack.dev/@okikio/animate&quot;</span><span style="color: #000000">;</span>
+
+<span style="color: #008000">// Via script tag</span>
+<span style="color: #000000">&lt;</span><span style="color: #001080">script</span><span style="color: #000000"> </span><span style="color: #001080">src</span><span style="color: #000000">=</span><span style="color: #A31515">&quot;https://unpkg.com/@okikio/animate/lib/api.js&quot;</span><span style="color: #000000">&gt;&lt;/</span><span style="color: #267F99">script</span><span style="color: #000000">&gt;</span>
+<span style="color: #008000">// Do note, on the web you need to do this, if you installed it via the script tag:</span>
+<span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">animate</span><span style="color: #000000"> = </span><span style="color: #001080">window</span><span style="color: #000000">.</span><span style="color: #001080">animate</span><span style="color: #000000">.</span><span style="color: #001080">default</span><span style="color: #000000">;</span>
+<span style="color: #008000">// or</span>
+<span style="color: #0000FF">const</span><span style="color: #000000"> { </span><span style="color: #001080">default</span><span style="color: #000000">: </span><span style="color: #0070C1">animate</span><span style="color: #000000"> } = </span><span style="color: #001080">window</span><span style="color: #000000">.</span><span style="color: #001080">animate</span><span style="color: #000000">;</span>
+<span style="color: #008000">// or</span>
+<span style="color: #0000FF">const</span><span style="color: #000000"> { </span><span style="color: #001080">default</span><span style="color: #000000">: </span><span style="color: #0070C1">anime</span><span style="color: #000000"> } = </span><span style="color: #001080">window</span><span style="color: #000000">.</span><span style="color: #001080">animate</span><span style="color: #000000">; </span><span style="color: #008000">// LOL</span>
+</code></pre>
+					<a href="#demo" id="demo" style="color: inherit; text-decoration: none;">
+						<h2>Demo</h2>
+					</a>
+					<p>I built a small demo showing off the abilities of the <code>@okikio/animate</code> library. You can find the files for the demo in <a href="https://github.com/okikio/native/tree/master/build">./build</a> folder.</p>
+					<blockquote>
+						<p><a href="https://okikio.github.io/native/demo/animate">Click to view demo &#8594;</a></p>
+					</blockquote>
+					<a href="#getting-started" id="getting-started" style="color: inherit; text-decoration: none;">
+						<h2>Getting started</h2>
+					</a>
+					<p><code>@okikio/animate</code> create animations by creating instances of <code>Animate</code>, a class that acts as a wrapper around the Web Animation API. To create new instances of the <code>Animate</code> class, you can either import the <code>Animate</code> class and do this, <code>new Animate({ ... })</code> or import the <code>animate</code> (lowercase) method and do this, <code>animate({ ... })</code>. The <code>animate</code> method creates new instances of the <code>Animate</code> class and passes the options it recieves as arguments to the <code>Animate</code> class.</p>
+					<p>The <code>Animate</code> class recieves a set of targets to animate, it then creates a list of Web Animation API <code>Animation</code> instances, along side a main animation, which is small <code>Animation</code> instance that is set to animate the opacity of a non visible element, the <code>Animate</code> class then plays each <code>Animation</code> instances keyframes including the main animation.</p>
+					<p>The main animation is there to ensure accuracy in different browser vendor implementation of the Web Animation API. The main animation is stored in <code>Animate.prototype.mainAnimation: Animation</code>, the other <code>Animation</code> instances are stored in a <code>Manager</code> (from <a href="https://www.npmjs.com/package/@okikio/manager">@okikio/manager</a>) <code>Animate.prototype.animations: Manager&lt;HTMLElement, Animation&gt;</code>.</p>
+					<pre><code class="language-typescript"><span style="color: #AF00DB">import</span><span style="color: #000000"> </span><span style="color: #001080">animate</span><span style="color: #000000"> </span><span style="color: #AF00DB">from</span><span style="color: #000000"> </span><span style="color: #A31515">&quot;@okikio/animate&quot;</span><span style="color: #000000">;</span>
+
+<span style="color: #008000">// Do note, on the web you need to do this, if you installed it via the script tag:</span>
+<span style="color: #008000">// const { animate } = window.animate;</span>
+
+<span style="color: #000000">(</span><span style="color: #0000FF">async</span><span style="color: #000000"> () </span><span style="color: #0000FF">=&gt;</span><span style="color: #000000"> {</span>
+<span style="color: #000000">    </span><span style="color: #0000FF">let</span><span style="color: #000000"> [</span><span style="color: #001080">options</span><span style="color: #000000">] = </span><span style="color: #AF00DB">await</span><span style="color: #000000"> </span><span style="color: #795E26">animate</span><span style="color: #000000">({</span>
+<span style="color: #000000">        </span><span style="color: #001080">target:</span><span style="color: #000000"> </span><span style="color: #A31515">&quot;.div&quot;</span><span style="color: #000000">,</span>
+<span style="color: #000000">        </span><span style="color: #008000">/* NOTE: If you turn this on you have to comment out the transform property. The keyframes property is a different format for animation you cannot you both styles of formatting in the same animation */</span>
+<span style="color: #000000">        </span><span style="color: #008000">// keyframes: [</span>
+<span style="color: #000000">        </span><span style="color: #008000">//     { transform: &quot;translateX(0px)&quot; },</span>
+<span style="color: #000000">        </span><span style="color: #008000">//     { transform: &quot;translateX(300px)&quot; }</span>
+<span style="color: #000000">        </span><span style="color: #008000">// ],</span>
+<span style="color: #000000">        </span><span style="color: #001080">transform:</span><span style="color: #000000"> [</span><span style="color: #A31515">&quot;translateX(0px)&quot;</span><span style="color: #000000">, </span><span style="color: #A31515">&quot;translateX(300px)&quot;</span><span style="color: #000000">],</span>
+<span style="color: #000000">        </span><span style="color: #001080">easing:</span><span style="color: #000000"> </span><span style="color: #A31515">&quot;out&quot;</span><span style="color: #000000">,</span>
+<span style="color: #000000">        </span><span style="color: #795E26">duration</span><span style="color: #000000">(</span><span style="color: #001080">i</span><span style="color: #000000">) {</span>
+<span style="color: #000000">            </span><span style="color: #AF00DB">return</span><span style="color: #000000"> (</span><span style="color: #001080">i</span><span style="color: #000000"> + </span><span style="color: #098658">1</span><span style="color: #000000">) * </span><span style="color: #098658">500</span><span style="color: #000000">;</span>
+<span style="color: #000000">        },</span>
+<span style="color: #000000">        </span><span style="color: #001080">loop:</span><span style="color: #000000"> </span><span style="color: #098658">1</span><span style="color: #000000">,</span>
+<span style="color: #000000">        </span><span style="color: #001080">speed:</span><span style="color: #000000"> </span><span style="color: #098658">2</span><span style="color: #000000">,</span>
+<span style="color: #000000">        </span><span style="color: #001080">fillMode:</span><span style="color: #000000"> </span><span style="color: #A31515">&quot;both&quot;</span><span style="color: #000000">,</span>
+<span style="color: #000000">        </span><span style="color: #001080">direction:</span><span style="color: #000000"> </span><span style="color: #A31515">&quot;normal&quot;</span><span style="color: #000000">,</span>
+<span style="color: #000000">        </span><span style="color: #001080">autoplay:</span><span style="color: #000000"> </span><span style="color: #0000FF">true</span><span style="color: #000000">,</span>
+<span style="color: #000000">        </span><span style="color: #795E26">delay</span><span style="color: #000000">(</span><span style="color: #001080">i</span><span style="color: #000000">) {</span>
+<span style="color: #000000">            </span><span style="color: #AF00DB">return</span><span style="color: #000000"> (</span><span style="color: #001080">i</span><span style="color: #000000"> + </span><span style="color: #098658">1</span><span style="color: #000000">) * </span><span style="color: #098658">100</span><span style="color: #000000">;</span>
+<span style="color: #000000">        },</span>
+<span style="color: #000000">        </span><span style="color: #795E26">endDelay</span><span style="color: #000000">(</span><span style="color: #001080">i</span><span style="color: #000000">) {</span>
+<span style="color: #000000">            </span><span style="color: #AF00DB">return</span><span style="color: #000000"> (</span><span style="color: #001080">i</span><span style="color: #000000"> + </span><span style="color: #098658">1</span><span style="color: #000000">) * </span><span style="color: #098658">100</span><span style="color: #000000">;</span>
+<span style="color: #000000">        },</span>
+<span style="color: #000000">    });</span>
+
+<span style="color: #000000">    </span><span style="color: #795E26">animate</span><span style="color: #000000">({</span>
+<span style="color: #000000">        </span><span style="color: #001080">options</span><span style="color: #000000">,</span>
+<span style="color: #000000">        </span><span style="color: #001080">transform:</span><span style="color: #000000"> [</span><span style="color: #A31515">&quot;translateX(300px)&quot;</span><span style="color: #000000">, </span><span style="color: #A31515">&quot;translateX(0px)&quot;</span><span style="color: #000000">],</span>
+<span style="color: #000000">    });</span>
+<span style="color: #000000">})();</span>
+
+<span style="color: #008000">// or you can use the .then() method</span>
+<span style="color: #795E26">animate</span><span style="color: #000000">({</span>
+<span style="color: #000000">    </span><span style="color: #001080">target:</span><span style="color: #000000"> </span><span style="color: #A31515">&quot;.div&quot;</span><span style="color: #000000">,</span>
+<span style="color: #000000">    </span><span style="color: #008000">// NOTE: If you turn this on you have to comment out the transform property. The keyframes property is a different format for animation you cannot you both styles of formatting in the same animation</span>
+<span style="color: #000000">    </span><span style="color: #008000">// keyframes: [</span>
+<span style="color: #000000">    </span><span style="color: #008000">//     { transform: &quot;translateX(0px)&quot; },</span>
+<span style="color: #000000">    </span><span style="color: #008000">//     { transform: &quot;translateX(300px)&quot; }</span>
+<span style="color: #000000">    </span><span style="color: #008000">// ],</span>
+<span style="color: #000000">    </span><span style="color: #001080">transform:</span><span style="color: #000000"> [</span><span style="color: #A31515">&quot;translateX(0px)&quot;</span><span style="color: #000000">, </span><span style="color: #A31515">&quot;translateX(300px)&quot;</span><span style="color: #000000">],</span>
+<span style="color: #000000">    </span><span style="color: #001080">easing:</span><span style="color: #000000"> </span><span style="color: #A31515">&quot;out&quot;</span><span style="color: #000000">,</span>
+<span style="color: #000000">    </span><span style="color: #795E26">duration</span><span style="color: #000000">(</span><span style="color: #001080">i</span><span style="color: #000000">) {</span>
+<span style="color: #000000">        </span><span style="color: #AF00DB">return</span><span style="color: #000000"> (</span><span style="color: #001080">i</span><span style="color: #000000"> + </span><span style="color: #098658">1</span><span style="color: #000000">) * </span><span style="color: #098658">500</span><span style="color: #000000">;</span>
+<span style="color: #000000">    },</span>
+<span style="color: #000000">    </span><span style="color: #001080">loop:</span><span style="color: #000000"> </span><span style="color: #098658">1</span><span style="color: #000000">,</span>
+<span style="color: #000000">    </span><span style="color: #001080">speed:</span><span style="color: #000000"> </span><span style="color: #098658">2</span><span style="color: #000000">,</span>
+<span style="color: #000000">    </span><span style="color: #001080">fillMode:</span><span style="color: #000000"> </span><span style="color: #A31515">&quot;both&quot;</span><span style="color: #000000">,</span>
+<span style="color: #000000">    </span><span style="color: #001080">direction:</span><span style="color: #000000"> </span><span style="color: #A31515">&quot;normal&quot;</span><span style="color: #000000">,</span>
+<span style="color: #000000">    </span><span style="color: #795E26">delay</span><span style="color: #000000">(</span><span style="color: #001080">i</span><span style="color: #000000">) {</span>
+<span style="color: #000000">        </span><span style="color: #AF00DB">return</span><span style="color: #000000"> (</span><span style="color: #001080">i</span><span style="color: #000000"> + </span><span style="color: #098658">1</span><span style="color: #000000">) * </span><span style="color: #098658">100</span><span style="color: #000000">;</span>
+<span style="color: #000000">    },</span>
+<span style="color: #000000">    </span><span style="color: #001080">autoplay:</span><span style="color: #000000"> </span><span style="color: #0000FF">true</span><span style="color: #000000">,</span>
+<span style="color: #000000">    </span><span style="color: #795E26">endDelay</span><span style="color: #000000">(</span><span style="color: #001080">i</span><span style="color: #000000">) {</span>
+<span style="color: #000000">        </span><span style="color: #AF00DB">return</span><span style="color: #000000"> (</span><span style="color: #001080">i</span><span style="color: #000000"> + </span><span style="color: #098658">1</span><span style="color: #000000">) * </span><span style="color: #098658">100</span><span style="color: #000000">;</span>
+<span style="color: #000000">    }</span>
+<span style="color: #000000">}).</span><span style="color: #795E26">then</span><span style="color: #000000">((</span><span style="color: #001080">options</span><span style="color: #000000">) </span><span style="color: #0000FF">=&gt;</span><span style="color: #000000"> {</span>
+<span style="color: #000000">    </span><span style="color: #795E26">animate</span><span style="color: #000000">({</span>
+<span style="color: #000000">        </span><span style="color: #001080">options</span><span style="color: #000000">,</span>
+<span style="color: #000000">        </span><span style="color: #001080">transform:</span><span style="color: #000000"> [</span><span style="color: #A31515">&quot;translateX(300px)&quot;</span><span style="color: #000000">, </span><span style="color: #A31515">&quot;translateX(0px)&quot;</span><span style="color: #000000">]</span>
+<span style="color: #000000">    });</span>
+<span style="color: #000000">});</span>
+</code></pre>
+					<p><a href="https://codepen.io/okikio/pen/mdPwNbJ?editors=0010">Preview this example &#8594;</a></p>
+					<a href="#options" id="options" style="color: inherit; text-decoration: none;">
+						<h2>Options</h2>
+					</a>
+					<p>Animation options control how an animation is produced, it shouldn&#39;t be too different for those who have used <code>animejs</code>, or <code>jquery</code>&#39;s animate method.</p>
+					<p>An animation option is an object with keys and values that are computed and passed to the <code>Animate</code> class to create animations that match the specified options.</p>
+					<p>The default options are:</p>
+					<pre><code class="language-typescript"><span style="color: #AF00DB">export</span><span style="color: #000000"> </span><span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">DefaultAnimationOptions</span><span style="color: #000000">: </span><span style="color: #267F99">AnimationOptions</span><span style="color: #000000"> = {</span>
+<span style="color: #000000">    </span><span style="color: #001080">keyframes:</span><span style="color: #000000"> [],</span>
+
+<span style="color: #000000">    </span><span style="color: #001080">loop:</span><span style="color: #000000"> </span><span style="color: #098658">1</span><span style="color: #000000">, </span><span style="color: #008000">// iterations: number,</span>
+<span style="color: #000000">    </span><span style="color: #001080">delay:</span><span style="color: #000000"> </span><span style="color: #098658">0</span><span style="color: #000000">,</span>
+<span style="color: #000000">    </span><span style="color: #001080">speed:</span><span style="color: #000000"> </span><span style="color: #098658">1</span><span style="color: #000000">,</span>
+<span style="color: #000000">    </span><span style="color: #001080">endDelay:</span><span style="color: #000000"> </span><span style="color: #098658">0</span><span style="color: #000000">,</span>
+<span style="color: #000000">    </span><span style="color: #001080">easing:</span><span style="color: #000000"> </span><span style="color: #A31515">&quot;ease&quot;</span><span style="color: #000000">,</span>
+<span style="color: #000000">    </span><span style="color: #001080">autoplay:</span><span style="color: #000000"> </span><span style="color: #0000FF">true</span><span style="color: #000000">,</span>
+<span style="color: #000000">    </span><span style="color: #001080">duration:</span><span style="color: #000000"> </span><span style="color: #098658">1000</span><span style="color: #000000">,</span>
+<span style="color: #000000">    </span><span style="color: #001080">fillMode:</span><span style="color: #000000"> </span><span style="color: #A31515">&quot;auto&quot;</span><span style="color: #000000">,</span>
+<span style="color: #000000">    </span><span style="color: #001080">direction:</span><span style="color: #000000"> </span><span style="color: #A31515">&quot;normal&quot;</span><span style="color: #000000">,</span>
+<span style="color: #000000">    </span><span style="color: #001080">padEndDelay:</span><span style="color: #000000"> </span><span style="color: #0000FF">true</span><span style="color: #000000">,</span>
+<span style="color: #000000">    </span><span style="color: #001080">extend:</span><span style="color: #000000"> {}</span>
+<span style="color: #000000">};</span>
+</code></pre>
+					<a href="#targets" id="targets" style="color: inherit; text-decoration: none;">
+						<h3>target(s)</h3>
+					</a>
+					<table>
+						<thead>
+							<tr>
+								<th align="left">Default</th>
+								<th align="left">Type</th>
+							</tr>
+						</thead>
+						<tbody><tr>
+								<td align="left"><code>null</code></td>
+								<td align="left">AnimationTarget = string | Node | NodeList | HTMLCollection | HTMLElement[] | AnimationTarget[]</td>
+							</tr>
+					</tbody></table>
+					<p>Determines the DOM elements to animate. You can pass it a CSS selector, DOM elements, or an Array of DOM Elements and/or CSS Selectors.</p>
+					<pre><code class="language-typescript"><span style="color: #795E26">animate</span><span style="color: #000000">({</span>
+<span style="color: #000000">    </span><span style="color: #001080">target:</span><span style="color: #000000"> </span><span style="color: #001080">document</span><span style="color: #000000">.</span><span style="color: #001080">body</span><span style="color: #000000">.</span><span style="color: #001080">children</span><span style="color: #000000">, </span><span style="color: #008000">// You can use either `target` or `targets` for your animations</span>
+<span style="color: #000000">    </span><span style="color: #008000">// or</span>
+<span style="color: #000000">    </span><span style="color: #008000">// target: &quot;.div&quot;,</span>
+<span style="color: #000000">    </span><span style="color: #008000">// target: document.querySelectorAll(&quot;.el&quot;),</span>
+<span style="color: #000000">    </span><span style="color: #008000">// target: [document.querySelectorAll(&quot;.el&quot;), &quot;.div&quot;]&quot;,</span>
+<span style="color: #000000">    </span><span style="color: #001080">transform:</span><span style="color: #000000"> [</span><span style="color: #A31515">&quot;rotate(0turn)&quot;</span><span style="color: #000000">, </span><span style="color: #A31515">&quot;rotate(1turn)&quot;</span><span style="color: #000000">],</span>
+<span style="color: #000000">});</span>
+</code></pre>
+					<a href="#easing" id="easing" style="color: inherit; text-decoration: none;">
+						<h3>easing</h3>
+					</a>
+					<table>
+						<thead>
+							<tr>
+								<th align="left">Default</th>
+								<th align="left">Type</th>
+							</tr>
+						</thead>
+						<tbody><tr>
+								<td align="left"><code>ease</code></td>
+								<td align="left">String | Function</td>
+							</tr>
+					</tbody></table>
+					<p>Determines the acceleration curve of your animation.
+					Based on the easings of <a href="https://easings.net">easings.net</a></p>
+					<table>
+						<thead>
+							<tr>
+								<th align="left">constant</th>
+								<th align="left">accelerate</th>
+								<th align="left">decelerate</th>
+								<th align="left">accelerate-decelerate</th>
+							</tr>
+						</thead>
+						<tbody><tr>
+								<td align="left">linear</td>
+								<td align="left">in-cubic</td>
+								<td align="left">out-cubic</td>
+								<td align="left">in-out-cubic</td>
+							</tr>
+							<tr>
+								<td align="left">ease</td>
+								<td align="left">in-quart</td>
+								<td align="left">out-quart</td>
+								<td align="left">in-out-quart</td>
+							</tr>
+							<tr>
+								<td align="left"></td>
+								<td align="left">in-quint</td>
+								<td align="left">out-quint</td>
+								<td align="left">in-out-quint</td>
+							</tr>
+							<tr>
+								<td align="left"></td>
+								<td align="left">in-expo</td>
+								<td align="left">out-expo</td>
+								<td align="left">in-out-expo</td>
+							</tr>
+							<tr>
+								<td align="left"></td>
+								<td align="left">in-circ</td>
+								<td align="left">out-circ</td>
+								<td align="left">in-out-circ</td>
+							</tr>
+							<tr>
+								<td align="left"></td>
+								<td align="left">in-back</td>
+								<td align="left">out-back</td>
+								<td align="left">in-out-back</td>
+							</tr>
+					</tbody></table>
+					<p>You can create your own custom cubic-bezier easing curves. Similar to css you type <code>cubic-bezier(...)</code> with 4 numbers representing the shape of the bezier curve, for example, <code>cubic-bezier(0.47, 0, 0.745, 0.715)</code> this is the bezier curve for <code>in-sine</code>.</p>
+					<p><em>Note: the <code>easing</code> property supports the original values and functions for easing as well, for example, <code>steps(1)</code>, and etc... are supported.</em></p>
+					<pre><code class="language-typescript"><span style="color: #008000">// cubic-bezier easing</span>
+<span style="color: #795E26">animate</span><span style="color: #000000">({</span>
+<span style="color: #000000">    </span><span style="color: #001080">target:</span><span style="color: #000000"> </span><span style="color: #A31515">&quot;.div&quot;</span><span style="color: #000000">,</span>
+<span style="color: #000000">    </span><span style="color: #001080">easing:</span><span style="color: #000000"> </span><span style="color: #A31515">&quot;cubic-bezier(0.47, 0, 0.745, 0.715)&quot;</span><span style="color: #000000">,</span>
+<span style="color: #000000">    </span><span style="color: #008000">/* or */</span>
+<span style="color: #000000">    </span><span style="color: #008000">// easing: &quot;in-sine&quot;,</span>
+<span style="color: #000000">    </span><span style="color: #001080">transform:</span><span style="color: #000000"> [</span><span style="color: #A31515">&quot;translate(0px)&quot;</span><span style="color: #000000">, </span><span style="color: #A31515">&quot;translate(500px)&quot;</span><span style="color: #000000">],</span>
+<span style="color: #000000">});</span>
+</code></pre>
+					<a href="#duration" id="duration" style="color: inherit; text-decoration: none;">
+						<h3>duration</h3>
+					</a>
+					<table>
+						<thead>
+							<tr>
+								<th align="left">Default</th>
+								<th align="left">Type</th>
+							</tr>
+						</thead>
+						<tbody><tr>
+								<td align="left"><code>1000</code></td>
+								<td align="left">Number | Function</td>
+							</tr>
+					</tbody></table>
+					<p>Determines the duration of your animation in milliseconds. By passing it a callback, you can define a different duration for each element. The callback takes the index of each element, the target dom element, and the total number of target elements as its argument and returns a number.</p>
+					<pre><code class="language-typescript"><span style="color: #008000">// First element fades out in 1s, second element in 2s, etc.</span>
+<span style="color: #795E26">animate</span><span style="color: #000000">({</span>
+<span style="color: #000000">    </span><span style="color: #001080">target:</span><span style="color: #000000"> </span><span style="color: #A31515">&quot;.div&quot;</span><span style="color: #000000">,</span>
+<span style="color: #000000">    </span><span style="color: #001080">easing:</span><span style="color: #000000"> </span><span style="color: #A31515">&quot;linear&quot;</span><span style="color: #000000">,</span>
+<span style="color: #000000">    </span><span style="color: #795E26">duration</span><span style="color: #001080">:</span><span style="color: #000000"> (</span><span style="color: #001080">index</span><span style="color: #000000">) </span><span style="color: #0000FF">=&gt;</span><span style="color: #000000"> (</span><span style="color: #001080">index</span><span style="color: #000000"> + </span><span style="color: #098658">1</span><span style="color: #000000">) * </span><span style="color: #098658">1000</span><span style="color: #000000">,</span>
+<span style="color: #000000">    </span><span style="color: #001080">opacity:</span><span style="color: #000000"> [</span><span style="color: #098658">1</span><span style="color: #000000">, </span><span style="color: #098658">0</span><span style="color: #000000">],</span>
+<span style="color: #000000">});</span>
+</code></pre>
+					<a href="#delay" id="delay" style="color: inherit; text-decoration: none;">
+						<h3>delay</h3>
+					</a>
+					<table>
+						<thead>
+							<tr>
+								<th align="left">Default</th>
+								<th align="left">Type</th>
+							</tr>
+						</thead>
+						<tbody><tr>
+								<td align="left"><code>0</code></td>
+								<td align="left">Number | Function</td>
+							</tr>
+					</tbody></table>
+					<p>Determines the delay of your animation in milliseconds. By passing it a callback, you can define a different delay for each element. The callback takes the index of each element, the target dom element, and the total number of target elements as its argument and returns a number.</p>
+					<pre><code class="language-typescript"><span style="color: #008000">// First element starts fading out after 1s, second element after 2s, etc.</span>
+<span style="color: #795E26">animate</span><span style="color: #000000">({</span>
+<span style="color: #000000">    </span><span style="color: #001080">target:</span><span style="color: #000000"> </span><span style="color: #A31515">&quot;.div&quot;</span><span style="color: #000000">,</span>
+<span style="color: #000000">    </span><span style="color: #001080">easing:</span><span style="color: #000000"> </span><span style="color: #A31515">&quot;linear&quot;</span><span style="color: #000000">,</span>
+<span style="color: #000000">    </span><span style="color: #795E26">delay</span><span style="color: #001080">:</span><span style="color: #000000"> (</span><span style="color: #001080">index</span><span style="color: #000000">) </span><span style="color: #0000FF">=&gt;</span><span style="color: #000000"> (</span><span style="color: #001080">index</span><span style="color: #000000"> + </span><span style="color: #098658">1</span><span style="color: #000000">) * </span><span style="color: #098658">1000</span><span style="color: #000000">,</span>
+<span style="color: #000000">    </span><span style="color: #001080">opacity:</span><span style="color: #000000"> [</span><span style="color: #098658">1</span><span style="color: #000000">, </span><span style="color: #098658">0</span><span style="color: #000000">],</span>
+<span style="color: #000000">});</span>
+</code></pre>
+					<a href="#enddelay" id="enddelay" style="color: inherit; text-decoration: none;">
+						<h3>endDelay</h3>
+					</a>
+					<table>
+						<thead>
+							<tr>
+								<th align="left">Default</th>
+								<th align="left">Type</th>
+							</tr>
+						</thead>
+						<tbody><tr>
+								<td align="left"><code>0</code></td>
+								<td align="left">Number | Function</td>
+							</tr>
+					</tbody></table>
+					<p>Similar to delay but it indicates the number of milliseconds to delay <strong>after</strong> the full animation has played <strong>not before</strong>.</p>
+					<p>*Note: <code>endDelay</code> will delay the <code>onfinish</code> method and event, but will not reserve the current state of the CSS animation, if you need to use endDelay you may need to use the <code>fillMode</code> property to reserve the changes to the animation target.</p>
+					<pre><code class="language-typescript"><span style="color: #008000">// First element fades out but then after 1s finishes, the second element after 2s, etc.</span>
+<span style="color: #795E26">animate</span><span style="color: #000000">({</span>
+<span style="color: #000000">    </span><span style="color: #001080">target:</span><span style="color: #000000"> </span><span style="color: #A31515">&quot;.div&quot;</span><span style="color: #000000">,</span>
+<span style="color: #000000">    </span><span style="color: #001080">easing:</span><span style="color: #000000"> </span><span style="color: #A31515">&quot;linear&quot;</span><span style="color: #000000">,</span>
+<span style="color: #000000">    </span><span style="color: #795E26">endDelay</span><span style="color: #001080">:</span><span style="color: #000000"> (</span><span style="color: #001080">index</span><span style="color: #000000">) </span><span style="color: #0000FF">=&gt;</span><span style="color: #000000"> (</span><span style="color: #001080">index</span><span style="color: #000000"> + </span><span style="color: #098658">1</span><span style="color: #000000">) * </span><span style="color: #098658">1000</span><span style="color: #000000">,</span>
+<span style="color: #000000">    </span><span style="color: #001080">opacity:</span><span style="color: #000000"> [</span><span style="color: #098658">1</span><span style="color: #000000">, </span><span style="color: #098658">0</span><span style="color: #000000">],</span>
+<span style="color: #000000">});</span>
+</code></pre>
+					<a href="#loop" id="loop" style="color: inherit; text-decoration: none;">
+						<h3>loop</h3>
+					</a>
+					<table>
+						<thead>
+							<tr>
+								<th align="left">Default</th>
+								<th align="left">Type</th>
+							</tr>
+						</thead>
+						<tbody><tr>
+								<td align="left"><code>1</code></td>
+								<td align="left">Boolean | Number | Function</td>
+							</tr>
+					</tbody></table>
+					<p>Determines if the animation should repeat, and how many times it should repeat.</p>
+					<pre><code class="language-typescript"><span style="color: #008000">// Loop forever</span>
+<span style="color: #795E26">animate</span><span style="color: #000000">({</span>
+<span style="color: #000000">    </span><span style="color: #001080">target:</span><span style="color: #000000"> </span><span style="color: #A31515">&quot;.div&quot;</span><span style="color: #000000">,</span>
+<span style="color: #000000">    </span><span style="color: #001080">easing:</span><span style="color: #000000"> </span><span style="color: #A31515">&quot;linear&quot;</span><span style="color: #000000">,</span>
+<span style="color: #000000">    </span><span style="color: #001080">loop:</span><span style="color: #000000"> </span><span style="color: #0000FF">true</span><span style="color: #000000">,</span>
+<span style="color: #000000">    </span><span style="color: #008000">// or</span>
+<span style="color: #000000">    </span><span style="color: #008000">// loop: 5, // If you want the animation to loop 5 times</span>
+<span style="color: #000000">    </span><span style="color: #001080">opacity:</span><span style="color: #000000"> [</span><span style="color: #098658">1</span><span style="color: #000000">, </span><span style="color: #098658">0</span><span style="color: #000000">],</span>
+<span style="color: #000000">});</span>
+</code></pre>
+					<a href="#onfinish" id="onfinish" style="color: inherit; text-decoration: none;">
+						<h3>onfinish</h3>
+					</a>
+					<table>
+						<thead>
+							<tr>
+								<th align="left">Default</th>
+								<th align="left">Type</th>
+							</tr>
+						</thead>
+						<tbody><tr>
+								<td align="left"><code>(element: HTMLElement, index: number, total: number, animation: Animation) =&gt; {}</code></td>
+								<td align="left">Function</td>
+							</tr>
+					</tbody></table>
+					<p>Occurs when the animation for one of the targets completes, meaning when animating many targets that finish at different times this will run multiple times. The arguments it takes is slightly different from the rest of the animation options.</p>
+					<p>The animation argument represents the animation for the current target.</p>
+					<p><strong>Warning</strong>: the order of the callback&#39;s arguments are in a different order, with the target element first, and the index second.</p>
+					<a href="#oncancel" id="oncancel" style="color: inherit; text-decoration: none;">
+						<h3>oncancel</h3>
+					</a>
+					<table>
+						<thead>
+							<tr>
+								<th align="left">Default</th>
+								<th align="left">Type</th>
+							</tr>
+						</thead>
+						<tbody><tr>
+								<td align="left"><code>(element: HTMLElement, index: number, total: number, animation: Animation) =&gt; {}</code></td>
+								<td align="left">Function</td>
+							</tr>
+					</tbody></table>
+					<p>Occurs when the animation for one of the targets is cancelled, meaning when animating many elements that are cancelled at different times this will run multiple times. The arguments it takes is slightly different from the rest of the animation options.</p>
+					<p>The animation argument represents the animation for the current element.</p>
+					<p><strong>Warning</strong>: the order of the callback&#39;s arguments are in a different order, with the target element first, and the index second.</p>
+					<pre><code class="language-typescript"><span style="color: #008000">// Avoid using fillMode, use this instead to commit style changes</span>
+<span style="color: #008000">// Do note endDelay delays the onfinish method</span>
+<span style="color: #795E26">animate</span><span style="color: #000000">({</span>
+<span style="color: #000000">    </span><span style="color: #001080">target:</span><span style="color: #000000"> </span><span style="color: #A31515">&quot;.div&quot;</span><span style="color: #000000">,</span>
+<span style="color: #000000">    </span><span style="color: #001080">opacity:</span><span style="color: #000000"> [</span><span style="color: #098658">0</span><span style="color: #000000">, </span><span style="color: #098658">1</span><span style="color: #000000">],</span>
+
+<span style="color: #000000">    </span><span style="color: #008000">// Note the order of the arguments -- it&#039;s different from other properties</span>
+<span style="color: #000000">    </span><span style="color: #795E26">onfinish</span><span style="color: #000000">(</span><span style="color: #001080">element</span><span style="color: #000000">, </span><span style="color: #001080">index</span><span style="color: #000000">, </span><span style="color: #001080">total</span><span style="color: #000000">, </span><span style="color: #001080">animation</span><span style="color: #000000">) {</span>
+<span style="color: #000000">        </span><span style="color: #001080">element</span><span style="color: #000000">.</span><span style="color: #001080">style</span><span style="color: #000000">.</span><span style="color: #001080">opacity</span><span style="color: #000000"> = </span><span style="color: #098658">0</span><span style="color: #000000">;</span>
+<span style="color: #000000">        </span><span style="color: #001080">console</span><span style="color: #000000">.</span><span style="color: #795E26">log</span><span style="color: #000000">(</span>
+<span style="color: #000000">            </span><span style="color: #A31515">`</span><span style="color: #0000FF">${</span>
+<span style="color: #000000FF">                </span><span style="color: #001080">index</span><span style="color: #000000FF"> </span><span style="color: #000000">+</span><span style="color: #000000FF"> </span><span style="color: #098658">1</span>
+<span style="color: #000000FF">            </span><span style="color: #0000FF">}</span><span style="color: #A31515"> out of </span><span style="color: #0000FF">${</span><span style="color: #001080">total</span><span style="color: #0000FF">}</span><span style="color: #A31515">, elements have finished their animations. Animation playback speed is </span><span style="color: #0000FF">${</span><span style="color: #001080">animation</span><span style="color: #000000FF">.</span><span style="color: #001080">playbackRate</span><span style="color: #0000FF">}</span><span style="color: #A31515">`</span>
+<span style="color: #000000">        );</span>
+<span style="color: #000000">    },</span>
+<span style="color: #000000">});</span>
+</code></pre>
+					<a href="#autoplay" id="autoplay" style="color: inherit; text-decoration: none;">
+						<h3>autoplay</h3>
+					</a>
+					<table>
+						<thead>
+							<tr>
+								<th align="left">Default</th>
+								<th align="left">Type</th>
+							</tr>
+						</thead>
+						<tbody><tr>
+								<td align="left"><code>true</code></td>
+								<td align="left">Boolean | Function</td>
+							</tr>
+					</tbody></table>
+					<p>Determines if the animation should automatically play, immediately after being instantiated.</p>
+					<a href="#direction" id="direction" style="color: inherit; text-decoration: none;">
+						<h3>direction</h3>
+					</a>
+					<table>
+						<thead>
+							<tr>
+								<th align="left">Default</th>
+								<th align="left">Type</th>
+							</tr>
+						</thead>
+						<tbody><tr>
+								<td align="left"><code>normal</code></td>
+								<td align="left">String | Function</td>
+							</tr>
+					</tbody></table>
+					<p>Determines the direction of the animation; <code>reverse</code> runs the animation backwards, <code>alternate</code> switches direction after each iteration if the animation loops. <code>alternate-reverse</code> starts the animation at what would be the end of the animation if the direction were <code>normal</code> but then when the animation reaches the beginning of the animation it alternates going back to the position it started at.</p>
+					<a href="#speed" id="speed" style="color: inherit; text-decoration: none;">
+						<h3>speed</h3>
+					</a>
+					<table>
+						<thead>
+							<tr>
+								<th align="left">Default</th>
+								<th align="left">Type</th>
+							</tr>
+						</thead>
+						<tbody><tr>
+								<td align="left"><code>1</code></td>
+								<td align="left">Number | Function</td>
+							</tr>
+					</tbody></table>
+					<p>Determines the animation playback rate. Useful in the authoring process to speed up some parts of a
+					long sequence (value above 1) or slow down a specific animation to observe it (value between 0 to 1), don&#39;t put negative numbers for speed.</p>
+					<a href="#fillmode" id="fillmode" style="color: inherit; text-decoration: none;">
+						<h3>fillMode</h3>
+					</a>
+					<table>
+						<thead>
+							<tr>
+								<th align="left">Default</th>
+								<th align="left">Type</th>
+							</tr>
+						</thead>
+						<tbody><tr>
+								<td align="left"><code>auto</code></td>
+								<td align="left">String | Function</td>
+							</tr>
+					</tbody></table>
+					<p><em>Be careful when using fillMode, it has some problems when it comes to concurrency of animations read more on <a href="https://developer.mozilla.org/en-US/docs/Web/API/EffectTiming/fill">MDN</a>, if browser support were better I would remove fillMode and use Animation.commitStyles, I&#39;ll have to change the way <code>fillMode</code> functions later. Use the onfinish method to commit styles <a href="#onfinish">onfinish</a>.</em></p>
+					<p>Defines how an element should look after the animation. <code>none</code> the animation&#39;s effects are only visible while the animation is playing. <code>forwards</code> the affected element will continue to be rendered in the state of the final animation frame. <code>backwards</code> the animation&#39;s effects should be reflected by the element(s) state prior to playing. <code>both</code> combining the effects of both forwards and backwards: The animation&#39;s effects should be reflected by the element(s) state prior to playing and retained after the animation has completed playing. <code>auto</code> if the animation effect fill mode is being applied to is a keyframe effect. &quot;auto&quot; is equivalent to &quot;none&quot;. Otherwise, the result is &quot;both&quot;. You can learn more here on <a href="https://developer.mozilla.org/en-US/docs/Web/API/EffectTiming/fill">MDN</a>.</p>
+					<a href="#options-1" id="options-1" style="color: inherit; text-decoration: none;">
+						<h3>options</h3>
+					</a>
+					<table>
+						<thead>
+							<tr>
+								<th align="left">Default</th>
+								<th align="left">Type</th>
+							</tr>
+						</thead>
+						<tbody><tr>
+								<td align="left"><code>{}</code></td>
+								<td align="left">Object | Animate | Animate[]</td>
+							</tr>
+					</tbody></table>
+					<p>Another way to input options for an animation, it&#39;s also used to chain animations.</p>
+					<p>The <code>options</code> animation option is another way to declare options, it can take an instance of <code>Animate</code>, a single <code>Animate</code> instance in an Array, e.g. <code>[Animate]</code> or an object containing animation options.</p>
+					<p><code>options</code> extends the animation properties of an animation, but more importance is given to the actual animation options object, so, the properties from <code>options</code> will be ignored if there is already an animation option with the same name declared.</p>
+					<p><em>Note: you can&#39;t use this property as a method.</em></p>
+					<pre><code class="language-typescript"><span style="color: #000000">(</span><span style="color: #0000FF">async</span><span style="color: #000000"> () </span><span style="color: #0000FF">=&gt;</span><span style="color: #000000"> {</span>
+<span style="color: #000000">    </span><span style="color: #008000">// animate is Promise-like, as in it has a then() method like a Promise but it isn&#039;t a Promise.</span>
+<span style="color: #000000">    </span><span style="color: #008000">// animate resolves to an Array that contains the Animate instance, e.g. [Animate]</span>
+<span style="color: #000000">    </span><span style="color: #0000FF">let</span><span style="color: #000000"> [</span><span style="color: #001080">options</span><span style="color: #000000">] = </span><span style="color: #AF00DB">await</span><span style="color: #000000"> </span><span style="color: #795E26">animate</span><span style="color: #000000">({</span>
+<span style="color: #000000">        </span><span style="color: #001080">target:</span><span style="color: #000000"> </span><span style="color: #A31515">&quot;.div&quot;</span><span style="color: #000000">,</span>
+<span style="color: #000000">        </span><span style="color: #001080">opacity:</span><span style="color: #000000"> [</span><span style="color: #098658">0</span><span style="color: #000000">, </span><span style="color: #098658">1</span><span style="color: #000000">],</span>
+<span style="color: #000000">    });</span>
+
+<span style="color: #000000">    </span><span style="color: #795E26">animate</span><span style="color: #000000">({</span>
+<span style="color: #000000">        </span><span style="color: #001080">options</span><span style="color: #000000">,</span>
+
+<span style="color: #000000">        </span><span style="color: #008000">// opacity overrides the opacity property from `options`</span>
+<span style="color: #000000">        </span><span style="color: #001080">opacity:</span><span style="color: #000000"> [</span><span style="color: #098658">1</span><span style="color: #000000">, </span><span style="color: #098658">0</span><span style="color: #000000">],</span>
+<span style="color: #000000">    });</span>
+
+<span style="color: #000000">    </span><span style="color: #001080">console</span><span style="color: #000000">.</span><span style="color: #795E26">log</span><span style="color: #000000">(</span><span style="color: #001080">options</span><span style="color: #000000">); </span><span style="color: #008000">//= Animate</span>
+<span style="color: #000000">})();</span>
+
+<span style="color: #008000">// or</span>
+<span style="color: #000000">(</span><span style="color: #0000FF">async</span><span style="color: #000000"> () </span><span style="color: #0000FF">=&gt;</span><span style="color: #000000"> {</span>
+<span style="color: #000000">    </span><span style="color: #0000FF">let</span><span style="color: #000000"> </span><span style="color: #001080">options</span><span style="color: #000000"> = </span><span style="color: #AF00DB">await</span><span style="color: #000000"> </span><span style="color: #795E26">animate</span><span style="color: #000000">({</span>
+<span style="color: #000000">        </span><span style="color: #001080">target:</span><span style="color: #000000"> </span><span style="color: #A31515">&quot;.div&quot;</span><span style="color: #000000">,</span>
+<span style="color: #000000">        </span><span style="color: #001080">opacity:</span><span style="color: #000000"> [</span><span style="color: #098658">0</span><span style="color: #000000">, </span><span style="color: #098658">1</span><span style="color: #000000">],</span>
+<span style="color: #000000">        </span><span style="color: #001080">duration:</span><span style="color: #000000"> </span><span style="color: #098658">2000</span><span style="color: #000000">,</span>
+
+<span style="color: #000000">    });</span>
+
+<span style="color: #000000">    </span><span style="color: #008000">// Remeber, the `options` animation option can handle Arrays with an Animate instance, e.g. [Animate]</span>
+<span style="color: #000000">    </span><span style="color: #008000">// Also, remeber that Animate resolves to an Arrays with an Animate instance, e.g. [Animate]</span>
+<span style="color: #000000">    </span><span style="color: #008000">// Note: the `options` animation option can only handle one Animate instance in an Array and that is alway the first element in the Array</span>
+<span style="color: #000000">    </span><span style="color: #795E26">animate</span><span style="color: #000000">({</span>
+<span style="color: #000000">        </span><span style="color: #001080">options</span><span style="color: #000000">,</span>
+<span style="color: #000000">        </span><span style="color: #001080">opacity:</span><span style="color: #000000"> [</span><span style="color: #098658">1</span><span style="color: #000000">, </span><span style="color: #098658">0</span><span style="color: #000000">],</span>
+<span style="color: #000000">    });</span>
+
+<span style="color: #000000">    </span><span style="color: #001080">console</span><span style="color: #000000">.</span><span style="color: #795E26">log</span><span style="color: #000000">(</span><span style="color: #001080">options</span><span style="color: #000000">); </span><span style="color: #008000">//= [Animate]</span>
+<span style="color: #000000">})();</span>
+
+<span style="color: #008000">// or</span>
+<span style="color: #000000">(</span><span style="color: #0000FF">async</span><span style="color: #000000"> () </span><span style="color: #0000FF">=&gt;</span><span style="color: #000000"> {</span>
+<span style="color: #000000">    </span><span style="color: #0000FF">let</span><span style="color: #000000"> </span><span style="color: #001080">options</span><span style="color: #000000"> = {</span>
+<span style="color: #000000">        </span><span style="color: #001080">target:</span><span style="color: #000000"> </span><span style="color: #A31515">&quot;.div&quot;</span><span style="color: #000000">,</span>
+<span style="color: #000000">        </span><span style="color: #001080">opacity:</span><span style="color: #000000"> [</span><span style="color: #098658">0</span><span style="color: #000000">, </span><span style="color: #098658">1</span><span style="color: #000000">],</span>
+<span style="color: #000000">    };</span>
+
+<span style="color: #000000">    </span><span style="color: #AF00DB">await</span><span style="color: #000000"> </span><span style="color: #795E26">animate</span><span style="color: #000000">(</span><span style="color: #001080">options</span><span style="color: #000000">);</span>
+<span style="color: #000000">    </span><span style="color: #795E26">animate</span><span style="color: #000000">({</span>
+<span style="color: #000000">        </span><span style="color: #001080">options</span><span style="color: #000000">,</span>
+<span style="color: #000000">        </span><span style="color: #001080">opacity:</span><span style="color: #000000"> [</span><span style="color: #098658">1</span><span style="color: #000000">, </span><span style="color: #098658">0</span><span style="color: #000000">],</span>
+<span style="color: #000000">    });</span>
+
+<span style="color: #000000">    </span><span style="color: #001080">console</span><span style="color: #000000">.</span><span style="color: #795E26">log</span><span style="color: #000000">(</span><span style="color: #001080">options</span><span style="color: #000000">); </span><span style="color: #008000">//= { ... }</span>
+<span style="color: #000000">})();</span>
+</code></pre>
+					<a href="#extend" id="extend" style="color: inherit; text-decoration: none;">
+						<h3>extend</h3>
+					</a>
+					<table>
+						<thead>
+							<tr>
+								<th align="left">Default</th>
+								<th align="left">Type</th>
+							</tr>
+						</thead>
+						<tbody><tr>
+								<td align="left"><code>{}</code></td>
+								<td align="left">Object</td>
+							</tr>
+					</tbody></table>
+					<p>The properties of the <code>extend</code> animation option are not interperted or computed, they are given directly to the Web Animation API, as way to access features that haven&#39;t been implemented in <code>@okikio/animate</code>, for example, <code>iterationStart</code>.</p>
+					<p><code>extend</code> is supposed to future proof the library if new features are added to the Web Animation API that you want to use, but that has not been implemented yet.</p>
+					<p><em>Note: you can&#39;t use this property as a method, neither can it&#39;s properties be used as methods.</em></p>
+					<p><em>Note: it doesn&#39;t allow for declaring animation keyframes, it&#39;s just for animation options, and it overrides all other animation options that accomplish the same goal, e.g. <code>loop</code> &amp; <code>iterations</code>, if iterations is a property of <code>extend</code> then <code>iterations</code> will override <code>loop</code>.</em></p>
+					<pre><code class="language-typescript"><span style="color: #795E26">animate</span><span style="color: #000000">({</span>
+<span style="color: #000000">    </span><span style="color: #001080">target:</span><span style="color: #000000"> </span><span style="color: #A31515">&quot;.div&quot;</span><span style="color: #000000">,</span>
+<span style="color: #000000">    </span><span style="color: #001080">opacity:</span><span style="color: #000000"> [</span><span style="color: #098658">0</span><span style="color: #000000">, </span><span style="color: #098658">1</span><span style="color: #000000">],</span>
+<span style="color: #000000">    </span><span style="color: #001080">loop:</span><span style="color: #000000"> </span><span style="color: #098658">5</span><span style="color: #000000">,</span>
+<span style="color: #000000">    </span><span style="color: #001080">extend:</span><span style="color: #000000"> {</span>
+<span style="color: #000000">        </span><span style="color: #001080">iterationStart:</span><span style="color: #000000"> </span><span style="color: #098658">0.5</span><span style="color: #000000">,</span>
+<span style="color: #000000">        </span><span style="color: #008000">// etc...</span>
+<span style="color: #000000">        </span><span style="color: #001080">fill:</span><span style="color: #000000"> </span><span style="color: #A31515">&quot;both&quot;</span><span style="color: #000000">, </span><span style="color: #008000">// This overrides fillMode</span>
+<span style="color: #000000">        </span><span style="color: #001080">iteration:</span><span style="color: #000000"> </span><span style="color: #098658">2</span><span style="color: #000000"> </span><span style="color: #008000">// This overrides loop</span>
+<span style="color: #000000">    }</span>
+<span style="color: #000000">});</span>
+</code></pre>
+					<a href="#animations" id="animations" style="color: inherit; text-decoration: none;">
+						<h2>Animations</h2>
+					</a>
+					<p><code>@okikio/animate</code> lets you animate HTML and SVG elements with any property that takes numeric values, including hexadecimal colors.
+					The <code>@okikio/animate</code> module contains a class that controls animatations called <code>Animate</code>. To create new instances of the <code>Animate</code> class I created the <code>animate()</code> function.</p>
+					<pre><code class="language-typescript"><span style="color: #008000">// Animate the fill color of an SVG circle</span>
+<span style="color: #795E26">animate</span><span style="color: #000000">({</span>
+<span style="color: #000000">    </span><span style="color: #001080">target:</span><span style="color: #000000"> </span><span style="color: #A31515">&quot;circle&quot;</span><span style="color: #000000">,</span>
+<span style="color: #000000">    </span><span style="color: #001080">fill:</span><span style="color: #000000"> [</span><span style="color: #A31515">&quot;#80f&quot;</span><span style="color: #000000">, </span><span style="color: #A31515">&quot;#fc0&quot;</span><span style="color: #000000">],</span>
+<span style="color: #000000">});</span>
+</code></pre>
+					<p>Each property you animate needs an array defining the start and end values, or an Array of keyframes.</p>
+					<pre><code class="language-typescript"><span style="color: #795E26">animate</span><span style="color: #000000">({</span>
+<span style="color: #000000">    </span><span style="color: #001080">target:</span><span style="color: #000000"> </span><span style="color: #A31515">&quot;.div&quot;</span><span style="color: #000000">,</span>
+<span style="color: #000000">    </span><span style="color: #001080">transform:</span><span style="color: #000000"> [</span><span style="color: #A31515">&quot;translate(0px)&quot;</span><span style="color: #000000">, </span><span style="color: #A31515">&quot;translate(1000px)&quot;</span><span style="color: #000000">],</span>
+<span style="color: #000000">});</span>
+
+<span style="color: #008000">// Or</span>
+<span style="color: #008000">// Same as [&quot;translate(0px)&quot;, &quot;translate(100px)&quot;]</span>
+<span style="color: #795E26">animate</span><span style="color: #000000">({</span>
+<span style="color: #000000">    </span><span style="color: #001080">target:</span><span style="color: #000000"> </span><span style="color: #A31515">&quot;.div&quot;</span><span style="color: #000000">,</span>
+<span style="color: #000000">    </span><span style="color: #001080">keyframes:</span><span style="color: #000000"> [</span>
+<span style="color: #000000">        { </span><span style="color: #001080">transform:</span><span style="color: #000000"> </span><span style="color: #A31515">&quot;translate(0px)&quot;</span><span style="color: #000000"> },</span>
+<span style="color: #000000">        { </span><span style="color: #001080">transform:</span><span style="color: #000000"> </span><span style="color: #A31515">&quot;translate(100px)&quot;</span><span style="color: #000000"> },</span>
+<span style="color: #000000">    ],</span>
+<span style="color: #000000">});</span>
+</code></pre>
+					<p><em>Note: you can only use one of these formats for an animation, and if <code>Animate</code> sees the <code>keyframes</code> property, it ignores all other css properties, in situations where <code>Animate</code> sees the keyframes property it will still accept animation properties like <code>easing</code>, <code>duration</code>, etc...</em></p>
+					<p>These arrays can optionally be returned by a callback that takes the index of each element, the total number of elements, and each specific element, just like with other properties.</p>
+					<pre><code class="language-typescript"><span style="color: #008000">// First element translates by 100px, second element by 200px, etc.</span>
+<span style="color: #795E26">animate</span><span style="color: #000000">({</span>
+<span style="color: #000000">    </span><span style="color: #001080">target:</span><span style="color: #000000"> </span><span style="color: #A31515">&quot;.div&quot;</span><span style="color: #000000">,</span>
+<span style="color: #000000">    </span><span style="color: #795E26">transform</span><span style="color: #000000">(</span><span style="color: #001080">index</span><span style="color: #000000">) {</span>
+<span style="color: #000000">        </span><span style="color: #AF00DB">return</span><span style="color: #000000"> [</span><span style="color: #A31515">&quot;translate(0px)&quot;</span><span style="color: #000000">, </span><span style="color: #A31515">`translate(</span><span style="color: #0000FF">${</span><span style="color: #000000FF">(</span><span style="color: #001080">index</span><span style="color: #000000FF"> </span><span style="color: #000000">+</span><span style="color: #000000FF"> </span><span style="color: #098658">1</span><span style="color: #000000FF">) </span><span style="color: #000000">*</span><span style="color: #000000FF"> </span><span style="color: #098658">100</span><span style="color: #0000FF">}</span><span style="color: #A31515">px)`</span><span style="color: #000000">];</span>
+<span style="color: #000000">    },</span>
+<span style="color: #000000">});</span>
+
+<span style="color: #008000">// Or</span>
+<span style="color: #008000">// Same as above</span>
+<span style="color: #795E26">animate</span><span style="color: #000000">({</span>
+<span style="color: #000000">    </span><span style="color: #001080">target:</span><span style="color: #000000"> </span><span style="color: #A31515">&quot;.div&quot;</span><span style="color: #000000">,</span>
+<span style="color: #000000">    </span><span style="color: #795E26">keyframes</span><span style="color: #000000">(</span><span style="color: #001080">index</span><span style="color: #000000">) {</span>
+<span style="color: #000000">        </span><span style="color: #AF00DB">return</span><span style="color: #000000"> [</span>
+<span style="color: #000000">            { </span><span style="color: #001080">transform:</span><span style="color: #000000"> </span><span style="color: #A31515">&quot;translate(0px)&quot;</span><span style="color: #000000"> },</span>
+<span style="color: #000000">            { </span><span style="color: #001080">transform:</span><span style="color: #000000"> </span><span style="color: #A31515">`translate(</span><span style="color: #0000FF">${</span><span style="color: #000000FF">(</span><span style="color: #001080">index</span><span style="color: #000000FF"> </span><span style="color: #000000">+</span><span style="color: #000000FF"> </span><span style="color: #098658">1</span><span style="color: #000000FF">) </span><span style="color: #000000">*</span><span style="color: #000000FF"> </span><span style="color: #098658">100</span><span style="color: #0000FF">}</span><span style="color: #A31515">px)`</span><span style="color: #000000"> },</span>
+<span style="color: #000000">        ];</span>
+<span style="color: #000000">    },</span>
+<span style="color: #000000">});</span>
+</code></pre>
+					<a href="#css-amp-svg-animations" id="css-amp-svg-animations" style="color: inherit; text-decoration: none;">
+						<h3>CSS &amp; SVG Animations</h3>
+					</a>
+					<p><code>Animate</code> can animate <code>~197</code> CSS properties; <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_animated_properties">MDN Animatable CSS Properties</a> and <code>~63</code> SVG properties; <a href="https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute/Presentation">MDN SVG Presentation Attributes</a>.</p>
+					<p>The animatable CSS properties are:</p>
+					<ul>
+						<li>backdrop-filter</li>
+						<li>background</li>
+						<li>background-color</li>
+						<li>background-position</li>
+						<li>background-size</li>
+						<li>block-size</li>
+						<li>border</li>
+						<li>border-block-end</li>
+						<li>border-block-end-color</li>
+						<li>border-block-end-width</li>
+						<li>border-block-start</li>
+						<li>border-block-start-color</li>
+						<li>border-block-start-width</li>
+						<li>border-bottom</li>
+						<li>border-bottom-color</li>
+						<li>border-bottom-left-radius</li>
+						<li>border-bottom-right-radius</li>
+						<li>border-bottom-width</li>
+						<li>border-color</li>
+						<li>border-end-end-radius</li>
+						<li>border-end-start-radius</li>
+						<li>border-image-outset</li>
+						<li>border-image-slice</li>
+						<li>border-image-width</li>
+						<li>border-inline-end</li>
+						<li>border-inline-end-color</li>
+						<li>border-inline-end-width</li>
+						<li>border-inline-start</li>
+						<li>border-inline-start-color</li>
+						<li>border-inline-start-width</li>
+						<li>border-left</li>
+						<li>border-left-color</li>
+						<li>border-left-width</li>
+						<li>border-radius</li>
+						<li>border-right</li>
+						<li>border-right-color</li>
+						<li>border-right-width</li>
+						<li>border-start-end-radius</li>
+						<li>border-start-start-radius</li>
+						<li>border-top</li>
+						<li>border-top-color</li>
+						<li>border-top-left-radius</li>
+						<li>border-top-right-radius</li>
+						<li>border-top-width</li>
+						<li>border-width</li>
+						<li>bottom</li>
+						<li>box-shadow</li>
+						<li>caret-color</li>
+						<li>clip</li>
+						<li>clip-path</li>
+						<li>color</li>
+						<li><a href="https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_animated_properties">etc...</a></li>
+					</ul>
+					<p>The animatable SVG properties are:</p>
+					<ul>
+						<li>alignment-baseline</li>
+						<li>baseline-shift</li>
+						<li>clip</li>
+						<li>clip-path</li>
+						<li>clip-rule</li>
+						<li>color</li>
+						<li>color-interpolation</li>
+						<li>color-interpolation-filters</li>
+						<li>color-profile</li>
+						<li>color-rendering</li>
+						<li>cursor</li>
+						<li>direction</li>
+						<li>display</li>
+						<li>dominant-baseline</li>
+						<li>enable-background</li>
+						<li>fill</li>
+						<li>fill-opacity</li>
+						<li>fill-rule</li>
+						<li>filter</li>
+						<li>flood-color</li>
+						<li>flood-opacity</li>
+						<li>font-family</li>
+						<li>font-size</li>
+						<li>font-size-adjust</li>
+						<li>font-stretch</li>
+						<li>font-style</li>
+						<li>font-variant</li>
+						<li>font-weight</li>
+						<li>letter-spacing</li>
+						<li>lighting-color</li>
+						<li>marker-end</li>
+						<li>marker-mid</li>
+						<li>marker-start</li>
+						<li>mask</li>
+						<li>opacity</li>
+						<li>overflow</li>
+						<li>pointer-events</li>
+						<li>shape-rendering</li>
+						<li>solid-color</li>
+						<li>solid-opacity</li>
+						<li>stop-color</li>
+						<li>stop-opacity</li>
+						<li>stroke</li>
+						<li>stroke-dasharray</li>
+						<li>stroke-dashoffset</li>
+						<li>stroke-linecap</li>
+						<li>stroke-linejoin</li>
+						<li>stroke-miterlimit</li>
+						<li>stroke-opacity</li>
+						<li>stroke-width</li>
+						<li>text-anchor</li>
+						<li>text-decoration</li>
+						<li>text-rendering</li>
+						<li>transform</li>
+						<li>vector-effect</li>
+						<li>visibility</li>
+						<li>word-spacing</li>
+						<li>writing-mode</li>
+						<li><a href="https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute/Presentation">etc...</a></li>
+					</ul>
+					<p>Unfortunately, morphing SVG paths via the <code>d</code> property isn&#39;t supported yet, as browsers don&#39;t yet support it, and there are other limitations to what the Web Animation API will allow 😭, these limitation are covered in detail by an article published by Adobe about <a href="https://blog.adobe.com/en/publish/2015/06/05/the-state-of-svg-animation.html#gs.pihpjw">the current state of SVG animation on the web</a>.</p>
+					<a href="#options-amp-properties-as-methods" id="options-amp-properties-as-methods" style="color: inherit; text-decoration: none;">
+						<h2>Options &amp; Properties as Methods</h2>
+					</a>
+					<p>All options &amp; properties except <code>target</code>, <code>speed</code>, <code>autoplay</code>, <code>extend</code>, <code>onfinish</code>, and <code>options</code> can be represented by a method with the arguments <code>(index: number, total: number, element: HTMLElement)</code>.</p>
+					<p><em>Note: the <code>keyframes</code> option <strong>can</strong> be a method</em>.</p>
+					<pre><code class="language-typescript"><span style="color: #008000">/**</span>
+<span style="color: #008000"> * </span><span style="color: #0000FF">@param</span><span style="color: #008000"> </span><span style="color: #267F99">{number}</span><span style="color: #008000"> </span><span style="color: #001080">[index]</span><span style="color: #008000"> - index of each element</span>
+<span style="color: #008000"> * </span><span style="color: #0000FF">@param</span><span style="color: #008000"> </span><span style="color: #267F99">{number}</span><span style="color: #008000"> </span><span style="color: #001080">[total]</span><span style="color: #008000"> - total number of elements</span>
+<span style="color: #008000"> * </span><span style="color: #0000FF">@param</span><span style="color: #008000"> </span><span style="color: #267F99">{HTMLElement}</span><span style="color: #008000"> </span><span style="color: #001080">[element]</span><span style="color: #008000"> - the target element</span>
+<span style="color: #008000"> * </span><span style="color: #0000FF">@returns</span><span style="color: #008000"> any</span>
+<span style="color: #008000"> */</span>
+
+<span style="color: #008000">// For example</span>
+<span style="color: #795E26">animate</span><span style="color: #000000">({</span>
+<span style="color: #000000">    </span><span style="color: #001080">target:</span><span style="color: #000000"> </span><span style="color: #A31515">&quot;.div&quot;</span><span style="color: #000000">,</span>
+<span style="color: #000000">    </span><span style="color: #795E26">opacity</span><span style="color: #000000">(</span><span style="color: #001080">index</span><span style="color: #000000">, </span><span style="color: #001080">total</span><span style="color: #000000">, </span><span style="color: #001080">element</span><span style="color: #000000">) {</span>
+<span style="color: #000000">        </span><span style="color: #001080">console</span><span style="color: #000000">.</span><span style="color: #795E26">log</span><span style="color: #000000">(</span><span style="color: #001080">element</span><span style="color: #000000">);</span>
+<span style="color: #000000">        </span><span style="color: #AF00DB">return</span><span style="color: #000000"> [</span><span style="color: #098658">0</span><span style="color: #000000">, (</span><span style="color: #001080">index</span><span style="color: #000000"> + </span><span style="color: #098658">1</span><span style="color: #000000">) / </span><span style="color: #001080">total</span><span style="color: #000000">];</span>
+<span style="color: #000000">    },</span>
+<span style="color: #000000">    </span><span style="color: #795E26">duration</span><span style="color: #000000">(</span><span style="color: #001080">index</span><span style="color: #000000">, </span><span style="color: #001080">total</span><span style="color: #000000">) {</span>
+<span style="color: #000000">        </span><span style="color: #AF00DB">return</span><span style="color: #000000"> </span><span style="color: #098658">200</span><span style="color: #000000"> + (</span><span style="color: #098658">500</span><span style="color: #000000"> * (</span><span style="color: #001080">index</span><span style="color: #000000"> + </span><span style="color: #098658">1</span><span style="color: #000000">) / </span><span style="color: #001080">total</span><span style="color: #000000">);</span>
+<span style="color: #000000">    }</span>
+<span style="color: #000000">});</span>
+</code></pre>
+					<a href="#promises-and-promise-like" id="promises-and-promise-like" style="color: inherit; text-decoration: none;">
+						<h2>Promises and Promise-Like</h2>
+					</a>
+					<p><code>animate()</code> is promise-like meaning it has <code>then</code>, <code>catch</code>, and <code>finally</code> methods, but <code>Animate</code> itself isn&#39;t a Promise (this is important to keep in mind when dealing with async/await asynchronous  animations). <code>Animate</code>&#39;s <code>then</code> resolves once all animations are complete. The promise resolves to an Array with the <code>Animate</code> instance being the only element, but the <code>options</code> animation option can use the options of another <code>Animate</code> instance allowing animation chaining to be straightforward and convenient. The <a href="#getting-started">Getting started</a> section gives a basic example.</p>
+					<p>Since <code>Animate</code> relies on native promises, you can benefit from all the usual features promises
+					provide, such as <code>Promise.all</code>, <code>Promise.race</code>, and especially <code>async/await</code> which makes animation timelines easy to set up.</p>
+					<blockquote>
+						<p><em>An interesting quirk of Promises is that even though <code>Animate</code> is not a Promise, async/await still work with it because it has a <code>then</code>, and <code>catch</code>.</em></p>
+					</blockquote>
+					<p><em>Warning: <code>then</code>, <code>catch</code>, and <code>finally</code> are not resetable, however, the <code>Animate.prototype.on(&quot;finish&quot;, ...)</code> event is, meaning if you reset an animation while the using <code>then</code>, <code>catch</code>, and <code>finally</code>, they will <strong>not</strong> fire again after the reset.</em></p>
+					<p>For example,</p>
+					<pre><code class="language-typescript"><span style="color: #795E26">animate</span><span style="color: #000000">({</span>
+<span style="color: #000000">    </span><span style="color: #001080">target:</span><span style="color: #000000"> </span><span style="color: #A31515">&quot;.div&quot;</span><span style="color: #000000">,</span>
+<span style="color: #000000">    </span><span style="color: #001080">duration:</span><span style="color: #000000"> </span><span style="color: #098658">3000</span><span style="color: #000000">,</span>
+<span style="color: #000000">    </span><span style="color: #001080">transform:</span><span style="color: #000000"> [</span><span style="color: #A31515">&quot;translateY(-100vh)&quot;</span><span style="color: #000000">, </span><span style="color: #A31515">&quot;translateY(0vh)&quot;</span><span style="color: #000000">],</span>
+<span style="color: #000000">});</span>
+
+<span style="color: #008000">// This will only run once</span>
+<span style="color: #008000">/*</span>
+<span style="color: #008000">    Note that the AnimateInstance is in an Array when it is resolved,</span>
+<span style="color: #008000">    this is due to Promises not wanting to resolve references,</span>
+<span style="color: #008000">    so, you can&#039;t resolve the `this` keyword directly.</span>
+<span style="color: #008000">    I chose to resolve `this` in an Array as it seemed like the best alternative</span>
+<span style="color: #008000">*/</span>
+<span style="color: #000000">.</span><span style="color: #795E26">then</span><span style="color: #000000">(( [</span><span style="color: #001080">AnimateInstance</span><span style="color: #000000">] ) </span><span style="color: #0000FF">=&gt;</span><span style="color: #000000"> {</span>
+<span style="color: #000000">    </span><span style="color: #001080">console</span><span style="color: #000000">.</span><span style="color: #795E26">log</span><span style="color: #000000">(</span><span style="color: #A31515">`</span><span style="color: #0000FF">${</span><span style="color: #795E26">getProgress</span><span style="color: #000000FF">()</span><span style="color: #0000FF">}</span><span style="color: #A31515">`</span><span style="color: #000000">%);</span>
+<span style="color: #000000">    </span><span style="color: #001080">AnimateInstance</span><span style="color: #000000">.</span><span style="color: #795E26">reset</span><span style="color: #000000">();</span>
+<span style="color: #000000">});</span>
+
+<span style="color: #008000">// or</span>
+<span style="color: #000000">(</span><span style="color: #0000FF">async</span><span style="color: #000000"> () </span><span style="color: #0000FF">=&gt;</span><span style="color: #000000"> {</span>
+<span style="color: #000000">    </span><span style="color: #0000FF">const</span><span style="color: #000000"> [</span><span style="color: #0070C1">AnimateInstance</span><span style="color: #000000">] = </span><span style="color: #AF00DB">await</span><span style="color: #000000"> </span><span style="color: #795E26">animate</span><span style="color: #000000">({</span>
+<span style="color: #000000">        </span><span style="color: #001080">target:</span><span style="color: #000000"> </span><span style="color: #A31515">&quot;.div&quot;</span><span style="color: #000000">,</span>
+<span style="color: #000000">        </span><span style="color: #001080">duration:</span><span style="color: #000000"> </span><span style="color: #098658">3000</span><span style="color: #000000">,</span>
+<span style="color: #000000">        </span><span style="color: #001080">transform:</span><span style="color: #000000"> [</span><span style="color: #A31515">&quot;translateY(-100vh)&quot;</span><span style="color: #000000">, </span><span style="color: #A31515">&quot;translateY(0vh)&quot;</span><span style="color: #000000">],</span>
+<span style="color: #000000">    });</span>
+
+<span style="color: #000000">    </span><span style="color: #AF00DB">await</span><span style="color: #000000"> </span><span style="color: #795E26">animate</span><span style="color: #000000">({</span>
+<span style="color: #000000">        </span><span style="color: #001080">options:</span><span style="color: #000000"> </span><span style="color: #001080">AnimateInstance</span><span style="color: #000000">,</span>
+<span style="color: #000000">        </span><span style="color: #001080">transform:</span><span style="color: #000000"> [</span><span style="color: #A31515">&quot;rotate(0turn)&quot;</span><span style="color: #000000">, </span><span style="color: #A31515">&quot;rotate(1turn)&quot;</span><span style="color: #000000">],</span>
+<span style="color: #000000">    });</span>
+
+<span style="color: #000000">    </span><span style="color: #AF00DB">await</span><span style="color: #000000"> </span><span style="color: #795E26">animate</span><span style="color: #000000">({</span>
+<span style="color: #000000">        </span><span style="color: #001080">options:</span><span style="color: #000000"> </span><span style="color: #001080">AnimateInstance</span><span style="color: #000000">,</span>
+<span style="color: #000000">        </span><span style="color: #001080">duration:</span><span style="color: #000000"> </span><span style="color: #098658">800</span><span style="color: #000000">,</span>
+<span style="color: #000000">        </span><span style="color: #001080">easing:</span><span style="color: #000000"> </span><span style="color: #A31515">&quot;in-quint&quot;</span><span style="color: #000000">,</span>
+<span style="color: #000000">        </span><span style="color: #001080">transform:</span><span style="color: #000000"> [</span><span style="color: #A31515">&quot;scale(1)&quot;</span><span style="color: #000000">, </span><span style="color: #A31515">&quot;scale(0)&quot;</span><span style="color: #000000">],</span>
+<span style="color: #000000">    });</span>
+<span style="color: #000000">})();</span>
+</code></pre>
+					<a href="#events" id="events" style="color: inherit; text-decoration: none;">
+						<h2>Events</h2>
+					</a>
+					<p>There are <code>8</code> events in total, they are:</p>
+					<ul>
+						<li>&quot;update&quot;</li>
+						<li>&quot;play&quot;</li>
+						<li>&quot;pause&quot;</li>
+						<li>&quot;begin&quot;</li>
+						<li>&quot;finish&quot;</li>
+						<li>&quot;cancel&quot;</li>
+						<li>&quot;error&quot;</li>
+						<li>&quot;stop&quot;</li>
+					</ul>
+					<pre><code class="language-typescript"><span style="color: #008000">// The update event is triggered continously while an animation is playing.</span>
+<span style="color: #000000">....</span><span style="color: #795E26">on</span><span style="color: #000000">(</span><span style="color: #A31515">&quot;update&quot;</span><span style="color: #000000">, (</span><span style="color: #001080">progress</span><span style="color: #000000">, </span><span style="color: #001080">instance</span><span style="color: #000000">) </span><span style="color: #0000FF">=&gt;</span><span style="color: #000000"> {</span>
+<span style="color: #000000">    </span><span style="color: #008000">/**</span>
+<span style="color: #008000">     * </span><span style="color: #0000FF">@param</span><span style="color: #008000"> </span><span style="color: #267F99">{number}</span><span style="color: #008000"> </span><span style="color: #001080">progress</span><span style="color: #008000"> - it is the animation progress from 0 to 100</span>
+<span style="color: #008000">     * </span><span style="color: #0000FF">@param</span><span style="color: #008000"> </span><span style="color: #267F99">{Animate}</span><span style="color: #008000"> </span><span style="color: #001080">instance</span><span style="color: #008000"> - it is the instance of Animate the update event is triggered from</span>
+<span style="color: #008000">    */</span>
+<span style="color: #000000">});</span>
+
+<span style="color: #008000">// The play &amp; pause events are triggered when the Animate.prototype.play() or .pause() methods are called.</span>
+<span style="color: #000000">....</span><span style="color: #795E26">on</span><span style="color: #000000">(</span><span style="color: #A31515">&quot;play&quot;</span><span style="color: #000000"> | </span><span style="color: #A31515">&quot;pause&quot;</span><span style="color: #000000">, (</span><span style="color: #001080">playstate</span><span style="color: #000000">, </span><span style="color: #001080">instance</span><span style="color: #000000">) </span><span style="color: #0000FF">=&gt;</span><span style="color: #000000"> {</span>
+<span style="color: #000000">    </span><span style="color: #008000">/**</span>
+<span style="color: #008000">     * </span><span style="color: #0000FF">@param</span><span style="color: #008000"> </span><span style="color: #267F99">{&quot;idle&quot; | &quot;running&quot; | &quot;paused&quot; | &quot;finished&quot;}</span><span style="color: #008000"> </span><span style="color: #001080">playstate</span><span style="color: #008000"> - it is the animations play state</span>
+<span style="color: #008000">     * </span><span style="color: #0000FF">@param</span><span style="color: #008000"> </span><span style="color: #267F99">{Animate}</span><span style="color: #008000"> </span><span style="color: #001080">instance</span><span style="color: #008000"> - it is the instance of Animate the event is triggered from</span>
+<span style="color: #008000">    */</span>
+<span style="color: #000000">});</span>
+
+<span style="color: #008000">// The begin, finish, and cancel events are triggered when all animations in an instance of Animate begin, finish or are cancelled.</span>
+<span style="color: #008000">// The begining of all animations is when the the Animate instance has started, while the finish event is when all animations (taking into account the endDelay and loops as well) have ended.</span>
+<span style="color: #008000">// The cancel event occurs when the mainElement animation is cancelled or the `.cancel()` method is called</span>
+<span style="color: #000000">....</span><span style="color: #795E26">on</span><span style="color: #000000">(</span><span style="color: #A31515">&quot;begin&quot;</span><span style="color: #000000"> | </span><span style="color: #A31515">&quot;finish&quot;</span><span style="color: #000000"> | </span><span style="color: #A31515">&quot;cancel&quot;</span><span style="color: #000000">, (</span><span style="color: #001080">instance</span><span style="color: #000000">) </span><span style="color: #0000FF">=&gt;</span><span style="color: #000000"> {</span>
+<span style="color: #000000">    </span><span style="color: #008000">/**</span>
+<span style="color: #008000">     * </span><span style="color: #0000FF">@param</span><span style="color: #008000"> </span><span style="color: #267F99">{Animate}</span><span style="color: #008000"> </span><span style="color: #001080">instance</span><span style="color: #008000"> - it is the instance of Animate the event is triggered from</span>
+<span style="color: #008000">    */</span>
+<span style="color: #000000">});</span>
+
+<span style="color: #008000">// The error event is triggered when an error occurs in the `Animate` setup</span>
+<span style="color: #000000">....</span><span style="color: #795E26">on</span><span style="color: #000000">(</span><span style="color: #A31515">&quot;error&quot;</span><span style="color: #000000">, (</span><span style="color: #001080">err</span><span style="color: #000000">) </span><span style="color: #0000FF">=&gt;</span><span style="color: #000000"> {</span>
+<span style="color: #000000">    </span><span style="color: #008000">/**</span>
+<span style="color: #008000">     * </span><span style="color: #0000FF">@param</span><span style="color: #008000"> </span><span style="color: #267F99">{Error}</span><span style="color: #008000"> </span><span style="color: #001080">err</span><span style="color: #008000"> - the error message</span>
+<span style="color: #008000">    */</span>
+<span style="color: #000000">});</span>
+
+<span style="color: #008000">// The stop event is triggered when an `Animate` instance has been permanently stopped via the `.stop()` method.</span>
+<span style="color: #000000">....</span><span style="color: #795E26">on</span><span style="color: #000000">(</span><span style="color: #A31515">&quot;stop&quot;</span><span style="color: #000000">, () </span><span style="color: #0000FF">=&gt;</span><span style="color: #000000"> { });</span>
+</code></pre>
+					<a href="#additional-methods-amp-properties" id="additional-methods-amp-properties" style="color: inherit; text-decoration: none;">
+						<h2>Additional methods &amp; properties</h2>
+					</a>
+					<a href="#mainanimation-animation" id="mainanimation-animation" style="color: inherit; text-decoration: none;">
+						<h3>mainAnimation: Animation</h3>
+					</a>
+					<p>Stores an animation that runs on the total duration of all the <code>Animation</code> instances, and as such it&#39;s the main Animation.</p>
+					<a href="#animations-managerlthtmlelement-animationgt" id="animations-managerlthtmlelement-animationgt" style="color: inherit; text-decoration: none;">
+						<h3>animations: Manager&lt;HTMLElement, Animation&gt;</h3>
+					</a>
+					<p>A Manager of <code>Animations</code>; it stores all the <code>Animation</code> instances.</p>
+					<a href="#computedoptions-managerltanimation-animationoptionsgt" id="computedoptions-managerltanimation-animationoptionsgt" style="color: inherit; text-decoration: none;">
+						<h3>computedOptions: Manager&lt;Animation, AnimationOptions&gt;</h3>
+					</a>
+					<p>A Manager that stores all the fully calculated options for individual <code>Animation</code> instances.</p>
+					<p><em>Note: the <code>computedOptions</code> are changed to their proper <code>Animation</code> instance options, so, some of the names are different, and options that can&#39;t be computed are not present. E.g. <code>fillMode</code> in the animation options is now just <code>fill</code> in the <code>computedOptions</code>.</em></p>
+					<p><em>Note: <code>keyframes</code> are not included, both the array form and the object form, the <code>options</code>, <code>speed</code>, and <code>autoplay</code> animation options are not allowed.</em></p>
+					<a href="#mindelay-number" id="mindelay-number" style="color: inherit; text-decoration: none;">
+						<h3>minDelay: number</h3>
+					</a>
+					<p>The smallest delay out of all <code>Animation</code>&#39;s, it is zero by default.</p>
+					<a href="#maxspeed-number" id="maxspeed-number" style="color: inherit; text-decoration: none;">
+						<h3>maxSpeed: number</h3>
+					</a>
+					<p>The largest speed out of all <code>Animation</code>&#39;s, it is zero by default.</p>
+					<a href="#on-off-and-emit" id="on-off-and-emit" style="color: inherit; text-decoration: none;">
+						<h3>on(...), off(...), and emit(...)</h3>
+					</a>
+					<p>These methods are inherited from <a href="https://www.npmjs.com/package/@okikio/emitter">@okikio/emitter</a>. They control events and their listeners. The only difference is that by default their scopes are set to the instance of <code>Animate</code>.</p>
+					<pre><code class="language-typescript"><span style="color: #AF00DB">import</span><span style="color: #000000"> { </span><span style="color: #001080">animate</span><span style="color: #000000"> } </span><span style="color: #AF00DB">from</span><span style="color: #000000"> </span><span style="color: #A31515">&quot;@okikio/animate&quot;</span><span style="color: #000000">;</span>
+
+<span style="color: #0000FF">let</span><span style="color: #000000"> </span><span style="color: #001080">anim</span><span style="color: #000000"> = </span><span style="color: #795E26">animate</span><span style="color: #000000">({</span>
+<span style="color: #000000">    </span><span style="color: #001080">target:</span><span style="color: #000000"> </span><span style="color: #A31515">&quot;.div&quot;</span><span style="color: #000000">,</span>
+<span style="color: #000000">    </span><span style="color: #001080">easing:</span><span style="color: #000000"> </span><span style="color: #A31515">&quot;linear&quot;</span><span style="color: #000000">,</span>
+<span style="color: #000000">    </span><span style="color: #795E26">duration</span><span style="color: #001080">:</span><span style="color: #000000"> (</span><span style="color: #001080">index</span><span style="color: #000000">) </span><span style="color: #0000FF">=&gt;</span><span style="color: #000000"> </span><span style="color: #098658">8000</span><span style="color: #000000"> + </span><span style="color: #001080">index</span><span style="color: #000000"> * </span><span style="color: #098658">200</span><span style="color: #000000">,</span>
+<span style="color: #000000">    </span><span style="color: #001080">loop:</span><span style="color: #000000"> </span><span style="color: #0000FF">true</span><span style="color: #000000">,</span>
+<span style="color: #000000">    </span><span style="color: #001080">transform:</span><span style="color: #000000"> [</span><span style="color: #A31515">&quot;rotate(0deg)&quot;</span><span style="color: #000000">, </span><span style="color: #A31515">&quot;rotate(360deg)&quot;</span><span style="color: #000000">],</span>
+<span style="color: #000000">});</span>
+
+<span style="color: #008000">// For more info. on what you can do with the Event Emitter go to [https://www.npmjs.com/package/@okikio/emitter],</span>
+<span style="color: #008000">// I implemented the `on`, `off`, and `emit` methods from the Event Emitter on `Animate`.</span>
+<span style="color: #001080">anim</span><span style="color: #000000">.</span><span style="color: #795E26">on</span><span style="color: #000000">(</span><span style="color: #A31515">&quot;complete&quot;</span><span style="color: #000000">, () </span><span style="color: #0000FF">=&gt;</span><span style="color: #000000"> {</span>
+<span style="color: #000000">    </span><span style="color: #001080">console</span><span style="color: #000000">.</span><span style="color: #795E26">log</span><span style="color: #000000">(</span><span style="color: #A31515">&quot;completed&quot;</span><span style="color: #000000">);</span>
+<span style="color: #000000">})</span>
+<span style="color: #000000">    </span><span style="color: #008000">// This is a built in event</span>
+<span style="color: #000000">    .</span><span style="color: #795E26">on</span><span style="color: #000000">(</span><span style="color: #A31515">&quot;update&quot;</span><span style="color: #000000">, (</span><span style="color: #001080">progress</span><span style="color: #000000">) </span><span style="color: #0000FF">=&gt;</span><span style="color: #000000"> {</span>
+<span style="color: #000000">        </span><span style="color: #001080">console</span><span style="color: #000000">.</span><span style="color: #795E26">log</span><span style="color: #000000">(</span>
+<span style="color: #000000">            </span><span style="color: #A31515">&quot;It runs every animation frame while the animation is running and not paused.&quot;</span>
+<span style="color: #000000">        );</span>
+<span style="color: #000000">        </span><span style="color: #001080">console</span><span style="color: #000000">.</span><span style="color: #795E26">log</span><span style="color: #000000">(</span><span style="color: #A31515">`Progress </span><span style="color: #0000FF">${</span><span style="color: #001080">progress</span><span style="color: #0000FF">}</span><span style="color: #A31515">%`</span><span style="color: #000000">); </span><span style="color: #008000">// Eg: Progress 10%</span>
+<span style="color: #000000">    })</span>
+<span style="color: #000000">    .</span><span style="color: #795E26">on</span><span style="color: #000000">({</span>
+<span style="color: #000000">        </span><span style="color: #795E26">play</span><span style="color: #000000">() {</span>
+<span style="color: #000000">            </span><span style="color: #001080">console</span><span style="color: #000000">.</span><span style="color: #795E26">log</span><span style="color: #000000">(</span><span style="color: #A31515">&quot;When the animation is played&quot;</span><span style="color: #000000">);</span>
+<span style="color: #000000">        },</span>
+<span style="color: #000000">        </span><span style="color: #795E26">pause</span><span style="color: #000000">() {</span>
+<span style="color: #000000">            </span><span style="color: #001080">anim</span><span style="color: #000000">.</span><span style="color: #795E26">emit</span><span style="color: #000000">(</span><span style="color: #A31515">&quot;Cool&quot;</span><span style="color: #000000">);</span>
+<span style="color: #000000">            </span><span style="color: #001080">console</span><span style="color: #000000">.</span><span style="color: #795E26">log</span><span style="color: #000000">(</span><span style="color: #A31515">&quot;When the animation is paused&quot;</span><span style="color: #000000">);</span>
+<span style="color: #000000">        },</span>
+<span style="color: #000000">        </span><span style="color: #795E26">cool</span><span style="color: #000000">() {</span>
+<span style="color: #000000">            </span><span style="color: #001080">console</span><span style="color: #000000">.</span><span style="color: #795E26">log</span><span style="color: #000000">(</span><span style="color: #A31515">&quot;The cool event isn&#039;t a built in event, but it will fire when the Animation is paused.&quot;</span><span style="color: #000000">);</span>
+<span style="color: #000000">        }</span>
+<span style="color: #000000">    });</span>
+</code></pre>
+					<a href="#play-pause-and-reset" id="play-pause-and-reset" style="color: inherit; text-decoration: none;">
+						<h3>play(), pause(), and reset()</h3>
+					</a>
+					<p>They are self explanatory, the <code>play/pause</code> methods play/pause animation, while the <code>reset</code> method resets the progress of an animation.</p>
+					<a href="#the-long-list-of-get-methods" id="the-long-list-of-get-methods" style="color: inherit; text-decoration: none;">
+						<h3>The long list of Get Methods</h3>
+					</a>
+					<ul>
+						<li><code>getTargets(): HTMLElement[]</code> - Returns an Array of HTMLElement&#39;s</li>
+						<li><code>getAnimation(element: HTMLElement): Animation</code> - Allows you to select a specific animation from an element</li>
+						<li><code>getTiming(value: HTMLElement | Animation): EffectTiming | AnimationOptions</code> - Returns the timings of an Animation, given a target E.g. { duration, endDelay, delay, iterations, iterationStart, direction, easing, fill, etc... }</li>
+						<li><code>getTotalDuration(): number</code> - Returns the total duration of the animation of all elements added together</li>
+						<li><code>getCurrentTime(): number</code> - Returns the current time of the animation of all elements</li>
+						<li><code>getProgress(): number</code> - Returns the progress of the animation of all elements as a percentage between 0 to 100.</li>
+						<li><code>getPlayState(): string</code> - Returns the current playing state, it can be <code>&quot;idle&quot; | &quot;running&quot; | &quot;paused&quot; | &quot;finished&quot;</code></li>
+						<li><code>getSpeed(): number</code> - Return the playback speed of the animation</li>
+						<li><code>getOptions(): object</code> - Returns the options that were used to create the animation</li>
+					</ul>
+					<a href="#the-almost-as-long-list-of-set-methods-these-methods-are-chainable" id="the-almost-as-long-list-of-set-methods-these-methods-are-chainable" style="color: inherit; text-decoration: none;">
+						<h3>The almost as long list of Set Methods; these methods are chainable</h3>
+					</a>
+					<ul>
+						<li><code>setCurrentTime(time: number)</code> - Sets the current time of the animation</li>
+						<li><code>setProgress(percent: number)</code> - Similar to <code>setCurrentTime</code> except it use a number between 0 and 100 to set the current progress of the animation</li>
+						<li><code>setSpeed(speed: number = 1)</code> - Sets the playback speed of an animation</li>
+					</ul>
+					<a href="#then-catch-and-finally" id="then-catch-and-finally" style="color: inherit; text-decoration: none;">
+						<h3>then(...), catch(...), and finally(...)</h3>
+					</a>
+					<p>They represent the then, catch, and finally methods of a Promise that is resolved when an animation has finished. It&#39;s also what allows the use of the <code>await/async</code> keywords for resolving animations. The <code>then</code> method resolves to the Animations Options, which can then be passed to other <code>Animate</code> instances to create animations with similar properties. Then, catch, and finally are chainable, they return the <code>Animate</code> class.</p>
+					<a href="#tojson" id="tojson" style="color: inherit; text-decoration: none;">
+						<h3>toJSON()</h3>
+					</a>
+					<p>An alias for <code>getOptions</code></p>
+					<a href="#allmethod-animation-animation-gt-void" id="allmethod-animation-animation-gt-void" style="color: inherit; text-decoration: none;">
+						<h3>all(method: (animation: Animation) =&gt; void)</h3>
+					</a>
+					<p>Calls a method that affects all animations including the mainAnimation; the method only allows the animation parameter</p>
+					<p>For example,</p>
+					<pre><code class="language-typescript"><span style="color: #008000">// This is a small snippet from the setCurrentTime() method</span>
+<span style="color: #0000FF">this</span><span style="color: #000000">.</span><span style="color: #795E26">all</span><span style="color: #000000">((</span><span style="color: #001080">animation</span><span style="color: #000000">: </span><span style="color: #267F99">Animation</span><span style="color: #000000">) </span><span style="color: #0000FF">=&gt;</span><span style="color: #000000"> {</span>
+<span style="color: #000000">    </span><span style="color: #001080">animation</span><span style="color: #000000">.</span><span style="color: #001080">currentTime</span><span style="color: #000000"> = </span><span style="color: #098658">5</span><span style="color: #000000">;</span>
+<span style="color: #000000">});</span>
+</code></pre>
+					<a href="#finish" id="finish" style="color: inherit; text-decoration: none;">
+						<h3>finish()</h3>
+					</a>
+					<p>Forces all Animations to finish, it triggers the <code>finish</code> and <code>complete</code> events.</p>
+					<a href="#cancel" id="cancel" style="color: inherit; text-decoration: none;">
+						<h3>cancel()</h3>
+					</a>
+					<p>Cancels all Animations, it just runs the cancel method from each individual animation.</p>
+					<a href="#stop" id="stop" style="color: inherit; text-decoration: none;">
+						<h3>stop()</h3>
+					</a>
+					<p>Cancels all Animations and de-references them allowing them to be garbage collected in a rush. It also emits a <code>stop</code> event to alert you to the animation stopping.</p>
+					<p>The <code>stop</code> method is not chainable.</p>
+					<p><em>Warning: if you try to reference properties from the <code>Animate</code> class after stop has been called many things will break. The <code>Animate</code> class cannont and will not recover from stop, it is meant as a final trash run of animations, don&#39;t use it if you think you may restart the animation.</em></p>
+					<a href="#examples" id="examples" style="color: inherit; text-decoration: none;">
+						<h2>Examples</h2>
+					</a>
+					<p><a href="https://codepen.io/collection/rxOEBO"><img src="https://raw.githubusercontent.com/okikio/native/master/packages/animate/assets/Web%20Animation%20API%20Library%20Playground.png" alt="@okikio/animate - playground"></a></p>
+					<p><a href="https://codepen.io/collection/rxOEBO">Go through this collection of examples for more detailed demos   &#8594;</a></p>
+					<a href="#browser-support" id="browser-support" style="color: inherit; text-decoration: none;">
+						<h2>Browser support</h2>
+					</a>
+					<p><code>@okikio/animate</code> is provided as a native ES6 module, which means you may need to transpile it depending on your browser support policy. The library works using <code>&lt;script type=&quot;module&quot;&gt;</code> in
+					the following browsers (<code>@okikio/animate</code> may support older browsers, but I haven&#39;t tested those browsers):</p>
+					<ul>
+						<li>Chrome &gt; 71</li>
+						<li>Edge &gt; 79</li>
+						<li>Firefox &gt; 60</li>
+					</ul>
+					<p><em>Note: as it really difficult to get access to older versions of these browsers, I have only tested Chrome 71 and above.</em></p>
+					<a href="#content-delivery-networks" id="content-delivery-networks" style="color: inherit; text-decoration: none;">
+						<h2>Content delivery networks</h2>
+					</a>
+					<p><code>@okikio/animate</code> is available on <a href="https://unpkg.com/@okikio/animate/lib/api.es.js">unpkg</a> <code>https://unpkg.com/@okikio/animate/lib/api.es.js</code>, <a href="https://cdn.skypack.dev/@okikio/animate">skypack</a> <code>https://cdn.skypack.dev/@okikio/animate</code> or <a href="https://cdn.jsdelivr.net/npm/@okikio/animate/lib/api.es.js">jsdelivr</a> <code>https://cdn.jsdelivr.net/npm/@okikio/animate/lib/api.es.js</code>.</p>
+					<pre><code class="language-typescript"><span style="color: #008000">// Notice the .es.js file name extension, that represents ES Modules</span>
+<span style="color: #008000">// There is also,</span>
+<span style="color: #008000">//      .cjs.js - Common JS Module</span>
+<span style="color: #008000">//      .es.js - Modern ES Module</span>
+<span style="color: #008000">//      .js - The Fresh JS, uses IIFE.</span>
+<span style="color: #AF00DB">import</span><span style="color: #000000"> { </span><span style="color: #001080">animate</span><span style="color: #000000"> } </span><span style="color: #AF00DB">from</span><span style="color: #000000"> </span><span style="color: #A31515">&quot;https://cdn.skypack.dev/@okikio/animate&quot;</span><span style="color: #000000">;</span>
+
+<span style="color: #795E26">animate</span><span style="color: #000000">({</span>
+<span style="color: #000000">    </span><span style="color: #001080">target:</span><span style="color: #000000"> </span><span style="color: #A31515">&quot;div&quot;</span><span style="color: #000000">,</span>
+<span style="color: #000000">    </span><span style="color: #001080">transform:</span><span style="color: #000000"> [</span><span style="color: #A31515">&quot;translate(0%)&quot;</span><span style="color: #000000">, </span><span style="color: #098658">100</span><span style="color: #000000">],</span>
+<span style="color: #000000">});</span>
+</code></pre>
+					<a href="#memory-management" id="memory-management" style="color: inherit; text-decoration: none;">
+						<h2>Memory Management</h2>
+					</a>
+					<p>I have found that CSS Animations tend to be the cause of memory leaks in websites, especially infinite animations. Javascript has become so efficient that it can effectively garbage collect js animations, however, I have found it is exceptionally difficult to manage looped animation so be very careful of memory when dealing with CSS and JS Animation), they eat up large ammounts of memory and CPU when left running for long periods of time. I would suggest making all your animations only occur a couple times and when they are done use the <code>stop()</code> method to remove the animations from memory <em>&quot;if you don&#39;t plan on replaying the same animation&quot;</em>. Don&#39;t just use the <code>stop()</code> method, test it first on your site before deploying it in a production enviroment.</p>
+					<a href="#best-practices-these-are-from-animate-plus-but-they-are-true-for-all-animation-libraries" id="best-practices-these-are-from-animate-plus-but-they-are-true-for-all-animation-libraries" style="color: inherit; text-decoration: none;">
+						<h2>Best practices (these are from Animate Plus, but they are true for all Animation libraries)</h2>
+					</a>
+					<p>Animations play a major role in the design of good user interfaces. They help connecting actions to consequences, make the flow of interactions manifest, and greatly improve the polish and perception of a product. However, animations can be damaging and detrimental to the user experience if they get in the way. Here are a few best practices to keep your animations effective and enjoyable:</p>
+					<ul>
+						<li><strong>Speed</strong>: Keep your animations fast. A quick animation makes a software feel more productive and responsive. The optimal duration depends on the effect and animation curve, but in most cases you should likely stay under 500 milliseconds.</li>
+						<li><strong>Easing</strong>: The animation curve contributes greatly to a well-crafted animation. The easing &quot;out&quot; option is usually a safe bet as animations kick off promptly, making them react to user interactions instantaneously.</li>
+						<li><strong>Performance</strong>: Having no animation is better than animations that stutter. When animating HTML elements, aim for using exclusively <code>transform</code> and <code>opacity</code> as these are the only properties browsers can animate cheaply.</li>
+						<li><strong>Restraint</strong>: Tone down your animations and respect user preferences. Animations can rapidly feel overwhelming and cause motion sickness, so it&#39;s important to keep them subtle and to attenuate them even more for users who need reduced motion, for example by using <code>matchMedia(&quot;(prefers-reduced-motion)&quot;)</code> in JavaScript.</li>
+					</ul>
+					<a href="#contributing" id="contributing" style="color: inherit; text-decoration: none;">
+						<h2>Contributing</h2>
+					</a>
+					<p>If there is something I missed, a mistake, or a feature you would like added please create an issue or a pull request and I&#39;ll try to get to it.</p>
+					<p><em>The <code>native</code> project uses <a href="https://www.conventionalcommits.org/en/v1.0.0/">Conventional Commits</a> as the style of commit, we even use the <a href="http://commitizen.github.io/cz-cli/">Commitizen CLI</a> to make commits easier.</em></p>
+					<a href="#licence" id="licence" style="color: inherit; text-decoration: none;">
+						<h2>Licence</h2>
+					</a>
+					<p>See the <a href="./LICENSE">LICENSE</a> file for license rights and limitations (MIT).</p>
+				</div>
+			</section>
+			<section class="tsd-panel-group tsd-index-group">
+				<h2>Index</h2>
+				<section class="tsd-panel tsd-index-panel">
+					<div class="tsd-index-content">
+						<section class="tsd-index-section ">
+							<h3>References</h3>
+							<ul class="tsd-index-list">
+								<li class="tsd-kind-reference tsd-parent-kind-module"><a href="animate.html#effects" class="tsd-kind-icon">EFFECTS</a></li>
+								<li class="tsd-kind-reference tsd-parent-kind-module"><a href="animate.html#keyframeparse" class="tsd-kind-icon">Keyframe<wbr>Parse</a></li>
+								<li class="tsd-kind-reference tsd-parent-kind-module"><a href="animate.html#default" class="tsd-kind-icon">default</a></li>
+								<li class="tsd-kind-reference tsd-parent-kind-module"><a href="animate.html#parseoffsets" class="tsd-kind-icon">parse<wbr>Offsets</a></li>
+							</ul>
+						</section>
+						<section class="tsd-index-section ">
+							<h3>Classes</h3>
+							<ul class="tsd-index-list">
+								<li class="tsd-kind-class tsd-parent-kind-module"><a href="../classes/animate.animate-1.html" class="tsd-kind-icon">Animate</a></li>
+							</ul>
+						</section>
+						<section class="tsd-index-section ">
+							<h3>Interfaces</h3>
+							<ul class="tsd-index-list">
+								<li class="tsd-kind-interface tsd-parent-kind-module"><a href="../interfaces/animate.animationoptions.html" class="tsd-kind-icon">Animation<wbr>Options</a></li>
+							</ul>
+						</section>
+						<section class="tsd-index-section ">
+							<h3>Type aliases</h3>
+							<ul class="tsd-index-list">
+								<li class="tsd-kind-type-alias tsd-parent-kind-module"><a href="animate.html#animationevents" class="tsd-kind-icon">Animation<wbr>Events</a></li>
+								<li class="tsd-kind-type-alias tsd-parent-kind-module"><a href="animate.html#animationoptiontypes" class="tsd-kind-icon">Animation<wbr>Option<wbr>Types</a></li>
+								<li class="tsd-kind-type-alias tsd-parent-kind-module"><a href="animate.html#animationtarget" class="tsd-kind-icon">Animation<wbr>Target</a></li>
+								<li class="tsd-kind-type-alias tsd-parent-kind-module"><a href="animate.html#callback" class="tsd-kind-icon">Callback</a></li>
+								<li class="tsd-kind-type-alias tsd-parent-kind-module"><a href="animate.html#callbackargs" class="tsd-kind-icon">Callback<wbr>Args</a></li>
+								<li class="tsd-kind-type-alias tsd-parent-kind-module"><a href="animate.html#computedanimationoptions" class="tsd-kind-icon">Computed<wbr>Animation<wbr>Options</a></li>
+								<li class="tsd-kind-type-alias tsd-parent-kind-module"><a href="animate.html#computedoptions" class="tsd-kind-icon">Computed<wbr>Options</a></li>
+								<li class="tsd-kind-type-alias tsd-parent-kind-module"><a href="animate.html#generictypes" class="tsd-kind-icon">Generic<wbr>Types</a></li>
+								<li class="tsd-kind-type-alias tsd-parent-kind-module"><a href="animate.html#keyframeoptionstype" class="tsd-kind-icon">Key<wbr>Frame<wbr>Options<wbr>Type</a></li>
+								<li class="tsd-kind-type-alias tsd-parent-kind-module"><a href="animate.html#playstates" class="tsd-kind-icon">Play<wbr>States</a></li>
+							</ul>
+						</section>
+						<section class="tsd-index-section ">
+							<h3>Variables</h3>
+							<ul class="tsd-index-list">
+								<li class="tsd-kind-variable tsd-parent-kind-module"><a href="animate.html#defaultanimationoptions" class="tsd-kind-icon">Default<wbr>Animation<wbr>Options</a></li>
+								<li class="tsd-kind-variable tsd-parent-kind-module"><a href="animate.html#easings" class="tsd-kind-icon">EASINGS</a></li>
+								<li class="tsd-kind-variable tsd-parent-kind-module"><a href="animate.html#easingkeys" class="tsd-kind-icon">Easing<wbr>Keys</a></li>
+							</ul>
+						</section>
+						<section class="tsd-index-section ">
+							<h3>Functions</h3>
+							<ul class="tsd-index-list">
+								<li class="tsd-kind-function tsd-parent-kind-module"><a href="animate.html#getease" class="tsd-kind-icon">Get<wbr>Ease</a></li>
+								<li class="tsd-kind-function tsd-parent-kind-module"><a href="animate.html#animate-2" class="tsd-kind-icon">animate</a></li>
+								<li class="tsd-kind-function tsd-parent-kind-module"><a href="animate.html#computeoption" class="tsd-kind-icon">compute<wbr>Option</a></li>
+								<li class="tsd-kind-function tsd-parent-kind-module"><a href="animate.html#flatten" class="tsd-kind-icon">flatten</a></li>
+								<li class="tsd-kind-function tsd-parent-kind-module"><a href="animate.html#getelements" class="tsd-kind-icon">get<wbr>Elements</a></li>
+								<li class="tsd-kind-function tsd-parent-kind-module"><a href="animate.html#gettargets" class="tsd-kind-icon">get<wbr>Targets</a></li>
+								<li class="tsd-kind-function tsd-parent-kind-module"><a href="animate.html#mapanimationoptions" class="tsd-kind-icon">map<wbr>Animation<wbr>Options</a></li>
+								<li class="tsd-kind-function tsd-parent-kind-module"><a href="animate.html#parseoptions" class="tsd-kind-icon">parse<wbr>Options</a></li>
+							</ul>
+						</section>
+					</div>
+				</section>
+			</section>
+			<section class="tsd-panel-group tsd-member-group ">
+				<h2>References</h2>
+				<section class="tsd-panel tsd-member tsd-kind-reference tsd-parent-kind-module">
+					<a name="effects" class="tsd-anchor"></a>
+					<h3>EFFECTS</h3>
+					Re-exports <a href="native.html#effects">EFFECTS</a>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-reference tsd-parent-kind-module">
+					<a name="keyframeparse" class="tsd-anchor"></a>
+					<h3>Keyframe<wbr>Parse</h3>
+					Re-exports <a href="native.html#keyframeparse">KeyframeParse</a>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-reference tsd-parent-kind-module">
+					<a name="default" class="tsd-anchor"></a>
+					<h3>default</h3>
+					Renames and exports <a href="animate.html#animate-2">animate</a>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-reference tsd-parent-kind-module">
+					<a name="parseoffsets" class="tsd-anchor"></a>
+					<h3>parse<wbr>Offsets</h3>
+					Re-exports <a href="native.html#parseoffsets">parseOffsets</a>
+				</section>
+			</section>
+			<section class="tsd-panel-group tsd-member-group ">
+				<h2>Type aliases</h2>
+				<section class="tsd-panel tsd-member tsd-kind-type-alias tsd-parent-kind-module">
+					<a name="animationevents" class="tsd-anchor"></a>
+					<h3>Animation<wbr>Events</h3>
+					<div class="tsd-signature tsd-kind-icon">Animation<wbr>Events<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">&quot;update&quot;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">&quot;play&quot;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">&quot;pause&quot;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">&quot;begin&quot;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">&quot;cancel&quot;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">&quot;finish&quot;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">&quot;error&quot;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">&quot;stop&quot;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">&quot;playstate-change&quot;</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/okikio/native/blob/9199fe8/packages/animate/src/api.ts#L595">animate/src/api.ts:595</a></li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-type-alias tsd-parent-kind-module">
+					<a name="animationoptiontypes" class="tsd-anchor"></a>
+					<h3>Animation<wbr>Option<wbr>Types</h3>
+					<div class="tsd-signature tsd-kind-icon">Animation<wbr>Option<wbr>Types<span class="tsd-signature-symbol">:</span> <a href="animate.html#callback" class="tsd-signature-type" data-tsd-kind="Type alias">Callback</a><span class="tsd-signature-symbol"> | </span><a href="animate.html#computedanimationoptions" class="tsd-signature-type" data-tsd-kind="Type alias">ComputedAnimationOptions</a></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/okikio/native/blob/9199fe8/packages/animate/src/api.ts#L29">animate/src/api.ts:29</a></li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-type-alias tsd-parent-kind-module">
+					<a name="animationtarget" class="tsd-anchor"></a>
+					<h3>Animation<wbr>Target</h3>
+					<div class="tsd-signature tsd-kind-icon">Animation<wbr>Target<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">Node</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">NodeList</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">HTMLCollection</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">HTMLElement</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol"> | </span><a href="animate.html#animationtarget" class="tsd-signature-type" data-tsd-kind="Type alias">AnimationTarget</a><span class="tsd-signature-symbol">[]</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/okikio/native/blob/9199fe8/packages/animate/src/api.ts#L5">animate/src/api.ts:5</a></li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-type-alias tsd-parent-kind-module">
+					<a name="callback" class="tsd-anchor"></a>
+					<h3>Callback</h3>
+					<div class="tsd-signature tsd-kind-icon">Callback<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol">(</span>index<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">number</span>, total<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">number</span>, element<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">HTMLElement</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><a href="animate.html#computedanimationoptions" class="tsd-signature-type" data-tsd-kind="Type alias">ComputedAnimationOptions</a></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/okikio/native/blob/9199fe8/packages/animate/src/api.ts#L28">animate/src/api.ts:28</a></li>
+						</ul>
+					</aside>
+					<div class="tsd-type-declaration">
+						<h4>Type declaration</h4>
+						<ul class="tsd-parameters">
+							<li class="tsd-parameter-signature">
+								<ul class="tsd-signatures tsd-kind-type-literal tsd-parent-kind-type-alias">
+									<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">(</span>index<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">number</span>, total<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">number</span>, element<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">HTMLElement</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="animate.html#computedanimationoptions" class="tsd-signature-type" data-tsd-kind="Type alias">ComputedAnimationOptions</a></li>
+								</ul>
+								<ul class="tsd-descriptions">
+									<li class="tsd-description">
+										<h4 class="tsd-parameters-title">Parameters</h4>
+										<ul class="tsd-parameters">
+											<li>
+												<h5><span class="tsd-flag ts-flagOptional">Optional</span> index: <span class="tsd-signature-type">number</span></h5>
+											</li>
+											<li>
+												<h5><span class="tsd-flag ts-flagOptional">Optional</span> total: <span class="tsd-signature-type">number</span></h5>
+											</li>
+											<li>
+												<h5><span class="tsd-flag ts-flagOptional">Optional</span> element: <span class="tsd-signature-type">HTMLElement</span></h5>
+											</li>
+										</ul>
+										<h4 class="tsd-returns-title">Returns <a href="animate.html#computedanimationoptions" class="tsd-signature-type" data-tsd-kind="Type alias">ComputedAnimationOptions</a></h4>
+									</li>
+								</ul>
+							</li>
+						</ul>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-type-alias tsd-parent-kind-module">
+					<a name="callbackargs" class="tsd-anchor"></a>
+					<h3>Callback<wbr>Args</h3>
+					<div class="tsd-signature tsd-kind-icon">Callback<wbr>Args<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol">[</span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">HTMLElement</span><span class="tsd-signature-symbol">]</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/okikio/native/blob/9199fe8/packages/animate/src/api.ts#L24">animate/src/api.ts:24</a></li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-type-alias tsd-parent-kind-module">
+					<a name="computedanimationoptions" class="tsd-anchor"></a>
+					<h3>Computed<wbr>Animation<wbr>Options</h3>
+					<div class="tsd-signature tsd-kind-icon">Computed<wbr>Animation<wbr>Options<span class="tsd-signature-symbol">:</span> <a href="animate.html#generictypes" class="tsd-signature-type" data-tsd-kind="Type alias">GenericTypes</a><span class="tsd-signature-symbol"> | </span><a href="animate.html#generictypes" class="tsd-signature-type" data-tsd-kind="Type alias">GenericTypes</a><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol"> | </span><a href="animate.html#keyframeoptionstype" class="tsd-signature-type" data-tsd-kind="Type alias">KeyFrameOptionsType</a></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/okikio/native/blob/9199fe8/packages/animate/src/api.ts#L27">animate/src/api.ts:27</a></li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-type-alias tsd-parent-kind-module">
+					<a name="computedoptions" class="tsd-anchor"></a>
+					<h3>Computed<wbr>Options</h3>
+					<div class="tsd-signature tsd-kind-icon">Computed<wbr>Options<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol">{}</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/okikio/native/blob/9199fe8/packages/animate/src/api.ts#L30">animate/src/api.ts:30</a></li>
+						</ul>
+					</aside>
+					<div class="tsd-type-declaration">
+						<h4>Type declaration</h4>
+						<ul class="tsd-parameters">
+							<li class="tsd-parameter-index-signature">
+								<h5><span class="tsd-signature-symbol">[</span>key: <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">]: </span><a href="animate.html#computedanimationoptions" class="tsd-signature-type" data-tsd-kind="Type alias">ComputedAnimationOptions</a></h5>
+							</li>
+						</ul>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-type-alias tsd-parent-kind-module">
+					<a name="generictypes" class="tsd-anchor"></a>
+					<h3>Generic<wbr>Types</h3>
+					<div class="tsd-signature tsd-kind-icon">Generic<wbr>Types<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">object</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">number</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/okikio/native/blob/9199fe8/packages/animate/src/api.ts#L25">animate/src/api.ts:25</a></li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-type-alias tsd-parent-kind-module">
+					<a name="keyframeoptionstype" class="tsd-anchor"></a>
+					<h3>Key<wbr>Frame<wbr>Options<wbr>Type</h3>
+					<div class="tsd-signature tsd-kind-icon">Key<wbr>Frame<wbr>Options<wbr>Type<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">Keyframe</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">PropertyIndexedKeyframes</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/okikio/native/blob/9199fe8/packages/animate/src/api.ts#L26">animate/src/api.ts:26</a></li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-type-alias tsd-parent-kind-module">
+					<a name="playstates" class="tsd-anchor"></a>
+					<h3>Play<wbr>States</h3>
+					<div class="tsd-signature tsd-kind-icon">Play<wbr>States<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">&quot;idle&quot;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">&quot;running&quot;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">&quot;paused&quot;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">&quot;finished&quot;</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/okikio/native/blob/9199fe8/packages/animate/src/api.ts#L596">animate/src/api.ts:596</a></li>
+						</ul>
+					</aside>
+				</section>
+			</section>
+			<section class="tsd-panel-group tsd-member-group ">
+				<h2>Variables</h2>
+				<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-module">
+					<a name="defaultanimationoptions" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagConst">Const</span> Default<wbr>Animation<wbr>Options</h3>
+					<div class="tsd-signature tsd-kind-icon">Default<wbr>Animation<wbr>Options<span class="tsd-signature-symbol">:</span> <a href="../interfaces/animate.animationoptions.html" class="tsd-signature-type" data-tsd-kind="Interface">AnimationOptions</a><span class="tsd-signature-symbol"> = ...</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/okikio/native/blob/9199fe8/packages/animate/src/api.ts#L579">animate/src/api.ts:579</a></li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>The default options for every Animate instance</p>
+						</div>
+						<pre><code class="language-typescript"><span style="color: #000000">{</span>
+<span style="color: #000000">  keyframes: [],</span>
+
+<span style="color: #000000">  loop: </span><span style="color: #098658">1</span><span style="color: #000000">,</span>
+<span style="color: #000000">  delay: </span><span style="color: #098658">0</span><span style="color: #000000">,</span>
+<span style="color: #000000">  speed: </span><span style="color: #098658">1</span><span style="color: #000000">,</span>
+<span style="color: #000000">  endDelay: </span><span style="color: #098658">0</span><span style="color: #000000">,</span>
+<span style="color: #000000">  easing: </span><span style="color: #A31515">&quot;ease&quot;</span><span style="color: #000000">,</span>
+<span style="color: #000000">  autoplay: </span><span style="color: #0000FF">true</span><span style="color: #000000">,</span>
+<span style="color: #000000">  duration: </span><span style="color: #098658">1000</span><span style="color: #000000">,</span>
+<span style="color: #000000">  fillMode: </span><span style="color: #A31515">&quot;none&quot;</span><span style="color: #000000">,</span>
+<span style="color: #000000">  direction: </span><span style="color: #A31515">&quot;normal&quot;</span><span style="color: #000000">,</span>
+<span style="color: #000000">  padEndDelay: </span><span style="color: #0000FF">false</span><span style="color: #000000">,</span>
+<span style="color: #000000">  extend: {}</span>
+<span style="color: #000000">}</span>
+</code></pre>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-module">
+					<a name="easings" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagConst">Const</span> EASINGS</h3>
+					<div class="tsd-signature tsd-kind-icon">EASINGS<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol">{ </span>in<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">; </span>in-back<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">; </span>in-circ<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">; </span>in-cubic<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">; </span>in-expo<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">; </span>in-out<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">; </span>in-out-back<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">; </span>in-out-circ<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">; </span>in-out-cubic<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">; </span>in-out-expo<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">; </span>in-out-quad<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">; </span>in-out-quart<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">; </span>in-out-quint<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">; </span>in-out-sine<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">; </span>in-quad<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">; </span>in-quart<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">; </span>in-quint<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">; </span>in-sine<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">; </span>out<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">; </span>out-back<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">; </span>out-circ<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">; </span>out-cubic<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">; </span>out-expo<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">; </span>out-quad<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">; </span>out-quart<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">; </span>out-quint<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">; </span>out-sine<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> }</span><span class="tsd-signature-symbol"> = ...</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/okikio/native/blob/9199fe8/packages/animate/src/api.ts#L102">animate/src/api.ts:102</a></li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>From: [<a href="https://easings.net%5D">https://easings.net]</a></p>
+						</div>
+						<pre><code class="language-typescript"><span style="color: #000000">{</span>
+<span style="color: #000000">    </span><span style="color: #A31515">&quot;in&quot;</span><span style="color: #000000">: </span><span style="color: #A31515">&quot;ease-in&quot;</span><span style="color: #000000">,</span>
+<span style="color: #000000">    </span><span style="color: #A31515">&quot;out&quot;</span><span style="color: #000000">: </span><span style="color: #A31515">&quot;ease-out&quot;</span><span style="color: #000000">,</span>
+<span style="color: #000000">    </span><span style="color: #A31515">&quot;in-out&quot;</span><span style="color: #000000">: </span><span style="color: #A31515">&quot;ease-in-out&quot;</span><span style="color: #000000">,</span>
+
+<span style="color: #000000">    </span><span style="color: #008000">// Sine</span>
+<span style="color: #000000">    </span><span style="color: #A31515">&quot;in-sine&quot;</span><span style="color: #000000">: </span><span style="color: #A31515">&quot;cubic-bezier(0.47, 0, 0.745, 0.715)&quot;</span><span style="color: #000000">,</span>
+<span style="color: #000000">    </span><span style="color: #A31515">&quot;out-sine&quot;</span><span style="color: #000000">: </span><span style="color: #A31515">&quot;cubic-bezier(0.39, 0.575, 0.565, 1)&quot;</span><span style="color: #000000">,</span>
+<span style="color: #000000">    </span><span style="color: #A31515">&quot;in-out-sine&quot;</span><span style="color: #000000">: </span><span style="color: #A31515">&quot;cubic-bezier(0.445, 0.05, 0.55, 0.95)&quot;</span><span style="color: #000000">,</span>
+
+<span style="color: #000000">    </span><span style="color: #008000">// Quad</span>
+<span style="color: #000000">    </span><span style="color: #A31515">&quot;in-quad&quot;</span><span style="color: #000000">: </span><span style="color: #A31515">&quot;cubic-bezier(0.55, 0.085, 0.68, 0.53)&quot;</span><span style="color: #000000">,</span>
+<span style="color: #000000">    </span><span style="color: #A31515">&quot;out-quad&quot;</span><span style="color: #000000">: </span><span style="color: #A31515">&quot;cubic-bezier(0.25, 0.46, 0.45, 0.94)&quot;</span><span style="color: #000000">,</span>
+<span style="color: #000000">    </span><span style="color: #A31515">&quot;in-out-quad&quot;</span><span style="color: #000000">: </span><span style="color: #A31515">&quot;cubic-bezier(0.455, 0.03, 0.515, 0.955)&quot;</span><span style="color: #000000">,</span>
+
+<span style="color: #000000">    </span><span style="color: #008000">// Cubic</span>
+<span style="color: #000000">    </span><span style="color: #A31515">&quot;in-cubic&quot;</span><span style="color: #000000">: </span><span style="color: #A31515">&quot;cubic-bezier(0.55, 0.055, 0.675, 0.19)&quot;</span><span style="color: #000000">,</span>
+<span style="color: #000000">    </span><span style="color: #A31515">&quot;out-cubic&quot;</span><span style="color: #000000">: </span><span style="color: #A31515">&quot;cubic-bezier(0.215, 0.61, 0.355, 1)&quot;</span><span style="color: #000000">,</span>
+<span style="color: #000000">    </span><span style="color: #A31515">&quot;in-out-cubic&quot;</span><span style="color: #000000">: </span><span style="color: #A31515">&quot;cubic-bezier(0.645, 0.045, 0.355, 1)&quot;</span><span style="color: #000000">,</span>
+
+<span style="color: #000000">    </span><span style="color: #008000">// Quart</span>
+<span style="color: #000000">    </span><span style="color: #A31515">&quot;in-quart&quot;</span><span style="color: #000000">: </span><span style="color: #A31515">&quot;cubic-bezier(0.895, 0.03, 0.685, 0.22)&quot;</span><span style="color: #000000">,</span>
+<span style="color: #000000">    </span><span style="color: #A31515">&quot;out-quart&quot;</span><span style="color: #000000">: </span><span style="color: #A31515">&quot;cubic-bezier(0.165, 0.84, 0.44, 1)&quot;</span><span style="color: #000000">,</span>
+<span style="color: #000000">    </span><span style="color: #A31515">&quot;in-out-quart&quot;</span><span style="color: #000000">: </span><span style="color: #A31515">&quot;cubic-bezier(0.77, 0, 0.175, 1)&quot;</span><span style="color: #000000">,</span>
+
+<span style="color: #000000">    </span><span style="color: #008000">// Quint</span>
+<span style="color: #000000">    </span><span style="color: #A31515">&quot;in-quint&quot;</span><span style="color: #000000">: </span><span style="color: #A31515">&quot;cubic-bezier(0.755, 0.05, 0.855, 0.06)&quot;</span><span style="color: #000000">,</span>
+<span style="color: #000000">    </span><span style="color: #A31515">&quot;out-quint&quot;</span><span style="color: #000000">: </span><span style="color: #A31515">&quot;cubic-bezier(0.23, 1, 0.32, 1)&quot;</span><span style="color: #000000">,</span>
+<span style="color: #000000">    </span><span style="color: #A31515">&quot;in-out-quint&quot;</span><span style="color: #000000">: </span><span style="color: #A31515">&quot;cubic-bezier(0.86, 0, 0.07, 1)&quot;</span><span style="color: #000000">,</span>
+
+<span style="color: #000000">    </span><span style="color: #008000">// Expo</span>
+<span style="color: #000000">    </span><span style="color: #A31515">&quot;in-expo&quot;</span><span style="color: #000000">: </span><span style="color: #A31515">&quot;cubic-bezier(0.95, 0.05, 0.795, 0.035)&quot;</span><span style="color: #000000">,</span>
+<span style="color: #000000">    </span><span style="color: #A31515">&quot;out-expo&quot;</span><span style="color: #000000">: </span><span style="color: #A31515">&quot;cubic-bezier(0.19, 1, 0.22, 1)&quot;</span><span style="color: #000000">,</span>
+<span style="color: #000000">    </span><span style="color: #A31515">&quot;in-out-expo&quot;</span><span style="color: #000000">: </span><span style="color: #A31515">&quot;cubic-bezier(1, 0, 0, 1)&quot;</span><span style="color: #000000">,</span>
+
+<span style="color: #000000">    </span><span style="color: #008000">// Circ</span>
+<span style="color: #000000">    </span><span style="color: #A31515">&quot;in-circ&quot;</span><span style="color: #000000">: </span><span style="color: #A31515">&quot;cubic-bezier(0.6, 0.04, 0.98, 0.335)&quot;</span><span style="color: #000000">,</span>
+<span style="color: #000000">    </span><span style="color: #A31515">&quot;out-circ&quot;</span><span style="color: #000000">: </span><span style="color: #A31515">&quot;cubic-bezier(0.075, 0.82, 0.165, 1)&quot;</span><span style="color: #000000">,</span>
+<span style="color: #000000">    </span><span style="color: #A31515">&quot;in-out-circ&quot;</span><span style="color: #000000">: </span><span style="color: #A31515">&quot;cubic-bezier(0.785, 0.135, 0.15, 0.86)&quot;</span><span style="color: #000000">,</span>
+
+<span style="color: #000000">    </span><span style="color: #008000">// Back</span>
+<span style="color: #000000">    </span><span style="color: #A31515">&quot;in-back&quot;</span><span style="color: #000000">: </span><span style="color: #A31515">&quot;cubic-bezier(0.6, -0.28, 0.735, 0.045)&quot;</span><span style="color: #000000">,</span>
+<span style="color: #000000">    </span><span style="color: #A31515">&quot;out-back&quot;</span><span style="color: #000000">: </span><span style="color: #A31515">&quot;cubic-bezier(0.175, 0.885, 0.32, 1.275)&quot;</span><span style="color: #000000">,</span>
+<span style="color: #000000">    </span><span style="color: #A31515">&quot;in-out-back&quot;</span><span style="color: #000000">: </span><span style="color: #A31515">&quot;cubic-bezier(0.68, -0.55, 0.265, 1.55)&quot;</span>
+<span style="color: #000000">}</span>
+</code></pre>
+					</div>
+					<div class="tsd-type-declaration">
+						<h4>Type declaration</h4>
+						<ul class="tsd-parameters">
+							<li class="tsd-parameter">
+								<h5>in<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span></h5>
+							</li>
+							<li class="tsd-parameter">
+								<h5>in-<wbr>back<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span></h5>
+							</li>
+							<li class="tsd-parameter">
+								<h5>in-<wbr>circ<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span></h5>
+							</li>
+							<li class="tsd-parameter">
+								<h5>in-<wbr>cubic<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span></h5>
+							</li>
+							<li class="tsd-parameter">
+								<h5>in-<wbr>expo<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span></h5>
+							</li>
+							<li class="tsd-parameter">
+								<h5>in-<wbr>out<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span></h5>
+							</li>
+							<li class="tsd-parameter">
+								<h5>in-<wbr>out-<wbr>back<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span></h5>
+							</li>
+							<li class="tsd-parameter">
+								<h5>in-<wbr>out-<wbr>circ<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span></h5>
+							</li>
+							<li class="tsd-parameter">
+								<h5>in-<wbr>out-<wbr>cubic<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span></h5>
+							</li>
+							<li class="tsd-parameter">
+								<h5>in-<wbr>out-<wbr>expo<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span></h5>
+							</li>
+							<li class="tsd-parameter">
+								<h5>in-<wbr>out-<wbr>quad<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span></h5>
+							</li>
+							<li class="tsd-parameter">
+								<h5>in-<wbr>out-<wbr>quart<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span></h5>
+							</li>
+							<li class="tsd-parameter">
+								<h5>in-<wbr>out-<wbr>quint<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span></h5>
+							</li>
+							<li class="tsd-parameter">
+								<h5>in-<wbr>out-<wbr>sine<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span></h5>
+							</li>
+							<li class="tsd-parameter">
+								<h5>in-<wbr>quad<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span></h5>
+							</li>
+							<li class="tsd-parameter">
+								<h5>in-<wbr>quart<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span></h5>
+							</li>
+							<li class="tsd-parameter">
+								<h5>in-<wbr>quint<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span></h5>
+							</li>
+							<li class="tsd-parameter">
+								<h5>in-<wbr>sine<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span></h5>
+							</li>
+							<li class="tsd-parameter">
+								<h5>out<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span></h5>
+							</li>
+							<li class="tsd-parameter">
+								<h5>out-<wbr>back<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span></h5>
+							</li>
+							<li class="tsd-parameter">
+								<h5>out-<wbr>circ<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span></h5>
+							</li>
+							<li class="tsd-parameter">
+								<h5>out-<wbr>cubic<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span></h5>
+							</li>
+							<li class="tsd-parameter">
+								<h5>out-<wbr>expo<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span></h5>
+							</li>
+							<li class="tsd-parameter">
+								<h5>out-<wbr>quad<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span></h5>
+							</li>
+							<li class="tsd-parameter">
+								<h5>out-<wbr>quart<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span></h5>
+							</li>
+							<li class="tsd-parameter">
+								<h5>out-<wbr>quint<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span></h5>
+							</li>
+							<li class="tsd-parameter">
+								<h5>out-<wbr>sine<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span></h5>
+							</li>
+						</ul>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-module">
+					<a name="easingkeys" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagConst">Const</span> Easing<wbr>Keys</h3>
+					<div class="tsd-signature tsd-kind-icon">Easing<wbr>Keys<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol"> = ...</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/okikio/native/blob/9199fe8/packages/animate/src/api.ts#L154">animate/src/api.ts:154</a></li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>The keys of <a href="animate.html#easings">EASINGS</a></p>
+						</div>
+						<dl class="tsd-comment-tags">
+							<dt>remark</dt>
+							<dd><p>&quot;in&quot;, &quot;out&quot;, &quot;in-out&quot;, &quot;in-sine&quot;, &quot;out-sine&quot;, &quot;in-out-sine&quot;, &quot;in-quad&quot;, &quot;out-quad&quot;, &quot;in-out-quad&quot;, &quot;in-cubic&quot;, &quot;out-cubic&quot;, &quot;in-out-cubic&quot;, &quot;in-quart&quot;, &quot;out-quart&quot;, &quot;in-out-quart&quot;, &quot;in-quint&quot;, &quot;out-quint&quot;, &quot;in-out-quint&quot;, &quot;in-expo&quot;, &quot;out-expo&quot;, &quot;in-out-expo&quot;, &quot;in-circ&quot;, &quot;out-circ&quot;, &quot;in-out-circ&quot;, &quot;in-back&quot;, &quot;out-back&quot;, &quot;in-out-back&quot;</p>
+							</dd>
+						</dl>
+					</div>
+				</section>
+			</section>
+			<section class="tsd-panel-group tsd-member-group ">
+				<h2>Functions</h2>
+				<section class="tsd-panel tsd-member tsd-kind-function tsd-parent-kind-module">
+					<a name="getease" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagConst">Const</span> Get<wbr>Ease</h3>
+					<ul class="tsd-signatures tsd-kind-function tsd-parent-kind-module">
+						<li class="tsd-signature tsd-kind-icon">Get<wbr>Ease<span class="tsd-signature-symbol">(</span>ease<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/okikio/native/blob/9199fe8/packages/animate/src/api.ts#L162">animate/src/api.ts:162</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Converts users input into a usable easing function</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>ease: <span class="tsd-signature-type">string</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>easing functions; <a href="animate.html#easingkeys">EasingKeys</a>, cubic-bezier, step, linear, etc...</p>
+									</div>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">string</span></h4>
+							<p>an easing function that <code>KeyframeEffect</code> can accept</p>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-function tsd-parent-kind-module">
+					<a name="animate-2" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagConst">Const</span> animate</h3>
+					<ul class="tsd-signatures tsd-kind-function tsd-parent-kind-module">
+						<li class="tsd-signature tsd-kind-icon">animate<span class="tsd-signature-symbol">(</span>options<span class="tsd-signature-symbol">?: </span><a href="../interfaces/animate.animationoptions.html" class="tsd-signature-type" data-tsd-kind="Interface">AnimationOptions</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="../classes/animate.animate-1.html" class="tsd-signature-type" data-tsd-kind="Class">Animate</a></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/okikio/native/blob/9199fe8/packages/animate/src/api.ts#L1247">animate/src/api.ts:1247</a></li>
+								</ul>
+							</aside>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>options: <a href="../interfaces/animate.animationoptions.html" class="tsd-signature-type" data-tsd-kind="Interface">AnimationOptions</a><span class="tsd-signature-symbol"> = {}</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <a href="../classes/animate.animate-1.html" class="tsd-signature-type" data-tsd-kind="Class">Animate</a></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-function tsd-parent-kind-module">
+					<a name="computeoption" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagConst">Const</span> compute<wbr>Option</h3>
+					<ul class="tsd-signatures tsd-kind-function tsd-parent-kind-module">
+						<li class="tsd-signature tsd-kind-icon">compute<wbr>Option<span class="tsd-signature-symbol">(</span>value<span class="tsd-signature-symbol">: </span><a href="animate.html#animationoptiontypes" class="tsd-signature-type" data-tsd-kind="Type alias">AnimationOptionTypes</a>, args<span class="tsd-signature-symbol">: </span><a href="animate.html#callbackargs" class="tsd-signature-type" data-tsd-kind="Type alias">CallbackArgs</a>, context<span class="tsd-signature-symbol">: </span><a href="../classes/animate.animate-1.html" class="tsd-signature-type" data-tsd-kind="Class">Animate</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="animate.html#computedanimationoptions" class="tsd-signature-type" data-tsd-kind="Type alias">ComputedAnimationOptions</a></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/okikio/native/blob/9199fe8/packages/animate/src/api.ts#L33">animate/src/api.ts:33</a></li>
+								</ul>
+							</aside>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>value: <a href="animate.html#animationoptiontypes" class="tsd-signature-type" data-tsd-kind="Type alias">AnimationOptionTypes</a></h5>
+								</li>
+								<li>
+									<h5>args: <a href="animate.html#callbackargs" class="tsd-signature-type" data-tsd-kind="Type alias">CallbackArgs</a></h5>
+								</li>
+								<li>
+									<h5>context: <a href="../classes/animate.animate-1.html" class="tsd-signature-type" data-tsd-kind="Class">Animate</a></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <a href="animate.html#computedanimationoptions" class="tsd-signature-type" data-tsd-kind="Type alias">ComputedAnimationOptions</a></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-function tsd-parent-kind-module">
+					<a name="flatten" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagConst">Const</span> flatten</h3>
+					<ul class="tsd-signatures tsd-kind-function tsd-parent-kind-module">
+						<li class="tsd-signature tsd-kind-icon">flatten<span class="tsd-signature-symbol">(</span>arr<span class="tsd-signature-symbol">: </span><a href="animate.html#animationtarget" class="tsd-signature-type" data-tsd-kind="Type alias">AnimationTarget</a><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">[]</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/okikio/native/blob/9199fe8/packages/animate/src/api.ts#L10">animate/src/api.ts:10</a></li>
+								</ul>
+							</aside>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>arr: <a href="animate.html#animationtarget" class="tsd-signature-type" data-tsd-kind="Type alias">AnimationTarget</a><span class="tsd-signature-symbol">[]</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">[]</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-function tsd-parent-kind-module">
+					<a name="getelements" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagConst">Const</span> get<wbr>Elements</h3>
+					<ul class="tsd-signatures tsd-kind-function tsd-parent-kind-module">
+						<li class="tsd-signature tsd-kind-icon">get<wbr>Elements<span class="tsd-signature-symbol">(</span>selector<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">Node</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Node</span><span class="tsd-signature-symbol">[]</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/okikio/native/blob/9199fe8/packages/animate/src/api.ts#L6">animate/src/api.ts:6</a></li>
+								</ul>
+							</aside>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>selector: <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">Node</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Node</span><span class="tsd-signature-symbol">[]</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-function tsd-parent-kind-module">
+					<a name="gettargets" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagConst">Const</span> get<wbr>Targets</h3>
+					<ul class="tsd-signatures tsd-kind-function tsd-parent-kind-module">
+						<li class="tsd-signature tsd-kind-icon">get<wbr>Targets<span class="tsd-signature-symbol">(</span>targets<span class="tsd-signature-symbol">: </span><a href="animate.html#animationtarget" class="tsd-signature-type" data-tsd-kind="Type alias">AnimationTarget</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Node</span><span class="tsd-signature-symbol">[]</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/okikio/native/blob/9199fe8/packages/animate/src/api.ts#L11">animate/src/api.ts:11</a></li>
+								</ul>
+							</aside>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>targets: <a href="animate.html#animationtarget" class="tsd-signature-type" data-tsd-kind="Type alias">AnimationTarget</a></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Node</span><span class="tsd-signature-symbol">[]</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-function tsd-parent-kind-module">
+					<a name="mapanimationoptions" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagConst">Const</span> map<wbr>Animation<wbr>Options</h3>
+					<ul class="tsd-signatures tsd-kind-function tsd-parent-kind-module">
+						<li class="tsd-signature tsd-kind-icon">map<wbr>Animation<wbr>Options<span class="tsd-signature-symbol">(</span>obj<span class="tsd-signature-symbol">: </span><a href="../interfaces/animate.animationoptions.html" class="tsd-signature-type" data-tsd-kind="Interface">AnimationOptions</a>, args<span class="tsd-signature-symbol">: </span><a href="animate.html#callbackargs" class="tsd-signature-type" data-tsd-kind="Type alias">CallbackArgs</a>, options<span class="tsd-signature-symbol">: </span><a href="../classes/animate.animate-1.html" class="tsd-signature-type" data-tsd-kind="Class">Animate</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="animate.html#computedoptions" class="tsd-signature-type" data-tsd-kind="Type alias">ComputedOptions</a></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/okikio/native/blob/9199fe8/packages/animate/src/api.ts#L39">animate/src/api.ts:39</a></li>
+								</ul>
+							</aside>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>obj: <a href="../interfaces/animate.animationoptions.html" class="tsd-signature-type" data-tsd-kind="Interface">AnimationOptions</a></h5>
+								</li>
+								<li>
+									<h5>args: <a href="animate.html#callbackargs" class="tsd-signature-type" data-tsd-kind="Type alias">CallbackArgs</a></h5>
+								</li>
+								<li>
+									<h5>options: <a href="../classes/animate.animate-1.html" class="tsd-signature-type" data-tsd-kind="Class">Animate</a></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <a href="animate.html#computedoptions" class="tsd-signature-type" data-tsd-kind="Type alias">ComputedOptions</a></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-function tsd-parent-kind-module">
+					<a name="parseoptions" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagConst">Const</span> parse<wbr>Options</h3>
+					<ul class="tsd-signatures tsd-kind-function tsd-parent-kind-module">
+						<li class="tsd-signature tsd-kind-icon">parse<wbr>Options<span class="tsd-signature-symbol">(</span>options<span class="tsd-signature-symbol">: </span><a href="../interfaces/animate.animationoptions.html" class="tsd-signature-type" data-tsd-kind="Interface">AnimationOptions</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="../interfaces/animate.animationoptions.html" class="tsd-signature-type" data-tsd-kind="Interface">AnimationOptions</a></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/okikio/native/blob/9199fe8/packages/animate/src/api.ts#L598">animate/src/api.ts:598</a></li>
+								</ul>
+							</aside>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>options: <a href="../interfaces/animate.animationoptions.html" class="tsd-signature-type" data-tsd-kind="Interface">AnimationOptions</a></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <a href="../interfaces/animate.animationoptions.html" class="tsd-signature-type" data-tsd-kind="Interface">AnimationOptions</a></h4>
+						</li>
+					</ul>
+				</section>
+			</section>
+		</div>
+		<div class="col-4 col-menu menu-sticky-wrap menu-highlight">
+			<nav class="tsd-navigation primary">
+				<ul>
+					<li class=" ">
+						<a href="../index.html">Modules</a>
+					</li>
+					<li class="current tsd-kind-module">
+						<a href="animate.html">animate</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="emitter.html">emitter</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="manager.html">manager</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="native.html">native</a>
+					</li>
+				</ul>
+			</nav>
+			<nav class="tsd-navigation secondary menu-sticky">
+				<ul class="before-current">
+				</ul>
+				<ul class="current">
+					<li class="current tsd-kind-module">
+						<a href="animate.html" class="tsd-kind-icon">animate</a>
+						<ul>
+							<li class=" tsd-kind-reference tsd-parent-kind-module">
+								<a href="animate.html#effects" class="tsd-kind-icon">EFFECTS</a>
+							</li>
+							<li class=" tsd-kind-reference tsd-parent-kind-module">
+								<a href="animate.html#keyframeparse" class="tsd-kind-icon">Keyframe<wbr>Parse</a>
+							</li>
+							<li class=" tsd-kind-reference tsd-parent-kind-module">
+								<a href="animate.html#default" class="tsd-kind-icon">default</a>
+							</li>
+							<li class=" tsd-kind-reference tsd-parent-kind-module">
+								<a href="animate.html#parseoffsets" class="tsd-kind-icon">parse<wbr>Offsets</a>
+							</li>
+							<li class=" tsd-kind-class tsd-parent-kind-module">
+								<a href="../classes/animate.animate-1.html" class="tsd-kind-icon">Animate</a>
+							</li>
+							<li class=" tsd-kind-interface tsd-parent-kind-module">
+								<a href="../interfaces/animate.animationoptions.html" class="tsd-kind-icon">Animation<wbr>Options</a>
+							</li>
+							<li class=" tsd-kind-type-alias tsd-parent-kind-module">
+								<a href="animate.html#animationevents" class="tsd-kind-icon">Animation<wbr>Events</a>
+							</li>
+							<li class=" tsd-kind-type-alias tsd-parent-kind-module">
+								<a href="animate.html#animationoptiontypes" class="tsd-kind-icon">Animation<wbr>Option<wbr>Types</a>
+							</li>
+							<li class=" tsd-kind-type-alias tsd-parent-kind-module">
+								<a href="animate.html#animationtarget" class="tsd-kind-icon">Animation<wbr>Target</a>
+							</li>
+							<li class=" tsd-kind-type-alias tsd-parent-kind-module">
+								<a href="animate.html#callback" class="tsd-kind-icon">Callback</a>
+							</li>
+							<li class=" tsd-kind-type-alias tsd-parent-kind-module">
+								<a href="animate.html#callbackargs" class="tsd-kind-icon">Callback<wbr>Args</a>
+							</li>
+							<li class=" tsd-kind-type-alias tsd-parent-kind-module">
+								<a href="animate.html#computedanimationoptions" class="tsd-kind-icon">Computed<wbr>Animation<wbr>Options</a>
+							</li>
+							<li class=" tsd-kind-type-alias tsd-parent-kind-module">
+								<a href="animate.html#computedoptions" class="tsd-kind-icon">Computed<wbr>Options</a>
+							</li>
+							<li class=" tsd-kind-type-alias tsd-parent-kind-module">
+								<a href="animate.html#generictypes" class="tsd-kind-icon">Generic<wbr>Types</a>
+							</li>
+							<li class=" tsd-kind-type-alias tsd-parent-kind-module">
+								<a href="animate.html#keyframeoptionstype" class="tsd-kind-icon">Key<wbr>Frame<wbr>Options<wbr>Type</a>
+							</li>
+							<li class=" tsd-kind-type-alias tsd-parent-kind-module">
+								<a href="animate.html#playstates" class="tsd-kind-icon">Play<wbr>States</a>
+							</li>
+							<li class=" tsd-kind-variable tsd-parent-kind-module">
+								<a href="animate.html#defaultanimationoptions" class="tsd-kind-icon">Default<wbr>Animation<wbr>Options</a>
+							</li>
+							<li class=" tsd-kind-variable tsd-parent-kind-module">
+								<a href="animate.html#easings" class="tsd-kind-icon">EASINGS</a>
+							</li>
+							<li class=" tsd-kind-variable tsd-parent-kind-module">
+								<a href="animate.html#easingkeys" class="tsd-kind-icon">Easing<wbr>Keys</a>
+							</li>
+							<li class=" tsd-kind-function tsd-parent-kind-module">
+								<a href="animate.html#getease" class="tsd-kind-icon">Get<wbr>Ease</a>
+							</li>
+							<li class=" tsd-kind-function tsd-parent-kind-module">
+								<a href="animate.html#animate-2" class="tsd-kind-icon">animate</a>
+							</li>
+							<li class=" tsd-kind-function tsd-parent-kind-module">
+								<a href="animate.html#computeoption" class="tsd-kind-icon">compute<wbr>Option</a>
+							</li>
+							<li class=" tsd-kind-function tsd-parent-kind-module">
+								<a href="animate.html#flatten" class="tsd-kind-icon">flatten</a>
+							</li>
+							<li class=" tsd-kind-function tsd-parent-kind-module">
+								<a href="animate.html#getelements" class="tsd-kind-icon">get<wbr>Elements</a>
+							</li>
+							<li class=" tsd-kind-function tsd-parent-kind-module">
+								<a href="animate.html#gettargets" class="tsd-kind-icon">get<wbr>Targets</a>
+							</li>
+							<li class=" tsd-kind-function tsd-parent-kind-module">
+								<a href="animate.html#mapanimationoptions" class="tsd-kind-icon">map<wbr>Animation<wbr>Options</a>
+							</li>
+							<li class=" tsd-kind-function tsd-parent-kind-module">
+								<a href="animate.html#parseoptions" class="tsd-kind-icon">parse<wbr>Options</a>
+							</li>
+						</ul>
+					</li>
+				</ul>
+				<ul class="after-current">
+					<li class=" tsd-kind-module">
+						<a href="emitter.html" class="tsd-kind-icon">emitter</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="manager.html" class="tsd-kind-icon">manager</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="native.html" class="tsd-kind-icon">native</a>
+					</li>
+				</ul>
+			</nav>
+		</div>
+	</div>
+</div>
+<footer class="with-border-bottom">
+	<div class="container">
+		<h2>Legend</h2>
+		<div class="tsd-legend-group">
+			<ul class="tsd-legend">
+				<li class="tsd-kind-variable"><span class="tsd-kind-icon">Variable</span></li>
+				<li class="tsd-kind-function"><span class="tsd-kind-icon">Function</span></li>
+				<li class="tsd-kind-type-alias"><span class="tsd-kind-icon">Type alias</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-class"><span class="tsd-kind-icon">Class</span></li>
+				<li class="tsd-kind-class tsd-has-type-parameter"><span class="tsd-kind-icon">Class with type parameter</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-interface"><span class="tsd-kind-icon">Interface</span></li>
+			</ul>
+		</div>
+	</div>
+</footer>
+<div class="container tsd-generator">
+	<p>Generated using <a href="https://typedoc.org/" target="_blank">TypeDoc</a></p>
+</div>
+<div class="overlay"></div>
+<script src="../assets/js/main.js"></script>
+</body>
+</html>
