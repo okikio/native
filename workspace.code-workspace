@@ -1,0 +1,29 @@
+{
+	"folders": [
+		{
+			"name": "✨ root",
+			"path": "."
+		},
+		{
+			"name": "📦 @okikio/animate",
+			"path": "packages\\animate"
+		},
+		{
+			"name": "📦 @okikio/emitter",
+			"path": "packages\\emitter"
+		},
+		{
+			"name": "📦 @okikio/manager",
+			"path": "packages\\manager"
+		},
+		{
+			"name": "📦 @okikio/native",
+			"path": "packages\\native"
+		}
+	],
+	"settings": {
+		"conventionalCommits.scopes": [
+			"demo"
+		]
+	}
+}
