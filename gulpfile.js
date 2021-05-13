@@ -2,7 +2,7 @@
 const mode = process.argv.includes("--watch") ? "watch" : "build";
 
 // Gulp utilities
-import { watch, task, series, parallel, stream } from "./util.js";
+import { watch, task, series, parallel, stream, src } from "./util.js";
 
 // Origin folders (source and destination folders)
 const srcFolder = `build`;
@@ -161,7 +161,7 @@ task("watch", async () => {
         }
     );
 
-    watch(`${pugFolder}/**/*.pug`, series("html"));
+    watch(`${pugFolder}/**/*.pug`, series("html", "css"));
     watch([`${sassFolder}/**/*.scss`, `./tailwind.cjs`], series("css"));
     watch(
         [
