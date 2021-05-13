@@ -58,7 +58,7 @@
     "bugs": {
         "url": "https://github.com/okikio/native/issues"
     },
-    "homepage": "https://github.com/okikio/native/packages/emitter#readme",
+    "homepage": "https://github.com/okikio/native/tree/master/packages/emitter#readme",
     "dependencies": {
         "@okikio/manager": "workspace:*"
     },

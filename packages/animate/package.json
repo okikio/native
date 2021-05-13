@@ -56,15 +56,15 @@
     "bugs": {
         "url": "https://github.com/okikio/native/issues"
     },
-    "homepage": "https://github.com/okikio/native/packages/animate#readme",
+    "homepage": "https://github.com/okikio/native/tree/master/packages/animate#readme",
     "dependencies": {
         "@okikio/emitter": "workspace:*",
         "@okikio/manager": "workspace:*"
     },
     "devDependencies": {
-        "esbuild": "^0.11.13",
-        "pnpm": "^6.0.2",
-        "standard-version": "^9.2.0",
+        "esbuild": "^0.11.20",
+        "pnpm": "^6.3.0",
+        "standard-version": "^9.3.0",
         "typescript": "^4.2.4"
     },
     "gitHead": "ad422076cdb57d570426f786886129d5bca2f90f"

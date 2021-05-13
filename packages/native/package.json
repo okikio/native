@@ -56,7 +56,7 @@
     "bugs": {
         "url": "https://github.com/okikio/native/issues"
     },
-    "homepage": "https://github.com/okikio/native/packages/native#readme",
+    "homepage": "https://github.com/okikio/native/tree/master/packages/native#readme",
     "dependencies": {
         "@okikio/animate": "workspace:*",
         "@okikio/emitter": "workspace:*",

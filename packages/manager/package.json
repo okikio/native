@@ -57,7 +57,7 @@
     "bugs": {
         "url": "https://github.com/okikio/native/issues"
     },
-    "homepage": "https://github.com/okikio/native/packages/manager#readme",
+    "homepage": "https://github.com/okikio/native/tree/master/packages/manager#readme",
     "devDependencies": {
         "@types/jest": "^26.0.22",
         "esbuild": "^0.11.13",
