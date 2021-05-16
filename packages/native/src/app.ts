@@ -1,4 +1,4 @@
-import { EventEmitter, ListenerCallback, EventInput } from "./emitter";
+import { EventEmitter, TypeListenerCallback, TypeEventInput } from "@okikio/emitter";
 import { ServiceManager, Service } from "./service";
 import { newConfig, ICONFIG, getConfig } from "./config";
 
@@ -12,8 +12,8 @@ export interface IApp {
     add(value: Service): App,
     boot(): App,
     stop(): App,
-    on(events: EventInput, callback?: ListenerCallback): App,
-    off(events: EventInput, callback?: ListenerCallback): App,
+    on(events: TypeEventInput, callback?: TypeListenerCallback): App,
+    off(events: TypeEventInput, callback?: TypeListenerCallback): App,
     emit(events: string | any[], ...args: any): App,
 }
 
@@ -116,12 +116,12 @@ export class App implements IApp {
     }
 
     /** Shortcuts to the App EventEmitter on, off, and emit methods */
-    public on(events: EventInput, callback?: ListenerCallback): App {
+    public on(events: TypeEventInput, callback?: TypeListenerCallback): App {
         this.emitter.on(events, callback, this);
         return this;
     }
 
-    public off(events: EventInput, callback?: ListenerCallback): App {
+    public off(events: TypeEventInput, callback?: TypeListenerCallback): App {
         this.emitter.off(events, callback, this);
         return this;
     }

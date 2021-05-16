@@ -1,4 +1,4 @@
-import { EventEmitter, ListenerCallback, EventInput } from "./emitter";
+import { EventEmitter, TypeListenerCallback, TypeEventInput } from "@okikio/emitter";
 import { ServiceManager, Service } from "./service";
 import { ICONFIG } from "./config";
 export interface IApp {
@@ -11,8 +11,8 @@ export interface IApp {
     add(value: Service): App;
     boot(): App;
     stop(): App;
-    on(events: EventInput, callback?: ListenerCallback): App;
-    off(events: EventInput, callback?: ListenerCallback): App;
+    on(events: TypeEventInput, callback?: TypeListenerCallback): App;
+    off(events: TypeEventInput, callback?: TypeListenerCallback): App;
     emit(events: string | any[], ...args: any): App;
 }
 /** The App class starts the entire process, it controls all managers and all services */
@@ -40,7 +40,7 @@ export declare class App implements IApp {
     /** Stops all Services and clears the even emitter of all events and listeners */
     stop(): App;
     /** Shortcuts to the App EventEmitter on, off, and emit methods */
-    on(events: EventInput, callback?: ListenerCallback): App;
-    off(events: EventInput, callback?: ListenerCallback): App;
+    on(events: TypeEventInput, callback?: TypeListenerCallback): App;
+    off(events: TypeEventInput, callback?: TypeListenerCallback): App;
     emit(events: string | any[], ...args: any): App;
 }
