@@ -1,35 +1,33 @@
 # @okikio/native
 
-`Native` is the initiative that encourages performance, modern technologies, and great user experiences. The idea behind `@okikio/native` is that it acts as the core framework to the `native` initiative, it combines all the other package into it a core package that is ~7 KB (minified & compressed).
+`native` is an initiative that encourages performance, modern technologies, and great user experiences. The idea behind `@okikio/native` is that it acts as the core framework to the `native` initiative, it combines all the other package into it a core package that is ~9.6 KB (minified & gzipped).
 
-`@okikio/native` is a guideline on how to create great web experiences that integrate into the system in a way that feels like a cohesive and native experience.
+[@okikio/native](https://www.skypack.dev/view/@okikio/native) is a guideline on how to create great web experiences that integrate into the system in a way that feels like a cohesive and native experience.
 
 The idea behind it is that, when an app feels native, it means that it integrates well into the systems and `just works`, for example, a dark mode that follows the entire system. The `just works` aspect is key to the framework, it should work without the user skipping a beat. On the web this boils down to being performant, efficient, and smooth.
 
-The `@okikio/native` package achieves performance, high efficiency, and a smooth experience by being heavily modern (relying on passive polyfills that only run on browsers that don't support certain features) and being well optimized.
+The `@okikio/native` package achieves performance, high efficiency, and a smooth experience by being heavily modern (relying on passive polyfills to support older browsers) and being well optimized.
 
 Currently many websites rely on older code to make sure they reach as wide an audience as possible, hurting performance with large amounts of overhead.
 
-`@okikio/native` uses modern browser api's like the Web Animation API, Maps, pushState, etc.... to achieve high efficiency and performance. The browser API's can be difficult to work with, so, I developed `@okikio/manager`, `@okikio/emitter`, and `@okiko/animate` libraries to make them more managable. I developed these libraries to ensure the framework is well optimized and to avoid large ammounts of npm dependencies.
+`@okikio/native` uses modern browser api's like the Web Animation API, Maps, pushState, etc.... to achieve high efficiency and performance. The browser API's can be difficult to work with, so, I developed `@okikio/manager`, `@okikio/emitter`, and `@okiko/animate` libraries to make them more managable. I developed these libraries to ensure the framework is well optimized and to avoid large number of dependencies.
 
+*You will need a Map, Promise, fetch, and WebAnimation polyfill for older browsers. If you install `@okikio/native` via [npm](https://www.npmjs.com/package/@okikio/native) you are most likely going to need [rollup](https://rollupjs.org/) or [esbuild](https://esbuild.github.io/). You can use [polyfill.io](https://polyfill.io/), or another source to create a polyfill. The minimum feature requirement for a polyfill are Map, Promise, fetch, and WebAnimations e.g. [https://cdn.polyfill.io/v3/polyfill.min.js?features=default,es2015,es2018,Array.prototype.includes,Map,Promise,fetch,WebAnimations](https://cdn.polyfill.io/v3/polyfill.min.js?features=default,es2015,Array.prototype.includes,Object.values,es2018,Map,Promise,fetch,WebAnimations).*
 
+You can try out `@okikio/native` using Gitpod:
 
+[![Open In Gitpod](https://gitpod.io/button/open-in-gitpod.svg)](https://gitpod.io/#https://github.com/okikio/native/blob/master/packages/native/README.md)
 
-You can play with `@okikio/native` using Gitpod:
-
-
-[![Edit with Gitpod](https://gitpod.io/button/open-in-gitpod.svg)](https://gitpod.io/#https://github.com/okikio/native)
-
-_Start the dev script by typing into the terminal_
+By default Gitpod will start the dev script for you, but if you need to restart the dev script you can do so by typing into the terminal.
 
 ```bash
 pnpm demo
 ```
 
-Once Gitpod has booted up, go to the `./build folder` and start tweaking and testing to your hearts content.
-
+Once Gitpod has booted up, go to [../../build/pug/](../../build/pug/) and [../../build/ts/](../../build/ts/) and start tweaking and testing to your hearts content.
 
 ## Table of Contents
+
 - [@okikio/native](#okikionative)
   - [Table of Contents](#table-of-contents)
   - [Getting Started](#getting-started)
@@ -38,22 +36,22 @@ Once Gitpod has booted up, go to the `./build folder` and start tweaking and tes
   - [API](#api)
     - [*Types*](#types)
     - [**ManagerItem**](#manageritem)
-      - [MangerItem#manager: IAdvancedManager;](#mangeritemmanager-iadvancedmanager)
-      - [MangerItem#app: IApp;](#mangeritemapp-iapp)
-      - [MangerItem#config: ICONFIG;](#mangeritemconfig-iconfig)
-      - [MangerItem#emitter: EventEmitter;](#mangeritememitter-eventemitter)
-      - [MangerItem#key: any;](#mangeritemkey-any)
-      - [MangerItem#install(): any;](#mangeriteminstall-any)
-      - [MangerItem#register(manager: IAdvancedManager, key: any): ManagerItem;](#mangeritemregistermanager-iadvancedmanager-key-any-manageritem)
-      - [MangerItem#uninstall(): any;](#mangeritemuninstall-any)
-      - [MangerItem#unregister(manager: IAdvancedManager, key: any): any;](#mangeritemunregistermanager-iadvancedmanager-key-any-any)
+      - [MangerItem#manager: IAdvancedManager](#mangeritemmanager-iadvancedmanager)
+      - [MangerItem#app: IApp](#mangeritemapp-iapp)
+      - [MangerItem#config: ICONFIG](#mangeritemconfig-iconfig)
+      - [MangerItem#emitter: EventEmitter](#mangeritememitter-eventemitter)
+      - [MangerItem#key: any](#mangeritemkey-any)
+      - [MangerItem#install(): any](#mangeriteminstall-any)
+      - [MangerItem#register(manager: IAdvancedManager, key: any): ManagerItem](#mangeritemregistermanager-iadvancedmanager-key-any-manageritem)
+      - [MangerItem#uninstall(): any](#mangeritemuninstall-any)
+      - [MangerItem#unregister(manager: IAdvancedManager, key: any): any](#mangeritemunregistermanager-iadvancedmanager-key-any-any)
       - [Example](#example)
     - [**AdvanncedManager**](#advanncedmanager)
       - [Example](#example-1)
       - [AdvancedManager#....Manager](#advancedmanagermanager)
-      - [AdvancedManager#app: IApp;](#advancedmanagerapp-iapp)
-      - [AdvancedManager#config: ICONFIG;](#advancedmanagerconfig-iconfig)
-      - [AdvancedManager#emitter: EventEmitter;](#advancedmanageremitter-eventemitter)
+      - [AdvancedManager#app: IApp](#advancedmanagerapp-iapp)
+      - [AdvancedManager#config: ICONFIG](#advancedmanagerconfig-iconfig)
+      - [AdvancedManager#emitter: EventEmitter](#advancedmanageremitter-eventemitter)
       - [AdvancedManager#constructor(app: IApp): AdvancedManager<K, V extends ManagerItem>](#advancedmanagerconstructorapp-iapp-advancedmanagerk-v-extends-manageritem)
       - [AdvancedManager#set(key: K, value: V): AdvancedManager<K, V extends ManagerItem>](#advancedmanagersetkey-k-value-v-advancedmanagerk-v-extends-manageritem)
     - [**Service**](#service)
@@ -67,9 +65,9 @@ Once Gitpod has booted up, go to the `./build folder` and start tweaking and tes
     - [**ServiceManager**](#servicemanager)
       - [ServiceManager/#stop()/#boot()/#init(): ServiceManager](#servicemanagerstopbootinit-servicemanager)
     - [**App**](#app)
-      - [App#config: ICONFIG;](#appconfig-iconfig)
-      - [App#emitter: EventEmitter;](#appemitter-eventemitter)
-      - [App#services: ServiceManager;](#appservices-servicemanager)
+      - [App#config: ICONFIG](#appconfig-iconfig)
+      - [App#emitter: EventEmitter](#appemitter-eventemitter)
+      - [App#services: ServiceManager](#appservices-servicemanager)
       - [App#constructor(config: object = {}): App](#appconstructorconfig-object---app)
       - [App#register(config: ICONFIG = {}): App](#appregisterconfig-iconfig---app)
       - [App/#get(key: string): Service/#set(key: string, value: Service): App/#add(value: Service): App](#appgetkey-string-servicesetkey-string-value-service-appaddvalue-service-app)
@@ -104,28 +102,33 @@ Once Gitpod has booted up, go to the `./build folder` and start tweaking and tes
 
 ## Getting Started
 
-`@okikio/native` was inspired by Rezo Zero's Starting Blocks project, and barbajs. Both libraries had a major impact on the development of this project. barbajs is easy to use and elevates the experience of a site with the use of PJAX, while Starting Blocks uses modern apis to create performant but complex web experiences. This project exists as a more flexible alternative to Starting Blocks, but with the same intuitive design and experience (UX/DX) barbajs provides. The framework doesn't need PJAX to function, and best of all if PJAX is enabled it can safely switch back to normal browser controls if something goes wrong.
+[@okikio/native](https://www.skypack.dev/view/@okikio/native) was inspired by Rezo Zero's Starting Blocks project, and barbajs. Both libraries had a major impact on the development of this project. barbajs is easy to use and elevates the experience of a site with the use of PJAX, while Starting Blocks uses modern apis to create performant but complex web experiences. This project exists as a more flexible alternative to Starting Blocks, but with the same intuitive design and experience (UX/DX) barbajs provides. The framework doesn't need PJAX to function, and best of all if PJAX is enabled it can safely switch back to normal browser controls if something goes wrong.
 
-This project is called a framework but it is more like a guideline, if all you want is a simple starter project that has PJAX built in then you install the project from `npm`, but otherwise you download the project into you workspace and tweak it to match your projects needs and remove all the extra fluff you don't want (this project works best with treeshaking, you can use rollup, webpack, or esbuild for this; esbuild is preferred).
+This project is called a framework but it is more like a guideline, if all you want is a simple starter project that has PJAX built in then you install the project from [npm](https://www.npmjs.com/package/@okikio/native), but otherwise you download the project into you workspace and tweak it to match your projects needs and remove all the extra fluff you don't want (this project works best with treeshaking, you can use rollup, webpack, or esbuild for this; esbuild is preferred).
 
 This package is built for ES2020, it expects the user to use a build tool to support older versions of browsers, the idea being most people are using evergreen browsers, so, why are web developers piling on polyfill code that most users don't need.
 
 ## Installation
-You can install `@okikio/native` from `npm` via `npm i @okikio/native` or `yarn add @okikio/native`. You can use `@okikio/native` on the web via:
-* [https://unpkg.com/@okikio/native@latest/lib/api.es.js](https://unpkg.com/@okikio/native@latest/lib/api.es.js),
-* [https://cdn.skypack.dev/@okikio/native](https://cdn.skypack.dev/@okikio/native) or
-* [https://cdn.jsdelivr.net/npm/@okikio/native@latest/lib/api.es.js](https://cdn.jsdelivr.net/npm/@okikio/native@latest/lib/api.es.js).
+
+You can install [@okikio/native](https://www.skypack.dev/view/@okikio/native) from [npm](https://www.npmjs.com/package/@okikio/native) via `npm i @okikio/native`, `pnpm i @okikio/native` or `yarn add @okikio/native`.
+
+You can use `@okikio/native` on the web via:
+
+- [https://unpkg.com/@okikio/native/lib/api.es.js](https://unpkg.com/@okikio/native/lib/api.es.js),
+- [https://cdn.skypack.dev/@okikio/native](https://cdn.skypack.dev/@okikio/native) or
+- [https://cdn.jsdelivr.net/npm/@okikio/native/lib/api.es.js](https://cdn.jsdelivr.net/npm/@okikio/native/lib/api.es.js).
 
 Once installed it can be used like this:
-```javascript
+
+```typescript
 import { App, PJAX } from "@okikio/native";
-import { App, PJAX } from "https://unpkg.com/@okikio/native@latest/lib/api.es.js";
-import { App, PJAX } from "https://cdn.jsdelivr.net/npm/@okikio/native@latest/lib/api.es.js";
+import { App, PJAX } from "https://unpkg.com/@okikio/native/lib/api.es.js";
+import { App, PJAX } from "https://cdn.jsdelivr.net/npm/@okikio/native/lib/api.es.js";
 // Or
 import { App, PJAX } from "https://cdn.skypack.dev/@okikio/native";
 
 // Via script tag
-<script src="https://unpkg.com/@okikio/native@latest/lib/api.js"></script>
+<script src="https://unpkg.com/@okikio/native/lib/api.js"></script>
 // Do note, on the web you need to do this, if you installed it via the script tag:
 const { App, PJAX } = window.native;
 ```
@@ -134,30 +137,32 @@ const { App, PJAX } = window.native;
 
 Located in [./build](https://github.com/okikio/native/tree/master/build), you will find multiple build files that can help you create your setup. The [./pug folder](https://github.com/okikio/native/tree/master/build/pug) contains [pug](https://pugjs.org/api/getting-started.html) files that format my html in a clean and clear way. The [./sass folder](https://github.com/okikio/native/tree/master/build/sass) contains [scss](https://sass-lang.com/guide) files that allow for modern css without the need of polyfills. The [./ts folder](https://github.com/okikio/native/tree/master/build/ts) contains [typescript](https://www.typescriptlang.org/) files that the framework runs on; typescript is used, because Intellisense is better with typescript. Outside the build folder, the [gulpfile.js](https://github.com/okikio/native/tree/master/gulpfile.js) file, is part of my [gulp](https://gulpjs.com/) config, and is the tool I use to build the demo, for your project other tools should also work, with some amoount of work. Explore the files stated above to learn how to get started.
 
-
 > [View the Demo  &#8594;](https://okikio.github.io/native/demo/)
 
-
 ## API
+
 `@okikio/native` has `5` base classes and `5` project classes, the base classes are:
-* `ManagerItem`
-* `AdvanncedManager`
-* `Service`
-* `ServiceManager`
-* `App`
+
+- `ManagerItem`
+- `AdvanncedManager`
+- `Service`
+- `ServiceManager`
+- `App`
 
 While the `5` project classes are:
-* `HistoryManager`
-* `TransitionManager`
-* `PageManager/Page`
-* `PJAX`
-* `Router`
+
+- `HistoryManager`
+- `TransitionManager`
+- `PageManager/Page`
+- `PJAX`
+- `Router`
 
 Project classes are optional and are based on the type of project you are creating, if they are not used, tree shaking using `rollup`, `webpack`, or `esbuild` should get rid of them.
 
 The `5 base classes` are mandatory classes that are built into the framework (tree shaking won't be able to get rid of them).
 
 *Note: all classes that aren't base classes are `Service`'s, or they extend the `Service` class in some way.*
+
 ### *Types*
 
 Many typescript types are used in the docs, for more info about these types go to [./@types](https://github.com/okikio/native/tree/master/packages/native/@types).
@@ -170,8 +175,9 @@ Many typescript types are used in the docs, for more info about these types go t
 
 *Note: when working with WebWorkers don't use more than one or 2 at a time, I have found that two is the maximum that lower end hardware can safely use with max performance.*
 
-#### MangerItem#manager: IAdvancedManager;
-```ts
+#### MangerItem#manager: IAdvancedManager
+
+```typescript
 MangerItem.prototype.manager: IAdvancedManager;
 
 /**
@@ -182,8 +188,9 @@ MangerItem.prototype.manager: IAdvancedManager;
  */
 ```
 
-#### MangerItem#app: IApp;
-```ts
+#### MangerItem#app: IApp
+
+```typescript
 MangerItem.prototype.app: IApp;
 
 /**
@@ -193,8 +200,9 @@ MangerItem.prototype.app: IApp;
  */
 ```
 
-#### MangerItem#config: ICONFIG;
-```ts
+#### MangerItem#config: ICONFIG
+
+```typescript
 MangerItem.prototype.config: ICONFIG;
 
 /**
@@ -204,8 +212,9 @@ MangerItem.prototype.config: ICONFIG;
  */
 ```
 
-#### MangerItem#emitter: EventEmitter;
-```ts
+#### MangerItem#emitter: EventEmitter
+
+```typescript
 MangerItem.prototype.emitter: EventEmitter;
 
 /**
@@ -215,8 +224,9 @@ MangerItem.prototype.emitter: EventEmitter;
  */
 ```
 
-#### MangerItem#key: any;
-```ts
+#### MangerItem#key: any
+
+```typescript
 MangerItem.prototype.key: any;
 
 /**
@@ -226,8 +236,9 @@ MangerItem.prototype.key: any;
  */
 ```
 
-#### MangerItem#install(): any;
-```ts
+#### MangerItem#install(): any
+
+```typescript
 MangerItem.prototype.install(): any;
 
 /**
@@ -237,8 +248,9 @@ MangerItem.prototype.install(): any;
  */
 ```
 
-#### MangerItem#register(manager: IAdvancedManager, key: any): ManagerItem;
-```ts
+#### MangerItem#register(manager: IAdvancedManager, key: any): ManagerItem
+
+```typescript
 MangerItem.prototype.register(manager: IAdvancedManager, key: any): ManagerItem;
 
 /**
@@ -250,8 +262,9 @@ MangerItem.prototype.register(manager: IAdvancedManager, key: any): ManagerItem;
  */
 ```
 
-#### MangerItem#uninstall(): any;
-```ts
+#### MangerItem#uninstall(): any
+
+```typescript
 MangerItem.prototype.uninstall(): any;
 
 /**
@@ -261,8 +274,9 @@ MangerItem.prototype.uninstall(): any;
  */
 ```
 
-#### MangerItem#unregister(manager: IAdvancedManager, key: any): any;
-```ts
+#### MangerItem#unregister(manager: IAdvancedManager, key: any): any
+
+```typescript
 MangerItem.prototype.unregister(): any;
 
 /**
@@ -273,7 +287,8 @@ MangerItem.prototype.unregister(): any;
 ```
 
 #### Example
-```ts
+
+```typescript
 import { App, AdvancedManager, ManagerItem } from "@okikio/native";
 
 const app = new App();
@@ -317,7 +332,8 @@ The `AdvancedManager` class is an extention of the `Manager` class (`AdvancedMan
 For example, `AdvancedManager` can give access to the `App` classes `ServiceManager` to a `ManagerItem` from another `AdvancedManager`, allowing a `ManagerItem` to access `Service`'s running on the `App` inside `ServiceManager` (say that 5 time fast, 😂).
 
 #### Example
-```ts
+
+```typescript
 import { AdvancedManager, ManagerItem, Service } from "@okikio/native";
 const app = new App();
 const manager = new AdvancedManager(app);
@@ -339,11 +355,14 @@ console.log(_item); // => ManagerItem { ... }
 console.log(_item.key); // => "item"
 console.log(item.key); // => "item"
 ```
+
 #### AdvancedManager#....Manager#
+
 All the properties and methods of the `Manager` class, read [@okikio/manager's README](../manager/README.md) to learn more.
 
-#### AdvancedManager#app: IApp;
-```ts
+#### AdvancedManager#app: IApp
+
+```typescript
 AdvancedManager.prototype.app: IApp;
 
 /**
@@ -353,8 +372,9 @@ AdvancedManager.prototype.app: IApp;
  */
 ```
 
-#### AdvancedManager#config: ICONFIG;
-```ts
+#### AdvancedManager#config: ICONFIG
+
+```typescript
 AdvancedManager.prototype.config: ICONFIG;
 
 /**
@@ -364,8 +384,9 @@ AdvancedManager.prototype.config: ICONFIG;
  */
 ```
 
-#### AdvancedManager#emitter: EventEmitter;
-```ts
+#### AdvancedManager#emitter: EventEmitter
+
+```typescript
 AdvancedManager.prototype.emitter: EventEmitter;
 
 /**
@@ -376,7 +397,8 @@ AdvancedManager.prototype.emitter: EventEmitter;
 ```
 
 #### AdvancedManager#constructor(app: IApp): AdvancedManager<K, V extends ManagerItem>
-```ts
+
+```typescript
 AdvancedManager.prototype.constructor(app: IApp): AdvancedManager<K, V extends ManagerItem>;
 new AdvancedManager(app: IApp): AdvancedManager<K, V extends ManagerItem>;
 
@@ -386,7 +408,8 @@ new AdvancedManager(app: IApp): AdvancedManager<K, V extends ManagerItem>;
 ```
 
 #### AdvancedManager#set(key: K, value: V): AdvancedManager<K, V extends ManagerItem>
-```ts
+
+```typescript
 AdvancedManager.prototype.set(key: K, value: V): AdvancedManager<V extends ManagerItem>;
 
 /**
@@ -402,8 +425,8 @@ The example above should also work to explain how to use the `AdvancedManager` A
 
 *Note: `ServiceManager` extends `AdvancedManager`, so all the properties and methods present, will also work on `ServiceManager`.*
 
-
 ### **Service**
+
 `Service` does everything, it is what enables, `PJAX`, `HistoryManager`, `Router`, `PageManager`, and `TransitionManager` to function, even though they are seperate from the `App` class.
 
 `Service` is an extention of `ManagerItem`, that adds extra life-cycle methods for controlling specific kinds of actions that require js.
@@ -411,6 +434,7 @@ The example above should also work to explain how to use the `AdvancedManager` A
 The life-cycle methods of a `Service` are register(), install(), init(), boot(), initEvents(), stop(), stopEvents(), uninstall(), and unregister().
 
 #### *Life-cycle*
+
 Here is a diagram that may aid in your understanding.
 [![Life Cycle Diagram](https://raw.githubusercontent.com/okikio/native/master/packages/native/assets/lifecycle.png)](https://github.com/okikio/native/tree/master/packages/native/assets/lifecycle.png)
 
@@ -425,7 +449,8 @@ To stop the `Service`'s the `SeviceManager` calls the `stop()` method for all `S
 *Note: all classes that aren't base classes are `Service`'s, or they extend the `Service` class in some way.*
 
 #### Service#init(...args: any): any
-```ts
+
+```typescript
 Service.prototype.init(...args: any): any;
 
 /**
@@ -437,7 +462,8 @@ Service.prototype.init(...args: any): any;
 ```
 
 #### Service#boot(...args: any): any
-```ts
+
+```typescript
 Service.prototype.boot(...args: any): any;
 
 /**
@@ -450,7 +476,8 @@ Service.prototype.boot(...args: any): any;
 ```
 
 #### Service#initEvents(): void
-```ts
+
+```typescript
 Service.prototype.initEvents(): void;
 
 /**
@@ -459,7 +486,8 @@ Service.prototype.initEvents(): void;
 ```
 
 #### Service#stopEvents(): void
-```ts
+
+```typescript
 Service.prototype.stopEvents(): void;
 
 /**
@@ -468,7 +496,8 @@ Service.prototype.stopEvents(): void;
 ```
 
 #### Service#stop(): void
-```ts
+
+```typescript
 Service.prototype.stop(): void;
 
 /**
@@ -477,11 +506,11 @@ Service.prototype.stop(): void;
  */
 ```
 
-
-
 #### Example
+
 To create a new `Service` you have to extend the `Service` class, like, so,
-```ts
+
+```typescript
 import { Service, App, animate } from "@okikio/native";
 
 // Imagine a DIV element with the class name of ".div" exists in the DOM
@@ -536,12 +565,13 @@ app.add(new Move());
 app.boot();
 ```
 
-
 ### **ServiceManager**
+
 The `ServiceManager` controls the life-cycle of all `Service`'s in an `App`. It extends the `AdvancedManager`, so it gains all the abilities, methods, and properties of the `AdvancedManager`, and extends them with some new methods namely `init()`, `boot()`, and `stop()`, they are basically glorified for loops that call the corresponding methods with the same name for all `Service`'s (since all `Services` have these methods).
 
 #### ServiceManager/#stop()/#boot()/#init(): ServiceManager
-```ts
+
+```typescript
 // I didn't bother creating multiple different sections, since they are really simple
 Service.prototype.stop(): ServiceManager;
 Service.prototype.boot(): ServiceManager;
@@ -554,6 +584,7 @@ Service.prototype.init(): ServiceManager;
 ```
 
 ### **App**
+
 The `App` class starts the entire process, it controls all managers and services, nothing will and can happen without the `App` class (it's pretty important).
 
 The `App` is where most/all of the configuration for a project will occur. To change the config for a `Service` use the same name for the property you are trying to change,
@@ -561,8 +592,9 @@ e.g. If you are trying to change the `PageManager`'s max number of pages, use th
 
 *On a side note: on `App` boot, the `App` starts listenining for the document DOMContentLoaded event, if it is emitted, the `App` "READY" and "ready" events are emitted as well.*
 
-#### App#config: ICONFIG;
-```ts
+#### App#config: ICONFIG
+
+```typescript
 App.prototype.config: ICONFIG;
 
 /**
@@ -588,8 +620,9 @@ App.prototype.config: ICONFIG;
  */
 ```
 
-#### App#emitter: EventEmitter;
-```ts
+#### App#emitter: EventEmitter
+
+```typescript
 App.prototype.emitter: EventEmitter;
 
 /**
@@ -599,8 +632,9 @@ App.prototype.emitter: EventEmitter;
  */
 ```
 
-#### App#services: ServiceManager;
-```ts
+#### App#services: ServiceManager
+
+```typescript
 App.prototype.services: ServiceManager;
 
 /**
@@ -611,7 +645,8 @@ App.prototype.services: ServiceManager;
 ```
 
 #### App#constructor(config: object = {}): App
-```ts
+
+```typescript
 App.prototype.constructor(config: object = {}): App;
 new App(config: object = {}): App;
 
@@ -623,7 +658,8 @@ new App(config: object = {}): App;
 ```
 
 #### App#register(config: ICONFIG = {}): App
-```ts
+
+```typescript
 App.prototype.register(config: ICONFIG = {}): App;
 
 /**
@@ -636,7 +672,8 @@ App.prototype.register(config: ICONFIG = {}): App;
 ```
 
 #### App/#get(key: string): Service/#set(key: string, value: Service): App/#add(value: Service): App
-```ts
+
+```typescript
 // Aliases to the ServiceManager methods of the same name
 // The act on the App's ServiceManager instance
 App.prototype.get(key: string): Service;
@@ -653,7 +690,8 @@ App.prototype.add(value: Service): App;
 ```
 
 #### App#boot(): App
-```ts
+
+```typescript
 App.prototype.boot(): App;
 
 /**
@@ -666,7 +704,8 @@ App.prototype.boot(): App;
 ```
 
 #### App#stop(): App
-```ts
+
+```typescript
 App.prototype.stop(): App;
 
 /**
@@ -677,7 +716,8 @@ App.prototype.stop(): App;
 ```
 
 #### App#on/off(events: EventInput, callback?: ListenerCallback): App
-```ts
+
+```typescript
 App.prototype.on(events: EventInput, callback?: ListenerCallback): App;
 App.prototype.off(events: EventInput, callback?: ListenerCallback): App;
 
@@ -692,7 +732,8 @@ App.prototype.off(events: EventInput, callback?: ListenerCallback): App;
 ```
 
 #### App#emit(events: string | any[], ...args: any): App
-```ts
+
+```typescript
 App.prototype.emit(events: string | any[], ...args: any): App;
 
 /**
@@ -705,7 +746,8 @@ App.prototype.emit(events: string | any[], ...args: any): App;
 ```
 
 #### Example
-```ts
+
+```typescript
 import { Service, App, animate } from "@okikio/native";
 
 let el = document.querySelector(".div");
@@ -816,16 +858,18 @@ app.emitter.on("app-stop", finish);
 ---
 
 These are the the `5` base classes as stated above, but there are also `5` project based classes, namely:
-* `HistoryManager`
-* `TransitionManager`
-* `PageManager/Page`
-* `PJAX`
-* `Router`
+
+- `HistoryManager`
+- `TransitionManager`
+- `PageManager/Page`
+- `PJAX`
+- `Router`
 
 These classes are all `Services`, but they have very specific names, so when using them make sure to use the names specified above as their keys in `app.set("...", ...)`.
 
 E.g.
-```ts
+
+```typescript
 // ...
 app.set("TransitionManager", new TransitionManager(/* ... */));
 app.set("HistoryManager", new HistoryManager());
@@ -839,10 +883,12 @@ app.set("PJAX", new PJAX());
 ```
 
 ### **HistoryManager**
+
 `HistoryManager` is a `Service` that keeps a record of the history of the `App`; it stores only the states of pages. A state represents the current status of a page, consisting of properties like: url, transition, and data. `HistoryManager` is an extention of the `Service` class.
 
 #### HistoryManager#states: IState[]
-```ts
+
+```typescript
 HistoryManager.prototype.states: IState[];
 
 /**
@@ -853,7 +899,8 @@ HistoryManager.prototype.states: IState[];
 ```
 
 #### HistoryManager#pointer: number
-```ts
+
+```typescript
 HistoryManager.prototype.pointer: number;
 
 /**
@@ -864,7 +911,8 @@ HistoryManager.prototype.pointer: number;
 ```
 
 #### HistoryManager#init(): void
-```ts
+
+```typescript
 HistoryManager.prototype.init(): void;
 
 /**
@@ -873,7 +921,8 @@ HistoryManager.prototype.init(): void;
 ```
 
 #### HistoryManager#get(index: number): IState
-```ts
+
+```typescript
 HistoryManager.prototype.get(index: number): IState;
 
 /**
@@ -885,7 +934,8 @@ HistoryManager.prototype.get(index: number): IState;
 ```
 
 #### HistoryManager#add(value?: IState, historyAction: "replace" | "push" = "push"): HistoryManager
-```ts
+
+```typescript
 HistoryManager.prototype.add(value?: IState, historyAction: "replace" | "push" = "push"): HistoryManager;
 
 /**
@@ -898,7 +948,8 @@ HistoryManager.prototype.add(value?: IState, historyAction: "replace" | "push" =
 ```
 
 #### HistoryManager#remove(index?: number): HistoryManager
-```ts
+
+```typescript
 HistoryManager.prototype.remove(index?: number): HistoryManager;
 
 /**
@@ -910,7 +961,8 @@ HistoryManager.prototype.remove(index?: number): HistoryManager;
 ```
 
 #### HistoryManager#replace(newStates: IState[]): HistoryManager
-```ts
+
+```typescript
 HistoryManager.prototype.replace(newStates: IState[]): HistoryManager;
 
 /**
@@ -922,7 +974,8 @@ HistoryManager.prototype.replace(newStates: IState[]): HistoryManager;
 ```
 
 #### HistoryManager#set(i: number, state: IState): IState
-```ts
+
+```typescript
 HistoryManager.prototype.set(i: number, state: IState): IState;
 
 /**
@@ -935,7 +988,8 @@ HistoryManager.prototype.set(i: number, state: IState): IState;
 ```
 
 #### HistoryManager#current: IState
-```ts
+
+```typescript
 HistoryManager.prototype.current: IState;
 
 /**
@@ -946,7 +1000,8 @@ HistoryManager.prototype.current: IState;
 ```
 
 #### HistoryManager#last: IState
-```ts
+
+```typescript
 HistoryManager.prototype.last: IState;
 
 /**
@@ -957,7 +1012,8 @@ HistoryManager.prototype.last: IState;
 ```
 
 #### HistoryManager#previous: IState | null
-```ts
+
+```typescript
 HistoryManager.prototype.previous: IState | null;
 
 /**
@@ -968,7 +1024,8 @@ HistoryManager.prototype.previous: IState | null;
 ```
 
 #### HistoryManager#length: number
-```ts
+
+```typescript
 HistoryManager.prototype.length: number;
 
 /**
@@ -979,7 +1036,8 @@ HistoryManager.prototype.length: number;
 ```
 
 #### #newCoords(x: number = window.scrollX, y: number = window.scrollY): ICoords
-```ts
+
+```typescript
 newCoords(x: number = window.scrollX, y: number = window.scrollY): ICoords;
 
 /**
@@ -992,15 +1050,16 @@ newCoords(x: number = window.scrollX, y: number = window.scrollY): ICoords;
 ```
 
 #### #newState(state: IState): IState
-```ts
+
+```typescript
 newState(state: IState = {
-	url: getHashedPath(newURL()),
-	index: 0,
-	transition: "default",
-	data: {
-		scroll: newCoords(),
-		trigger: "HistoryManager"
-	}
+ url: getHashedPath(newURL()),
+ index: 0,
+ transition: "default",
+ data: {
+  scroll: newCoords(),
+  trigger: "HistoryManager"
+ }
 }): IState;
 
 /**
@@ -1020,7 +1079,8 @@ newState(state: IState = {
 ```
 
 #### #changeState(action: "push" | "replace", state: IState, item: object): void
-```ts
+
+```typescript
 changeState(action: "push" | "replace", state: IState, item: object): void;
 
 /**
@@ -1033,9 +1093,10 @@ changeState(action: "push" | "replace", state: IState, item: object): void;
 ```
 
 #### Example
+
 The `HistoryManager` methods aren't really meant to be used, you are just supposed to create a new instance of the `HistoryManager` and attach it to the app.
 
-```ts
+```typescript
 // ...
 app.set("HistoryManager", new HistoryManager());
 // ...
@@ -1045,7 +1106,7 @@ app.set("HistoryManager", new HistoryManager());
 
 This example is the go() method for the `PJAX` service.
 
-```ts
+```typescript
 // ...
 go({
     href,
@@ -1138,8 +1199,10 @@ go({
 ---
 
 ### **TransitionManager**
+
 As the name implies it controls the transitions between pages (there can be many differing transition animations). By default the `TransitionManager` has a simple replace transition with no animation and that supports hashes. To understand the `TransitionManager` you have to first understand how to instantiate it. To instantiate the `TransitionManager`,
-```ts
+
+```typescript
 // ...
 // If no parameters are present the TransitionManager will just use the default transition (the default transition can be overridden)
 const transitionManager = new TransitionManager();
@@ -1206,7 +1269,8 @@ const transitionManager = new TransitionManager([
 The `TransitionManager` accepts transitions from both the `App` config as well as the arguments it was instantiated with, but by default it will prefer the arguments it was instantiated with (do note the config proerty is `transitions: [....]`).
 
 For example,
-```ts
+
+```typescript
 // ...
 // You can declare transitions as an Array of [key, value] arrays in the parameter (similar to Maps), if you set the key to "default", it will replace the default transition
 
@@ -1277,7 +1341,8 @@ app.set("TransitionManager", TransitionManager);
 A transition is an object with some methods and properties pre-defined to control page transition animation.
 
 It looks like this:
-```ts
+
+```typescript
 // ...
 const Fade = {
     // This is required to let PJAX, know that this transition can also handle scrolling automatically, but if your transition doesn't need to handle scroll then it's not needed
@@ -1448,6 +1513,7 @@ Pjax stands for [pushState + Ajax](https://github.com/defunkt/jquery-pjax), with
 To use the `PJAX` `Service` all the pages must follow a similar layout with the same js, and css. Above all every page must have a wrapper element, this is indicated by the `data-wrapper` attribute (the attribute can be changed in the `App` config using the property `wrapperAttr`).
 
 For example:
+
 ```html
 <body>
     <!-- Content Before e.g. navbar, header, style, etc... -->
@@ -1474,23 +1540,24 @@ First, it will collect information like the transition to use, which comes from 
 
 Secondly, `PJAX` loads and builds the pages required (both the old and new page) using the `PageManager` (the "NAVIGATION_START" event is fired at around this point). While the pages are loading, the "PAGE_LOADING" event is fired. Once the page loading has finished the "PAGE_LOAD_COMPLETE" event is fired.
 
-
 Lastly, `PJAX` loads the required transition from the `TransitionManager` and then starts it (the "TRANSITION_START" event is fired at around this point). If the `PJAX.prototype.stickScroll` property is set to true (it can be changed by the `App`'s config with a property of the same name) the transitions will receive the scroll coords of the previous page and scroll to that point. If the `PJAX.prototype.ignoreHashAction` property is set to true (it can be changed by the `App`'s config with a property of the same name) `PJAX` will ignore hash scrolling.  If the `PJAX.prototype.forceOnError` is true, as it sounds it will force a page switch via the browsers normal methods (it can be changed by the `App`'s config with a property of the same name).After all this the "TRANSITION_END" and "NAVIGATION_END" events are fired.
 
 During the transition this events will be called in this order:
-* "BEFORE_TRANSITION_OUT" - Before transitioning the old page out
-* "AFTER_TRANSITION_OUT" - After transitioning the old page out
-* "CONTENT_INSERT" - After the new page gets added to the DOM
-* "CONTENT_REPLACED" - After the new page has replace the old page (the old page has been removed from the DOM)
-* "BEFORE_TRANSITION_IN" - Before transitioning the new page in
-* "AFTER_TRANSITION_IN" - After transitioning the new page in
+
+- "BEFORE_TRANSITION_OUT" - Before transitioning the old page out
+- "AFTER_TRANSITION_OUT" - After transitioning the old page out
+- "CONTENT_INSERT" - After the new page gets added to the DOM
+- "CONTENT_REPLACED" - After the new page has replace the old page (the old page has been removed from the DOM)
+- "BEFORE_TRANSITION_IN" - Before transitioning the new page in
+- "AFTER_TRANSITION_IN" - After transitioning the new page in
 
 When a user moves backward or forward in page history the window popstate event gets triggered. First, `PJAX` determines the direction backward or forward. Then it emits the "POPSTATE" event, depending on the direction a "POPSTATE_BACK" or a "POPSTATE_FORWARD" event gets fired. The `HistoryManager` then replaces the current state with either the previous or next pages state. Using a similar process to when a user clicks an anchor the rest of the process follows.
 
 To use `PJAX` is just a simple create a new instance, ensure `HistoryManager`, `PageManager`, and `TransitionManager` are present and accounted for and everything is golden.
 
 For example:
-```ts
+
+```typescript
 // ...
 app
     .set("HistoryManager", new HistoryManager())
@@ -1507,9 +1574,10 @@ app
 ```
 
 ### **Router**
+
 The `Router` service uses a list of objects called IRoute which complete certain actions when route paths match the current url, or when moving from one url to another.
 
-```ts
+```typescript
 IRoute {
     path: {
         to: string | RegExp | boolean,
@@ -1520,7 +1588,8 @@ IRoute {
 ```
 
 To add a new IRoute,
-```ts
+
+```typescript
 // ...
 const router = new Router([
     // You can the routes here as well
@@ -1553,11 +1622,12 @@ router.add({
 // ...
 ```
 
-
 ## Contributing
+
 If there is something I missed, a mistake, or a feature you would like added please create an issue or a pull request and I'll try to get to it.
 
 *The `native` project uses [Conventional Commits](https://www.conventionalcommits.org/en/v1.0.0/) as the style of commit, we even use the [Commitizen CLI](http://commitizen.github.io/cz-cli/) to make commits easier.*
 
 ## Licence
+
 See the [LICENSE](./LICENSE) file for license rights and limitations (MIT).
