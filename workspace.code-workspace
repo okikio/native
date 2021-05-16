@@ -23,6 +23,11 @@
 	],
 	"settings": {
 		"conventionalCommits.scopes": [
+			"root",
+			"@okikio/manager",
+			"@okikio/emitter",
+			"@okikio/animate",
+			"@okikio/native",
 			"demo",
 			"gulp"
 		]
