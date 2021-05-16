@@ -22,28 +22,28 @@
 
 The `native` project repo is a monorepo with 4 smaller packages within it, they are:
 
-### [@okikio/manager](./packages/manager/)
+### [@okikio/manager](./packages/manager#readme)
 
 The Map class is the most efficient way to handle large amounts of controlled data, but it has some inconvient quirks that would be annoying to handle, so I built this package to avoid some of it's quirks and introduce new features.
 
 _Note: you can install it as a seperate package from the rest of the `@okikio/native` framework._
 [Read more...](./packages/manager/README.md)
 
-### [@okikio/emitter](./packages/emitter/)
+### [@okikio/emitter](./packages/emitter#readme)
 
 A small Event Emitter written in typescript with performance and ease of use in mind. It's pretty self explanitory, there are millions of event emitters like this one, the only difference is that this one is optimized for use in the `@okikio/native` framework.
 
 _Note: you can install it as a seperate package from the rest of the `@okikio/native` framework._
 [Read more...](./packages/emitter/README.md)
 
-### [@okikio/animate](./packages/animate/)
+### [@okikio/animate](./packages/animate#readme)
 
 A truly native animation library that takes full advantage of the Web Animation API to create amazingly pollished experiences on all devices. To future proof animation in an easy to use and effiecient manner, I built this library as a light wrapper around the Web Animation API, that takes on conventional means for creating animation today, allowing developers to get started with modern animation today.
 
 _Note: you can install it as a seperate package from the rest of the `@okikio/native` framework._
 [Read more...](./packages/animate/README.md)
 
-### [@okikio/native](./packages/native/)
+### [@okikio/native](./packages/native#readme)
 
 `@okikio/native` is the framework component of the `native` initiative, it bundles all the other packages into iteself. This package encourages the user to download/copy-and-paste the code into their development enviroment of choice, and tweak it to match their projects needs.
 [Read more...](./packages/native/README.md)
