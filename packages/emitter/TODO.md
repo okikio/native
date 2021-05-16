@@ -2,5 +2,5 @@
 
 * [x] Update README.md
 * [x] Create TODO.md
-* [ ] Make files faster and smaller 
-* [ ] Support Event Listener argument intellisense via Typescript
+* [x] Make files faster and smaller
+* [x] Support Event Listener arguments intellisense via Typescript
