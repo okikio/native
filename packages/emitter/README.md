@@ -1,27 +1,23 @@
 # @okikio/emitter
 
-A small Event Emitter written in typescript with performance and ease of use in mind, it weighs ~800 B (minified and compressed).
+A small Event Emitter written in typescript with performance and ease of use in mind, it weighs ~810 B (minified and gzipped).
 
-*You will need a Map polyfill for older browsers. If you install `@okikio/emitter` via `npm` you are most likely going to need [rollup](https://rollupjs.org/) or [esbuild](https://esbuild.github.io/). You can use [polyfill.io](https://polyfill.io/), or another source to create a polyfill. The minimum feature requirement for a polyfill are Maps e.g. [https://polyfill.io/v3/polyfill.min.js?features=Maps](https://polyfill.io/v3/polyfill.min.js?features=Maps).*
+*You will need a Map and Promise polyfill for older browsers. If you install `@okikio/emitter` via [npm](https://www.npmjs.com/package/@okikio/emitter) you are most likely going to need [rollup](https://rollupjs.org/) or [esbuild](https://esbuild.github.io/). You can use [polyfill.io](https://polyfill.io/), or another source to create a polyfill. The minimum feature requirement for a polyfill are Maps and Promises e.g. [https://polyfill.io/v3/polyfill.min.js?features=Promise,Map](https://polyfill.io/v3/polyfill.min.js?features=Promise,Map).*
 
+You can try out `@okikio/emitter` using Gitpod:
 
+[![Open In Gitpod](https://gitpod.io/button/open-in-gitpod.svg)](https://gitpod.io/#https://github.com/okikio/native/blob/master/packages/emitter/README.md)
 
-
-You can play with `@okikio/emitter` using Gitpod:
-
-
-[![Edit with Gitpod](https://gitpod.io/button/open-in-gitpod.svg)](https://gitpod.io/#https://github.com/okikio/native)
-
-_Start the dev script by typing into the terminal_
+By default Gitpod will start the dev script for you, but if you need to restart the dev script you can do so by typing into the terminal.
 
 ```bash
 pnpm test-dev --filter "@okikio/emitter"
 ```
 
-Once Gitpod has booted up, go to [`./packages/emitter/test/test.ts`](https://github.com/okikio/native/tree/master/packages/emitter/tests/test.ts) and start tweaking and testing to your hearts content.
-
+Once Gitpod has booted up, go to [./tests/test.ts](./tests/test.ts) and start tweaking and testing to your hearts content.
 
 ## Table of Contents
+
 - [@okikio/emitter](#okikioemitter)
   - [Table of Contents](#table-of-contents)
   - [Installation](#installation)
@@ -29,37 +25,42 @@ Once Gitpod has booted up, go to [`./packages/emitter/test/test.ts`](https://git
   - [API](#api)
       - [EventEmitter#on(events, callback, scope) & EventEmitter#emit(events, ...args)](#eventemitteronevents-callback-scope--eventemitteremitevents-args)
       - [EventEmitter#off(events, callback, scope)](#eventemitteroffevents-callback-scope)
+      - [EventEmitter#once(events, callback, scope)](#eventemitteronceevents-callback-scope)
   - [Contributing](#contributing)
   - [Licence](#licence)
 
-
 ## Installation
-You can install `@okikio/emitter` from `npm` via `npm i @okikio/emitter` or `yarn add @okikio/emitter`. You can use `@okikio/emitter` on the web via:
-* [https://unpkg.com/@okikio/emitter@latest/lib/api.es.js](https://unpkg.com/@okikio/emitter@latest/lib/api.es.js),
-* [https://cdn.skypack.dev/@okikio/emitter](https://cdn.skypack.dev/@okikio/emitter) or
-* [https://cdn.jsdelivr.net/npm/@okikio/emitter@latest/lib/api.es.js](https://cdn.jsdelivr.net/npm/@okikio/emitter@latest/lib/api.es.js).
+
+You can install [@okikio/emitter](https://www.skypack.dev/view/@okikio/emitter) from [npm](https://www.npmjs.com/package/@okikio/emitter) via `npm i @okikio/emitter`, `pnpm i @okikio/emitter` or `yarn add @okikio/emitter`.
+
+You can use `@okikio/emitter` on the web via:
+
+- [https://unpkg.com/@okikio/emitter/lib/api.es.js](https://unpkg.com/@okikio/emitter@latest/lib/api.es.js),
+- [https://cdn.skypack.dev/@okikio/emitter](https://cdn.skypack.dev/@okikio/emitter) or
+- [https://cdn.jsdelivr.net/npm/@okikio/emitter/lib/api.es.js](https://cdn.jsdelivr.net/npm/@okikio/emitter/lib/api.es.js).
 
 Once installed it can be used like this:
-```javascript
+
+```typescript
 import { EventEmitter } from "@okikio/emitter";
-import { EventEmitter } from "https://unpkg.com/@okikio/emitter@latest/lib/api.es.js";
-import { EventEmitter } from "https://cdn.jsdelivr.net/npm/@okikio/emitter@latest/lib/api.es.js";
+import { EventEmitter } from "https://unpkg.com/@okikio/emitter/lib/api.es.js";
+import { EventEmitter } from "https://cdn.jsdelivr.net/npm/@okikio/emitter/lib/api.es.js";
 // Or
 import { EventEmitter } from "https://cdn.skypack.dev/@okikio/emitter";
 
 // Via script tag
-<script src="https://unpkg.com/@okikio/emitter@latest/lib/api.js"></script>
+<script src="https://unpkg.com/@okikio/emitter/lib/api.js"></script>
 // Do note, on the web you need to do this, if you installed it via the script tag:
-const { default: EventEmitter } = window.emitter;
+const { EventEmitter } = window.emitter;
 ```
 
 ## Getting started
 
 The `EventEmitter` class is what runs the show for the `@okikio/emitter` library. To use it properly you need to create a new instance of `EventEmitter`, the instance of `EventEmitter` is what allows for event emitting, and listening.
 
-`EventEmitter` allows for an easy way to manage events. It inherits properties/methods from [@okiki/manager](https://www.npmjs.com/package/@okikio/manager).
+`EventEmitter` allows for an easy way to manage events. It inherits properties/methods from [@okikio/manager](https://www.npmjs.com/package/@okikio/manager).
 
-```js
+```ts
 // You need to first initialize a new Event Emitter
 const emitter = new EventEmitter();
 
@@ -78,7 +79,8 @@ setTimeout(() => {
 ## API
 
 #### EventEmitter#on(events, callback, scope) & EventEmitter#emit(events, ...args)
-```js
+
+```ts
 /**
  * Adds a listener for a given event
  *
@@ -105,7 +107,6 @@ EventEmitter.prototype.emit(events: string | Array<any>, ...args: any);
 
 // Example:
 import EventEmitter from "@okikio/emitter";
-
 const emitter = new EventEmitter();
 
 let test = false;
@@ -115,6 +116,8 @@ let on = emitter.on(
     "test",
     function (key, value) {
         test = [key, value];
+
+        // `this` comes from `obj`, since it was set as the scope of this listener
         console.log(this.bool); //= false
     },
     obj // Binds the callback to the `obj` scope
@@ -157,7 +160,7 @@ emitter.on(
         play2: fn(2),
         play3: fn(4)
     },
-    obj // Bind all callbacks to `obj` scope
+    obj // Bind all callbacks to the `obj` scope
 );
 
 // You can emit multiple events back to back
@@ -168,7 +171,8 @@ console.log(counter); //= 15
 ```
 
 #### EventEmitter#off(events, callback, scope)
-```js
+
+```ts
 EventEmitter.prototype.off(events: EventInput, callback?: ListenerCallback | object, scope?: object);
 
 /**
@@ -183,11 +187,11 @@ EventEmitter.prototype.off(events: EventInput, callback?: ListenerCallback | obj
 
 // Example:
 import EventEmitter from "@okikio/emitter";
-
 const emitter = new EventEmitter();
 
 /*
-    `EventEmitter.prototype.off(...)` literally does the same thing `EventEmitter.prototype.on(...)` does except instead of listening for Events it removes Events and Event Listeners
+    `EventEmitter.prototype.off(...)` literally does the opposite of what `EventEmitter.prototype.on(...)` does,
+    `EventEmitter.prototype.off(...)` removes Events and Event Listeners
 */
 let counter = 0, fn, scope = { bool: false };
 let on = emitter.on(
@@ -209,10 +213,66 @@ on.emit("test test1 test2"); // Nothing happens, there are no Events or listener
 console.log(counter); //= 0
 ```
 
+#### EventEmitter#once(events, callback, scope)
+
+```ts
+/**
+ * Adds a one time event listener for an event
+ *
+ * @param {EventInput} events
+ * @param {ListenerCallback | object} callback
+ * @param {object} scope
+ * @returns EventEmitter
+ * @memberof EventEmitter
+ */
+
+EventEmitter.prototype.once(events: EventInput, callback?: ListenerCallback | object, scope?: object);
+
+
+// Example:
+import EventEmitter from "@okikio/emitter";
+const emitter = new EventEmitter();
+
+/**
+ * `EventEmitter#once(...)` supports everything `EventEmitter#on(...)` supports
+ * except the event listeners can only be fired once
+ * */
+let test: boolean | any = false;
+let obj = { bool: false };
+let counter = 0;
+let on: EventEmitter = emitter.once(
+    "test test1 test2",
+    function (key, value) {
+        test = [key, value];
+        counter++;
+
+        // `this` comes from `obj`, since it was set as the scope of this listener
+        console.log(this.bool); //= false
+    },
+    obj
+);
+
+on.emit("test test1 test2", 1, "true");
+console.log(test); //= [1, "true"]
+console.log(counter); //= 3
+
+// Since event listeners registered using the `once` method can only be emitted once\
+// The second `emit` actually does nothing
+on.emit("test test1 test2", 1, "true");
+console.log(test); //= [1, "true"]
+console.log(counter); //= 3
+
+// The "test" event has no listeners registered since, they have already been removed
+console.log(on.get("test").size) //= 0
+```
+
+
 ## Contributing
+
 If there is something I missed, a mistake, or a feature you would like added please create an issue or a pull request and I'll try to get to it.
 
-*The `native` project uses [Conventional Commits](https://www.conventionalcommits.org/en/v1.0.0/) as the style of commit, we even use the [Commitizen CLI](http://commitizen.github.io/cz-cli/) to make commits easier.*
+*The `native` initiative uses [Conventional Commits](https://www.conventionalcommits.org/en/v1.0.0/) as the style of commit, we also use the [Commitizen CLI](http://commitizen.github.io/cz-cli/) to make commits easier.*
 
 ## Licence
+
 See the [LICENSE](./LICENSE) file for license rights and limitations (MIT).
