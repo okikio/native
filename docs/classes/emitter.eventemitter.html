@@ -127,8 +127,10 @@
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><a href="emitter.eventemitter.html#has" class="tsd-kind-icon">has</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><a href="emitter.eventemitter.html#keys" class="tsd-kind-icon">keys</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><a href="emitter.eventemitter.html#last" class="tsd-kind-icon">last</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="emitter.eventemitter.html#newlistener" class="tsd-kind-icon">new<wbr>Listener</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="emitter.eventemitter.html#off" class="tsd-kind-icon">off</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="emitter.eventemitter.html#on" class="tsd-kind-icon">on</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="emitter.eventemitter.html#once" class="tsd-kind-icon">once</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><a href="emitter.eventemitter.html#remove" class="tsd-kind-icon">remove</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="emitter.eventemitter.html#removelistener" class="tsd-kind-icon">remove<wbr>Listener</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><a href="emitter.eventemitter.html#set" class="tsd-kind-icon">set</a></li>
@@ -151,7 +153,7 @@
 							<aside class="tsd-sources">
 								<p>Overrides <a href="manager.manager-1.html">Manager</a>.<a href="manager.manager-1.html#constructor">constructor</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/okikio/native/blob/9199fe8/packages/emitter/src/api.ts#L32">emitter/src/api.ts:32</a></li>
+									<li>Defined in <a href="https://github.com/okikio/native/blob/5a208b9/packages/emitter/src/api.ts#L42">emitter/src/api.ts:42</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <a href="emitter.eventemitter.html" class="tsd-signature-type" data-tsd-kind="Class">EventEmitter</a></h4>
@@ -168,12 +170,12 @@
 					<aside class="tsd-sources">
 						<p>Inherited from <a href="manager.manager-1.html">Manager</a>.<a href="manager.manager-1.html#map">map</a></p>
 						<ul>
-							<li>Defined in <a href="https://github.com/okikio/native/blob/9199fe8/packages/manager/src/api.ts#L4">manager/src/api.ts:4</a></li>
+							<li>Defined in <a href="https://github.com/okikio/native/blob/5a208b9/packages/manager/src/api.ts#L9">manager/src/api.ts:9</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
 						<div class="lead">
-							<p>The complex list of named data, to which the Manager controls</p>
+							<p>For backward compatability and performance reasons Manager use Map to store data</p>
 						</div>
 					</div>
 				</section>
@@ -190,7 +192,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/okikio/native/blob/9199fe8/packages/manager/src/api.ts#L50">manager/src/api.ts:50</a></li>
+									<li>Defined in <a href="https://github.com/okikio/native/blob/5a208b9/packages/manager/src/api.ts#L55">manager/src/api.ts:55</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -212,7 +214,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/okikio/native/blob/9199fe8/packages/manager/src/api.ts#L45">manager/src/api.ts:45</a></li>
+									<li>Defined in <a href="https://github.com/okikio/native/blob/5a208b9/packages/manager/src/api.ts#L50">manager/src/api.ts:50</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -238,7 +240,7 @@
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="manager.manager-1.html">Manager</a>.<a href="manager.manager-1.html#_symbol_iterator_">[Symbol.iterator]</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/okikio/native/blob/9199fe8/packages/manager/src/api.ts#L97">manager/src/api.ts:97</a></li>
+									<li>Defined in <a href="https://github.com/okikio/native/blob/5a208b9/packages/manager/src/api.ts#L102">manager/src/api.ts:102</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -261,7 +263,7 @@
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="manager.manager-1.html">Manager</a>.<a href="manager.manager-1.html#add">add</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/okikio/native/blob/9199fe8/packages/manager/src/api.ts#L36">manager/src/api.ts:36</a></li>
+									<li>Defined in <a href="https://github.com/okikio/native/blob/5a208b9/packages/manager/src/api.ts#L41">manager/src/api.ts:41</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -290,7 +292,7 @@
 							<aside class="tsd-sources">
 								<p>Overrides <a href="manager.manager-1.html">Manager</a>.<a href="manager.manager-1.html#clear">clear</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/okikio/native/blob/9199fe8/packages/emitter/src/api.ts#L176">emitter/src/api.ts:176</a></li>
+									<li>Defined in <a href="https://github.com/okikio/native/blob/5a208b9/packages/emitter/src/api.ts#L217">emitter/src/api.ts:217</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -313,7 +315,7 @@
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="manager.manager-1.html">Manager</a>.<a href="manager.manager-1.html#delete">delete</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/okikio/native/blob/9199fe8/packages/manager/src/api.ts#L61">manager/src/api.ts:61</a></li>
+									<li>Defined in <a href="https://github.com/okikio/native/blob/5a208b9/packages/manager/src/api.ts#L66">manager/src/api.ts:66</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -341,7 +343,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/okikio/native/blob/9199fe8/packages/emitter/src/api.ts#L151">emitter/src/api.ts:151</a></li>
+									<li>Defined in <a href="https://github.com/okikio/native/blob/5a208b9/packages/emitter/src/api.ts#L193">emitter/src/api.ts:193</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -373,7 +375,7 @@
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="manager.manager-1.html">Manager</a>.<a href="manager.manager-1.html#entries">entries</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/okikio/native/blob/9199fe8/packages/manager/src/api.ts#L83">manager/src/api.ts:83</a></li>
+									<li>Defined in <a href="https://github.com/okikio/native/blob/5a208b9/packages/manager/src/api.ts#L88">manager/src/api.ts:88</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -396,7 +398,7 @@
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="manager.manager-1.html">Manager</a>.<a href="manager.manager-1.html#foreach">forEach</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/okikio/native/blob/9199fe8/packages/manager/src/api.ts#L88">manager/src/api.ts:88</a></li>
+									<li>Defined in <a href="https://github.com/okikio/native/blob/5a208b9/packages/manager/src/api.ts#L93">manager/src/api.ts:93</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -452,7 +454,7 @@
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="manager.manager-1.html">Manager</a>.<a href="manager.manager-1.html#get">get</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/okikio/native/blob/9199fe8/packages/manager/src/api.ts#L15">manager/src/api.ts:15</a></li>
+									<li>Defined in <a href="https://github.com/okikio/native/blob/5a208b9/packages/manager/src/api.ts#L20">manager/src/api.ts:20</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -480,7 +482,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/okikio/native/blob/9199fe8/packages/emitter/src/api.ts#L38">emitter/src/api.ts:38</a></li>
+									<li>Defined in <a href="https://github.com/okikio/native/blob/5a208b9/packages/emitter/src/api.ts#L48">emitter/src/api.ts:48</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -509,7 +511,7 @@
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="manager.manager-1.html">Manager</a>.<a href="manager.manager-1.html#getmap">getMap</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/okikio/native/blob/9199fe8/packages/manager/src/api.ts#L10">manager/src/api.ts:10</a></li>
+									<li>Defined in <a href="https://github.com/okikio/native/blob/5a208b9/packages/manager/src/api.ts#L15">manager/src/api.ts:15</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -532,7 +534,7 @@
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="manager.manager-1.html">Manager</a>.<a href="manager.manager-1.html#has">has</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/okikio/native/blob/9199fe8/packages/manager/src/api.ts#L78">manager/src/api.ts:78</a></li>
+									<li>Defined in <a href="https://github.com/okikio/native/blob/5a208b9/packages/manager/src/api.ts#L83">manager/src/api.ts:83</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -561,7 +563,7 @@
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="manager.manager-1.html">Manager</a>.<a href="manager.manager-1.html#keys">keys</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/okikio/native/blob/9199fe8/packages/manager/src/api.ts#L20">manager/src/api.ts:20</a></li>
+									<li>Defined in <a href="https://github.com/okikio/native/blob/5a208b9/packages/manager/src/api.ts#L25">manager/src/api.ts:25</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -584,7 +586,7 @@
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="manager.manager-1.html">Manager</a>.<a href="manager.manager-1.html#last">last</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/okikio/native/blob/9199fe8/packages/manager/src/api.ts#L55">manager/src/api.ts:55</a></li>
+									<li>Defined in <a href="https://github.com/okikio/native/blob/5a208b9/packages/manager/src/api.ts#L60">manager/src/api.ts:60</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -603,16 +605,50 @@
 					</ul>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
-					<a name="off" class="tsd-anchor"></a>
-					<h3>off</h3>
+					<a name="newlistener" class="tsd-anchor"></a>
+					<h3>new<wbr>Listener</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">off<span class="tsd-signature-symbol">(</span>events<span class="tsd-signature-symbol">: </span><a href="../modules/emitter.html#eventinput" class="tsd-signature-type" data-tsd-kind="Type alias">EventInput</a>, callback<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">object</span><span class="tsd-signature-symbol"> | </span><a href="../modules/emitter.html#listenercallback" class="tsd-signature-type" data-tsd-kind="Type alias">ListenerCallback</a>, scope<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">object</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="emitter.eventemitter.html" class="tsd-signature-type" data-tsd-kind="Class">EventEmitter</a></li>
+						<li class="tsd-signature tsd-kind-icon">new<wbr>Listener<span class="tsd-signature-symbol">(</span>name<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, callback<span class="tsd-signature-symbol">: </span><a href="../modules/emitter.html#typelistenercallback" class="tsd-signature-type" data-tsd-kind="Type alias">TypeListenerCallback</a>, scope<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">object</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="emitter.event.html" class="tsd-signature-type" data-tsd-kind="Class">Event</a></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/okikio/native/blob/9199fe8/packages/emitter/src/api.ts#L112">emitter/src/api.ts:112</a></li>
+									<li>Defined in <a href="https://github.com/okikio/native/blob/5a208b9/packages/emitter/src/api.ts#L59">emitter/src/api.ts:59</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Creates a listener and adds it to an event</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>name: <span class="tsd-signature-type">string</span></h5>
+								</li>
+								<li>
+									<h5>callback: <a href="../modules/emitter.html#typelistenercallback" class="tsd-signature-type" data-tsd-kind="Type alias">TypeListenerCallback</a></h5>
+								</li>
+								<li>
+									<h5>scope: <span class="tsd-signature-type">object</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <a href="emitter.event.html" class="tsd-signature-type" data-tsd-kind="Class">Event</a></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+					<a name="off" class="tsd-anchor"></a>
+					<h3>off</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">off<span class="tsd-signature-symbol">(</span>events<span class="tsd-signature-symbol">: </span><a href="../modules/emitter.html#typeeventinput" class="tsd-signature-type" data-tsd-kind="Type alias">TypeEventInput</a>, callback<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">object</span><span class="tsd-signature-symbol"> | </span><a href="../modules/emitter.html#typelistenercallback" class="tsd-signature-type" data-tsd-kind="Type alias">TypeListenerCallback</a>, scope<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">object</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="emitter.eventemitter.html" class="tsd-signature-type" data-tsd-kind="Class">EventEmitter</a></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/okikio/native/blob/5a208b9/packages/emitter/src/api.ts#L124">emitter/src/api.ts:124</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -623,10 +659,10 @@
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
-									<h5>events: <a href="../modules/emitter.html#eventinput" class="tsd-signature-type" data-tsd-kind="Type alias">EventInput</a></h5>
+									<h5>events: <a href="../modules/emitter.html#typeeventinput" class="tsd-signature-type" data-tsd-kind="Type alias">TypeEventInput</a></h5>
 								</li>
 								<li>
-									<h5><span class="tsd-flag ts-flagOptional">Optional</span> callback: <span class="tsd-signature-type">object</span><span class="tsd-signature-symbol"> | </span><a href="../modules/emitter.html#listenercallback" class="tsd-signature-type" data-tsd-kind="Type alias">ListenerCallback</a></h5>
+									<h5><span class="tsd-flag ts-flagOptional">Optional</span> callback: <span class="tsd-signature-type">object</span><span class="tsd-signature-symbol"> | </span><a href="../modules/emitter.html#typelistenercallback" class="tsd-signature-type" data-tsd-kind="Type alias">TypeListenerCallback</a></h5>
 								</li>
 								<li>
 									<h5><span class="tsd-flag ts-flagOptional">Optional</span> scope: <span class="tsd-signature-type">object</span></h5>
@@ -640,13 +676,13 @@
 					<a name="on" class="tsd-anchor"></a>
 					<h3>on</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">on<span class="tsd-signature-symbol">(</span>events<span class="tsd-signature-symbol">: </span><a href="../modules/emitter.html#eventinput" class="tsd-signature-type" data-tsd-kind="Type alias">EventInput</a>, callback<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">object</span><span class="tsd-signature-symbol"> | </span><a href="../modules/emitter.html#listenercallback" class="tsd-signature-type" data-tsd-kind="Type alias">ListenerCallback</a>, scope<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">object</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="emitter.eventemitter.html" class="tsd-signature-type" data-tsd-kind="Class">EventEmitter</a></li>
+						<li class="tsd-signature tsd-kind-icon">on<span class="tsd-signature-symbol">(</span>events<span class="tsd-signature-symbol">: </span><a href="../modules/emitter.html#typeeventinput" class="tsd-signature-type" data-tsd-kind="Type alias">TypeEventInput</a>, callback<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">object</span><span class="tsd-signature-symbol"> | </span><a href="../modules/emitter.html#typelistenercallback" class="tsd-signature-type" data-tsd-kind="Type alias">TypeListenerCallback</a>, scope<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">object</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="emitter.eventemitter.html" class="tsd-signature-type" data-tsd-kind="Class">EventEmitter</a></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/okikio/native/blob/9199fe8/packages/emitter/src/api.ts#L49">emitter/src/api.ts:49</a></li>
+									<li>Defined in <a href="https://github.com/okikio/native/blob/5a208b9/packages/emitter/src/api.ts#L70">emitter/src/api.ts:70</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -657,10 +693,44 @@
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
-									<h5>events: <a href="../modules/emitter.html#eventinput" class="tsd-signature-type" data-tsd-kind="Type alias">EventInput</a></h5>
+									<h5>events: <a href="../modules/emitter.html#typeeventinput" class="tsd-signature-type" data-tsd-kind="Type alias">TypeEventInput</a></h5>
 								</li>
 								<li>
-									<h5><span class="tsd-flag ts-flagOptional">Optional</span> callback: <span class="tsd-signature-type">object</span><span class="tsd-signature-symbol"> | </span><a href="../modules/emitter.html#listenercallback" class="tsd-signature-type" data-tsd-kind="Type alias">ListenerCallback</a></h5>
+									<h5><span class="tsd-flag ts-flagOptional">Optional</span> callback: <span class="tsd-signature-type">object</span><span class="tsd-signature-symbol"> | </span><a href="../modules/emitter.html#typelistenercallback" class="tsd-signature-type" data-tsd-kind="Type alias">TypeListenerCallback</a></h5>
+								</li>
+								<li>
+									<h5><span class="tsd-flag ts-flagOptional">Optional</span> scope: <span class="tsd-signature-type">object</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <a href="emitter.eventemitter.html" class="tsd-signature-type" data-tsd-kind="Class">EventEmitter</a></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+					<a name="once" class="tsd-anchor"></a>
+					<h3>once</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">once<span class="tsd-signature-symbol">(</span>events<span class="tsd-signature-symbol">: </span><a href="../modules/emitter.html#typeeventinput" class="tsd-signature-type" data-tsd-kind="Type alias">TypeEventInput</a>, callback<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">object</span><span class="tsd-signature-symbol"> | </span><a href="../modules/emitter.html#typelistenercallback" class="tsd-signature-type" data-tsd-kind="Type alias">TypeListenerCallback</a>, scope<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">object</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="emitter.eventemitter.html" class="tsd-signature-type" data-tsd-kind="Class">EventEmitter</a></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/okikio/native/blob/5a208b9/packages/emitter/src/api.ts#L161">emitter/src/api.ts:161</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Adds a one time event listener for an event</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>events: <a href="../modules/emitter.html#typeeventinput" class="tsd-signature-type" data-tsd-kind="Type alias">TypeEventInput</a></h5>
+								</li>
+								<li>
+									<h5><span class="tsd-flag ts-flagOptional">Optional</span> callback: <span class="tsd-signature-type">object</span><span class="tsd-signature-symbol"> | </span><a href="../modules/emitter.html#typelistenercallback" class="tsd-signature-type" data-tsd-kind="Type alias">TypeListenerCallback</a></h5>
 								</li>
 								<li>
 									<h5><span class="tsd-flag ts-flagOptional">Optional</span> scope: <span class="tsd-signature-type">object</span></h5>
@@ -681,7 +751,7 @@
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="manager.manager-1.html">Manager</a>.<a href="manager.manager-1.html#remove">remove</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/okikio/native/blob/9199fe8/packages/manager/src/api.ts#L66">manager/src/api.ts:66</a></li>
+									<li>Defined in <a href="https://github.com/okikio/native/blob/5a208b9/packages/manager/src/api.ts#L71">manager/src/api.ts:71</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -703,13 +773,13 @@
 					<a name="removelistener" class="tsd-anchor"></a>
 					<h3>remove<wbr>Listener</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">remove<wbr>Listener<span class="tsd-signature-symbol">(</span>name<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, callback<span class="tsd-signature-symbol">: </span><a href="../modules/emitter.html#listenercallback" class="tsd-signature-type" data-tsd-kind="Type alias">ListenerCallback</a>, scope<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">object</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="emitter.event.html" class="tsd-signature-type" data-tsd-kind="Class">Event</a></li>
+						<li class="tsd-signature tsd-kind-icon">remove<wbr>Listener<span class="tsd-signature-symbol">(</span>name<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, callback<span class="tsd-signature-symbol">: </span><a href="../modules/emitter.html#typelistenercallback" class="tsd-signature-type" data-tsd-kind="Type alias">TypeListenerCallback</a>, scope<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">object</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="emitter.event.html" class="tsd-signature-type" data-tsd-kind="Class">Event</a></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/okikio/native/blob/9199fe8/packages/emitter/src/api.ts#L91">emitter/src/api.ts:91</a></li>
+									<li>Defined in <a href="https://github.com/okikio/native/blob/5a208b9/packages/emitter/src/api.ts#L103">emitter/src/api.ts:103</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -723,7 +793,7 @@
 									<h5>name: <span class="tsd-signature-type">string</span></h5>
 								</li>
 								<li>
-									<h5>callback: <a href="../modules/emitter.html#listenercallback" class="tsd-signature-type" data-tsd-kind="Type alias">ListenerCallback</a></h5>
+									<h5>callback: <a href="../modules/emitter.html#typelistenercallback" class="tsd-signature-type" data-tsd-kind="Type alias">TypeListenerCallback</a></h5>
 								</li>
 								<li>
 									<h5>scope: <span class="tsd-signature-type">object</span></h5>
@@ -744,7 +814,7 @@
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="manager.manager-1.html">Manager</a>.<a href="manager.manager-1.html#set">set</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/okikio/native/blob/9199fe8/packages/manager/src/api.ts#L30">manager/src/api.ts:30</a></li>
+									<li>Defined in <a href="https://github.com/okikio/native/blob/5a208b9/packages/manager/src/api.ts#L35">manager/src/api.ts:35</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -776,7 +846,7 @@
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="manager.manager-1.html">Manager</a>.<a href="manager.manager-1.html#values">values</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/okikio/native/blob/9199fe8/packages/manager/src/api.ts#L25">manager/src/api.ts:25</a></li>
+									<li>Defined in <a href="https://github.com/okikio/native/blob/5a208b9/packages/manager/src/api.ts#L30">manager/src/api.ts:30</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -881,10 +951,16 @@
 										<a href="emitter.eventemitter.html#last" class="tsd-kind-icon">last</a>
 									</li>
 									<li class=" tsd-kind-method tsd-parent-kind-class">
+										<a href="emitter.eventemitter.html#newlistener" class="tsd-kind-icon">new<wbr>Listener</a>
+									</li>
+									<li class=" tsd-kind-method tsd-parent-kind-class">
 										<a href="emitter.eventemitter.html#off" class="tsd-kind-icon">off</a>
 									</li>
 									<li class=" tsd-kind-method tsd-parent-kind-class">
 										<a href="emitter.eventemitter.html#on" class="tsd-kind-icon">on</a>
+									</li>
+									<li class=" tsd-kind-method tsd-parent-kind-class">
+										<a href="emitter.eventemitter.html#once" class="tsd-kind-icon">once</a>
 									</li>
 									<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
 										<a href="emitter.eventemitter.html#remove" class="tsd-kind-icon">remove</a>
@@ -904,10 +980,10 @@
 								<a href="../interfaces/emitter.ilistener.html" class="tsd-kind-icon">IListener</a>
 							</li>
 							<li class=" tsd-kind-type-alias tsd-parent-kind-module">
-								<a href="../modules/emitter.html#eventinput" class="tsd-kind-icon">Event<wbr>Input</a>
+								<a href="../modules/emitter.html#typeeventinput" class="tsd-kind-icon">Type<wbr>Event<wbr>Input</a>
 							</li>
 							<li class=" tsd-kind-type-alias tsd-parent-kind-module">
-								<a href="../modules/emitter.html#listenercallback" class="tsd-kind-icon">Listener<wbr>Callback</a>
+								<a href="../modules/emitter.html#typelistenercallback" class="tsd-kind-icon">Type<wbr>Listener<wbr>Callback</a>
 							</li>
 							<li class=" tsd-kind-function tsd-parent-kind-module">
 								<a href="../modules/emitter.html#newlistener" class="tsd-kind-icon">new<wbr>Listener</a>

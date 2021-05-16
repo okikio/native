@@ -147,6 +147,10 @@ task("watch", async () => {
                     route: "/lib",
                     dir: ["./lib"],
                 },
+                {
+                    route: "/docs",
+                    dir: ["./docs"],
+                },
             ],
             reloadOnRestart: true,
             scrollThrottle: 250

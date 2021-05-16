@@ -99,11 +99,13 @@
 							<ul class="tsd-index-list">
 								<li class="tsd-kind-property tsd-parent-kind-class"><a href="animate.animate-1.html#animationframe" class="tsd-kind-icon">animation<wbr>Frame</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class"><a href="animate.animate-1.html#animations" class="tsd-kind-icon">animations</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class"><a href="animate.animate-1.html#computedkeyframes" class="tsd-kind-icon">computed<wbr>Keyframes</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class"><a href="animate.animate-1.html#computedoptions" class="tsd-kind-icon">computed<wbr>Options</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class"><a href="animate.animate-1.html#emitter" class="tsd-kind-icon">emitter</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class"><a href="animate.animate-1.html#keyframeeffects" class="tsd-kind-icon">keyframe<wbr>Effects</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class"><a href="animate.animate-1.html#mainanimation" class="tsd-kind-icon">main<wbr>Animation</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class"><a href="animate.animate-1.html#mainelement" class="tsd-kind-icon">main<wbr>Element</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class"><a href="animate.animate-1.html#mainkeyframeeffect" class="tsd-kind-icon">mainkeyframe<wbr>Effect</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class"><a href="animate.animate-1.html#maxspeed" class="tsd-kind-icon">max<wbr>Speed</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class"><a href="animate.animate-1.html#mindelay" class="tsd-kind-icon">min<wbr>Delay</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class"><a href="animate.animate-1.html#options" class="tsd-kind-icon">options</a></li>
@@ -149,6 +151,7 @@
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="animate.animate-1.html#pause" class="tsd-kind-icon">pause</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="animate.animate-1.html#play" class="tsd-kind-icon">play</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="animate.animate-1.html#reset" class="tsd-kind-icon">reset</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="animate.animate-1.html#reverse" class="tsd-kind-icon">reverse</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="animate.animate-1.html#setcurrenttime" class="tsd-kind-icon">set<wbr>Current<wbr>Time</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="animate.animate-1.html#setprogress" class="tsd-kind-icon">set<wbr>Progress</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="animate.animate-1.html#setspeed" class="tsd-kind-icon">set<wbr>Speed</a></li>
@@ -156,6 +159,7 @@
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="animate.animate-1.html#stoploop" class="tsd-kind-icon">stop<wbr>Loop</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="animate.animate-1.html#then" class="tsd-kind-icon">then</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="animate.animate-1.html#tojson" class="tsd-kind-icon">toJSON</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="animate.animate-1.html#updateoptions" class="tsd-kind-icon">update<wbr>Options</a></li>
 							</ul>
 						</section>
 					</div>
@@ -167,19 +171,19 @@
 					<a name="constructor" class="tsd-anchor"></a>
 					<h3>constructor</h3>
 					<ul class="tsd-signatures tsd-kind-constructor tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">new <wbr>Animate<span class="tsd-signature-symbol">(</span>options<span class="tsd-signature-symbol">: </span><a href="../interfaces/animate.animationoptions.html" class="tsd-signature-type" data-tsd-kind="Interface">AnimationOptions</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="animate.animate-1.html" class="tsd-signature-type" data-tsd-kind="Class">Animate</a></li>
+						<li class="tsd-signature tsd-kind-icon">new <wbr>Animate<span class="tsd-signature-symbol">(</span>options<span class="tsd-signature-symbol">: </span><a href="../interfaces/animate.ianimationoptions.html" class="tsd-signature-type" data-tsd-kind="Interface">IAnimationOptions</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="animate.animate-1.html" class="tsd-signature-type" data-tsd-kind="Class">Animate</a></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/okikio/native/blob/9199fe8/packages/animate/src/api.ts#L686">animate/src/api.ts:686</a></li>
+									<li>Defined in <a href="https://github.com/okikio/native/blob/5a208b9/packages/animate/src/api.ts#L1228">animate/src/api.ts:1228</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
-									<h5>options: <a href="../interfaces/animate.animationoptions.html" class="tsd-signature-type" data-tsd-kind="Interface">AnimationOptions</a></h5>
+									<h5>options: <a href="../interfaces/animate.ianimationoptions.html" class="tsd-signature-type" data-tsd-kind="Interface">IAnimationOptions</a></h5>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <a href="animate.animate-1.html" class="tsd-signature-type" data-tsd-kind="Class">Animate</a></h4>
@@ -195,7 +199,7 @@
 					<div class="tsd-signature tsd-kind-icon">animation<wbr>Frame<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/okikio/native/blob/9199fe8/packages/animate/src/api.ts#L676">animate/src/api.ts:676</a></li>
+							<li>Defined in <a href="https://github.com/okikio/native/blob/5a208b9/packages/animate/src/api.ts#L1218">animate/src/api.ts:1218</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -210,7 +214,7 @@
 					<div class="tsd-signature tsd-kind-icon">animations<span class="tsd-signature-symbol">:</span> <a href="manager.manager-1.html" class="tsd-signature-type" data-tsd-kind="Class">Manager</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">HTMLElement</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">Animation</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> = ...</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/okikio/native/blob/9199fe8/packages/animate/src/api.ts#L630">animate/src/api.ts:630</a></li>
+							<li>Defined in <a href="https://github.com/okikio/native/blob/5a208b9/packages/animate/src/api.ts#L1158">animate/src/api.ts:1158</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -220,12 +224,29 @@
 					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
-					<a name="computedoptions" class="tsd-anchor"></a>
-					<h3>computed<wbr>Options</h3>
-					<div class="tsd-signature tsd-kind-icon">computed<wbr>Options<span class="tsd-signature-symbol">:</span> <a href="manager.manager-1.html" class="tsd-signature-type" data-tsd-kind="Class">Manager</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">Animation</span><span class="tsd-signature-symbol">, </span><a href="../modules/animate.html#computedoptions" class="tsd-signature-type" data-tsd-kind="Type alias">ComputedOptions</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> = ...</span></div>
+					<a name="computedkeyframes" class="tsd-anchor"></a>
+					<h3>computed<wbr>Keyframes</h3>
+					<div class="tsd-signature tsd-kind-icon">computed<wbr>Keyframes<span class="tsd-signature-symbol">:</span> <a href="manager.manager-1.html" class="tsd-signature-type" data-tsd-kind="Class">Manager</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">Animation</span><span class="tsd-signature-symbol">, </span><a href="../modules/animate.html#typekeyframeoptionstype" class="tsd-signature-type" data-tsd-kind="Type alias">TypeKeyFrameOptionsType</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> = ...</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/okikio/native/blob/9199fe8/packages/animate/src/api.ts#L661">animate/src/api.ts:661</a></li>
+							<li>Defined in <a href="https://github.com/okikio/native/blob/5a208b9/packages/animate/src/api.ts#L1198">animate/src/api.ts:1198</a></li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>The keyframes for individual animations</p>
+						</div>
+						<p>A Manager that stores all the fully calculated keyframes for individual Animation instances.</p>
+						<p><em><strong>Note</strong>: the computedKeyframes are changed to their proper Animation instance options, so, some of the names are different, and options that can&#39;t be computed are not present. E.g. translateX, skew, etc..., they&#39;ve all been turned into the transform property.*</em></p>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
+					<a name="computedoptions" class="tsd-anchor"></a>
+					<h3>computed<wbr>Options</h3>
+					<div class="tsd-signature tsd-kind-icon">computed<wbr>Options<span class="tsd-signature-symbol">:</span> <a href="manager.manager-1.html" class="tsd-signature-type" data-tsd-kind="Class">Manager</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">Animation</span><span class="tsd-signature-symbol">, </span><a href="../modules/animate.html#typecomputedoptions" class="tsd-signature-type" data-tsd-kind="Type alias">TypeComputedOptions</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> = ...</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/okikio/native/blob/5a208b9/packages/animate/src/api.ts#L1189">animate/src/api.ts:1189</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -243,7 +264,7 @@
 					<div class="tsd-signature tsd-kind-icon">emitter<span class="tsd-signature-symbol">:</span> <a href="emitter.eventemitter.html" class="tsd-signature-type" data-tsd-kind="Class">EventEmitter</a><span class="tsd-signature-symbol"> = ...</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/okikio/native/blob/9199fe8/packages/animate/src/api.ts#L681">animate/src/api.ts:681</a></li>
+							<li>Defined in <a href="https://github.com/okikio/native/blob/5a208b9/packages/animate/src/api.ts#L1223">animate/src/api.ts:1223</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -258,7 +279,7 @@
 					<div class="tsd-signature tsd-kind-icon">keyframe<wbr>Effects<span class="tsd-signature-symbol">:</span> <a href="manager.manager-1.html" class="tsd-signature-type" data-tsd-kind="Class">Manager</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">Animation</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">KeyframeEffect</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> = ...</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/okikio/native/blob/9199fe8/packages/animate/src/api.ts#L635">animate/src/api.ts:635</a></li>
+							<li>Defined in <a href="https://github.com/okikio/native/blob/5a208b9/packages/animate/src/api.ts#L1163">animate/src/api.ts:1163</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -273,7 +294,7 @@
 					<div class="tsd-signature tsd-kind-icon">main<wbr>Animation<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">Animation</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/okikio/native/blob/9199fe8/packages/animate/src/api.ts#L671">animate/src/api.ts:671</a></li>
+							<li>Defined in <a href="https://github.com/okikio/native/blob/5a208b9/packages/animate/src/api.ts#L1208">animate/src/api.ts:1208</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -288,7 +309,7 @@
 					<div class="tsd-signature tsd-kind-icon">main<wbr>Element<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">HTMLElement</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/okikio/native/blob/9199fe8/packages/animate/src/api.ts#L666">animate/src/api.ts:666</a></li>
+							<li>Defined in <a href="https://github.com/okikio/native/blob/5a208b9/packages/animate/src/api.ts#L1203">animate/src/api.ts:1203</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -298,12 +319,27 @@
 					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
+					<a name="mainkeyframeeffect" class="tsd-anchor"></a>
+					<h3>mainkeyframe<wbr>Effect</h3>
+					<div class="tsd-signature tsd-kind-icon">mainkeyframe<wbr>Effect<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">KeyframeEffect</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/okikio/native/blob/5a208b9/packages/animate/src/api.ts#L1213">animate/src/api.ts:1213</a></li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>The Keyframe Effect for the mainAnimation</p>
+						</div>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
 					<a name="maxspeed" class="tsd-anchor"></a>
 					<h3>max<wbr>Speed</h3>
 					<div class="tsd-signature tsd-kind-icon">max<wbr>Speed<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> = 0</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/okikio/native/blob/9199fe8/packages/animate/src/api.ts#L650">animate/src/api.ts:650</a></li>
+							<li>Defined in <a href="https://github.com/okikio/native/blob/5a208b9/packages/animate/src/api.ts#L1178">animate/src/api.ts:1178</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -318,7 +354,7 @@
 					<div class="tsd-signature tsd-kind-icon">min<wbr>Delay<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> = 0</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/okikio/native/blob/9199fe8/packages/animate/src/api.ts#L645">animate/src/api.ts:645</a></li>
+							<li>Defined in <a href="https://github.com/okikio/native/blob/5a208b9/packages/animate/src/api.ts#L1173">animate/src/api.ts:1173</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -330,17 +366,17 @@
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
 					<a name="options" class="tsd-anchor"></a>
 					<h3>options</h3>
-					<div class="tsd-signature tsd-kind-icon">options<span class="tsd-signature-symbol">:</span> <a href="../interfaces/animate.animationoptions.html" class="tsd-signature-type" data-tsd-kind="Interface">AnimationOptions</a><span class="tsd-signature-symbol"> = {}</span></div>
+					<div class="tsd-signature tsd-kind-icon">options<span class="tsd-signature-symbol">:</span> <a href="../interfaces/animate.ianimationoptions.html" class="tsd-signature-type" data-tsd-kind="Interface">IAnimationOptions</a><span class="tsd-signature-symbol"> = {}</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/okikio/native/blob/9199fe8/packages/animate/src/api.ts#L615">animate/src/api.ts:615</a></li>
+							<li>Defined in <a href="https://github.com/okikio/native/blob/5a208b9/packages/animate/src/api.ts#L1143">animate/src/api.ts:1143</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
 						<div class="lead">
 							<p>The default options for every Animate instance</p>
 						</div>
-						<pre><code class="language-typescript"><span style="color: #000000">{</span>
+						<pre><code class="language-ts"><span style="color: #000000">{</span>
 <span style="color: #000000">  keyframes: [],</span>
 
 <span style="color: #000000">  loop: </span><span style="color: #098658">1</span><span style="color: #000000">,</span>
@@ -364,7 +400,7 @@
 					<div class="tsd-signature tsd-kind-icon">promise<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="animate.animate-1.html" class="tsd-signature-type" data-tsd-kind="Class">Animate</a><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">&gt;</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/okikio/native/blob/9199fe8/packages/animate/src/api.ts#L686">animate/src/api.ts:686</a></li>
+							<li>Defined in <a href="https://github.com/okikio/native/blob/5a208b9/packages/animate/src/api.ts#L1228">animate/src/api.ts:1228</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -379,7 +415,7 @@
 					<div class="tsd-signature tsd-kind-icon">properties<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">object</span><span class="tsd-signature-symbol"> = {}</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/okikio/native/blob/9199fe8/packages/animate/src/api.ts#L625">animate/src/api.ts:625</a></li>
+							<li>Defined in <a href="https://github.com/okikio/native/blob/5a208b9/packages/animate/src/api.ts#L1153">animate/src/api.ts:1153</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -391,15 +427,15 @@
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
 					<a name="targets" class="tsd-anchor"></a>
 					<h3>targets</h3>
-					<div class="tsd-signature tsd-kind-icon">targets<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">Node</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol"> = []</span></div>
+					<div class="tsd-signature tsd-kind-icon">targets<span class="tsd-signature-symbol">:</span> <a href="manager.manager-1.html" class="tsd-signature-type" data-tsd-kind="Class">Manager</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">Node</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> = ...</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/okikio/native/blob/9199fe8/packages/animate/src/api.ts#L620">animate/src/api.ts:620</a></li>
+							<li>Defined in <a href="https://github.com/okikio/native/blob/5a208b9/packages/animate/src/api.ts#L1148">animate/src/api.ts:1148</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
 						<div class="lead">
-							<p>The Array of Elements to Animate</p>
+							<p>The list of Elements to Animate</p>
 						</div>
 					</div>
 				</section>
@@ -409,7 +445,7 @@
 					<div class="tsd-signature tsd-kind-icon">total<wbr>Duration<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> = 0</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/okikio/native/blob/9199fe8/packages/animate/src/api.ts#L640">animate/src/api.ts:640</a></li>
+							<li>Defined in <a href="https://github.com/okikio/native/blob/5a208b9/packages/animate/src/api.ts#L1168">animate/src/api.ts:1168</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -431,7 +467,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/okikio/native/blob/9199fe8/packages/animate/src/api.ts#L1157">animate/src/api.ts:1157</a></li>
+									<li>Defined in <a href="https://github.com/okikio/native/blob/5a208b9/packages/animate/src/api.ts#L1803">animate/src/api.ts:1803</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -458,7 +494,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/okikio/native/blob/9199fe8/packages/animate/src/api.ts#L916">animate/src/api.ts:916</a></li>
+									<li>Defined in <a href="https://github.com/okikio/native/blob/5a208b9/packages/animate/src/api.ts#L1312">animate/src/api.ts:1312</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -507,7 +543,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/okikio/native/blob/9199fe8/packages/animate/src/api.ts#L908">animate/src/api.ts:908</a></li>
+									<li>Defined in <a href="https://github.com/okikio/native/blob/5a208b9/packages/animate/src/api.ts#L1304">animate/src/api.ts:1304</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -556,7 +592,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/okikio/native/blob/9199fe8/packages/animate/src/api.ts#L925">animate/src/api.ts:925</a></li>
+									<li>Defined in <a href="https://github.com/okikio/native/blob/5a208b9/packages/animate/src/api.ts#L1321">animate/src/api.ts:1321</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -578,7 +614,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/okikio/native/blob/9199fe8/packages/animate/src/api.ts#L977">animate/src/api.ts:977</a></li>
+									<li>Defined in <a href="https://github.com/okikio/native/blob/5a208b9/packages/animate/src/api.ts#L1376">animate/src/api.ts:1376</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -600,12 +636,12 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/okikio/native/blob/9199fe8/packages/animate/src/api.ts#L874">animate/src/api.ts:874</a></li>
+									<li>Defined in <a href="https://github.com/okikio/native/blob/5a208b9/packages/animate/src/api.ts#L1270">animate/src/api.ts:1270</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
 								<div class="lead">
-									<p>Catches error that occur in the this.promise Promise</p>
+									<p>Catches error that occur in the <code>this.promise</code> Promise</p>
 								</div>
 							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -640,13 +676,13 @@
 					<a name="emit" class="tsd-anchor"></a>
 					<h3>emit</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">emit<span class="tsd-signature-symbol">(</span>events<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol"> | </span><a href="../modules/animate.html#animationevents" class="tsd-signature-type" data-tsd-kind="Type alias">AnimationEvents</a><span class="tsd-signature-symbol">[]</span>, <span class="tsd-signature-symbol">...</span>args<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="animate.animate-1.html" class="tsd-signature-type" data-tsd-kind="Class">Animate</a></li>
+						<li class="tsd-signature tsd-kind-icon">emit<span class="tsd-signature-symbol">(</span>events<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol"> | </span><a href="../modules/animate.html#typeanimationevents" class="tsd-signature-type" data-tsd-kind="Type alias">TypeAnimationEvents</a><span class="tsd-signature-symbol">[]</span>, <span class="tsd-signature-symbol">...</span>args<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="animate.animate-1.html" class="tsd-signature-type" data-tsd-kind="Class">Animate</a></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/okikio/native/blob/9199fe8/packages/animate/src/api.ts#L1142">animate/src/api.ts:1142</a></li>
+									<li>Defined in <a href="https://github.com/okikio/native/blob/5a208b9/packages/animate/src/api.ts#L1788">animate/src/api.ts:1788</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -657,7 +693,7 @@
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
-									<h5>events: <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol"> | </span><a href="../modules/animate.html#animationevents" class="tsd-signature-type" data-tsd-kind="Type alias">AnimationEvents</a><span class="tsd-signature-symbol">[]</span></h5>
+									<h5>events: <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol"> | </span><a href="../modules/animate.html#typeanimationevents" class="tsd-signature-type" data-tsd-kind="Type alias">TypeAnimationEvents</a><span class="tsd-signature-symbol">[]</span></h5>
 								</li>
 								<li>
 									<h5><span class="tsd-flag ts-flagRest">Rest</span> <span class="tsd-signature-symbol">...</span>args: <span class="tsd-signature-type">any</span></h5>
@@ -677,12 +713,12 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/okikio/native/blob/9199fe8/packages/animate/src/api.ts#L883">animate/src/api.ts:883</a></li>
+									<li>Defined in <a href="https://github.com/okikio/native/blob/5a208b9/packages/animate/src/api.ts#L1279">animate/src/api.ts:1279</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
 								<div class="lead">
-									<p>If you don&#39;t care if the this.promise Promise has either been rejected or resolved</p>
+									<p>If you don&#39;t care if the <code>this.promise</code> Promise has either been rejected or resolved</p>
 								</div>
 							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -717,7 +753,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/okikio/native/blob/9199fe8/packages/animate/src/api.ts#L985">animate/src/api.ts:985</a></li>
+									<li>Defined in <a href="https://github.com/okikio/native/blob/5a208b9/packages/animate/src/api.ts#L1384">animate/src/api.ts:1384</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -739,7 +775,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/okikio/native/blob/9199fe8/packages/animate/src/api.ts#L1015">animate/src/api.ts:1015</a></li>
+									<li>Defined in <a href="https://github.com/okikio/native/blob/5a208b9/packages/animate/src/api.ts#L1425">animate/src/api.ts:1425</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -761,13 +797,13 @@
 					<a name="getcomputedoption" class="tsd-anchor"></a>
 					<h3>get<wbr>Computed<wbr>Option</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">get<wbr>Computed<wbr>Option<span class="tsd-signature-symbol">(</span>target<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">HTMLElement</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">Animation</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="../interfaces/animate.animationoptions.html" class="tsd-signature-type" data-tsd-kind="Interface">AnimationOptions</a></li>
+						<li class="tsd-signature tsd-kind-icon">get<wbr>Computed<wbr>Option<span class="tsd-signature-symbol">(</span>target<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">HTMLElement</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">Animation</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="../interfaces/animate.ianimationoptions.html" class="tsd-signature-type" data-tsd-kind="Interface">IAnimationOptions</a></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/okikio/native/blob/9199fe8/packages/animate/src/api.ts#L1084">animate/src/api.ts:1084</a></li>
+									<li>Defined in <a href="https://github.com/okikio/native/blob/5a208b9/packages/animate/src/api.ts#L1494">animate/src/api.ts:1494</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -781,7 +817,7 @@
 									<h5>target: <span class="tsd-signature-type">HTMLElement</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">Animation</span></h5>
 								</li>
 							</ul>
-							<h4 class="tsd-returns-title">Returns <a href="../interfaces/animate.animationoptions.html" class="tsd-signature-type" data-tsd-kind="Interface">AnimationOptions</a></h4>
+							<h4 class="tsd-returns-title">Returns <a href="../interfaces/animate.ianimationoptions.html" class="tsd-signature-type" data-tsd-kind="Interface">IAnimationOptions</a></h4>
 						</li>
 					</ul>
 				</section>
@@ -795,7 +831,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/okikio/native/blob/9199fe8/packages/animate/src/api.ts#L1049">animate/src/api.ts:1049</a></li>
+									<li>Defined in <a href="https://github.com/okikio/native/blob/5a208b9/packages/animate/src/api.ts#L1459">animate/src/api.ts:1459</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -817,7 +853,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/okikio/native/blob/9199fe8/packages/animate/src/api.ts#L1022">animate/src/api.ts:1022</a></li>
+									<li>Defined in <a href="https://github.com/okikio/native/blob/5a208b9/packages/animate/src/api.ts#L1432">animate/src/api.ts:1432</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -839,13 +875,13 @@
 					<a name="getoptions" class="tsd-anchor"></a>
 					<h3>get<wbr>Options</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">get<wbr>Options<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="../interfaces/animate.animationoptions.html" class="tsd-signature-type" data-tsd-kind="Interface">AnimationOptions</a></li>
+						<li class="tsd-signature tsd-kind-icon">get<wbr>Options<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="../interfaces/animate.ianimationoptions.html" class="tsd-signature-type" data-tsd-kind="Interface">IAnimationOptions</a></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/okikio/native/blob/9199fe8/packages/animate/src/api.ts#L1077">animate/src/api.ts:1077</a></li>
+									<li>Defined in <a href="https://github.com/okikio/native/blob/5a208b9/packages/animate/src/api.ts#L1487">animate/src/api.ts:1487</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -853,7 +889,7 @@
 									<p>Get the options of an Animate instance</p>
 								</div>
 							</div>
-							<h4 class="tsd-returns-title">Returns <a href="../interfaces/animate.animationoptions.html" class="tsd-signature-type" data-tsd-kind="Interface">AnimationOptions</a></h4>
+							<h4 class="tsd-returns-title">Returns <a href="../interfaces/animate.ianimationoptions.html" class="tsd-signature-type" data-tsd-kind="Interface">IAnimationOptions</a></h4>
 						</li>
 					</ul>
 				</section>
@@ -861,13 +897,13 @@
 					<a name="getplaystate" class="tsd-anchor"></a>
 					<h3>get<wbr>Play<wbr>State</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">get<wbr>Play<wbr>State<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="../modules/animate.html#playstates" class="tsd-signature-type" data-tsd-kind="Type alias">PlayStates</a></li>
+						<li class="tsd-signature tsd-kind-icon">get<wbr>Play<wbr>State<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="../modules/animate.html#typeplaystates" class="tsd-signature-type" data-tsd-kind="Type alias">TypePlayStates</a></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/okikio/native/blob/9199fe8/packages/animate/src/api.ts#L1070">animate/src/api.ts:1070</a></li>
+									<li>Defined in <a href="https://github.com/okikio/native/blob/5a208b9/packages/animate/src/api.ts#L1480">animate/src/api.ts:1480</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -875,7 +911,7 @@
 									<p>Returns the current playing state</p>
 								</div>
 							</div>
-							<h4 class="tsd-returns-title">Returns <a href="../modules/animate.html#playstates" class="tsd-signature-type" data-tsd-kind="Type alias">PlayStates</a></h4>
+							<h4 class="tsd-returns-title">Returns <a href="../modules/animate.html#typeplaystates" class="tsd-signature-type" data-tsd-kind="Type alias">TypePlayStates</a></h4>
 						</li>
 					</ul>
 				</section>
@@ -889,7 +925,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/okikio/native/blob/9199fe8/packages/animate/src/api.ts#L1056">animate/src/api.ts:1056</a></li>
+									<li>Defined in <a href="https://github.com/okikio/native/blob/5a208b9/packages/animate/src/api.ts#L1466">animate/src/api.ts:1466</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -911,7 +947,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/okikio/native/blob/9199fe8/packages/animate/src/api.ts#L1063">animate/src/api.ts:1063</a></li>
+									<li>Defined in <a href="https://github.com/okikio/native/blob/5a208b9/packages/animate/src/api.ts#L1473">animate/src/api.ts:1473</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -933,12 +969,12 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/okikio/native/blob/9199fe8/packages/animate/src/api.ts#L1008">animate/src/api.ts:1008</a></li>
+									<li>Defined in <a href="https://github.com/okikio/native/blob/5a208b9/packages/animate/src/api.ts#L1418">animate/src/api.ts:1418</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
 								<div class="lead">
-									<p>Returns an Array of targets</p>
+									<p>Returns an Manager instance for targets</p>
 								</div>
 							</div>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Node</span><span class="tsd-signature-symbol">[]</span></h4>
@@ -949,13 +985,13 @@
 					<a name="gettiming" class="tsd-anchor"></a>
 					<h3>get<wbr>Timing</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">get<wbr>Timing<span class="tsd-signature-symbol">(</span>target<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">HTMLElement</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">Animation</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="../modules/animate.html#computedanimationoptions" class="tsd-signature-type" data-tsd-kind="Type alias">ComputedAnimationOptions</a></li>
+						<li class="tsd-signature tsd-kind-icon">get<wbr>Timing<span class="tsd-signature-symbol">(</span>target<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">HTMLElement</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">Animation</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="../modules/animate.html#typecomputedanimationoptions" class="tsd-signature-type" data-tsd-kind="Type alias">TypeComputedAnimationOptions</a></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/okikio/native/blob/9199fe8/packages/animate/src/api.ts#L1030">animate/src/api.ts:1030</a></li>
+									<li>Defined in <a href="https://github.com/okikio/native/blob/5a208b9/packages/animate/src/api.ts#L1440">animate/src/api.ts:1440</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -970,7 +1006,7 @@
 									<h5>target: <span class="tsd-signature-type">HTMLElement</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">Animation</span></h5>
 								</li>
 							</ul>
-							<h4 class="tsd-returns-title">Returns <a href="../modules/animate.html#computedanimationoptions" class="tsd-signature-type" data-tsd-kind="Type alias">ComputedAnimationOptions</a></h4>
+							<h4 class="tsd-returns-title">Returns <a href="../modules/animate.html#typecomputedanimationoptions" class="tsd-signature-type" data-tsd-kind="Type alias">TypeComputedAnimationOptions</a></h4>
 						</li>
 					</ul>
 				</section>
@@ -984,7 +1020,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/okikio/native/blob/9199fe8/packages/animate/src/api.ts#L1042">animate/src/api.ts:1042</a></li>
+									<li>Defined in <a href="https://github.com/okikio/native/blob/5a208b9/packages/animate/src/api.ts#L1452">animate/src/api.ts:1452</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1000,24 +1036,24 @@
 					<a name="is" class="tsd-anchor"></a>
 					<h3>is</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">is<span class="tsd-signature-symbol">(</span>playstate<span class="tsd-signature-symbol">: </span><a href="../modules/animate.html#playstates" class="tsd-signature-type" data-tsd-kind="Type alias">PlayStates</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">boolean</span></li>
+						<li class="tsd-signature tsd-kind-icon">is<span class="tsd-signature-symbol">(</span>playstate<span class="tsd-signature-symbol">: </span><a href="../modules/animate.html#typeplaystates" class="tsd-signature-type" data-tsd-kind="Type alias">TypePlayStates</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">boolean</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/okikio/native/blob/9199fe8/packages/animate/src/api.ts#L1092">animate/src/api.ts:1092</a></li>
+									<li>Defined in <a href="https://github.com/okikio/native/blob/5a208b9/packages/animate/src/api.ts#L1502">animate/src/api.ts:1502</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
 								<div class="lead">
-									<p>Check if the current playstate is &quot;running&quot;, &quot;finished&quot;, etc...</p>
+									<p>Returns a boolean determining if the <code>animate</code> instances playstate is equal to the <code>playstate</code> parameter.</p>
 								</div>
 							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
-									<h5>playstate: <a href="../modules/animate.html#playstates" class="tsd-signature-type" data-tsd-kind="Type alias">PlayStates</a></h5>
+									<h5>playstate: <a href="../modules/animate.html#typeplaystates" class="tsd-signature-type" data-tsd-kind="Type alias">TypePlayStates</a></h5>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">boolean</span></h4>
@@ -1034,7 +1070,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/okikio/native/blob/9199fe8/packages/animate/src/api.ts#L892">animate/src/api.ts:892</a></li>
+									<li>Defined in <a href="https://github.com/okikio/native/blob/5a208b9/packages/animate/src/api.ts#L1288">animate/src/api.ts:1288</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1056,12 +1092,12 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/okikio/native/blob/9199fe8/packages/animate/src/api.ts#L844">animate/src/api.ts:844</a></li>
+									<li>Defined in <a href="https://github.com/okikio/native/blob/5a208b9/packages/animate/src/api.ts#L1237">animate/src/api.ts:1237</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
 								<div class="lead">
-									<p>Returns a new Promise that is resolve when this.finish is called</p>
+									<p>Returns a new Promise that is resolved when the animation finishes</p>
 								</div>
 							</div>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="animate.animate-1.html" class="tsd-signature-type" data-tsd-kind="Class">Animate</a><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">&gt;</span></h4>
@@ -1072,13 +1108,13 @@
 					<a name="off" class="tsd-anchor"></a>
 					<h3>off</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">off<span class="tsd-signature-symbol">(</span>events<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">object</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol"> | </span><a href="../modules/animate.html#animationevents" class="tsd-signature-type" data-tsd-kind="Type alias">AnimationEvents</a><span class="tsd-signature-symbol">[]</span>, callback<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">object</span><span class="tsd-signature-symbol"> | </span><a href="../modules/emitter.html#listenercallback" class="tsd-signature-type" data-tsd-kind="Type alias">ListenerCallback</a>, scope<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">object</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="animate.animate-1.html" class="tsd-signature-type" data-tsd-kind="Class">Animate</a></li>
+						<li class="tsd-signature tsd-kind-icon">off<span class="tsd-signature-symbol">(</span>events<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">object</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol"> | </span><a href="../modules/animate.html#typeanimationevents" class="tsd-signature-type" data-tsd-kind="Type alias">TypeAnimationEvents</a><span class="tsd-signature-symbol">[]</span>, callback<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">object</span><span class="tsd-signature-symbol"> | </span><a href="../modules/emitter.html#typelistenercallback" class="tsd-signature-type" data-tsd-kind="Type alias">TypeListenerCallback</a>, scope<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">object</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="animate.animate-1.html" class="tsd-signature-type" data-tsd-kind="Class">Animate</a></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/okikio/native/blob/9199fe8/packages/animate/src/api.ts#L1134">animate/src/api.ts:1134</a></li>
+									<li>Defined in <a href="https://github.com/okikio/native/blob/5a208b9/packages/animate/src/api.ts#L1780">animate/src/api.ts:1780</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1089,10 +1125,10 @@
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
-									<h5>events: <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">object</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol"> | </span><a href="../modules/animate.html#animationevents" class="tsd-signature-type" data-tsd-kind="Type alias">AnimationEvents</a><span class="tsd-signature-symbol">[]</span></h5>
+									<h5>events: <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">object</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol"> | </span><a href="../modules/animate.html#typeanimationevents" class="tsd-signature-type" data-tsd-kind="Type alias">TypeAnimationEvents</a><span class="tsd-signature-symbol">[]</span></h5>
 								</li>
 								<li>
-									<h5><span class="tsd-flag ts-flagOptional">Optional</span> callback: <span class="tsd-signature-type">object</span><span class="tsd-signature-symbol"> | </span><a href="../modules/emitter.html#listenercallback" class="tsd-signature-type" data-tsd-kind="Type alias">ListenerCallback</a></h5>
+									<h5><span class="tsd-flag ts-flagOptional">Optional</span> callback: <span class="tsd-signature-type">object</span><span class="tsd-signature-symbol"> | </span><a href="../modules/emitter.html#typelistenercallback" class="tsd-signature-type" data-tsd-kind="Type alias">TypeListenerCallback</a></h5>
 								</li>
 								<li>
 									<h5><span class="tsd-flag ts-flagOptional">Optional</span> scope: <span class="tsd-signature-type">object</span></h5>
@@ -1106,13 +1142,13 @@
 					<a name="on" class="tsd-anchor"></a>
 					<h3>on</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">on<span class="tsd-signature-symbol">(</span>events<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">object</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol"> | </span><a href="../modules/animate.html#animationevents" class="tsd-signature-type" data-tsd-kind="Type alias">AnimationEvents</a><span class="tsd-signature-symbol">[]</span>, callback<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">object</span><span class="tsd-signature-symbol"> | </span><a href="../modules/emitter.html#listenercallback" class="tsd-signature-type" data-tsd-kind="Type alias">ListenerCallback</a>, scope<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">object</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="animate.animate-1.html" class="tsd-signature-type" data-tsd-kind="Class">Animate</a></li>
+						<li class="tsd-signature tsd-kind-icon">on<span class="tsd-signature-symbol">(</span>events<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">object</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol"> | </span><a href="../modules/animate.html#typeanimationevents" class="tsd-signature-type" data-tsd-kind="Type alias">TypeAnimationEvents</a><span class="tsd-signature-symbol">[]</span>, callback<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">object</span><span class="tsd-signature-symbol"> | </span><a href="../modules/emitter.html#typelistenercallback" class="tsd-signature-type" data-tsd-kind="Type alias">TypeListenerCallback</a>, scope<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">object</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="animate.animate-1.html" class="tsd-signature-type" data-tsd-kind="Class">Animate</a></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/okikio/native/blob/9199fe8/packages/animate/src/api.ts#L1126">animate/src/api.ts:1126</a></li>
+									<li>Defined in <a href="https://github.com/okikio/native/blob/5a208b9/packages/animate/src/api.ts#L1772">animate/src/api.ts:1772</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1123,10 +1159,10 @@
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
-									<h5>events: <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">object</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol"> | </span><a href="../modules/animate.html#animationevents" class="tsd-signature-type" data-tsd-kind="Type alias">AnimationEvents</a><span class="tsd-signature-symbol">[]</span></h5>
+									<h5>events: <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">object</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol"> | </span><a href="../modules/animate.html#typeanimationevents" class="tsd-signature-type" data-tsd-kind="Type alias">TypeAnimationEvents</a><span class="tsd-signature-symbol">[]</span></h5>
 								</li>
 								<li>
-									<h5><span class="tsd-flag ts-flagOptional">Optional</span> callback: <span class="tsd-signature-type">object</span><span class="tsd-signature-symbol"> | </span><a href="../modules/emitter.html#listenercallback" class="tsd-signature-type" data-tsd-kind="Type alias">ListenerCallback</a></h5>
+									<h5><span class="tsd-flag ts-flagOptional">Optional</span> callback: <span class="tsd-signature-type">object</span><span class="tsd-signature-symbol"> | </span><a href="../modules/emitter.html#typelistenercallback" class="tsd-signature-type" data-tsd-kind="Type alias">TypeListenerCallback</a></h5>
 								</li>
 								<li>
 									<h5><span class="tsd-flag ts-flagOptional">Optional</span> scope: <span class="tsd-signature-type">object</span></h5>
@@ -1146,7 +1182,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/okikio/native/blob/9199fe8/packages/animate/src/api.ts#L951">animate/src/api.ts:951</a></li>
+									<li>Defined in <a href="https://github.com/okikio/native/blob/5a208b9/packages/animate/src/api.ts#L1343">animate/src/api.ts:1343</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1168,7 +1204,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/okikio/native/blob/9199fe8/packages/animate/src/api.ts#L937">animate/src/api.ts:937</a></li>
+									<li>Defined in <a href="https://github.com/okikio/native/blob/5a208b9/packages/animate/src/api.ts#L1329">animate/src/api.ts:1329</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1190,12 +1226,34 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/okikio/native/blob/9199fe8/packages/animate/src/api.ts#L965">animate/src/api.ts:965</a></li>
+									<li>Defined in <a href="https://github.com/okikio/native/blob/5a208b9/packages/animate/src/api.ts#L1365">animate/src/api.ts:1365</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
 								<div class="lead">
 									<p>Reset all Animations</p>
+								</div>
+							</div>
+							<h4 class="tsd-returns-title">Returns <a href="animate.animate-1.html" class="tsd-signature-type" data-tsd-kind="Class">Animate</a></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+					<a name="reverse" class="tsd-anchor"></a>
+					<h3>reverse</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">reverse<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="animate.animate-1.html" class="tsd-signature-type" data-tsd-kind="Class">Animate</a></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/okikio/native/blob/5a208b9/packages/animate/src/api.ts#L1357">animate/src/api.ts:1357</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Reverse Animation</p>
 								</div>
 							</div>
 							<h4 class="tsd-returns-title">Returns <a href="animate.animate-1.html" class="tsd-signature-type" data-tsd-kind="Class">Animate</a></h4>
@@ -1212,7 +1270,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/okikio/native/blob/9199fe8/packages/animate/src/api.ts#L1099">animate/src/api.ts:1099</a></li>
+									<li>Defined in <a href="https://github.com/okikio/native/blob/5a208b9/packages/animate/src/api.ts#L1509">animate/src/api.ts:1509</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1240,7 +1298,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/okikio/native/blob/9199fe8/packages/animate/src/api.ts#L1108">animate/src/api.ts:1108</a></li>
+									<li>Defined in <a href="https://github.com/okikio/native/blob/5a208b9/packages/animate/src/api.ts#L1518">animate/src/api.ts:1518</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1268,7 +1326,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/okikio/native/blob/9199fe8/packages/animate/src/api.ts#L1117">animate/src/api.ts:1117</a></li>
+									<li>Defined in <a href="https://github.com/okikio/native/blob/5a208b9/packages/animate/src/api.ts#L1527">animate/src/api.ts:1527</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1296,7 +1354,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/okikio/native/blob/9199fe8/packages/animate/src/api.ts#L993">animate/src/api.ts:993</a></li>
+									<li>Defined in <a href="https://github.com/okikio/native/blob/5a208b9/packages/animate/src/api.ts#L1392">animate/src/api.ts:1392</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1318,7 +1376,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/okikio/native/blob/9199fe8/packages/animate/src/api.ts#L901">animate/src/api.ts:901</a></li>
+									<li>Defined in <a href="https://github.com/okikio/native/blob/5a208b9/packages/animate/src/api.ts#L1297">animate/src/api.ts:1297</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1340,12 +1398,12 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/okikio/native/blob/9199fe8/packages/animate/src/api.ts#L861">animate/src/api.ts:861</a></li>
+									<li>Defined in <a href="https://github.com/okikio/native/blob/5a208b9/packages/animate/src/api.ts#L1257">animate/src/api.ts:1257</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
 								<div class="lead">
-									<p>Fulfills the this.promise Promise</p>
+									<p>Fulfills the <code>this.promise</code> Promise</p>
 								</div>
 							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -1401,13 +1459,13 @@
 					<a name="tojson" class="tsd-anchor"></a>
 					<h3>toJSON</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">toJSON<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="../interfaces/animate.animationoptions.html" class="tsd-signature-type" data-tsd-kind="Interface">AnimationOptions</a></li>
+						<li class="tsd-signature tsd-kind-icon">toJSON<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="../interfaces/animate.ianimationoptions.html" class="tsd-signature-type" data-tsd-kind="Interface">IAnimationOptions</a></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/okikio/native/blob/9199fe8/packages/animate/src/api.ts#L1148">animate/src/api.ts:1148</a></li>
+									<li>Defined in <a href="https://github.com/okikio/native/blob/5a208b9/packages/animate/src/api.ts#L1794">animate/src/api.ts:1794</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1415,7 +1473,40 @@
 									<p>Returns the Animate options, as JSON</p>
 								</div>
 							</div>
-							<h4 class="tsd-returns-title">Returns <a href="../interfaces/animate.animationoptions.html" class="tsd-signature-type" data-tsd-kind="Interface">AnimationOptions</a></h4>
+							<h4 class="tsd-returns-title">Returns <a href="../interfaces/animate.ianimationoptions.html" class="tsd-signature-type" data-tsd-kind="Interface">IAnimationOptions</a></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+					<a name="updateoptions" class="tsd-anchor"></a>
+					<h3>update<wbr>Options</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">update<wbr>Options<span class="tsd-signature-symbol">(</span>options<span class="tsd-signature-symbol">?: </span><a href="../interfaces/animate.ianimationoptions.html" class="tsd-signature-type" data-tsd-kind="Interface">IAnimationOptions</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/okikio/native/blob/5a208b9/packages/animate/src/api.ts#L1544">animate/src/api.ts:1544</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Update the options for all targets set in the constructor</p>
+								</div>
+								<p><em><strong>Note</strong>: <code>KeyframeEffect</code> support is really low, so, I am suggest that you avoid using the <code>updateOptions</code> method, until browser support for <code>KeyframeEffect.updateTiming(...)</code> and <code>KeyframeEffefct.setKeyframes(...)</code> is better</em></p>
+								<dl class="tsd-comment-tags">
+									<dt>beta</dt>
+									<dd></dd>
+								</dl>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>options: <a href="../interfaces/animate.ianimationoptions.html" class="tsd-signature-type" data-tsd-kind="Interface">IAnimationOptions</a><span class="tsd-signature-symbol"> = {}</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
 						</li>
 					</ul>
 				</section>
@@ -1448,18 +1539,6 @@
 					<li class="current tsd-kind-module">
 						<a href="../modules/animate.html" class="tsd-kind-icon">animate</a>
 						<ul>
-							<li class=" tsd-kind-reference tsd-parent-kind-module">
-								<a href="../modules/animate.html#effects" class="tsd-kind-icon">EFFECTS</a>
-							</li>
-							<li class=" tsd-kind-reference tsd-parent-kind-module">
-								<a href="../modules/animate.html#keyframeparse" class="tsd-kind-icon">Keyframe<wbr>Parse</a>
-							</li>
-							<li class=" tsd-kind-reference tsd-parent-kind-module">
-								<a href="../modules/animate.html#default" class="tsd-kind-icon">default</a>
-							</li>
-							<li class=" tsd-kind-reference tsd-parent-kind-module">
-								<a href="../modules/animate.html#parseoffsets" class="tsd-kind-icon">parse<wbr>Offsets</a>
-							</li>
 							<li class="current tsd-kind-class tsd-parent-kind-module">
 								<a href="animate.animate-1.html" class="tsd-kind-icon">Animate</a>
 								<ul>
@@ -1471,6 +1550,9 @@
 									</li>
 									<li class=" tsd-kind-property tsd-parent-kind-class">
 										<a href="animate.animate-1.html#animations" class="tsd-kind-icon">animations</a>
+									</li>
+									<li class=" tsd-kind-property tsd-parent-kind-class">
+										<a href="animate.animate-1.html#computedkeyframes" class="tsd-kind-icon">computed<wbr>Keyframes</a>
 									</li>
 									<li class=" tsd-kind-property tsd-parent-kind-class">
 										<a href="animate.animate-1.html#computedoptions" class="tsd-kind-icon">computed<wbr>Options</a>
@@ -1486,6 +1568,9 @@
 									</li>
 									<li class=" tsd-kind-property tsd-parent-kind-class">
 										<a href="animate.animate-1.html#mainelement" class="tsd-kind-icon">main<wbr>Element</a>
+									</li>
+									<li class=" tsd-kind-property tsd-parent-kind-class">
+										<a href="animate.animate-1.html#mainkeyframeeffect" class="tsd-kind-icon">mainkeyframe<wbr>Effect</a>
 									</li>
 									<li class=" tsd-kind-property tsd-parent-kind-class">
 										<a href="animate.animate-1.html#maxspeed" class="tsd-kind-icon">max<wbr>Speed</a>
@@ -1593,6 +1678,9 @@
 										<a href="animate.animate-1.html#reset" class="tsd-kind-icon">reset</a>
 									</li>
 									<li class=" tsd-kind-method tsd-parent-kind-class">
+										<a href="animate.animate-1.html#reverse" class="tsd-kind-icon">reverse</a>
+									</li>
+									<li class=" tsd-kind-method tsd-parent-kind-class">
 										<a href="animate.animate-1.html#setcurrenttime" class="tsd-kind-icon">set<wbr>Current<wbr>Time</a>
 									</li>
 									<li class=" tsd-kind-method tsd-parent-kind-class">
@@ -1613,73 +1701,10 @@
 									<li class=" tsd-kind-method tsd-parent-kind-class">
 										<a href="animate.animate-1.html#tojson" class="tsd-kind-icon">toJSON</a>
 									</li>
+									<li class=" tsd-kind-method tsd-parent-kind-class">
+										<a href="animate.animate-1.html#updateoptions" class="tsd-kind-icon">update<wbr>Options</a>
+									</li>
 								</ul>
-							</li>
-							<li class=" tsd-kind-interface tsd-parent-kind-module">
-								<a href="../interfaces/animate.animationoptions.html" class="tsd-kind-icon">Animation<wbr>Options</a>
-							</li>
-							<li class=" tsd-kind-type-alias tsd-parent-kind-module">
-								<a href="../modules/animate.html#animationevents" class="tsd-kind-icon">Animation<wbr>Events</a>
-							</li>
-							<li class=" tsd-kind-type-alias tsd-parent-kind-module">
-								<a href="../modules/animate.html#animationoptiontypes" class="tsd-kind-icon">Animation<wbr>Option<wbr>Types</a>
-							</li>
-							<li class=" tsd-kind-type-alias tsd-parent-kind-module">
-								<a href="../modules/animate.html#animationtarget" class="tsd-kind-icon">Animation<wbr>Target</a>
-							</li>
-							<li class=" tsd-kind-type-alias tsd-parent-kind-module">
-								<a href="../modules/animate.html#callback" class="tsd-kind-icon">Callback</a>
-							</li>
-							<li class=" tsd-kind-type-alias tsd-parent-kind-module">
-								<a href="../modules/animate.html#callbackargs" class="tsd-kind-icon">Callback<wbr>Args</a>
-							</li>
-							<li class=" tsd-kind-type-alias tsd-parent-kind-module">
-								<a href="../modules/animate.html#computedanimationoptions" class="tsd-kind-icon">Computed<wbr>Animation<wbr>Options</a>
-							</li>
-							<li class=" tsd-kind-type-alias tsd-parent-kind-module">
-								<a href="../modules/animate.html#computedoptions" class="tsd-kind-icon">Computed<wbr>Options</a>
-							</li>
-							<li class=" tsd-kind-type-alias tsd-parent-kind-module">
-								<a href="../modules/animate.html#generictypes" class="tsd-kind-icon">Generic<wbr>Types</a>
-							</li>
-							<li class=" tsd-kind-type-alias tsd-parent-kind-module">
-								<a href="../modules/animate.html#keyframeoptionstype" class="tsd-kind-icon">Key<wbr>Frame<wbr>Options<wbr>Type</a>
-							</li>
-							<li class=" tsd-kind-type-alias tsd-parent-kind-module">
-								<a href="../modules/animate.html#playstates" class="tsd-kind-icon">Play<wbr>States</a>
-							</li>
-							<li class=" tsd-kind-variable tsd-parent-kind-module">
-								<a href="../modules/animate.html#defaultanimationoptions" class="tsd-kind-icon">Default<wbr>Animation<wbr>Options</a>
-							</li>
-							<li class=" tsd-kind-variable tsd-parent-kind-module">
-								<a href="../modules/animate.html#easings" class="tsd-kind-icon">EASINGS</a>
-							</li>
-							<li class=" tsd-kind-variable tsd-parent-kind-module">
-								<a href="../modules/animate.html#easingkeys" class="tsd-kind-icon">Easing<wbr>Keys</a>
-							</li>
-							<li class=" tsd-kind-function tsd-parent-kind-module">
-								<a href="../modules/animate.html#getease" class="tsd-kind-icon">Get<wbr>Ease</a>
-							</li>
-							<li class=" tsd-kind-function tsd-parent-kind-module">
-								<a href="../modules/animate.html#animate-2" class="tsd-kind-icon">animate</a>
-							</li>
-							<li class=" tsd-kind-function tsd-parent-kind-module">
-								<a href="../modules/animate.html#computeoption" class="tsd-kind-icon">compute<wbr>Option</a>
-							</li>
-							<li class=" tsd-kind-function tsd-parent-kind-module">
-								<a href="../modules/animate.html#flatten" class="tsd-kind-icon">flatten</a>
-							</li>
-							<li class=" tsd-kind-function tsd-parent-kind-module">
-								<a href="../modules/animate.html#getelements" class="tsd-kind-icon">get<wbr>Elements</a>
-							</li>
-							<li class=" tsd-kind-function tsd-parent-kind-module">
-								<a href="../modules/animate.html#gettargets" class="tsd-kind-icon">get<wbr>Targets</a>
-							</li>
-							<li class=" tsd-kind-function tsd-parent-kind-module">
-								<a href="../modules/animate.html#mapanimationoptions" class="tsd-kind-icon">map<wbr>Animation<wbr>Options</a>
-							</li>
-							<li class=" tsd-kind-function tsd-parent-kind-module">
-								<a href="../modules/animate.html#parseoptions" class="tsd-kind-icon">parse<wbr>Options</a>
 							</li>
 						</ul>
 					</li>
