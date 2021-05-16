@@ -1,13 +1,20 @@
 import { Manager, methodCall } from "@okikio/manager";
 
-export type ListenerCallback = ((...args: any) => void);
+/**
+ * Represents a listener callback function
+ */
+export type TypeListenerCallback = ((...args: any) => void);
+
+/** Represents a new event listener consisting of properties like: callback, scope, name */
 export interface IListener {
-    readonly callback: ListenerCallback;
+    readonly callback: TypeListenerCallback;
     readonly scope: object;
     readonly name: string;
 }
 
-/** Represents a new event listener consisting of properties like: callback, scope, name */
+/**
+ * Creates a new listener based on {@link IListener | IListener}
+ */
 export const newListener = ({
     callback = () => { },
     scope = null,
@@ -24,7 +31,10 @@ export class Event extends Manager<number, IListener> {
     }
 }
 
-export type EventInput = string | object | Array<string>;
+/**
+ * The types of values `EventEmitter.prototype.on(...), EventEmitter.prototype.once(...), and EventEmitter.prototype.off(...)` accept
+ */
+export type TypeEventInput = string | object | Array<string>;
 
 /**
  * An Event Emitter
@@ -48,7 +58,7 @@ export class EventEmitter extends Manager<string, Event> {
     /** Creates a listener and adds it to an event */
     public newListener(
         name: string,
-        callback: ListenerCallback,
+        callback: TypeListenerCallback,
         scope: object
     ): Event {
         let event = this.getEvent(name);
@@ -58,8 +68,8 @@ export class EventEmitter extends Manager<string, Event> {
 
     /** Adds a listener to a given event */
     public on(
-        events: EventInput,
-        callback?: ListenerCallback | object,
+        events: TypeEventInput,
+        callback?: TypeListenerCallback | object,
         scope?: object
     ): EventEmitter {
         // If there is no event break
@@ -69,11 +79,11 @@ export class EventEmitter extends Manager<string, Event> {
         if (typeof events == "string") events = events.trim().split(/\s/g);
 
         let _name: string;
-        let _callback: ListenerCallback;
+        let _callback: TypeListenerCallback;
         let isObject = typeof events == "object" && !Array.isArray(events);
 
         let _scope: object = isObject ? callback : scope;
-        if (!isObject) _callback = (callback as ListenerCallback);
+        if (!isObject) _callback = (callback as TypeListenerCallback);
 
         // Loop through the list of events
         Object.keys(events).forEach(key => {
@@ -81,12 +91,8 @@ export class EventEmitter extends Manager<string, Event> {
             // Remember events can be {String | Object | Array<string>}
 
             // Check If events is an Object (JSON like Object, and not an Array)
-            if (isObject) {
-                _name = key;
-                _callback = events[key];
-            } else {
-                _name = events[key];
-            }
+            _name = isObject ? key : events[key];
+            if (isObject) _callback = events[key];
 
             this.newListener(_name, _callback, _scope);
         }, this);
@@ -96,7 +102,7 @@ export class EventEmitter extends Manager<string, Event> {
     /** Removes a listener from an event */
     public removeListener(
         name: string,
-        callback: ListenerCallback,
+        callback: TypeListenerCallback,
         scope: object
     ): Event {
         let event: Event = this.get(name);
@@ -107,9 +113,7 @@ export class EventEmitter extends Manager<string, Event> {
                 if (
                     value.callback === listener.callback &&
                     value.scope === listener.scope
-                ) {
-                    return event.remove(i);
-                }
+                ) return event.remove(i);
             });
         }
 
@@ -118,8 +122,8 @@ export class EventEmitter extends Manager<string, Event> {
 
     /** Remove a listener from a given event, or just completely remove an event */
     public off(
-        events: EventInput,
-        callback?: ListenerCallback | object,
+        events: TypeEventInput,
+        callback?: TypeListenerCallback | object,
         scope?: object
     ): EventEmitter {
         // If there is no event break
@@ -129,11 +133,11 @@ export class EventEmitter extends Manager<string, Event> {
         if (typeof events == "string") events = events.trim().split(/\s/g);
 
         let _name: string;
-        let _callback: ListenerCallback;
+        let _callback: TypeListenerCallback;
         let isObject = typeof events == "object" && !Array.isArray(events);
 
         let _scope: object = isObject ? callback : scope;
-        if (!isObject) _callback = (callback as ListenerCallback);
+        if (!isObject) _callback = (callback as TypeListenerCallback);
 
         // Loop through the list of events
         Object.keys(events).forEach(key => {
@@ -141,16 +145,46 @@ export class EventEmitter extends Manager<string, Event> {
             // Remember events can be {String | Object | Array<any>}
 
             // Check If events is an Object (JSON like Object, and not an Array)
-            if (isObject) {
-                _name = key;
-                _callback = events[key];
-            } else {
-                _name = events[key];
-            }
+            _name = isObject ? key : events[key];
+            if (isObject) _callback = events[key];
 
             if (typeof _callback === "function") {
                 this.removeListener(_name, _callback, _scope);
             } else this.remove(_name);
+        }, this);
+        return this;
+    }
+
+    /**
+     * Adds a one time event listener for an event
+     */
+    public once(
+        events: TypeEventInput,
+        callback?: TypeListenerCallback | object,
+        scope?: object
+    ): EventEmitter {
+        // If there is no event break
+        if (typeof events == "undefined") return this;
+
+        // Create a new event every space
+        if (typeof events == "string") events = events.trim().split(/\s/g);
+
+        let isObject = typeof events == "object" && !Array.isArray(events);
+
+        // Loop through the list of events
+        Object.keys(events).forEach(key => {
+            // Select the name of the event from the list
+            // Remember events can be {String | Object | Array<string>}
+            // Check If events is an Object (JSON like Object, and not an Array)
+            let _name: string = isObject ? key : events[key];
+            let _callback: TypeListenerCallback = isObject ? events[key] : (callback as TypeListenerCallback);
+            let _scope: object = isObject ? callback : scope;
+            let onceFn: TypeListenerCallback = (...args) => {
+                _callback.apply(_scope, args);
+                this.removeListener(_name, onceFn, _scope);
+            };
+
+            this.newListener(_name, onceFn, _scope);
         }, this);
         return this;
     }
@@ -169,7 +203,6 @@ export class EventEmitter extends Manager<string, Event> {
         // Loop through the list of events
         events.forEach((event: string) => {
             let _event: Event = this.get(event);
-
             if (_event instanceof Event) {
                 _event.forEach((listener: IListener) => {
                     let { callback, scope } = listener;

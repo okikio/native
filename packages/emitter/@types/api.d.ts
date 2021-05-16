@@ -1,11 +1,17 @@
 import { Manager } from "@okikio/manager";
-export declare type ListenerCallback = ((...args: any) => void);
+/**
+ * Represents a listener callback function
+ */
+export declare type TypeListenerCallback = ((...args: any) => void);
+/** Represents a new event listener consisting of properties like: callback, scope, name */
 export interface IListener {
-    readonly callback: ListenerCallback;
+    readonly callback: TypeListenerCallback;
     readonly scope: object;
     readonly name: string;
 }
-/** Represents a new event listener consisting of properties like: callback, scope, name */
+/**
+ * Creates a new listener based on {@link IListener | IListener}
+ */
 export declare const newListener: ({ callback, scope, name, }: IListener) => IListener;
 /** Represents a new event  */
 export declare class Event extends Manager<number, IListener> {
@@ -13,7 +19,10 @@ export declare class Event extends Manager<number, IListener> {
     name: string;
     constructor(name?: string);
 }
-export declare type EventInput = string | object | Array<string>;
+/**
+ * The types of values `EventEmitter.prototype.on(...), EventEmitter.prototype.once(...), and EventEmitter.prototype.off(...)` accept
+ */
+export declare type TypeEventInput = string | object | Array<string>;
 /**
  * An Event Emitter
  * */
@@ -22,13 +31,17 @@ export declare class EventEmitter extends Manager<string, Event> {
     /** Gets event, if event doesn't exist create a new one */
     getEvent(name: string): Event;
     /** Creates a listener and adds it to an event */
-    newListener(name: string, callback: ListenerCallback, scope: object): Event;
+    newListener(name: string, callback: TypeListenerCallback, scope: object): Event;
     /** Adds a listener to a given event */
-    on(events: EventInput, callback?: ListenerCallback | object, scope?: object): EventEmitter;
+    on(events: TypeEventInput, callback?: TypeListenerCallback | object, scope?: object): EventEmitter;
     /** Removes a listener from an event */
-    removeListener(name: string, callback: ListenerCallback, scope: object): Event;
+    removeListener(name: string, callback: TypeListenerCallback, scope: object): Event;
     /** Remove a listener from a given event, or just completely remove an event */
-    off(events: EventInput, callback?: ListenerCallback | object, scope?: object): EventEmitter;
+    off(events: TypeEventInput, callback?: TypeListenerCallback | object, scope?: object): EventEmitter;
+    /**
+     * Adds a one time event listener for an event
+     */
+    once(events: TypeEventInput, callback?: TypeListenerCallback | object, scope?: object): EventEmitter;
     /** Call all listeners within an event */
     emit(events: string | Array<any>, ...args: any): EventEmitter;
     /** Clears events and event listeners */
