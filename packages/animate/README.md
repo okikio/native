@@ -27,6 +27,7 @@ Once Gitpod has booted up, click on the `@okikio/animate (no-pjax)` button in th
   - [Installation](#installation)
   - [Demo](#demo)
   - [Getting started](#getting-started)
+  - [API Documentation](#api-documentation)
   - [Options](#options)
     - [target(s)](#targets)
     - [easing](#easing)
@@ -69,7 +70,7 @@ Once Gitpod has booted up, click on the `@okikio/animate (no-pjax)` button in th
     - [finish()](#finish)
     - [cancel()](#cancel)
     - [stop()](#stop)
-  - [API Documentation](#api-documentation)
+  - [Pause Animation when Page is out of Focus](#pause-animation-when-page-is-out-of-focus)
   - [Examples](#examples)
   - [Browser support](#browser-support)
     - [CSS & SVG Animations Support](#css--svg-animations-support)
@@ -193,6 +194,10 @@ animate({
 ```
 
 [Preview this example &#8594;](https://codepen.io/okikio/pen/mdPwNbJ?editors=0010)
+
+## API Documentation
+
+Not all available methods and properties are listed here (otherwise this README would be too long), so  go through the [API documentation](https://okikio.github.io/native/docs/modules/animate.html) for the full documented API.
 
 ## Options
 
@@ -1112,11 +1117,21 @@ Cancels all Animations and de-references them allowing them to be garbage collec
 
 The `stop` method is not chainable.
 
-*Warning: if you try to reference properties from the `Animate` class after stop has been called many things will break. The `Animate` class cannot and will not recover from stop, it is meant as a final trash run of animations, don't use it if you think you may restart the animation.*
+_**Warning**: if you try to reference properties from the `Animate` class after stop has been called many things will break. The `Animate` class cannot and will not recover from stop, it is meant as a final trash run of animations, don't use it if you think you may restart the animation._
 
-## API Documentation
+## Pause Animation when Page is out of Focus
 
-Not all available methods and properties are listed here (otherwise this README would be too long), so go to [okikio.github.io/native/docs](https://okikio.github.io/native/docs) for a fully documented API.
+If the page looses focus, by default `Animate` will pause all playing animations until the user goes back to the page, however, this behavior can be changed by setting the `pauseOnPageHidden` static property to false.
+
+_**Note**: you need to put this statemeant at the top of your document, before all `Animate` instances_
+
+```ts
+import { animate, Animate } from "@okikio/animate";
+Animate.pauseOnPageHidden = false;
+animate({
+    // ...
+})
+```
 
 ## Examples
 
