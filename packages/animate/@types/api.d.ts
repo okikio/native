@@ -882,6 +882,26 @@ export declare class Animate {
     promise: Promise<Animate[]>;
     constructor(options: IAnimationOptions);
     /**
+     * Tells all animate instances to pause when the page is hidden
+     *
+     * @static
+     * @type {Boolean}
+     * @memberof Animate
+     */
+    static pauseOnPageHidden: Boolean;
+    /**
+     * Store the last remebered playstate before page was hidden
+     *
+     * @protected
+     * @type {TypePlayStates}
+     * @memberof Animate
+     */
+    protected visibilityPlayState: TypePlayStates;
+    /**
+     * document `visibilitychange` event handler
+     */
+    protected onVisibilityChange(): void;
+    /**
      * Returns a new Promise that is resolved when the animation finishes
      */
     newPromise(): Promise<Animate[]>;
