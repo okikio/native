@@ -45,11 +45,11 @@ export interface IPageManager extends Service {
     loading: Manager<string, Promise<string>>;
     pages: AdvancedManager<string, Page>;
     install(): any;
-    get(key: any): Page;
-    add(value: any): PageManager;
-    set(key: any, value: any): PageManager;
-    remove(key: any): PageManager;
-    has(key: any): boolean;
+    get(key: string): Page;
+    add(value: IPage): PageManager;
+    set(key: string, value: IPage): PageManager;
+    remove(key: string): PageManager;
+    has(key: string): boolean;
     clear(): PageManager;
     size: number;
     keys(): any[];
@@ -63,11 +63,11 @@ export declare class PageManager extends Service implements IPageManager {
     pages: AdvancedManager<string, Page>;
     /** Instantiate pages, and add the current page to pages */
     install(): void;
-    get(key: any): Page;
-    add(value: any): this;
-    set(key: any, value: any): this;
-    remove(key: any): this;
-    has(key: any): boolean;
+    get(key: string): Page;
+    add(value: IPage): this;
+    set(key: string, value: IPage): this;
+    remove(key: string): this;
+    has(key: string): boolean;
     clear(): this;
     get size(): number;
     keys(): string[];

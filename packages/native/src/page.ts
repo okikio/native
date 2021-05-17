@@ -95,11 +95,11 @@ export interface IPageManager extends Service {
 
     install(): any,
 
-    get(key): Page,
-    add(value): PageManager,
-    set(key, value): PageManager,
-    remove(key): PageManager,
-    has(key): boolean,
+    get(key: string): Page,
+    add(value: IPage): PageManager,
+    set(key: string, value: IPage): PageManager,
+    remove(key: string): PageManager,
+    has(key: string): boolean,
     clear(): PageManager,
     size: number,
     keys(): any[],
@@ -124,11 +124,11 @@ export class PageManager extends Service implements IPageManager {
         URLString = undefined;
     }
 
-    get(key) { return this.pages.get(key); }
-    add(value) { this.pages.add(value); return this; }
-    set(key, value) { this.pages.set(key, value); return this; }
-    remove(key) { this.pages.remove(key); return this; }
-    has(key) { return this.pages.has(key); }
+    get(key: string) { return this.pages.get(key); }
+    add(value: IPage) { this.pages.add(value); return this; }
+    set(key: string, value: IPage) { this.pages.set(key, value); return this; }
+    remove(key: string) { this.pages.remove(key); return this; }
+    has(key: string) { return this.pages.has(key); }
     clear() { this.pages.clear(); return this; }
     get size() { return this.pages.size; }
     keys() { return this.pages.keys(); }

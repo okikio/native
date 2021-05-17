@@ -1,4 +1,4 @@
-import { Manager } from "@okikio/manager";
+import { Manager, methodCall } from "@okikio/manager";
 import { ICONFIG } from "./config";
 import { IApp } from "./app";
 import { EventEmitter } from "@okikio/emitter";
@@ -38,4 +38,4 @@ export declare class AdvancedManager<K, V extends ManagerItem> extends Manager<K
     /** Add a ManagerItem to AdvancedManager at a specified key */
     set(key: K, value: V): this;
 }
-export * from "@okikio/manager";
+export { Manager, methodCall };

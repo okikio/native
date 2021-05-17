@@ -8,5 +8,6 @@ export * from "./transition";
 export * from "./app";
 export * from "./pjax";
 export * from "./router";
+export * from "@okikio/manager";
 export * from "@okikio/animate";
 export * from "@okikio/emitter";

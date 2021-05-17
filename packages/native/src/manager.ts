@@ -1,4 +1,4 @@
-import { Manager, methodCall, asyncMethodCall } from "@okikio/manager";
+import { Manager, methodCall } from "@okikio/manager";
 import { ICONFIG } from "./config";
 import { IApp } from "./app";
 import { EventEmitter } from "@okikio/emitter";
@@ -81,4 +81,4 @@ export class AdvancedManager<K, V extends ManagerItem> extends Manager<K, V> {
     }
 }
 
-export * from "@okikio/manager";
+export { Manager, methodCall };
