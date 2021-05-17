@@ -29,7 +29,8 @@
 			"@okikio/animate",
 			"@okikio/native",
 			"demo",
-			"gulp"
+			"gulp",
+			"typedoc"
 		]
 	}
 }
