@@ -1,6 +1,6 @@
 # @okikio/native
 
-`native` is an initiative that encourages performance, modern technologies, and great user experiences. The idea behind `@okikio/native` is that it acts as the core framework to the `native` initiative, it combines all the other package into it a core package that is ~9.6 KB (minified & gzipped).
+`native` is an initiative that encourages performance, modern technologies, and great user experiences. The idea behind `@okikio/native` is that it acts as the core framework to the `native` initiative, it combines all the other package into it a core package that is ~9.8 KB (minified & gzipped).
 
 [@okikio/native](https://www.skypack.dev/view/@okikio/native) is a guideline on how to create great web experiences that integrate into the system in a way that feels like a cohesive and native experience.
 
