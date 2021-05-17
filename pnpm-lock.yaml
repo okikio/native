@@ -14,7 +14,7 @@ importers:
       chalk: ^4.1.1
       chokidar: ^3.5.1
       commitizen: ^4.2.4
-      esbuild: ^0.11.21
+      esbuild: ^0.11.23
       gulp: ^4.0.2
       gulp-esbuild: ^0.7.7
       gulp-plumber: ^1.2.1
@@ -47,7 +47,7 @@ importers:
       chalk: 4.1.1
       chokidar: 3.5.1
       commitizen: 4.2.4
-      esbuild: 0.11.21
+      esbuild: 0.11.23
       gulp: 4.0.2
       gulp-esbuild: 0.7.7
       gulp-plumber: 1.2.1
@@ -1792,7 +1792,7 @@ packages:
     dependencies:
       caniuse-lite: 1.0.30001228
       colorette: 1.2.2
-      electron-to-chromium: 1.3.727
+      electron-to-chromium: 1.3.728
       escalade: 3.1.1
       node-releases: 1.1.72
     dev: true
@@ -2968,8 +2968,8 @@ packages:
     resolution: {integrity: sha512-B6zLTxxaOFP4WZm6DrvgRk8kLFYWNhQ5TrHMC0l5WtkMXhU5UbnvWoTfeEwqOruUSlNMhVLfYak7REX6oC5Yfw==}
     dev: true
 
-  /electron-to-chromium/1.3.727:
-    resolution: {integrity: sha512-Mfz4FIB4FSvEwBpDfdipRIrwd6uo8gUDoRDF4QEYb4h4tSuI3ov594OrjU6on042UlFHouIJpClDODGkPcBSbg==}
+  /electron-to-chromium/1.3.728:
+    resolution: {integrity: sha512-SHv4ziXruBpb1Nz4aTuqEHBYi/9GNCJMYIJgDEXrp/2V01nFXMNFUTli5Z85f5ivSkioLilQatqBYFB44wNJrA==}
     dev: true
 
   /emittery/0.7.2:
@@ -3118,14 +3118,14 @@ packages:
     requiresBuild: true
     dev: true
 
-  /esbuild/0.11.21:
-    resolution: {integrity: sha512-FqpYdJqiTeLDbj3vqxc/fG8UmHIEvQrDaUxSw1oJf4giLd/tnMDUUlXellCjOab7qGKQ5hUFD5eQgmO+tkZeow==}
+  /esbuild/0.11.22:
+    resolution: {integrity: sha512-1e6BDytHzTxRlUOCe7M0+ZV5JqKARByHwz1iP5UNmxt2TEOyI8E/1gLLNCyaPjpXfCr1TThxTyFO9MjF5mFLvA==}
     hasBin: true
     requiresBuild: true
     dev: true
 
-  /esbuild/0.11.22:
-    resolution: {integrity: sha512-1e6BDytHzTxRlUOCe7M0+ZV5JqKARByHwz1iP5UNmxt2TEOyI8E/1gLLNCyaPjpXfCr1TThxTyFO9MjF5mFLvA==}
+  /esbuild/0.11.23:
+    resolution: {integrity: sha512-iaiZZ9vUF5wJV8ob1tl+5aJTrwDczlvGP0JoMmnpC2B0ppiMCu8n8gmy5ZTGl5bcG081XBVn+U+jP+mPFm5T5Q==}
     hasBin: true
     requiresBuild: true
     dev: true
@@ -3933,7 +3933,7 @@ packages:
     resolution: {integrity: sha512-v0Wp5ptrw4hBoTUy2H2YnbJH2QDr88TN9wgD6XMU1+hj2Bx119gNISVuAsnIWgzhPqybqN2usu1ROhcKtTFyiA==}
     engines: {node: '>=8.6.0'}
     dependencies:
-      esbuild: 0.11.21
+      esbuild: 0.11.23
       plugin-error: 1.0.1
       vinyl: 2.2.1
     dev: true
