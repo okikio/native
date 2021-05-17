@@ -11,7 +11,8 @@
     - [@okikio/emitter](#okikioemitter)
     - [@okikio/animate](#okikioanimate)
     - [@okikio/native](#okikionative)
-    - [etc...](#etc)
+    - [etc](#etc)
+    - [API Documentation](#api-documentation)
   - [Usage](#usage)
   - [Trying it Out](#trying-it-out)
   - [Demo](#demo)
@@ -48,11 +49,15 @@ _Note: you can install it as a seperate package from the rest of the `@okikio/na
 `@okikio/native` is the framework component of the `native` initiative, it bundles all the other packages into iteself. This package encourages the user to download/copy-and-paste the code into their development enviroment of choice, and tweak it to match their projects needs.
 [Read more...](./packages/native/README.md)
 
-### etc...
+### etc
 
 ***Note**: All package in the `native` initiative are built for ES2020, This project expects the user to use a build tool to support older versions of browsers, the idea being most people are using evergreen browsers, so, why are web developers piling on polyfill code that most users don't need. I suggest `esbuild`, `rollup`, `*typescript`, or `webpack` for bundling the library, and for polyfills `babel` or `polyfill.io`.*
 
 **I have found typescript to be the best method for bundling for older browsers e.g. IE11. I only suggest you use `babel` for polyfilling `Promise`, `fetch`, etc...*
+
+### API Documentation
+
+Go to [okikio.github.io/native/docs](https://okikio.github.io/native/docs), for a more detailed API documentation on the native initiative.
 
 ## Usage
 
