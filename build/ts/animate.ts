@@ -41,6 +41,8 @@ let playbackFn = (containerSel, anims) => {
 
 }
 
+let random = (min: number, max: number) => Math.floor(Math.random() * (max - min + 1)) + min;
+
 /* Properties Section */
 // Playback Controls Demo
 (() => {
@@ -73,10 +75,29 @@ let playbackFn = (containerSel, anims) => {
         // },
 
         // transform: ["translateX(0px)", "translateX(300px)"],
-        translateX: 300,
+        // translateX: 300,
+
+        translateX: (index) => [170, 80, 270][index],
+        translateY(index) {
+            return 50 + (-50 * index);
+        },
+        scale(index, total) {
+            return (total - index) + 0.25;
+        },
         opacity(index, total) {
             return [0.5, 0.5 + Math.min((index + 1) / total, 0.5)];
         },
+        rotate: () => random(-360, 360),
+        borderRadius: () => `${random(10, 35)}%`,
+        duration: () => random(1200, 1800),
+        delay: () => random(0, 400),
+
+        // delay(index) {
+        //     return ((index + 1) * 500) / 2;
+        // },
+        // duration(index: number) {
+        //     return (index + 1) * 500;
+        // },
 
         // It is best to use the onfinish() method, but in this situation fillMode works best
         fillMode: "both",
@@ -85,17 +106,10 @@ let playbackFn = (containerSel, anims) => {
         //     element.style.transform = "translateX(300px)";
         // },
 
-        easing: "out-cubic",
+        easing: "in-out-back",
         loop: 2,
         speed: 1.5,
         direction: "alternate",
-
-        delay(index) {
-            return ((index + 1) * 500) / 2;
-        },
-        duration(index: number) {
-            return (index + 1) * 500;
-        },
 
         padEndDelay: true,
         autoplay: true
@@ -105,7 +119,7 @@ let playbackFn = (containerSel, anims) => {
         console.log("updateOptions");
 
         anim.updateOptions({
-            backgroundColor: ["#fff", "red"],
+            backgroundColor: "red",
             speed: (i) => 1.5 - (i * 0.125),
         });
     }, 500)

@@ -3,7 +3,7 @@ include /components/footer.pug
 include /components/big-transition.pug
 
 doctype html
-head
+head.dark
   meta(charset='utf-8')
   meta(http-equiv='X-UA-Compatible' content='IE=edge')
   block title
@@ -14,10 +14,12 @@ head
 
   link(rel='preconnect' href='https://fonts.googleapis.com')
   link(rel='preconnect' href='https://fonts.gstatic.com')
-  
+
   link(rel='stylesheet' href='./css/app.css' async)
-  link(href='https://fonts.googleapis.com/css2?family=Material+Icons&family=Material+Icons+Round&display=swap' rel='stylesheet' async)
   script(src='./js/theme.js' type='module' async)
+
+  link(href='https://fonts.googleapis.com/css2?family=Material+Icons&family=Material+Icons+Round&display=swap' rel='stylesheet' async)
+
 
 body
   +navbar

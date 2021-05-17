@@ -11,7 +11,8 @@
 
 .el,
 .el-initial {
-    --size: 4vmin;
+    border-radius: 50%;
+    --size: 2vmin;
     width: var(--size);
     height: var(--size);
     /*     transform: scale(1); */

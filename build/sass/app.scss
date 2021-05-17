@@ -84,7 +84,7 @@ a {
     }
 
     .navbar-bg {
-        transition: background-color ease 0.25s;
+        // transition: background-color ease 0.25s;
         @apply absolute top-0 left-0 w-full h-full px-5;
         @apply bg-white dark:bg-black;
     }
@@ -117,7 +117,7 @@ a {
     }
 
     .navbar-border {
-        transition: border-color ease 0.25s;
+        // transition: border-color ease 0.25s;
         @apply absolute top-0 left-0 w-full h-full;
         @apply border-b border-gray-200;
         @apply dark:border-elevated;
