@@ -1228,7 +1228,47 @@ export class Animate {
     public promise: Promise<Animate[]>;
     constructor(options: IAnimationOptions) {
         this.loop = this.loop.bind(this);
+        this.onVisibilityChange = this.onVisibilityChange.bind(this);
         this.updateOptions(options);
+
+        this.visibilityPlayState = this.getPlayState();
+        if (Animate.pauseOnPageHidden) {
+            document.addEventListener('visibilitychange', this.onVisibilityChange);
+        }
+    }
+
+    /**
+     * Tells all animate instances to pause when the page is hidden
+     *
+     * @static
+     * @type {Boolean}
+     * @memberof Animate
+     */
+    static pauseOnPageHidden: Boolean = true;
+
+    /**
+     * Store the last remebered playstate before page was hidden
+     *
+     * @protected
+     * @type {TypePlayStates}
+     * @memberof Animate
+     */
+     protected visibilityPlayState: TypePlayStates;
+
+    /**
+     * document `visibilitychange` event handler
+     */
+    protected onVisibilityChange() {
+        if (document.hidden) {
+            this.visibilityPlayState = this.getPlayState();
+            if (this.is("running")) {
+                this.loop();
+                this.pause();
+            }
+        } else {
+            if (this.visibilityPlayState == "running" && this.is("paused"))
+                this.play();
+        }
     }
 
     /**
@@ -1287,8 +1327,8 @@ export class Animate {
      */
     public loop(): void {
         this.stopLoop();
-        this.emit("update", this.getProgress(), this);
         this.animationFrame = window.requestAnimationFrame(this.loop);
+        this.emit("update", this.getProgress(), this);
     }
 
     /**
@@ -1391,6 +1431,11 @@ export class Animate {
      */
     public stop() {
         this.cancel();
+
+        if (Animate.pauseOnPageHidden) {
+            document.removeEventListener('visibilitychange', this.onVisibilityChange);
+        }
+
         this.computedOptions.clear();
         this.animations.clear();
         this.keyframeEffects.clear();
