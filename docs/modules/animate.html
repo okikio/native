@@ -70,7 +70,7 @@
 					<a href="#okikioanimate" id="okikioanimate" style="color: inherit; text-decoration: none;">
 						<h1>@okikio/animate</h1>
 					</a>
-					<p>An animation library for the modern web, which. Inspired by animate plus, and animejs, <a href="https://www.skypack.dev/view/@okikio/animate">@okikio/animate</a> is a Javascript animation library focused on performance and ease of use. It  utilizes the Web Animation API to deliver butter smooth animations at a small size, it weighs ~4.7 KB (minified and gzipped).</p>
+					<p>An animation library for the modern web, which. Inspired by animate plus, and animejs, <a href="https://www.skypack.dev/view/@okikio/animate">@okikio/animate</a> is a Javascript animation library focused on performance and ease of use. It  utilizes the Web Animation API to deliver butter smooth animations at a small size, it weighs ~4.9 KB (minified and gzipped).</p>
 					<p><em>Before even getting started, you will most likely need the Web Animation API, Promise, Set, and Map polyfills. If you install <a href="https://www.skypack.dev/view/@okikio/animate">@okikio/animate</a> via <a href="https://www.npmjs.com/package/@okikio/animate">npm</a> you are most likely going to need <a href="https://rollupjs.org/">rollup</a> or <a href="https://esbuild.github.io/">esbuild</a>. You can use <a href="https://github.com/web-animations/web-animations-js">web-animations-js</a>, or <a href="https://polyfill.io/">polyfill.io</a> to create a polyfill. The minimum feature requirement for a polyfill are Maps, Set, Promises, and a WebAnimation polyfill, e.g. <a href="https://cdn.polyfill.io/v3/polyfill.min.js?features=default,es2015,es2018,Array.prototype.includes,Map,Set,Promise,WebAnimations">https://cdn.polyfill.io/v3/polyfill.min.js?features=default,es2015,es2018,Array.prototype.includes,Map,Set,Promise,WebAnimations</a>.</em></p>
 					<p><em><strong>Warning</strong>: polyfilling may not fix animation format bugs, e.g. <a href="https://developer.mozilla.org/en-US/docs/Web/API/KeyframeEffect/composite">composite animations</a> don&#39;t work on older browsers, so, if you use <code>polyfill.io</code> and set it to check if the browser supports the feature before applying the polyfill, your project might encounter errors, as the browser may only have partial support of the Web Animation API.</em></p>
 					<p><em><strong>Note</strong>: to properly understand <code>@okikio/animate</code>, please read up on the <a href="https://developer.mozilla.org/en-US/docs/Web/API/Element/animate">Web Animation API</a> on MDN.</em></p>
@@ -89,6 +89,7 @@
 								<li><a href="#installation">Installation</a></li>
 								<li><a href="#demo">Demo</a></li>
 								<li><a href="#getting-started">Getting started</a></li>
+								<li><a href="#api-documentation">API Documentation</a></li>
 								<li><a href="#options">Options</a><ul>
 										<li><a href="#targets">target(s)</a></li>
 										<li><a href="#easing">easing</a></li>
@@ -114,7 +115,6 @@
 								<li><a href="#animations">Animations</a></li>
 								<li><a href="#animation-options--css-properties-as-methods">Animation Options &amp; CSS Properties as Methods</a><ul>
 										<li><a href="#transformable-css-properties">Transformable CSS Properties</a></li>
-										<li><a href="#css--svg-animations">CSS &amp; SVG Animations</a></li>
 									</ul>
 								</li>
 								<li><a href="#promises-and-promise-like">Promises and Promise-Like</a></li>
@@ -138,9 +138,12 @@
 										<li><a href="#stop">stop()</a></li>
 									</ul>
 								</li>
-								<li><a href="#api-documentation">API Documentation</a></li>
+								<li><a href="#pause-animation-when-page-is-out-of-focus">Pause Animation when Page is out of Focus</a></li>
 								<li><a href="#examples">Examples</a></li>
-								<li><a href="#browser-support">Browser support</a></li>
+								<li><a href="#browser-support">Browser support</a><ul>
+										<li><a href="#css--svg-animations-support">CSS &amp; SVG Animations Support</a></li>
+									</ul>
+								</li>
 								<li><a href="#content-delivery-networks">Content delivery networks</a></li>
 								<li><a href="#memory-management">Memory Management</a></li>
 								<li><a href="#best-practices-these-are-from-animate-plus-but-they-are-true-for-all-animation-libraries">Best practices (these are from Animate Plus, but they are true for all Animation libraries)</a></li>
@@ -257,6 +260,10 @@
 <span style="color: #000000">});</span>
 </code></pre>
 					<p><a href="https://codepen.io/okikio/pen/mdPwNbJ?editors=0010">Preview this example &#8594;</a></p>
+					<a href="#api-documentation" id="api-documentation" style="color: inherit; text-decoration: none;">
+						<h2>API Documentation</h2>
+					</a>
+					<p>Not all available methods and properties are listed here (otherwise this README would be too long), so  go through the <a href="https://okikio.github.io/native/docs/modules/animate.html">API documentation</a> for the full documented API.</p>
 					<a href="#options" id="options" style="color: inherit; text-decoration: none;">
 						<h2>Options</h2>
 					</a>
@@ -1046,129 +1053,6 @@
 <span style="color: #008000">//=   opacity: [ &#039;0&#039;, &#039;5&#039; ]</span>
 <span style="color: #008000">//= }</span>
 </code></pre>
-					<a href="#css-amp-svg-animations" id="css-amp-svg-animations" style="color: inherit; text-decoration: none;">
-						<h3>CSS &amp; SVG Animations</h3>
-					</a>
-					<p><code>Animate</code> can animate <code>~197</code> CSS properties; <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_animated_properties">MDN Animatable CSS Properties</a> and <code>~63</code> SVG properties; <a href="https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute/Presentation">MDN SVG Presentation Attributes</a>.</p>
-					<p>The animatable CSS properties are:</p>
-					<ul>
-						<li>backdrop-filter</li>
-						<li>background</li>
-						<li>background-color</li>
-						<li>background-position</li>
-						<li>background-size</li>
-						<li>block-size</li>
-						<li>border</li>
-						<li>border-block-end</li>
-						<li>border-block-end-color</li>
-						<li>border-block-end-width</li>
-						<li>border-block-start</li>
-						<li>border-block-start-color</li>
-						<li>border-block-start-width</li>
-						<li>border-bottom</li>
-						<li>border-bottom-color</li>
-						<li>border-bottom-left-radius</li>
-						<li>border-bottom-right-radius</li>
-						<li>border-bottom-width</li>
-						<li>border-color</li>
-						<li>border-end-end-radius</li>
-						<li>border-end-start-radius</li>
-						<li>border-image-outset</li>
-						<li>border-image-slice</li>
-						<li>border-image-width</li>
-						<li>border-inline-end</li>
-						<li>border-inline-end-color</li>
-						<li>border-inline-end-width</li>
-						<li>border-inline-start</li>
-						<li>border-inline-start-color</li>
-						<li>border-inline-start-width</li>
-						<li>border-left</li>
-						<li>border-left-color</li>
-						<li>border-left-width</li>
-						<li>border-radius</li>
-						<li>border-right</li>
-						<li>border-right-color</li>
-						<li>border-right-width</li>
-						<li>border-start-end-radius</li>
-						<li>border-start-start-radius</li>
-						<li>border-top</li>
-						<li>border-top-color</li>
-						<li>border-top-left-radius</li>
-						<li>border-top-right-radius</li>
-						<li>border-top-width</li>
-						<li>border-width</li>
-						<li>bottom</li>
-						<li>box-shadow</li>
-						<li>caret-color</li>
-						<li>clip</li>
-						<li>clip-path</li>
-						<li>offset-distance</li>
-						<li>color</li>
-						<li><a href="https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_animated_properties">etc...</a></li>
-					</ul>
-					<p>The animatable SVG properties are:</p>
-					<ul>
-						<li>alignment-baseline</li>
-						<li>baseline-shift</li>
-						<li>clip</li>
-						<li>clip-path</li>
-						<li>clip-rule</li>
-						<li>color</li>
-						<li>color-interpolation</li>
-						<li>color-interpolation-filters</li>
-						<li>color-profile</li>
-						<li>color-rendering</li>
-						<li>cursor</li>
-						<li>direction</li>
-						<li>display</li>
-						<li>dominant-baseline</li>
-						<li>enable-background</li>
-						<li>fill</li>
-						<li>fill-opacity</li>
-						<li>fill-rule</li>
-						<li>filter</li>
-						<li>flood-color</li>
-						<li>flood-opacity</li>
-						<li>font-family</li>
-						<li>font-size</li>
-						<li>font-size-adjust</li>
-						<li>font-stretch</li>
-						<li>font-style</li>
-						<li>font-variant</li>
-						<li>font-weight</li>
-						<li>letter-spacing</li>
-						<li>lighting-color</li>
-						<li>marker-end</li>
-						<li>marker-mid</li>
-						<li>marker-start</li>
-						<li>mask</li>
-						<li>opacity</li>
-						<li>overflow</li>
-						<li>pointer-events</li>
-						<li>shape-rendering</li>
-						<li>solid-color</li>
-						<li>solid-opacity</li>
-						<li>stop-color</li>
-						<li>stop-opacity</li>
-						<li>stroke</li>
-						<li>stroke-dasharray</li>
-						<li>stroke-dashoffset</li>
-						<li>stroke-linecap</li>
-						<li>stroke-linejoin</li>
-						<li>stroke-miterlimit</li>
-						<li>stroke-opacity</li>
-						<li>stroke-width</li>
-						<li>text-anchor</li>
-						<li>text-decoration</li>
-						<li>text-rendering</li>
-						<li>transform</li>
-						<li>vector-effect</li>
-						<li>visibility</li>
-						<li>word-spacing</li>
-						<li>writing-mode</li>
-						<li><a href="https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute/Presentation">etc...</a></li>
-					</ul>
-					<p>Unfortunately, morphing SVG paths via the <code>d</code> property isn&#39;t supported yet, as browsers don&#39;t yet support it, and there are other limitations to what the Web Animation API will allow 😭, these limitation are covered in detail by an article published by Adobe about <a href="https://blog.adobe.com/en/publish/2015/06/05/the-state-of-svg-animation.html#gs.pihpjw">the current state of SVG animation on the web</a>. However, animation using paths is now viable through <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Motion_Path">Motion Path</a> go through</p>
 					<a href="#promises-and-promise-like" id="promises-and-promise-like" style="color: inherit; text-decoration: none;">
 						<h2>Promises and Promise-Like</h2>
 					</a>
@@ -1400,11 +1284,18 @@
 					</a>
 					<p>Cancels all Animations and de-references them allowing them to be garbage collected in a rush. It also emits a <code>stop</code> event to alert you to the animation stopping.</p>
 					<p>The <code>stop</code> method is not chainable.</p>
-					<p><em>Warning: if you try to reference properties from the <code>Animate</code> class after stop has been called many things will break. The <code>Animate</code> class cannot and will not recover from stop, it is meant as a final trash run of animations, don&#39;t use it if you think you may restart the animation.</em></p>
-					<a href="#api-documentation" id="api-documentation" style="color: inherit; text-decoration: none;">
-						<h2>API Documentation</h2>
+					<p><em><strong>Warning</strong>: if you try to reference properties from the <code>Animate</code> class after stop has been called many things will break. The <code>Animate</code> class cannot and will not recover from stop, it is meant as a final trash run of animations, don&#39;t use it if you think you may restart the animation.</em></p>
+					<a href="#pause-animation-when-page-is-out-of-focus" id="pause-animation-when-page-is-out-of-focus" style="color: inherit; text-decoration: none;">
+						<h2>Pause Animation when Page is out of Focus</h2>
 					</a>
-					<p>Not all available methods and properties are listed here (otherwise this README would be too long), so go to <a href="https://okikio.github.io/native/docs">okikio.github.io/native/docs</a> for a fully documented API.</p>
+					<p>If the page looses focus, by default <code>Animate</code> will pause all playing animations until the user goes back to the page, however, this behavior can be changed by setting the <code>pauseOnPageHidden</code> static property to false.</p>
+					<p><em><strong>Note</strong>: you need to put this statemeant at the top of your document, before all <code>Animate</code> instances</em></p>
+					<pre><code class="language-ts"><span style="color: #AF00DB">import</span><span style="color: #000000"> { </span><span style="color: #001080">animate</span><span style="color: #000000">, </span><span style="color: #001080">Animate</span><span style="color: #000000"> } </span><span style="color: #AF00DB">from</span><span style="color: #000000"> </span><span style="color: #A31515">&quot;@okikio/animate&quot;</span><span style="color: #000000">;</span>
+<span style="color: #001080">Animate</span><span style="color: #000000">.</span><span style="color: #001080">pauseOnPageHidden</span><span style="color: #000000"> = </span><span style="color: #0000FF">false</span><span style="color: #000000">;</span>
+<span style="color: #795E26">animate</span><span style="color: #000000">({</span>
+<span style="color: #000000">    </span><span style="color: #008000">// ...</span>
+<span style="color: #000000">})</span>
+</code></pre>
 					<a href="#examples" id="examples" style="color: inherit; text-decoration: none;">
 						<h2>Examples</h2>
 					</a>
@@ -1421,6 +1312,129 @@
 						<li>Firefox &gt; 60</li>
 					</ul>
 					<p><em><strong>Note</strong>: as it really difficult to get access to older versions of these browsers, I have only tested Chrome 71 and above.</em></p>
+					<a href="#css-amp-svg-animations-support" id="css-amp-svg-animations-support" style="color: inherit; text-decoration: none;">
+						<h3>CSS &amp; SVG Animations Support</h3>
+					</a>
+					<p><code>Animate</code> can animate <code>~197</code> CSS properties; <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_animated_properties">MDN Animatable CSS Properties</a> and <code>~63</code> SVG properties; <a href="https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute/Presentation">MDN SVG Presentation Attributes</a>.</p>
+					<p>The animatable CSS properties are:</p>
+					<ul>
+						<li>backdrop-filter</li>
+						<li>background</li>
+						<li>background-color</li>
+						<li>background-position</li>
+						<li>background-size</li>
+						<li>block-size</li>
+						<li>border</li>
+						<li>border-block-end</li>
+						<li>border-block-end-color</li>
+						<li>border-block-end-width</li>
+						<li>border-block-start</li>
+						<li>border-block-start-color</li>
+						<li>border-block-start-width</li>
+						<li>border-bottom</li>
+						<li>border-bottom-color</li>
+						<li>border-bottom-left-radius</li>
+						<li>border-bottom-right-radius</li>
+						<li>border-bottom-width</li>
+						<li>border-color</li>
+						<li>border-end-end-radius</li>
+						<li>border-end-start-radius</li>
+						<li>border-image-outset</li>
+						<li>border-image-slice</li>
+						<li>border-image-width</li>
+						<li>border-inline-end</li>
+						<li>border-inline-end-color</li>
+						<li>border-inline-end-width</li>
+						<li>border-inline-start</li>
+						<li>border-inline-start-color</li>
+						<li>border-inline-start-width</li>
+						<li>border-left</li>
+						<li>border-left-color</li>
+						<li>border-left-width</li>
+						<li>border-radius</li>
+						<li>border-right</li>
+						<li>border-right-color</li>
+						<li>border-right-width</li>
+						<li>border-start-end-radius</li>
+						<li>border-start-start-radius</li>
+						<li>border-top</li>
+						<li>border-top-color</li>
+						<li>border-top-left-radius</li>
+						<li>border-top-right-radius</li>
+						<li>border-top-width</li>
+						<li>border-width</li>
+						<li>bottom</li>
+						<li>box-shadow</li>
+						<li>caret-color</li>
+						<li>clip</li>
+						<li>clip-path</li>
+						<li>offset-distance</li>
+						<li>color</li>
+						<li><a href="https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_animated_properties">etc...</a></li>
+					</ul>
+					<p>The animatable SVG properties are:</p>
+					<ul>
+						<li>alignment-baseline</li>
+						<li>baseline-shift</li>
+						<li>clip</li>
+						<li>clip-path</li>
+						<li>clip-rule</li>
+						<li>color</li>
+						<li>color-interpolation</li>
+						<li>color-interpolation-filters</li>
+						<li>color-profile</li>
+						<li>color-rendering</li>
+						<li>cursor</li>
+						<li>direction</li>
+						<li>display</li>
+						<li>dominant-baseline</li>
+						<li>enable-background</li>
+						<li>fill</li>
+						<li>fill-opacity</li>
+						<li>fill-rule</li>
+						<li>filter</li>
+						<li>flood-color</li>
+						<li>flood-opacity</li>
+						<li>font-family</li>
+						<li>font-size</li>
+						<li>font-size-adjust</li>
+						<li>font-stretch</li>
+						<li>font-style</li>
+						<li>font-variant</li>
+						<li>font-weight</li>
+						<li>letter-spacing</li>
+						<li>lighting-color</li>
+						<li>marker-end</li>
+						<li>marker-mid</li>
+						<li>marker-start</li>
+						<li>mask</li>
+						<li>opacity</li>
+						<li>overflow</li>
+						<li>pointer-events</li>
+						<li>shape-rendering</li>
+						<li>solid-color</li>
+						<li>solid-opacity</li>
+						<li>stop-color</li>
+						<li>stop-opacity</li>
+						<li>stroke</li>
+						<li>stroke-dasharray</li>
+						<li>stroke-dashoffset</li>
+						<li>stroke-linecap</li>
+						<li>stroke-linejoin</li>
+						<li>stroke-miterlimit</li>
+						<li>stroke-opacity</li>
+						<li>stroke-width</li>
+						<li>text-anchor</li>
+						<li>text-decoration</li>
+						<li>text-rendering</li>
+						<li>transform</li>
+						<li>vector-effect</li>
+						<li>visibility</li>
+						<li>word-spacing</li>
+						<li>writing-mode</li>
+						<li><a href="https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute/Presentation">etc...</a></li>
+					</ul>
+					<p>Unfortunately, morphing SVG paths via the <code>d</code> property isn&#39;t supported yet, as browsers don&#39;t yet support it, and there are other limitations to what the Web Animation API will allow 😭, these limitation are covered in detail by an article published by Adobe about <a href="https://blog.adobe.com/en/publish/2015/06/05/the-state-of-svg-animation.html#gs.pihpjw">the current state of SVG animation on the web</a>. However, animation using paths is now viable through <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Motion_Path">Motion Path</a> go through</p>
 					<a href="#content-delivery-networks" id="content-delivery-networks" style="color: inherit; text-decoration: none;">
 						<h2>Content delivery networks</h2>
 					</a>
@@ -1580,7 +1594,7 @@
 					<div class="tsd-signature tsd-kind-icon">Type<wbr>Animation<wbr>Events<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">&quot;update&quot;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">&quot;play&quot;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">&quot;pause&quot;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">&quot;begin&quot;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">&quot;cancel&quot;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">&quot;finish&quot;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">&quot;error&quot;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">&quot;stop&quot;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">&quot;playstate-change&quot;</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/okikio/native/blob/5a208b9/packages/animate/src/api.ts#L733">animate/src/api.ts:733</a></li>
+							<li>Defined in <a href="https://github.com/okikio/native/blob/57da07c/packages/animate/src/api.ts#L733">animate/src/api.ts:733</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -1590,7 +1604,7 @@
 					<div class="tsd-signature tsd-kind-icon">Type<wbr>Animation<wbr>Option<wbr>Types<span class="tsd-signature-symbol">:</span> <a href="animate.html#typecallback" class="tsd-signature-type" data-tsd-kind="Type alias">TypeCallback</a><span class="tsd-signature-symbol"> | </span><a href="animate.html#typecomputedanimationoptions" class="tsd-signature-type" data-tsd-kind="Type alias">TypeComputedAnimationOptions</a></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/okikio/native/blob/5a208b9/packages/animate/src/api.ts#L32">animate/src/api.ts:32</a></li>
+							<li>Defined in <a href="https://github.com/okikio/native/blob/57da07c/packages/animate/src/api.ts#L32">animate/src/api.ts:32</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -1600,7 +1614,7 @@
 					<div class="tsd-signature tsd-kind-icon">Type<wbr>Animation<wbr>Target<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">Node</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">NodeList</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">HTMLCollection</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">HTMLElement</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol"> | </span><a href="animate.html#typeanimationtarget" class="tsd-signature-type" data-tsd-kind="Type alias">TypeAnimationTarget</a><span class="tsd-signature-symbol">[]</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/okikio/native/blob/5a208b9/packages/animate/src/api.ts#L6">animate/src/api.ts:6</a></li>
+							<li>Defined in <a href="https://github.com/okikio/native/blob/57da07c/packages/animate/src/api.ts#L6">animate/src/api.ts:6</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -1610,7 +1624,7 @@
 					<div class="tsd-signature tsd-kind-icon">TypeCSSLike<wbr>Keyframe<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol">{}</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/okikio/native/blob/5a208b9/packages/animate/src/api.ts#L27">animate/src/api.ts:27</a></li>
+							<li>Defined in <a href="https://github.com/okikio/native/blob/57da07c/packages/animate/src/api.ts#L27">animate/src/api.ts:27</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-type-declaration">
@@ -1628,7 +1642,7 @@
 					<div class="tsd-signature tsd-kind-icon">TypeCSSProperty<wbr>Value<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol">(</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">[]</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/okikio/native/blob/5a208b9/packages/animate/src/api.ts#L29">animate/src/api.ts:29</a></li>
+							<li>Defined in <a href="https://github.com/okikio/native/blob/57da07c/packages/animate/src/api.ts#L29">animate/src/api.ts:29</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -1638,7 +1652,7 @@
 					<div class="tsd-signature tsd-kind-icon">Type<wbr>Callback<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol">(</span>index<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">number</span>, total<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">number</span>, element<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">HTMLElement</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><a href="animate.html#typecomputedanimationoptions" class="tsd-signature-type" data-tsd-kind="Type alias">TypeComputedAnimationOptions</a></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/okikio/native/blob/5a208b9/packages/animate/src/api.ts#L31">animate/src/api.ts:31</a></li>
+							<li>Defined in <a href="https://github.com/okikio/native/blob/57da07c/packages/animate/src/api.ts#L31">animate/src/api.ts:31</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-type-declaration">
@@ -1675,7 +1689,7 @@
 					<div class="tsd-signature tsd-kind-icon">Type<wbr>Callback<wbr>Args<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol">[</span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">HTMLElement</span><span class="tsd-signature-symbol">]</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/okikio/native/blob/5a208b9/packages/animate/src/api.ts#L25">animate/src/api.ts:25</a></li>
+							<li>Defined in <a href="https://github.com/okikio/native/blob/57da07c/packages/animate/src/api.ts#L25">animate/src/api.ts:25</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -1685,7 +1699,7 @@
 					<div class="tsd-signature tsd-kind-icon">Type<wbr>Computed<wbr>Animation<wbr>Options<span class="tsd-signature-symbol">:</span> <a href="animate.html#typegeneric" class="tsd-signature-type" data-tsd-kind="Type alias">TypeGeneric</a><span class="tsd-signature-symbol"> | </span><a href="animate.html#typegeneric" class="tsd-signature-type" data-tsd-kind="Type alias">TypeGeneric</a><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol"> | </span><a href="animate.html#typekeyframeoptionstype" class="tsd-signature-type" data-tsd-kind="Type alias">TypeKeyFrameOptionsType</a><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">KeyframeEffectOptions</span><span class="tsd-signature-symbol"> | </span><a href="../interfaces/animate.icsscomputedtransformableproperties.html" class="tsd-signature-type" data-tsd-kind="Interface">ICSSComputedTransformableProperties</a></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/okikio/native/blob/5a208b9/packages/animate/src/api.ts#L30">animate/src/api.ts:30</a></li>
+							<li>Defined in <a href="https://github.com/okikio/native/blob/57da07c/packages/animate/src/api.ts#L30">animate/src/api.ts:30</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -1695,7 +1709,7 @@
 					<div class="tsd-signature tsd-kind-icon">Type<wbr>Computed<wbr>Options<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol">{}</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/okikio/native/blob/5a208b9/packages/animate/src/api.ts#L33">animate/src/api.ts:33</a></li>
+							<li>Defined in <a href="https://github.com/okikio/native/blob/57da07c/packages/animate/src/api.ts#L33">animate/src/api.ts:33</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-type-declaration">
@@ -1713,7 +1727,7 @@
 					<div class="tsd-signature tsd-kind-icon">Type<wbr>Generic<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">object</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">number</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/okikio/native/blob/5a208b9/packages/animate/src/api.ts#L26">animate/src/api.ts:26</a></li>
+							<li>Defined in <a href="https://github.com/okikio/native/blob/57da07c/packages/animate/src/api.ts#L26">animate/src/api.ts:26</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -1723,7 +1737,7 @@
 					<div class="tsd-signature tsd-kind-icon">Type<wbr>Key<wbr>Frame<wbr>Options<wbr>Type<span class="tsd-signature-symbol">:</span> <a href="animate.html#typecsslikekeyframe" class="tsd-signature-type" data-tsd-kind="Type alias">TypeCSSLikeKeyframe</a><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">Keyframe</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">PropertyIndexedKeyframes</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/okikio/native/blob/5a208b9/packages/animate/src/api.ts#L28">animate/src/api.ts:28</a></li>
+							<li>Defined in <a href="https://github.com/okikio/native/blob/57da07c/packages/animate/src/api.ts#L28">animate/src/api.ts:28</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -1733,7 +1747,7 @@
 					<div class="tsd-signature tsd-kind-icon">Type<wbr>Play<wbr>States<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">&quot;idle&quot;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">&quot;running&quot;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">&quot;paused&quot;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">&quot;finished&quot;</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/okikio/native/blob/5a208b9/packages/animate/src/api.ts#L734">animate/src/api.ts:734</a></li>
+							<li>Defined in <a href="https://github.com/okikio/native/blob/57da07c/packages/animate/src/api.ts#L734">animate/src/api.ts:734</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -1743,7 +1757,7 @@
 					<div class="tsd-signature tsd-kind-icon">Type<wbr>Single<wbr>ValueCSSProperty<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> | </span><a href="animate.html#typecsspropertyvalue" class="tsd-signature-type" data-tsd-kind="Type alias">TypeCSSPropertyValue</a></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/okikio/native/blob/5a208b9/packages/animate/src/api.ts#L172">animate/src/api.ts:172</a></li>
+							<li>Defined in <a href="https://github.com/okikio/native/blob/57da07c/packages/animate/src/api.ts#L172">animate/src/api.ts:172</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -1756,7 +1770,7 @@
 					<div class="tsd-signature tsd-kind-icon">Default<wbr>Animation<wbr>Options<span class="tsd-signature-symbol">:</span> <a href="../interfaces/animate.ianimationoptions.html" class="tsd-signature-type" data-tsd-kind="Interface">IAnimationOptions</a><span class="tsd-signature-symbol"> = ...</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/okikio/native/blob/5a208b9/packages/animate/src/api.ts#L715">animate/src/api.ts:715</a></li>
+							<li>Defined in <a href="https://github.com/okikio/native/blob/57da07c/packages/animate/src/api.ts#L715">animate/src/api.ts:715</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -1787,7 +1801,7 @@
 					<div class="tsd-signature tsd-kind-icon">EASINGS<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol">{ </span>in<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">; </span>in-back<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">; </span>in-circ<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">; </span>in-cubic<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">; </span>in-expo<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">; </span>in-out<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">; </span>in-out-back<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">; </span>in-out-circ<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">; </span>in-out-cubic<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">; </span>in-out-expo<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">; </span>in-out-quad<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">; </span>in-out-quart<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">; </span>in-out-quint<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">; </span>in-out-sine<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">; </span>in-quad<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">; </span>in-quart<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">; </span>in-quint<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">; </span>in-sine<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">; </span>out<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">; </span>out-back<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">; </span>out-circ<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">; </span>out-cubic<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">; </span>out-expo<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">; </span>out-quad<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">; </span>out-quart<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">; </span>out-quint<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">; </span>out-sine<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> }</span><span class="tsd-signature-symbol"> = ...</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/okikio/native/blob/5a208b9/packages/animate/src/api.ts#L107">animate/src/api.ts:107</a></li>
+							<li>Defined in <a href="https://github.com/okikio/native/blob/57da07c/packages/animate/src/api.ts#L107">animate/src/api.ts:107</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -1935,7 +1949,7 @@
 					<div class="tsd-signature tsd-kind-icon">Easing<wbr>Keys<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol"> = ...</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/okikio/native/blob/5a208b9/packages/animate/src/api.ts#L159">animate/src/api.ts:159</a></li>
+							<li>Defined in <a href="https://github.com/okikio/native/blob/57da07c/packages/animate/src/api.ts#L159">animate/src/api.ts:159</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -1955,7 +1969,7 @@
 					<div class="tsd-signature tsd-kind-icon">Transform<wbr>Function<wbr>Names<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol"> = ...</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/okikio/native/blob/5a208b9/packages/animate/src/api.ts#L890">animate/src/api.ts:890</a></li>
+							<li>Defined in <a href="https://github.com/okikio/native/blob/57da07c/packages/animate/src/api.ts#L890">animate/src/api.ts:890</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -1972,7 +1986,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/okikio/native/blob/5a208b9/packages/animate/src/api.ts#L883">animate/src/api.ts:883</a></li>
+									<li>Defined in <a href="https://github.com/okikio/native/blob/57da07c/packages/animate/src/api.ts#L883">animate/src/api.ts:883</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -2034,7 +2048,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/okikio/native/blob/5a208b9/packages/animate/src/api.ts#L940">animate/src/api.ts:940</a></li>
+									<li>Defined in <a href="https://github.com/okikio/native/blob/57da07c/packages/animate/src/api.ts#L940">animate/src/api.ts:940</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -2062,7 +2076,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/okikio/native/blob/5a208b9/packages/animate/src/api.ts#L802">animate/src/api.ts:802</a></li>
+									<li>Defined in <a href="https://github.com/okikio/native/blob/57da07c/packages/animate/src/api.ts#L802">animate/src/api.ts:802</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -2132,7 +2146,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/okikio/native/blob/5a208b9/packages/animate/src/api.ts#L167">animate/src/api.ts:167</a></li>
+									<li>Defined in <a href="https://github.com/okikio/native/blob/57da07c/packages/animate/src/api.ts#L167">animate/src/api.ts:167</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -2164,7 +2178,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/okikio/native/blob/5a208b9/packages/animate/src/api.ts#L1066">animate/src/api.ts:1066</a></li>
+									<li>Defined in <a href="https://github.com/okikio/native/blob/57da07c/packages/animate/src/api.ts#L1066">animate/src/api.ts:1066</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -2196,7 +2210,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/okikio/native/blob/5a208b9/packages/animate/src/api.ts#L998">animate/src/api.ts:998</a></li>
+									<li>Defined in <a href="https://github.com/okikio/native/blob/57da07c/packages/animate/src/api.ts#L998">animate/src/api.ts:998</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -2270,7 +2284,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/okikio/native/blob/5a208b9/packages/animate/src/api.ts#L761">animate/src/api.ts:761</a></li>
+									<li>Defined in <a href="https://github.com/okikio/native/blob/57da07c/packages/animate/src/api.ts#L761">animate/src/api.ts:761</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -2298,7 +2312,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/okikio/native/blob/5a208b9/packages/animate/src/api.ts#L935">animate/src/api.ts:935</a></li>
+									<li>Defined in <a href="https://github.com/okikio/native/blob/57da07c/packages/animate/src/api.ts#L935">animate/src/api.ts:935</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -2326,7 +2340,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/okikio/native/blob/5a208b9/packages/animate/src/api.ts#L755">animate/src/api.ts:755</a></li>
+									<li>Defined in <a href="https://github.com/okikio/native/blob/57da07c/packages/animate/src/api.ts#L755">animate/src/api.ts:755</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -2354,7 +2368,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/okikio/native/blob/5a208b9/packages/animate/src/api.ts#L929">animate/src/api.ts:929</a></li>
+									<li>Defined in <a href="https://github.com/okikio/native/blob/57da07c/packages/animate/src/api.ts#L929">animate/src/api.ts:929</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -2382,7 +2396,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/okikio/native/blob/5a208b9/packages/animate/src/api.ts#L758">animate/src/api.ts:758</a></li>
+									<li>Defined in <a href="https://github.com/okikio/native/blob/57da07c/packages/animate/src/api.ts#L758">animate/src/api.ts:758</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -2410,7 +2424,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/okikio/native/blob/5a208b9/packages/animate/src/api.ts#L932">animate/src/api.ts:932</a></li>
+									<li>Defined in <a href="https://github.com/okikio/native/blob/57da07c/packages/animate/src/api.ts#L932">animate/src/api.ts:932</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -2438,7 +2452,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/okikio/native/blob/5a208b9/packages/animate/src/api.ts#L750">animate/src/api.ts:750</a></li>
+									<li>Defined in <a href="https://github.com/okikio/native/blob/57da07c/packages/animate/src/api.ts#L750">animate/src/api.ts:750</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -2489,7 +2503,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/okikio/native/blob/5a208b9/packages/animate/src/api.ts#L1893">animate/src/api.ts:1893</a></li>
+									<li>Defined in <a href="https://github.com/okikio/native/blob/57da07c/packages/animate/src/api.ts#L1938">animate/src/api.ts:1938</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -2512,7 +2526,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/okikio/native/blob/5a208b9/packages/animate/src/api.ts#L36">animate/src/api.ts:36</a></li>
+									<li>Defined in <a href="https://github.com/okikio/native/blob/57da07c/packages/animate/src/api.ts#L36">animate/src/api.ts:36</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -2541,7 +2555,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/okikio/native/blob/5a208b9/packages/animate/src/api.ts#L915">animate/src/api.ts:915</a></li>
+									<li>Defined in <a href="https://github.com/okikio/native/blob/57da07c/packages/animate/src/api.ts#L915">animate/src/api.ts:915</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -2569,7 +2583,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/okikio/native/blob/5a208b9/packages/animate/src/api.ts#L11">animate/src/api.ts:11</a></li>
+									<li>Defined in <a href="https://github.com/okikio/native/blob/57da07c/packages/animate/src/api.ts#L11">animate/src/api.ts:11</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -2592,7 +2606,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/okikio/native/blob/5a208b9/packages/animate/src/api.ts#L7">animate/src/api.ts:7</a></li>
+									<li>Defined in <a href="https://github.com/okikio/native/blob/57da07c/packages/animate/src/api.ts#L7">animate/src/api.ts:7</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -2615,7 +2629,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/okikio/native/blob/5a208b9/packages/animate/src/api.ts#L12">animate/src/api.ts:12</a></li>
+									<li>Defined in <a href="https://github.com/okikio/native/blob/57da07c/packages/animate/src/api.ts#L12">animate/src/api.ts:12</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -2638,7 +2652,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/okikio/native/blob/5a208b9/packages/animate/src/api.ts#L787">animate/src/api.ts:787</a></li>
+									<li>Defined in <a href="https://github.com/okikio/native/blob/57da07c/packages/animate/src/api.ts#L787">animate/src/api.ts:787</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -2672,7 +2686,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/okikio/native/blob/5a208b9/packages/animate/src/api.ts#L42">animate/src/api.ts:42</a></li>
+									<li>Defined in <a href="https://github.com/okikio/native/blob/57da07c/packages/animate/src/api.ts#L42">animate/src/api.ts:42</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -2701,7 +2715,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/okikio/native/blob/5a208b9/packages/animate/src/api.ts#L736">animate/src/api.ts:736</a></li>
+									<li>Defined in <a href="https://github.com/okikio/native/blob/57da07c/packages/animate/src/api.ts#L736">animate/src/api.ts:736</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -2724,7 +2738,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/okikio/native/blob/5a208b9/packages/animate/src/api.ts#L769">animate/src/api.ts:769</a></li>
+									<li>Defined in <a href="https://github.com/okikio/native/blob/57da07c/packages/animate/src/api.ts#L769">animate/src/api.ts:769</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -2755,7 +2769,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/okikio/native/blob/5a208b9/packages/animate/src/api.ts#L839">animate/src/api.ts:839</a></li>
+									<li>Defined in <a href="https://github.com/okikio/native/blob/57da07c/packages/animate/src/api.ts#L839">animate/src/api.ts:839</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">

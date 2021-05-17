@@ -70,7 +70,7 @@
 					<a href="#okikionative" id="okikionative" style="color: inherit; text-decoration: none;">
 						<h1>@okikio/native</h1>
 					</a>
-					<p><code>native</code> is an initiative that encourages performance, modern technologies, and great user experiences. The idea behind <code>@okikio/native</code> is that it acts as the core framework to the <code>native</code> initiative, it combines all the other package into it a core package that is ~9.6 KB (minified &amp; gzipped).</p>
+					<p><code>native</code> is an initiative that encourages performance, modern technologies, and great user experiences. The idea behind <code>@okikio/native</code> is that it acts as the core framework to the <code>native</code> initiative, it combines all the other package into it a core package that is ~9.8 KB (minified &amp; gzipped).</p>
 					<p><a href="https://www.skypack.dev/view/@okikio/native">@okikio/native</a> is a guideline on how to create great web experiences that integrate into the system in a way that feels like a cohesive and native experience.</p>
 					<p>The idea behind it is that, when an app feels native, it means that it integrates well into the systems and <code>just works</code>, for example, a dark mode that follows the entire system. The <code>just works</code> aspect is key to the framework, it should work without the user skipping a beat. On the web this boils down to being performant, efficient, and smooth.</p>
 					<p>The <code>@okikio/native</code> package achieves performance, high efficiency, and a smooth experience by being heavily modern (relying on passive polyfills to support older browsers) and being well optimized.</p>
@@ -91,7 +91,10 @@
 								<li><a href="#table-of-contents">Table of Contents</a></li>
 								<li><a href="#getting-started">Getting Started</a></li>
 								<li><a href="#installation">Installation</a></li>
-								<li><a href="#demo">Demo</a></li>
+								<li><a href="#demo">Demo</a><ul>
+										<li><a href="#api-documentation">API Documentation</a></li>
+									</ul>
+								</li>
 								<li><a href="#api">API</a><ul>
 										<li><a href="#types"><em>Types</em></a></li>
 										<li><a href="#manageritem"><strong>ManagerItem</strong></a><ul>
@@ -210,6 +213,11 @@
 					<blockquote>
 						<p><a href="https://okikio.github.io/native/demo/">View the Demo  &#8594;</a></p>
 					</blockquote>
+					<a href="#api-documentation" id="api-documentation" style="color: inherit; text-decoration: none;">
+						<h3>API Documentation</h3>
+					</a>
+					<p>I highly suggest going through the <a href="https://okikio.github.io/native/docs/modules/native.html">API documentation</a>, for a more detailed documentation of the API&#39;s.</p>
+					<p>Also, <code>@okikio/native</code> bundles and re-exports <a href="https://www.npmjs.com/package/@okikio/manager">@okikio/manager</a>, <a href="https://www.npmjs.com/package/@okikio/emitter">@okikio/emitter</a>, and <a href="https://www.npmjs.com/package/@okikio/animate">@okikio/animate</a>, this is to avoid needing to download a bunch of packages that use the same libraries.</p>
 					<a href="#api" id="api" style="color: inherit; text-decoration: none;">
 						<h2>API</h2>
 					</a>
@@ -2016,7 +2024,7 @@
 					<div class="tsd-signature tsd-kind-icon">Config<wbr>Keys<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol">keyof </span><span class="tsd-signature-symbol">typeof </span><a href="native.html#config_defaults" class="tsd-signature-type" data-tsd-kind="Variable">CONFIG_DEFAULTS</a><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/okikio/native/blob/5a208b9/packages/native/src/config.ts#L33">native/src/config.ts:33</a></li>
+							<li>Defined in <a href="https://github.com/okikio/native/blob/57da07c/packages/native/src/config.ts#L33">native/src/config.ts:33</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -2026,7 +2034,7 @@
 					<div class="tsd-signature tsd-kind-icon">IAdvanced<wbr>Manager<span class="tsd-signature-symbol">:</span> <a href="../classes/native.advancedmanager.html" class="tsd-signature-type" data-tsd-kind="Class">AdvancedManager</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">, </span><a href="../classes/native.manageritem.html" class="tsd-signature-type" data-tsd-kind="Class">ManagerItem</a><span class="tsd-signature-symbol">&gt;</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/okikio/native/blob/5a208b9/packages/native/src/manager.ts#L6">native/src/manager.ts:6</a></li>
+							<li>Defined in <a href="https://github.com/okikio/native/blob/57da07c/packages/native/src/manager.ts#L6">native/src/manager.ts:6</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -2036,7 +2044,7 @@
 					<div class="tsd-signature tsd-kind-icon">IgnoreURLs<wbr>List<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol">(</span><span class="tsd-signature-type">RegExp</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">[]</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/okikio/native/blob/5a208b9/packages/native/src/pjax.ts#L10">native/src/pjax.ts:10</a></li>
+							<li>Defined in <a href="https://github.com/okikio/native/blob/57da07c/packages/native/src/pjax.ts#L10">native/src/pjax.ts:10</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -2046,7 +2054,7 @@
 					<div class="tsd-signature tsd-kind-icon">Link<wbr>Event<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">MouseEvent</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">TouchEvent</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/okikio/native/blob/5a208b9/packages/native/src/pjax.ts#L8">native/src/pjax.ts:8</a></li>
+							<li>Defined in <a href="https://github.com/okikio/native/blob/57da07c/packages/native/src/pjax.ts#L8">native/src/pjax.ts:8</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -2056,7 +2064,7 @@
 					<div class="tsd-signature tsd-kind-icon">Route<wbr>Method<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">...</span>args<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">any</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/okikio/native/blob/5a208b9/packages/native/src/router.ts#L6">native/src/router.ts:6</a></li>
+							<li>Defined in <a href="https://github.com/okikio/native/blob/57da07c/packages/native/src/router.ts#L6">native/src/router.ts:6</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-type-declaration">
@@ -2087,7 +2095,7 @@
 					<div class="tsd-signature tsd-kind-icon">Route<wbr>Path<span class="tsd-signature-symbol">:</span> <a href="../interfaces/native.iroutetofrom.html" class="tsd-signature-type" data-tsd-kind="Interface">IRouteToFrom</a><span class="tsd-signature-symbol"> | </span><a href="native.html#routestyle" class="tsd-signature-type" data-tsd-kind="Type alias">RouteStyle</a></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/okikio/native/blob/5a208b9/packages/native/src/router.ts#L12">native/src/router.ts:12</a></li>
+							<li>Defined in <a href="https://github.com/okikio/native/blob/57da07c/packages/native/src/router.ts#L12">native/src/router.ts:12</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -2097,7 +2105,7 @@
 					<div class="tsd-signature tsd-kind-icon">Route<wbr>Style<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">RegExp</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">boolean</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/okikio/native/blob/5a208b9/packages/native/src/router.ts#L7">native/src/router.ts:7</a></li>
+							<li>Defined in <a href="https://github.com/okikio/native/blob/57da07c/packages/native/src/router.ts#L7">native/src/router.ts:7</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -2107,7 +2115,7 @@
 					<div class="tsd-signature tsd-kind-icon">State<wbr>Event<span class="tsd-signature-symbol">:</span> <a href="native.html#linkevent" class="tsd-signature-type" data-tsd-kind="Type alias">LinkEvent</a><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">PopStateEvent</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/okikio/native/blob/5a208b9/packages/native/src/pjax.ts#L9">native/src/pjax.ts:9</a></li>
+							<li>Defined in <a href="https://github.com/okikio/native/blob/57da07c/packages/native/src/pjax.ts#L9">native/src/pjax.ts:9</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -2117,7 +2125,7 @@
 					<div class="tsd-signature tsd-kind-icon">Trigger<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">HTMLAnchorElement</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">&quot;HistoryManager&quot;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">&quot;popstate&quot;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">&quot;back&quot;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">&quot;forward&quot;</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/okikio/native/blob/5a208b9/packages/native/src/history.ts#L4">native/src/history.ts:4</a></li>
+							<li>Defined in <a href="https://github.com/okikio/native/blob/57da07c/packages/native/src/history.ts#L4">native/src/history.ts:4</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -2127,7 +2135,7 @@
 					<div class="tsd-signature tsd-kind-icon">async<wbr>Fn<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol">(</span>err<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">any</span>, value<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">void</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/okikio/native/blob/5a208b9/packages/native/src/transition.ts#L11">native/src/transition.ts:11</a></li>
+							<li>Defined in <a href="https://github.com/okikio/native/blob/57da07c/packages/native/src/transition.ts#L11">native/src/transition.ts:11</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -2169,7 +2177,7 @@
 					<div class="tsd-signature tsd-kind-icon">CONFIG_<wbr>DEFAULTS<span class="tsd-signature-symbol">:</span> <a href="../interfaces/native.iconfig.html" class="tsd-signature-type" data-tsd-kind="Interface">ICONFIG</a><span class="tsd-signature-symbol"> = ...</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/okikio/native/blob/5a208b9/packages/native/src/config.ts#L17">native/src/config.ts:17</a></li>
+							<li>Defined in <a href="https://github.com/okikio/native/blob/57da07c/packages/native/src/config.ts#L17">native/src/config.ts:17</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -2179,7 +2187,7 @@
 					<div class="tsd-signature tsd-kind-icon">EFFECTS<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol">{}</span><span class="tsd-signature-symbol"> = {}</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in animate/src/builtin-effects.ts:77</li>
+							<li>Defined in <a href="https://github.com/okikio/native/blob/57da07c/packages/animate/src/builtin-effects.ts#L77">animate/src/builtin-effects.ts:77</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -2205,7 +2213,7 @@
 					<div class="tsd-signature tsd-kind-icon">PARSER<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">DOMParser</span><span class="tsd-signature-symbol"> = ...</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/okikio/native/blob/5a208b9/packages/native/src/page.ts#L24">native/src/page.ts:24</a></li>
+							<li>Defined in <a href="https://github.com/okikio/native/blob/57da07c/packages/native/src/page.ts#L24">native/src/page.ts:24</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -2227,7 +2235,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in animate/src/builtin-effects.ts:46</li>
+									<li>Defined in <a href="https://github.com/okikio/native/blob/57da07c/packages/animate/src/builtin-effects.ts#L46">animate/src/builtin-effects.ts:46</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -2281,7 +2289,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/okikio/native/blob/5a208b9/packages/native/src/history.ts#L133">native/src/history.ts:133</a></li>
+									<li>Defined in <a href="https://github.com/okikio/native/blob/57da07c/packages/native/src/history.ts#L133">native/src/history.ts:133</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -2315,7 +2323,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/okikio/native/blob/5a208b9/packages/native/src/url.ts#L15">native/src/url.ts:15</a></li>
+									<li>Defined in <a href="https://github.com/okikio/native/blob/57da07c/packages/native/src/url.ts#L15">native/src/url.ts:15</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -2343,7 +2351,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/okikio/native/blob/5a208b9/packages/native/src/url.ts#L18">native/src/url.ts:18</a></li>
+									<li>Defined in <a href="https://github.com/okikio/native/blob/57da07c/packages/native/src/url.ts#L18">native/src/url.ts:18</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -2374,7 +2382,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/okikio/native/blob/5a208b9/packages/native/src/config.ts#L46">native/src/config.ts:46</a></li>
+									<li>Defined in <a href="https://github.com/okikio/native/blob/57da07c/packages/native/src/config.ts#L46">native/src/config.ts:46</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -2408,7 +2416,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/okikio/native/blob/5a208b9/packages/native/src/url.ts#L12">native/src/url.ts:12</a></li>
+									<li>Defined in <a href="https://github.com/okikio/native/blob/57da07c/packages/native/src/url.ts#L12">native/src/url.ts:12</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -2436,7 +2444,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/okikio/native/blob/5a208b9/packages/native/src/url.ts#L6">native/src/url.ts:6</a></li>
+									<li>Defined in <a href="https://github.com/okikio/native/blob/57da07c/packages/native/src/url.ts#L6">native/src/url.ts:6</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -2464,7 +2472,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/okikio/native/blob/5a208b9/packages/native/src/transition.ts#L42">native/src/transition.ts:42</a></li>
+									<li>Defined in <a href="https://github.com/okikio/native/blob/57da07c/packages/native/src/transition.ts#L42">native/src/transition.ts:42</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -2495,7 +2503,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/okikio/native/blob/5a208b9/packages/native/src/config.ts#L34">native/src/config.ts:34</a></li>
+									<li>Defined in <a href="https://github.com/okikio/native/blob/57da07c/packages/native/src/config.ts#L34">native/src/config.ts:34</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -2518,7 +2526,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/okikio/native/blob/5a208b9/packages/native/src/history.ts#L44">native/src/history.ts:44</a></li>
+									<li>Defined in <a href="https://github.com/okikio/native/blob/57da07c/packages/native/src/history.ts#L44">native/src/history.ts:44</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -2549,7 +2557,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/okikio/native/blob/5a208b9/packages/native/src/history.ts#L47">native/src/history.ts:47</a></li>
+									<li>Defined in <a href="https://github.com/okikio/native/blob/57da07c/packages/native/src/history.ts#L47">native/src/history.ts:47</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -2577,7 +2585,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/okikio/native/blob/5a208b9/packages/native/src/url.ts#L1">native/src/url.ts:1</a></li>
+									<li>Defined in <a href="https://github.com/okikio/native/blob/57da07c/packages/native/src/url.ts#L1">native/src/url.ts:1</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -2600,7 +2608,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in animate/src/builtin-effects.ts:4</li>
+									<li>Defined in <a href="https://github.com/okikio/native/blob/57da07c/packages/animate/src/builtin-effects.ts#L4">animate/src/builtin-effects.ts:4</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -2628,7 +2636,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/okikio/native/blob/5a208b9/packages/native/src/config.ts#L39">native/src/config.ts:39</a></li>
+									<li>Defined in <a href="https://github.com/okikio/native/blob/57da07c/packages/native/src/config.ts#L39">native/src/config.ts:39</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
