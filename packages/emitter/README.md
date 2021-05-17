@@ -22,6 +22,7 @@ Once Gitpod has booted up, go to [./tests/test.ts](./tests/test.ts) and start tw
   - [Table of Contents](#table-of-contents)
   - [Installation](#installation)
   - [Getting started](#getting-started)
+    - [API Documentation](#api-documentation)
   - [API](#api)
       - [EventEmitter#on(events, callback, scope) & EventEmitter#emit(events, ...args)](#eventemitteronevents-callback-scope--eventemitteremitevents-args)
       - [EventEmitter#off(events, callback, scope)](#eventemitteroffevents-callback-scope)
@@ -75,6 +76,10 @@ setTimeout(() => {
     emitter.emit("new-event"); //= A new event occured
 }, 3000);
 ```
+
+### API Documentation
+
+You can also go through the [API documentation](https://okikio.github.io/native/docs/modules/emitter.html), for a more detailed documentation of the API.
 
 ## API
 
@@ -265,7 +270,6 @@ console.log(counter); //= 3
 // The "test" event has no listeners registered since, they have already been removed
 console.log(on.get("test").size) //= 0
 ```
-
 
 ## Contributing
 

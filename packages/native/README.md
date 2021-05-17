@@ -33,6 +33,7 @@ Once Gitpod has booted up, go to [../../build/pug/](../../build/pug/) and [../..
   - [Getting Started](#getting-started)
   - [Installation](#installation)
   - [Demo](#demo)
+    - [API Documentation](#api-documentation)
   - [API](#api)
     - [*Types*](#types)
     - [**ManagerItem**](#manageritem)
@@ -138,6 +139,12 @@ const { App, PJAX } = window.native;
 Located in [./build](https://github.com/okikio/native/tree/master/build), you will find multiple build files that can help you create your setup. The [./pug folder](https://github.com/okikio/native/tree/master/build/pug) contains [pug](https://pugjs.org/api/getting-started.html) files that format my html in a clean and clear way. The [./sass folder](https://github.com/okikio/native/tree/master/build/sass) contains [scss](https://sass-lang.com/guide) files that allow for modern css without the need of polyfills. The [./ts folder](https://github.com/okikio/native/tree/master/build/ts) contains [typescript](https://www.typescriptlang.org/) files that the framework runs on; typescript is used, because Intellisense is better with typescript. Outside the build folder, the [gulpfile.js](https://github.com/okikio/native/tree/master/gulpfile.js) file, is part of my [gulp](https://gulpjs.com/) config, and is the tool I use to build the demo, for your project other tools should also work, with some amoount of work. Explore the files stated above to learn how to get started.
 
 > [View the Demo  &#8594;](https://okikio.github.io/native/demo/)
+
+### API Documentation
+
+I highly suggest going through the [API documentation](https://okikio.github.io/native/docs/modules/native.html), for a more detailed documentation of the API's.
+
+Also, `@okikio/native` bundles and re-exports [@okikio/manager](https://www.npmjs.com/package/@okikio/manager), [@okikio/emitter](https://www.npmjs.com/package/@okikio/emitter), and [@okikio/animate](https://www.npmjs.com/package/@okikio/animate), this is to avoid needing to download a bunch of packages that use the same libraries.
 
 ## API
 

@@ -22,6 +22,7 @@ Once Gitpod has booted up, go to [./tests/test.ts](./tests/test.ts) and start tw
   - [Table of Contents](#table-of-contents)
   - [Installation](#installation)
   - [Getting started](#getting-started)
+    - [API Documentation](#api-documentation)
   - [API](#api)
     - [Existing Map Methods](#existing-map-methods)
     - [Manager#length](#managerlength)
@@ -68,7 +69,11 @@ const { default: Manager, methodCall } = window.manager;
 
 The `Manager` class makes Maps easier to use, as well as adding 7 methods, **getMap**, **last**, **methodCall**, **asyncMethodCall**, **add**, **remove**, **keys** and **values**, (**methodCall**, and **asyncMethodCall** are seperate methods from the `Manager` class, so treeshaking can get rid of them if they aren't need).
 
-***Note**: the behavior of the keys and values methods are slightly modified, to return an Array of keys/values instead of an iterator. You can get the keys and values original effects by using `.getMap().keys()` or `.getMap().values()`.*
+_**Note**: the behavior of the keys and values methods are slightly modified, to return an Array of keys/values instead of an iterator. You can get the keys and values original effects by using `.getMap().keys()` or `.getMap().values()`._
+
+### API Documentation
+
+You can also go through the [API documentation](https://okikio.github.io/native/docs/modules/manager.html), for a more detailed documentation of the API.
 
 ## API
 
