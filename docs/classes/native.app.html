@@ -80,13 +80,12 @@
 				<ul class="tsd-hierarchy">
 					<li>
 						<span class="target">App</span>
+						<ul class="tsd-hierarchy">
+							<li>
+								<a href="../interfaces/native.iapp.html" class="tsd-signature-type" data-tsd-kind="Interface">IApp</a>
+							</li>
+						</ul>
 					</li>
-				</ul>
-			</section>
-			<section class="tsd-panel">
-				<h3>Implements</h3>
-				<ul class="tsd-hierarchy">
-					<li><a href="../interfaces/native.iapp.html" class="tsd-signature-type" data-tsd-kind="Interface">IApp</a></li>
 				</ul>
 			</section>
 			<section class="tsd-panel-group tsd-index-group">
@@ -112,9 +111,9 @@
 						<section class="tsd-index-section ">
 							<h3>Methods</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-private"><a href="native.app.html#_ready" class="tsd-kind-icon">_ready</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-private"><a href="native.app.html#_resize" class="tsd-kind-icon">_resize</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-private"><a href="native.app.html#_scroll" class="tsd-kind-icon">_scroll</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-protected"><a href="native.app.html#_ready" class="tsd-kind-icon">_ready</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-protected"><a href="native.app.html#_resize" class="tsd-kind-icon">_resize</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-protected"><a href="native.app.html#_scroll" class="tsd-kind-icon">_scroll</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="native.app.html#add" class="tsd-kind-icon">add</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="native.app.html#boot" class="tsd-kind-icon">boot</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="native.app.html#emit" class="tsd-kind-icon">emit</a></li>
@@ -135,19 +134,19 @@
 					<a name="constructor" class="tsd-anchor"></a>
 					<h3>constructor</h3>
 					<ul class="tsd-signatures tsd-kind-constructor tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">new <wbr>App<span class="tsd-signature-symbol">(</span>config<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">object</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="native.app.html" class="tsd-signature-type" data-tsd-kind="Class">App</a></li>
+						<li class="tsd-signature tsd-kind-icon">new <wbr>App<span class="tsd-signature-symbol">(</span>config<span class="tsd-signature-symbol">?: </span><a href="../interfaces/native.iconfig.html" class="tsd-signature-type" data-tsd-kind="Interface">ICONFIG</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="native.app.html" class="tsd-signature-type" data-tsd-kind="Class">App</a></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/okikio/native/blob/57da07c/packages/native/src/app.ts#L32">native/src/app.ts:32</a></li>
+									<li>Defined in <a href="https://github.com/okikio/native/blob/e82fc66/packages/native/src/app.ts#L29">native/src/app.ts:29</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
-									<h5>config: <span class="tsd-signature-type">object</span><span class="tsd-signature-symbol"> = {}</span></h5>
+									<h5>config: <a href="../interfaces/native.iconfig.html" class="tsd-signature-type" data-tsd-kind="Interface">ICONFIG</a><span class="tsd-signature-symbol"> = {}</span></h5>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <a href="native.app.html" class="tsd-signature-type" data-tsd-kind="Class">App</a></h4>
@@ -163,7 +162,7 @@
 					<div class="tsd-signature tsd-kind-icon">can<wbr>Resize<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol"> = true</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/okikio/native/blob/57da07c/packages/native/src/app.ts#L31">native/src/app.ts:31</a></li>
+							<li>Defined in <a href="https://github.com/okikio/native/blob/e82fc66/packages/native/src/app.ts#L28">native/src/app.ts:28</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -173,7 +172,7 @@
 					<div class="tsd-signature tsd-kind-icon">can<wbr>Scroll<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol"> = true</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/okikio/native/blob/57da07c/packages/native/src/app.ts#L32">native/src/app.ts:32</a></li>
+							<li>Defined in <a href="https://github.com/okikio/native/blob/e82fc66/packages/native/src/app.ts#L29">native/src/app.ts:29</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -182,9 +181,8 @@
 					<h3>config</h3>
 					<div class="tsd-signature tsd-kind-icon">config<span class="tsd-signature-symbol">:</span> <a href="../interfaces/native.iconfig.html" class="tsd-signature-type" data-tsd-kind="Interface">ICONFIG</a></div>
 					<aside class="tsd-sources">
-						<p>Implementation of <a href="../interfaces/native.iapp.html">IApp</a>.<a href="../interfaces/native.iapp.html#config">config</a></p>
 						<ul>
-							<li>Defined in <a href="https://github.com/okikio/native/blob/57da07c/packages/native/src/app.ts#L29">native/src/app.ts:29</a></li>
+							<li>Defined in <a href="https://github.com/okikio/native/blob/e82fc66/packages/native/src/app.ts#L26">native/src/app.ts:26</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -198,9 +196,8 @@
 					<h3>emitter</h3>
 					<div class="tsd-signature tsd-kind-icon">emitter<span class="tsd-signature-symbol">:</span> <a href="emitter.eventemitter.html" class="tsd-signature-type" data-tsd-kind="Class">EventEmitter</a></div>
 					<aside class="tsd-sources">
-						<p>Implementation of <a href="../interfaces/native.iapp.html">IApp</a>.<a href="../interfaces/native.iapp.html#emitter">emitter</a></p>
 						<ul>
-							<li>Defined in <a href="https://github.com/okikio/native/blob/57da07c/packages/native/src/app.ts#L26">native/src/app.ts:26</a></li>
+							<li>Defined in <a href="https://github.com/okikio/native/blob/e82fc66/packages/native/src/app.ts#L23">native/src/app.ts:23</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -214,9 +211,8 @@
 					<h3>services</h3>
 					<div class="tsd-signature tsd-kind-icon">services<span class="tsd-signature-symbol">:</span> <a href="native.servicemanager.html" class="tsd-signature-type" data-tsd-kind="Class">ServiceManager</a></div>
 					<aside class="tsd-sources">
-						<p>Implementation of <a href="../interfaces/native.iapp.html">IApp</a>.<a href="../interfaces/native.iapp.html#services">services</a></p>
 						<ul>
-							<li>Defined in <a href="https://github.com/okikio/native/blob/57da07c/packages/native/src/app.ts#L23">native/src/app.ts:23</a></li>
+							<li>Defined in <a href="https://github.com/okikio/native/blob/e82fc66/packages/native/src/app.ts#L20">native/src/app.ts:20</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -228,51 +224,51 @@
 			</section>
 			<section class="tsd-panel-group tsd-member-group ">
 				<h2>Methods</h2>
-				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-private">
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-protected">
 					<a name="_ready" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagPrivate">Private</span> _ready</h3>
-					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-private">
+					<h3><span class="tsd-flag ts-flagProtected">Protected</span> _ready</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-protected">
 						<li class="tsd-signature tsd-kind-icon">_ready<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/okikio/native/blob/57da07c/packages/native/src/app.ts#L53">native/src/app.ts:53</a></li>
+									<li>Defined in <a href="https://github.com/okikio/native/blob/e82fc66/packages/native/src/app.ts#L45">native/src/app.ts:45</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
 						</li>
 					</ul>
 				</section>
-				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-private">
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-protected">
 					<a name="_resize" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagPrivate">Private</span> _resize</h3>
-					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-private">
+					<h3><span class="tsd-flag ts-flagProtected">Protected</span> _resize</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-protected">
 						<li class="tsd-signature tsd-kind-icon">_resize<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/okikio/native/blob/57da07c/packages/native/src/app.ts#L59">native/src/app.ts:59</a></li>
+									<li>Defined in <a href="https://github.com/okikio/native/blob/e82fc66/packages/native/src/app.ts#L51">native/src/app.ts:51</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
 						</li>
 					</ul>
 				</section>
-				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-private">
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-protected">
 					<a name="_scroll" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagPrivate">Private</span> _scroll</h3>
-					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-private">
+					<h3><span class="tsd-flag ts-flagProtected">Protected</span> _scroll</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-protected">
 						<li class="tsd-signature tsd-kind-icon">_scroll<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/okikio/native/blob/57da07c/packages/native/src/app.ts#L76">native/src/app.ts:76</a></li>
+									<li>Defined in <a href="https://github.com/okikio/native/blob/e82fc66/packages/native/src/app.ts#L68">native/src/app.ts:68</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
@@ -288,11 +284,15 @@
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
-								<p>Implementation of <a href="../interfaces/native.iapp.html">IApp</a>.<a href="../interfaces/native.iapp.html#add">add</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/okikio/native/blob/57da07c/packages/native/src/app.ts#L99">native/src/app.ts:99</a></li>
+									<li>Defined in <a href="https://github.com/okikio/native/blob/e82fc66/packages/native/src/app.ts#L93">native/src/app.ts:93</a></li>
 								</ul>
 							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Shortcuts for adding Services</p>
+								</div>
+							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
@@ -312,9 +312,8 @@
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
-								<p>Implementation of <a href="../interfaces/native.iapp.html">IApp</a>.<a href="../interfaces/native.iapp.html#boot">boot</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/okikio/native/blob/57da07c/packages/native/src/app.ts#L105">native/src/app.ts:105</a></li>
+									<li>Defined in <a href="https://github.com/okikio/native/blob/e82fc66/packages/native/src/app.ts#L99">native/src/app.ts:99</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -330,23 +329,27 @@
 					<a name="emit" class="tsd-anchor"></a>
 					<h3>emit</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">emit<span class="tsd-signature-symbol">(</span>events<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">[]</span>, <span class="tsd-signature-symbol">...</span>args<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="native.app.html" class="tsd-signature-type" data-tsd-kind="Class">App</a></li>
+						<li class="tsd-signature tsd-kind-icon">emit<span class="tsd-signature-symbol">(</span>events<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">[]</span>, <span class="tsd-signature-symbol">...</span>args<span class="tsd-signature-symbol">: </span><a href="../modules/native.html#typeemitargs" class="tsd-signature-type" data-tsd-kind="Type alias">TypeEmitArgs</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="native.app.html" class="tsd-signature-type" data-tsd-kind="Class">App</a></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
-								<p>Implementation of <a href="../interfaces/native.iapp.html">IApp</a>.<a href="../interfaces/native.iapp.html#emit">emit</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/okikio/native/blob/57da07c/packages/native/src/app.ts#L129">native/src/app.ts:129</a></li>
+									<li>Defined in <a href="https://github.com/okikio/native/blob/e82fc66/packages/native/src/app.ts#L134">native/src/app.ts:134</a></li>
 								</ul>
 							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Shortcuts to the App EventEmitter emit method</p>
+								</div>
+							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
-									<h5>events: <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">[]</span></h5>
+									<h5>events: <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">[]</span></h5>
 								</li>
 								<li>
-									<h5><span class="tsd-flag ts-flagRest">Rest</span> <span class="tsd-signature-symbol">...</span>args: <span class="tsd-signature-type">any</span></h5>
+									<h5><span class="tsd-flag ts-flagRest">Rest</span> <span class="tsd-signature-symbol">...</span>args: <a href="../modules/native.html#typeemitargs" class="tsd-signature-type" data-tsd-kind="Type alias">TypeEmitArgs</a></h5>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <a href="native.app.html" class="tsd-signature-type" data-tsd-kind="Class">App</a></h4>
@@ -362,14 +365,13 @@
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
-								<p>Implementation of <a href="../interfaces/native.iapp.html">IApp</a>.<a href="../interfaces/native.iapp.html#get">get</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/okikio/native/blob/57da07c/packages/native/src/app.ts#L90">native/src/app.ts:90</a></li>
+									<li>Defined in <a href="https://github.com/okikio/native/blob/e82fc66/packages/native/src/app.ts#L82">native/src/app.ts:82</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
 								<div class="lead">
-									<p>Shortcuts to adding, setting, and getting Services</p>
+									<p>Shortcuts for getting Services</p>
 								</div>
 							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -386,23 +388,27 @@
 					<a name="off" class="tsd-anchor"></a>
 					<h3>off</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">off<span class="tsd-signature-symbol">(</span>events<span class="tsd-signature-symbol">: </span><a href="../modules/emitter.html#typeeventinput" class="tsd-signature-type" data-tsd-kind="Type alias">TypeEventInput</a>, callback<span class="tsd-signature-symbol">?: </span><a href="../modules/emitter.html#typelistenercallback" class="tsd-signature-type" data-tsd-kind="Type alias">TypeListenerCallback</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="native.app.html" class="tsd-signature-type" data-tsd-kind="Class">App</a></li>
+						<li class="tsd-signature tsd-kind-icon">off<span class="tsd-signature-symbol">(</span>events<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">object</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">[]</span>, callback<span class="tsd-signature-symbol">?: </span><a href="../modules/native.html#typeapplistenercallback" class="tsd-signature-type" data-tsd-kind="Type alias">TypeAppListenerCallback</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="native.app.html" class="tsd-signature-type" data-tsd-kind="Class">App</a></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
-								<p>Implementation of <a href="../interfaces/native.iapp.html">IApp</a>.<a href="../interfaces/native.iapp.html#off">off</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/okikio/native/blob/57da07c/packages/native/src/app.ts#L124">native/src/app.ts:124</a></li>
+									<li>Defined in <a href="https://github.com/okikio/native/blob/e82fc66/packages/native/src/app.ts#L128">native/src/app.ts:128</a></li>
 								</ul>
 							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Shortcuts to the App EventEmitter off method</p>
+								</div>
+							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
-									<h5>events: <a href="../modules/emitter.html#typeeventinput" class="tsd-signature-type" data-tsd-kind="Type alias">TypeEventInput</a></h5>
+									<h5>events: <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">object</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">[]</span></h5>
 								</li>
 								<li>
-									<h5><span class="tsd-flag ts-flagOptional">Optional</span> callback: <a href="../modules/emitter.html#typelistenercallback" class="tsd-signature-type" data-tsd-kind="Type alias">TypeListenerCallback</a></h5>
+									<h5><span class="tsd-flag ts-flagOptional">Optional</span> callback: <a href="../modules/native.html#typeapplistenercallback" class="tsd-signature-type" data-tsd-kind="Type alias">TypeAppListenerCallback</a></h5>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <a href="native.app.html" class="tsd-signature-type" data-tsd-kind="Class">App</a></h4>
@@ -413,28 +419,27 @@
 					<a name="on" class="tsd-anchor"></a>
 					<h3>on</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">on<span class="tsd-signature-symbol">(</span>events<span class="tsd-signature-symbol">: </span><a href="../modules/emitter.html#typeeventinput" class="tsd-signature-type" data-tsd-kind="Type alias">TypeEventInput</a>, callback<span class="tsd-signature-symbol">?: </span><a href="../modules/emitter.html#typelistenercallback" class="tsd-signature-type" data-tsd-kind="Type alias">TypeListenerCallback</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="native.app.html" class="tsd-signature-type" data-tsd-kind="Class">App</a></li>
+						<li class="tsd-signature tsd-kind-icon">on<span class="tsd-signature-symbol">(</span>events<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">object</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">[]</span>, callback<span class="tsd-signature-symbol">?: </span><a href="../modules/native.html#typeapplistenercallback" class="tsd-signature-type" data-tsd-kind="Type alias">TypeAppListenerCallback</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="native.app.html" class="tsd-signature-type" data-tsd-kind="Class">App</a></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
-								<p>Implementation of <a href="../interfaces/native.iapp.html">IApp</a>.<a href="../interfaces/native.iapp.html#on">on</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/okikio/native/blob/57da07c/packages/native/src/app.ts#L119">native/src/app.ts:119</a></li>
+									<li>Defined in <a href="https://github.com/okikio/native/blob/e82fc66/packages/native/src/app.ts#L122">native/src/app.ts:122</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
 								<div class="lead">
-									<p>Shortcuts to the App EventEmitter on, off, and emit methods</p>
+									<p>Shortcuts to the App EventEmitter on method</p>
 								</div>
 							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
-									<h5>events: <a href="../modules/emitter.html#typeeventinput" class="tsd-signature-type" data-tsd-kind="Type alias">TypeEventInput</a></h5>
+									<h5>events: <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">object</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">[]</span></h5>
 								</li>
 								<li>
-									<h5><span class="tsd-flag ts-flagOptional">Optional</span> callback: <a href="../modules/emitter.html#typelistenercallback" class="tsd-signature-type" data-tsd-kind="Type alias">TypeListenerCallback</a></h5>
+									<h5><span class="tsd-flag ts-flagOptional">Optional</span> callback: <a href="../modules/native.html#typeapplistenercallback" class="tsd-signature-type" data-tsd-kind="Type alias">TypeAppListenerCallback</a></h5>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <a href="native.app.html" class="tsd-signature-type" data-tsd-kind="Class">App</a></h4>
@@ -450,9 +455,8 @@
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
-								<p>Implementation of <a href="../interfaces/native.iapp.html">IApp</a>.<a href="../interfaces/native.iapp.html#register">register</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/okikio/native/blob/57da07c/packages/native/src/app.ts#L41">native/src/app.ts:41</a></li>
+									<li>Defined in <a href="https://github.com/okikio/native/blob/e82fc66/packages/native/src/app.ts#L38">native/src/app.ts:38</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -479,11 +483,15 @@
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
-								<p>Implementation of <a href="../interfaces/native.iapp.html">IApp</a>.<a href="../interfaces/native.iapp.html#set">set</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/okikio/native/blob/57da07c/packages/native/src/app.ts#L94">native/src/app.ts:94</a></li>
+									<li>Defined in <a href="https://github.com/okikio/native/blob/e82fc66/packages/native/src/app.ts#L87">native/src/app.ts:87</a></li>
 								</ul>
 							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Shortcuts for setting Services</p>
+								</div>
+							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
@@ -506,9 +514,8 @@
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
-								<p>Implementation of <a href="../interfaces/native.iapp.html">IApp</a>.<a href="../interfaces/native.iapp.html#stop">stop</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/okikio/native/blob/57da07c/packages/native/src/app.ts#L112">native/src/app.ts:112</a></li>
+									<li>Defined in <a href="https://github.com/okikio/native/blob/e82fc66/packages/native/src/app.ts#L112">native/src/app.ts:112</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -579,13 +586,13 @@
 									<li class=" tsd-kind-property tsd-parent-kind-class">
 										<a href="native.app.html#services" class="tsd-kind-icon">services</a>
 									</li>
-									<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-private">
+									<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-protected">
 										<a href="native.app.html#_ready" class="tsd-kind-icon">_ready</a>
 									</li>
-									<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-private">
+									<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-protected">
 										<a href="native.app.html#_resize" class="tsd-kind-icon">_resize</a>
 									</li>
-									<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-private">
+									<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-protected">
 										<a href="native.app.html#_scroll" class="tsd-kind-icon">_scroll</a>
 									</li>
 									<li class=" tsd-kind-method tsd-parent-kind-class">
@@ -643,11 +650,13 @@
 				<li class="tsd-kind-type-alias"><span class="tsd-kind-icon">Type alias</span></li>
 			</ul>
 			<ul class="tsd-legend">
-				<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><span class="tsd-kind-icon">Private property</span></li>
-				<li class="tsd-kind-method tsd-parent-kind-class tsd-is-private"><span class="tsd-kind-icon">Private method</span></li>
+				<li class="tsd-kind-interface"><span class="tsd-kind-icon">Interface</span></li>
 			</ul>
 			<ul class="tsd-legend">
-				<li class="tsd-kind-interface"><span class="tsd-kind-icon">Interface</span></li>
+				<li class="tsd-kind-method tsd-parent-kind-class tsd-is-protected"><span class="tsd-kind-icon">Protected method</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><span class="tsd-kind-icon">Private property</span></li>
 			</ul>
 		</div>
 	</div>
