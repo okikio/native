@@ -30,7 +30,7 @@ importers:
       postcss-csso: ^5.0.1
       postcss-scss: ^3.0.5
       pretty-bytes: ^5.6.0
-      sass: ^1.33.0
+      sass: ^1.34.0
       standard-version: ^9.3.0
       tailwindcss: ^2.1.2
       typedoc: ^0.20.36
@@ -64,7 +64,7 @@ importers:
       postcss-csso: 5.0.1_postcss@8.3.0
       postcss-scss: 3.0.5
       pretty-bytes: 5.6.0
-      sass: 1.33.0
+      sass: 1.34.0
       standard-version: 9.3.0
       tailwindcss: 2.1.2_bce0498cf0c3ab962ab667a3a4ae1b48
       typedoc: 0.20.36_typescript@4.2.4
@@ -676,7 +676,7 @@ packages:
     dependencies:
       '@csstools/sass-import-resolve': 1.0.0
       postcss: 7.0.35
-      sass: 1.33.0
+      sass: 1.34.0
       source-map: 0.7.3
     dev: true
 
@@ -1279,7 +1279,7 @@ packages:
     engines: {node: '>= 8'}
     dependencies:
       normalize-path: 3.0.0
-      picomatch: 2.2.3
+      picomatch: 2.3.0
     dev: true
 
   /append-buffer/1.0.2:
@@ -1482,7 +1482,7 @@ packages:
       browserslist: 4.16.6
       caniuse-lite: 1.0.30001228
       colorette: 1.2.2
-      fraction.js: 4.1.0
+      fraction.js: 4.1.1
       normalize-range: 0.1.2
       postcss: 8.3.0
       postcss-value-parser: 4.1.0
@@ -3001,7 +3001,7 @@ packages:
   /encoding/0.1.13:
     resolution: {integrity: sha512-ETBauow1T35Y/WZMkio9jiM0Z5xjHHmJ4XmjZOq1l/dXz3lr2sRn87nJy20RupqSh1F2m3HHPSp8ShIPQJrJ3A==}
     dependencies:
-      iconv-lite: 0.6.2
+      iconv-lite: 0.6.3
     dev: true
     optional: true
 
@@ -3353,7 +3353,7 @@ packages:
       glob-parent: 5.1.2
       merge2: 1.4.1
       micromatch: 4.0.4
-      picomatch: 2.2.3
+      picomatch: 2.3.0
     dev: true
 
   /fast-json-stable-stringify/2.1.0:
@@ -3572,8 +3572,8 @@ packages:
       mime-types: 2.1.30
     dev: true
 
-  /fraction.js/4.1.0:
-    resolution: {integrity: sha512-o9lSKpK0TDqDwTL24Hxqi6I99s942l6TYkfl6WvGWgLOIFz/YonSGKfiSeMadoiNvTfqnfOa9mjb5SGVbBK9/w==}
+  /fraction.js/4.1.1:
+    resolution: {integrity: sha512-MHOhvvxHTfRFpF1geTK9czMIZ6xclsEor2wkIGYYq+PxcQqT7vStJqjhe6S1TenZrMZzo+wlqOufBDVepUEgPg==}
     dev: true
 
   /fragment-cache/0.2.1:
@@ -4245,8 +4245,8 @@ packages:
       safer-buffer: 2.1.2
     dev: true
 
-  /iconv-lite/0.6.2:
-    resolution: {integrity: sha512-2y91h5OpQlolefMPmUlivelittSWy0rP+oYVpn6A7GwVHNE8AWzoYOBNmlwks3LobaJxgHCYZAnyNo2GgpNRNQ==}
+  /iconv-lite/0.6.3:
+    resolution: {integrity: sha512-4fCk79wshMdzMp2rH06qWrJE4iolqLhCUH+OiuIgU++RB0+94NlDL81atO7GX55uUKueo0txHNtvEyI6D7WdMw==}
     engines: {node: '>=0.10.0'}
     dependencies:
       safer-buffer: 2.1.2
@@ -5662,8 +5662,8 @@ packages:
       object-visit: 1.0.1
     dev: true
 
-  /marked/2.0.4:
-    resolution: {integrity: sha512-MIL0xKRDQM3DE7dJr/wa6JV0EmK9yZ3cwuTc2bu66FNm/tmEMm9cJCgJZpt9R+K1T+pB2iBNV55wvnwSd345zg==}
+  /marked/2.0.5:
+    resolution: {integrity: sha512-yfCEUXmKhBPLOzEC7c+tc4XZdIeTdGoRCZakFMkCxodr7wDXqoapIME4wjcpBPJLNyUnKJ3e8rb8wlAgnLnaDw==}
     engines: {node: '>= 8.16.2'}
     hasBin: true
     dev: true
@@ -5756,7 +5756,7 @@ packages:
     engines: {node: '>=8.6'}
     dependencies:
       braces: 3.0.2
-      picomatch: 2.2.3
+      picomatch: 2.3.0
     dev: true
 
   /mime-db/1.47.0:
@@ -6509,8 +6509,8 @@ packages:
     resolution: {integrity: sha1-Ywn04OX6kT7BxpMHrjZLSzd8nns=}
     dev: true
 
-  /picomatch/2.2.3:
-    resolution: {integrity: sha512-KpELjfwcCDUb9PeigTs2mBJzXUPzAuP2oPcA989He8Rte0+YUAjw1JVedDhuTKPkHjSYzMN3npC9luThGYEKdg==}
+  /picomatch/2.3.0:
+    resolution: {integrity: sha512-lY1Q/PiJGC2zOv/z391WOTD+Z02bCgsFfvxoXXf6h7kv9o+WmsmzYqrAwY63sNgOxE4xEdq0WyUnXfKeBrSvYw==}
     engines: {node: '>=8.6'}
     dev: true
 
@@ -7035,7 +7035,7 @@ packages:
     resolution: {integrity: sha512-cMhu7c/8rdhkHXWsY+osBhfSy0JikwpHK/5+imo+LpeasTF8ouErHrlYkwT0++njiyuDvc7OFY5T3ukvZ8qmFQ==}
     engines: {node: '>=8.10.0'}
     dependencies:
-      picomatch: 2.2.3
+      picomatch: 2.3.0
     dev: true
 
   /rechoir/0.6.2:
@@ -7380,8 +7380,8 @@ packages:
       walker: 1.0.7
     dev: true
 
-  /sass/1.33.0:
-    resolution: {integrity: sha512-9v0MUXnSi62FtfjqcwZ+b8B9FIxdwFEb3FPUkjEPXWd0b5KcnPGSp2XF9WrzcH1ZxedfgJVTdA3A1j4eEj53xg==}
+  /sass/1.34.0:
+    resolution: {integrity: sha512-rHEN0BscqjUYuomUEaqq3BMgsXqQfkcMVR7UhscsAVub0/spUrZGBMxQXFS2kfiDsPLZw5yuU9iJEFNC2x38Qw==}
     engines: {node: '>=8.9.0'}
     hasBin: true
     dependencies:
@@ -8391,7 +8391,7 @@ packages:
       handlebars: 4.7.7
       lodash: 4.17.21
       lunr: 2.3.9
-      marked: 2.0.4
+      marked: 2.0.5
       minimatch: 3.0.4
       progress: 2.0.3
       shelljs: 0.8.4
