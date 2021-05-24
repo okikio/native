@@ -1,3 +1,7 @@
+export * from "@okikio/manager";
+export * from "@okikio/emitter";
+export * from "@okikio/animate";
+
 export * from "./config";
 export * from "./manager";
 export * from "./url";
@@ -11,7 +15,3 @@ export * from "./transition";
 export * from "./app";
 export * from "./pjax";
 export * from "./router";
-
-export * from "@okikio/manager";
-export * from "@okikio/animate";
-export * from "@okikio/emitter";
