@@ -46,11 +46,11 @@ export class ManagerItem {
         this.uninstall();
 
         this.manager.remove(this.key);
-        this.key = undefined;
-        this.manager = undefined;
-        this.app = undefined;
-        this.config = undefined;
-        this.emitter = undefined;
+        this.key = null;
+        this.manager = null;
+        this.app = null;
+        this.config = null;
+        this.emitter = null;
     }
 }
 
