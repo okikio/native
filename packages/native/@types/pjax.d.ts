@@ -1,21 +1,21 @@
-import { Trigger } from "./history";
+import { TypeTrigger } from "./history";
 import { Service } from "./service";
 export declare type LinkEvent = MouseEvent | TouchEvent;
 export declare type StateEvent = LinkEvent | PopStateEvent;
 export declare type IgnoreURLsList = Array<RegExp | string>;
 /**
- * Creates a barbajs like PJAX Service, for the native framework
+ * Creates a barbajs based PJAX Service, for the native framework
  * Based on barbajs and StartingBlocks
  */
 export declare class PJAX extends Service {
-    /** URLs to ignore when prefetching */
-    ignoreURLs: IgnoreURLsList;
-    /** Whether or not to disable prefetching */
-    prefetchIgnore: boolean;
+    /** URLs to disable PJAX for */
+    preventURLs: boolean | IgnoreURLsList;
+    /** URLs to ignore when prefetching / Whether or not to disable prefetching */
+    prefetchIgnore: boolean | IgnoreURLsList;
     /** Current state of transitions */
     isTransitioning: boolean;
     /** Ignore extra clicks of an anchor element if a transition has already started */
-    stopOnTransitioning: boolean;
+    onTransitionPreventClick: boolean;
     /** On page change (excluding popstate events) keep current scroll position */
     stickyScroll: boolean;
     /** Force load a page if an error occurs */
@@ -40,7 +40,7 @@ export declare class PJAX extends Service {
     /** When an element is clicked, get valid anchor element, go for a transition */
     onClick(event: LinkEvent): void;
     /** Returns the direction of the State change as a String, either the Back button or the Forward button */
-    getDirection(value: number): Trigger;
+    getDirection(value: number): TypeTrigger;
     /** Force a page to go to a certain URL */
     force(href: string): void;
     /**
@@ -49,24 +49,22 @@ export declare class PJAX extends Service {
      * On state change, change the current state history, to reflect the direction of said state change
      * Load page and page transition.
      */
-    go({ href, trigger, event, }: {
+    go({ href, trigger, event }: {
         href: string;
-        trigger?: Trigger;
+        trigger?: TypeTrigger;
         event?: StateEvent;
     }): Promise<void>;
     /** Load the new Page as well as a Transition; starts the Transition */
     load({ oldHref, href, trigger, transitionName, scroll, }: {
         oldHref: string;
         href: string;
-        trigger: Trigger;
+        trigger?: TypeTrigger;
         transitionName?: string;
-        scroll: {
+        scroll?: {
             x: number;
             y: number;
         };
     }): Promise<any>;
-    /** Check to see if the URL is to be ignored, uses either RegExp of Strings to check */
-    ignoredURL({ pathname }: URL): boolean;
     /** When you hover over an anchor, prefetch the event target's href */
     onHover(event: LinkEvent): Promise<void>;
     /** When History state changes, get url from State, go for a Transition. */

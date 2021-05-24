@@ -10,7 +10,7 @@ export declare class Service extends ManagerItem {
     initEvents(): void;
     /** Stop events */
     stopEvents(): void;
-    /** Stop services */
+    /** Stop Service */
     stop(): void;
 }
 /** The Service Manager controls the lifecycle of all Services in an App */

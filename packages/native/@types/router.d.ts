@@ -1,12 +1,16 @@
 import { Service } from "./service";
 import { Manager } from "./manager";
 export declare type RouteMethod = (...args: any) => any;
-export declare type RouteStyle = string | RegExp | boolean;
+export declare type RouteStyle = string | RegExp | boolean | RouteStyle[];
 export interface IRouteToFrom {
-    to: RouteStyle;
-    from: RouteStyle;
+    to?: RouteStyle;
+    from?: RouteStyle;
 }
-export declare type RoutePath = IRouteToFrom | RouteStyle;
+export declare type RoutePath = IRouteToFrom & ({
+    to: RouteStyle;
+} | {
+    from: RouteStyle;
+}) | RouteStyle;
 export interface IRoute {
     path: RoutePath;
     method: RouteMethod;

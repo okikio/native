@@ -1,5 +1,5 @@
 import { Service } from "./service";
-export declare type Trigger = HTMLAnchorElement | "HistoryManager" | "popstate" | "back" | "forward";
+export declare type TypeTrigger = HTMLAnchorElement | "HistoryManager" | "popstate" | "back" | "forward";
 export interface ICoords {
     readonly x: number;
     readonly y: number;
@@ -18,26 +18,12 @@ export interface IHistoryItem {
     index: number;
     states: IState[];
 }
-export interface IHistoryManager extends Service {
-    states: IState[];
-    pointer: number;
-    init(): any;
-    get(index: number): IState;
-    add(value?: IState, historyAction?: "replace" | "push"): HistoryManager;
-    remove(index?: number): HistoryManager;
-    replace(newStates: IState[]): HistoryManager;
-    set(i: number, state: IState): IState;
-    current: IState;
-    last: IState;
-    previous: IState | null;
-    length: number;
-}
 /** A quick snapshot of page scroll coordinates */
 export declare const newCoords: (x?: number, y?: number) => ICoords;
 /** Creates a state; a state represents the current status of the page consisting of properties like: url, transition, and data */
 export declare const newState: (state?: IState) => IState;
 /** Keeps a record of the history of the App; it stores only the states of Pages */
-export declare class HistoryManager extends Service implements IHistoryManager {
+export declare class HistoryManager extends Service {
     states: IState[];
     pointer: number;
     /** Initializes the states array, and replace the history pushState data with the states array */
@@ -58,6 +44,8 @@ export declare class HistoryManager extends Service implements IHistoryManager {
     /** Get the previous state. */
     get previous(): IState | null;
     get length(): number;
+}
+export interface IHistoryManager extends HistoryManager {
 }
 /** Either push or replace history state */
 export declare const changeState: (action: "push" | "replace", state: IState, item: object) => void;
