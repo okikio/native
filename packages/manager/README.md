@@ -1,6 +1,6 @@
 # @okikio/manager
 
-A superset of the Map class, it extends the Map classes capabilities with awesome new features; it weighs ~360 B (minified and gzipped).
+A superset of the Map class, it extends the Map classes capabilities with awesome new features; it weighs **~361 B** (minified and gzipped).
 
 *You will need a Map and Promise polyfill for older browsers. If you install `@okikio/manager` via [npm](https://www.npmjs.com/package/@okikio/manager) you are most likely going to need [rollup](https://rollupjs.org/) or [esbuild](https://esbuild.github.io/). You can use [polyfill.io](https://polyfill.io/), or another source to create a polyfill. The minimum feature requirement for a polyfill are Maps and Promises e.g. [https://cdn.polyfill.io/v3/polyfill.min.js?features=Maps,Promise](https://cdn.polyfill.io/v3/polyfill.min.js?features=Maps,Promise).*
 
