@@ -1,59 +1,54 @@
-import { PJAX, App, TransitionManager, Router, HistoryManager, PageManager, animate, Animate } from "@okikio/native";
-import { IntroAnimation } from "./services/IntroAnimation";
+import { PJAX, App, TransitionManager, Router, HistoryManager, PageManager, ITransitionData } from "@okikio/native";
 
 import { Fade } from "./transitions/Fade";
 import { BigTransition } from "./transitions/BigTransition";
 import { Slide, SlideLeft, SlideRight } from "./transitions/Slide";
 
-import { toArr } from "./toArr";
 import { Navbar } from "./services/Navbar";
+import { stop, run } from "./animate";
 
-let router: Router, pjax: PJAX;
-const app: App = new App();
-app
-    .add(new IntroAnimation())
-    .set("HistoryManager", new HistoryManager())
-    .set("PageManager", new PageManager())
-    .set("TransitionManager", new TransitionManager([
+const router = new Router();
+const pjax = new PJAX();
+const navbar = new Navbar();
+const app = new App({
+    // prefetchIgnore: ["/index(.html)?"],
+    // preventURLs: ["/other(.html)?"],
+    transitions: [
         ["default", Fade],
         ["BigTransition", BigTransition],
         ["Slide", Slide],
         ["SlideLeft", SlideLeft],
         ["SlideRight", SlideRight]
-    ]))
-    .add(new Navbar())
-    .set("router", router = new Router())
-    .add(pjax = new PJAX());
+    ]
+});
 
-try {
-    router = app.get("router") as Router;
+app
+    .set("HistoryManager", new HistoryManager())
+    .set("PageManager", new PageManager())
+    .set("TransitionManager", new TransitionManager())
 
-    // This isn't nessceary, but it changes the nav link in focus depending on the page
-    let navLink: HTMLElement[] = toArr(document.querySelectorAll(".navbar .nav-link"));
-    for (let item of navLink) {
-        let navItem = (item as HTMLAnchorElement);
-        router.add({
-            path: navItem.getAttribute("data-path") || navItem.pathname,
-            method() {
-                let isActive = navItem.classList.contains("active");
-                if (!isActive) navItem.classList.add("active");
-                for (let nav of navLink) {
-                    if (nav !== navItem)
-                        nav.classList.remove("active");
-                }
-            }
-        });
-    }
+    .add(navbar)
+    .add(router)
+    .add(pjax);
 
-    router.add({
-        path: /(index|\/$)(\.html)?/,
-        method() { }
+app.on("CLICK", (data) => {
+    let { from } = data as ITransitionData ;
+})
+
+router
+    .add({
+        path: {
+            from: "/animate(.html)?",
+            to: false,
+        },
+        method: stop
+    })
+    .add({
+        path: "/animate(.html)?",
+        method: run
     });
 
-    // app.on("AFTER_SPLASHSCREEN_HIDE", () => {
-    //     anim?.play();
-    // });
-
+try {
     app.boot();
 } catch (err) {
     console.warn("[App] boot failed,", err);

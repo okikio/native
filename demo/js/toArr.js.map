@@ -1,7 +1,0 @@
-{
-  "version": 3,
-  "sources": ["build/ts/toArr.ts"],
-  "sourcesContent": ["export const toArr = (input: any): any[] => Array.from(input);\r\nexport default toArr;"],
-  "mappings": "AAAO,GAAM,GAAQ,AAAC,GAAsB,MAAM,KAAK,GAChD,EAAQ",
-  "names": []
-}

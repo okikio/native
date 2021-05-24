@@ -1,50 +1,46 @@
 import { ITransition, ITransitionData, animate } from "@okikio/native";
-import toArr from "../toArr";
 
-//== Transitions
 export const BigTransition: ITransition = {
     name: "big",
     delay: 200,
     durationPerAnimation: 700,
-    scrollable: true,
+    manualScroll: true,
 
     init() {
         this.mainElement = document.getElementById('big-transition');
         this.logoElement = this.mainElement.querySelector('#logo');
-        this.horizontalElements = toArr(this.mainElement.querySelectorAll('#big-transition-horizontal div'));
+        this.horizontalElements = Array.from(this.mainElement.querySelectorAll('#big-transition-horizontal div'));
         this.maxLength = this.horizontalElements.length;
     },
 
-    out({ from, scroll }: ITransitionData) {
+    out({ from, done }: ITransitionData) {
         let { durationPerAnimation: duration, delay } = this;
         let fromWrapper = from.wrapper;
-
-        let wrapperStyle = Object.assign({}, fromWrapper.style);
-        return new Promise<void>(async resolve => {
+        
+        (async () => {
+            let wrapperStyle = Object.assign({}, fromWrapper.style);
             this.mainElement.style.opacity = "1";
             this.mainElement.style.visibility = "visible";
             let anim1 = animate({
                 target: fromWrapper,
                 opacity: [1, 0],
                 duration,
-                onfinish(el: { style: { opacity: string; }; }) {
+                onfinish(el) {
                     el.style.opacity = '0';
                 }
             });
 
-            anim1.then(function () { this.stop(); });
+            anim1.then(function () {
+                this.stop();
+            });
 
             let [anim2] = await animate({
                 target: this.horizontalElements,
-                keyframes: [
-                    { transform: "scaleX(0)" },
-                    { transform: "scaleX(1)" },
-                ],
-                // @ts-ignore
+                scaleX: [0, 1],
                 delay(i: number) {
                     return delay * (i + 1);
                 },
-                onfinish(el: { style: { transform: string; }; }) {
+                onfinish(el) {
                     el.style.transform = `scaleX(1)`;
                 },
                 easing: "out-cubic",
@@ -60,25 +56,30 @@ export const BigTransition: ITransition = {
                 target: this.logoElement,
                 opacity: [0, 1],
                 duration: loaderDuration,
-                onfinish(el: { style: { opacity: string; }; }) {
+                onfinish(el) {
                     el.style.opacity = `1`;
                 },
+            });
+
+            anim3.on("stop", () => {
+                console.log("`anim3` of the BigTransition has stopped")
             });
 
             let [anim4] = await animate({
                 options: anim3,
                 opacity: [1, 0],
-                onfinish(el: { style: { opacity: string; }; }) {
+                onfinish(el) {
                     el.style.opacity = `0`;
                 },
                 delay: 1500
             });
+
             this.logoElement.style.visibility = "hidden";
-            // anim2.stop() // -> anim2.stop() Breaks the Animation
+            anim2.stop()
             anim3.stop();
             anim4.stop();
-            resolve();
-        });
+            done();
+        })();
     },
 
     in({ to, scroll }: ITransitionData) {
@@ -97,15 +98,11 @@ export const BigTransition: ITransition = {
 
             let [anim2] = await animate({
                 target: this.horizontalElements,
-                keyframes: [
-                    { transform: "scaleX(1)" },
-                    { transform: "scaleX(0)" },
-                ],
-                // @ts-ignore
+                scaleX: [2, 0],
                 delay(i: number) {
                     return delay * (i + 1);
                 },
-                onfinish(el: { style: { transform: string; }; }) {
+                onfinish(el) {
                     el.style.transform = `scaleX(0)`;
                 },
                 easing: "out-cubic",

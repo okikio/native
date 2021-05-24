@@ -1,4 +1,5 @@
-import { animate, IAnimationOptions, methodCall } from "@okikio/native";
+import { animate, IAnimationOptions, methodCall, UnitPXCSSValue } from "@okikio/native";
+
 
 let playbackFn = (containerSel, anims) => {
     let playstateEl = document.querySelector(`${containerSel} #playstate-toggle`) as HTMLInputElement;
@@ -19,25 +20,36 @@ let playbackFn = (containerSel, anims) => {
             progressOutputEl.textContent = `${Math.round(progress)}%`;
         });
 
-    playstateEl.addEventListener("click", () => {
+    let clickFn = () => {
         if (anims[0].is("running")) methodCall(anims, "pause");
         else if (anims[0].is("finished")) methodCall(anims, "reset");
         else methodCall(anims, "play");
 
         updatePlayState();
-    });
+    };
 
-    progressEl.addEventListener("input", (e) => {
+    let inputFn = () => {
         let percent = +progressEl.value;
         methodCall(anims, "pause");
         methodCall(anims, "setProgress", percent);
-    });
+    }
 
-    progressEl.addEventListener("change", () => {
+    let changeFn = () => {
         oldState !== "paused" ? methodCall(anims, "play") : methodCall(anims, "pause");
 
         updatePlayState();
-    });
+    }
+
+    playstateEl.addEventListener("click", clickFn);
+    progressEl.addEventListener("input", inputFn);
+    progressEl.addEventListener("change", changeFn);
+
+    anims[0].on("stop", () => {
+        playstateEl.removeEventListener("click", clickFn);
+        progressEl.removeEventListener("input", inputFn);
+        progressEl.removeEventListener("change", changeFn);
+        anims = null;
+    })
 
 }
 
@@ -45,130 +57,185 @@ let random = (min: number, max: number) => Math.floor(Math.random() * (max - min
 
 /* Properties Section */
 // Playback Controls Demo
-(() => {
-    let containerSel = ".playback-demo";
+export let anim, motionPath, getTotalLength;
+export let run = () => {
+    // Based on an example by animateplus
+    (() => {
+        let containerSel = ".morph-demo";
+        let pathEl = document.querySelectorAll(`${containerSel} path`);
 
-    let DOMNodes = document.querySelectorAll(`${containerSel} .el`);
-    let anim = animate({
-        target: DOMNodes,
+        if (pathEl) {
+            let anim = animate({
+                target: pathEl,
+                duration: 1800,
+                easing: "ease",
+                loop: 4,
+                direction: "alternate",
+                "d": `path("M2,5 S2,14 4,5 S7,8 8,4")`,
+                stroke: `rgb(96, 165, 250)`,
+            });
 
-        // keyframes(index, total) {
-        //     return [
-        //         { transform: "translateX(0px)", opacity: 0.1 },
-        //         { transform: "translateX(400px)", opacity: 0.2 + ((index + 1) / total) }
-        //     ]
-        // },
-        // keyframes(index, total) {
-        //     return {
-        //         "from": {
-        //             // transform: "translateX(0px)",
-        //             // translateX: 0,
-        //             opacity: 0.1,
-        //         },
-        //         "to": {
-        //             // transform: "translateX(400px)",
-        //             // translate: 400,
-        //             translateX: 400,
-        //             opacity: 0.2 + ((index + 1) / total)
-        //         }
-        //     };
-        // },
+            playbackFn(containerSel, [anim]);
+        }
+    })();
 
-        // transform: ["translateX(0px)", "translateX(300px)"],
-        // translateX: 300,
+    (() => {
+        let containerSel = ".playback-demo";
+        let DOMNodes = document.querySelectorAll(`${containerSel} .el`);
+        if (DOMNodes.length) {
+            anim = animate({
+                target: DOMNodes,
+                backgroundColor() {
+                    let [r, g, b] = [
+                        random(0, 255),
+                        random(0, 255),
+                        random(0, 255)
+                    ]
+                    return `rgb(${r}, ${g}, ${b})`;
+                },
 
-        translateX: (index) => [170, 80, 270][index],
-        translateY(index) {
-            return 50 + (-50 * index);
-        },
-        scale(index, total) {
-            return (total - index) + 0.25;
-        },
-        opacity(index, total) {
-            return [0.5, 0.5 + Math.min((index + 1) / total, 0.5)];
-        },
-        rotate: () => random(-360, 360),
-        borderRadius: () => `${random(10, 35)}%`,
-        duration: () => random(1200, 1800),
-        delay: () => random(0, 400),
+                translateX: () => random(50, 400),
+                translateY(_, total) {
+                    return (random(-50, 50) * total);
+                },
+                scale() {
+                    return 1 + random(0.025, 1.75);
+                },
+                opacity(_, total) {
+                    return [0.5, 0.5 + Math.min(random(0.025, total) / total, 0.5)];
+                },
+                rotate: () => random(-360, 360),
+                borderRadius: () => `${random(10, 35)}%`,
+                duration: () => random(1200, 1800),
+                delay: () => random(0, 400),
 
-        // delay(index) {
-        //     return ((index + 1) * 500) / 2;
-        // },
-        // duration(index: number) {
-        //     return (index + 1) * 500;
-        // },
+                // It is best to use the onfinish() method, but in this situation fillMode works best
+                fillMode: "both",
+                easing: "in-out-back",
+                loop: 2,
+                speed: (i) => 1.5 - (i * 0.125),
+                direction: "alternate",
 
-        // It is best to use the onfinish() method, but in this situation fillMode works best
-        fillMode: "both",
-        // onfinish(element, index, total) {
-        //     element.style.opacity = `${((index + 1) / total)}`;
-        //     element.style.transform = "translateX(300px)";
-        // },
+                padEndDelay: true,
+                autoplay: true
+            });
 
-        easing: "in-out-back",
-        loop: 2,
-        speed: 1.5,
-        direction: "alternate",
+            let addBtn = document.querySelector("#add-el") as HTMLElement;
+            let removeBtn = document.querySelector("#remove-el") as HTMLElement;
+            let elPlacement = document.querySelector(".el-placement") as HTMLElement;
 
-        padEndDelay: true,
-        autoplay: true
-    });
+            let contain = document.createElement("div");
+            contain.className = "contain";
+            contain.innerHTML = `
+            <div class="el"></div>
+            <div class="el-initial"></div>`.trim();
 
-    setTimeout(() => {
-        console.log("updateOptions");
+            addBtn.onclick = () => {
+                let _contain = contain.cloneNode(true) as HTMLElement;
+                let el = _contain.querySelector(".el");
+                elPlacement.appendChild(_contain);
 
-        anim.updateOptions({
-            backgroundColor: "red",
-            speed: (i) => 1.5 - (i * 0.125),
-        });
-    }, 500)
+                anim.add(el);
 
-    playbackFn(containerSel, [anim]);
-})();
+                let transition = animate({
+                    target: _contain,
+                    opacity: [0, 1],
+                    height: [0, "4vmin"],
+                    marginBottom: UnitPXCSSValue([0, 5]),
+                    fillMode: "forwards",
+                    duration: 400,
+                    easing: "out"
+                }).then(() => {
+                    transition.stop();
+                    transition = null;
+                    _contain = null;
+                    el = null;
+                });
 
-(() => {
-    let options: IAnimationOptions = {
-        padEndDelay: true,
-        easing: "linear",
-        duration: 2000,
-        loop: 4,
-        speed: 1,
-    };
+            };
 
-    let containerSel = ".motion-path-demo";
-    let el = document.querySelector('.motion-path .el-1') as HTMLElement;
-    let motionPath = animate({
-        target: el,
-        "offsetDistance": ["0%", "100%"],
-        ...options
-    });
+            removeBtn.onclick = () => {
+                let contain = elPlacement.querySelector(".contain");
+                let el = contain?.querySelector(".el");
 
-    let path = document.querySelector('.motion-path path') as SVGPathElement;
-    let el2 = document.querySelector('.motion-path .el-2') as HTMLElement;
+                anim.remove(el);
 
-    let pts: Set<number[]> = new Set();
-    let rotateArr: number[] = [];
-    let len = path.getTotalLength();
+                let transition = animate({
+                    target: contain,
+                    opacity: 0,
+                    height: 0,
+                    marginBottom: 0,
+                    fillMode: "forwards",
+                    duration: 400,
+                    easing: "out"
+                }).then(() => {
+                    transition.stop();
+                    contain?.remove();
 
-    let ptAtZero = path.getPointAtLength(0);
-    for (var i = 0; i < len; i++) {
-        let { x, y } = path.getPointAtLength(i);
-        pts.add([x, y]);
+                    transition = null;
+                    contain = null;
+                    el = null;
+                });
+            };
 
-        let { x: x0, y: y0 } = i - 1 >= 1 ? path.getPointAtLength(i - 1) : ptAtZero;
-        let { x: x1, y: y1 } = i + 1 >= 1 ? path.getPointAtLength(i + 1) : ptAtZero;
-        let calc = +(Math.atan2(y1 - y0, x1 - x0) * 180 / Math.PI);
-        rotateArr.push(calc);
-    }
+            playbackFn(containerSel, [anim]);
+        }
+    })();
 
-    let getTotalLength = animate({
-        target: el2,
-        translate: [...pts],
-        rotate: rotateArr,
-        fillMode: "both",
-        ...options
-    });
+    (() => {
+        let options: IAnimationOptions = {
+            padEndDelay: true,
+            easing: "linear",
+            duration: 2000,
+            loop: 4,
+            speed: 1,
+        };
 
-    playbackFn(containerSel, [motionPath, getTotalLength]);
-})();
+        let containerSel = ".motion-path-demo";
+        let el = document.querySelector('.motion-path .el-1') as HTMLElement;
+        if (el) {
+            motionPath = animate({
+                target: el,
+                "offsetDistance": ["0%", "100%"],
+                ...options
+            });
+        }
+
+        let path = document.querySelector('.motion-path path') as SVGPathElement;
+        let el2 = document.querySelector('.motion-path .el-2') as HTMLElement;
+        if (path && el2) {
+
+            let pts: Set<number[]> = new Set();
+            let rotateArr: number[] = [];
+            let len = path.getTotalLength();
+
+            let ptAtZero = path.getPointAtLength(0);
+            for (var i = 0; i < len; i++) {
+                let { x, y } = path.getPointAtLength(i);
+                pts.add([x, y]);
+
+                let { x: x0, y: y0 } = i - 1 >= 1 ? path.getPointAtLength(i - 1) : ptAtZero;
+                let { x: x1, y: y1 } = i + 1 >= 1 ? path.getPointAtLength(i + 1) : ptAtZero;
+                let calc = +(Math.atan2(y0 - y1, x0 - x1) * 180 / Math.PI);
+                rotateArr.push(calc);
+            }
+
+            getTotalLength = animate({
+                target: el2,
+                translate: [...pts],
+                rotate: rotateArr,
+                fillMode: "both",
+                ...options,
+            });
+
+            playbackFn(containerSel, [motionPath, getTotalLength]);
+        }
+    })();
+};
+
+export let stop = () => {
+    anim?.stop();
+    motionPath?.stop();
+    getTotalLength?.stop();
+
+}

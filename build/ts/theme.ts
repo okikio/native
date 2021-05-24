@@ -1,5 +1,3 @@
-import toArr from "./toArr";
-
 // Based on [joshwcomeau.com/gatsby/dark-mode/]
 export let getTheme = (): string | null => {
     let theme = window.localStorage.getItem("theme");
@@ -68,7 +66,7 @@ let handler = (() => {
 
     try {
         // On theme switcher button click (mouseup is a tiny bit more efficient) toggle the theme between dark and light mode
-        let themeSwitch = toArr(document.querySelectorAll(".theme-toggle"));
+        let themeSwitch = Array.from(document.querySelectorAll(".theme-toggle"));
         if (themeSwitch[0]) {
             for (let el of themeSwitch)
                 el.addEventListener("click", () => {

@@ -6,22 +6,61 @@ block title
 block content
   link(rel='stylesheet' href='./css/animate.css' defer)
   .container.px-5.py-2(class="sm:max-w-screen-xl")
-    .px-12.rounded-lg.intro-animation
+    .rounded-lg.intro-animation
       h1.py-24.text-5xl.font-semibold @okikio/animate
 
-      .p-6.bg-gray-200(class="dark:bg-quaternary").rounded-lg.intro-animation
-        .playback-demo
-          //- h3.font-sz-xl.font-sans.font-400 Keyframes
+      .morph-demo.p-6.bg-gray-200.rounded-lg.intro-animation(class="dark:bg-quaternary")
+        h2.text-lg.font-bold.mb-2 SVG Morphing
+        svg.svg-1(viewbox='0 0 10 10')
+          path(d='M2,5 S2,-2 4,5 S7,8 8,4')
+
+
+        .controls.row.mx-0.mt-5.align-items-center
+          .col-2
+            button#playstate-toggle.btn-icon(
+              type="button",
+              title="Play/Pause Toggle",
+              data-playstate="paused"
+            )
+              i.fa.fa-play(aria-hidden="true")
+              i.fa.fa-pause(aria-hidden="true")
+              i.fa.fa-redo(aria-hidden="true")
+            span.text-center(id=`progress-output`) 0
+          input#progress.col-10.form-control-range(
+            type="range",
+            value="0",
+            min="0",
+            max="100"
+            step="0.01"
+          )
+
+
+
+      .bg-gray-200(class="dark:bg-quaternary").rounded-lg.intro-animation
+        .playback-demo.p-6
+          h2.text-lg.font-bold.mb-2 Multiple Targets with Random Values
           //- p Click on the box to play the animation
-          - for (let i = 0; i < 3; i ++) {
-            .contain
-              .el
-              .el-initial
-          - }
+          .el-placement
+            - for (let i = 0; i < 3; i ++) {
+              .contain
+                .el
+                .el-initial
+            - }
+          .add-remove-btns.flex.justify-center.my-5.align-items-center
+            button#add-el.btn-icon(
+              type="button",
+              title="Add element",
+            )
+              i.fa.fa-plus(aria-hidden="true")
+            button#remove-el.btn-icon(
+              type="button",
+              title="Remove element",
+            )
+              i.fa.fa-minus(aria-hidden="true")
 
           .controls.row.mx-0.mt-5.align-items-center
             .col-2
-              button#playstate-toggle.btn.btn-light(
+              button#playstate-toggle.btn-icon(
                 type="button",
                 title="Play/Pause Toggle",
                 data-playstate="paused"
@@ -40,7 +79,7 @@ block content
 
       .p-6.mt-6.bg-gray-200(class="dark:bg-quaternary").rounded-lg.intro-animation
         .motion-path-demo
-          .flex.justify-evenly
+          .flex.justify-evenly.flex-wrap
             .motion-path
               h2.text-center.text-lg.font-bold Motion Path/Offset Path
               .relative
@@ -61,7 +100,7 @@ block content
 
           .controls.row.mx-0.mt-5.align-items-center
             .col-2
-              button#playstate-toggle.btn.btn-light(
+              button#playstate-toggle.btn-icon(
                 type="button",
                 title="Play/Pause Toggle",
                 data-playstate="paused"
@@ -79,4 +118,4 @@ block content
             )
 
   link(rel="stylesheet", href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css")
-  script(src="./js/animate.js" type="module")
+  //- script(src="./js/animate.js" type="module")

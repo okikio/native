@@ -1,5 +1,4 @@
 import { Service, animate } from "@okikio/native";
-import toArr from "../toArr";
 
 export class IntroAnimation extends Service {
     public elements: Array<Element>;
@@ -9,7 +8,7 @@ export class IntroAnimation extends Service {
         super.init();
 
         // Elements
-        this.elements = toArr(document.querySelectorAll('.intro-animation'));
+        this.elements = Array.from(document.querySelectorAll('.intro-animation'));
     }
 
     public newPage() {
@@ -49,7 +48,6 @@ export class IntroAnimation extends Service {
         let [anim] = await animate({
             target: (this.elements as HTMLElement[]),
             opacity: [0, 1],
-            // @ts-ignore
             delay(i: number) {
                 return 300 * (i + 1);
             },
