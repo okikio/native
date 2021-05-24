@@ -20,8 +20,8 @@ export declare class App {
     emitter: EventEmitter;
     /** The current Configuration's for the App */
     config: ICONFIG;
-    private canResize;
-    private canScroll;
+    protected canResize: boolean;
+    protected canScroll: boolean;
     constructor(config?: ICONFIG);
     /** Create new instances of the ServiceManager, EventEmitter and the configurations */
     register(config?: ICONFIG): App;
