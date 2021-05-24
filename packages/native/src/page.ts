@@ -1,22 +1,9 @@
 import { Manager, ManagerItem, AdvancedManager } from "./manager";
 import { equal, newURL } from "./url";
-import { getConfig } from "./config";
+import { toAttr } from "./config";
 import { Service } from "./service";
-
-export interface IPage extends ManagerItem {
-    dom: Document,
-    wrapper: HTMLElement,
-    title: string,
-    head: Element,
-    body: Element,
-    url: URL,
-    data: string,
-    wrapperAttr: string,
-
-    build(): any,
-    install(): void,
-    uninstall(): any,
-}
+import { IgnoreURLsList } from "./pjax";
+import { pathToRegexp } from "path-to-regexp";
 
 /**
  * Parses strings to DOM
@@ -24,7 +11,7 @@ export interface IPage extends ManagerItem {
 export const PARSER: DOMParser = new DOMParser();
 
 /** A page represents the DOM elements that create each page */
-export class Page extends ManagerItem implements IPage {
+export class Page extends ManagerItem {
     /** Holds the DOM of the current page */
     public dom: Document;
 
@@ -49,9 +36,9 @@ export class Page extends ManagerItem implements IPage {
     /** Attr that identifies the wrapper */
     public wrapperAttr: string;
 
-    constructor(url: URL = newURL(), dom: string | Document = document) {
+    constructor(url: string | URL = newURL(), dom: string | Document = document) {
         super();
-        this.url = url;
+        this.url = newURL(url);
 
         if (typeof dom === "string") {
             this.data = dom;
@@ -59,7 +46,7 @@ export class Page extends ManagerItem implements IPage {
     }
 
     /** Builds the page's dom, and sets the title, head, body, and wrapper properties of the Page class */
-    public build() {
+    public async build() {
         if (!(this.dom instanceof Node)) {
             this.dom = PARSER.parseFromString(this.data, "text/html");
         }
@@ -74,54 +61,44 @@ export class Page extends ManagerItem implements IPage {
     }
 
     public install() {
-        this.wrapperAttr = getConfig(this.config, "wrapperAttr");
+        this.wrapperAttr = toAttr(this.config, "wrapperAttr");
     }
 
     public uninstall() {
-        this.url = undefined;
-        this.title = undefined;
-        this.head = undefined;
-        this.body = undefined;
-        this.dom = undefined;
-        this.wrapper = undefined;
-        this.data = undefined;
-        this.wrapperAttr = undefined;
+        this.url = null;
+        this.title = null;
+        this.head = null;
+        this.body = null;
+        this.dom = null;
+        this.wrapper = null;
+        this.data = null;
+        this.wrapperAttr = null;
     }
 }
 
-export interface IPageManager extends Service {
-    loading: Manager<string, Promise<string>>,
-    pages: AdvancedManager<string, Page>;
-
-    install(): any,
-
-    get(key: string): Page,
-    add(value: IPage): PageManager,
-    set(key: string, value: IPage): PageManager,
-    remove(key: string): PageManager,
-    has(key: string): boolean,
-    clear(): PageManager,
-    size: number,
-    keys(): any[],
-
-    load(_url: URL | string): Promise<Page>,
-    request(url: string): Promise<string>,
-}
+export interface IPage extends Page { }
 
 /** Controls which page to load */
-export class PageManager extends Service implements IPageManager {
+export class PageManager extends Service {
     /** Stores all fetch requests that are currently loading */
     public loading: Manager<string, Promise<string>> = new Manager();
+    public pages: AdvancedManager<string, Page>;
 
-    pages: AdvancedManager<string, Page>;
+    /** URLs to ignore caching */
+    public cacheIgnore: IgnoreURLsList | boolean;
+
+    constructor() {
+        super();
+    }
 
     /** Instantiate pages, and add the current page to pages */
     install() {
         this.pages = new AdvancedManager(this.app);
+        this.cacheIgnore = this.config.cacheIgnore;
 
         let URLString = newURL().pathname;
         this.set(URLString, new Page());
-        URLString = undefined;
+        URLString = null;
     }
 
     get(key: string) { return this.pages.get(key); }
@@ -139,7 +116,7 @@ export class PageManager extends Service implements IPageManager {
         let urlString: string = url.pathname;
         let page: Page, request: Promise<string>;
 
-        if (this.has(urlString)) {
+        if (this.has(urlString) && !ignoreURLs(urlString, this.cacheIgnore)) {
             page = this.get(urlString);
             return Promise.resolve(page);
         }
@@ -155,16 +132,16 @@ export class PageManager extends Service implements IPageManager {
         page = new Page(url, response);
         this.set(urlString, page);
 
-        if (this.size > getConfig(this.config, "maxPages")) {
+        if (this.size > this.config.maxPages) {
             let currentUrl = newURL();
             let keys = this.keys();
             let first = equal(currentUrl, keys[0]) ? keys[1] : keys[0];
             let page = this.get(first);
             page.unregister();
-            page = undefined;
-            keys = undefined;
-            currentUrl = undefined;
-            first = undefined;
+            page = null;
+            keys = null;
+            currentUrl = null;
+            first = null;
         }
 
         return page;
@@ -172,11 +149,14 @@ export class PageManager extends Service implements IPageManager {
 
     /** Starts a fetch request */
     public async request(url: string): Promise<string> {
-        const headers = new Headers(getConfig(this.config, "headers"));
+        const headers = new Headers(this.config.headers);
         const timeout = window.setTimeout(() => {
             window.clearTimeout(timeout);
-            throw "Request Timed Out!";
-        }, getConfig(this.config, "timeout"));
+            
+            const err = new Error("Request Timed Out!");
+            this.emitter.emit("TIMEOUT_ERROR", err);
+            throw err;
+        }, this.config.timeout);
 
         try {
             let response = await fetch(url, {
@@ -188,11 +168,11 @@ export class PageManager extends Service implements IPageManager {
             });
 
             window.clearTimeout(timeout);
-            if (response.status >= 200 && response.status < 300) {
+            if (response.status >= 200 && response.status < 300)
                 return await response.text();
-            }
 
             const err = new Error(response.statusText || "" + response.status);
+            this.emitter.emit("REQUEST_ERROR", err);
             throw err;
         } catch (err) {
             window.clearTimeout(timeout);
@@ -200,3 +180,14 @@ export class PageManager extends Service implements IPageManager {
         }
     }
 }
+
+
+/** Check if url is supposed to be ignored */
+export const ignoreURLs = (urlString: string, ignoreList: boolean | IgnoreURLsList) => {
+    if (typeof ignoreList == "boolean")
+        return ignoreList;
+    return !(ignoreList as IgnoreURLsList)
+        .every(val => pathToRegexp(val).exec(urlString) == null);
+}
+
+export interface IPageManager extends PageManager { }
