@@ -2,13 +2,18 @@ language: node_js
 dist: xenial
 os: linux
 node_js:
-  - "16"
+  - "14"
 cache:
   npm: false
   directories:
     - "~/.pnpm-store"
+
 before_install:
   - curl -f https://get.pnpm.io/v6.js | node - add --global pnpm@6
   - pnpm config set store-dir ~/.pnpm-store
+
 install:
   - pnpm install
+
+script:
+  - pnpm test && pnpm dts && pnpm build && pnpm demo

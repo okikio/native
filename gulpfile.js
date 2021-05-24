@@ -105,7 +105,7 @@ task("js", async () => {
         import("pretty-bytes"),
     ]);
 
-    const esbuild = mode == "watch" ? createGulpEsbuild() : gulpEsBuild; //
+    const esbuild = mode == "watch" ? createGulpEsbuild() : gulpEsBuild;
     return stream(`${tsFolder}/*.ts`, {
         pipes: [
             // Bundle Modules
@@ -114,7 +114,7 @@ task("js", async () => {
                 minify: true,
                 sourcemap: true,
                 format: "esm",
-                target: ["chrome71"],
+                target: ["es2018"],
             }),
         ],
         dest: jsFolder, // Output
@@ -142,6 +142,9 @@ task("watch", async () => {
                     extensions: ["html"],
                 },
             },
+
+            // I use Chrome canary for development
+            browser: "chrome",
             serveStatic: [
                 {
                     route: "/lib",
@@ -175,6 +178,7 @@ task("watch", async () => {
             `packages/manager/src/**/*.ts`,
             `packages/emitter/src/**/*.ts`,
         ],
+        { delay: 300 },
         series("js")
     );
 
