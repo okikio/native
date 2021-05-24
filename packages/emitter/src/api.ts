@@ -73,7 +73,10 @@ export class EventEmitter extends Manager<string, Event> {
         scope?: object
     ): EventEmitter {
         // If there is no event break
-        if (typeof events == "undefined") return this;
+        if (
+            typeof events == "undefined" ||
+            events == null
+        ) return this;
 
         // Create a new event every space
         if (typeof events == "string") events = events.trim().split(/\s/g);
@@ -108,7 +111,6 @@ export class EventEmitter extends Manager<string, Event> {
         let event: Event = this.get(name);
         if (event instanceof Event && callback) {
             let listener = newListener({ name, callback, scope });
-
             event.forEach((value: IListener, i: number) => {
                 if (
                     value.callback === listener.callback &&
@@ -127,7 +129,10 @@ export class EventEmitter extends Manager<string, Event> {
         scope?: object
     ): EventEmitter {
         // If there is no event break
-        if (typeof events == "undefined") return this;
+        if (
+            typeof events == "undefined" ||
+            events == null
+        ) return this;
 
         // Create a new event every space
         if (typeof events == "string") events = events.trim().split(/\s/g);
@@ -164,7 +169,10 @@ export class EventEmitter extends Manager<string, Event> {
         scope?: object
     ): EventEmitter {
         // If there is no event break
-        if (typeof events == "undefined") return this;
+        if (
+            typeof events == "undefined" ||
+            events == null
+        ) return this;
 
         // Create a new event every space
         if (typeof events == "string") events = events.trim().split(/\s/g);
@@ -195,7 +203,10 @@ export class EventEmitter extends Manager<string, Event> {
         ...args: any
     ): EventEmitter {
         // If there is no event break
-        if (typeof events == "undefined") return this;
+        if (
+            typeof events == "undefined" ||
+            events == null
+        ) return this;
 
         // Create a new event every space
         if (typeof events == "string") events = events.trim().split(/\s/g);
