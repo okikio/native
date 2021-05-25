@@ -16,7 +16,7 @@
         "dts": "ultra -r dts",
         "test": "ultra -r test",
         "test-dev": "ultra -r test-dev",
-        "pre-release": "ultra -r pre-release && pnpm demo-build",
+        "pre-release": "ultra -r pre-release && pnpm demo-build && pnpm typedoc",
         "changelog": "pnpm -r changelog && lerna-changelog && git push --follow-tags origin master",
         "release": "pnpm -r publish --tag latest"
     },

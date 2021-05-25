@@ -44,7 +44,7 @@ jobs:
       run: pnpm build
 
     - name: Demo
-      run: pnpm demo
+      run: pnpm demo-build
 
     - name: Types
       run: pnpm dts
