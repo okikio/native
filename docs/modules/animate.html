@@ -70,7 +70,7 @@
 					<a href="#okikioanimate" id="okikioanimate" style="color: inherit; text-decoration: none;">
 						<h1>@okikio/animate</h1>
 					</a>
-					<p>An animation library for the modern web, which. Inspired by animate plus, and animejs, <a href="https://www.skypack.dev/view/@okikio/animate">@okikio/animate</a> is a Javascript animation library focused on performance and ease of use. It  utilizes the Web Animation API to deliver butter smooth animations at a small size, it weighs <strong>~5.35 KB</strong> (minified and gzipped).</p>
+					<p>An animation library for the modern web, which. Inspired by animate plus, and animejs, <a href="https://www.skypack.dev/view/@okikio/animate">@okikio/animate</a> is a Javascript animation library focused on performance and ease of use. It  utilizes the Web Animation API to deliver butter smooth animations at a small size, it weighs <strong>~5.36 KB</strong> (minified and gzipped).</p>
 					<p><em>Before even getting started, you will most likely need the Web Animation API, Promise, Set, and Map polyfills. If you install <a href="https://www.skypack.dev/view/@okikio/animate">@okikio/animate</a> via <a href="https://www.npmjs.com/package/@okikio/animate">npm</a> you are most likely going to need <a href="https://rollupjs.org/">rollup</a> or <a href="https://esbuild.github.io/">esbuild</a>. You can use <a href="https://github.com/web-animations/web-animations-js">web-animations-js</a>, or <a href="https://polyfill.io/">polyfill.io</a> to create a polyfill. The minimum feature requirement for a polyfill are Maps, Set, Promises, and a WebAnimation polyfill, e.g. <a href="https://cdn.polyfill.io/v3/polyfill.min.js?features=default,es2015,es2018,Array.prototype.includes,Map,Set,Promise,WebAnimations">https://cdn.polyfill.io/v3/polyfill.min.js?features=default,es2015,es2018,Array.prototype.includes,Map,Set,Promise,WebAnimations</a>.</em></p>
 					<p><em><strong>Warning</strong>: polyfilling may not fix animation format bugs, e.g. <a href="https://developer.mozilla.org/en-US/docs/Web/API/KeyframeEffect/composite">composite animations</a> don&#39;t work on older browsers, so, if you use <code>polyfill.io</code> and set it to check if the browser supports the feature before applying the polyfill, your project might encounter errors, as the browser may only have partial support of the Web Animation API.</em></p>
 					<p><em><strong>Note</strong>: to properly understand <code>@okikio/animate</code>, please read up on the <a href="https://developer.mozilla.org/en-US/docs/Web/API/Element/animate">Web Animation API</a> on MDN.</em></p>
@@ -1530,6 +1530,7 @@
 								<li class="tsd-kind-reference tsd-parent-kind-module"><a href="animate.html#unitpxcssvalue" class="tsd-kind-icon">UnitPXCSSValue</a></li>
 								<li class="tsd-kind-reference tsd-parent-kind-module"><a href="animate.html#addcssunit" class="tsd-kind-icon">addCSSUnit</a></li>
 								<li class="tsd-kind-reference tsd-parent-kind-module"><a href="animate.html#createtransformproperty" class="tsd-kind-icon">create<wbr>Transform<wbr>Property</a></li>
+								<li class="tsd-kind-reference tsd-parent-kind-module"><a href="animate.html#default" class="tsd-kind-icon">default</a></li>
 								<li class="tsd-kind-reference tsd-parent-kind-module"><a href="animate.html#isvalid" class="tsd-kind-icon">is<wbr>Valid</a></li>
 								<li class="tsd-kind-reference tsd-parent-kind-module"><a href="animate.html#parseoffset" class="tsd-kind-icon">parse<wbr>Offset</a></li>
 								<li class="tsd-kind-reference tsd-parent-kind-module"><a href="animate.html#toarr" class="tsd-kind-icon">to<wbr>Arr</a></li>
@@ -1731,6 +1732,11 @@
 					Re-exports <a href="native.html#createtransformproperty">createTransformProperty</a>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-reference tsd-parent-kind-module">
+					<a name="default" class="tsd-anchor"></a>
+					<h3>default</h3>
+					Renames and exports <a href="animate.html#animate-2">animate</a>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-reference tsd-parent-kind-module">
 					<a name="isvalid" class="tsd-anchor"></a>
 					<h3>is<wbr>Valid</h3>
 					Re-exports <a href="native.html#isvalid">isValid</a>
@@ -1759,7 +1765,7 @@
 					<div class="tsd-signature tsd-kind-icon">Default<wbr>Animation<wbr>Options<span class="tsd-signature-symbol">:</span> <a href="../interfaces/native.ianimationoptions.html" class="tsd-signature-type" data-tsd-kind="Interface">IAnimationOptions</a><span class="tsd-signature-symbol"> = ...</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/okikio/native/blob/e82fc66/packages/animate/src/api.ts#L193">animate/src/api.ts:193</a></li>
+							<li>Defined in <a href="https://github.com/okikio/native/blob/859cc92/packages/animate/src/api.ts#L193">animate/src/api.ts:193</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -1790,7 +1796,7 @@
 					<div class="tsd-signature tsd-kind-icon">EASINGS<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol">{ </span>in<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">; </span>in-back<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">; </span>in-circ<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">; </span>in-cubic<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">; </span>in-expo<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">; </span>in-out<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">; </span>in-out-back<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">; </span>in-out-circ<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">; </span>in-out-cubic<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">; </span>in-out-expo<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">; </span>in-out-quad<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">; </span>in-out-quart<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">; </span>in-out-quint<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">; </span>in-out-sine<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">; </span>in-quad<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">; </span>in-quart<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">; </span>in-quint<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">; </span>in-sine<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">; </span>out<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">; </span>out-back<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">; </span>out-circ<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">; </span>out-cubic<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">; </span>out-expo<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">; </span>out-quad<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">; </span>out-quart<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">; </span>out-quint<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">; </span>out-sine<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> }</span><span class="tsd-signature-symbol"> = ...</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/okikio/native/blob/e82fc66/packages/animate/src/api.ts#L108">animate/src/api.ts:108</a></li>
+							<li>Defined in <a href="https://github.com/okikio/native/blob/859cc92/packages/animate/src/api.ts#L108">animate/src/api.ts:108</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -1938,7 +1944,7 @@
 					<div class="tsd-signature tsd-kind-icon">Easing<wbr>Keys<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol"> = ...</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/okikio/native/blob/e82fc66/packages/animate/src/api.ts#L160">animate/src/api.ts:160</a></li>
+							<li>Defined in <a href="https://github.com/okikio/native/blob/859cc92/packages/animate/src/api.ts#L160">animate/src/api.ts:160</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -1965,7 +1971,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/okikio/native/blob/e82fc66/packages/animate/src/api.ts#L168">animate/src/api.ts:168</a></li>
+									<li>Defined in <a href="https://github.com/okikio/native/blob/859cc92/packages/animate/src/api.ts#L168">animate/src/api.ts:168</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1997,7 +2003,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/okikio/native/blob/e82fc66/packages/animate/src/api.ts#L1155">animate/src/api.ts:1155</a></li>
+									<li>Defined in <a href="https://github.com/okikio/native/blob/859cc92/packages/animate/src/api.ts#L1155">animate/src/api.ts:1155</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -2020,7 +2026,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/okikio/native/blob/e82fc66/packages/animate/src/api.ts#L30">animate/src/api.ts:30</a></li>
+									<li>Defined in <a href="https://github.com/okikio/native/blob/859cc92/packages/animate/src/api.ts#L30">animate/src/api.ts:30</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -2049,7 +2055,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/okikio/native/blob/e82fc66/packages/animate/src/api.ts#L17">animate/src/api.ts:17</a></li>
+									<li>Defined in <a href="https://github.com/okikio/native/blob/859cc92/packages/animate/src/api.ts#L17">animate/src/api.ts:17</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -2072,7 +2078,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/okikio/native/blob/e82fc66/packages/animate/src/api.ts#L13">animate/src/api.ts:13</a></li>
+									<li>Defined in <a href="https://github.com/okikio/native/blob/859cc92/packages/animate/src/api.ts#L13">animate/src/api.ts:13</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -2095,7 +2101,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/okikio/native/blob/e82fc66/packages/animate/src/api.ts#L18">animate/src/api.ts:18</a></li>
+									<li>Defined in <a href="https://github.com/okikio/native/blob/859cc92/packages/animate/src/api.ts#L18">animate/src/api.ts:18</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -2118,7 +2124,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/okikio/native/blob/e82fc66/packages/animate/src/api.ts#L51">animate/src/api.ts:51</a></li>
+									<li>Defined in <a href="https://github.com/okikio/native/blob/859cc92/packages/animate/src/api.ts#L51">animate/src/api.ts:51</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -2147,7 +2153,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/okikio/native/blob/e82fc66/packages/animate/src/api.ts#L39">animate/src/api.ts:39</a></li>
+									<li>Defined in <a href="https://github.com/okikio/native/blob/859cc92/packages/animate/src/api.ts#L39">animate/src/api.ts:39</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -2204,7 +2210,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/okikio/native/blob/e82fc66/packages/animate/src/api.ts#L226">animate/src/api.ts:226</a></li>
+									<li>Defined in <a href="https://github.com/okikio/native/blob/859cc92/packages/animate/src/api.ts#L226">animate/src/api.ts:226</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -2249,7 +2255,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/okikio/native/blob/e82fc66/packages/animate/src/api.ts#L212">animate/src/api.ts:212</a></li>
+									<li>Defined in <a href="https://github.com/okikio/native/blob/859cc92/packages/animate/src/api.ts#L212">animate/src/api.ts:212</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -2386,6 +2392,9 @@
 							</li>
 							<li class=" tsd-kind-reference tsd-parent-kind-module">
 								<a href="animate.html#createtransformproperty" class="tsd-kind-icon">create<wbr>Transform<wbr>Property</a>
+							</li>
+							<li class=" tsd-kind-reference tsd-parent-kind-module">
+								<a href="animate.html#default" class="tsd-kind-icon">default</a>
 							</li>
 							<li class=" tsd-kind-reference tsd-parent-kind-module">
 								<a href="animate.html#isvalid" class="tsd-kind-icon">is<wbr>Valid</a>
