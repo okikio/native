@@ -42,9 +42,7 @@ router
     })
     .add({
         path: /\/animate(.html)?/,
-        method() {
-            run()
-        }
+        method: run
     });
 
 console.log(pathToRegexp("\/animate(.html)?"))
