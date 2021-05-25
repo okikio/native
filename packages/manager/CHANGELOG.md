@@ -2,6 +2,25 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.1.0](https://github.com/okikio/native/compare/@okikio/manager@2.0.4...@okikio/manager@2.1.0) (2021-05-25)
+
+
+### Features
+
+* **@okikio/animate:** :sparkles: ([8a83f0e](https://github.com/okikio/native/commit/8a83f0e56e82ae025ddaa00becbb7f9b36310ee7))
+* **@okikio/animate:** :sparkles: ([017044d](https://github.com/okikio/native/commit/017044d276740aac78b12984b1b2ad00c1f074b3))
+* **@okikio/animate:** :sparkles: ([b388ff1](https://github.com/okikio/native/commit/b388ff102c89fbd974f5c1ccd163b336da48875c))
+* **@okikio/animate:** :sparkles: add updateOptions method; ([382da7e](https://github.com/okikio/native/commit/382da7e51afb9538367c59b8c5a48daddf5a3940))
+* **@okikio/emitter:** :sparkles: ([8bcbf61](https://github.com/okikio/native/commit/8bcbf612c6c62a132a4edb6f9284634d1025adbe))
+* **@okikio/native:** :sparkles: ([e1a687b](https://github.com/okikio/native/commit/e1a687bb2a0813fc6f49a4613d58990a2a0231e1))
+* **@okikio/native:** :sparkles: add support for paths; ([e5ae22b](https://github.com/okikio/native/commit/e5ae22bcf15b062b0c360b27766b41a209e4fa3a))
+* **@okikio/native:** :sparkles: rename @okikio/emitter types; ([936d190](https://github.com/okikio/native/commit/936d19062e4083e8d24c0abb43259dfac25d1727))
+
+
+### Bug Fixes
+
+* **root:** :bug: add sideEffects false; ([e82fc66](https://github.com/okikio/native/commit/e82fc664bff5c3aa716c7b03bd063e21832a231f))
+
 ### [2.0.4](https://github.com/okikio/native/compare/@okikio/manager@2.0.3...@okikio/manager@2.0.4) (2021-01-23)
 
 ### [2.0.3](https://github.com/okikio/native/compare/@okikio/manager@2.0.2...@okikio/manager@2.0.3) (2021-01-23)
