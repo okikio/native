@@ -1,6 +1,6 @@
 # @okikio/animate
 
-An animation library for the modern web, which. Inspired by animate plus, and animejs, [@okikio/animate](https://www.skypack.dev/view/@okikio/animate) is a Javascript animation library focused on performance and ease of use. It  utilizes the Web Animation API to deliver butter smooth animations at a small size, it weighs ~4.9 KB (minified and gzipped).
+An animation library for the modern web, which. Inspired by animate plus, and animejs, [@okikio/animate](https://www.skypack.dev/view/@okikio/animate) is a Javascript animation library focused on performance and ease of use. It  utilizes the Web Animation API to deliver butter smooth animations at a small size, it weighs **~5.35 KB** (minified and gzipped).
 
 *Before even getting started, you will most likely need the Web Animation API, Promise, Set, and Map polyfills. If you install [@okikio/animate](https://www.skypack.dev/view/@okikio/animate) via [npm](https://www.npmjs.com/package/@okikio/animate) you are most likely going to need [rollup](https://rollupjs.org/) or [esbuild](https://esbuild.github.io/). You can use [web-animations-js](https://github.com/web-animations/web-animations-js), or [polyfill.io](https://polyfill.io/) to create a polyfill. The minimum feature requirement for a polyfill are Maps, Set, Promises, and a WebAnimation polyfill, e.g. [https://cdn.polyfill.io/v3/polyfill.min.js?features=default,es2015,es2018,Array.prototype.includes,Map,Set,Promise,WebAnimations](https://cdn.polyfill.io/v3/polyfill.min.js?features=default,es2015,es2018,Array.prototype.includes,Map,Set,Promise,WebAnimations).*
 
@@ -55,8 +55,11 @@ Once Gitpod has booted up, click on the `@okikio/animate (no-pjax)` button in th
   - [Events](#events)
   - [Additional methods & properties](#additional-methods--properties)
     - [mainAnimation: Animation](#mainanimation-animation)
-    - [animations: Manager<HTMLElement, Animation>](#animations-managerhtmlelement-animation)
-    - [computedOptions: Manager<Animation, AnimationOptions>](#computedoptions-manageranimation-animationoptions)
+    - [targetIndexes: WeakMap<Node, number>](#targetindexes-weakmapnode-number)
+    - [keyframeEffects: WeakMap<HTMLElement, KeyframeEffect>](#keyframeeffects-weakmaphtmlelement-keyframeeffect)
+    - [computedOptions: WeakMap<HTMLElement, TypeComputedOptions>](#computedoptions-weakmaphtmlelement-typecomputedoptions)
+    - [animations: WeakMap<KeyframeEffect, Animation>](#animations-weakmapkeyframeeffect-animation)
+    - [computedKeyframes: WeakMap<HTMLElement, TypeKeyFrameOptionsType> = new WeakMap()](#computedkeyframes-weakmaphtmlelement-typekeyframeoptionstype--new-weakmap)
     - [minDelay: number](#mindelay-number)
     - [maxSpeed: number](#maxspeed-number)
     - [on(...), off(...), and emit(...)](#on-off-and-emit)
@@ -995,17 +998,34 @@ There are `8` events in total, they are:
 
 Stores an animation that runs on the total duration of all the `Animation` instances, and as such it's the main Animation.
 
-### animations: Manager<HTMLElement, Animation>
+### targetIndexes: WeakMap<Node, number>
 
-A Manager of `Animations`; it stores all the `Animation` instances.
+The indexs of target Elements in Animate
 
-### computedOptions: Manager<Animation, AnimationOptions>
+### keyframeEffects: WeakMap<HTMLElement, KeyframeEffect>
 
-A Manager that stores all the fully calculated options for individual `Animation` instances.
+A WeakMap of KeyFrameEffects
 
-*Note: the `computedOptions` are changed to their proper `Animation` instance options, so, some of the names are different, and options that can't be computed are not present. E.g. `fillMode` in the animation options is now just `fill` in the `computedOptions`.*
+### computedOptions: WeakMap<HTMLElement, TypeComputedOptions>
 
-*Note: `keyframes` are not included, both the array form and the object form, the `options`, `speed`, and `autoplay` animation options are not allowed.*
+The computed options for individual animations
+A WeakMap that stores all the fully calculated options for individual Animation instances.
+
+_**Note**: the computedOptions are changed to their proper Animation instance options, so, some of the names are different, and tions that can't be computed are not present. E.g. fillMode in the animation options is now just fill in the computedOptions._
+
+_**Note**: keyframes are not included, both the array form and the object form; the options, speed, extend, padEndDelay, and autoplay animation options are not included_
+
+### animations: WeakMap<KeyframeEffect, Animation>
+
+A WeakMap of Animations
+
+### computedKeyframes: WeakMap<HTMLElement, TypeKeyFrameOptionsType> = new WeakMap()
+
+The keyframes for individual animations
+
+A WeakMap that stores all the fully calculated keyframes for individual Animation instances.
+
+_**Note**: the computedKeyframes are changed to their proper Animation instance options, so, some of the names are different, and options that can't be computed are not present. E.g. translateX, skew, etc..., they've all been turned into the transform property._
 
 ### minDelay: number
 
@@ -1013,7 +1033,7 @@ The smallest delay out of all `Animation`'s, it is zero by default.
 
 ### maxSpeed: number
 
-The largest speed out of all `Animation`'s, it is zero by default.
+The smallest speed out of all `Animation`'s, it is zero by default.
 
 ### on(...), off(...), and emit(...)
 
@@ -1066,15 +1086,12 @@ They are self explanatory, the `play/pause` methods play/pause animation, the `r
 
 ### The long list of Get Methods
 
-- `getTargets(): HTMLElement[]` - Returns an Array of HTMLElement's
-- `getAnimation(element: HTMLElement): Animation` - Allows you to select a specific animation from an element
-- `getTiming(value: HTMLElement | Animation): EffectTiming | AnimationOptions` - Returns the timings of an Animation, given a target E.g. { duration, endDelay, delay, iterations, iterationStart, direction, easing, fill, etc... }
-- `getTotalDuration(): number` - Returns the total duration of the animation of all elements added together
+- `getAnimation(target: HTMLElement): Animation` - Allows you to select a specific animation from an element
+- `getTiming(value: HTMLElement | Animation): EffectTiming | AnimationOptions` - Returns the timings of an Animation, given a target. E.g. { duration, endDelay, delay, iterations, iterationStart, direction, easing, fill, etc... }
 - `getCurrentTime(): number` - Returns the current time of the animation of all elements
 - `getProgress(): number` - Returns the progress of the animation of all elements as a percentage between 0 to 100.
 - `getPlayState(): string` - Returns the current playing state, it can be `"idle" | "running" | "paused" | "finished"`
 - `getSpeed(): number` - Return the playback speed of the animation
-- `getOptions(): object` - Returns the options that were used to create the animation
 
 ### The almost as long list of Set Methods; these methods are chainable
 
@@ -1088,7 +1105,7 @@ They represent the then, catch, and finally methods of a Promise that is resolve
 
 ### toJSON()
 
-An alias for `getOptions`
+An alias for [options](https://okikio.github.io/native/docs/classes/animate.animate-1.html#options)
 
 ### all(method: (animation: Animation, target?: HTMLElement) => void)
 
@@ -1113,7 +1130,7 @@ Cancels all Animations, it just runs the cancel method from each individual anim
 
 ### stop()
 
-Cancels all Animations and de-references them allowing them to be garbage collected in a rush. It also emits a `stop` event to alert you to the animation stopping.
+Cancels all Animations and de-references them, allowing them to be garbage collected in a rush. It also emits a `stop` event to alert you to the animation stopping.
 
 The `stop` method is not chainable.
 
@@ -1144,11 +1161,11 @@ animate({
 `@okikio/animate` is provided as a native ES6 module, which means you may need to transpile it depending on your browser support policy. The library works using `<script type="module">` in
 the following browsers (`@okikio/animate` may support older browsers, but I haven't tested those browsers):
 
-- Chrome > 71
+- Chrome > 75
 - Edge > 79
 - Firefox > 60
 
-_**Note**: as it really difficult to get access to older versions of these browsers, I have only tested Chrome 71 and above._
+_**Note**: as it really difficult to get access to older versions of these browsers, I have only tested Chrome 75 and above._
 
 ### CSS & SVG Animations Support
 
@@ -1279,11 +1296,11 @@ Unfortunately, morphing SVG paths via the `d` property isn't supported yet, as b
 `@okikio/animate` is available on, [unpkg](https://unpkg.com/@okikio/animate/lib/api.es.js), [skypack](https://cdn.skypack.dev/@okikio/animate) or [jsdelivr](https://cdn.jsdelivr.net/npm/@okikio/animate/lib/api.es.js).
 
 ```ts
-// Notice the .es.js file name extension, that represents ES Modules
+// Notice the .es.js file name extension in the links above, that represents ES Modules
 // There is also,
 //      .cjs.js - Common JS Module
 //      .es.js - Modern ES Module
-//      .js - IIFE.
+//      .js - IIFE
 import { animate } from "https://cdn.skypack.dev/@okikio/animate";
 
 animate({
@@ -1294,7 +1311,7 @@ animate({
 
 ## Memory Management
 
-I have found that infinite CSS Animations tend to be the cause of high memory usage in websites. Javascript has become so efficient that it can effectively garbage collect js animations, however, I have found it is exceptionally difficult to manage looped animation so be very careful of memory when dealing with CSS and JS Animations, they eat up large ammounts of memory and CPU when left running for long periods of time. I would suggest making all your animations only occur a couple times and when they are done use the `stop()` method to remove the animations from memory *"if you don't plan on replaying the same animation"*. Don't just use the `stop()` method, test it first on your site before deploying it in a production enviroment.
+I have found that infinite CSS Animations tend to be the cause of high memory usage in websites. Javascript has become so efficient that it can effectively garbage collect js animations, however, I have also found it exceptionally difficult to manage looped animation so be very careful of memory when dealing with CSS and JS Animations, they eat up large ammounts of memory and CPU when left running for long periods of time. I would suggest making all your animations only occur a couple times and when they are done use the `cancel()` (preference) or `stop()` methods, (you can use the `stop()` method *"if you don't plan on replaying the same animation"*). Don't just use the `stop()` method, test it first on your site before deploying it in a production enviroment.
 
 ## Best practices (these are from Animate Plus, but they are true for all Animation libraries)
 
@@ -1309,7 +1326,7 @@ Animations play a major role in the design of good user interfaces. They help co
 
 If there is something I missed, a mistake, or a feature you would like added please create an issue or a pull request and I'll try to get to it.
 
-*The `native` project uses [Conventional Commits](https://www.conventionalcommits.org/en/v1.0.0/) as the style of commit, we even use the [Commitizen CLI](https://commitizen.github.io/cz-cli/) to make commits easier.*
+*The `native` initiative uses [Conventional Commits](https://www.conventionalcommits.org/en/v1.0.0/) as the style of commit, we even use the [Commitizen CLI](https://commitizen.github.io/cz-cli/) to make commits easier.*
 
 ## Licence
 
