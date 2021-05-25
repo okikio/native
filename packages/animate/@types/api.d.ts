@@ -508,3 +508,4 @@ export declare class Animate {
  * @packageDocumentation
  */
 export declare const animate: (options?: IAnimationOptions) => Animate;
+export default animate;

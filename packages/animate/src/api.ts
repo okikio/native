@@ -1156,4 +1156,4 @@ export const animate = (options: IAnimationOptions = {}): Animate => {
     return new Animate(options);
 };
 
-// export default animate;
+export default animate;
