@@ -1,6 +1,8 @@
 # @okikio/native
 
-`native` is an initiative that encourages performance, modern technologies, and great user experiences. The idea behind `@okikio/native` is that it acts as the core framework to the `native` initiative, it combines all the other package into it a core package that is ~9.8 KB (minified & gzipped).
+`native` is an initiative that encourages performance, modern technologies, and great user experiences. The idea behind `@okikio/native` is that it acts as the core framework to the `native` initiative, it combines all the other package into it a core package that is **~11.6 KB** (minified & gzipped).
+
+_**Note**: `@okikio/native` is treeshakable, so you only need to use the features required for your project and the other portions can be removed. By default `@okikio/native` bundles [@okikio/animate](https://www.npmjs.com/package/@okikio/animate), so you don't need to install extra packages, but if you don't use it, it can be treeshaken out of your bundle. The absolute minimum functional treeshaken size is **~1.75 KB** (minified & gzipped)._
 
 [@okikio/native](https://www.skypack.dev/view/@okikio/native) is a guideline on how to create great web experiences that integrate into the system in a way that feels like a cohesive and native experience.
 
@@ -33,9 +35,19 @@ Once Gitpod has booted up, go to [../../build/pug/](../../build/pug/) and [../..
   - [Getting Started](#getting-started)
   - [Installation](#installation)
   - [Demo](#demo)
-    - [API Documentation](#api-documentation)
-  - [API](#api)
-    - [*Types*](#types)
+  - [Usage](#usage)
+    - [PJAX](#pjax)
+    - [Wrapper](#wrapper)
+  - [Configuration](#configuration)
+  - [Animations & extras](#animations--extras)
+  - [API Documentation](#api-documentation)
+    - [API](#api)
+    - [Types](#types)
+    - [Events](#events)
+    - [PageManager events](#pagemanager-events)
+    - [PJAX events](#pjax-events)
+    - [TransitionManager events](#transitionmanager-events)
+    - [App events](#app-events)
     - [**ManagerItem**](#manageritem)
       - [MangerItem#manager: IAdvancedManager](#mangeritemmanager-iadvancedmanager)
       - [MangerItem#app: IApp](#mangeritemapp-iapp)
@@ -96,7 +108,7 @@ Once Gitpod has booted up, go to [../../build/pug/](../../build/pug/) and [../..
       - [Example](#example-4)
     - [**TransitionManager**](#transitionmanager)
     - [**PageManager/Page**](#pagemanagerpage)
-    - [**PJAX**](#pjax)
+    - [**PJAX**](#pjax-1)
     - [**Router**](#router)
   - [Contributing](#contributing)
   - [Licence](#licence)
@@ -140,13 +152,406 @@ Located in [./build](https://github.com/okikio/native/tree/master/build), you wi
 
 > [View the Demo  &#8594;](https://okikio.github.io/native/demo/)
 
-### API Documentation
+## Usage
+
+Be default @okikio/native is very open ended in how you use it. You first create a new App, and then add Services, the App is the boss of the operation, while Services are workers that accomplish specific tasks.
+
+For example,
+
+```ts
+import { App, Service, getConfig } from "@okikio/native";
+
+const app = new App({
+    serviceOptions: "Some Options",
+    containerAttr: "container"
+});
+
+// Read more about Service in API section
+// This basically shows off all the methods ExampleService inherited from being a Service that extends ManagerItem
+class ExampleService extends Service {
+    /** The constructor doesn't do anything by default, but you can add stuff to it */
+    constructor() { }
+
+    /** Register the current Service's manager */
+    register(manager, key) {
+        console.log("register()");
+
+        /** The AdvancedManager the Service is attached to */
+        this.manager = manager;
+
+        /** The App the Service is attached to */
+        this.app = manager.app;
+
+        /** The Config of the App the Service is attached to */
+        this.config = manager.config;
+
+        /** The EventEmitter of the App the Service is attached to */
+        this.emitter = manager.emitter;
+
+        /** The key to where Service is stored in an AdvancedManager */
+        this.key = key;
+
+        this.install();
+        return this;
+    }
+
+    /** Run after the Service has been registered */
+    install() {
+        console.log("register()");
+
+        // All methods called after install have access to App event emitter, properties, Services, and Config
+        console.log(this.config.serviceOptions);
+        console.log(getConfig(this.config, "containerAttr", true)); //= "[data-container]"
+    }
+
+    /**
+     * This method is called by the ServiceManager, so don't worry about it
+     */
+    /** Called before the start of a Service, represents a constructor of sorts */
+    init(...args) {
+        console.log("init()");
+    }
+
+    /**
+     * This method is called by the ServiceManager, so don't worry about it
+     */
+    /** Called on start of Service */
+    boot(...args) {
+        console.log("boot()");
+        this.initEvents();
+    }
+
+    /** Initialize events */
+    initEvents() {
+        // The "ready" event is defined by the App class, that only runs when the DOM is fully ready
+        // The App class also defines a "scroll", and "resize" event
+        // but those events are throttled to give the best performance
+        this.emitter.on("ready", () => {
+            console.log("initEvents()")
+        });
+    }
+
+    /** Stop events */
+    stopEvents() {
+        console.log("stopEvents()");
+
+        // Normally you would remove events and their event listeners here
+        // But it's best not remove `ready` as it's an App wide event
+    }
+
+    /** Basically removes a Service, in order to recover the Service, it needs to be re-added to the App class */
+    unregister() {
+        console.log("unregister()");
+        this.uninstall();
+
+        // Remove everything, make sure there are no more reference to these objects
+        // in order to ensure everything works well
+        this.manager.remove(this.key);
+        this.key = null;
+        this.manager = null;
+        this.app = null;
+        this.config = null;
+        this.emitter = null;
+    }
+
+    /** Run before the Service has been unregistered */
+    uninstall() {
+        console.log("uninstall()");
+    }
+
+    /**
+     * This method `can be` called by the ServiceManager but you can also call it when you wish
+     */
+    /** Stop Service */
+    stop() {
+        console.log("stop()");
+
+        this.stopEvents();
+        this.unregister();
+    }
+}
+
+app
+    .add(new ExampleService())
+    // or
+    .set("ExampleService", new ExampleService());
+
+try {
+    console.log(app.get("ExampleService")) //= ExampleService { ... }
+
+    app.on("resize", () => {
+        console.log("App resizing");
+    });
+
+    app.boot();
+} catch (e) {
+    console.warn(e)
+}
+```
+
+### PJAX
+
+If you would like to use PJAX on your site you would probably want a setup like this,
+
+Setup your HTML pages with this,
+
+```html
+<head>
+    ...
+</head>
+<body>
+    <!-- put here content that will not change
+    between your pages, like <header> or <nav> -->
+
+    <main data-wrapper>
+        <!-- put here the content you wish to change
+        between your pages, like your main content <h1> or <p> -->
+
+        <!-- This will be prefetched on hover, and clicking on it will start the Fade transition -->
+        <a href="./about.html" data-transition="fade">About</a>
+
+        <!-- This won't be prefetched nor will PJAX run when clicked -->
+        <a href="./other.html" data-prevent="self">Other</a>
+
+        <!-- This will use the default replace transition, and will scroll to #image-5 -->
+        <a href="./other.html#image-5">Last</a>
+    </main>
+
+    <!-- put here content that will not change
+    between your pages, like <footer> -->
+</body>
+```
+
+Then add this to your javascript,
+
+```ts
+import {  App, PJAX, TransitionManager, HistoryManager, PageManager, Router, animate } from "@okikio/native";
+const app = new App();
+
+//= Fade Transition
+const Fade = {
+    name: "default",
+
+    // Fade Out Old Page
+    out({ from }) {
+        let fromWrapper = from.wrapper;
+
+        return animate({
+            target: fromWrapper,
+            opacity: [1, 0],
+            duration: 500,
+        })
+    },
+
+    // Fade In New Page
+    async in({ to }) {
+        let toWrapper = to.wrapper;
+
+        await animate({
+            target: toWrapper,
+            opacity: [0, 1],
+            duration: 500
+        });
+    }
+};
+
+app
+    // Note only these 3 Services must be set under the names specified
+    .set("HistoryManager", new HistoryManager())
+    .set("PageManager", new PageManager())
+    .set("TransitionManager", new TransitionManager([
+        ["fade", Fade],
+    ]))
+
+    // The names of these Services don't really matter
+    .set("Router", new Router())
+    .add(new PJAX());
+
+try {
+    // Router is a router, depending on the page path it will run certain tasks
+    // It support regexp and paths that path-to-regex supports
+    const router = app.get("Router");
+    router.add({
+        path: "./index?(.html)?",
+        method() {
+            console.log("Run on Index page");
+        }
+    })
+
+    // Note these events are emitted by the PJAX Service
+    app.on({
+        HOVER() {
+            console.log("Print a value on hover over link")
+        },
+        CLICK() {
+            console.log("Print something when a link is clicked")
+        },
+        NAVIGATION_START() {
+            console.log("Print before you start loading pages and prior to transitioning")
+        },
+        // etc...
+    })
+
+    // While this event is emitted by the App
+    app.on("resize", () => {
+        console.log("App resizing");
+    });
+
+    app.boot();
+} catch (e) {
+    console.warn(e)
+}
+```
+
+### Wrapper
+
+The `wrapper` is the element with the `data-wrapper` attribute; it's the part of the page that get's switched out with new content. There can only be one `wrapper` per page, if there are multiple `wrapper`s the first `wrapper` will count as the wrapper for the page.
+
+## Configuration
+
+`@okikio/native` comes with some default configuration but these can be changed, by default these are the configurations it comes with. You can also create your own custom configurations.
+
+```ts
+export interface ICONFIG {
+    /**
+     * The Prefix attached to data attributes
+     */
+    prefix?: string;
+
+    /**
+     * The attribute used to identify wrappers
+     * @default `wrapper` as in `data-wrapper`
+    */
+    wrapperAttr?: string;
+
+    /**
+     * Headers to attach to fetch requests done by the PageManager
+     * e.g. if you only want to load a partial output containing only the wrapper
+     *
+     * @default `[]`
+     * @example
+     * ```ts
+     * headers: [
+     *      ["partial-output", "true"]
+     * ]
+     * ```
+     */
+    headers?: string[][];
+
+    /**
+     * Attribute used to identify anchors that don't want PJAX enabled
+     * @default `prevent="self"` as in `data-prevent="self"`
+     */
+    preventSelfAttr?: string;
+
+    /**
+     * Attribute used to identify elements that don't want PJAX enabled for themeselves and their child elements
+     * @default `prevent="all"` as in `data-prevent="all"`
+     */
+    preventAllAttr?: string;
+
+    /**
+     * Attribute used to identify transition an anchor wants to use, the value you set will select the transition used by name
+     * _**Note**: transition names are case sensitive_
+     * @default `transition` as in `data-transition`
+     */
+    transitionAttr?: string;
+
+    /**
+     * The amount of time in milliseconds to wait before counting the PageManagers fetch requests as timed out
+     * @default `2000`
+     */
+    timeout?: number;
+
+    /**
+     * The maximum amount of pages to have in the cache at any moment in time;
+     * PageManager removes pages from the cache to ensure content doesn't become stale;
+     * and memory usage isn't too high
+     * @default `5`
+     */
+    maxPages?: number;
+
+    /**
+     * The resize event is debounced by this amount of time (in miliseconds)
+     * @default `100`
+     */
+    resizeDelay?: number;
+
+    /**
+     * Ignore extra clicks of an anchor element if a transition has already started
+     * by default PJAX will reload the page on multiple clicks but this allows you to stop extra clicks
+     * from affecting the current transition
+     * @default `true`
+     */
+    onTransitionPreventClick?: boolean;
+
+    /**
+     * Specifies which urls to always fetch from the web
+     * It also accepts boolean values:
+     * - `true` means always fetch from the web for all urls
+     * - `false` means always try to fetch from the cache
+     * @default `false`
+     */
+    cacheIgnore?: boolean | IgnoreURLsList;
+
+    /**
+     * Specifies which urls to not prefetch
+     * It also accepts boolean values:
+     * - `true` means don't prefetch any anchor
+     * - `false` means always prefetch all anchors
+     * @default `false`
+     */
+    prefetchIgnore?: boolean | IgnoreURLsList;
+
+    /**
+     * Specifies which urls to not use PJAX for
+     * @default `[]`
+     */
+    preventURLs?: boolean | IgnoreURLsList;
+
+    /**
+     * On page change (excluding popstate events, and hashes) keep current scroll position
+     * @default `false`
+     */
+    stickyScroll?: boolean;
+
+    /**
+     * Force load a page if an error occurs
+     * @default `true`
+     */
+    forceOnError?: boolean;
+
+    /**
+     * Don't do anything if the url has a hash
+     * @default `false`
+     */
+    ignoreHashAction?: boolean;
+
+    /**
+     * TransitionManagers regestered transitions
+     * @default `[]`
+     */
+    transitions?: Array<[string, ITransition]>;
+    [key: string]: any;
+}
+```
+
+## Animations & extras
+
+By default `@okikio/native` comes bundled with [@okikio/animate](https://www.npmjs.com/package/@okikio/animate), [@okikio/emitter](https://www.npmjs.com/package/@okikio/emitter), and [@okikio/manager](https://www.npmjs.com/package/@okikio/manager). Theses packages are all part of the [native initiative](https://github.com/okikio/native), which aims to create smooth modern experiences that feel native to whatever and wherever you engage with a website or webapp. Unlike some other PJAX projects `@okikio/native` is the only package you need, to create beautiful experiences.
+
+```ts
+import { animate, manager, emitter, App } from "@okikio/native";
+// ...
+```
+
+## API Documentation
 
 I highly suggest going through the [API documentation](https://okikio.github.io/native/docs/modules/native.html), for a more detailed documentation of the API's.
 
 Also, `@okikio/native` bundles and re-exports [@okikio/manager](https://www.npmjs.com/package/@okikio/manager), [@okikio/emitter](https://www.npmjs.com/package/@okikio/emitter), and [@okikio/animate](https://www.npmjs.com/package/@okikio/animate), this is to avoid needing to download a bunch of packages that use the same libraries.
 
-## API
+### API
 
 `@okikio/native` has `5` base classes and `5` project classes, the base classes are:
 
@@ -170,9 +575,157 @@ The `5 base classes` are mandatory classes that are built into the framework (tr
 
 *Note: all classes that aren't base classes are `Service`'s, or they extend the `Service` class in some way.*
 
-### *Types*
+### Types
 
 Many typescript types are used in the docs, for more info about these types go to [./@types](https://github.com/okikio/native/tree/master/packages/native/@types).
+
+### Events
+
+In total there are 25 events, they are:
+
+### PageManager events
+
+- "REQUEST_ERROR" - During a fetch request, if an error other than a timeout occurs
+- "TIMEOUT_ERROR" - A fetch request timeout error
+
+e.g.
+
+```ts
+// ...
+app.on("REQUEST_ERROR" | "TIMEOUT_ERROR", (err: Error) => {
+    // ...
+})
+```
+
+### PJAX events
+
+- "ANCHOR_HOVER" / "HOVER" - When you hover over an anchor
+- "ANCHOR_CLICK" / "CLICK" - When a valid anchor element element is clicked and just before navigation starts
+- "PREFETCH" - When a prefetch is called with no errors
+
+e.g.
+
+```ts
+// ...
+app.on("ANCHOR_HOVER" | "HOVER" | "ANCHOR_CLICK" | "CLICK" | "PREFETCH", (event: LinkEvent) => {
+    // ...
+})
+```
+
+- "POPSTATE" - When moving through page history, either forward or backward
+- "POPSTATE_BACK" - When going back in page history
+- "POPSTATE_FORWARD" - When going forward in page history
+- "HISTORY_NEW_ITEM" - When a valid link is clicked and new state is added to history
+- "GO" - If transition is not running and if current url is different from the new url.
+
+e.g.
+
+```ts
+// ...
+app.on("POPSTATE" | "POPSTATE_BACK" | "POPSTATE_FORWARD" | "HISTORY_NEW_ITEM" | "GO", (event: StateEvent) => {
+    // ...
+})
+```
+
+- "NAVIGATION_START" - Before loading new page and building them
+- "PAGE_LOADING" - Fires when page starts loading
+- "PAGE_LOAD_COMPLETE" - Fires when page load is complete
+- "NAVIGATION_END" - After transitions, page load & build, etc... Fires to indicate the entire navigation process is complete
+
+e.g.
+
+```ts
+// ...
+app.on("NAVIGATION_START", ({ oldHref, href, trigger, transitionName, scroll }: {
+    oldHref: string,
+    href: string,
+    trigger: TypeTrigger,
+    transitionName: string,
+    scroll: ICoords
+}) => {
+    // ...
+});
+
+app.on("PAGE_LOADING", ({ href, oldHref, trigger, scroll }: {
+    oldHref: string,
+    href: string,
+    trigger: TypeTrigger,
+    scroll: ICoords
+}) => {
+    // ...
+});
+
+app.on("PAGE_LOAD_COMPLETE", ({ newPage, oldPage, trigger, scroll }: {
+    newPage: IPage,
+    oldPage: IPage,
+    trigger: TypeTrigger,
+    scroll: ICoords
+}) => {
+    // ...
+});
+
+app.on("NAVIGATION_END", ({ newPage, oldPage, trigger, transitionName, scroll }: {
+    newPage: IPage,
+    oldPage: IPage,
+    trigger: TypeTrigger,
+    transitionName: string,
+    scroll: ICoords
+}) => {
+    // ...
+});
+```
+
+### TransitionManager events
+
+- "TRANSITION_START" - Indicates the start of the transition process
+- "BEFORE_TRANSITION_OUT" - Before transitioning the old page out
+- "AFTER_TRANSITION_OUT" - After transitioning the old page out
+- "CONTENT_INSERT" - After the new page gets added to the DOM
+- "CONTENT_REPLACED" - After the new page has replaced the old page (the old page has been removed from the DOM)
+- "BEFORE_TRANSITION_IN" - Before transitioning the new page in
+- "AFTER_TRANSITION_IN" - After transitioning the new page in
+- "TRANSITION_END" -  Indicates the end of the transition process
+
+e.g.
+
+```ts
+// ...
+app.on("TRANSITION_START" | "TRANSITION_END", ({ oldPage, newPage, trigger, scroll, ignoreHashAction }: {
+    newPage: IPage,
+    oldPage: IPage,
+    trigger: TypeTrigger,
+    transitionName: string,
+    ignoreHashAction: boolean,
+    scroll: ICoords
+}) => {
+    // ...
+});
+
+app.on("BEFORE_TRANSITION_OUT" | "AFTER_TRANSITION_OUT" | "CONTENT_INSERT" | "CONTENT_REPLACED" | "BEFORE_TRANSITION_IN" | "AFTER_TRANSITION_IN", ({ newPage, oldPage, trigger, scroll, ignoreHashAction }: {
+    newPage: IPage,
+    oldPage: IPage,
+    trigger: TypeTrigger,
+    ignoreHashAction: boolean,
+    scroll: ICoords
+}) => {
+    // ...
+});
+```
+
+### App events
+
+- "READY" / "ready" - Fires when the DOM Content has fully loaded
+- "SCROLL" / "scroll" - Fires when the user scrolls (notes the scrolling is throttled to avoid lag and jank)
+- "RESIZE" / "resize" - Fires when the user resizes window (notes the resize is throttled and debouced to avoid lag and jank)
+
+e.g.
+
+```ts
+// ...
+app.on("READY" | "ready" | "SCROLL" | "scroll" | "RESIZE" | "resize", () => {
+    // ...
+});
+```
 
 ### **ManagerItem**
 
@@ -884,7 +1437,7 @@ app.set("PageManager", new PageManager());
 
 // PJAX relies on HistoryManager, PageManager, and TransitionManager, so, to ensure that nothing breaks, all these classes need to be present with the name stated in the forms they've been stated
 
-// Note: PJAX doesn't need Router to function, Router adds extra functionality that is often needed but not crucial. Router is often used for highlight navbar links to pages that have changed via PJAX, but a custom solution can also be made that is smaller and lighter, so, its not absolutely necessary
+// Note: PJAX doesn't need Router to function, Router adds extra functionality that is often needed but not crucial. Router is often used for highlighting navbar links to pages that have changed via PJAX, but a custom solution can also be made that is smaller and lighter, so, its not absolutely necessary
 app.set("PJAX", new PJAX());
 // ...
 ```
@@ -1121,7 +1674,7 @@ go({
     event,
 }) {
     // If transition is already running and the go() method is called again, force load page
-    if (this.isTransitioning && this.stopOnTransitioning ||
+    if (this.isTransitioning && this.onTransitionPreventClick ||
 
         // The PJAX service will only work if the HistoryManager is set as a Service in the App's ServiceManager
         !this.manager.has("TransitionManager") ||
@@ -1222,7 +1775,7 @@ const transitionManager = new TransitionManager();
 const Fade = {
     name: "default", // This isn't nesscary but it can be nice when debugging transitions, you can use it to identify which transition is occuring
     duration: 500,
-    scrollable: true,
+    manualScroll: true,
 
     out({ from }: ITransitionData) {
         let { duration } = this;
@@ -1273,7 +1826,7 @@ const transitionManager = new TransitionManager([
 // ...
 ```
 
-The `TransitionManager` accepts transitions from both the `App` config as well as the arguments it was instantiated with, but by default it will prefer the arguments it was instantiated with (do note the config proerty is `transitions: [....]`).
+The `TransitionManager` accepts transitions from both the `App` config as well as the arguments it was instantiated with, but by default it will prefer the arguments it was instantiated with (do note the config property is `transitions: [....]`).
 
 For example,
 
@@ -1285,7 +1838,7 @@ For example,
 const Fade = {
     name: "default", // This isn't nesscary but it can be nice when debugging transitions, you can use it to identify which transition is occuring
     duration: 500,
-    scrollable: true,
+    manualScroll: true,
 
     out({ from }) {
         let { duration } = this;
@@ -1295,9 +1848,7 @@ const Fade = {
             opacity: [1, 0],
             duration,
             onfinish(el: { style: { opacity: string } }) {
-                requestAnimationFrame(() => {
-                    el.style.opacity = "0";
-                });
+                el.style.opacity = "0";
             }
         }).on("finish", function () {
             this.stop();
@@ -1318,10 +1869,7 @@ const Fade = {
             opacity: [0, 1],
             duration,
             onfinish(el: { style: { opacity?: string } }) {
-                requestAnimationFrame(() => {
-                    el.style.opacity = "1";
-                    el.style = {};
-                });
+                el.style.opacity = "1";
             }
         }).then(function () {
             this.stop();
@@ -1335,12 +1883,13 @@ const transitionManager = new TransitionManager([
 ]);
 
 const app = new App({
-    // The TransitionManager will completely ignore this, because it has been instantiated with the transitions, and those are usually the one that is intended for use
+    // The TransitionManager will completely ignore this, because it has been instantiated with transitions, and those are usually the one that is intended for use
     transitions: [
         ["default", {}]
         ["fade", {}]
     ]
 });
+
 app.set("TransitionManager", TransitionManager);
 // ...
 ```
@@ -1353,7 +1902,7 @@ It looks like this:
 // ...
 const Fade = {
     // This is required to let PJAX, know that this transition can also handle scrolling automatically, but if your transition doesn't need to handle scroll then it's not needed
-    scrollable: true,
+    manualScroll: true,
 
     // Initialize some data that the transition may needs, it's not necessary. It is called before the transition in() or out() methods
     /**
@@ -1422,7 +1971,7 @@ const Fade = {
 
 const Fade = {
     // This is required to let PJAX, know that this transition can also handle scrolling automatically, but if your transition doesn't need to handle scroll then it's not needed
-    scrollable: true,
+    manualScroll: true,
 
     // Initialize some data that the transition may needs, it's not necessary. It is called before the transition in() or out() methods
     /**
@@ -1533,13 +2082,19 @@ For example:
 
 `PJAX` looks for the wrapper between pages and switches out the old page's wrapper with a new pages wrapper (it also changes the title as well).
 
-*Note: by default `PJAX` will prefetch pages based on the links it hovers over (this behaviour can be changed via the `App`'s config using the property `prefetchIgnore`).*
+_**Note**: by default `PJAX` will prefetch pages based on the links it hovers over if they don't contain any `data-prevent` behavior (this setting can be changed via the `App`'s config using the property `prefetchIgnore`). When you hover over a link the "ANCHOR_HOVER" and "HOVER" events fire, but if a link is a valid prefetch, the "PREFETCH" event will fire._
 
-Once `PJAX` has been started, it will listen for an anchor click (when an anchor is clicked, the `App` emits "ANCHOR_CLICK" and "CLICK" events), if the anchor is valid, `PJAX` will start the process of switching out the page wrappers (a link being valid means it doesn't link to an external site, it doesn't have a target="_blank" attribute, it isn't a download link, the data-prevent attribute isn't set to "self", or "all", etc...) [the data-prevent="self" and the data-prevent="all" attributes are set by the `App`'s config using the property `preventSelfAttr` and `preventAllAttr`]. The preventSelf attribute basically states don't allow `PJAX` to work with an anchor with this attribute, while the preventAll attribute basically states don't allow PJAX to work with all anchors underneat an element with this attribute.
+Once `PJAX` has been started, it will listen for an anchor click (when an anchor is clicked, the `App` emits "ANCHOR_CLICK" and "CLICK" events), if the anchor is valid, `PJAX` will start the process of switching out the page wrappers (a link being valid means it doesn't link to an external site, it doesn't have a target="_blank" attribute, it isn't a download link, the data-prevent attribute isn't set to "self", or "all", etc...) [the data-prevent="self" and the data-prevent="all" attributes are set by the `App`'s config using the property `preventSelfAttr` and `preventAllAttr`].
 
-If the url of the page to switch out is in the ignoreAll array (an array of strings and RegExp's `PJAX` is supposed to ignore) [it can be set via the `App` config using the property `ignoreURLs`) `PJAX` will ignore it].
+_**Note**: the `TIMEOUT_ERROR` event fires if a page request times out or a general `REQUEST_ERROR` event fires if its some other form of error with the request._
 
-If the `PJAX` property `stopOnTransitioning` is set to true `PJAX` will disallow clicks when pages are transitioning (this can be set via the `App`'s config using the property `stopOnTransitioning`).
+The `preventSelf` attribute basically states don't allow `PJAX` to work with an anchor with this attribute, while the preventAll attribute basically states don't allow PJAX to work with all anchors underneat an element with this attribute.
+
+If the url of the page to switch out is in the `preventURLs` array (an array of strings and RegExp's `PJAX` is supposed to ignore) [it can be set via the `App` config using the property `preventURLs`, `PJAX` will ignore it].
+
+_**Note**: `preventURLs`, `cacheIgnore`, and `prefetchIgnore` all support Array's of paths and regex's from [path-to-regexp](https://www.npmjs.com/package/path-to-regexp)_
+
+If the `PJAX` property `onTransitionPreventClick` is set to true `PJAX` will disallow clicks when pages are transitioning (this can be set via the `App`'s config using the property `onTransitionPreventClick`).
 
 In order for `PJAX` to continue, all the condition stated above must first be met, and if they're all met, then it will start the process of switching page wrappers.
 
@@ -1547,7 +2102,9 @@ First, it will collect information like the transition to use, which comes from 
 
 Secondly, `PJAX` loads and builds the pages required (both the old and new page) using the `PageManager` (the "NAVIGATION_START" event is fired at around this point). While the pages are loading, the "PAGE_LOADING" event is fired. Once the page loading has finished the "PAGE_LOAD_COMPLETE" event is fired.
 
-Lastly, `PJAX` loads the required transition from the `TransitionManager` and then starts it (the "TRANSITION_START" event is fired at around this point). If the `PJAX.prototype.stickScroll` property is set to true (it can be changed by the `App`'s config with a property of the same name) the transitions will receive the scroll coords of the previous page and scroll to that point. If the `PJAX.prototype.ignoreHashAction` property is set to true (it can be changed by the `App`'s config with a property of the same name) `PJAX` will ignore hash scrolling.  If the `PJAX.prototype.forceOnError` is true, as it sounds it will force a page switch via the browsers normal methods (it can be changed by the `App`'s config with a property of the same name).After all this the "TRANSITION_END" and "NAVIGATION_END" events are fired.
+Lastly, `PJAX` loads the required transition from the `TransitionManager` and then starts it (the "TRANSITION_START" event is fired at around this point). If the `PJAX.prototype.stickyScroll` property is set to true (it can be changed by the `App`'s config with a property of the same name) the transitions will receive the scroll coords of the previous page and scroll to that point. If the `PJAX.prototype.ignoreHashAction` property is set to true (it can be changed by the `App`'s config with a property of the same name) `PJAX` will ignore hash scrolling.
+
+ If the `PJAX.prototype.forceOnError` is true, as it sounds it will force a page switch via the browsers normal methods (it can be changed by the `App`'s config with a property of the same name). After all this the "TRANSITION_END" and "NAVIGATION_END" events are fired.
 
 During the transition this events will be called in this order:
 
@@ -1584,12 +2141,17 @@ app
 
 The `Router` service uses a list of objects called IRoute which complete certain actions when route paths match the current url, or when moving from one url to another.
 
+Also, `Router` supports [path-to-regexp](https://www.npmjs.com/package/path-to-regexp), so, you can use all the express like url syntax's you are used to.
+
+_**Note**: at least either `to` or `from` must be present, in `to, from` path mode_
+
 ```typescript
-IRoute {
+interface IRoute {
     path: {
-        to: string | RegExp | boolean,
-        from: string | RegExp | boolean
-    } | string | RegExp | boolean,
+        // At least either to or from must be present, in `to, from` path mode
+        to?: string | RegExp | Array<string | RegExp> | boolean,
+        from?: string | RegExp | Array<string | RegExp> | boolean
+    } | string | RegExp | Array<string | RegExp> | boolean,
     method: (...args) => {}
 }
 ```
@@ -1602,7 +2164,7 @@ const router = new Router([
     // You can the routes here as well
     {
         // When the path is /index.html/
-        path: /index.html/,
+        path: "index.html",
 
         /**
          * from - The array from searching using the RegExp.exec on the from path
@@ -1616,16 +2178,59 @@ const router = new Router([
 ]);
 
 // or
-router.add({
-    // When moving from /index.html/ to /about.html/ run the  method
-    path: {
-        from: /index.html/,
-        to: /about.html/
-    },
-    method() {
-        console.log("Going to about.html from index.html");
-    }
-});
+router
+    .add({
+        // When moving from /index.html/ to /about.html/ run the  method
+        path: {
+            from: /index.html/,
+            to: /about.html/
+        },
+        method() {
+            console.log("Going to about.html from index.html");
+        }
+    })
+
+    .add({
+        // Going to index.html, from every other page including index.html to index.html
+        path: "index.html",
+        method() {
+            console.log("Going to index.html from everything else");
+        }
+    })
+
+    .add({
+        // Going to index.html, from every other page `including` index.html to index.html
+        // The same as the route above
+        path: {
+            from: true,
+            to: "index.html",
+        },
+        method() {
+            console.log("Going to index.html from everything else");
+        }
+    })
+
+    .add({
+        // Going from index.html, to every other page `excluding` index.html to index.html
+        path: {
+            from: "/index.html",
+            to: false,
+        },
+        method() {
+            console.log("Going to everything else except index.html from index.html");
+        }
+    })
+
+    .add({
+        // Going from every other page `excluding` index.html, to index.html
+        path: {
+            from: false,
+            to: "/index.html",
+        },
+        method() {
+            console.log("Going from everything else except index.html to index.html");
+        }
+    });
 // ...
 ```
 
