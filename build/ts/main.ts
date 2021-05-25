@@ -1,5 +1,4 @@
 import { PJAX, App, TransitionManager, Router, HistoryManager, PageManager } from "@okikio/native";
-import { pathToRegexp } from "path-to-regexp";
 
 import { Fade } from "./transitions/Fade";
 import { BigTransition } from "./transitions/BigTransition";
@@ -44,8 +43,6 @@ router
         path: /\/animate(.html)?/,
         method: run
     });
-
-console.log(pathToRegexp("\/animate(.html)?"))
 
 try {
     app.boot();
