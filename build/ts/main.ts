@@ -31,10 +31,6 @@ app
     .add(router)
     .add(pjax);
 
-app.on("CLICK", (data) => {
-    let { from } = data as ITransitionData ;
-})
-
 router
     .add({
         path: {
@@ -45,7 +41,10 @@ router
     })
     .add({
         path: "/animate(.html)?",
-        method: run
+        method() {
+            console.log("run")
+            run()
+        }
     });
 
 try {
