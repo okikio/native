@@ -268,7 +268,7 @@ describe("EventEmitter", () => {
         });
     });
 
-    /* describe("#once(event, function, context) & #emit(event, function, context)", () => {
+    describe("#once(event, function, context) & #emit(event, function, context)", () => {
         test("listen for one event and one listener once; emit one event listener once", () => {
             let test: boolean | any = false;
             let obj = { bool: false };
@@ -358,8 +358,70 @@ describe("EventEmitter", () => {
             expect(counter).toBe(3);
         });
 
+        test("listen for multiple events (String format) once; emit only one event listener once", () => {
+            let test = false;
+            let obj = { bool: false };
+            let counter = 0;
+            let on: EventEmitter = emitter.once(
+                "test test1 test2",
+                function () {
+                    test = true;
+                    counter++;
+                    expect(this).toHaveProperty("bool");
+                    expect(this.bool).toBe(false);
+                },
+                obj
+            );
+
+            on.emit("test2");
+            expect(on).toBeInstanceOf(EventEmitter);
+            expect(test).toEqual(true);
+
+            expect(on.get("test")).toBeInstanceOf(Event);
+            expect(on.get("test").size).toBe(1);
+
+            expect(on.get("test1")).toBeInstanceOf(Event);
+            expect(on.get("test1").size).toBe(1);
+
+            expect(on.get("test2")).toBeInstanceOf(Event);
+            expect(on.get("test2").size).toBe(0);
+
+            expect(counter).toBe(1);
+        });
+
+        test("listen for multiple event listeners (String format) on one event; emit only one event listener once; expect only the listener registed once to be removed", () => {
+            let test = false;
+            let obj = { bool: false };
+            let counter = 0;
+            let fn = function () {
+                test = true;
+                counter++;
+                expect(this).toHaveProperty("bool");
+                expect(this.bool).toBe(false);
+            };
+            let on: EventEmitter = emitter.once("test test1 test2", fn, obj);
+            emitter.on("test2", fn, obj);
+
+            expect(on.get("test2").size).toBe(2);
+            on.emit("test2");
+            on.emit("test2");
+            expect(on).toBeInstanceOf(EventEmitter);
+            expect(test).toEqual(true);
+
+            expect(on.get("test")).toBeInstanceOf(Event);
+            expect(on.get("test").size).toBe(1);
+
+            expect(on.get("test1")).toBeInstanceOf(Event);
+            expect(on.get("test1").size).toBe(1);
+
+            expect(on.get("test2")).toBeInstanceOf(Event);
+            expect(on.get("test2").size).toBe(1);
+
+            expect(counter).toBe(3);
+        });
+
         test("listen for multiple events (Object format) and multiple listeners once; emit multiples events once", () => {
-            let test: boolean | any = false;
+            let test: boolean | (boolean | number)[] = false;
             let obj = { bool: false };
             let counter = 0;
             let fn = function (i = 1) {
@@ -431,8 +493,8 @@ describe("EventEmitter", () => {
             expect(on.get("test3").size).toBe(1);
 
             on.off("test");
-            on.off("test1", on.get("test1").get(0).getCallback(), obj);
-            on.off("test3", on.get("test3").get(0).getCallback(), obj);
+            on.off("test1", on.get("test1").get(0).callback, obj);
+            on.off("test3", on.get("test3").get(0).callback, obj);
 
             on.emit("test test1 test3", 1, "true");
             on.emit("test test1 test3", 1, "true");
@@ -449,7 +511,7 @@ describe("EventEmitter", () => {
 
             expect(counter).toBe(0);
         });
-    }); */
+    });
 
     describe("#emit(event, function, context) & #on(event, function, context)", () => {
         test("listen for one event and one listener; emit one wrong event listener", () => {

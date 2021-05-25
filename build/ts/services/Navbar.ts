@@ -1,5 +1,4 @@
-import { Service, animate } from "../../../packages/native/src/api";
-import { toArr } from "../toArr";
+import { Service } from "@okikio/native";
 
 export class Navbar extends Service {
     public navbar: HTMLElement;
@@ -14,7 +13,7 @@ export class Navbar extends Service {
         this.navbar = document.querySelector(".navbar") as HTMLElement;
         this.collapseSection = this.navbar.querySelector(".navbar-collapse.mobile") as HTMLElement;
         this.navbarList = this.navbar.querySelector(".navbar-list") as HTMLElement;
-        this.elements = toArr(this.navbar.querySelectorAll(".navbar-list a"));
+        this.elements = Array.from(this.navbar.querySelectorAll(".navbar-list a"));
         this.menu = this.navbar.querySelector(".navbar-toggle") as HTMLElement;
         this.toggleStatus = false;
 
@@ -58,7 +57,7 @@ export class Navbar extends Service {
     }
 
     public scroll() {
-        this.navbar.classList.toggle("shadow", window.scrollY >= 5);
+        this.navbar.classList.toggle("active-shadow", window.scrollY >= 5);
     }
 
     public initEvents() {
@@ -77,8 +76,8 @@ export class Navbar extends Service {
 
     public uninstall() {
         while (this.elements.length) this.elements.pop();
-        this.elements = undefined;
-        this.menu = undefined;
-        this.navbar = undefined;
+        this.elements = null;
+        this.menu = null;
+        this.navbar = null;
     }
 }

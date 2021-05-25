@@ -1,0 +1,21 @@
+{
+    "entryPoints": [
+        "packages/native/src/api.ts",
+        "packages/animate/src/api.ts",
+        "packages/emitter/src/api.ts",
+        "packages/manager/src/api.ts"
+    ],
+    "external-modulemap": ".*/packages/([\\w\\-_]+)/",
+    "exclude": [
+        "**/test.ts",
+        "**/node_modules/**",
+        "**/*.d.ts",
+        "**/@types/*.d.ts"
+    ],
+    "tsconfig": "./tsconfig.json",
+    "readme": "none",
+    "includeVersion": false,
+    "theme": "default",
+    "name": "native",
+    "out": "docs"
+}

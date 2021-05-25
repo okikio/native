@@ -1,10 +1,10 @@
-import { ITransition, ITransitionData, animate } from "../../../packages/native/src/api";
+import { ITransition, ITransitionData, animate } from "@okikio/native";
 
 //== Transition
 export const Fade: ITransition = {
     name: "default",
     duration: 500,
-    scrollable: true,
+    manualScroll: true,
 
     out({ from }: ITransitionData) {
         let { duration } = this;
@@ -14,7 +14,6 @@ export const Fade: ITransition = {
             opacity: [1, 0],
             duration,
         }).on("finish", function () {
-            window.scroll(0, 0);
             this.stop();
         });
     },

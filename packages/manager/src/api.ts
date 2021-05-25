@@ -1,6 +1,11 @@
-/** Manages complex lists of named data, eg. A page can be stored in a list by of other pages with the url being how the page is stored in the list. Managers use Maps to store data */
+/**
+ * Acts as an enhanced version of the Map class with new features and changed behavior for convenience
+ *
+ * @typeParam K - the type of keys to store use to store values
+ * @typeParam V - the type of values to store
+ * */
 export class Manager<K, V> {
-	/** The complex list of named data, to which the Manager controls */
+	/** For backward compatability and performance reasons Manager use Map to store data */
 	public map: Map<K, V>;
 	constructor(value?: Array<[K, V]>) {
 		this.map = new Map(value);

@@ -1,7 +1,7 @@
-import { Manager, methodCall, asyncMethodCall } from "@okikio/manager";
+import { Manager, methodCall } from "@okikio/manager";
 import { ICONFIG } from "./config";
 import { IApp } from "./app";
-import { EventEmitter } from "./emitter";
+import { EventEmitter } from "@okikio/emitter";
 
 export type IAdvancedManager = AdvancedManager<any, ManagerItem>;
 
@@ -46,11 +46,11 @@ export class ManagerItem {
         this.uninstall();
 
         this.manager.remove(this.key);
-        this.key = undefined;
-        this.manager = undefined;
-        this.app = undefined;
-        this.config = undefined;
-        this.emitter = undefined;
+        this.key = null;
+        this.manager = null;
+        this.app = null;
+        this.config = null;
+        this.emitter = null;
     }
 }
 
@@ -81,4 +81,4 @@ export class AdvancedManager<K, V extends ManagerItem> extends Manager<K, V> {
     }
 }
 
-export { Manager, methodCall, asyncMethodCall };
+export { Manager, methodCall };

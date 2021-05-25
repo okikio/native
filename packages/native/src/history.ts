@@ -1,7 +1,7 @@
 import { Service } from "./service";
 import { getHashedPath, newURL } from "./url";
 
-export type Trigger = HTMLAnchorElement | "HistoryManager" | "popstate" | "back" | "forward";
+export type TypeTrigger = HTMLAnchorElement | "HistoryManager" | "popstate" | "back" | "forward";
 export interface ICoords {
 	readonly x: number;
 	readonly y: number;
@@ -24,22 +24,6 @@ export interface IHistoryItem {
 	states: IState[];
 }
 
-export interface IHistoryManager extends Service {
-	states: IState[],
-	pointer: number,
-
-	init(): any,
-	get(index: number): IState,
-	add(value?: IState, historyAction?: "replace" | "push"): HistoryManager,
-	remove(index?: number): HistoryManager,
-	replace(newStates: IState[]): HistoryManager,
-	set(i: number, state: IState): IState,
-	current: IState,
-	last: IState,
-	previous: IState | null,
-	length: number,
-}
-
 /** A quick snapshot of page scroll coordinates */
 export const newCoords = (x: number = window.scrollX, y: number = window.scrollY): ICoords => ({ x, y });
 
@@ -55,7 +39,7 @@ export const newState = (state: IState = {
 }): IState => (state);
 
 /** Keeps a record of the history of the App; it stores only the states of Pages */
-export class HistoryManager extends Service implements IHistoryManager {
+export class HistoryManager extends Service {
 	public states: IState[];
 	public pointer = -1;
 
@@ -129,10 +113,13 @@ export class HistoryManager extends Service implements IHistoryManager {
 	}
 }
 
+export interface IHistoryManager extends HistoryManager { }
+
 /** Either push or replace history state */
 export const changeState = (action: "push" | "replace", state: IState, item: object) => {
 	let href = getHashedPath(state.url);
 	let args = [item, "", href];
+	
 	if (window.history) {
 		switch (action) {
 			case "push":

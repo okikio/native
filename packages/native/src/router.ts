@@ -2,14 +2,16 @@ import { Service } from "./service";
 import { Manager } from "./manager";
 import { newURL, getHashedPath } from "./url";
 import { IHistoryManager } from "./history";
+import { Path, pathToRegexp } from "path-to-regexp";
 
 export type RouteMethod = (...args: any) => any;
-export type RouteStyle = string | RegExp | boolean;
+export type RouteStyle = string | RegExp | boolean | RouteStyle[];
 export interface IRouteToFrom {
-    to: RouteStyle,
-    from: RouteStyle
+    to?: RouteStyle,
+    from?: RouteStyle
 }
-export type RoutePath = IRouteToFrom | RouteStyle;
+
+export type RoutePath = IRouteToFrom & ({ to: RouteStyle } | { from: RouteStyle }) | RouteStyle;
 export interface IRoute {
     path: RoutePath,
     method: RouteMethod
@@ -36,10 +38,12 @@ export class Router extends Service {
 
     /** Convert strings into path match functions */
     public parsePath(path: RouteStyle): RegExp | boolean {
-        if (typeof path === "string") return new RegExp(path, "i");
-        else if (path instanceof RegExp || typeof path === "boolean")
-            return path;
-        throw "[Router] only regular expressions, strings and booleans are accepted as paths.";
+        if (typeof path === "string" || path instanceof RegExp || Array.isArray(path)) {
+            return pathToRegexp(path as Path);
+        } else if (typeof path === "boolean")
+            return path ? /.*/ : path;
+
+        throw "[Router] only regular expressions, strings, booleans and arrays of regular expressions and strings are accepted as paths.";
     }
 
     /** Determines if a strings counts has a path */
@@ -47,7 +51,8 @@ export class Router extends Service {
         return (
             typeof input === "string" ||
             input instanceof RegExp ||
-            typeof input === "boolean"
+            typeof input === "boolean" ||
+            Array.isArray(input)
         );
     }
 
@@ -55,8 +60,8 @@ export class Router extends Service {
     public parse(input: RoutePath): IRouteToFrom {
         let route = input as IRouteToFrom;
         let toFromPath: IRouteToFrom = {
-            from: /(.*)/g,
-            to: /(.*)/g,
+            from: /.*/,
+            to: /.*/,
         };
 
         if (this.isPath(input as RouteStyle))
@@ -65,7 +70,7 @@ export class Router extends Service {
                 to: input as RouteStyle,
             };
         else if (this.isPath(route.from) && this.isPath(route.to as RouteStyle))
-            toFromPath = route;
+            toFromPath = Object.assign({}, toFromPath, route);
         else
             throw "[Router] path is neither a string, regular expression, or a { from, to } object.";
 
@@ -90,28 +95,31 @@ export class Router extends Service {
                 if (
                     typeof fromRegExp === "boolean" &&
                     typeof toRegExp === "boolean"
-                ) {
+                )
                     throw `[Router] path ({ from: ${fromRegExp}, to: ${toRegExp} }) is not valid, remember paths can only be strings, regular expressions, or a boolean; however, both the from and to paths cannot be both booleans.`;
-                }
 
                 let fromParam: RegExpExecArray | RegExp | boolean = fromRegExp;
                 let toParam: RegExpExecArray | RegExp | boolean = toRegExp;
 
                 if (fromRegExp instanceof RegExp && fromRegExp.test(from))
                     fromParam = fromRegExp.exec(from);
+
                 if (toRegExp instanceof RegExp && toRegExp.test(to))
                     toParam = toRegExp.exec(to);
 
+                // If fromParam or toParam are `false`, then negate the other param's RegEx
                 if (
                     (Array.isArray(toParam) && Array.isArray(fromParam)) ||
                     (Array.isArray(toParam) &&
-                        typeof fromParam == "boolean" &&
-                        fromParam) ||
+                        fromParam == false && !(toRegExp as RegExp).test(from)) ||
                     (Array.isArray(fromParam) &&
-                        typeof toParam == "boolean" &&
-                        toParam)
+                        toParam == false && !(fromRegExp as RegExp).test(to))
                 )
-                    method({ from: fromParam, to: toParam, path: { from, to } });
+                    method({
+                        from: fromParam,
+                        to: toParam,
+                        path: { from, to }
+                    });
             });
         } else {
             console.warn("[Route] HistoryManager is missing.");

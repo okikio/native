@@ -1,67 +1,121 @@
 extends /layouts/layout.pug
 
+block title
+  title @okikio/animate (no-pjax)
+
 block content
-  main#home-page(data-wrapper='' role='main')
-    .container
-      .jumbotron.jumbotron-fluid.my-2.p-4.rounded-lg.box-shadow.text-dark.intro-animation
-        label(for='scrub') @okikio/animate
-        input#scrub(type='range' value='0' min='0' max='100' step='0.01')
-        button(type="button").btn.btn-dark.playtoggle Play/Pause/Reset
-        p.support Requires native Web Animation Support (latest Firefox, Chrome, Opera)
+  link(rel='stylesheet' href='./css/animate.css' defer)
+  .container.px-5.py-2(class="sm:max-w-screen-xl")
+    .rounded-lg.intro-animation
+      h1.py-24.text-5xl.font-semibold @okikio/animate
 
-        p.info This is pretty cool right
-        p.fix.progress 0%
-        - for (let i = 0; i < 5; i ++) {
-          .div
-        - }
-        
-      .jumbotron.jumbotron-fluid.my-3.px-4.rounded-lg.box-shadow.text-dark.bg-warning
-          h1.font-sz-5xl.font-sans.font-100 @okikio/animate
-          p.lead Dynamic example's based off of animejs to get you started.
-
-      h2.font-sz-3xl.font-sans.font-400 Target
-      .animation-containers.jumbotron.jumbotron-fluid.my-2.p-4.rounded-lg.box-shadow.text-dark.bg-warning
-        .animation-container.css-selector-demo
-          h3.font-sz-xl.font-sans.font-400 CSS Selector
-          .contain
-            .el
-            .el-initial
-
-        .animation-container.dom-node-demo
-          h3.font-sz-xl.font-sans.font-400 DOM Node / Nodelist
-          - for (let i = 0; i < 5; i ++) {
-            .contain
-              .el
-              .el-initial
-          - }
-
-        .animation-container.array-demo
-          h3.font-sz-xl.font-sans.font-400 Array
-          - for (let i = 0; i < 3; i ++) {
-            .contain
-              .el(class=`el-0${i + 1}`)
-              .el-initial
-          - }
+      .morph-demo.p-6.bg-gray-200.rounded-lg.intro-animation(class="dark:bg-quaternary")
+        h2.text-lg.font-bold.mb-2 SVG Morphing
+        svg.svg-1(viewbox='0 0 10 10')
+          path(d='M2,5 S2,-2 4,5 S7,8 8,4')
 
 
-      h2.font-sz-3xl.font-sans.font-400 Properties
-      .animation-containers.jumbotron.jumbotron-fluid.my-2.p-4.rounded-lg.box-shadow.text-dark.bg-warning
-        .animation-container.css-properties-demo
-          h3.font-sz-xl.font-sans.font-400 CSS Properties
-          .contain
-            .el
-            .el-initial
+        .controls.row.mx-0.mt-5.align-items-center
+          .col-2
+            button#playstate-toggle.btn-icon(
+              type="button",
+              title="Play/Pause Toggle",
+              data-playstate="paused"
+            )
+              i.fa.fa-play(aria-hidden="true")
+              i.fa.fa-pause(aria-hidden="true")
+              i.fa.fa-redo(aria-hidden="true")
+            span.text-center(id=`progress-output`) 0
+          input#progress.col-10.form-control-range(
+            type="range",
+            value="0",
+            min="0",
+            max="100"
+            step="0.01"
+          )
 
-        .animation-container.css-transform-demo
-          h3.font-sz-xl.font-sans.font-400 CSS Transforms
-          .contain
-            .el
-            .el-initial
 
-        .animation-container.svg-attributes-demo
-          h3.font-sz-xl.font-sans.font-400 SVG Attributes
-          .contain
-            svg.svg(xmlns='http://www.w3.org/2000/svg' width='500px' height='300px' viewbox='0 0 1310 680')
-              path(d='M53,234c143.452,-81.953,313.407,-167.554,430,-107c116.592,45.554,70.404,361.126,236,472c235.595,95.873,447.977,-197.535,477,-306' style='stroke:red;fill:none;stroke-width:5px;')
 
-//- script(src="./js/animate.js" type="module")
+      .bg-gray-200(class="dark:bg-quaternary").rounded-lg.intro-animation
+        .playback-demo.p-6
+          h2.text-lg.font-bold.mb-2 Multiple Targets with Random Values
+          //- p Click on the box to play the animation
+          .el-placement
+            - for (let i = 0; i < 3; i ++) {
+              .contain
+                .el
+                .el-initial
+            - }
+          .add-remove-btns.flex.justify-center.my-5.align-items-center
+            button#add-el.btn-icon(
+              type="button",
+              title="Add element",
+            )
+              i.fa.fa-plus(aria-hidden="true")
+            button#remove-el.btn-icon(
+              type="button",
+              title="Remove element",
+            )
+              i.fa.fa-minus(aria-hidden="true")
+
+          .controls.row.mx-0.mt-5.align-items-center
+            .col-2
+              button#playstate-toggle.btn-icon(
+                type="button",
+                title="Play/Pause Toggle",
+                data-playstate="paused"
+              )
+                i.fa.fa-play(aria-hidden="true")
+                i.fa.fa-pause(aria-hidden="true")
+                i.fa.fa-redo(aria-hidden="true")
+              span.text-center(id=`progress-output`) 0
+            input#progress.col-10.form-control-range(
+              type="range",
+              value="0",
+              min="0",
+              max="100"
+              step="0.01"
+            )
+
+      .p-6.mt-6.bg-gray-200(class="dark:bg-quaternary").rounded-lg.intro-animation
+        .motion-path-demo
+          .flex.justify-evenly.flex-wrap
+            .motion-path
+              h2.text-center.text-lg.font-bold Motion Path/Offset Path
+              .relative
+                .small.square.shadow.el-initial
+                .small.square.el.el-1
+                svg(width='256' height='112' viewbox='0 0 256 112')
+                  path#follow-path(fill='none' stroke='currentColor' stroke-width='1' d='M8,56 C8,33.90861 25.90861,16 48,16 C70.09139,16 88,33.90861 88,56 C88,78.09139 105.90861,92 128,92 C150.09139,92 160,72 160,56 C160,40 148,24 128,24 C108,24 96,40 96,56 C96,72 105.90861,92 128,92 C154,93 168,78 168,56 C168,33.90861 185.90861,16 208,16 C230.09139,16 248,33.90861 248,56 C248,78.09139 230.09139,96 208,96 L48,96 C25.90861,96 8,78.09139 8,56 Z')
+
+
+            .motion-path
+              h2.text-center.text-lg.font-bold getTotalLength()
+              .relative
+                .small.square.shadow.el-initial
+                .small.square.el.el-2
+                svg(width='256' height='112' viewbox='0 0 256 112')
+                  path#follow-path(fill='none' stroke='currentColor' stroke-width='1' d='M8,56 C8,33.90861 25.90861,16 48,16 C70.09139,16 88,33.90861 88,56 C88,78.09139 105.90861,92 128,92 C150.09139,92 160,72 160,56 C160,40 148,24 128,24 C108,24 96,40 96,56 C96,72 105.90861,92 128,92 C154,93 168,78 168,56 C168,33.90861 185.90861,16 208,16 C230.09139,16 248,33.90861 248,56 C248,78.09139 230.09139,96 208,96 L48,96 C25.90861,96 8,78.09139 8,56 Z')
+
+
+          .controls.row.mx-0.mt-5.align-items-center
+            .col-2
+              button#playstate-toggle.btn-icon(
+                type="button",
+                title="Play/Pause Toggle",
+                data-playstate="paused"
+              )
+                i.fa.fa-play(aria-hidden="true")
+                i.fa.fa-pause(aria-hidden="true")
+                i.fa.fa-redo(aria-hidden="true")
+              span.text-center(id=`progress-output`) 0
+            input#progress.col-10.form-control-range(
+              type="range",
+              value="0",
+              min="0",
+              max="100"
+              step="0.01"
+            )
+
+  link(rel="stylesheet", href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css")
+  //- script(src="./js/animate.js" type="module")

@@ -2,7 +2,7 @@
 const mode = process.argv.includes("--watch") ? "watch" : "build";
 
 // Gulp utilities
-import { watch, task, series, parallel, stream } from "./util.js";
+import { watch, task, series, parallel, stream, src } from "./util.js";
 
 // Origin folders (source and destination folders)
 const srcFolder = `build`;
@@ -105,7 +105,7 @@ task("js", async () => {
         import("pretty-bytes"),
     ]);
 
-    const esbuild = mode == "watch" ? createGulpEsbuild() : gulpEsBuild; //
+    const esbuild = mode == "watch" ? createGulpEsbuild() : gulpEsBuild;
     return stream(`${tsFolder}/*.ts`, {
         pipes: [
             // Bundle Modules
@@ -114,7 +114,7 @@ task("js", async () => {
                 minify: true,
                 sourcemap: true,
                 format: "esm",
-                target: ["chrome71"],
+                target: ["es2018"],
             }),
         ],
         dest: jsFolder, // Output
@@ -142,13 +142,19 @@ task("watch", async () => {
                     extensions: ["html"],
                 },
             },
+
+            // I use Chrome canary for development
+            browser: "chrome",
             serveStatic: [
                 {
                     route: "/lib",
                     dir: ["./lib"],
                 },
+                {
+                    route: "/docs",
+                    dir: ["./docs"],
+                },
             ],
-            online: true,
             reloadOnRestart: true,
             scrollThrottle: 250
         },
@@ -162,7 +168,7 @@ task("watch", async () => {
         }
     );
 
-    watch(`${pugFolder}/**/*.pug`, parallel("html", "css"));
+    watch(`${pugFolder}/**/*.pug`, series("html", "css"));
     watch([`${sassFolder}/**/*.scss`, `./tailwind.cjs`], series("css"));
     watch(
         [
@@ -172,6 +178,7 @@ task("watch", async () => {
             `packages/manager/src/**/*.ts`,
             `packages/emitter/src/**/*.ts`,
         ],
+        { delay: 300 },
         series("js")
     );
 
@@ -181,5 +188,5 @@ task("watch", async () => {
     );
 });
 
-task("build", parallel("html", series("css", "minify-css"), "js"));
+task("build", series(parallel("html", "css", "js"), "minify-css"));
 task("default", series(parallel("html", "css", "js"), "watch"));

@@ -1,41 +1,38 @@
 import { Manager } from "./manager";
-import { ICoords, newCoords, Trigger } from "./history";
+import { ICoords, newCoords, TypeTrigger } from "./history";
 import { IPage } from "./page";
-import { getConfig } from "./config";
+import { toAttr } from "./config";
 import { Service } from "./service";
 import { newURL } from "./url";
 
 /**
  * The async function type, allows for smooth transition between Promises
  */
-export type asyncFn = (err?: any, value?: any) => void;
+export type TypeAsyncFn = (value?: any) => void;
 export interface ITransition {
     oldPage?: IPage;
     newPage?: IPage;
-    trigger?: Trigger;
+    trigger?: TypeTrigger;
     scroll?: { x: number; y: number };
-    scrollable?: boolean;
-    in: (data: ITransitionData) => any;
-    out: (data: ITransitionData) => any;
+    manualScroll?: boolean;
+    init?: (data: InitialTransitionData) => void;
+    in?: (data: ITransitionData) => any;
+    out?: (data: ITransitionData) => any;
     [key: string]: any;
 }
-export interface ITransitionData {
+
+export interface InitialTransitionData {
+    trigger?: TypeTrigger;
+    scroll?: ICoords;
+    oldPage: IPage;
+    newPage: IPage;
+    ignoreHashAction: boolean;
+}
+
+export interface ITransitionData extends InitialTransitionData {
     from?: IPage;
     to?: IPage;
-    trigger?: Trigger;
-    scroll?: ICoords;
-    done: asyncFn;
-}
-export interface ITransitionManager extends Service {
-    transitions: Manager<string, ITransition>,
-
-    get(key: string): ITransition,
-    set(key: string, value: ITransition): TransitionManager,
-    add(value: ITransition): TransitionManager,
-    has(key: string): boolean,
-
-    boot(): any,
-    animate(name: string, data: any): Promise<ITransition>,
+    done: TypeAsyncFn;
 }
 
 /** Auto scrolls to an elements position if the element has an hash */
@@ -51,7 +48,6 @@ export const hashAction = (coords?: ICoords, hash: string = window.location.hash
                 let x = left + scrollLeft;
                 let y = top + scrollTop;
 
-                console.log(x, y);
                 return newCoords(x, y);
             }
         }
@@ -63,22 +59,11 @@ export const hashAction = (coords?: ICoords, hash: string = window.location.hash
 };
 
 // The Default Transition
-const Default: ITransition = {
-    name: "default",
-    scrollable: true,
-
-    out({ done }: ITransitionData) {
-        done();
-    },
-    in({ scroll, done }: ITransitionData) {
-        window.scroll(scroll.x, scroll.y);
-        done();
-    }
-};
+export const Replace: ITransition = { name: "replace" };
 
 /** Controls which Transition between pages to use */
-export class TransitionManager extends Service implements ITransitionManager {
-    transitions: Manager<string, ITransition>;
+export class TransitionManager extends Service {
+    public transitions: Manager<string, ITransition>;
     private _arg: Array<[string, ITransition]>;
     constructor(transitions?: Array<[string, ITransition]>) {
         super();
@@ -89,12 +74,14 @@ export class TransitionManager extends Service implements ITransitionManager {
     public install() {
         super.install();
 
-        let transitions = this._arg && this._arg.length ? this._arg : (getConfig(this.config, "transitions") ?? []);
+        let transitions = this._arg && this._arg.length ? this._arg : this.config.transitions;
 
         // Manager like Maps use the most recent [key, value] Array it knows, replacing the default transition
-        // With any other transitions called ["default", ...]
-        transitions = [["default", Default]].concat(transitions);
-        this.transitions = new Manager(transitions);
+        // with any other transitions called ["default", ...]
+        this.transitions = new Manager([
+            ["default", Replace],
+            ["replace", Replace],
+        ].concat(transitions) as Array<[string, ITransition]>);
     }
 
     get(key: string) { return this.transitions.get(key); }
@@ -103,88 +90,86 @@ export class TransitionManager extends Service implements ITransitionManager {
     has(key: string) { return this.transitions.has(key); }
 
     /** Starts a transition */
-    public async animate(name: string, data: any): Promise<ITransition> {
+    public async start(name: string, data: InitialTransitionData): Promise<InitialTransitionData> {
         let transition: ITransition = this.transitions.get(name);
-        let scroll = data.scroll;
-        let ignoreHashAction = data.ignoreHashAction;
-        if (!("wrapper" in data.oldPage) || !("wrapper" in data.newPage))
-            throw `[Page] either oldPage or newPage aren't instances of the Page Class.\n ${{
-                newPage: data.newPage,
-                oldPage: data.oldPage,
-            }}`;
+        let { oldPage, newPage, ignoreHashAction, trigger } = data;
+        this.emitter.emit("TRANSITION_START", { transitionName: name, ...data });
+
+        if (!("wrapper" in oldPage) || !("wrapper" in newPage))
+            throw `[TransitionManager] either oldPage or newPage aren't instances of the Page Class.\n ${{ newPage, oldPage }}`;
 
         // Replace the title
-        document.title = `` + data.newPage.title;
+        document.title = `` + newPage.title;
 
-        let fromWrapper = data.oldPage.wrapper;
-        let toWrapper = data.newPage.wrapper;
-
+        let fromWrapper = oldPage.wrapper;
+        let toWrapper = newPage.wrapper;
         if (!(fromWrapper instanceof Node) || !(toWrapper instanceof Node))
-            throw `[Wrapper] the wrapper from the ${!(toWrapper instanceof Node) ? "next" : "current"
-            } page cannot be found. The wrapper must be an element that has the attribute ${getConfig(this.config,
-                "wrapperAttr"
-            )}.`;
+            throw `[TransitionManager] the wrapper from the ${!(toWrapper instanceof Node) ? "next" : "current"
+            } page cannot be found. The wrapper must be an element that has the attribute ${toAttr(this.config, "wrapperAttr")}.`;
 
         // Give the Transition all the background data it may require
         transition.init && transition?.init(data);
-
-        this.emitter.emit("BEFORE_TRANSITION_OUT");
+        this.emitter.emit("BEFORE_TRANSITION_OUT", data);
 
         // Start the out point of the Transition
         if (transition.out) {
-            await new Promise((done) => {
-                let outMethod: Promise<any> = transition.out.call(transition, {
-                    ...data,
-                    from: data.oldPage,
-                    trigger: data.trigger,
-                    done,
-                });
+            await new Promise(done => {
+                let outMethod: Promise<any> = transition.out.call(transition,
+                    { ...data, from: oldPage, done, }
+                );
 
                 outMethod?.then(done);
             });
         }
 
-        this.emitter.emit("AFTER_TRANSITION_OUT");
+        this.emitter.emit("AFTER_TRANSITION_OUT", data);
 
         // Add the new wrapper before the old one
-        await new Promise<void>((done) => {
+        await new Promise<void>(done => {
             fromWrapper.insertAdjacentElement("beforebegin", toWrapper);
-            this.emitter.emit("CONTENT_INSERT");
-
-            if (!ignoreHashAction && !/back|popstate|forward/.test(data.trigger as string)) {
-                scroll = hashAction(scroll);
-            }
+            this.emitter.emit("CONTENT_INSERT", data);
             done();
         });
 
         // Replace the old wrapper with the new one
-        await new Promise<void>((done) => {
+        await new Promise<void>(done => {
             fromWrapper.remove();
-            fromWrapper = undefined;
-            toWrapper = undefined;
-            this.emitter.emit("CONTENT_REPLACED");
+            fromWrapper = null;
+            toWrapper = null;
+
+            this.emitter.emit("CONTENT_REPLACED", data);
+
+            if (!ignoreHashAction && !/back|popstate|forward/.test(trigger as string))
+                data.scroll = hashAction(data.scroll);
             done();
         });
 
-        this.emitter.emit("BEFORE_TRANSITION_IN");
+        this.emitter.emit("BEFORE_TRANSITION_IN", data);
 
-        // Start the in point of the Transition (only the in method has access to the hashAction's scroll position)
+        // Start the `in` point of the Transition (only the `in` method has access to the hashAction's scroll position)
         if (transition.in) {
-            await new Promise(async (done) => {
-                let inMethod: Promise<any> = transition.in.call(transition, {
-                    ...data,
-                    from: data.oldPage,
-                    to: data.newPage,
-                    trigger: data.trigger,
-                    scroll,
-                    done,
-                });
+            await new Promise(done => {
+                let inMethod: Promise<any> = transition.in.call(transition,
+                    { ...data, from: oldPage, to: newPage, done }
+                );
 
                 inMethod?.then(done);
             });
         }
 
-        this.emitter.emit("AFTER_TRANSITION_IN");
-        return transition;
+        this.emitter.emit("AFTER_TRANSITION_IN", data);
+
+        // If the transition doesn't handle scroll itself, fallback on the transition manager handling it after the fact
+        if (!transition.manualScroll) {
+            if (!ignoreHashAction && !/back|popstate|forward/.test(trigger as string))
+                data.scroll = hashAction(data.scroll);
+
+            window.scroll(data.scroll.x, data.scroll.y);
+        }
+
+        this.emitter.emit("TRANSITION_END", { transitionName: name, ...data });
+        return data;
     }
 }
+
+export interface ITransitionManager extends TransitionManager { }

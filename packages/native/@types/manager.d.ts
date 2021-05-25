@@ -1,7 +1,7 @@
-import { Manager, methodCall, asyncMethodCall } from "@okikio/manager";
+import { Manager, methodCall } from "@okikio/manager";
 import { ICONFIG } from "./config";
 import { IApp } from "./app";
-import { EventEmitter } from "./emitter";
+import { EventEmitter } from "@okikio/emitter";
 export declare type IAdvancedManager = AdvancedManager<any, ManagerItem>;
 /** The base class for AdvancedManager items */
 export declare class ManagerItem {
@@ -38,4 +38,4 @@ export declare class AdvancedManager<K, V extends ManagerItem> extends Manager<K
     /** Add a ManagerItem to AdvancedManager at a specified key */
     set(key: K, value: V): this;
 }
-export { Manager, methodCall, asyncMethodCall };
+export { Manager, methodCall };

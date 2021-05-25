@@ -1,5 +1,7 @@
 {
     "compilerOptions": {
+        "jsx": "preserve",
+        "jsxImportSource": "solid-js",
         "moduleResolution": "node",
         "target": "ES2020",
         "module": "ES2020",

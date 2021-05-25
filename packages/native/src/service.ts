@@ -19,7 +19,7 @@ export class Service extends ManagerItem {
 	/** Stop events */
 	public stopEvents(): void { }
 
-	/** Stop services */
+	/** Stop Service */
 	public stop(): void {
 		this.stopEvents();
 		this.unregister();

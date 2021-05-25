@@ -31,7 +31,7 @@ export default async (source = "src/api.ts", globalName, mode) => {
         color: true,
         bundle: true,
         minify: true,
-        sourcemap: true,
+        sourcemap: false,
         globalName,
         tsconfig: "./tsconfig.json",
         logLevel: "info",

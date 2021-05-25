@@ -1,0 +1,571 @@
+<!doctype html>
+<html class="default no-js">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>emitter | native</title>
+	<meta name="description" content="Documentation for native">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="../assets/css/main.css">
+	<script async src="../assets/js/search.js" id="search-script"></script>
+</head>
+<body>
+<header>
+	<div class="tsd-page-toolbar">
+		<div class="container">
+			<div class="table-wrap">
+				<div class="table-cell" id="tsd-search" data-index="../assets/js/search.json" data-base="..">
+					<div class="field">
+						<label for="tsd-search-field" class="tsd-widget search no-caption">Search</label>
+						<input id="tsd-search-field" type="text" />
+					</div>
+					<ul class="results">
+						<li class="state loading">Preparing search index...</li>
+						<li class="state failure">The search index is not available</li>
+					</ul>
+					<a href="../index.html" class="title">native</a>
+				</div>
+				<div class="table-cell" id="tsd-widgets">
+					<div id="tsd-filter">
+						<a href="#" class="tsd-widget options no-caption" data-toggle="options">Options</a>
+						<div class="tsd-filter-group">
+							<div class="tsd-select" id="tsd-filter-visibility">
+								<span class="tsd-select-label">All</span>
+								<ul class="tsd-select-list">
+									<li data-value="public">Public</li>
+									<li data-value="protected">Public/Protected</li>
+									<li data-value="private" class="selected">All</li>
+								</ul>
+							</div>
+							<input type="checkbox" id="tsd-filter-inherited" checked />
+							<label class="tsd-widget" for="tsd-filter-inherited">Inherited</label>
+							<input type="checkbox" id="tsd-filter-externals" checked />
+							<label class="tsd-widget" for="tsd-filter-externals">Externals</label>
+						</div>
+					</div>
+					<a href="#" class="tsd-widget menu no-caption" data-toggle="menu">Menu</a>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="tsd-page-title">
+		<div class="container">
+			<ul class="tsd-breadcrumb">
+				<li>
+					<a href="../index.html">native</a>
+				</li>
+				<li>
+					<a href="emitter.html">emitter</a>
+				</li>
+			</ul>
+			<h1>Module emitter</h1>
+		</div>
+	</div>
+</header>
+<div class="container container-main">
+	<div class="row">
+		<div class="col-8 col-content">
+			<section class="tsd-panel tsd-comment">
+				<div class="tsd-comment tsd-typography">
+					<a href="#okikioemitter" id="okikioemitter" style="color: inherit; text-decoration: none;">
+						<h1>@okikio/emitter</h1>
+					</a>
+					<p>A small Event Emitter written in typescript with performance and ease of use in mind, it weighs <strong>~838 B</strong> (minified and gzipped).</p>
+					<p><em>You will need a Map and Promise polyfill for older browsers. If you install <code>@okikio/emitter</code> via <a href="https://www.npmjs.com/package/@okikio/emitter">npm</a> you are most likely going to need <a href="https://rollupjs.org/">rollup</a> or <a href="https://esbuild.github.io/">esbuild</a>. You can use <a href="https://polyfill.io/">polyfill.io</a>, or another source to create a polyfill. The minimum feature requirement for a polyfill are Maps and Promises e.g. <a href="https://polyfill.io/v3/polyfill.min.js?features=Promise,Map">https://polyfill.io/v3/polyfill.min.js?features=Promise,Map</a>.</em></p>
+					<p>You can try out <code>@okikio/emitter</code> using Gitpod:</p>
+					<p><a href="https://gitpod.io/#https://github.com/okikio/native/blob/master/packages/emitter/README.md"><img src="https://gitpod.io/button/open-in-gitpod.svg" alt="Open In Gitpod"></a></p>
+					<p>By default Gitpod will start the dev script for you, but if you need to restart the dev script you can do so by typing into the terminal.</p>
+					<pre><code class="language-bash"><span style="color: #000000">pnpm test-dev --filter </span><span style="color: #A31515">&quot;@okikio/emitter&quot;</span>
+</code></pre>
+					<p>Once Gitpod has booted up, go to <a href="./tests/test.ts">./tests/test.ts</a> and start tweaking and testing to your hearts content.</p>
+					<a href="#table-of-contents" id="table-of-contents" style="color: inherit; text-decoration: none;">
+						<h2>Table of Contents</h2>
+					</a>
+					<ul>
+						<li><a href="#okikioemitter">@okikio/emitter</a><ul>
+								<li><a href="#table-of-contents">Table of Contents</a></li>
+								<li><a href="#installation">Installation</a></li>
+								<li><a href="#getting-started">Getting started</a><ul>
+										<li><a href="#api-documentation">API Documentation</a></li>
+									</ul>
+								</li>
+								<li><a href="#api">API</a><ul>
+										<li><a href="#eventemitteronevents-callback-scope--eventemitteremitevents-args">EventEmitter#on(events, callback, scope) &amp; EventEmitter#emit(events, ...args)</a></li>
+										<li><a href="#eventemitteroffevents-callback-scope">EventEmitter#off(events, callback, scope)</a></li>
+										<li><a href="#eventemitteronceevents-callback-scope">EventEmitter#once(events, callback, scope)</a></li>
+									</ul>
+								</li>
+								<li><a href="#contributing">Contributing</a></li>
+								<li><a href="#licence">Licence</a></li>
+							</ul>
+						</li>
+					</ul>
+					<a href="#installation" id="installation" style="color: inherit; text-decoration: none;">
+						<h2>Installation</h2>
+					</a>
+					<p>You can install <a href="https://www.skypack.dev/view/@okikio/emitter">@okikio/emitter</a> from <a href="https://www.npmjs.com/package/@okikio/emitter">npm</a> via <code>npm i @okikio/emitter</code>, <code>pnpm i @okikio/emitter</code> or <code>yarn add @okikio/emitter</code>.</p>
+					<p>You can use <code>@okikio/emitter</code> on the web via:</p>
+					<ul>
+						<li><a href="https://unpkg.com/@okikio/emitter@latest/lib/api.es.js">https://unpkg.com/@okikio/emitter/lib/api.es.js</a>,</li>
+						<li><a href="https://cdn.skypack.dev/@okikio/emitter">https://cdn.skypack.dev/@okikio/emitter</a> or</li>
+						<li><a href="https://cdn.jsdelivr.net/npm/@okikio/emitter/lib/api.es.js">https://cdn.jsdelivr.net/npm/@okikio/emitter/lib/api.es.js</a>.</li>
+					</ul>
+					<p>Once installed it can be used like this:</p>
+					<pre><code class="language-typescript"><span style="color: #AF00DB">import</span><span style="color: #000000"> { </span><span style="color: #001080">EventEmitter</span><span style="color: #000000"> } </span><span style="color: #AF00DB">from</span><span style="color: #000000"> </span><span style="color: #A31515">&quot;@okikio/emitter&quot;</span><span style="color: #000000">;</span>
+<span style="color: #AF00DB">import</span><span style="color: #000000"> { </span><span style="color: #001080">EventEmitter</span><span style="color: #000000"> } </span><span style="color: #AF00DB">from</span><span style="color: #000000"> </span><span style="color: #A31515">&quot;https://unpkg.com/@okikio/emitter/lib/api.es.js&quot;</span><span style="color: #000000">;</span>
+<span style="color: #AF00DB">import</span><span style="color: #000000"> { </span><span style="color: #001080">EventEmitter</span><span style="color: #000000"> } </span><span style="color: #AF00DB">from</span><span style="color: #000000"> </span><span style="color: #A31515">&quot;https://cdn.jsdelivr.net/npm/@okikio/emitter/lib/api.es.js&quot;</span><span style="color: #000000">;</span>
+<span style="color: #008000">// Or</span>
+<span style="color: #AF00DB">import</span><span style="color: #000000"> { </span><span style="color: #001080">EventEmitter</span><span style="color: #000000"> } </span><span style="color: #AF00DB">from</span><span style="color: #000000"> </span><span style="color: #A31515">&quot;https://cdn.skypack.dev/@okikio/emitter&quot;</span><span style="color: #000000">;</span>
+
+<span style="color: #008000">// Via script tag</span>
+<span style="color: #000000">&lt;</span><span style="color: #001080">script</span><span style="color: #000000"> </span><span style="color: #001080">src</span><span style="color: #000000">=</span><span style="color: #A31515">&quot;https://unpkg.com/@okikio/emitter/lib/api.js&quot;</span><span style="color: #000000">&gt;&lt;/</span><span style="color: #267F99">script</span><span style="color: #000000">&gt;</span>
+<span style="color: #008000">// Do note, on the web you need to do this, if you installed it via the script tag:</span>
+<span style="color: #0000FF">const</span><span style="color: #000000"> { </span><span style="color: #0070C1">EventEmitter</span><span style="color: #000000"> } = </span><span style="color: #001080">window</span><span style="color: #000000">.</span><span style="color: #001080">emitter</span><span style="color: #000000">;</span>
+</code></pre>
+					<a href="#getting-started" id="getting-started" style="color: inherit; text-decoration: none;">
+						<h2>Getting started</h2>
+					</a>
+					<p>The <code>EventEmitter</code> class is what runs the show for the <code>@okikio/emitter</code> library. To use it properly you need to create a new instance of <code>EventEmitter</code>, the instance of <code>EventEmitter</code> is what allows for event emitting, and listening.</p>
+					<p><code>EventEmitter</code> allows for an easy way to manage events. It inherits properties/methods from <a href="https://www.npmjs.com/package/@okikio/manager">@okikio/manager</a>.</p>
+					<pre><code class="language-ts"><span style="color: #008000">// You need to first initialize a new Event Emitter</span>
+<span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">emitter</span><span style="color: #000000"> = </span><span style="color: #0000FF">new</span><span style="color: #000000"> </span><span style="color: #795E26">EventEmitter</span><span style="color: #000000">();</span>
+
+<span style="color: #008000">// Then listen for an event</span>
+<span style="color: #001080">emitter</span><span style="color: #000000">.</span><span style="color: #795E26">on</span><span style="color: #000000">(</span><span style="color: #A31515">&quot;new-event&quot;</span><span style="color: #000000">, () </span><span style="color: #0000FF">=&gt;</span><span style="color: #000000"> {</span>
+<span style="color: #000000">    </span><span style="color: #001080">console</span><span style="color: #000000">.</span><span style="color: #795E26">log</span><span style="color: #000000">(</span><span style="color: #A31515">&quot;A new event occured&quot;</span><span style="color: #000000">);</span>
+<span style="color: #000000">});</span>
+
+<span style="color: #008000">// Then emit or fire the event</span>
+<span style="color: #795E26">setTimeout</span><span style="color: #000000">(() </span><span style="color: #0000FF">=&gt;</span><span style="color: #000000"> {</span>
+<span style="color: #000000">    </span><span style="color: #008000">// Eg. after 3 seconds fire the `new-event` listener</span>
+<span style="color: #000000">    </span><span style="color: #001080">emitter</span><span style="color: #000000">.</span><span style="color: #795E26">emit</span><span style="color: #000000">(</span><span style="color: #A31515">&quot;new-event&quot;</span><span style="color: #000000">); </span><span style="color: #008000">//= A new event occured</span>
+<span style="color: #000000">}, </span><span style="color: #098658">3000</span><span style="color: #000000">);</span>
+</code></pre>
+					<a href="#api-documentation" id="api-documentation" style="color: inherit; text-decoration: none;">
+						<h3>API Documentation</h3>
+					</a>
+					<p>You can also go through the <a href="https://okikio.github.io/native/docs/modules/emitter.html">API documentation</a>, for a more detailed documentation of the API.</p>
+					<a href="#api" id="api" style="color: inherit; text-decoration: none;">
+						<h2>API</h2>
+					</a>
+					<a href="#eventemitteronevents-callback-scope-amp-eventemitteremitevents-args" id="eventemitteronevents-callback-scope-amp-eventemitteremitevents-args" style="color: inherit; text-decoration: none;">
+						<h4>EventEmitter#on(events, callback, scope) &amp; EventEmitter#emit(events, ...args)</h4>
+					</a>
+					<pre><code class="language-ts"><span style="color: #008000">/**</span>
+<span style="color: #008000"> * Adds a listener for a given event</span>
+<span style="color: #008000"> *</span>
+<span style="color: #008000"> * </span><span style="color: #0000FF">@param</span><span style="color: #008000"> </span><span style="color: #267F99">{EventInput}</span><span style="color: #008000"> </span><span style="color: #001080">events</span>
+<span style="color: #008000"> * </span><span style="color: #0000FF">@param</span><span style="color: #008000"> </span><span style="color: #267F99">{ListenerCallback | object}</span><span style="color: #008000"> </span><span style="color: #001080">callback</span>
+<span style="color: #008000"> * </span><span style="color: #0000FF">@param</span><span style="color: #008000"> </span><span style="color: #267F99">{object}</span><span style="color: #008000"> </span><span style="color: #001080">scope</span>
+<span style="color: #008000"> * </span><span style="color: #0000FF">@returns</span><span style="color: #008000"> EventEmitter</span>
+<span style="color: #008000"> * </span><span style="color: #0000FF">@memberof</span><span style="color: #008000"> </span><span style="color: #267F99">EventEmitter</span>
+<span style="color: #008000"> */</span>
+
+<span style="color: #267F99">EventEmitter</span><span style="color: #000000">.</span><span style="color: #001080">prototype</span><span style="color: #000000">.</span><span style="color: #795E26">on</span><span style="color: #000000">(</span><span style="color: #001080">events</span><span style="color: #000000">: </span><span style="color: #001080">EventInput</span><span style="color: #000000">, </span><span style="color: #001080">callback</span><span style="color: #000000">?: </span><span style="color: #001080">ListenerCallback</span><span style="color: #000000"> | </span><span style="color: #001080">object</span><span style="color: #000000">, </span><span style="color: #001080">scope</span><span style="color: #000000">?: </span><span style="color: #001080">object</span><span style="color: #000000">);</span>
+
+<span style="color: #008000">/**</span>
+<span style="color: #008000"> * Call all listeners within an event</span>
+<span style="color: #008000"> *</span>
+<span style="color: #008000"> * </span><span style="color: #0000FF">@param</span><span style="color: #008000"> </span><span style="color: #267F99">{(string | Array&lt;any&gt;)}</span><span style="color: #008000"> </span><span style="color: #001080">events</span>
+<span style="color: #008000"> * </span><span style="color: #0000FF">@param</span><span style="color: #008000"> </span><span style="color: #267F99">{...any}</span><span style="color: #008000"> </span><span style="color: #001080">args</span>
+<span style="color: #008000"> * </span><span style="color: #0000FF">@returns</span><span style="color: #008000"> EventEmitter</span>
+<span style="color: #008000"> * </span><span style="color: #0000FF">@memberof</span><span style="color: #008000"> </span><span style="color: #267F99">EventEmitter</span>
+<span style="color: #008000"> */</span>
+
+<span style="color: #267F99">EventEmitter</span><span style="color: #000000">.</span><span style="color: #001080">prototype</span><span style="color: #000000">.</span><span style="color: #795E26">emit</span><span style="color: #000000">(</span><span style="color: #001080">events</span><span style="color: #000000">: </span><span style="color: #001080">string</span><span style="color: #000000"> | </span><span style="color: #267F99">Array</span><span style="color: #000000">&lt;</span><span style="color: #001080">any</span><span style="color: #000000">&gt;, ...</span><span style="color: #001080">args</span><span style="color: #000000">: </span><span style="color: #001080">any</span><span style="color: #000000">);</span>
+
+
+<span style="color: #008000">// Example:</span>
+<span style="color: #AF00DB">import</span><span style="color: #000000"> </span><span style="color: #001080">EventEmitter</span><span style="color: #000000"> </span><span style="color: #AF00DB">from</span><span style="color: #000000"> </span><span style="color: #A31515">&quot;@okikio/emitter&quot;</span><span style="color: #000000">;</span>
+<span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">emitter</span><span style="color: #000000"> = </span><span style="color: #0000FF">new</span><span style="color: #000000"> </span><span style="color: #795E26">EventEmitter</span><span style="color: #000000">();</span>
+
+<span style="color: #0000FF">let</span><span style="color: #000000"> </span><span style="color: #001080">test</span><span style="color: #000000"> = </span><span style="color: #0000FF">false</span><span style="color: #000000">;</span>
+<span style="color: #0000FF">let</span><span style="color: #000000"> </span><span style="color: #001080">obj</span><span style="color: #000000"> = { </span><span style="color: #001080">bool:</span><span style="color: #000000"> </span><span style="color: #0000FF">false</span><span style="color: #000000"> };</span>
+<span style="color: #0000FF">let</span><span style="color: #000000"> </span><span style="color: #001080">counter</span><span style="color: #000000"> = </span><span style="color: #098658">0</span><span style="color: #000000">;</span>
+<span style="color: #0000FF">let</span><span style="color: #000000"> </span><span style="color: #001080">on</span><span style="color: #000000"> = </span><span style="color: #001080">emitter</span><span style="color: #000000">.</span><span style="color: #795E26">on</span><span style="color: #000000">(</span>
+<span style="color: #000000">    </span><span style="color: #A31515">&quot;test&quot;</span><span style="color: #000000">,</span>
+<span style="color: #000000">    </span><span style="color: #0000FF">function</span><span style="color: #000000"> (</span><span style="color: #001080">key</span><span style="color: #000000">, </span><span style="color: #001080">value</span><span style="color: #000000">) {</span>
+<span style="color: #000000">        </span><span style="color: #001080">test</span><span style="color: #000000"> = [</span><span style="color: #001080">key</span><span style="color: #000000">, </span><span style="color: #001080">value</span><span style="color: #000000">];</span>
+
+<span style="color: #000000">        </span><span style="color: #008000">// `this` comes from `obj`, since it was set as the scope of this listener</span>
+<span style="color: #000000">        </span><span style="color: #001080">console</span><span style="color: #000000">.</span><span style="color: #795E26">log</span><span style="color: #000000">(</span><span style="color: #0000FF">this</span><span style="color: #000000">.</span><span style="color: #001080">bool</span><span style="color: #000000">); </span><span style="color: #008000">//= false</span>
+<span style="color: #000000">    },</span>
+<span style="color: #000000">    </span><span style="color: #001080">obj</span><span style="color: #000000"> </span><span style="color: #008000">// Binds the callback to the `obj` scope</span>
+<span style="color: #000000">)</span>
+
+<span style="color: #008000">// You can chain methods</span>
+<span style="color: #000000">.</span><span style="color: #795E26">on</span><span style="color: #000000">(</span>
+<span style="color: #000000">    </span><span style="color: #008000">// You can listen for multiple events at the same time</span>
+<span style="color: #000000">    </span><span style="color: #A31515">&quot;test test1 test2&quot;</span><span style="color: #000000">, </span><span style="color: #008000">// You can also use arrays [&quot;test&quot;, &quot;test1&quot;, &quot;test2&quot;]</span>
+<span style="color: #000000">    </span><span style="color: #0000FF">function</span><span style="color: #000000"> (</span><span style="color: #001080">key</span><span style="color: #000000">, </span><span style="color: #001080">value</span><span style="color: #000000">) {</span>
+<span style="color: #000000">        </span><span style="color: #001080">test</span><span style="color: #000000"> = [</span><span style="color: #001080">value</span><span style="color: #000000">, </span><span style="color: #001080">key</span><span style="color: #000000">];</span>
+<span style="color: #000000">        </span><span style="color: #001080">counter</span><span style="color: #000000">++;</span>
+<span style="color: #000000">        </span><span style="color: #001080">console</span><span style="color: #000000">.</span><span style="color: #795E26">log</span><span style="color: #000000">(</span><span style="color: #0000FF">this</span><span style="color: #000000">.</span><span style="color: #001080">bool</span><span style="color: #000000">); </span><span style="color: #008000">//= undefined</span>
+<span style="color: #000000">    }</span>
+<span style="color: #000000">    </span><span style="color: #008000">// You can also bind all event listener callbacks to the same scope, in this example I didn&#039;t</span>
+<span style="color: #000000">);</span>
+
+<span style="color: #001080">on</span><span style="color: #000000">.</span><span style="color: #795E26">emit</span><span style="color: #000000">(</span><span style="color: #A31515">&quot;test&quot;</span><span style="color: #000000">, </span><span style="color: #098658">1</span><span style="color: #000000">, </span><span style="color: #A31515">&quot;true&quot;</span><span style="color: #000000">);</span>
+<span style="color: #001080">console</span><span style="color: #000000">.</span><span style="color: #795E26">log</span><span style="color: #000000">(</span><span style="color: #001080">test</span><span style="color: #000000">); </span><span style="color: #008000">//= [1, &quot;true&quot;]</span>
+
+<span style="color: #001080">on</span><span style="color: #000000">.</span><span style="color: #795E26">emit</span><span style="color: #000000">(</span>
+<span style="color: #000000">    </span><span style="color: #A31515">&quot;test test1 test2&quot;</span><span style="color: #000000">, </span><span style="color: #008000">// You can also use arrays [&quot;test&quot;, &quot;test1&quot;, &quot;test2&quot;]</span>
+<span style="color: #000000">    </span><span style="color: #098658">1</span><span style="color: #000000">, </span><span style="color: #A31515">&quot;true&quot;</span><span style="color: #000000">);</span>
+<span style="color: #001080">console</span><span style="color: #000000">.</span><span style="color: #795E26">log</span><span style="color: #000000">(</span><span style="color: #001080">test</span><span style="color: #000000">); </span><span style="color: #008000">//= [&quot;true&quot;, 1]</span>
+<span style="color: #001080">console</span><span style="color: #000000">.</span><span style="color: #795E26">log</span><span style="color: #000000">(</span><span style="color: #001080">counter</span><span style="color: #000000">); </span><span style="color: #008000">//= 3</span>
+
+<span style="color: #001080">counter</span><span style="color: #000000"> = </span><span style="color: #098658">0</span><span style="color: #000000">;</span>
+<span style="color: #0000FF">let</span><span style="color: #000000"> </span><span style="color: #795E26">fn</span><span style="color: #000000"> = </span><span style="color: #0000FF">function</span><span style="color: #000000"> (</span><span style="color: #001080">i</span><span style="color: #000000"> = </span><span style="color: #098658">1</span><span style="color: #000000">) {</span>
+<span style="color: #000000">    </span><span style="color: #AF00DB">return</span><span style="color: #000000"> </span><span style="color: #0000FF">function</span><span style="color: #000000"> (</span><span style="color: #001080">key</span><span style="color: #000000">, </span><span style="color: #001080">value</span><span style="color: #000000">) {</span>
+<span style="color: #000000">        </span><span style="color: #001080">test</span><span style="color: #000000"> = [</span><span style="color: #001080">key</span><span style="color: #000000">, </span><span style="color: #001080">value</span><span style="color: #000000">];</span>
+<span style="color: #000000">        </span><span style="color: #001080">counter</span><span style="color: #000000"> += </span><span style="color: #001080">i</span><span style="color: #000000">;</span>
+<span style="color: #000000">        </span><span style="color: #001080">console</span><span style="color: #000000">.</span><span style="color: #795E26">log</span><span style="color: #000000">(</span><span style="color: #0000FF">this</span><span style="color: #000000">.</span><span style="color: #001080">bool</span><span style="color: #000000">); </span><span style="color: #008000">//= false</span>
+<span style="color: #000000">    };</span>
+<span style="color: #000000">};</span>
+
+<span style="color: #008000">// You can also use an object to listen for events</span>
+<span style="color: #001080">emitter</span><span style="color: #000000">.</span><span style="color: #795E26">on</span><span style="color: #000000">(</span>
+<span style="color: #000000">    {</span>
+<span style="color: #000000">        </span><span style="color: #001080">play1:</span><span style="color: #000000"> </span><span style="color: #795E26">fn</span><span style="color: #000000">(),</span>
+<span style="color: #000000">        </span><span style="color: #001080">play2:</span><span style="color: #000000"> </span><span style="color: #795E26">fn</span><span style="color: #000000">(</span><span style="color: #098658">2</span><span style="color: #000000">),</span>
+<span style="color: #000000">        </span><span style="color: #001080">play3:</span><span style="color: #000000"> </span><span style="color: #795E26">fn</span><span style="color: #000000">(</span><span style="color: #098658">4</span><span style="color: #000000">)</span>
+<span style="color: #000000">    },</span>
+<span style="color: #000000">    </span><span style="color: #001080">obj</span><span style="color: #000000"> </span><span style="color: #008000">// Bind all callbacks to the `obj` scope</span>
+<span style="color: #000000">);</span>
+
+<span style="color: #008000">// You can emit multiple events back to back</span>
+<span style="color: #001080">on</span><span style="color: #000000">.</span><span style="color: #795E26">emit</span><span style="color: #000000">(</span><span style="color: #A31515">&quot;play1 play2 play3 play1&quot;</span><span style="color: #000000">, </span><span style="color: #A31515">&quot;true&quot;</span><span style="color: #000000">, </span><span style="color: #098658">1</span><span style="color: #000000">)</span>
+<span style="color: #000000">    .</span><span style="color: #795E26">emit</span><span style="color: #000000">([</span><span style="color: #A31515">&quot;play1&quot;</span><span style="color: #000000">, </span><span style="color: #A31515">&quot;play2&quot;</span><span style="color: #000000">, </span><span style="color: #A31515">&quot;play3&quot;</span><span style="color: #000000">], </span><span style="color: #098658">1</span><span style="color: #000000">, </span><span style="color: #A31515">&quot;true&quot;</span><span style="color: #000000">);</span>
+<span style="color: #001080">console</span><span style="color: #000000">.</span><span style="color: #795E26">log</span><span style="color: #000000">(</span><span style="color: #001080">test</span><span style="color: #000000">); </span><span style="color: #008000">//= [1, &quot;true&quot;]</span>
+<span style="color: #001080">console</span><span style="color: #000000">.</span><span style="color: #795E26">log</span><span style="color: #000000">(</span><span style="color: #001080">counter</span><span style="color: #000000">); </span><span style="color: #008000">//= 15</span>
+</code></pre>
+					<a href="#eventemitteroffevents-callback-scope" id="eventemitteroffevents-callback-scope" style="color: inherit; text-decoration: none;">
+						<h4>EventEmitter#off(events, callback, scope)</h4>
+					</a>
+					<pre><code class="language-ts"><span style="color: #267F99">EventEmitter</span><span style="color: #000000">.</span><span style="color: #001080">prototype</span><span style="color: #000000">.</span><span style="color: #795E26">off</span><span style="color: #000000">(</span><span style="color: #001080">events</span><span style="color: #000000">: </span><span style="color: #001080">EventInput</span><span style="color: #000000">, </span><span style="color: #001080">callback</span><span style="color: #000000">?: </span><span style="color: #001080">ListenerCallback</span><span style="color: #000000"> | </span><span style="color: #001080">object</span><span style="color: #000000">, </span><span style="color: #001080">scope</span><span style="color: #000000">?: </span><span style="color: #001080">object</span><span style="color: #000000">);</span>
+
+<span style="color: #008000">/**</span>
+<span style="color: #008000"> * Removes a listener from a given event, or completely removes an event</span>
+<span style="color: #008000"> *</span>
+<span style="color: #008000"> * </span><span style="color: #0000FF">@param</span><span style="color: #008000"> </span><span style="color: #267F99">{EventInput}</span><span style="color: #008000"> </span><span style="color: #001080">events</span>
+<span style="color: #008000"> * </span><span style="color: #0000FF">@param</span><span style="color: #008000"> </span><span style="color: #267F99">{ListenerCallback | object}</span><span style="color: #008000"> </span><span style="color: #001080">[callback]</span>
+<span style="color: #008000"> * </span><span style="color: #0000FF">@param</span><span style="color: #008000"> </span><span style="color: #267F99">{object}</span><span style="color: #008000"> </span><span style="color: #001080">[scope]</span>
+<span style="color: #008000"> * </span><span style="color: #0000FF">@returns</span><span style="color: #008000"> EventEmitter</span>
+<span style="color: #008000"> * </span><span style="color: #0000FF">@memberof</span><span style="color: #008000"> </span><span style="color: #267F99">EventEmitter</span>
+<span style="color: #008000"> */</span>
+
+<span style="color: #008000">// Example:</span>
+<span style="color: #AF00DB">import</span><span style="color: #000000"> </span><span style="color: #001080">EventEmitter</span><span style="color: #000000"> </span><span style="color: #AF00DB">from</span><span style="color: #000000"> </span><span style="color: #A31515">&quot;@okikio/emitter&quot;</span><span style="color: #000000">;</span>
+<span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">emitter</span><span style="color: #000000"> = </span><span style="color: #0000FF">new</span><span style="color: #000000"> </span><span style="color: #795E26">EventEmitter</span><span style="color: #000000">();</span>
+
+<span style="color: #008000">/*</span>
+<span style="color: #008000">    `EventEmitter.prototype.off(...)` literally does the opposite of what `EventEmitter.prototype.on(...)` does,</span>
+<span style="color: #008000">    `EventEmitter.prototype.off(...)` removes Events and Event Listeners</span>
+<span style="color: #008000">*/</span>
+<span style="color: #0000FF">let</span><span style="color: #000000"> </span><span style="color: #001080">counter</span><span style="color: #000000"> = </span><span style="color: #098658">0</span><span style="color: #000000">, </span><span style="color: #001080">fn</span><span style="color: #000000">, </span><span style="color: #001080">scope</span><span style="color: #000000"> = { </span><span style="color: #001080">bool:</span><span style="color: #000000"> </span><span style="color: #0000FF">false</span><span style="color: #000000"> };</span>
+<span style="color: #0000FF">let</span><span style="color: #000000"> </span><span style="color: #001080">on</span><span style="color: #000000"> = </span><span style="color: #001080">emitter</span><span style="color: #000000">.</span><span style="color: #795E26">on</span><span style="color: #000000">(</span>
+<span style="color: #000000">    </span><span style="color: #008000">// You can listen for multiple events at the same time</span>
+<span style="color: #000000">    </span><span style="color: #A31515">&quot;test test1 test2&quot;</span><span style="color: #000000">, </span><span style="color: #008000">// You can also use arrays [&quot;test&quot;, &quot;test1&quot;, &quot;test2&quot;]</span>
+<span style="color: #000000">    </span><span style="color: #795E26">fn</span><span style="color: #000000"> = </span><span style="color: #0000FF">function</span><span style="color: #000000"> () {</span>
+<span style="color: #000000">        </span><span style="color: #001080">counter</span><span style="color: #000000">++;</span>
+<span style="color: #000000">    },</span>
+<span style="color: #000000">    </span><span style="color: #001080">scope</span>
+<span style="color: #000000">);</span>
+
+<span style="color: #008000">// To remove an entire Event, or multiple Events</span>
+<span style="color: #001080">emitter</span><span style="color: #000000">.</span><span style="color: #795E26">off</span><span style="color: #000000">(</span><span style="color: #A31515">&quot;test1 test2&quot;</span><span style="color: #000000">);</span>
+
+<span style="color: #008000">// To remove a specific listener you need the scope (if you didn&#039;t put anything as the scope when listening for an Event then you don&#039;t need a scope) and callback</span>
+<span style="color: #001080">emitter</span><span style="color: #000000">.</span><span style="color: #795E26">off</span><span style="color: #000000">(</span><span style="color: #A31515">&quot;test&quot;</span><span style="color: #000000">, </span><span style="color: #001080">fn</span><span style="color: #000000">, </span><span style="color: #001080">scope</span><span style="color: #000000">);</span>
+
+<span style="color: #001080">on</span><span style="color: #000000">.</span><span style="color: #795E26">emit</span><span style="color: #000000">(</span><span style="color: #A31515">&quot;test test1 test2&quot;</span><span style="color: #000000">); </span><span style="color: #008000">// Nothing happens, there are no Events or listeners, so, it can&#039;t emit anything</span>
+<span style="color: #001080">console</span><span style="color: #000000">.</span><span style="color: #795E26">log</span><span style="color: #000000">(</span><span style="color: #001080">counter</span><span style="color: #000000">); </span><span style="color: #008000">//= 0</span>
+</code></pre>
+					<a href="#eventemitteronceevents-callback-scope" id="eventemitteronceevents-callback-scope" style="color: inherit; text-decoration: none;">
+						<h4>EventEmitter#once(events, callback, scope)</h4>
+					</a>
+					<pre><code class="language-ts"><span style="color: #008000">/**</span>
+<span style="color: #008000"> * Adds a one time event listener for an event</span>
+<span style="color: #008000"> *</span>
+<span style="color: #008000"> * </span><span style="color: #0000FF">@param</span><span style="color: #008000"> </span><span style="color: #267F99">{EventInput}</span><span style="color: #008000"> </span><span style="color: #001080">events</span>
+<span style="color: #008000"> * </span><span style="color: #0000FF">@param</span><span style="color: #008000"> </span><span style="color: #267F99">{ListenerCallback | object}</span><span style="color: #008000"> </span><span style="color: #001080">callback</span>
+<span style="color: #008000"> * </span><span style="color: #0000FF">@param</span><span style="color: #008000"> </span><span style="color: #267F99">{object}</span><span style="color: #008000"> </span><span style="color: #001080">scope</span>
+<span style="color: #008000"> * </span><span style="color: #0000FF">@returns</span><span style="color: #008000"> EventEmitter</span>
+<span style="color: #008000"> * </span><span style="color: #0000FF">@memberof</span><span style="color: #008000"> </span><span style="color: #267F99">EventEmitter</span>
+<span style="color: #008000"> */</span>
+
+<span style="color: #267F99">EventEmitter</span><span style="color: #000000">.</span><span style="color: #001080">prototype</span><span style="color: #000000">.</span><span style="color: #795E26">once</span><span style="color: #000000">(</span><span style="color: #001080">events</span><span style="color: #000000">: </span><span style="color: #001080">EventInput</span><span style="color: #000000">, </span><span style="color: #001080">callback</span><span style="color: #000000">?: </span><span style="color: #001080">ListenerCallback</span><span style="color: #000000"> | </span><span style="color: #001080">object</span><span style="color: #000000">, </span><span style="color: #001080">scope</span><span style="color: #000000">?: </span><span style="color: #001080">object</span><span style="color: #000000">);</span>
+
+
+<span style="color: #008000">// Example:</span>
+<span style="color: #AF00DB">import</span><span style="color: #000000"> </span><span style="color: #001080">EventEmitter</span><span style="color: #000000"> </span><span style="color: #AF00DB">from</span><span style="color: #000000"> </span><span style="color: #A31515">&quot;@okikio/emitter&quot;</span><span style="color: #000000">;</span>
+<span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">emitter</span><span style="color: #000000"> = </span><span style="color: #0000FF">new</span><span style="color: #000000"> </span><span style="color: #795E26">EventEmitter</span><span style="color: #000000">();</span>
+
+<span style="color: #008000">/**</span>
+<span style="color: #008000"> * `EventEmitter#once(...)` supports everything `EventEmitter#on(...)` supports</span>
+<span style="color: #008000"> * except the event listeners can only be fired once</span>
+<span style="color: #008000"> * */</span>
+<span style="color: #0000FF">let</span><span style="color: #000000"> </span><span style="color: #001080">test</span><span style="color: #000000">: </span><span style="color: #267F99">boolean</span><span style="color: #000000"> | </span><span style="color: #267F99">any</span><span style="color: #000000"> = </span><span style="color: #0000FF">false</span><span style="color: #000000">;</span>
+<span style="color: #0000FF">let</span><span style="color: #000000"> </span><span style="color: #001080">obj</span><span style="color: #000000"> = { </span><span style="color: #001080">bool:</span><span style="color: #000000"> </span><span style="color: #0000FF">false</span><span style="color: #000000"> };</span>
+<span style="color: #0000FF">let</span><span style="color: #000000"> </span><span style="color: #001080">counter</span><span style="color: #000000"> = </span><span style="color: #098658">0</span><span style="color: #000000">;</span>
+<span style="color: #0000FF">let</span><span style="color: #000000"> </span><span style="color: #001080">on</span><span style="color: #000000">: </span><span style="color: #267F99">EventEmitter</span><span style="color: #000000"> = </span><span style="color: #001080">emitter</span><span style="color: #000000">.</span><span style="color: #795E26">once</span><span style="color: #000000">(</span>
+<span style="color: #000000">    </span><span style="color: #A31515">&quot;test test1 test2&quot;</span><span style="color: #000000">,</span>
+<span style="color: #000000">    </span><span style="color: #0000FF">function</span><span style="color: #000000"> (</span><span style="color: #001080">key</span><span style="color: #000000">, </span><span style="color: #001080">value</span><span style="color: #000000">) {</span>
+<span style="color: #000000">        </span><span style="color: #001080">test</span><span style="color: #000000"> = [</span><span style="color: #001080">key</span><span style="color: #000000">, </span><span style="color: #001080">value</span><span style="color: #000000">];</span>
+<span style="color: #000000">        </span><span style="color: #001080">counter</span><span style="color: #000000">++;</span>
+
+<span style="color: #000000">        </span><span style="color: #008000">// `this` comes from `obj`, since it was set as the scope of this listener</span>
+<span style="color: #000000">        </span><span style="color: #001080">console</span><span style="color: #000000">.</span><span style="color: #795E26">log</span><span style="color: #000000">(</span><span style="color: #0000FF">this</span><span style="color: #000000">.</span><span style="color: #001080">bool</span><span style="color: #000000">); </span><span style="color: #008000">//= false</span>
+<span style="color: #000000">    },</span>
+<span style="color: #000000">    </span><span style="color: #001080">obj</span>
+<span style="color: #000000">);</span>
+
+<span style="color: #001080">on</span><span style="color: #000000">.</span><span style="color: #795E26">emit</span><span style="color: #000000">(</span><span style="color: #A31515">&quot;test test1 test2&quot;</span><span style="color: #000000">, </span><span style="color: #098658">1</span><span style="color: #000000">, </span><span style="color: #A31515">&quot;true&quot;</span><span style="color: #000000">);</span>
+<span style="color: #001080">console</span><span style="color: #000000">.</span><span style="color: #795E26">log</span><span style="color: #000000">(</span><span style="color: #001080">test</span><span style="color: #000000">); </span><span style="color: #008000">//= [1, &quot;true&quot;]</span>
+<span style="color: #001080">console</span><span style="color: #000000">.</span><span style="color: #795E26">log</span><span style="color: #000000">(</span><span style="color: #001080">counter</span><span style="color: #000000">); </span><span style="color: #008000">//= 3</span>
+
+<span style="color: #008000">// Since event listeners registered using the `once` method can only be emitted once\</span>
+<span style="color: #008000">// The second `emit` actually does nothing</span>
+<span style="color: #001080">on</span><span style="color: #000000">.</span><span style="color: #795E26">emit</span><span style="color: #000000">(</span><span style="color: #A31515">&quot;test test1 test2&quot;</span><span style="color: #000000">, </span><span style="color: #098658">1</span><span style="color: #000000">, </span><span style="color: #A31515">&quot;true&quot;</span><span style="color: #000000">);</span>
+<span style="color: #001080">console</span><span style="color: #000000">.</span><span style="color: #795E26">log</span><span style="color: #000000">(</span><span style="color: #001080">test</span><span style="color: #000000">); </span><span style="color: #008000">//= [1, &quot;true&quot;]</span>
+<span style="color: #001080">console</span><span style="color: #000000">.</span><span style="color: #795E26">log</span><span style="color: #000000">(</span><span style="color: #001080">counter</span><span style="color: #000000">); </span><span style="color: #008000">//= 3</span>
+
+<span style="color: #008000">// The &quot;test&quot; event has no listeners registered since, they have already been removed</span>
+<span style="color: #001080">console</span><span style="color: #000000">.</span><span style="color: #795E26">log</span><span style="color: #000000">(</span><span style="color: #001080">on</span><span style="color: #000000">.</span><span style="color: #795E26">get</span><span style="color: #000000">(</span><span style="color: #A31515">&quot;test&quot;</span><span style="color: #000000">).</span><span style="color: #001080">size</span><span style="color: #000000">) </span><span style="color: #008000">//= 0</span>
+</code></pre>
+					<a href="#contributing" id="contributing" style="color: inherit; text-decoration: none;">
+						<h2>Contributing</h2>
+					</a>
+					<p>If there is something I missed, a mistake, or a feature you would like added please create an issue or a pull request and I&#39;ll try to get to it.</p>
+					<p><em>The <code>native</code> initiative uses <a href="https://www.conventionalcommits.org/en/v1.0.0/">Conventional Commits</a> as the style of commit, we also use the <a href="http://commitizen.github.io/cz-cli/">Commitizen CLI</a> to make commits easier.</em></p>
+					<a href="#licence" id="licence" style="color: inherit; text-decoration: none;">
+						<h2>Licence</h2>
+					</a>
+					<p>See the <a href="./LICENSE">LICENSE</a> file for license rights and limitations (MIT).</p>
+				</div>
+			</section>
+			<section class="tsd-panel-group tsd-index-group">
+				<h2>Index</h2>
+				<section class="tsd-panel tsd-index-panel">
+					<div class="tsd-index-content">
+						<section class="tsd-index-section ">
+							<h3>References</h3>
+							<ul class="tsd-index-list">
+								<li class="tsd-kind-reference tsd-parent-kind-module"><a href="emitter.html#default" class="tsd-kind-icon">default</a></li>
+							</ul>
+						</section>
+						<section class="tsd-index-section ">
+							<h3>Classes</h3>
+							<ul class="tsd-index-list">
+								<li class="tsd-kind-class tsd-parent-kind-module"><a href="../classes/emitter.event.html" class="tsd-kind-icon">Event</a></li>
+								<li class="tsd-kind-class tsd-parent-kind-module"><a href="../classes/emitter.eventemitter.html" class="tsd-kind-icon">Event<wbr>Emitter</a></li>
+							</ul>
+						</section>
+						<section class="tsd-index-section ">
+							<h3>Interfaces</h3>
+							<ul class="tsd-index-list">
+								<li class="tsd-kind-interface tsd-parent-kind-module"><a href="../interfaces/emitter.ilistener.html" class="tsd-kind-icon">IListener</a></li>
+							</ul>
+						</section>
+						<section class="tsd-index-section ">
+							<h3>Type aliases</h3>
+							<ul class="tsd-index-list">
+								<li class="tsd-kind-type-alias tsd-parent-kind-module"><a href="emitter.html#typeeventinput" class="tsd-kind-icon">Type<wbr>Event<wbr>Input</a></li>
+								<li class="tsd-kind-type-alias tsd-parent-kind-module"><a href="emitter.html#typelistenercallback" class="tsd-kind-icon">Type<wbr>Listener<wbr>Callback</a></li>
+							</ul>
+						</section>
+						<section class="tsd-index-section ">
+							<h3>Functions</h3>
+							<ul class="tsd-index-list">
+								<li class="tsd-kind-function tsd-parent-kind-module"><a href="emitter.html#newlistener" class="tsd-kind-icon">new<wbr>Listener</a></li>
+							</ul>
+						</section>
+					</div>
+				</section>
+			</section>
+			<section class="tsd-panel-group tsd-member-group ">
+				<h2>References</h2>
+				<section class="tsd-panel tsd-member tsd-kind-reference tsd-parent-kind-module">
+					<a name="default" class="tsd-anchor"></a>
+					<h3>default</h3>
+					Renames and exports <a href="../classes/emitter.eventemitter.html">EventEmitter</a>
+				</section>
+			</section>
+			<section class="tsd-panel-group tsd-member-group ">
+				<h2>Type aliases</h2>
+				<section class="tsd-panel tsd-member tsd-kind-type-alias tsd-parent-kind-module">
+					<a name="typeeventinput" class="tsd-anchor"></a>
+					<h3>Type<wbr>Event<wbr>Input</h3>
+					<div class="tsd-signature tsd-kind-icon">Type<wbr>Event<wbr>Input<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">object</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">[]</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/okikio/native/blob/859cc92/packages/emitter/src/api.ts#L37">emitter/src/api.ts:37</a></li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>The types of values <code>EventEmitter.prototype.on(...), EventEmitter.prototype.once(...), and EventEmitter.prototype.off(...)</code> accept</p>
+						</div>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-type-alias tsd-parent-kind-module">
+					<a name="typelistenercallback" class="tsd-anchor"></a>
+					<h3>Type<wbr>Listener<wbr>Callback</h3>
+					<div class="tsd-signature tsd-kind-icon">Type<wbr>Listener<wbr>Callback<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">...</span>args<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">void</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/okikio/native/blob/859cc92/packages/emitter/src/api.ts#L6">emitter/src/api.ts:6</a></li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>Represents a listener callback function</p>
+						</div>
+					</div>
+					<div class="tsd-type-declaration">
+						<h4>Type declaration</h4>
+						<ul class="tsd-parameters">
+							<li class="tsd-parameter-signature">
+								<ul class="tsd-signatures tsd-kind-type-literal tsd-parent-kind-type-alias">
+									<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">...</span>args<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+								</ul>
+								<ul class="tsd-descriptions">
+									<li class="tsd-description">
+										<h4 class="tsd-parameters-title">Parameters</h4>
+										<ul class="tsd-parameters">
+											<li>
+												<h5><span class="tsd-flag ts-flagRest">Rest</span> <span class="tsd-signature-symbol">...</span>args: <span class="tsd-signature-type">any</span></h5>
+											</li>
+										</ul>
+										<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+									</li>
+								</ul>
+							</li>
+						</ul>
+					</div>
+				</section>
+			</section>
+			<section class="tsd-panel-group tsd-member-group ">
+				<h2>Functions</h2>
+				<section class="tsd-panel tsd-member tsd-kind-function tsd-parent-kind-module">
+					<a name="newlistener" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagConst">Const</span> new<wbr>Listener</h3>
+					<ul class="tsd-signatures tsd-kind-function tsd-parent-kind-module">
+						<li class="tsd-signature tsd-kind-icon">new<wbr>Listener<span class="tsd-signature-symbol">(</span>__namedParameters<span class="tsd-signature-symbol">: </span><a href="../interfaces/emitter.ilistener.html" class="tsd-signature-type" data-tsd-kind="Interface">IListener</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="../interfaces/emitter.ilistener.html" class="tsd-signature-type" data-tsd-kind="Interface">IListener</a></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/okikio/native/blob/859cc92/packages/emitter/src/api.ts#L18">emitter/src/api.ts:18</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Creates a new listener based on <a href="../interfaces/emitter.ilistener.html">IListener</a></p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>__namedParameters: <a href="../interfaces/emitter.ilistener.html" class="tsd-signature-type" data-tsd-kind="Interface">IListener</a></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <a href="../interfaces/emitter.ilistener.html" class="tsd-signature-type" data-tsd-kind="Interface">IListener</a></h4>
+						</li>
+					</ul>
+				</section>
+			</section>
+		</div>
+		<div class="col-4 col-menu menu-sticky-wrap menu-highlight">
+			<nav class="tsd-navigation primary">
+				<ul>
+					<li class=" ">
+						<a href="../index.html">Modules</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="animate.html">animate</a>
+					</li>
+					<li class="current tsd-kind-module">
+						<a href="emitter.html">emitter</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="manager.html">manager</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="native.html">native</a>
+					</li>
+				</ul>
+			</nav>
+			<nav class="tsd-navigation secondary menu-sticky">
+				<ul class="before-current">
+					<li class=" tsd-kind-module">
+						<a href="animate.html" class="tsd-kind-icon">animate</a>
+					</li>
+				</ul>
+				<ul class="current">
+					<li class="current tsd-kind-module">
+						<a href="emitter.html" class="tsd-kind-icon">emitter</a>
+						<ul>
+							<li class=" tsd-kind-reference tsd-parent-kind-module">
+								<a href="emitter.html#default" class="tsd-kind-icon">default</a>
+							</li>
+							<li class=" tsd-kind-class tsd-parent-kind-module">
+								<a href="../classes/emitter.event.html" class="tsd-kind-icon">Event</a>
+							</li>
+							<li class=" tsd-kind-class tsd-parent-kind-module">
+								<a href="../classes/emitter.eventemitter.html" class="tsd-kind-icon">Event<wbr>Emitter</a>
+							</li>
+							<li class=" tsd-kind-interface tsd-parent-kind-module">
+								<a href="../interfaces/emitter.ilistener.html" class="tsd-kind-icon">IListener</a>
+							</li>
+							<li class=" tsd-kind-type-alias tsd-parent-kind-module">
+								<a href="emitter.html#typeeventinput" class="tsd-kind-icon">Type<wbr>Event<wbr>Input</a>
+							</li>
+							<li class=" tsd-kind-type-alias tsd-parent-kind-module">
+								<a href="emitter.html#typelistenercallback" class="tsd-kind-icon">Type<wbr>Listener<wbr>Callback</a>
+							</li>
+							<li class=" tsd-kind-function tsd-parent-kind-module">
+								<a href="emitter.html#newlistener" class="tsd-kind-icon">new<wbr>Listener</a>
+							</li>
+						</ul>
+					</li>
+				</ul>
+				<ul class="after-current">
+					<li class=" tsd-kind-module">
+						<a href="manager.html" class="tsd-kind-icon">manager</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="native.html" class="tsd-kind-icon">native</a>
+					</li>
+				</ul>
+			</nav>
+		</div>
+	</div>
+</div>
+<footer class="with-border-bottom">
+	<div class="container">
+		<h2>Legend</h2>
+		<div class="tsd-legend-group">
+			<ul class="tsd-legend">
+				<li class="tsd-kind-variable"><span class="tsd-kind-icon">Variable</span></li>
+				<li class="tsd-kind-function"><span class="tsd-kind-icon">Function</span></li>
+				<li class="tsd-kind-type-alias"><span class="tsd-kind-icon">Type alias</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-class"><span class="tsd-kind-icon">Class</span></li>
+				<li class="tsd-kind-class tsd-has-type-parameter"><span class="tsd-kind-icon">Class with type parameter</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-interface"><span class="tsd-kind-icon">Interface</span></li>
+			</ul>
+		</div>
+	</div>
+</footer>
+<div class="container tsd-generator">
+	<p>Generated using <a href="https://typedoc.org/" target="_blank">TypeDoc</a></p>
+</div>
+<div class="overlay"></div>
+<script src="../assets/js/main.js"></script>
+</body>
+</html>

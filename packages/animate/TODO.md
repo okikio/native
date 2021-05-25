@@ -2,13 +2,13 @@
 
 * [x] Update README.md
 * [x] Create TODO.md
-* [ ] Add the `.is("...state")` method for testing states, e.g. running, paused 
-* [ ] Use Cypress to automate Demo tests 
-* [ ] Add Timeline Class and methods
+* [x] Add the `.is("...state")` method for testing states, e.g. running, paused
+* [ ] Use Cypress/Playwright to automate Demo tests
 * [ ] Support events before, after, and during loop
 * [ ] Fix inconsistencies with Web Animation API
 * [ ] Make smaller and faster
 * [ ] Automatically commitStyles
-* [ ] Support non array values / ending values in animation properties
+* [x] Support non array values / ending values in animation properties
 * [ ] Create more advanced tests
 * [ ] Support advanced SVG properties
+* [ ] Add a `remove` target method

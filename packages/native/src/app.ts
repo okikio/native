@@ -1,24 +1,21 @@
-import { EventEmitter, ListenerCallback, EventInput } from "./emitter";
+import { EventEmitter, TypeEventInput } from "@okikio/emitter";
 import { ServiceManager, Service } from "./service";
-import { newConfig, ICONFIG, getConfig } from "./config";
+import { newConfig, ICONFIG } from "./config";
+import { ITransitionData } from "./transition";
+import { StateEvent } from "./pjax";
 
-export interface IApp {
-    services: ServiceManager,
-    emitter: EventEmitter,
-    config: ICONFIG,
-    register(config: ICONFIG): App,
-    get(key: string): Service,
-    set(key: string, service: Service): App,
-    add(value: Service): App,
-    boot(): App,
-    stop(): App,
-    on(events: EventInput, callback?: ListenerCallback): App,
-    off(events: EventInput, callback?: ListenerCallback): App,
-    emit(events: string | any[], ...args: any): App,
-}
+export interface IApp extends App { }
+
+export type TypeAllEvents = "REQUEST_ERROR" | "TIMEOUT_ERROR" | "ANCHOR_HOVER" | "HOVER" | "ANCHOR_CLICK" | "CLICK" | "PREFETCH" | "POPSTATE" | "POPSTATE_BACK" | "POPSTATE_FORWARD" | "HISTORY_NEW_ITEM" | "GO" | "NAVIGATION_START" | "PAGE_LOADING" | "PAGE_LOAD_COMPLETE" | "NAVIGATION_END" | "TRANSITION_START" | "TRANSITION_END" | "BEFORE_TRANSITION_OUT" | "AFTER_TRANSITION_OUT" | "CONTENT_INSERT" | "CONTENT_REPLACED" | "BEFORE_TRANSITION_IN" | "AFTER_TRANSITION_IN" | "READY" | "ready" | "SCROLL" | "scroll" | "RESIZE" | "resize";
+
+export type TypeEmitArgs = (
+    (ITransitionData & { oldHref: string, href: string, transitionName: string })
+    | StateEvent | Error | void | any
+)[];
+export type TypeAppListenerCallback = (...args: TypeEmitArgs) => void;
 
 /** The App class starts the entire process, it controls all managers and all services */
-export class App implements IApp {
+export class App {
     /** An instance of the ServiceManager */
     public services: ServiceManager;
 
@@ -28,9 +25,9 @@ export class App implements IApp {
     /** The current Configuration's for the App */
     public config: ICONFIG;
 
-    private canResize = true;
-    private canScroll = true;
-    constructor(config: object = {}) {
+    protected canResize = true;
+    protected canScroll = true;
+    constructor(config: ICONFIG = {}) {
         this._resize = this._resize.bind(this);
         this._scroll = this._scroll.bind(this);
         this._ready = this._ready.bind(this);
@@ -42,21 +39,16 @@ export class App implements IApp {
         this.config = newConfig(config);
         this.emitter = new EventEmitter();
         this.services = new ServiceManager(this);
-
-        document.addEventListener("DOMContentLoaded", this._ready);
-        window.addEventListener("load", this._ready);
-        window.addEventListener("resize", this._resize, { passive: true });
-        window.addEventListener("scroll", this._scroll, { passive: true });
         return this;
     }
 
-    private _ready() {
+    protected _ready() {
         document.removeEventListener("DOMContentLoaded", this._ready);
         window.removeEventListener("load", this._ready);
         this.emitter.emit("READY ready");
     }
 
-    private _resize() {
+    protected _resize() {
         if (this.canResize) {
             let timer: number | void, raf: number | void;
             this.canResize = false;
@@ -68,12 +60,12 @@ export class App implements IApp {
                     this.canResize = true;
                     timer = window.clearTimeout(timer as number);
                     raf = window.cancelAnimationFrame(raf as number);
-                }, getConfig(this.config, "resizeDelay"));
+                }, this.config.resizeDelay);
             });
         }
     }
 
-    private _scroll() {
+    protected _scroll() {
         if (this.canScroll) {
             let raf: number | void;
             this.canScroll = false;
@@ -86,16 +78,18 @@ export class App implements IApp {
         }
     }
 
-    /** Shortcuts to adding, setting, and getting Services */
+    /** Shortcuts for getting Services */
     public get(key: string): Service {
         return this.services.get(key);
     }
 
+    /** Shortcuts for setting Services */
     public set(key: string, value: Service): App {
         this.services.set(key, value);
         return this;
     }
 
+    /** Shortcuts for adding Services */
     public add(value: Service): App {
         this.services.add(value);
         return this;
@@ -103,6 +97,12 @@ export class App implements IApp {
 
     /** Initialize and boot all Services */
     public boot(): App {
+        document.addEventListener("DOMContentLoaded", this._ready);
+        window.addEventListener("load", this._ready);
+
+        window.addEventListener("resize", this._resize, { passive: true });
+        window.addEventListener("scroll", this._scroll, { passive: true });
+
         this.services.init();
         this.services.boot();
         return this;
@@ -110,23 +110,28 @@ export class App implements IApp {
 
     /** Stops all Services and clears the even emitter of all events and listeners */
     public stop(): App {
+        window.removeEventListener("resize", this._resize);
+        window.removeEventListener("scroll", this._scroll);
+
         this.services.stop();
         this.emitter.clear();
         return this;
     }
 
-    /** Shortcuts to the App EventEmitter on, off, and emit methods */
-    public on(events: EventInput, callback?: ListenerCallback): App {
+    /** Shortcuts to the App EventEmitter on method */
+    public on(events: TypeAllEvents | TypeEventInput, callback?: TypeAppListenerCallback): App {
         this.emitter.on(events, callback, this);
         return this;
     }
 
-    public off(events: EventInput, callback?: ListenerCallback): App {
+    /** Shortcuts to the App EventEmitter off method */
+    public off(events: TypeAllEvents | TypeEventInput, callback?: TypeAppListenerCallback): App {
         this.emitter.off(events, callback, this);
         return this;
     }
 
-    public emit(events: string | any[], ...args: any): App {
+    /** Shortcuts to the App EventEmitter emit method */
+    public emit(events: TypeAllEvents | string | string[], ...args: TypeEmitArgs): App {
         this.emitter.emit(events, ...args);
         return this;
     }

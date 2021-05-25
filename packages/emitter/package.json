@@ -1,7 +1,8 @@
 {
     "name": "@okikio/emitter",
-    "version": "2.0.4",
+    "version": "2.1.0",
     "type": "module",
+    "sideEffects": false,
     "description": "A small Event Emitter written in typescript with performance and ease of use in mind.",
     "publishConfig": {
         "access": "public",
@@ -58,7 +59,7 @@
     "bugs": {
         "url": "https://github.com/okikio/native/issues"
     },
-    "homepage": "https://github.com/okikio/native/packages/emitter#readme",
+    "homepage": "https://github.com/okikio/native/tree/master/packages/emitter#readme",
     "dependencies": {
         "@okikio/manager": "workspace:*"
     },

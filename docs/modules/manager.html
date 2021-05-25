@@ -1,0 +1,571 @@
+<!doctype html>
+<html class="default no-js">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>manager | native</title>
+	<meta name="description" content="Documentation for native">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="../assets/css/main.css">
+	<script async src="../assets/js/search.js" id="search-script"></script>
+</head>
+<body>
+<header>
+	<div class="tsd-page-toolbar">
+		<div class="container">
+			<div class="table-wrap">
+				<div class="table-cell" id="tsd-search" data-index="../assets/js/search.json" data-base="..">
+					<div class="field">
+						<label for="tsd-search-field" class="tsd-widget search no-caption">Search</label>
+						<input id="tsd-search-field" type="text" />
+					</div>
+					<ul class="results">
+						<li class="state loading">Preparing search index...</li>
+						<li class="state failure">The search index is not available</li>
+					</ul>
+					<a href="../index.html" class="title">native</a>
+				</div>
+				<div class="table-cell" id="tsd-widgets">
+					<div id="tsd-filter">
+						<a href="#" class="tsd-widget options no-caption" data-toggle="options">Options</a>
+						<div class="tsd-filter-group">
+							<div class="tsd-select" id="tsd-filter-visibility">
+								<span class="tsd-select-label">All</span>
+								<ul class="tsd-select-list">
+									<li data-value="public">Public</li>
+									<li data-value="protected">Public/Protected</li>
+									<li data-value="private" class="selected">All</li>
+								</ul>
+							</div>
+							<input type="checkbox" id="tsd-filter-inherited" checked />
+							<label class="tsd-widget" for="tsd-filter-inherited">Inherited</label>
+							<input type="checkbox" id="tsd-filter-externals" checked />
+							<label class="tsd-widget" for="tsd-filter-externals">Externals</label>
+						</div>
+					</div>
+					<a href="#" class="tsd-widget menu no-caption" data-toggle="menu">Menu</a>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="tsd-page-title">
+		<div class="container">
+			<ul class="tsd-breadcrumb">
+				<li>
+					<a href="../index.html">native</a>
+				</li>
+				<li>
+					<a href="manager.html">manager</a>
+				</li>
+			</ul>
+			<h1>Module manager</h1>
+		</div>
+	</div>
+</header>
+<div class="container container-main">
+	<div class="row">
+		<div class="col-8 col-content">
+			<section class="tsd-panel tsd-comment">
+				<div class="tsd-comment tsd-typography">
+					<a href="#okikiomanager" id="okikiomanager" style="color: inherit; text-decoration: none;">
+						<h1>@okikio/manager</h1>
+					</a>
+					<p>A superset of the Map class, it extends the Map classes capabilities with awesome new features; it weighs <strong>~361 B</strong> (minified and gzipped).</p>
+					<p><em>You will need a Map and Promise polyfill for older browsers. If you install <code>@okikio/manager</code> via <a href="https://www.npmjs.com/package/@okikio/manager">npm</a> you are most likely going to need <a href="https://rollupjs.org/">rollup</a> or <a href="https://esbuild.github.io/">esbuild</a>. You can use <a href="https://polyfill.io/">polyfill.io</a>, or another source to create a polyfill. The minimum feature requirement for a polyfill are Maps and Promises e.g. <a href="https://cdn.polyfill.io/v3/polyfill.min.js?features=Maps,Promise">https://cdn.polyfill.io/v3/polyfill.min.js?features=Maps,Promise</a>.</em></p>
+					<p>You can try out <code>@okikio/manager</code> using Gitpod:</p>
+					<p><a href="https://gitpod.io/#https://github.com/okikio/native/blob/master/packages/manager/README.md"><img src="https://gitpod.io/button/open-in-gitpod.svg" alt="Open In Gitpod"></a></p>
+					<p>By default Gitpod will start the dev script for you, but if you need to restart the dev script you can do so by typing into the terminal.</p>
+					<pre><code class="language-bash"><span style="color: #000000">pnpm test-dev --filter </span><span style="color: #A31515">&quot;@okikio/manager&quot;</span>
+</code></pre>
+					<p>Once Gitpod has booted up, go to <a href="./tests/test.ts">./tests/test.ts</a> and start tweaking and testing to your hearts content.</p>
+					<a href="#table-of-contents" id="table-of-contents" style="color: inherit; text-decoration: none;">
+						<h2>Table of Contents</h2>
+					</a>
+					<ul>
+						<li><a href="#okikiomanager">@okikio/manager</a><ul>
+								<li><a href="#table-of-contents">Table of Contents</a></li>
+								<li><a href="#installation">Installation</a></li>
+								<li><a href="#getting-started">Getting started</a><ul>
+										<li><a href="#api-documentation">API Documentation</a></li>
+									</ul>
+								</li>
+								<li><a href="#api">API</a><ul>
+										<li><a href="#existing-map-methods">Existing Map Methods</a></li>
+										<li><a href="#managerlength">Manager#length</a></li>
+										<li><a href="#managergetmap">Manager#getMap()</a></li>
+										<li><a href="#manageraddvalue">Manager#add(value)</a></li>
+										<li><a href="#managerremovekey">Manager#remove(key)</a></li>
+										<li><a href="#managerkeys">Manager#keys()</a></li>
+										<li><a href="#managervalues">Manager#values()</a></li>
+										<li><a href="#managerlastdistance">Manager#last(distance)</a></li>
+										<li><a href="#manageriterator">Manager#@@iterator</a></li>
+										<li><a href="#methodcallmethod-">#methodCall(method, ...)</a></li>
+										<li><a href="#asyncmethodcallmethod-">#asyncMethodCall(method, ...)</a></li>
+									</ul>
+								</li>
+								<li><a href="#contributing">Contributing</a></li>
+								<li><a href="#licence">Licence</a></li>
+							</ul>
+						</li>
+					</ul>
+					<a href="#installation" id="installation" style="color: inherit; text-decoration: none;">
+						<h2>Installation</h2>
+					</a>
+					<p>You can install <a href="https://www.skypack.dev/view/@okikio/manager">@okikio/manager</a> from <a href="https://www.npmjs.com/package/@okikio/manager">npm</a> via <code>npm i @okikio/manager</code>, <code>pnpm i @okikio/animate</code> or <code>yarn add @okikio/manager</code>.</p>
+					<p>You can use <code>@okikio/manager</code> on the web via:</p>
+					<ul>
+						<li><a href="https://unpkg.com/@okikio/manager/lib/api.es.js">https://unpkg.com/@okikio/manager/lib/api.es.js</a>,</li>
+						<li><a href="https://cdn.skypack.dev/@okikio/manager">https://cdn.skypack.dev/@okikio/manager</a> or</li>
+						<li><a href="https://cdn.jsdelivr.net/npm/@okikio/manager/lib/api.es.js">https://cdn.jsdelivr.net/npm/@okikio/manager/lib/api.es.js</a>.</li>
+					</ul>
+					<p>Once installed it can be used like this:</p>
+					<pre><code class="language-typescript"><span style="color: #AF00DB">import</span><span style="color: #000000"> { </span><span style="color: #001080">Manager</span><span style="color: #000000"> } </span><span style="color: #AF00DB">from</span><span style="color: #000000"> </span><span style="color: #A31515">&quot;@okikio/manager&quot;</span><span style="color: #000000">;</span>
+<span style="color: #AF00DB">import</span><span style="color: #000000"> { </span><span style="color: #001080">Manager</span><span style="color: #000000"> } </span><span style="color: #AF00DB">from</span><span style="color: #000000"> </span><span style="color: #A31515">&quot;https://unpkg.com/@okikio/manager/lib/api.es.js&quot;</span><span style="color: #000000">;</span>
+<span style="color: #AF00DB">import</span><span style="color: #000000"> { </span><span style="color: #001080">Manager</span><span style="color: #000000"> } </span><span style="color: #AF00DB">from</span><span style="color: #000000"> </span><span style="color: #A31515">&quot;https://cdn.jsdelivr.net/npm/@okikio/manager/lib/api.es.js&quot;</span><span style="color: #000000">;</span>
+<span style="color: #008000">// Or</span>
+<span style="color: #AF00DB">import</span><span style="color: #000000"> { </span><span style="color: #001080">Manager</span><span style="color: #000000"> } </span><span style="color: #AF00DB">from</span><span style="color: #000000"> </span><span style="color: #A31515">&quot;https://cdn.skypack.dev/@okikio/manager&quot;</span><span style="color: #000000">;</span>
+
+<span style="color: #008000">// Via script tag</span>
+<span style="color: #000000">&lt;</span><span style="color: #001080">script</span><span style="color: #000000"> </span><span style="color: #001080">src</span><span style="color: #000000">=</span><span style="color: #A31515">&quot;https://unpkg.com/@okikio/manager/lib/api.js&quot;</span><span style="color: #000000">&gt;&lt;/</span><span style="color: #267F99">script</span><span style="color: #000000">&gt;</span>
+<span style="color: #008000">// Do note, on the web you need to do this, if you installed it via the script tag:</span>
+<span style="color: #0000FF">const</span><span style="color: #000000"> { </span><span style="color: #0070C1">Manager</span><span style="color: #000000">, </span><span style="color: #0070C1">methodCall</span><span style="color: #000000"> } = </span><span style="color: #001080">window</span><span style="color: #000000">.</span><span style="color: #001080">manager</span><span style="color: #000000">;</span>
+<span style="color: #008000">// or</span>
+<span style="color: #0000FF">const</span><span style="color: #000000"> { </span><span style="color: #001080">default</span><span style="color: #000000">: </span><span style="color: #0070C1">Manager</span><span style="color: #000000">, </span><span style="color: #0070C1">methodCall</span><span style="color: #000000"> } = </span><span style="color: #001080">window</span><span style="color: #000000">.</span><span style="color: #001080">manager</span><span style="color: #000000">;</span>
+</code></pre>
+					<a href="#getting-started" id="getting-started" style="color: inherit; text-decoration: none;">
+						<h2>Getting started</h2>
+					</a>
+					<p>The <code>Manager</code> class makes Maps easier to use, as well as adding 7 methods, <strong>getMap</strong>, <strong>last</strong>, <strong>methodCall</strong>, <strong>asyncMethodCall</strong>, <strong>add</strong>, <strong>remove</strong>, <strong>keys</strong> and <strong>values</strong>, (<strong>methodCall</strong>, and <strong>asyncMethodCall</strong> are seperate methods from the <code>Manager</code> class, so treeshaking can get rid of them if they aren&#39;t need).</p>
+					<p><em><strong>Note</strong>: the behavior of the keys and values methods are slightly modified, to return an Array of keys/values instead of an iterator. You can get the keys and values original effects by using <code>.getMap().keys()</code> or <code>.getMap().values()</code>.</em></p>
+					<a href="#api-documentation" id="api-documentation" style="color: inherit; text-decoration: none;">
+						<h3>API Documentation</h3>
+					</a>
+					<p>You can also go through the <a href="https://okikio.github.io/native/docs/modules/manager.html">API documentation</a>, for a more detailed documentation of the API.</p>
+					<a href="#api" id="api" style="color: inherit; text-decoration: none;">
+						<h2>API</h2>
+					</a>
+					<a href="#existing-map-methods" id="existing-map-methods" style="color: inherit; text-decoration: none;">
+						<h3>Existing Map Methods</h3>
+					</a>
+					<p><code>Manager.prototype.get(key: K): V</code></p>
+					<p>Returns a specified element from a Map object. If the value that is associated to the provided key is an object, then you will get a reference to that object and any change made to that object will effectively modify it inside the Map object.</p>
+					<p><code>Manager.prototype.set(value: V): Manager</code></p>
+					<p>Adds or updates an element with a specified key and a value to a Map object. Returns the Manager class (it is chainable).</p>
+					<p><em><strong>Note</strong>: techincally the values being returned are different from a normal Map. The Map <code>.set()</code> method returns the Map class while the <code>Manager</code> <code>.set()</code> method return the <code>Manager</code> class, this shouldn&#39;t leave much of an effect on use, but should be kept in mind.</em></p>
+					<p><code>Manager.prototype.size: number</code></p>
+					<p>Returns the number of elements in a Map object.</p>
+					<p><code>Manager.prototype.delete(key: K): boolean</code></p>
+					<p>Removes the specified element from a Map object by key. Returns true if an element in the Map object existed and has been removed, or false if the element does not exist.</p>
+					<p><code>Manager.prototype.entries(): [[K, V], ...]</code></p>
+					<p>Returns a new Iterator object that contains the [key, value] pairs for each element in the Map object in insertion order.</p>
+					<p><code>Manager.prototype.has(): boolean</code></p>
+					<p>Returns a boolean indicating whether an element with the specified key exists or not, true if an element with the specified key exists in the Map object; otherwise false.</p>
+					<p><code>Manager.prototype.forEach(callback: Function,context?: object): Manager</code></p>
+					<p>Executes a provided function once per each key/value pair in the Map object, in insertion order. Returns the <code>Manager</code> class (it is chainable).</p>
+					<a href="#managerlength" id="managerlength" style="color: inherit; text-decoration: none;">
+						<h3>Manager#length</h3>
+					</a>
+					<pre><code class="language-ts"><span style="color: #267F99">Manager</span><span style="color: #000000">.</span><span style="color: #001080">prototype</span><span style="color: #000000">.</span><span style="color: #001080">length</span>
+
+<span style="color: #008000">/**</span>
+<span style="color: #008000"> * Returns the total number of items stored in the Manager, an alias to Manger.prototype.size</span>
+<span style="color: #008000"> *</span>
+<span style="color: #008000"> * </span><span style="color: #0000FF">@public</span>
+<span style="color: #008000"> * </span><span style="color: #0000FF">@returns</span><span style="color: #008000"> Number</span>
+<span style="color: #008000"> */</span>
+
+<span style="color: #008000">// Example:</span>
+<span style="color: #AF00DB">import</span><span style="color: #000000"> </span><span style="color: #001080">Manager</span><span style="color: #000000"> </span><span style="color: #AF00DB">from</span><span style="color: #000000"> </span><span style="color: #A31515">&quot;@okikio/manager&quot;</span><span style="color: #000000">;</span>
+
+<span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">arr</span><span style="color: #000000"> = </span><span style="color: #267F99">Array</span><span style="color: #000000">.</span><span style="color: #795E26">from</span><span style="color: #000000">([</span><span style="color: #098658">1</span><span style="color: #000000">, </span><span style="color: #098658">2</span><span style="color: #000000">, </span><span style="color: #098658">3</span><span style="color: #000000">, </span><span style="color: #098658">4</span><span style="color: #000000">, </span><span style="color: #098658">5</span><span style="color: #000000">].</span><span style="color: #795E26">entries</span><span style="color: #000000">());</span>
+<span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">manager</span><span style="color: #000000"> = </span><span style="color: #0000FF">new</span><span style="color: #000000"> </span><span style="color: #795E26">Manager</span><span style="color: #000000">(</span><span style="color: #001080">arr</span><span style="color: #000000">);</span>
+<span style="color: #001080">console</span><span style="color: #000000">.</span><span style="color: #795E26">log</span><span style="color: #000000">(</span><span style="color: #001080">manager</span><span style="color: #000000">.</span><span style="color: #001080">length</span><span style="color: #000000">); </span><span style="color: #008000">//= 5</span>
+</code></pre>
+					<a href="#managergetmap" id="managergetmap" style="color: inherit; text-decoration: none;">
+						<h3>Manager#getMap()</h3>
+					</a>
+					<pre><code class="language-ts"><span style="color: #267F99">Manager</span><span style="color: #000000">.</span><span style="color: #001080">prototype</span><span style="color: #000000">.</span><span style="color: #795E26">getMap</span><span style="color: #000000">();</span>
+
+<span style="color: #008000">/**</span>
+<span style="color: #008000"> * Returns the Manager class as a Map</span>
+<span style="color: #008000"> *</span>
+<span style="color: #008000"> * </span><span style="color: #0000FF">@returns</span><span style="color: #008000"> Map&lt;K, V&gt;</span>
+<span style="color: #008000"> * </span><span style="color: #0000FF">@memberof</span><span style="color: #008000"> </span><span style="color: #267F99">Manager</span>
+<span style="color: #008000"> */</span>
+
+<span style="color: #008000">// Example:</span>
+<span style="color: #AF00DB">import</span><span style="color: #000000"> </span><span style="color: #001080">Manager</span><span style="color: #000000"> </span><span style="color: #AF00DB">from</span><span style="color: #000000"> </span><span style="color: #A31515">&quot;@okikio/manager&quot;</span><span style="color: #000000">;</span>
+
+<span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">arr</span><span style="color: #000000"> = </span><span style="color: #267F99">Array</span><span style="color: #000000">.</span><span style="color: #795E26">from</span><span style="color: #000000">([</span><span style="color: #098658">1</span><span style="color: #000000">, </span><span style="color: #098658">2</span><span style="color: #000000">, </span><span style="color: #098658">3</span><span style="color: #000000">, </span><span style="color: #098658">4</span><span style="color: #000000">, </span><span style="color: #098658">5</span><span style="color: #000000">].</span><span style="color: #795E26">entries</span><span style="color: #000000">());</span>
+<span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">manager</span><span style="color: #000000"> = </span><span style="color: #0000FF">new</span><span style="color: #000000"> </span><span style="color: #795E26">Manager</span><span style="color: #000000">(</span><span style="color: #001080">arr</span><span style="color: #000000">);</span>
+<span style="color: #001080">console</span><span style="color: #000000">.</span><span style="color: #795E26">log</span><span style="color: #000000">(</span><span style="color: #001080">manager</span><span style="color: #000000">.</span><span style="color: #795E26">getMap</span><span style="color: #000000">()); </span><span style="color: #008000">//= Map(5) { 0 =&gt; 1, 1 =&gt; 2, 2 =&gt; 3, 3 =&gt; 4, 4 =&gt; 5 }</span>
+</code></pre>
+					<a href="#manageraddvalue" id="manageraddvalue" style="color: inherit; text-decoration: none;">
+						<h3>Manager#add(value)</h3>
+					</a>
+					<pre><code class="language-ts"><span style="color: #267F99">Manager</span><span style="color: #000000">.</span><span style="color: #001080">prototype</span><span style="color: #000000">.</span><span style="color: #795E26">add</span><span style="color: #000000">(</span><span style="color: #001080">value</span><span style="color: #000000">: </span><span style="color: #0070C1">V</span><span style="color: #000000">);</span>
+
+<span style="color: #008000">/**</span>
+<span style="color: #008000"> * Adds a value to Manager, and uses the current size of the Manager as it&#039;s key, it works best when all the keys in the Manager are numbers</span>
+<span style="color: #008000"> *</span>
+<span style="color: #008000"> * </span><span style="color: #0000FF">@param</span><span style="color: #008000">  </span><span style="color: #267F99">{V}</span><span style="color: #008000"> </span><span style="color: #001080">value</span>
+<span style="color: #008000"> * </span><span style="color: #0000FF">@returns</span><span style="color: #008000"> Manager&lt;K, V&gt;</span>
+<span style="color: #008000"> */</span>
+
+<span style="color: #008000">// Example:</span>
+<span style="color: #AF00DB">import</span><span style="color: #000000"> </span><span style="color: #001080">Manager</span><span style="color: #000000"> </span><span style="color: #AF00DB">from</span><span style="color: #000000"> </span><span style="color: #A31515">&quot;@okikio/manager&quot;</span><span style="color: #000000">;</span>
+
+<span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">arr</span><span style="color: #000000"> = </span><span style="color: #267F99">Array</span><span style="color: #000000">.</span><span style="color: #795E26">from</span><span style="color: #000000">([</span><span style="color: #098658">1</span><span style="color: #000000">, </span><span style="color: #098658">2</span><span style="color: #000000">, </span><span style="color: #098658">3</span><span style="color: #000000">, </span><span style="color: #098658">4</span><span style="color: #000000">, </span><span style="color: #098658">5</span><span style="color: #000000">].</span><span style="color: #795E26">entries</span><span style="color: #000000">());</span>
+<span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">manager</span><span style="color: #000000"> = </span><span style="color: #0000FF">new</span><span style="color: #000000"> </span><span style="color: #795E26">Manager</span><span style="color: #000000">(</span><span style="color: #001080">arr</span><span style="color: #000000">);</span>
+<span style="color: #001080">manager</span><span style="color: #000000">.</span><span style="color: #795E26">add</span><span style="color: #000000">(</span><span style="color: #098658">6</span><span style="color: #000000">).</span><span style="color: #795E26">add</span><span style="color: #000000">(</span><span style="color: #098658">7</span><span style="color: #000000">);</span>
+<span style="color: #001080">console</span><span style="color: #000000">.</span><span style="color: #795E26">log</span><span style="color: #000000">(</span><span style="color: #001080">manager</span><span style="color: #000000">.</span><span style="color: #795E26">get</span><span style="color: #000000">(</span><span style="color: #098658">5</span><span style="color: #000000">)); </span><span style="color: #008000">//= 6</span>
+</code></pre>
+					<a href="#managerremovekey" id="managerremovekey" style="color: inherit; text-decoration: none;">
+						<h3>Manager#remove(key)</h3>
+					</a>
+					<pre><code class="language-ts"><span style="color: #267F99">Manager</span><span style="color: #000000">.</span><span style="color: #001080">prototype</span><span style="color: #000000">.</span><span style="color: #795E26">remove</span><span style="color: #000000">(</span><span style="color: #001080">key</span><span style="color: #000000">: </span><span style="color: #0070C1">K</span><span style="color: #000000">);</span>
+
+<span style="color: #008000">/**</span>
+<span style="color: #008000"> * Removes a value stored in the Manager, via the key, returns the Manager class, allowing for chains</span>
+<span style="color: #008000"> * Similar to `Manager.prototype.delete`, except it is chainable, and returns the Manager class.</span>
+<span style="color: #008000"> *</span>
+<span style="color: #008000"> * </span><span style="color: #0000FF">@public</span>
+<span style="color: #008000"> * </span><span style="color: #0000FF">@param</span><span style="color: #008000">  </span><span style="color: #267F99">{K}</span><span style="color: #008000"> </span><span style="color: #001080">key</span><span style="color: #008000"> - The key for the key value pair to be removed</span>
+<span style="color: #008000"> * </span><span style="color: #0000FF">@returns</span><span style="color: #008000"> Manager&lt;K, V&gt;</span>
+<span style="color: #008000"> */</span>
+
+<span style="color: #008000">// Example:</span>
+<span style="color: #AF00DB">import</span><span style="color: #000000"> </span><span style="color: #001080">Manager</span><span style="color: #000000"> </span><span style="color: #AF00DB">from</span><span style="color: #000000"> </span><span style="color: #A31515">&quot;@okikio/manager&quot;</span><span style="color: #000000">;</span>
+
+<span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">arr</span><span style="color: #000000"> = </span><span style="color: #267F99">Array</span><span style="color: #000000">.</span><span style="color: #795E26">from</span><span style="color: #000000">([</span><span style="color: #098658">1</span><span style="color: #000000">, </span><span style="color: #098658">2</span><span style="color: #000000">, </span><span style="color: #098658">3</span><span style="color: #000000">, </span><span style="color: #098658">4</span><span style="color: #000000">, </span><span style="color: #098658">5</span><span style="color: #000000">].</span><span style="color: #795E26">entries</span><span style="color: #000000">());</span>
+<span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">manager</span><span style="color: #000000"> = </span><span style="color: #0000FF">new</span><span style="color: #000000"> </span><span style="color: #795E26">Manager</span><span style="color: #000000">(</span><span style="color: #001080">arr</span><span style="color: #000000">);</span>
+<span style="color: #001080">manager</span><span style="color: #000000">.</span><span style="color: #795E26">remove</span><span style="color: #000000">(</span><span style="color: #098658">2</span><span style="color: #000000">).</span><span style="color: #795E26">remove</span><span style="color: #000000">(</span><span style="color: #098658">1</span><span style="color: #000000">);</span>
+<span style="color: #001080">console</span><span style="color: #000000">.</span><span style="color: #795E26">log</span><span style="color: #000000">(</span><span style="color: #001080">manager</span><span style="color: #000000">.</span><span style="color: #795E26">get</span><span style="color: #000000">(</span><span style="color: #098658">1</span><span style="color: #000000">)); </span><span style="color: #008000">//= undefined</span>
+</code></pre>
+					<a href="#managerkeys" id="managerkeys" style="color: inherit; text-decoration: none;">
+						<h3>Manager#keys()</h3>
+					</a>
+					<pre><code class="language-ts"><span style="color: #267F99">Manager</span><span style="color: #000000">.</span><span style="color: #001080">prototype</span><span style="color: #000000">.</span><span style="color: #795E26">keys</span><span style="color: #000000">();</span>
+
+<span style="color: #008000">/**</span>
+<span style="color: #008000"> * Returns the keys of all items stored in the Manager as an Array</span>
+<span style="color: #008000"> *</span>
+<span style="color: #008000"> * </span><span style="color: #0000FF">@returns</span><span style="color: #008000"> Array&lt;K&gt;</span>
+<span style="color: #008000"> * </span><span style="color: #0000FF">@memberof</span><span style="color: #008000"> </span><span style="color: #267F99">Manager</span>
+<span style="color: #008000"> */</span>
+
+<span style="color: #008000">// Example:</span>
+<span style="color: #AF00DB">import</span><span style="color: #000000"> </span><span style="color: #001080">Manager</span><span style="color: #000000"> </span><span style="color: #AF00DB">from</span><span style="color: #000000"> </span><span style="color: #A31515">&quot;@okikio/manager&quot;</span><span style="color: #000000">;</span>
+
+<span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">arr</span><span style="color: #000000"> = </span><span style="color: #267F99">Array</span><span style="color: #000000">.</span><span style="color: #795E26">from</span><span style="color: #000000">([</span><span style="color: #098658">1</span><span style="color: #000000">, </span><span style="color: #098658">2</span><span style="color: #000000">, </span><span style="color: #098658">3</span><span style="color: #000000">, </span><span style="color: #098658">4</span><span style="color: #000000">, </span><span style="color: #098658">5</span><span style="color: #000000">].</span><span style="color: #795E26">entries</span><span style="color: #000000">());</span>
+<span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">manager</span><span style="color: #000000"> = </span><span style="color: #0000FF">new</span><span style="color: #000000"> </span><span style="color: #795E26">Manager</span><span style="color: #000000">(</span><span style="color: #001080">arr</span><span style="color: #000000">);</span>
+<span style="color: #001080">console</span><span style="color: #000000">.</span><span style="color: #795E26">log</span><span style="color: #000000">(</span><span style="color: #001080">manager</span><span style="color: #000000">.</span><span style="color: #795E26">keys</span><span style="color: #000000">()); </span><span style="color: #008000">//= [0, 1, 2, 3, 4]</span>
+</code></pre>
+					<a href="#managervalues" id="managervalues" style="color: inherit; text-decoration: none;">
+						<h3>Manager#values()</h3>
+					</a>
+					<pre><code class="language-ts"><span style="color: #267F99">Manager</span><span style="color: #000000">.</span><span style="color: #001080">prototype</span><span style="color: #000000">.</span><span style="color: #795E26">values</span><span style="color: #000000">();</span>
+
+<span style="color: #008000">/**</span>
+<span style="color: #008000"> * Returns the values of all items stored in the Manager as an Array</span>
+<span style="color: #008000"> *</span>
+<span style="color: #008000"> * </span><span style="color: #0000FF">@returns</span><span style="color: #008000"> Array&lt;V&gt;</span>
+<span style="color: #008000"> * </span><span style="color: #0000FF">@memberof</span><span style="color: #008000"> </span><span style="color: #267F99">Manager</span>
+<span style="color: #008000"> */</span>
+
+<span style="color: #008000">// Example:</span>
+<span style="color: #AF00DB">import</span><span style="color: #000000"> </span><span style="color: #001080">Manager</span><span style="color: #000000"> </span><span style="color: #AF00DB">from</span><span style="color: #000000"> </span><span style="color: #A31515">&quot;@okikio/manager&quot;</span><span style="color: #000000">;</span>
+
+<span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">arr</span><span style="color: #000000"> = </span><span style="color: #267F99">Array</span><span style="color: #000000">.</span><span style="color: #795E26">from</span><span style="color: #000000">([</span><span style="color: #098658">1</span><span style="color: #000000">, </span><span style="color: #098658">2</span><span style="color: #000000">, </span><span style="color: #098658">3</span><span style="color: #000000">, </span><span style="color: #098658">4</span><span style="color: #000000">, </span><span style="color: #098658">5</span><span style="color: #000000">].</span><span style="color: #795E26">entries</span><span style="color: #000000">());</span>
+<span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">manager</span><span style="color: #000000"> = </span><span style="color: #0000FF">new</span><span style="color: #000000"> </span><span style="color: #795E26">Manager</span><span style="color: #000000">(</span><span style="color: #001080">arr</span><span style="color: #000000">);</span>
+<span style="color: #001080">console</span><span style="color: #000000">.</span><span style="color: #795E26">log</span><span style="color: #000000">(</span><span style="color: #001080">manager</span><span style="color: #000000">.</span><span style="color: #795E26">values</span><span style="color: #000000">()); </span><span style="color: #008000">//= [1, 2, 3, 4, 5]</span>
+</code></pre>
+					<a href="#managerlastdistance" id="managerlastdistance" style="color: inherit; text-decoration: none;">
+						<h3>Manager#last(distance)</h3>
+					</a>
+					<pre><code class="language-ts"><span style="color: #267F99">Manager</span><span style="color: #000000">.</span><span style="color: #001080">prototype</span><span style="color: #000000">.</span><span style="color: #795E26">last</span><span style="color: #000000">(</span><span style="color: #001080">distance</span><span style="color: #000000">: </span><span style="color: #001080">number</span><span style="color: #000000"> = </span><span style="color: #098658">1</span><span style="color: #000000">);</span>
+
+<span style="color: #008000">/**</span>
+<span style="color: #008000"> * Returns the last item in the Manager who&#039;s index is a certain distance from the last item in the Manager</span>
+<span style="color: #008000"> *</span>
+<span style="color: #008000"> * </span><span style="color: #0000FF">@param</span><span style="color: #008000"> </span><span style="color: #267F99">{number}</span><span style="color: #008000"> </span><span style="color: #001080">[distance</span><span style="color: #000000">=</span><span style="color: #001080">1]</span>
+<span style="color: #008000"> * </span><span style="color: #0000FF">@returns</span><span style="color: #008000"> V</span>
+<span style="color: #008000"> * </span><span style="color: #0000FF">@memberof</span><span style="color: #008000"> </span><span style="color: #267F99">Manager</span>
+<span style="color: #008000"> */</span>
+
+<span style="color: #008000">// Example:</span>
+<span style="color: #AF00DB">import</span><span style="color: #000000"> </span><span style="color: #001080">Manager</span><span style="color: #000000"> </span><span style="color: #AF00DB">from</span><span style="color: #000000"> </span><span style="color: #A31515">&quot;@okikio/manager&quot;</span><span style="color: #000000">;</span>
+
+<span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">arr</span><span style="color: #000000"> = </span><span style="color: #267F99">Array</span><span style="color: #000000">.</span><span style="color: #795E26">from</span><span style="color: #000000">([</span><span style="color: #098658">1</span><span style="color: #000000">, </span><span style="color: #098658">2</span><span style="color: #000000">, </span><span style="color: #098658">3</span><span style="color: #000000">, </span><span style="color: #098658">4</span><span style="color: #000000">, </span><span style="color: #098658">5</span><span style="color: #000000">].</span><span style="color: #795E26">entries</span><span style="color: #000000">());</span>
+<span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">manager</span><span style="color: #000000"> = </span><span style="color: #0000FF">new</span><span style="color: #000000"> </span><span style="color: #795E26">Manager</span><span style="color: #000000">(</span><span style="color: #001080">arr</span><span style="color: #000000">);</span>
+<span style="color: #001080">console</span><span style="color: #000000">.</span><span style="color: #795E26">log</span><span style="color: #000000">(</span><span style="color: #001080">manager</span><span style="color: #000000">.</span><span style="color: #795E26">last</span><span style="color: #000000">()); </span><span style="color: #008000">//= 5</span>
+<span style="color: #001080">console</span><span style="color: #000000">.</span><span style="color: #795E26">log</span><span style="color: #000000">(</span><span style="color: #001080">manager</span><span style="color: #000000">.</span><span style="color: #795E26">last</span><span style="color: #000000">(</span><span style="color: #098658">3</span><span style="color: #000000">)); </span><span style="color: #008000">//= 3</span>
+</code></pre>
+					<a href="#manageriterator" id="manageriterator" style="color: inherit; text-decoration: none;">
+						<h3>Manager#@@iterator</h3>
+					</a>
+					<pre><code class="language-ts"><span style="color: #008000">/**</span>
+<span style="color: #008000"> * Allows iteration via the for..of, learn more: [https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Iterators_and_Generators]</span>
+<span style="color: #008000"> *</span>
+<span style="color: #008000"> * </span><span style="color: #0000FF">@returns</span><span style="color: #008000"> IterableIterator&lt;[K, V]&gt;</span>
+<span style="color: #008000"> * </span><span style="color: #0000FF">@memberof</span><span style="color: #008000"> </span><span style="color: #267F99">Manager</span>
+<span style="color: #008000"> */</span>
+
+<span style="color: #008000">// Example:</span>
+<span style="color: #AF00DB">import</span><span style="color: #000000"> </span><span style="color: #001080">Manager</span><span style="color: #000000"> </span><span style="color: #AF00DB">from</span><span style="color: #000000"> </span><span style="color: #A31515">&quot;@okikio/manager&quot;</span><span style="color: #000000">;</span>
+
+<span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">arr</span><span style="color: #000000"> = </span><span style="color: #267F99">Array</span><span style="color: #000000">.</span><span style="color: #795E26">from</span><span style="color: #000000">([</span><span style="color: #098658">1</span><span style="color: #000000">, </span><span style="color: #098658">2</span><span style="color: #000000">, </span><span style="color: #098658">3</span><span style="color: #000000">, </span><span style="color: #098658">4</span><span style="color: #000000">, </span><span style="color: #098658">5</span><span style="color: #000000">].</span><span style="color: #795E26">entries</span><span style="color: #000000">());</span>
+<span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">manager</span><span style="color: #000000"> = </span><span style="color: #0000FF">new</span><span style="color: #000000"> </span><span style="color: #795E26">Manager</span><span style="color: #000000">(</span><span style="color: #001080">arr</span><span style="color: #000000">);</span>
+<span style="color: #AF00DB">for</span><span style="color: #000000"> (</span><span style="color: #0000FF">let</span><span style="color: #000000"> [</span><span style="color: #001080">key</span><span style="color: #000000">, </span><span style="color: #001080">value</span><span style="color: #000000">] </span><span style="color: #0000FF">of</span><span style="color: #000000"> </span><span style="color: #001080">manager</span><span style="color: #000000">) {</span>
+<span style="color: #000000">    </span><span style="color: #001080">console</span><span style="color: #000000">.</span><span style="color: #795E26">log</span><span style="color: #000000">({ </span><span style="color: #001080">key</span><span style="color: #000000">, </span><span style="color: #001080">value</span><span style="color: #000000"> }); </span><span style="color: #008000">//= { key: ..., value: ... }</span>
+<span style="color: #000000">}</span>
+</code></pre>
+					<a href="#methodcallmethod-" id="methodcallmethod-" style="color: inherit; text-decoration: none;">
+						<h3>#methodCall(method, ...)</h3>
+					</a>
+					<pre><code class="language-ts"><span style="color: #795E26">methodCall</span><span style="color: #000000">(</span><span style="color: #001080">method</span><span style="color: #000000">: </span><span style="color: #001080">string</span><span style="color: #000000">, ...</span><span style="color: #001080">args</span><span style="color: #000000">: </span><span style="color: #001080">any</span><span style="color: #000000">);</span>
+
+<span style="color: #008000">/**</span>
+<span style="color: #008000"> * Calls the method of a certain name for all items that are currently installed</span>
+<span style="color: #008000"> *</span>
+<span style="color: #008000"> * </span><span style="color: #0000FF">@param</span><span style="color: #008000"> </span><span style="color: #267F99">{Manager&lt;any, any&gt;}</span><span style="color: #008000"> </span><span style="color: #001080">manager</span>
+<span style="color: #008000"> * </span><span style="color: #0000FF">@param</span><span style="color: #008000"> </span><span style="color: #267F99">{string}</span><span style="color: #008000"> </span><span style="color: #001080">method</span>
+<span style="color: #008000"> * </span><span style="color: #0000FF">@param</span><span style="color: #008000"> </span><span style="color: #267F99">{Array&lt;any&gt;}</span><span style="color: #008000"> </span><span style="color: #001080">[args</span><span style="color: #000000">=</span><span style="color: #001080">[]]</span>
+<span style="color: #008000"> */</span>
+
+<span style="color: #008000">// Example:</span>
+<span style="color: #AF00DB">import</span><span style="color: #000000"> { </span><span style="color: #001080">Manager</span><span style="color: #000000">, </span><span style="color: #001080">methodCall</span><span style="color: #000000"> } </span><span style="color: #AF00DB">from</span><span style="color: #000000"> </span><span style="color: #A31515">&quot;@okikio/manager&quot;</span><span style="color: #000000">;</span>
+
+<span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">manager</span><span style="color: #000000"> = </span><span style="color: #0000FF">new</span><span style="color: #000000"> </span><span style="color: #795E26">Manager</span><span style="color: #000000">();</span>
+<span style="color: #001080">manager</span><span style="color: #000000">.</span><span style="color: #795E26">set</span><span style="color: #000000">(</span><span style="color: #A31515">&quot;x&quot;</span><span style="color: #000000">, { </span><span style="color: #001080">print:</span><span style="color: #000000"> </span><span style="color: #001080">console</span><span style="color: #000000">.</span><span style="color: #001080">log</span><span style="color: #000000"> });</span>
+<span style="color: #001080">manager</span><span style="color: #000000">.</span><span style="color: #795E26">set</span><span style="color: #000000">(</span><span style="color: #A31515">&quot;y&quot;</span><span style="color: #000000">, { </span><span style="color: #001080">print:</span><span style="color: #000000"> </span><span style="color: #001080">console</span><span style="color: #000000">.</span><span style="color: #001080">log</span><span style="color: #000000"> });</span>
+<span style="color: #795E26">methodCall</span><span style="color: #000000">(</span><span style="color: #001080">manager</span><span style="color: #000000">, </span><span style="color: #A31515">&quot;print&quot;</span><span style="color: #000000">, </span><span style="color: #267F99">Date</span><span style="color: #000000">.</span><span style="color: #795E26">now</span><span style="color: #000000">()); </span><span style="color: #008000">// Eg. 1598772789150, 1598772801639</span>
+</code></pre>
+					<a href="#asyncmethodcallmethod-" id="asyncmethodcallmethod-" style="color: inherit; text-decoration: none;">
+						<h3>#asyncMethodCall(method, ...)</h3>
+					</a>
+					<pre><code class="language-ts"><span style="color: #795E26">asyncMethodCall</span><span style="color: #000000">(</span><span style="color: #001080">method</span><span style="color: #000000">: </span><span style="color: #001080">string</span><span style="color: #000000">, ...</span><span style="color: #001080">args</span><span style="color: #000000">: </span><span style="color: #001080">any</span><span style="color: #000000">[]);</span>
+
+<span style="color: #008000">/**</span>
+<span style="color: #008000"> * Asynchronously calls the method of a certain name for all items that are currently installed, similar to methodCall</span>
+<span style="color: #008000"> *</span>
+<span style="color: #008000"> * </span><span style="color: #0000FF">@param</span><span style="color: #008000"> </span><span style="color: #267F99">{Manager&lt;any, any&gt;}</span><span style="color: #008000"> </span><span style="color: #001080">manager</span>
+<span style="color: #008000"> * </span><span style="color: #0000FF">@param</span><span style="color: #008000"> </span><span style="color: #267F99">{string}</span><span style="color: #008000"> </span><span style="color: #001080">method</span>
+<span style="color: #008000"> * </span><span style="color: #0000FF">@param</span><span style="color: #008000"> </span><span style="color: #267F99">{Array&lt;any&gt;}</span><span style="color: #008000"> </span><span style="color: #001080">[args</span><span style="color: #000000">=</span><span style="color: #001080">[]]</span>
+<span style="color: #008000"> */</span>
+
+<span style="color: #008000">// Example:</span>
+<span style="color: #AF00DB">import</span><span style="color: #000000"> { </span><span style="color: #001080">Manager</span><span style="color: #000000">, </span><span style="color: #001080">asyncMethodCall</span><span style="color: #000000"> } </span><span style="color: #AF00DB">from</span><span style="color: #000000"> </span><span style="color: #A31515">&quot;@okikio/manager&quot;</span><span style="color: #000000">;</span>
+
+<span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">manager</span><span style="color: #000000"> = </span><span style="color: #0000FF">new</span><span style="color: #000000"> </span><span style="color: #795E26">Manager</span><span style="color: #000000">();</span>
+<span style="color: #0000FF">let</span><span style="color: #000000"> </span><span style="color: #795E26">fn</span><span style="color: #000000"> = (</span><span style="color: #001080">url</span><span style="color: #000000"> = </span><span style="color: #A31515">&quot;https://google.com&quot;</span><span style="color: #000000">) </span><span style="color: #0000FF">=&gt;</span><span style="color: #000000"> {</span>
+<span style="color: #000000">    </span><span style="color: #AF00DB">return</span><span style="color: #000000"> </span><span style="color: #0000FF">async</span><span style="color: #000000"> () </span><span style="color: #0000FF">=&gt;</span><span style="color: #000000"> {</span>
+<span style="color: #000000">        </span><span style="color: #0000FF">let</span><span style="color: #000000"> </span><span style="color: #001080">data</span><span style="color: #000000"> = </span><span style="color: #AF00DB">await</span><span style="color: #000000"> </span><span style="color: #795E26">fetch</span><span style="color: #000000">(</span><span style="color: #001080">url</span><span style="color: #000000">);</span>
+<span style="color: #000000">        </span><span style="color: #001080">console</span><span style="color: #000000">.</span><span style="color: #795E26">log</span><span style="color: #000000">(</span><span style="color: #A31515">`(</span><span style="color: #0000FF">${</span><span style="color: #001080">data</span><span style="color: #000000FF">.</span><span style="color: #001080">url</span><span style="color: #0000FF">}</span><span style="color: #A31515">)`</span><span style="color: #000000">);</span>
+<span style="color: #000000">    };</span>
+<span style="color: #000000">};</span>
+
+<span style="color: #001080">manager</span><span style="color: #000000">.</span><span style="color: #795E26">set</span><span style="color: #000000">(</span><span style="color: #A31515">&quot;x&quot;</span><span style="color: #000000">, { </span><span style="color: #001080">print:</span><span style="color: #000000"> </span><span style="color: #795E26">fn</span><span style="color: #000000">() });</span>
+<span style="color: #001080">manager</span><span style="color: #000000">.</span><span style="color: #795E26">set</span><span style="color: #000000">(</span><span style="color: #A31515">&quot;y&quot;</span><span style="color: #000000">, { </span><span style="color: #001080">print:</span><span style="color: #000000"> </span><span style="color: #795E26">fn</span><span style="color: #000000">(</span><span style="color: #A31515">&quot;https://github.com&quot;</span><span style="color: #000000">) });</span>
+<span style="color: #795E26">asyncMethodCall</span><span style="color: #000000">(</span><span style="color: #001080">manager</span><span style="color: #000000">, </span><span style="color: #A31515">&quot;print&quot;</span><span style="color: #000000">); </span><span style="color: #008000">//= (https://www.google.com/), (https://github.com/)</span>
+</code></pre>
+					<a href="#contributing" id="contributing" style="color: inherit; text-decoration: none;">
+						<h2>Contributing</h2>
+					</a>
+					<p>If there is something I missed, a mistake, or a feature you would like added please create an issue or a pull request and I&#39;ll try to get to it.</p>
+					<p><em>The <code>native</code> initiative uses <a href="https://www.conventionalcommits.org/en/v1.0.0/">Conventional Commits</a> as the style of commit, we also use the <a href="http://commitizen.github.io/cz-cli/">Commitizen CLI</a> to make commits easier.</em></p>
+					<a href="#licence" id="licence" style="color: inherit; text-decoration: none;">
+						<h2>Licence</h2>
+					</a>
+					<p>See the <a href="./LICENSE">LICENSE</a> file for license rights and limitations (MIT).</p>
+				</div>
+			</section>
+			<section class="tsd-panel-group tsd-index-group">
+				<h2>Index</h2>
+				<section class="tsd-panel tsd-index-panel">
+					<div class="tsd-index-content">
+						<section class="tsd-index-section ">
+							<h3>References</h3>
+							<ul class="tsd-index-list">
+								<li class="tsd-kind-reference tsd-parent-kind-module"><a href="manager.html#default" class="tsd-kind-icon">default</a></li>
+							</ul>
+						</section>
+						<section class="tsd-index-section ">
+							<h3>Classes</h3>
+							<ul class="tsd-index-list">
+								<li class="tsd-kind-class tsd-parent-kind-module tsd-has-type-parameter"><a href="../classes/manager.manager-1.html" class="tsd-kind-icon">Manager</a></li>
+							</ul>
+						</section>
+						<section class="tsd-index-section ">
+							<h3>Functions</h3>
+							<ul class="tsd-index-list">
+								<li class="tsd-kind-function tsd-parent-kind-module"><a href="manager.html#asyncmethodcall" class="tsd-kind-icon">async<wbr>Method<wbr>Call</a></li>
+								<li class="tsd-kind-function tsd-parent-kind-module"><a href="manager.html#methodcall" class="tsd-kind-icon">method<wbr>Call</a></li>
+							</ul>
+						</section>
+					</div>
+				</section>
+			</section>
+			<section class="tsd-panel-group tsd-member-group ">
+				<h2>References</h2>
+				<section class="tsd-panel tsd-member tsd-kind-reference tsd-parent-kind-module">
+					<a name="default" class="tsd-anchor"></a>
+					<h3>default</h3>
+					Renames and exports <a href="../classes/manager.manager-1.html">Manager</a>
+				</section>
+			</section>
+			<section class="tsd-panel-group tsd-member-group ">
+				<h2>Functions</h2>
+				<section class="tsd-panel tsd-member tsd-kind-function tsd-parent-kind-module">
+					<a name="asyncmethodcall" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagConst">Const</span> async<wbr>Method<wbr>Call</h3>
+					<ul class="tsd-signatures tsd-kind-function tsd-parent-kind-module">
+						<li class="tsd-signature tsd-kind-icon">async<wbr>Method<wbr>Call<span class="tsd-signature-symbol">(</span>manager<span class="tsd-signature-symbol">: </span><a href="../classes/manager.manager-1.html" class="tsd-signature-type" data-tsd-kind="Class">Manager</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span>, method<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, <span class="tsd-signature-symbol">...</span>args<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">void</span><span class="tsd-signature-symbol">&gt;</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/okikio/native/blob/859cc92/packages/manager/src/api.ts#L120">manager/src/api.ts:120</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Asynchronously calls the method of a certain name for all items that are currently installed, similar to methodCall</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>manager: <a href="../classes/manager.manager-1.html" class="tsd-signature-type" data-tsd-kind="Class">Manager</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span></h5>
+								</li>
+								<li>
+									<h5>method: <span class="tsd-signature-type">string</span></h5>
+								</li>
+								<li>
+									<h5><span class="tsd-flag ts-flagRest">Rest</span> <span class="tsd-signature-symbol">...</span>args: <span class="tsd-signature-type">any</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">void</span><span class="tsd-signature-symbol">&gt;</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-function tsd-parent-kind-module">
+					<a name="methodcall" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagConst">Const</span> method<wbr>Call</h3>
+					<ul class="tsd-signatures tsd-kind-function tsd-parent-kind-module">
+						<li class="tsd-signature tsd-kind-icon">method<wbr>Call<span class="tsd-signature-symbol">(</span>manager<span class="tsd-signature-symbol">: </span><a href="../classes/manager.manager-1.html" class="tsd-signature-type" data-tsd-kind="Class">Manager</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span>, method<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, <span class="tsd-signature-symbol">...</span>args<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/okikio/native/blob/859cc92/packages/manager/src/api.ts#L110">manager/src/api.ts:110</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Calls the method of a certain name for all items that are currently installed</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>manager: <a href="../classes/manager.manager-1.html" class="tsd-signature-type" data-tsd-kind="Class">Manager</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span></h5>
+								</li>
+								<li>
+									<h5>method: <span class="tsd-signature-type">string</span></h5>
+								</li>
+								<li>
+									<h5><span class="tsd-flag ts-flagRest">Rest</span> <span class="tsd-signature-symbol">...</span>args: <span class="tsd-signature-type">any</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+						</li>
+					</ul>
+				</section>
+			</section>
+		</div>
+		<div class="col-4 col-menu menu-sticky-wrap menu-highlight">
+			<nav class="tsd-navigation primary">
+				<ul>
+					<li class=" ">
+						<a href="../index.html">Modules</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="animate.html">animate</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="emitter.html">emitter</a>
+					</li>
+					<li class="current tsd-kind-module">
+						<a href="manager.html">manager</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="native.html">native</a>
+					</li>
+				</ul>
+			</nav>
+			<nav class="tsd-navigation secondary menu-sticky">
+				<ul class="before-current">
+					<li class=" tsd-kind-module">
+						<a href="animate.html" class="tsd-kind-icon">animate</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="emitter.html" class="tsd-kind-icon">emitter</a>
+					</li>
+				</ul>
+				<ul class="current">
+					<li class="current tsd-kind-module">
+						<a href="manager.html" class="tsd-kind-icon">manager</a>
+						<ul>
+							<li class=" tsd-kind-reference tsd-parent-kind-module">
+								<a href="manager.html#default" class="tsd-kind-icon">default</a>
+							</li>
+							<li class=" tsd-kind-class tsd-parent-kind-module tsd-has-type-parameter">
+								<a href="../classes/manager.manager-1.html" class="tsd-kind-icon">Manager</a>
+							</li>
+							<li class=" tsd-kind-function tsd-parent-kind-module">
+								<a href="manager.html#asyncmethodcall" class="tsd-kind-icon">async<wbr>Method<wbr>Call</a>
+							</li>
+							<li class=" tsd-kind-function tsd-parent-kind-module">
+								<a href="manager.html#methodcall" class="tsd-kind-icon">method<wbr>Call</a>
+							</li>
+						</ul>
+					</li>
+				</ul>
+				<ul class="after-current">
+					<li class=" tsd-kind-module">
+						<a href="native.html" class="tsd-kind-icon">native</a>
+					</li>
+				</ul>
+			</nav>
+		</div>
+	</div>
+</div>
+<footer class="with-border-bottom">
+	<div class="container">
+		<h2>Legend</h2>
+		<div class="tsd-legend-group">
+			<ul class="tsd-legend">
+				<li class="tsd-kind-variable"><span class="tsd-kind-icon">Variable</span></li>
+				<li class="tsd-kind-function"><span class="tsd-kind-icon">Function</span></li>
+				<li class="tsd-kind-type-alias"><span class="tsd-kind-icon">Type alias</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-class"><span class="tsd-kind-icon">Class</span></li>
+				<li class="tsd-kind-class tsd-has-type-parameter"><span class="tsd-kind-icon">Class with type parameter</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-interface"><span class="tsd-kind-icon">Interface</span></li>
+			</ul>
+		</div>
+	</div>
+</footer>
+<div class="container tsd-generator">
+	<p>Generated using <a href="https://typedoc.org/" target="_blank">TypeDoc</a></p>
+</div>
+<div class="overlay"></div>
+<script src="../assets/js/main.js"></script>
+</body>
+</html>

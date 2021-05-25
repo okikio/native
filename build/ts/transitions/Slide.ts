@@ -1,13 +1,13 @@
-import { ITransition, ITransitionData, animate } from "../../../packages/native/src/api";
+import { ITransition, ITransitionData, animate } from "@okikio/native";
 
 //== Transitions
 export const Slide: ITransition = {
     name: "slide",
     duration: 500,
     direction: "right",
-    scrollable: true,
 
     init(data: ITransition) {
+        document.documentElement.classList.add("no-overflow-x");
         let trigger = (data.trigger as HTMLElement);
         if (trigger instanceof Node && trigger.hasAttribute("data-direction")) {
             this.direction = trigger.getAttribute("data-direction");
@@ -16,46 +16,39 @@ export const Slide: ITransition = {
         }
     },
 
-    out({ from }: ITransitionData) {
+    out({ from }) {
         let { duration, direction } = this;
         let fromWrapper = from.wrapper;
 
         let anim = animate({
             target: fromWrapper,
-            keyframes: [
-                { transform: "translateX(0%)", opacity: 1 },
-                { transform: `translateX(${direction === "left" ? "-" : ""}25%)`, opacity: 0 },
-            ],
+            translateX: [0, `${(direction === "left" ? -1 : 1) * 25}%`],
+            opacity: [1, 0],
             duration,
             easing: "in-quint"
         });
 
-        return anim.on("begin", () => {
-            document.body.classList.add("no-overflow-x");
-        }).then(function () {
+        return anim.then(function () {
             this.stop();
         });
     },
 
-    in({ to, scroll }: ITransitionData) {
+    async in({ to }) {
         let { duration } = this;
         let toWrapper = to.wrapper;
 
-        window.scroll(scroll.x, scroll.y);
         let anim = animate({
             target: toWrapper,
-            keyframes: [
-                { transform: `translateX(${this.direction === "right" ? "-" : ""}25%)`, opacity: 0 },
-                { transform: "translateX(0%)", opacity: 1 },
-            ],
+            translateX: [`${(this.direction === "right" ? -1 : 1) * 25}%`, 0],
+            opacity: [0, 1],
             duration,
             easing: "out-quint"
         })
 
-        return anim.then(function () {
-            document.body.classList.remove("no-overflow-x");
-            this.stop();
-        });
+        await anim;
+
+        document.documentElement.classList.remove("no-overflow-x");
+        anim.stop();
     }
 };
 
@@ -64,7 +57,6 @@ export const SlideLeft: ITransition = {
 
     name: "slide-left",
     direction: "left",
-    init(data: ITransition) { }
 };
 
 export const SlideRight: ITransition = {
@@ -72,5 +64,4 @@ export const SlideRight: ITransition = {
 
     name: "slide-right",
     direction: "right",
-    init(data: ITransition) { }
 };
