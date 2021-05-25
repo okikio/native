@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [2.1.3](https://github.com/okikio/native/compare/@okikio/animate@2.1.2...@okikio/animate@2.1.3) (2021-05-25)
+
+
+### Bug Fixes
+
+* **@okikio/animate:** :bug: fix easing & loop bugs in animationKeyframes ([9025933](https://github.com/okikio/native/commit/9025933e207595ec3634ac99c6cf201c71de34fb))
+
 ### [2.1.2](https://github.com/okikio/native/compare/@okikio/animate@2.1.1...@okikio/animate@2.1.2) (2021-05-25)
 
 ### [2.1.1](https://github.com/okikio/native/compare/@okikio/animate@2.1.0...@okikio/animate@2.1.1) (2021-05-25)
