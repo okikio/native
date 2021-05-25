@@ -1,4 +1,5 @@
-import { PJAX, App, TransitionManager, Router, HistoryManager, PageManager, ITransitionData } from "@okikio/native";
+import { PJAX, App, TransitionManager, Router, HistoryManager, PageManager } from "@okikio/native";
+import { pathToRegexp } from "path-to-regexp";
 
 import { Fade } from "./transitions/Fade";
 import { BigTransition } from "./transitions/BigTransition";
@@ -42,10 +43,11 @@ router
     .add({
         path: "/animate(.html)?",
         method() {
-            console.log("run")
             run()
         }
     });
+
+console.log(pathToRegexp("/animate(.html)?"))
 
 try {
     app.boot();

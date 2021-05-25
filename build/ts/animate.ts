@@ -59,8 +59,6 @@ let random = (min: number, max: number) => Math.floor(Math.random() * (max - min
 // Playback Controls Demo
 export let anim, motionPath, getTotalLength;
 export let run = () => {
-    console.log("Run");
-    
     // Based on an example by animateplus
     (() => {
         let containerSel = ".morph-demo";

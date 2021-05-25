@@ -24,6 +24,7 @@ importers:
       gzip-size: ^6.0.0
       husky: ^6.0.0
       lerna-changelog: ^1.0.1
+      path-to-regexp: ^6.2.0
       pnpm: ^6.4.0
       postcss: ^8.3.0
       postcss-csso: ^5.0.1
@@ -57,6 +58,7 @@ importers:
       gzip-size: 6.0.0
       husky: 6.0.0
       lerna-changelog: 1.0.1
+      path-to-regexp: 6.2.0
       pnpm: 6.4.0
       postcss: 8.3.0
       postcss-csso: 5.0.1_postcss@8.3.0
@@ -6476,7 +6478,6 @@ packages:
 
   /path-to-regexp/6.2.0:
     resolution: {integrity: sha512-f66KywYG6+43afgE/8j/GoiNyygk/bnoCbps++3ErRKsIYkGGupyv07R2Ok5m9i67Iqc+T2g1eAUGUPzWhYTyg==}
-    dev: false
 
   /path-type/1.1.0:
     resolution: {integrity: sha1-WcRPfuSR2nBNpBXaWkBwuk+P5EE=}
