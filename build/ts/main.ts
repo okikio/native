@@ -41,13 +41,13 @@ router
         method: stop
     })
     .add({
-        path: "/animate(.html)?",
+        path: /\/animate(.html)?/,
         method() {
             run()
         }
     });
 
-console.log(pathToRegexp("/animate(.html)?"))
+console.log(pathToRegexp("\/animate(.html)?"))
 
 try {
     app.boot();
