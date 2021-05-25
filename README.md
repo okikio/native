@@ -12,7 +12,7 @@
     - [@okikio/animate](#okikioanimate)
     - [@okikio/native](#okikionative)
     - [etc](#etc)
-    - [API Documentation](#api-documentation)
+  - [API Documentation](#api-documentation)
   - [Usage](#usage)
   - [Trying it Out](#trying-it-out)
   - [Demo](#demo)
@@ -55,7 +55,7 @@ _Note: you can install it as a seperate package from the rest of the `@okikio/na
 
 **I have found typescript to be the best method for bundling for older browsers e.g. IE11. I only suggest you use `babel` for polyfilling `Promise`, `fetch`, etc...*
 
-### API Documentation
+## API Documentation
 
 Go to [okikio.github.io/native/docs](https://okikio.github.io/native/docs), for a more detailed API documentation on the native initiative.
 
