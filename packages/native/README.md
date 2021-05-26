@@ -18,7 +18,7 @@ Currently many websites rely on older code to make sure they reach as wide an au
 
 You can try out `@okikio/native` using Gitpod:
 
-[![Open In Gitpod](https://gitpod.io/button/open-in-gitpod.svg)](https://gitpod.io/#https://github.com/okikio/native/blob/master/packages/native/README.md)
+[![Open In Gitpod](https://gitpod.io/button/open-in-gitpod.svg)](https://gitpod.io/#https://github.com/okikio/native/blob/beta/packages/native/README.md)
 
 By default Gitpod will start the dev script for you, but if you need to restart the dev script you can do so by typing into the terminal.
 
@@ -148,7 +148,9 @@ const { App, PJAX } = window.native;
 
 ## Demo
 
-Located in [./build](https://github.com/okikio/native/tree/master/build), you will find multiple build files that can help you create your setup. The [./pug folder](https://github.com/okikio/native/tree/master/build/pug) contains [pug](https://pugjs.org/api/getting-started.html) files that format my html in a clean and clear way. The [./sass folder](https://github.com/okikio/native/tree/master/build/sass) contains [scss](https://sass-lang.com/guide) files that allow for modern css without the need of polyfills. The [./ts folder](https://github.com/okikio/native/tree/master/build/ts) contains [typescript](https://www.typescriptlang.org/) files that the framework runs on; typescript is used, because Intellisense is better with typescript. Outside the build folder, the [gulpfile.js](https://github.com/okikio/native/tree/master/gulpfile.js) file, is part of my [gulp](https://gulpjs.com/) config, and is the tool I use to build the demo, for your project other tools should also work, with some amoount of work. Explore the files stated above to learn how to get started.
+Located in [./build](https://github.com/okikio/native/tree/beta/build), you will find multiple build files that can help you create your setup. The [./pug folder](https://github.com/okikio/native/tree/beta/build/pug) contains [pug](https://pugjs.org/api/getting-started.html) files that format my html in a clean and clear way. The [./sass folder](https://github.com/okikio/native/tree/beta/build/sass) contains [scss](https://sass-lang.com/guide) files that allow for modern css without the need of polyfills. The [./ts folder](https://github.com/okikio/native/tree/beta/build/ts) contains [typescript](https://www.typescriptlang.org/) files that the framework runs on; typescript is used, because Intellisense is better with typescript. Outside the build folder, the [gulpfile.js](https://github.com/okikio/native/tree/beta/gulpfile.js) file, is part of my [gulp](https://gulpjs.com/) config, and is the tool I use to build the demo, for your project other tools should also work, with some amoount of work. Explore the files stated above to learn how to get started.
+
+I recommend using the Gitpod link at the top of the page to get started with development, as it removes the need for setup.
 
 > [View the Demo  &#8594;](https://okikio.github.io/native/demo/)
 
@@ -577,7 +579,7 @@ The `5 base classes` are mandatory classes that are built into the framework (tr
 
 ### Types
 
-Many typescript types are used in the docs, for more info about these types go to [./@types](https://github.com/okikio/native/tree/master/packages/native/@types).
+Many typescript types are used in the docs, for more info about these types go to [./@types](https://github.com/okikio/native/tree/beta/packages/native/@types).
 
 ### Events
 
@@ -996,7 +998,7 @@ The life-cycle methods of a `Service` are register(), install(), init(), boot(),
 #### *Life-cycle*
 
 Here is a diagram that may aid in your understanding.
-[![Life Cycle Diagram](https://raw.githubusercontent.com/okikio/native/master/packages/native/assets/lifecycle.png)](https://github.com/okikio/native/tree/master/packages/native/assets/lifecycle.png)
+[![Life Cycle Diagram](https://raw.githubusercontent.com/okikio/native/beta/packages/native/assets/lifecycle.png)](https://github.com/okikio/native/tree/beta/packages/native/assets/lifecycle.png)
 
 The life-cycle is controlled by the `ServiceManager`, the `Service`'s themselves have the life-cycle methods, but only the `ServiceManager` can decide when to call the life-cycle methods of all `Service`'s.
 
@@ -1282,7 +1284,7 @@ App.prototype.on(events: EventInput, callback?: ListenerCallback): App;
 App.prototype.off(events: EventInput, callback?: ListenerCallback): App;
 
 /**
- * Shortcuts to the App EventEmitter on and off methods, they create and remove events and event listeners, read more about @okikio/emitter in [../emitter/README.md](https://github.com/okikio/native/tree/master/packages/emitter/README.md).
+ * Shortcuts to the App EventEmitter on and off methods, they create and remove events and event listeners, read more about @okikio/emitter in [../emitter/README.md](https://github.com/okikio/native/tree/beta/packages/emitter/README.md).
  * Note: the scope of the events are automatically set to the App
  *
  * @param  {EventInput} events - Takes event name, and supports all the different ways to represent events that @okikio/amitter offers
@@ -1297,7 +1299,7 @@ App.prototype.off(events: EventInput, callback?: ListenerCallback): App;
 App.prototype.emit(events: string | any[], ...args: any): App;
 
 /**
- * Shortcuts to the App EventEmitter emit method, emits (triggers) events and event listeners, read more about @okikio/emitter in [../emitter/README.md](https://github.com/okikio/native/tree/master/packages/emitter/README.md)
+ * Shortcuts to the App EventEmitter emit method, emits (triggers) events and event listeners, read more about @okikio/emitter in [../emitter/README.md](https://github.com/okikio/native/tree/beta/packages/emitter/README.md)
  *
  * @param  {string | any[]} events - Takes event names, and supports all the different ways to represent events that @okikio/amitter offers
  * @param  {any} [...args] - Arguments to pass to the events
@@ -1754,7 +1756,7 @@ go({
 
 ---
 
-*Note: thus far I have given you a detailed overview of the API's that make up the base classes as well as the `HistoryManager` (as an example of a complex project based class), but from this point onward the difficulty will drastically increaase, but because the next classes are project based classes they will only need to be instantiated into an `App`'s `ServiceManager` using a specific name to be used, with little to no config required on you part. PS. this is getting really tiring to document, so, for the next classes I will skimp out on aspects I feel aren't useful for the type of projects you want or need, if you would like more detail just look through the code for the framework, as well as the [./build/ts folder](https://github.com/okikio/native/tree/master/build/ts/). Also, **all classes that aren't base classes are `Service`'s, or they extend the `Service` class in some way.***
+*Note: thus far I have given you a detailed overview of the API's that make up the base classes as well as the `HistoryManager` (as an example of a complex project based class), but from this point onward the difficulty will drastically increaase, but because the next classes are project based classes they will only need to be instantiated into an `App`'s `ServiceManager` using a specific name to be used, with little to no config required on you part. PS. this is getting really tiring to document, so, for the next classes I will skimp out on aspects I feel aren't useful for the type of projects you want or need, if you would like more detail just look through the code for the framework, as well as the [./build/ts folder](https://github.com/okikio/native/tree/beta/build/ts/). Also, **all classes that aren't base classes are `Service`'s, or they extend the `Service` class in some way.***
 
 ---
 
@@ -2237,6 +2239,8 @@ router
 ## Contributing
 
 If there is something I missed, a mistake, or a feature you would like added please create an issue or a pull request and I'll try to get to it.
+
+_**Note**: all contributions must be done on the `beta` branch, using the Conventional Commits style._
 
 *The `native` project uses [Conventional Commits](https://www.conventionalcommits.org/en/v1.0.0/) as the style of commit, we even use the [Commitizen CLI](http://commitizen.github.io/cz-cli/) to make commits easier.*
 

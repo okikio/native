@@ -6,7 +6,7 @@ A superset of the Map class, it extends the Map classes capabilities with awesom
 
 You can try out `@okikio/manager` using Gitpod:
 
-[![Open In Gitpod](https://gitpod.io/button/open-in-gitpod.svg)](https://gitpod.io/#https://github.com/okikio/native/blob/master/packages/manager/README.md)
+[![Open In Gitpod](https://gitpod.io/button/open-in-gitpod.svg)](https://gitpod.io/#https://github.com/okikio/native/blob/beta/packages/manager/README.md)
 
 By default Gitpod will start the dev script for you, but if you need to restart the dev script you can do so by typing into the terminal.
 
@@ -22,7 +22,7 @@ Once Gitpod has booted up, go to [./tests/test.ts](./tests/test.ts) and start tw
   - [Table of Contents](#table-of-contents)
   - [Installation](#installation)
   - [Getting started](#getting-started)
-    - [API Documentation](#api-documentation)
+  - [API Documentation](#api-documentation)
   - [API](#api)
     - [Existing Map Methods](#existing-map-methods)
     - [Manager#length](#managerlength)
@@ -71,7 +71,7 @@ The `Manager` class makes Maps easier to use, as well as adding 7 methods, **get
 
 _**Note**: the behavior of the keys and values methods are slightly modified, to return an Array of keys/values instead of an iterator. You can get the keys and values original effects by using `.getMap().keys()` or `.getMap().values()`._
 
-### API Documentation
+## API Documentation
 
 You can also go through the [API documentation](https://okikio.github.io/native/docs/modules/manager.html), for a more detailed documentation of the API.
 
@@ -329,6 +329,8 @@ asyncMethodCall(manager, "print"); //= (https://www.google.com/), (https://githu
 ## Contributing
 
 If there is something I missed, a mistake, or a feature you would like added please create an issue or a pull request and I'll try to get to it.
+
+_**Note**: all contributions must be done on the `beta` branch, using the Conventional Commits style._
 
 *The `native` initiative uses [Conventional Commits](https://www.conventionalcommits.org/en/v1.0.0/) as the style of commit, we also use the [Commitizen CLI](http://commitizen.github.io/cz-cli/) to make commits easier.*
 

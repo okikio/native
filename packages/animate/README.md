@@ -2,7 +2,7 @@
 
 An animation library for the modern web, which. Inspired by animate plus, and animejs, [@okikio/animate](https://www.skypack.dev/view/@okikio/animate) is a Javascript animation library focused on performance and ease of use. It  utilizes the Web Animation API to deliver butter smooth animations at a small size, it weighs **~5.36 KB** (minified and gzipped).
 
-*Before even getting started, you will most likely need the Web Animation API, Promise, Set, and Map polyfills. If you install [@okikio/animate](https://www.skypack.dev/view/@okikio/animate) via [npm](https://www.npmjs.com/package/@okikio/animate) you are most likely going to need [rollup](https://rollupjs.org/) or [esbuild](https://esbuild.github.io/). You can use [web-animations-js](https://github.com/web-animations/web-animations-js), or [polyfill.io](https://polyfill.io/) to create a polyfill. The minimum feature requirement for a polyfill are Maps, Set, Promises, and a WebAnimation polyfill, e.g. [https://cdn.polyfill.io/v3/polyfill.min.js?features=default,es2015,es2018,Array.prototype.includes,Map,Set,Promise,WebAnimations](https://cdn.polyfill.io/v3/polyfill.min.js?features=default,es2015,es2018,Array.prototype.includes,Map,Set,Promise,WebAnimations).*
+*Before even getting started, you will most likely need the Web Animation API, Promise, Set, and Map polyfills. If you install [@okikio/animate](https://www.skypack.dev/view/@okikio/animate) via [npm](https://www.npmjs.com/package/@okikio/animate) you are most likely going to need [rollup](https://rollupjs.org/) or [esbuild](https://esbuild.github.io/). You can use [web-animations-js](https://github.com/web-animations/web-animations-js), or [polyfill.io](https://polyfill.io/) to create a polyfill. The minimum feature requirement for a polyfill are Maps, Set, Promises, and a WebAnimation polyfill, e.g. [https://cdn.polyfill.io/v3/polyfill.min.js?features=default,es2015,es2018,Array.prototype.includes,Map,Set,Promise,WebAnimations](https://cdn.polyfill.io/v3/polyfill.min.js?features=default,es2015,es2018,Array.prototype.includes,Map,Set,Promise). and [https://cdn.jsdelivr.net/npm/web-animations-js/web-animations-next.min.js](https://cdn.jsdelivr.net/npm/web-animations-js/web-animations-next.min.js)*
 
 ***Warning**: polyfilling may not fix animation format bugs, e.g. [composite animations](https://developer.mozilla.org/en-US/docs/Web/API/KeyframeEffect/composite) don't work on older browsers, so, if you use `polyfill.io` and set it to check if the browser supports the feature before applying the polyfill, your project might encounter errors, as the browser may only have partial support of the Web Animation API.*
 
@@ -10,7 +10,7 @@ An animation library for the modern web, which. Inspired by animate plus, and an
 
 You can try out `@okikio/animate` using Gitpod:
 
-[![Open In Gitpod](https://gitpod.io/button/open-in-gitpod.svg)](https://gitpod.io/#https://github.com/okikio/native/blob/master/packages/animate/README.md)
+[![Open In Gitpod](https://gitpod.io/button/open-in-gitpod.svg)](https://gitpod.io/#https://github.com/okikio/native/blob/beta/packages/animate/README.md)
 
 By default Gitpod will start the dev script for you, but if you need to restart the dev script you can do so by typing into the terminal.
 
@@ -114,7 +114,9 @@ const { default: anime } = window.animate; // LOL
 
 ## Demo
 
-I built a small demo showing off the abilities of the `@okikio/animate` library. You can find the files for the demo in [./build](https://github.com/okikio/native/tree/master/build) folder.
+I built a small demo showing off the abilities of the `@okikio/animate` library. You can find the files for the demo in [./build](https://github.com/okikio/native/tree/beta/build) folder. For more info on how to use the demo go to [okikio/native#usage](https://github.com/okikio/native/blob/beta/README.md#usage) on Github.
+
+I recommend using the Gitpod link at the top of the page to get started with development, as it removes the need for setup.
 
 > [Click to view demo &#8594;](https://okikio.github.io/native/demo/animate)
 
@@ -124,7 +126,7 @@ I built a small demo showing off the abilities of the `@okikio/animate` library.
 
 The `Animate` class recieves a set of targets to animate, it then creates a list of Web Animation API `Animation` instances, along side a main animation, which is small `Animation` instance that is set to animate the opacity of a non visible element, the `Animate` class then plays each `Animation` instances keyframes including the main animation.
 
-The main animation is there to ensure accuracy in different browser vendor implementation of the Web Animation API. The main animation is stored in `Animate.prototype.mainAnimation: Animation`, the other `Animation` instances are stored in a `Manager` (from [@okikio/manager](https://www.npmjs.com/package/@okikio/manager)) `Animate.prototype.animations: Manager<HTMLElement, Animation>`.
+The main animation is there to ensure accuracy in different browser vendor implementation of the Web Animation API. The main animation is stored in `Animate.prototype.mainAnimation: Animation`, the other `Animation` instances are stored in a `WeakMap` `Animate.prototype.animations: WeakMap<KeyframeEffect, Animation>`.
 
 ```ts
 import animate from "@okikio/animate";
@@ -643,6 +645,8 @@ Represents the timeline of animation. It exists to pass timeline features to Ani
 
 As of right now it doesn't contain any features but in the future when other timelines like the [ScrollTimeline](https://drafts.csswg.org/scroll-animations-1/#scrolltimeline), read the Google Developer article for [examples and demos of ScrollTimeLine](https://developers.google.com/web/updates/2018/10/animation-worklet#hooking_into_the_space-time_continuum_scrolltimeline)
 
+_**Note**: timeline cannot be a callback/function_
+
 ### keyframes
 
 | Default | Type                                                                                                                                                                            |
@@ -1152,7 +1156,7 @@ animate({
 
 ## Examples
 
-[![@okikio/animate - playground](https://raw.githubusercontent.com/okikio/native/master/packages/animate/assets/Web%20Animation%20API%20Library%20Playground.png)](https://codepen.io/collection/rxOEBO)
+[![@okikio/animate - playground](https://raw.githubusercontent.com/okikio/native/beta/packages/animate/assets/Web%20Animation%20API%20Library%20Playground.png)](https://codepen.io/collection/rxOEBO)
 
 [Go through this collection of examples for more detailed demos   &#8594;](https://codepen.io/collection/rxOEBO)
 
@@ -1325,6 +1329,8 @@ Animations play a major role in the design of good user interfaces. They help co
 ## Contributing
 
 If there is something I missed, a mistake, or a feature you would like added please create an issue or a pull request and I'll try to get to it.
+
+_**Note**: all contributions must be done on the `beta` branch, using the Conventional Commits style._
 
 *The `native` initiative uses [Conventional Commits](https://www.conventionalcommits.org/en/v1.0.0/) as the style of commit, we even use the [Commitizen CLI](https://commitizen.github.io/cz-cli/) to make commits easier.*
 

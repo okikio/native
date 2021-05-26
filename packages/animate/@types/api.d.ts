@@ -126,6 +126,7 @@ export declare const GetEase: (ease: keyof typeof EASINGS | string) => string;
  *   fillMode: "none",
  *   direction: "normal",
  *   padEndDelay: false,
+ *   timeline: document.timeline,
  *   extend: {}
  * }
  * ```
@@ -370,6 +371,7 @@ export declare class Animate {
         oldCSSProperties: any;
         onfinish: any;
         oncancel: any;
+        timeline?: any;
     }, len: number): void;
     /**
      * Update the options for all targets

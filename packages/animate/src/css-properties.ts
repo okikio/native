@@ -299,7 +299,7 @@ export const ParseTransformableCSSProperties = (properties: ICSSComputedTransfor
         scale, scale3d, scaleX, scaleY, scaleZ,
         skew, skewX, skewY,
         perspective
-    ).map(createTransformProperty);
+    ).filter(isValid).map(createTransformProperty);
 
     // Wrap non array CSS property values in an array
     rest = mapObject(rest, value => [].concat(value).map(v => `` + v));
@@ -377,6 +377,7 @@ export const ParseTransformableCSSKeyframes = (keyframes: ICSSComputedTransforma
         ];
     }).map(([rest, ...transformFunctions]) => {
         let transform = createTransformProperty(transformFunctions);
+        
         return Object.assign({},
             isValid(transform) ? { transform } : null,
             rest);

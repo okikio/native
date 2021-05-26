@@ -1,6 +1,6 @@
 import { animate, IAnimationOptions, methodCall, UnitPXCSSValue } from "@okikio/native";
 
-
+// I added extra code to the demo to support Chrome 77 and below
 let playbackFn = (containerSel, anims) => {
     let playstateEl = document.querySelector(`${containerSel} #playstate-toggle`) as HTMLInputElement;
     let progressEl = document.querySelector(`${containerSel} #progress`) as HTMLInputElement;
@@ -10,13 +10,16 @@ let playbackFn = (containerSel, anims) => {
 
     let updatePlayState = () => {
         oldState = anims[0].getPlayState();
+        if (oldState as string == "pending") oldState = "running";
         playstateEl.setAttribute("data-playstate", oldState);
+
+        methodCall(anims, "loop");
     };
 
     anims[0]
         .on("finish begin", updatePlayState)
         .on("update", (progress) => {
-            progressEl.value = `` + progress.toFixed(2);
+            progressEl.value = `` + (Math.round(progress) >= 100 ? 100 : progress.toFixed(2));
             progressOutputEl.textContent = `${Math.round(progress)}%`;
         });
 
@@ -29,7 +32,7 @@ let playbackFn = (containerSel, anims) => {
     };
 
     let inputFn = () => {
-        let percent = +progressEl.value;
+        let percent = Math.round(+progressEl.value);
         methodCall(anims, "setProgress", percent);
         methodCall(anims, "pause");
     }
@@ -62,17 +65,24 @@ export let run = () => {
     // Based on an example by animateplus
     (() => {
         let containerSel = ".morph-demo";
-        let pathEl = document.querySelectorAll(`${containerSel} path`);
+        let pathEl = document.querySelector(`${containerSel} path`);
 
-        if (pathEl.length) {
+        if (pathEl) {
+            let InitialStyle = getComputedStyle(pathEl);
             let anim = animate({
                 target: pathEl,
                 duration: 1800,
                 easing: "ease",
                 loop: 4,
                 direction: "alternate",
-                "d": `path("M2,5 S2,14 4,5 S7,8 8,4")`,
-                stroke: `rgb(96, 165, 250)`,
+                "d": [
+                    InitialStyle.getPropertyValue("d"),
+                    `path("M2,5 S2,14 4,5 S7,8 8,4")`
+                ],
+                stroke: [
+                    InitialStyle.getPropertyValue("stroke"),
+                    `rgb(96, 165, 250)`
+                ],
             });
 
             playbackFn(containerSel, [anim]);
@@ -85,27 +95,58 @@ export let run = () => {
         if (DOMNodes.length) {
             anim = animate({
                 target: DOMNodes,
-                backgroundColor() {
+                // keyframes(_, total, target) {
+                //     let bgColor = getComputedStyle(target).getPropertyValue("background-color");
+                //     let [r, g, b] = [
+                //         random(0, 255),
+                //         random(0, 255),
+                //         random(0, 255)
+                //     ];
+
+                //     return [
+                //         {
+                //             translateX: 0,
+                //             translateY: 0,
+                //             scale: 1,
+                //             opacity: 0.5,
+                //             rotate: 0,
+                //             backgroundColor: bgColor
+                //         },
+                //         {
+                //             translateX: random(50, 400),
+                //             translateY: (random(-50, 50) * total),
+                //             scale: 1 + random(0.025, 1.75),
+                //             opacity: 0.5 + Math.min(random(0.025, total) / total, 0.5),
+                //             rotate: random(-360, 360),
+                //             backgroundColor: `rgb(${r}, ${g}, ${b})`
+                //         }
+                //     ];
+                // },
+
+                backgroundColor(_0, _1, target) {
                     let [r, g, b] = [
                         random(0, 255),
                         random(0, 255),
                         random(0, 255)
                     ]
-                    return `rgb(${r}, ${g}, ${b})`;
+                    return [
+                        getComputedStyle(target).getPropertyValue("background-color"),
+                        `rgb(${r}, ${g}, ${b})`
+                    ];
                 },
 
-                translateX: () => random(50, 400),
+                translateX: () => [0, random(50, 400)],
                 translateY(_, total) {
-                    return (random(-50, 50) * total);
+                    return [0, (random(-50, 50) * total)];
                 },
                 scale() {
-                    return 1 + random(0.025, 1.75);
+                    return [1, 1 + random(0.025, 1.75)];
                 },
                 opacity(_, total) {
                     return [0.5, 0.5 + Math.min(random(0.025, total) / total, 0.5)];
                 },
-                rotate: () => random(-360, 360),
-                borderRadius: () => `${random(10, 35)}%`,
+                rotate: () => [0, random(-360, 360)],
+                borderRadius: () => ["3px", `${random(10, 35)}%`],
                 duration: () => random(1200, 1800),
                 delay: () => random(0, 400),
 
@@ -155,16 +196,16 @@ export let run = () => {
             };
 
             removeBtn.onclick = () => {
-                let contain = elPlacement.querySelector(".contain");
-                let el = contain?.querySelector(".el");
+                let contain = elPlacement.querySelector(".contain") as HTMLElement;
+                let el = contain?.querySelector(".el") as HTMLElement;
 
                 anim.remove(el);
 
                 let transition = animate({
                     target: contain,
-                    opacity: 0,
-                    height: 0,
-                    marginBottom: 0,
+                    opacity: [1, 0],
+                    height: [contain.style.height, 0],
+                    marginBottom: [contain.style.marginBottom, 0],
                     fillMode: "forwards",
                     duration: 400,
                     easing: "out"

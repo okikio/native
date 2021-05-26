@@ -38,7 +38,6 @@ export let themeGet = () => {
 export let themeSet = (theme: string) => {
     html.setAttribute("data-theme", theme);
     html.classList.toggle("dark", theme == "dark");
-    setTheme(theme);
 };
 
 export let runTheme = () => {
@@ -70,7 +69,9 @@ let handler = (() => {
         if (themeSwitch[0]) {
             for (let el of themeSwitch)
                 el.addEventListener("click", () => {
-                    themeSet(themeGet() === "dark" ? "light" : "dark");
+                    let theme = themeGet() === "dark" ? "light" : "dark";
+                    themeSet(theme);
+                    setTheme(theme);
                 });
         }
     } catch (e) {

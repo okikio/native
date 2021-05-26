@@ -73,7 +73,7 @@
 					<p>A superset of the Map class, it extends the Map classes capabilities with awesome new features; it weighs <strong>~361 B</strong> (minified and gzipped).</p>
 					<p><em>You will need a Map and Promise polyfill for older browsers. If you install <code>@okikio/manager</code> via <a href="https://www.npmjs.com/package/@okikio/manager">npm</a> you are most likely going to need <a href="https://rollupjs.org/">rollup</a> or <a href="https://esbuild.github.io/">esbuild</a>. You can use <a href="https://polyfill.io/">polyfill.io</a>, or another source to create a polyfill. The minimum feature requirement for a polyfill are Maps and Promises e.g. <a href="https://cdn.polyfill.io/v3/polyfill.min.js?features=Maps,Promise">https://cdn.polyfill.io/v3/polyfill.min.js?features=Maps,Promise</a>.</em></p>
 					<p>You can try out <code>@okikio/manager</code> using Gitpod:</p>
-					<p><a href="https://gitpod.io/#https://github.com/okikio/native/blob/master/packages/manager/README.md"><img src="https://gitpod.io/button/open-in-gitpod.svg" alt="Open In Gitpod"></a></p>
+					<p><a href="https://gitpod.io/#https://github.com/okikio/native/blob/beta/packages/manager/README.md"><img src="https://gitpod.io/button/open-in-gitpod.svg" alt="Open In Gitpod"></a></p>
 					<p>By default Gitpod will start the dev script for you, but if you need to restart the dev script you can do so by typing into the terminal.</p>
 					<pre><code class="language-bash"><span style="color: #000000">pnpm test-dev --filter </span><span style="color: #A31515">&quot;@okikio/manager&quot;</span>
 </code></pre>
@@ -85,10 +85,8 @@
 						<li><a href="#okikiomanager">@okikio/manager</a><ul>
 								<li><a href="#table-of-contents">Table of Contents</a></li>
 								<li><a href="#installation">Installation</a></li>
-								<li><a href="#getting-started">Getting started</a><ul>
-										<li><a href="#api-documentation">API Documentation</a></li>
-									</ul>
-								</li>
+								<li><a href="#getting-started">Getting started</a></li>
+								<li><a href="#api-documentation">API Documentation</a></li>
 								<li><a href="#api">API</a><ul>
 										<li><a href="#existing-map-methods">Existing Map Methods</a></li>
 										<li><a href="#managerlength">Manager#length</a></li>
@@ -138,7 +136,7 @@
 					<p>The <code>Manager</code> class makes Maps easier to use, as well as adding 7 methods, <strong>getMap</strong>, <strong>last</strong>, <strong>methodCall</strong>, <strong>asyncMethodCall</strong>, <strong>add</strong>, <strong>remove</strong>, <strong>keys</strong> and <strong>values</strong>, (<strong>methodCall</strong>, and <strong>asyncMethodCall</strong> are seperate methods from the <code>Manager</code> class, so treeshaking can get rid of them if they aren&#39;t need).</p>
 					<p><em><strong>Note</strong>: the behavior of the keys and values methods are slightly modified, to return an Array of keys/values instead of an iterator. You can get the keys and values original effects by using <code>.getMap().keys()</code> or <code>.getMap().values()</code>.</em></p>
 					<a href="#api-documentation" id="api-documentation" style="color: inherit; text-decoration: none;">
-						<h3>API Documentation</h3>
+						<h2>API Documentation</h2>
 					</a>
 					<p>You can also go through the <a href="https://okikio.github.io/native/docs/modules/manager.html">API documentation</a>, for a more detailed documentation of the API.</p>
 					<a href="#api" id="api" style="color: inherit; text-decoration: none;">
@@ -373,6 +371,7 @@
 						<h2>Contributing</h2>
 					</a>
 					<p>If there is something I missed, a mistake, or a feature you would like added please create an issue or a pull request and I&#39;ll try to get to it.</p>
+					<p><em><strong>Note</strong>: all contributions must be done on the <code>beta</code> branch, using the Conventional Commits style.</em></p>
 					<p><em>The <code>native</code> initiative uses <a href="https://www.conventionalcommits.org/en/v1.0.0/">Conventional Commits</a> as the style of commit, we also use the <a href="http://commitizen.github.io/cz-cli/">Commitizen CLI</a> to make commits easier.</em></p>
 					<a href="#licence" id="licence" style="color: inherit; text-decoration: none;">
 						<h2>Licence</h2>
@@ -426,7 +425,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/okikio/native/blob/fab3d59/packages/manager/src/api.ts#L120">manager/src/api.ts:120</a></li>
+									<li>Defined in <a href="https://github.com/okikio/native/blob/b6dad77/packages/manager/src/api.ts#L120">manager/src/api.ts:120</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -460,7 +459,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/okikio/native/blob/fab3d59/packages/manager/src/api.ts#L110">manager/src/api.ts:110</a></li>
+									<li>Defined in <a href="https://github.com/okikio/native/blob/b6dad77/packages/manager/src/api.ts#L110">manager/src/api.ts:110</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">

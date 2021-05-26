@@ -98,7 +98,7 @@ export const BigTransition: ITransition = {
 
             let [anim2] = await animate({
                 target: this.horizontalElements,
-                scaleX: [2, 0],
+                scaleX: [1, 0],
                 delay(i: number) {
                     return delay * (i + 1);
                 },

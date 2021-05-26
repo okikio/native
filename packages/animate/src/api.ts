@@ -186,6 +186,7 @@ export const GetEase = (ease: keyof typeof EASINGS | string): string => {
  *   fillMode: "none",
  *   direction: "normal",
  *   padEndDelay: false,
+ *   timeline: document.timeline,
  *   extend: {}
  * }
  * ```
@@ -205,6 +206,7 @@ export const DefaultAnimationOptions: IAnimationOptions = {
     fillMode: "none",
     direction: "normal",
     padEndDelay: false,
+    timeline: document.timeline,
     extend: {}
 };
 
@@ -337,12 +339,14 @@ export class Animate {
     constructor(options: IAnimationOptions) {
         this.loop = this.loop.bind(this);
         this.onVisibilityChange = this.onVisibilityChange.bind(this);
-        this.on("error", (err) => console.error(err));
+        this.on("error", console.error);
         this.updateOptions(options);
 
-        this.visibilityPlayState = this.getPlayState();
-        if (Animate.pauseOnPageHidden) {
-            document.addEventListener('visibilitychange', this.onVisibilityChange, false);
+        if (this.mainAnimation) {
+            this.visibilityPlayState = this.getPlayState();
+            if (Animate.pauseOnPageHidden) {
+                document.addEventListener('visibilitychange', this.onVisibilityChange, false);
+            }
         }
 
         this.newPromise();
@@ -736,13 +740,14 @@ export class Animate {
     /**
      * Creates animations out of an array of computed options
      */
-    protected createAnimations(param: { arrOfComputedOptions: any; padEndDelay: any; oldCSSProperties: any; onfinish: any; oncancel: any; }, len: number) {
+    protected createAnimations(param: { arrOfComputedOptions: any; padEndDelay: any; oldCSSProperties: any; onfinish: any; oncancel: any; timeline?: any; }, len: number) {
         let {
             arrOfComputedOptions,
             padEndDelay,
             oldCSSProperties,
             onfinish,
-            oncancel
+            oncancel,
+            timeline
         } = param;
 
         this.targets.forEach((target: HTMLElement, i) => {
@@ -802,7 +807,7 @@ export class Animate {
                     // Remove `speed` & `loop`, they are not valid CSS properties
                     let { easing, offset, ...remaining } = omit(["speed", "loop"], keyframe);
 
-                    return Object.assign({ },
+                    return Object.assign({},
                         remaining,
                         typeof easing == "string" ? { easing: GetEase(easing) } : null,
                         typeof offset == "string" || typeof offset == "number"
@@ -825,7 +830,7 @@ export class Animate {
             } else {
                 // Create animation and add it to the Animations Set
                 keyFrameEffect = new KeyframeEffect(target, computedKeyframes, computedOptions as KeyframeAnimationOptions);
-                animation = new Animation(keyFrameEffect, computedOptions.timeline);
+                animation = new Animation(keyFrameEffect, timeline);
 
                 this.keyframeEffects.set(target, keyFrameEffect);
                 this.animations.set(keyFrameEffect, animation);
@@ -866,11 +871,13 @@ export class Animate {
             let {
                 // These values cannot be functions
                 padEndDelay,
-                onfinish,
-                oncancel,
                 autoplay,
                 target,
                 targets,
+                timeline,
+
+                onfinish,
+                oncancel,
 
                 /**
                  * Theses are the CSS properties to be animated as Keyframes
@@ -879,7 +886,7 @@ export class Animate {
             } = omit(sharedTimingKeys, this.options);
 
             // This removes all none CSS properties from `optionsFromParam`
-            this.properties = omit([...sharedTimingKeys, "keyframes", "padEndDelay", "onfinish", "oncancel", "autoplay", "target", "targets"], optionsFromParam);
+            this.properties = omit([...sharedTimingKeys, "keyframes", "padEndDelay", "onfinish", "oncancel", "autoplay", "target", "targets", "timeline"], optionsFromParam);
 
             // Avoid duplicate elements
             let oldTargets = this.targets.values();
@@ -897,11 +904,12 @@ export class Animate {
                 padEndDelay,
                 oldCSSProperties,
                 onfinish,
-                oncancel
+                oncancel,
+                timeline
             }, len);
 
             this.maxSpeed = this.maxSpeed ?? this.options.speed as number;
-            this.minDelay = this.minDelay ??  this.options.delay as number;
+            this.minDelay = this.minDelay ?? this.options.delay as number;
             this.totalDuration = this.totalDuration ?? this.options.duration as number;
 
             if (!this.mainAnimation) {
@@ -914,7 +922,7 @@ export class Animate {
                     easing: "linear"
                 });
 
-                this.mainAnimation = new Animation(this.mainkeyframeEffect, this.options.timeline);
+                this.mainAnimation = new Animation(this.mainkeyframeEffect, timeline);
             } else {
                 this.mainkeyframeEffect?.updateTiming?.({
                     duration: this.totalDuration

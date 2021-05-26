@@ -20,7 +20,8 @@ html.dark
     link(href='https://fonts.googleapis.com/css2?family=Material+Icons&family=Material+Icons+Round&display=block' rel='stylesheet')
 
     link(rel='stylesheet' href='./css/app.css')
-    script(src='./js/theme.js' type='module' async)
+
+    script(src='./js/theme.min.js' async)
 
   body
     +navbar
@@ -31,5 +32,10 @@ html.dark
       block content
 
     +footer
+
+    script(src="https://cdn.polyfill.io/v3/polyfill.min.js?features=default,es2015,es2018,Array.prototype.includes,Map,Set,Promise" defer)
+    script(src="https://cdn.jsdelivr.net/npm/web-animations-js/web-animations-next.min.js" defer)
+
     block scripts
-      script(src='./js/main.js' type='module' async)
+      script(src='./js/legacy.min.js' nomodule defer)
+      script(src='./js/main.min.js' type='module' defer)
