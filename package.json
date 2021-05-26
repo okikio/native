@@ -8,7 +8,7 @@
     ],
     "scripts": {
         "commit": "git cz",
-        "typedoc": "typedoc",
+        "typedoc": "trash docs/ && typedoc",
         "build": "pnpm -r build",
         "watch": "pnpm -r watch --parallel",
         "demo": "gulp default --watch",
@@ -72,6 +72,7 @@
         "sass": "^1.34.0",
         "standard-version": "^9.3.0",
         "tailwindcss": "^2.1.2",
+        "trash-cli": "^4.0.0",
         "typedoc": "^0.20.36",
         "typescript": "^4.2.4",
         "ultra-runner": "^3.10.5"
