@@ -2,9 +2,9 @@ import chalk from "chalk";
 import { build } from "esbuild";
 import { file } from "gzip-size";
 import prettyBytes from "pretty-bytes";
+import del from "del";
 
 let arrPromises, promise, newTime, oldTime;
-
 export default async (source = "src/api.ts", globalName, mode) => {
     const fileSize = async (inputFile = "lib/api.es.js") => `${prettyBytes(await file(inputFile))}`;
     const outputs = [
