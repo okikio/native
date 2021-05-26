@@ -2,7 +2,7 @@
 const mode = process.argv.includes("--watch") ? "watch" : "build";
 
 // Gulp utilities
-import { watch, task, series, parallel, stream, src } from "./util.js";
+import { watch, task, series, parallel, stream, tasks, parallelFn } from "./util.js";
 
 // Origin folders (source and destination folders)
 const srcFolder = `build`;
@@ -17,6 +17,9 @@ const pugFolder = `${srcFolder}/pug`;
 const jsFolder = `${destFolder}/js`;
 const cssFolder = `${destFolder}/css`;
 const htmlFolder = `${destFolder}`;
+
+// Main ts file bane
+const tsFile = `main.ts`;
 
 let browserSync;
 
@@ -94,38 +97,158 @@ task("minify-css", async () => {
 });
 
 // JS Tasks
-task("js", async () => {
-    const [
-        { default: gulpEsBuild, createGulpEsbuild },
-        { default: gzipSize },
-        { default: prettyBytes },
-    ] = await Promise.all([
-        import("gulp-esbuild"),
-        import("gzip-size"),
-        import("pretty-bytes"),
-    ]);
+tasks({
+    "modern-js": async () => {
+        const [
+            { default: gulpEsBuild, createGulpEsbuild },
+            { default: size },
+        ] = await Promise.all([
+            import("gulp-esbuild"),
+            import("gulp-size"),
+        ]);
 
-    const esbuild = mode == "watch" ? createGulpEsbuild() : gulpEsBuild;
-    return stream(`${tsFolder}/*.ts`, {
-        pipes: [
-            // Bundle Modules
-            esbuild({
-                bundle: true,
-                minify: true,
-                sourcemap: true,
-                format: "esm",
-                target: ["es2018"],
-            }),
-        ],
-        dest: jsFolder, // Output
-        async end() {
-            console.log(
-                `=> Gzip size - ${prettyBytes(
-                    await gzipSize.file(`${jsFolder}/main.js`)
-                )}\n`
-            );
-        },
-    });
+        const esbuild = mode == "watch" ? createGulpEsbuild() : gulpEsBuild;
+        return stream(`${tsFolder}/${tsFile}`, {
+            pipes: [
+                // Bundle Modules
+                esbuild({
+                    bundle: true,
+                    minify: true,
+                    sourcemap: true,
+                    format: "esm",
+                    platform: "browser",
+                    target: ["es2018"],
+                    entryNames: '[name].min',
+                }),
+                size({ gzip: true, showFiles: true, showTotal: false })
+            ],
+            dest: jsFolder, // Output
+        });
+    },
+
+    "legacy-js": async () => {
+        let [
+            { default: gulpEsBuild, createGulpEsbuild },
+            { default: typescript },
+            { default: terser },
+            { default: size },
+        ] = await Promise.all([
+            import("gulp-esbuild"),
+            import("gulp-typescript"),
+            import("gulp-terser"),
+            import("gulp-size"),
+        ]);
+
+        let esbuild = mode == "watch" ? createGulpEsbuild() : gulpEsBuild;
+        return stream([`${tsFolder}/${tsFile}`], {
+            pipes: [
+                // Bundle Modules
+                esbuild({
+                    bundle: true,
+                    minify: false,
+                    sourcemap: false,
+                    format: "iife",
+                    platform: "browser",
+                    target: ["es6"],
+                    outfile: "legacy.min.js",
+                }),
+
+                // Support for es5
+                typescript({
+                    target: "ES5",
+                    allowJs: true,
+                    checkJs: false,
+                    noEmit: true,
+                    noEmitOnError: true,
+                    sourceMap: false,
+                    declaration: false,
+                    isolatedModules: true,
+                }),
+
+                // Minify
+                terser({
+                    keep_fnames: false, // change to true here
+                    toplevel: true,
+                    compress: {
+                        dead_code: true,
+                    },
+                    ecma: 5,
+                }),
+
+                size({ gzip: true, showFiles: true, showTotal: false  })
+            ],
+            dest: jsFolder, // Output
+        });
+    },
+
+    "other-js": async () => {
+        let [
+            { default: gulpEsBuild, createGulpEsbuild },
+            { default: typescript },
+            { default: terser },
+            { default: size },
+        ] = await Promise.all([
+            import("gulp-esbuild"),
+            import("gulp-typescript"),
+            import("gulp-terser"),
+            import("gulp-size"),
+        ]);
+
+        let esbuild = mode == "watch" ? createGulpEsbuild() : gulpEsBuild;
+        return stream([`${tsFolder}/*.ts`, `!${tsFolder}/${tsFile}`], {
+            pipes: [
+                // Bundle Modules
+                esbuild({
+                    bundle: true,
+                    minify: false,
+                    sourcemap: false,
+                    format: "iife",
+                    platform: "browser",
+                    target: ["es6"],
+                    entryNames: '[name].min',
+                }),
+
+                // Support for es5
+                typescript({
+                    target: "ES5",
+                    allowJs: true,
+                    checkJs: false,
+                    noEmit: true,
+                    noEmitOnError: true,
+                    sourceMap: true,
+                    declaration: false,
+                    isolatedModules: true,
+                }),
+
+                // Minify
+                terser({
+                    keep_fnames: false, // change to true here
+                    toplevel: true,
+                    compress: {
+                        dead_code: true,
+                    },
+                    ecma: 5,
+                }),
+                size({ gzip: true, showFiles: true, showTotal: false  })
+            ],
+            dest: jsFolder, // Output
+        });
+    },
+    "js": parallelFn("modern-js", "legacy-js", "other-js")
+});
+// BrowserSync
+task("reload", (resolve) => {
+    if (browserSync) browserSync.reload();
+    resolve();
+});
+
+// Delete destFolder for added performance
+task("clean", async () => {
+    const { default: fn } = await import("fs");
+    if (!fn.existsSync(destFolder)) return Promise.resolve();
+
+    const { default: del } = await import("del");
+    return del(destFolder);
 });
 
 // Build & Watch Tasks
@@ -168,7 +291,7 @@ task("watch", async () => {
         }
     );
 
-    watch(`${pugFolder}/**/*.pug`, series("html", "css"));
+    watch(`${pugFolder}/**/*.pug`, series("html", "css", "reload"));
     watch([`${sassFolder}/**/*.scss`, `./tailwind.cjs`], series("css"));
     watch(
         [
@@ -179,14 +302,9 @@ task("watch", async () => {
             `packages/emitter/src/**/*.ts`,
         ],
         { delay: 300 },
-        series("js")
-    );
-
-    watch([`${htmlFolder}/**/*.html`, `${jsFolder}/**/*.js`]).on(
-        "change",
-        browserSync.reload
+        series("js", "reload")
     );
 });
 
-task("build", series(parallel("html", "css", "js"), "minify-css"));
-task("default", series(parallel("html", "css", "js"), "watch"));
+task("build", series("clean", parallel("html", "css", "js"), "minify-css"));
+task("default", series("clean", parallel("html", "css", "js"), "watch"));
