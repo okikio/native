@@ -10,7 +10,7 @@ An animation library for the modern web, which. Inspired by animate plus, and an
 
 You can try out `@okikio/animate` using Gitpod:
 
-[![Open In Gitpod](https://gitpod.io/button/open-in-gitpod.svg)](https://gitpod.io/#https://github.com/okikio/native/blob/master/packages/animate/README.md)
+[![Open In Gitpod](https://gitpod.io/button/open-in-gitpod.svg)](https://gitpod.io/#https://github.com/okikio/native/blob/beta/packages/animate/README.md)
 
 By default Gitpod will start the dev script for you, but if you need to restart the dev script you can do so by typing into the terminal.
 
@@ -114,7 +114,9 @@ const { default: anime } = window.animate; // LOL
 
 ## Demo
 
-I built a small demo showing off the abilities of the `@okikio/animate` library. You can find the files for the demo in [./build](https://github.com/okikio/native/tree/master/build) folder.
+I built a small demo showing off the abilities of the `@okikio/animate` library. You can find the files for the demo in [./build](https://github.com/okikio/native/tree/beta/build) folder. For more info on how to use the demo go to [okikio/native#usage](https://github.com/okikio/native/blob/beta/README.md#usage) on Github.
+
+I recommend using the Gitpod link at the top of the page to get started with development, as it removes the need for setup.
 
 > [Click to view demo &#8594;](https://okikio.github.io/native/demo/animate)
 
@@ -1154,7 +1156,7 @@ animate({
 
 ## Examples
 
-[![@okikio/animate - playground](https://raw.githubusercontent.com/okikio/native/master/packages/animate/assets/Web%20Animation%20API%20Library%20Playground.png)](https://codepen.io/collection/rxOEBO)
+[![@okikio/animate - playground](https://raw.githubusercontent.com/okikio/native/beta/packages/animate/assets/Web%20Animation%20API%20Library%20Playground.png)](https://codepen.io/collection/rxOEBO)
 
 [Go through this collection of examples for more detailed demos   &#8594;](https://codepen.io/collection/rxOEBO)
 
@@ -1327,6 +1329,8 @@ Animations play a major role in the design of good user interfaces. They help co
 ## Contributing
 
 If there is something I missed, a mistake, or a feature you would like added please create an issue or a pull request and I'll try to get to it.
+
+_**Note**: all contributions must be done on the `beta` branch, using the Conventional Commits style._
 
 *The `native` initiative uses [Conventional Commits](https://www.conventionalcommits.org/en/v1.0.0/) as the style of commit, we even use the [Commitizen CLI](https://commitizen.github.io/cz-cli/) to make commits easier.*
 
