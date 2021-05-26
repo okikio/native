@@ -370,6 +370,7 @@ export declare class Animate {
         oldCSSProperties: any;
         onfinish: any;
         oncancel: any;
+        timeline?: any;
     }, len: number): void;
     /**
      * Update the options for all targets
