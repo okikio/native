@@ -30,8 +30,8 @@ let playbackFn = (containerSel, anims) => {
 
     let inputFn = () => {
         let percent = +progressEl.value;
-        methodCall(anims, "pause");
         methodCall(anims, "setProgress", percent);
+        methodCall(anims, "pause");
     }
 
     let changeFn = () => {
