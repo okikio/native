@@ -39,7 +39,11 @@ export class Router extends Service {
     /** Convert strings into path match functions */
     public parsePath(path: RouteStyle): RegExp | boolean {
         if (typeof path === "string" || path instanceof RegExp || Array.isArray(path)) {
-            return pathToRegexp(path as Path);
+            let _keys = [];
+            return pathToRegexp(path as Path, _keys, {
+                start: false,
+                end: false
+            });
         } else if (typeof path === "boolean")
             return path ? /.*/ : path;
 

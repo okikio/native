@@ -1,4 +1,4 @@
-import { PJAX, App, TransitionManager, Router, HistoryManager, PageManager, ITransitionData } from "@okikio/native";
+import { PJAX, App, TransitionManager, Router, HistoryManager, PageManager } from "@okikio/native";
 
 import { Fade } from "./transitions/Fade";
 import { BigTransition } from "./transitions/BigTransition";
@@ -31,10 +31,6 @@ app
     .add(router)
     .add(pjax);
 
-app.on("CLICK", (data) => {
-    let { from } = data as ITransitionData ;
-})
-
 router
     .add({
         path: {
@@ -44,7 +40,7 @@ router
         method: stop
     })
     .add({
-        path: "/animate(.html)?",
+        path: /\/animate(.html)?/,
         method: run
     });
 

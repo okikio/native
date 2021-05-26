@@ -30,8 +30,8 @@ let playbackFn = (containerSel, anims) => {
 
     let inputFn = () => {
         let percent = +progressEl.value;
-        methodCall(anims, "pause");
         methodCall(anims, "setProgress", percent);
+        methodCall(anims, "pause");
     }
 
     let changeFn = () => {
@@ -64,7 +64,7 @@ export let run = () => {
         let containerSel = ".morph-demo";
         let pathEl = document.querySelectorAll(`${containerSel} path`);
 
-        if (pathEl) {
+        if (pathEl.length) {
             let anim = animate({
                 target: pathEl,
                 duration: 1800,

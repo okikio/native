@@ -798,16 +798,16 @@ export class Animate {
                     !isValid(_offset) ? null : { offset: _offset.map(parseOffset) }
                 ) as PropertyIndexedKeyframes;
             } else {
-                computedKeyframes = animationKeyframe.map((keyframe: Keyframe & { loop: boolean | number }) => {
-                    // Remove `speed`, it's not a valid CSS property
-                    let { loop, easing, offset, ...remaining } = omit(["speed"], keyframe);
+                computedKeyframes = animationKeyframe.map((keyframe: Keyframe) => {
+                    // Remove `speed` & `loop`, they are not valid CSS properties
+                    let { easing, offset, ...remaining } = omit(["speed", "loop"], keyframe);
 
-                    return {
-                        easing: GetEase(easing),
-                        iterations: (loop as boolean) === true ? Infinity : Number(loop),
-                        offset: parseOffset(offset),
-                        ...remaining
-                    };
+                    return Object.assign({ },
+                        remaining,
+                        typeof easing == "string" ? { easing: GetEase(easing) } : null,
+                        typeof offset == "string" || typeof offset == "number"
+                            ? { offset: parseOffset(offset) } : null
+                    );
                 });
 
                 // Transform transformable CSS properties in each keyframe of the keyframe array

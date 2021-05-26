@@ -34,6 +34,7 @@ jobs:
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v2
         with:
+          ref: master
           node-version: 14
           registry-url: https://registry.npmjs.org/
       - name: Cache .pnpm-store
@@ -60,8 +61,10 @@ jobs:
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v2
         with:
+          ref: master
           node-version: 14
           registry-url: https://npm.pkg.github.com/
+          scope: '@okikio'
       - name: Cache .pnpm-store
         uses: actions/cache@v1
         with:

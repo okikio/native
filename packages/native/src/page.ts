@@ -152,7 +152,7 @@ export class PageManager extends Service {
         const headers = new Headers(this.config.headers);
         const timeout = window.setTimeout(() => {
             window.clearTimeout(timeout);
-            
+
             const err = new Error("Request Timed Out!");
             this.emitter.emit("TIMEOUT_ERROR", err);
             throw err;
@@ -186,8 +186,13 @@ export class PageManager extends Service {
 export const ignoreURLs = (urlString: string, ignoreList: boolean | IgnoreURLsList) => {
     if (typeof ignoreList == "boolean")
         return ignoreList;
+
+    let _keys = [];
     return !(ignoreList as IgnoreURLsList)
-        .every(val => pathToRegexp(val).exec(urlString) == null);
+        .every(val => pathToRegexp(val, _keys, {
+            start: false,
+            end: false
+        }).exec(urlString) == null);
 }
 
 export interface IPageManager extends PageManager { }

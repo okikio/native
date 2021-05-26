@@ -1,9 +1,9 @@
 mixin nav-list
   ul.navbar-list
-    a(href='./animate.html' data-path='/animate(\.html)?' data-prevent="self") @okikio/animate (no-pjax)
     a(href='./index.html' data-path='(index|\/$)(\.html)?' data-transition='default') Home
     a(href='./about.html' data-path='/about(.html)?' data-transition='SlideLeft') About
     a(href='./other.html' data-path='/other(.html)?' data-transition='BigTransition') Other
+    a(href='./animate.html' data-path='/animate(\.html)?' data-prevent="self") @okikio/animate (no-pjax)
     block
 
 mixin navbar
@@ -18,6 +18,7 @@ mixin navbar
       .navbar-frame
         a.navbar-logo(href='./index.html') @okikio/native
         .mobile
+          a.btn.btn-highlight(href="https://github.com/okikio/native#readme" target="_blank" rel="noopener") Github
           button.theme-toggle(type='button')
             span.icon dark_mode
           button.navbar-toggle(type='button')
@@ -27,5 +28,6 @@ mixin navbar
         .desktop
           .navbar-collapse
             +nav-list
+              a.btn.btn-highlight(href="https://github.com/okikio/native#readme" target="_blank" rel="noopener") Github
               button.theme-toggle(type='button')
                 span.icon dark_mode

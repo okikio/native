@@ -1,6 +1,6 @@
 {
     "name": "@okikio/native",
-    "version": "2.1.0",
+    "version": "2.1.5",
     "type": "module",
     "sideEffects": false,
     "description": "A framework who's goal is to make it easier to create complex, light-weight, and performant web applications using modern js apis.",
@@ -65,7 +65,7 @@
         "path-to-regexp": "^6.2.0"
     },
     "devDependencies": {
-        "esbuild": "^0.12.1",
+        "esbuild": "^0.12.2",
         "pnpm": "^6.4.0",
         "standard-version": "^9.3.0",
         "typescript": "^4.2.4"
