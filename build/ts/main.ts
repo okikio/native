@@ -5,7 +5,7 @@ import { BigTransition } from "./transitions/BigTransition";
 import { Slide, SlideLeft, SlideRight } from "./transitions/Slide";
 
 import { Navbar } from "./services/Navbar";
-import { stop, run } from "./animate";
+import { stop, run } from "./modules/animate";
 
 const router = new Router();
 const pjax = new PJAX();
