@@ -53,7 +53,7 @@ a {
     -webkit-tap-highlight-color: transparent;
 }
 
-@screen sm {
+@screen md {
     .desktop {
         display: block;
     }
@@ -63,7 +63,7 @@ a {
     }
 }
 
-@screen lt-sm {
+@screen lt-md {
     .mobile {
         display: block;
     }
@@ -74,8 +74,7 @@ a {
 }
 
 .navbar-toggle,
-.theme-toggle,
-.btn-icon {
+.theme-toggle {
     @apply rounded-md;
     @apply mr-1 w-10 h-10 text-blue-500 bg-gray-100 hover:bg-gray-200 active:bg-blue-200;
     @apply dark:text-blue-400 dark:bg-quaternary;
@@ -84,14 +83,15 @@ a {
 }
 
 .btn-icon {
-    @apply bg-white hover:bg-gray-100 active:bg-blue-200;
-    @apply dark:text-blue-400 dark:bg-tertiary;
+    @apply rounded-md mr-1;
+    @apply text-blue-500 bg-gray-100 hover:bg-gray-200 active:bg-blue-200;
+    @apply dark:text-blue-400 dark:bg-quaternary;
     @apply dark:hover:bg-gray-800 dark:active:bg-gray-700;
     @apply focus-visible:border-blue-600 focus-visible:ring-4 focus:rounded-md;
 }
 
 .theme-toggle {
-    @apply sm:ml-3;
+    @apply md:ml-3;
 }
 
 .btn {

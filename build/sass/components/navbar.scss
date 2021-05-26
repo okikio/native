@@ -64,7 +64,7 @@
 .navbar-collapse {
     @apply items-center;
 
-    @screen lt-sm {
+    @screen lt-md {
         --height: 100vh;
         transition: height ease-out 0.35s;
         @apply flex-grow;
@@ -83,7 +83,7 @@
 }
 
 .navbar-list {
-    @apply flex lt-sm:flex-col flex-nowrap px-1;
+    @apply flex lt-md:flex-col flex-nowrap px-1;
 }
 
 .navbar-logo {
@@ -92,7 +92,7 @@
 }
 
 .navbar-list a {
-    @apply sm:mx-1 lt-sm:w-full lt-sm:my-1;
+    @apply md:mx-1 lt-md:w-full lt-md:my-1;
     @apply font-medium;
 }
 
@@ -117,7 +117,7 @@
 .navbar-list a {
     transition: border-color 0.2s ease-out, box-shadow 0.2s ease-out;
 
-    @screen sm {
+    @screen md {
         transition: background-color 0.15s ease-out, color 0.15s ease-out,
             border-color 0.2s ease-out, box-shadow 0.2s ease-out;
     }
