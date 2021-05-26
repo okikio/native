@@ -186,6 +186,7 @@ export const GetEase = (ease: keyof typeof EASINGS | string): string => {
  *   fillMode: "none",
  *   direction: "normal",
  *   padEndDelay: false,
+ *   timeline: document.timeline,
  *   extend: {}
  * }
  * ```
