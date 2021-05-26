@@ -9,18 +9,22 @@ importers:
       '@csstools/postcss-sass': ^4.0.0
       '@okikio/native': workspace:*
       '@strictsoftware/typedoc-plugin-monorepo': ^0.4.2
-      autoprefixer: ^10.2.5
+      autoprefixer: ^10.2.6
       browser-sync: ^2.26.14
       chalk: ^4.1.1
       chokidar: ^3.5.1
       commitizen: ^4.2.4
-      esbuild: ^0.12.2
+      del: ^6.0.0
+      esbuild: ^0.12.3
       gulp: ^4.0.2
       gulp-esbuild: ^0.8.0
       gulp-plumber: ^1.2.1
       gulp-postcss: ^9.0.0
       gulp-pug: ^4.0.1
       gulp-rename: ^2.0.0
+      gulp-size: ^4.0.0
+      gulp-terser: ^2.0.1
+      gulp-typescript: ^6.0.0-alpha.1
       gzip-size: ^6.0.0
       husky: ^6.0.0
       lerna-changelog: ^1.0.1
@@ -43,18 +47,22 @@ importers:
       '@commitlint/config-conventional': 12.1.4
       '@csstools/postcss-sass': 4.0.0
       '@strictsoftware/typedoc-plugin-monorepo': 0.4.2_typedoc@0.20.36
-      autoprefixer: 10.2.5_postcss@8.3.0
+      autoprefixer: 10.2.6_postcss@8.3.0
       browser-sync: 2.26.14
       chalk: 4.1.1
       chokidar: 3.5.1
       commitizen: 4.2.4
-      esbuild: 0.12.2
+      del: 6.0.0
+      esbuild: 0.12.3
       gulp: 4.0.2
       gulp-esbuild: 0.8.0
       gulp-plumber: 1.2.1
       gulp-postcss: 9.0.0_postcss@8.3.0
       gulp-pug: 4.0.1
       gulp-rename: 2.0.0
+      gulp-size: 4.0.0_gulp@4.0.2
+      gulp-terser: 2.0.1
+      gulp-typescript: 6.0.0-alpha.1_typescript@4.2.4
       gzip-size: 6.0.0
       husky: 6.0.0
       lerna-changelog: 1.0.1
@@ -66,7 +74,7 @@ importers:
       pretty-bytes: 5.6.0
       sass: 1.34.0
       standard-version: 9.3.0
-      tailwindcss: 2.1.2_bce0498cf0c3ab962ab667a3a4ae1b48
+      tailwindcss: 2.1.2_6daa0ece57b4377652e73c9c66c3b94c
       typedoc: 0.20.36_typescript@4.2.4
       typescript: 4.2.4
       ultra-runner: 3.10.5
@@ -76,7 +84,9 @@ importers:
       '@okikio/emitter': workspace:*
       '@okikio/manager': workspace:*
       esbuild: ^0.12.2
+      gzip-size: ^6.0.0
       pnpm: ^6.4.0
+      pretty-bytes: ^5.6.0
       standard-version: ^9.3.0
       typescript: ^4.2.4
     dependencies:
@@ -84,7 +94,9 @@ importers:
       '@okikio/manager': link:../manager
     devDependencies:
       esbuild: 0.12.2
+      gzip-size: 6.0.0
       pnpm: 6.4.0
+      pretty-bytes: 5.6.0
       standard-version: 9.3.0
       typescript: 4.2.4
 
@@ -94,9 +106,11 @@ importers:
       '@types/jest': ^26.0.23
       esbuild: ^0.12.2
       esbuild-jest: ^0.5.0
+      gzip-size: ^6.0.0
       jest: ^27.0.1
       jest-chain: ^1.1.5
       pnpm: ^6.4.0
+      pretty-bytes: ^5.6.0
       standard-version: ^9.3.0
       typescript: ^4.2.4
       ultra-runner: ^3.10.5
@@ -106,9 +120,11 @@ importers:
       '@types/jest': 26.0.23
       esbuild: 0.12.2
       esbuild-jest: 0.5.0_esbuild@0.12.2
+      gzip-size: 6.0.0
       jest: 27.0.1
       jest-chain: 1.1.5
       pnpm: 6.4.0
+      pretty-bytes: 5.6.0
       standard-version: 9.3.0
       typescript: 4.2.4
       ultra-runner: 3.10.5
@@ -118,10 +134,12 @@ importers:
       '@types/jest': ^26.0.23
       esbuild: ^0.12.2
       esbuild-jest: ^0.5.0
+      gzip-size: ^6.0.0
       jest: ^27.0.1
       jest-chain: ^1.1.5
       node-fetch: ^2.6.1
       pnpm: ^6.4.0
+      pretty-bytes: ^5.6.0
       standard-version: ^9.3.0
       typescript: ^4.2.4
       ultra-runner: ^3.10.5
@@ -129,10 +147,12 @@ importers:
       '@types/jest': 26.0.23
       esbuild: 0.12.2
       esbuild-jest: 0.5.0_esbuild@0.12.2
+      gzip-size: 6.0.0
       jest: 27.0.1
       jest-chain: 1.1.5
       node-fetch: 2.6.1
       pnpm: 6.4.0
+      pretty-bytes: 5.6.0
       standard-version: 9.3.0
       typescript: 4.2.4
       ultra-runner: 3.10.5
@@ -143,8 +163,10 @@ importers:
       '@okikio/emitter': workspace:*
       '@okikio/manager': workspace:*
       esbuild: ^0.12.2
+      gzip-size: ^6.0.0
       path-to-regexp: ^6.2.0
       pnpm: ^6.4.0
+      pretty-bytes: ^5.6.0
       standard-version: ^9.3.0
       typescript: ^4.2.4
     dependencies:
@@ -154,7 +176,9 @@ importers:
       path-to-regexp: 6.2.0
     devDependencies:
       esbuild: 0.12.2
+      gzip-size: 6.0.0
       pnpm: 6.4.0
+      pretty-bytes: 5.6.0
       standard-version: 9.3.0
       typescript: 4.2.4
 
@@ -1191,6 +1215,11 @@ packages:
       ansi-wrap: 0.1.0
     dev: true
 
+  /ansi-colors/4.1.1:
+    resolution: {integrity: sha512-JoX0apGbHaUJBNl6yF+p6JAFYZ666/hhCGKN5t9QFjbJQKUU/g8MNbFDbvfrgKXvI1QpZplPOnwIo99lX/AAmA==}
+    engines: {node: '>=6'}
+    dev: true
+
   /ansi-cyan/0.1.1:
     resolution: {integrity: sha1-U4rlKK+JgvKK4w2G8vF0VtJgmHM=}
     engines: {node: '>=0.10.0'}
@@ -1409,6 +1438,11 @@ packages:
       kind-of: 5.1.0
     dev: true
 
+  /array-union/2.1.0:
+    resolution: {integrity: sha512-HGyxoOTYUyCM6stUe6EJgnd4EoewAI7zMdfqO+kGjnlZmBDz/cR5pf8r/cR4Wq60sL/p0IkcjUEEPwS3GFrIyw==}
+    engines: {node: '>=8'}
+    dev: true
+
   /array-unique/0.3.2:
     resolution: {integrity: sha1-qJS3XUvE9s1nnvMkSp/Y9Gri1Cg=}
     engines: {node: '>=0.10.0'}
@@ -1477,8 +1511,8 @@ packages:
     hasBin: true
     dev: true
 
-  /autoprefixer/10.2.5_postcss@8.3.0:
-    resolution: {integrity: sha512-7H4AJZXvSsn62SqZyJCP+1AWwOuoYpUfK6ot9vm0e87XD6mT8lDywc9D9OTJPMULyGcvmIxzTAMeG2Cc+YX+fA==}
+  /autoprefixer/10.2.6_postcss@8.3.0:
+    resolution: {integrity: sha512-8lChSmdU6dCNMCQopIf4Pe5kipkAGj/fvTMslCsih0uHpOrXOPUEVOmYMMqmw3cekQkSD7EhIeuYl5y0BLdKqg==}
     engines: {node: ^10 || ^12 || >=14}
     hasBin: true
     peerDependencies:
@@ -1742,6 +1776,13 @@ packages:
       fill-range: 7.0.1
     dev: true
 
+  /brotli-size/4.0.0:
+    resolution: {integrity: sha512-uA9fOtlTRC0iqKfzff1W34DXUA3GyVqbUaeo3Rw3d4gd1eavKVCETXrn3NzO74W+UVkG3UHu8WxUi+XvKI/huA==}
+    engines: {node: '>= 10.16.0'}
+    dependencies:
+      duplexer: 0.1.1
+    dev: true
+
   /browser-process-hrtime/1.0.0:
     resolution: {integrity: sha512-9o5UecI3GhkpM6DrXr69PblIuWxPKk9Y0jHBRhdocZ2y7YECBFCsHm79Pr3OyR2AvjhDkabFJaDJMYRazHgsow==}
     dev: true
@@ -1819,7 +1860,7 @@ packages:
     dependencies:
       caniuse-lite: 1.0.30001230
       colorette: 1.2.2
-      electron-to-chromium: 1.3.738
+      electron-to-chromium: 1.3.739
       escalade: 3.1.1
       node-releases: 1.1.72
     dev: true
@@ -2851,6 +2892,20 @@ packages:
     resolution: {integrity: sha1-yY2bzvdWdBiOEQlpFRGZ45sfppM=}
     dev: true
 
+  /del/6.0.0:
+    resolution: {integrity: sha512-1shh9DQ23L16oXSZKB2JxpL7iMy2E0S9d517ptA1P8iw0alkPtQcrKH7ru31rYtKwF499HkTu+DRzq3TCKDFRQ==}
+    engines: {node: '>=10'}
+    dependencies:
+      globby: 11.0.3
+      graceful-fs: 4.2.6
+      is-glob: 4.0.1
+      is-path-cwd: 2.2.0
+      is-path-inside: 3.0.3
+      p-map: 4.0.0
+      rimraf: 3.0.2
+      slash: 3.0.0
+    dev: true
+
   /delayed-stream/1.0.0:
     resolution: {integrity: sha1-3zrhmayt+31ECqrgsp4icrJOxhk=}
     engines: {node: '>=0.4.0'}
@@ -2910,6 +2965,13 @@ packages:
     engines: {node: ^10.13.0 || ^12.13.0 || ^14.15.0 || >=15.0.0}
     dev: true
 
+  /dir-glob/3.0.1:
+    resolution: {integrity: sha512-WkrWp9GR4KXfKGYzOLmTuGVi1UWFfws377n9cc55/tb6DuqyF6pcQ5AbiHEshaDpY9v6oaSr2XCDidGmMwdzIA==}
+    engines: {node: '>=8'}
+    dependencies:
+      path-type: 4.0.0
+    dev: true
+
   /dlv/1.1.3:
     resolution: {integrity: sha512-+HlytyjlPKnIG8XuRG8WvmBP8xs8P71y+SKKS6ZXWoEgLuePxtDoUEiH7WkdePWrQ5JBpE6aoVqfZfJUQkjXwA==}
     dev: true
@@ -2938,6 +3000,10 @@ packages:
     dependencies:
       find-up: 3.0.0
       minimatch: 3.0.4
+    dev: true
+
+  /duplexer/0.1.1:
+    resolution: {integrity: sha1-rOb/gIwc5mtX0ev5eXessCM0z8E=}
     dev: true
 
   /duplexer/0.1.2:
@@ -2978,8 +3044,8 @@ packages:
     resolution: {integrity: sha1-WQxhFWsK4vTwJVcyoViyZrxWsh0=}
     dev: true
 
-  /electron-to-chromium/1.3.738:
-    resolution: {integrity: sha512-vCMf4gDOpEylPSLPLSwAEsz+R3ShP02Y3cAKMZvTqule3XcPp7tgc/0ESI7IS6ZeyBlGClE50N53fIOkcIVnpw==}
+  /electron-to-chromium/1.3.739:
+    resolution: {integrity: sha512-+LPJVRsN7hGZ9EIUUiWCpO7l4E3qBYHNadazlucBfsXBbccDFNKUBAgzE68FnkWGJPwD/AfKhSzL+G+Iqb8A4A==}
     dev: true
 
   /emittery/0.8.1:
@@ -3124,6 +3190,12 @@ packages:
 
   /esbuild/0.12.2:
     resolution: {integrity: sha512-VELu6ndrs0CWMV+Ts8GwO3S08JsFFrEuHCo8ekfqNAv/rHEK4UjoXvZOFyopHvRvQVsbTvqQWfBzYKVeLBm0WA==}
+    hasBin: true
+    requiresBuild: true
+    dev: true
+
+  /esbuild/0.12.3:
+    resolution: {integrity: sha512-0kuxNbGLGli8DYMHebJ4pk+RQ9ORYL1PmCSrSQpna1ioHvm+fzCAs99jwRYXGSfCNed1mj0vFSM9LbBm6YVbIQ==}
     hasBin: true
     requiresBuild: true
     dev: true
@@ -3850,6 +3922,18 @@ packages:
     engines: {node: '>=4'}
     dev: true
 
+  /globby/11.0.3:
+    resolution: {integrity: sha512-ffdmosjA807y7+lA1NM0jELARVmYul/715xiILEjo3hBLPTcirgQNnXECn5g3mtR8TOLCVbkfua1Hpen25/Xcg==}
+    engines: {node: '>=10'}
+    dependencies:
+      array-union: 2.1.0
+      dir-glob: 3.0.1
+      fast-glob: 3.2.5
+      ignore: 5.1.8
+      merge2: 1.4.1
+      slash: 3.0.0
+    dev: true
+
   /globrex/0.1.2:
     resolution: {integrity: sha512-uHJgbwAMwNFf5mLst7IWLNg14x1CkeqglJb/K3doi4dw6q2IvAAmM/Y81kevy83wP+Sst+nutFTYOGg3d1lsxg==}
     dev: true
@@ -3894,7 +3978,7 @@ packages:
     resolution: {integrity: sha512-Kkf5wJ8X3cbu+G5abk9hIYJ4vX2Wz2atesW6fTHTt/OKaSlcpE2sxogNPh7cca79lRmcwxR+kXamhbCwY+ABfQ==}
     engines: {node: '>=8.6.0'}
     dependencies:
-      esbuild: 0.12.2
+      esbuild: 0.12.3
       plugin-error: 1.0.1
       vinyl: 2.2.1
     dev: true
@@ -3939,6 +4023,51 @@ packages:
     engines: {node: '>=4'}
     dev: true
 
+  /gulp-size/4.0.0_gulp@4.0.2:
+    resolution: {integrity: sha512-VBjkLazLE8ey54Spf9UCVneSSnlheCLpB+AXx1dbX2SWCiicFBPxokf7U8oA2skU8ljcim/Eo5UMjzve1aTAjg==}
+    engines: {node: '>=12'}
+    peerDependencies:
+      gulp: '>=4'
+    peerDependenciesMeta:
+      gulp:
+        optional: true
+    dependencies:
+      brotli-size: 4.0.0
+      chalk: 4.1.1
+      fancy-log: 1.3.3
+      gulp: 4.0.2
+      gzip-size: 6.0.0
+      plugin-error: 1.0.1
+      pretty-bytes: 5.6.0
+      stream-counter: 1.0.0
+      through2: 4.0.2
+    dev: true
+
+  /gulp-terser/2.0.1:
+    resolution: {integrity: sha512-XCrnCXP8ovNpgLK9McJIXlgm0j3W2TsiWu7K9y3m+Sn5XZgUzi6U8MPHtS3NdLMic9poCj695N0ARJ2B6atypw==}
+    engines: {node: '>=10'}
+    dependencies:
+      plugin-error: 1.0.1
+      terser: 5.4.0
+      through2: 4.0.2
+      vinyl-sourcemaps-apply: 0.2.1
+    dev: true
+
+  /gulp-typescript/6.0.0-alpha.1_typescript@4.2.4:
+    resolution: {integrity: sha512-KoT0TTfjfT7w3JItHkgFH1T/zK4oXWC+a8xxKfniRfVcA0Fa1bKrIhztYelYmb+95RB80OLMBreknYkdwzdi2Q==}
+    engines: {node: '>= 8'}
+    peerDependencies:
+      typescript: '~2.7.1 || >=2.8.0-dev || >=2.9.0-dev || ~3.0.0 || >=3.0.0-dev || >=3.1.0-dev || >= 3.2.0-dev || >= 3.3.0-dev || >= 3.4.0-dev || >= 3.5.0-dev || >= 3.6.0-dev || >= 3.7.0-dev '
+    dependencies:
+      ansi-colors: 4.1.1
+      plugin-error: 1.0.1
+      source-map: 0.7.3
+      through2: 3.0.2
+      typescript: 4.2.4
+      vinyl: 2.2.1
+      vinyl-fs: 3.0.3
+    dev: true
+
   /gulp/4.0.2:
     resolution: {integrity: sha512-dvEs27SCZt2ibF29xYgmnwwCYZxdxhQ/+LFWlbAW8y7jt68L/65402Lz3+CKy0Ov4rOs+NERmDq7YlZaDqUIfA==}
     engines: {node: '>= 0.10'}
@@ -3974,7 +4103,7 @@ packages:
       source-map: 0.6.1
       wordwrap: 1.0.0
     optionalDependencies:
-      uglify-js: 3.13.7
+      uglify-js: 3.13.8
     dev: true
 
   /hard-rejection/2.1.0:
@@ -4101,7 +4230,7 @@ packages:
       depd: 1.1.2
       inherits: 2.0.3
       setprototypeof: 1.1.0
-      statuses: 1.4.0
+      statuses: 1.5.0
     dev: true
 
   /http-errors/1.7.3:
@@ -4549,6 +4678,16 @@ packages:
 
   /is-obj/2.0.0:
     resolution: {integrity: sha512-drqDG3cbczxxEJRoOXcOjtdp1J/lyp1mNn0xaznRs8+muBhgQcrnbspox5X5fOw0HnMnbfDzvnEMEtqDEJEo8w==}
+    engines: {node: '>=8'}
+    dev: true
+
+  /is-path-cwd/2.2.0:
+    resolution: {integrity: sha512-w942bTcih8fdJPJmQHFzkS76NEP8Kzzvmw92cXsazb8intwLqPibPPdXf4ANdKV3rYMuuQYGIWtvz9JilB3NFQ==}
+    engines: {node: '>=6'}
+    dev: true
+
+  /is-path-inside/3.0.3:
+    resolution: {integrity: sha512-Fd4gABb+ycGAmKou8eMftCupSir5lRxqf4aD/vd0cD2qc4HL07OjCeuHMr8Ro4CoMaeCKDB0/ECBOVWjTwUvPQ==}
     engines: {node: '>=8'}
     dev: true
 
@@ -6125,8 +6264,8 @@ packages:
       kind-of: 3.2.2
     dev: true
 
-  /object-hash/2.1.1:
-    resolution: {integrity: sha512-VOJmgmS+7wvXf8CjbQmimtCnEx3IAoLxI3fp2fbWehxrWBcAQFbk+vcwb6vzR0VZv/eNCJ/27j151ZTwqW/JeQ==}
+  /object-hash/2.2.0:
+    resolution: {integrity: sha512-gScRMn0bS5fH+IuwyIFgnh9zBdo4DV+6GhygmWM9HyNJSgS0hScp1f5vjtm7oIIOiT9trXrShAkLFSc2IqKNgw==}
     engines: {node: '>= 6'}
     dev: true
 
@@ -6321,6 +6460,13 @@ packages:
   /p-map/3.0.0:
     resolution: {integrity: sha512-d3qXVTF/s+W+CdJ5A29wywV2n8CQQYahlgz2bFiA+4eVNJbHJodPZ+/gXwPGh0bOqA+j8S+6+ckmvLGPk1QpxQ==}
     engines: {node: '>=8'}
+    dependencies:
+      aggregate-error: 3.1.0
+    dev: true
+
+  /p-map/4.0.0:
+    resolution: {integrity: sha512-/bjOqmgETBYB5BoEeGVea8dmvHb2m9GLy1E9W43yeyfP6QQCZGFNa+XRceJEuDB6zqr+gKpIAmlLebMpykw/MQ==}
+    engines: {node: '>=10'}
     dependencies:
       aggregate-error: 3.1.0
     dev: true
@@ -7753,6 +7899,11 @@ packages:
     engines: {node: '>= 0.6'}
     dev: true
 
+  /stream-counter/1.0.0:
+    resolution: {integrity: sha1-kc8lac5NxQYf6816yyY5SloRR1E=}
+    engines: {node: '>=0.10.20'}
+    dev: true
+
   /stream-exhaust/1.0.2:
     resolution: {integrity: sha512-b/qaq/GlBK5xaq1yrK9/zFcyRSTNxmcZwFLGSTG0mXgZl/4Z6GgiyYOXOvY7N3eEvFRAG1bkDRz5EPGSvPYQlw==}
     dev: true
@@ -7961,7 +8112,7 @@ packages:
     resolution: {integrity: sha512-9QNk5KwDF+Bvz+PyObkmSYjI5ksVUYtjW7AU22r2NKcfLJcXp96hkDWU3+XndOsUb+AQ9QhfzfCT2O+CNWT5Tw==}
     dev: true
 
-  /tailwindcss/2.1.2_bce0498cf0c3ab962ab667a3a4ae1b48:
+  /tailwindcss/2.1.2_6daa0ece57b4377652e73c9c66c3b94c:
     resolution: {integrity: sha512-T5t+wwd+/hsOyRw2HJuFuv0LTUm3MUdHm2DJ94GPVgzqwPPFa9XxX0KlwLWupUuiOUj6uiKURCzYPHFcuPch/w==}
     engines: {node: '>=12.13.0'}
     hasBin: true
@@ -7970,7 +8121,7 @@ packages:
       postcss: ^8.0.9
     dependencies:
       '@fullhuman/postcss-purgecss': 3.1.3
-      autoprefixer: 10.2.5_postcss@8.3.0
+      autoprefixer: 10.2.6_postcss@8.3.0
       bytes: 3.1.0
       chalk: 4.1.1
       chokidar: 3.5.1
@@ -7986,7 +8137,7 @@ packages:
       modern-normalize: 1.1.0
       node-emoji: 1.10.0
       normalize-path: 3.0.0
-      object-hash: 2.1.1
+      object-hash: 2.2.0
       parse-glob: 3.0.4
       postcss: 8.3.0
       postcss-functions: 3.0.0
@@ -8018,6 +8169,16 @@ packages:
     dependencies:
       ansi-escapes: 4.3.2
       supports-hyperlinks: 2.2.0
+    dev: true
+
+  /terser/5.4.0:
+    resolution: {integrity: sha512-3dZunFLbCJis9TAF2VnX+VrQLctRUmt1p3W2kCsJuZE4ZgWqh//+1MZ62EanewrqKoUf4zIaDGZAvml4UDc0OQ==}
+    engines: {node: '>=10'}
+    hasBin: true
+    dependencies:
+      commander: 2.20.3
+      source-map: 0.7.3
+      source-map-support: 0.5.19
     dev: true
 
   /test-exclude/6.0.0:
@@ -8074,6 +8235,13 @@ packages:
     dependencies:
       readable-stream: 2.3.7
       xtend: 4.0.2
+    dev: true
+
+  /through2/3.0.2:
+    resolution: {integrity: sha512-enaDQ4MUyP2W6ZyT6EsMzqBPZaM/avg8iuo+l2d3QCs0J+6RaqkHV/2/lOwDTueBHeJ/2LG9lrLW3d5rWPucuQ==}
+    dependencies:
+      inherits: 2.0.4
+      readable-stream: 3.6.0
     dev: true
 
   /through2/4.0.2:
@@ -8304,8 +8472,8 @@ packages:
       uglify-to-browserify: 1.0.2
     dev: true
 
-  /uglify-js/3.13.7:
-    resolution: {integrity: sha512-1Psi2MmnZJbnEsgJJIlfnd7tFlJfitusmR7zDI8lXlFI0ACD4/Rm/xdrU8bh6zF0i74aiVoBtkRiFulkrmh3AA==}
+  /uglify-js/3.13.8:
+    resolution: {integrity: sha512-PvFLMFIQHfIjFFlvAch69U2IvIxK9TNzNWt1SxZGp9JZ/v70yvqIQuiJeVPPtUMOzoNt+aNRDk4wgxb34wvEqA==}
     engines: {node: '>=0.8.0'}
     hasBin: true
     dev: true
