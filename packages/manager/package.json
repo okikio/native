@@ -1,6 +1,6 @@
 {
     "name": "@okikio/manager",
-    "version": "2.1.5",
+    "version": "2.1.6",
     "type": "module",
     "sideEffects": false,
     "description": "A superset of the Map class, it gives the Map class superpowers.",
