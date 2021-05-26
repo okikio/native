@@ -40,17 +40,8 @@ jobs:
     - name: Install
       run: pnpm install
 
-    - name: Build
-      run: pnpm build
-
-    - name: Demo
-      run: pnpm demo-build
-
-    - name: Types
-      run: pnpm dts
-
-    - name: API
-      run: pnpm typedoc
+    - name: Pre-Release
+      run: pnpm pre-release
 
     - name: Commit files
       run: |

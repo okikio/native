@@ -8,7 +8,7 @@
     ],
     "scripts": {
         "commit": "git cz",
-        "typedoc": "trash docs/ && typedoc",
+        "typedoc": "del-cli docs/ && typedoc",
         "build": "pnpm -r build",
         "watch": "pnpm -r watch --parallel",
         "demo": "gulp default --watch",
@@ -17,7 +17,7 @@
         "test": "ultra -r test",
         "test-dev": "ultra -r test-dev",
         "pre-release": "ultra -r pre-release && pnpm demo-build && pnpm typedoc",
-        "changelog": "pnpm -r changelog && lerna-changelog && git push --follow-tags origin master",
+        "changelog": "pnpm -r changelog && git push --follow-tags origin master",
         "release": "pnpm -r publish --tag latest"
     },
     "changelog": {
@@ -50,6 +50,7 @@
         "chokidar": "^3.5.1",
         "commitizen": "^4.2.4",
         "del": "^6.0.0",
+        "del-cli": "^3.0.1",
         "esbuild": "^0.12.3",
         "gulp": "^4.0.2",
         "gulp-esbuild": "^0.8.0",
@@ -72,7 +73,6 @@
         "sass": "^1.34.0",
         "standard-version": "^9.3.0",
         "tailwindcss": "^2.1.2",
-        "trash-cli": "^4.0.0",
         "typedoc": "^0.20.36",
         "typescript": "^4.2.4",
         "ultra-runner": "^3.10.5"
