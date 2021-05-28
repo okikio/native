@@ -154,7 +154,7 @@ export class PageManager extends Service {
             window.clearTimeout(timeout);
 
             const err = new Error("Request Timed Out!");
-            this.emitter.emit("TIMEOUT_ERROR", err);
+            this.emitter.emit("TIMEOUT_ERROR", err, url);
             throw err;
         }, this.config.timeout);
 
@@ -172,7 +172,7 @@ export class PageManager extends Service {
                 return await response.text();
 
             const err = new Error(response.statusText || "" + response.status);
-            this.emitter.emit("REQUEST_ERROR", err);
+            this.emitter.emit("REQUEST_ERROR", err, url);
             throw err;
         } catch (err) {
             window.clearTimeout(timeout);

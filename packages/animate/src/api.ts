@@ -255,17 +255,17 @@ export class Animate {
     /**
      * The total duration of all Animation's
      */
-    public totalDuration: number = 0;
+    public totalDuration: number = -Infinity;
 
     /**
      * The smallest delay out of all Animation's
      */
-    public minDelay: number;
+    public minDelay: number = Infinity;
 
     /**
      * The smallest speed out of all Animation's
      */
-    public maxSpeed: number;
+    public maxSpeed: number = Infinity;
 
     /**
      * The Element the mainAnimation runs on
@@ -731,8 +731,8 @@ export class Animate {
                 iterations,
             };
 
-            if (!isValid(this.minDelay) || delay < this.minDelay) this.minDelay = delay;
-            if (!isValid(this.maxSpeed) || speed < this.maxSpeed) this.maxSpeed = speed;
+            if (this.minDelay > delay) this.minDelay = delay;
+            if (this.maxSpeed > speed) this.maxSpeed = speed;
         });
         return result;
     }
@@ -908,9 +908,15 @@ export class Animate {
                 timeline
             }, len);
 
-            this.maxSpeed = this.maxSpeed ?? this.options.speed as number;
-            this.minDelay = this.minDelay ?? this.options.delay as number;
-            this.totalDuration = this.totalDuration ?? this.options.duration as number;
+            // If the total number of targets is zero or less, it means there not values in  `arrOfComputedOptions`
+            // So, set the values for `totalDuration`, `minDelay`, and `maxSpeed` to the options directly
+            // This is for anyone who wants to build a `timeline` in the future
+            if (len <= 0) {
+                if (this.maxSpeed == Infinity) this.maxSpeed = Number(this.options.speed);
+                if (this.minDelay == Infinity)
+                    this.minDelay = Number(this.options.delay) + Number(this.options.timelineOffset);
+                if (this.totalDuration == -Infinity) this.totalDuration = Number(this.options.duration);
+            }
 
             if (!this.mainAnimation) {
                 this.mainkeyframeEffect = new KeyframeEffect(this.mainElement, [

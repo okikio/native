@@ -51,7 +51,7 @@
         "commitizen": "^4.2.4",
         "del": "^6.0.0",
         "del-cli": "^3.0.1",
-        "esbuild": "^0.12.3",
+        "esbuild": "^0.12.5",
         "gulp": "^4.0.2",
         "gulp-esbuild": "^0.8.0",
         "gulp-plumber": "^1.2.1",
@@ -65,7 +65,7 @@
         "husky": "^6.0.0",
         "lerna-changelog": "^1.0.1",
         "path-to-regexp": "^6.2.0",
-        "pnpm": "^6.4.0",
+        "pnpm": "^6.6.1",
         "postcss": "^8.3.0",
         "postcss-csso": "^5.0.1",
         "postcss-scss": "^3.0.5",
@@ -74,7 +74,7 @@
         "standard-version": "^9.3.0",
         "tailwindcss": "^2.1.2",
         "typedoc": "^0.20.36",
-        "typescript": "^4.2.4",
+        "typescript": "^4.3.2",
         "ultra-runner": "^3.10.5"
     }
 }
