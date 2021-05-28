@@ -35,7 +35,7 @@
         "test": "jest --maxWorkers=1",
         "test-dev": "jest --maxWorkers=1 --watch --verbose false",
         "pre-release": "npm run build && npm test && npm run dts",
-        "changelog": "standard-version --releaseCommitMessageFormat --tag-prefix \"@okikio/emitter@\" \"chore(release): @okikio/emitter@{{currentTag}}\""
+        "changelog": "standard-version --releaseCommitMessageFormat --tag-prefix \"@okikio/emitter@\" \"chore(release): :rocket: @okikio/emitter@{{currentTag}}\""
     },
     "repository": {
         "type": "git",
