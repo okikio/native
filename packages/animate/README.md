@@ -50,7 +50,7 @@ Once Gitpod has booted up, click on the `@okikio/animate (no-pjax)` button in th
     - [extend](#extend)
   - [Animations](#animations)
   - [Animation Options & CSS Properties as Methods](#animation-options--css-properties-as-methods)
-    - [Transformable CSS Properties](#transformable-css-properties)
+  - [Transformable CSS Properties](#transformable-css-properties)
   - [Promises and Promise-Like](#promises-and-promise-like)
   - [Events](#events)
   - [Additional methods & properties](#additional-methods--properties)
@@ -66,7 +66,16 @@ Once Gitpod has booted up, click on the `@okikio/animate (no-pjax)` button in th
     - [is(playstate: TypePlayStates)](#isplaystate-typeplaystates)
     - [play(), pause(), reverse(), and reset()](#play-pause-reverse-and-reset)
     - [The long list of Get Methods](#the-long-list-of-get-methods)
+      - [`getAnimation(target: HTMLElement): Animation`](#getanimationtarget-htmlelement-animation)
+      - [`getTiming(value: HTMLElement | Animation): EffectTiming | AnimationOptions`](#gettimingvalue-htmlelement--animation-effecttiming--animationoptions)
+      - [`getCurrentTime(): number`](#getcurrenttime-number)
+      - [`getProgress(): number`](#getprogress-number)
+      - [`getPlayState(): string`](#getplaystate-string)
+      - [`getSpeed(): number`](#getspeed-number)
     - [The almost as long list of Set Methods; these methods are chainable](#the-almost-as-long-list-of-set-methods-these-methods-are-chainable)
+      - [`setCurrentTime(time: number)`](#setcurrenttimetime-number)
+      - [`setProgress(percent: number)`](#setprogresspercent-number)
+      - [`setSpeed(speed: number = 1)`](#setspeedspeed-number--1)
     - [then(...), catch(...), and finally(...)](#then-catch-and-finally)
     - [toJSON()](#tojson)
     - [all(method: (animation: Animation, target?: HTMLElement) => void)](#allmethod-animation-animation-target-htmlelement--void)
@@ -76,7 +85,7 @@ Once Gitpod has booted up, click on the `@okikio/animate (no-pjax)` button in th
   - [Pause Animation when Page is out of Focus](#pause-animation-when-page-is-out-of-focus)
   - [Examples](#examples)
   - [Browser support](#browser-support)
-    - [CSS & SVG Animations Support](#css--svg-animations-support)
+  - [CSS & SVG Animations Support](#css--svg-animations-support)
   - [Content delivery networks](#content-delivery-networks)
   - [Memory Management](#memory-management)
   - [Best practices (these are from Animate Plus, but they are true for all Animation libraries)](#best-practices-these-are-from-animate-plus-but-they-are-true-for-all-animation-libraries)
@@ -689,15 +698,17 @@ animate({
 
 ### extend
 
-| Default | Type                                                                                                                                                                                      |
-| :------ | :---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `{}`    | [KeyframeEffectOptions](https://developer.mozilla.org/en-US/docs/Web/API/KeyframeEffectOptions) \| [TypeCallback](https://okikio.github.io/native/docs/modules/animate.html#typecallback) |
+| Default | Type                                                                                            |
+| :------ | :---------------------------------------------------------------------------------------------- |
+| `{}`    | [KeyframeEffectOptions](https://developer.mozilla.org/en-US/docs/Web/API/KeyframeEffectOptions) |
 
-The properties of the `extend` animation option are not interperted or computed, they are given directly to the Web Animation API, as way to access features that haven't been implemented in `@okikio/animate`, for example, `iterationStart`.
+The properties of the `extend` animation option are computed and can use [TypeCallback](https://okikio.github.io/native/docs/modules/animate.html#typecallback), they are a way to access features that haven't been implemented in `@okikio/animate`, for example, `iterationStart`.
 
 `extend` is supposed to future proof the library if new features are added to the Web Animation API that you want to use, but that has not been implemented yet.
 
 _**Note**: it doesn't allow for declaring actual animation keyframes; it's just for animation timing options, and it overrides all other animation timing options that accomplish the same goal, e.g. `loop` & `iterations`, if `iterations` is a property of `extend` then `iterations` will override `loop`._
+
+_**Warning**: `extend` itself **cannont** be computed, so, it doesn't support TypeCallback._
 
 ```ts
 animate({
@@ -774,7 +785,7 @@ animate({
 
 ## Animation Options & CSS Properties as Methods
 
-All options & properties except `target`, `speed`, `autoplay`, `extend`, `onfinish`, and `options` can be represented by a method with the arguments `(index: number, total: number, element: HTMLElement)`.
+All options & properties except `target`, `targets`, `autoplay`, `extend`, `onfinish`, and `options` can be represented by a method with the arguments `(index: number, total: number, element: HTMLElement)`.
 
 *Note: the `keyframes` option **can** be a method*.
 
@@ -799,7 +810,7 @@ animate({
 });
 ```
 
-### Transformable CSS Properties
+## Transformable CSS Properties
 
 I added the ability to use single value unitless numbers, strings, and arrays, as well as added the transform functions as CSS properties.
 
@@ -1090,18 +1101,44 @@ They are self explanatory, the `play/pause` methods play/pause animation, the `r
 
 ### The long list of Get Methods
 
-- `getAnimation(target: HTMLElement): Animation` - Allows you to select a specific animation from an element
-- `getTiming(value: HTMLElement | Animation): EffectTiming | AnimationOptions` - Returns the timings of an Animation, given a target. E.g. { duration, endDelay, delay, iterations, iterationStart, direction, easing, fill, etc... }
-- `getCurrentTime(): number` - Returns the current time of the animation of all elements
-- `getProgress(): number` - Returns the progress of the animation of all elements as a percentage between 0 to 100.
-- `getPlayState(): string` - Returns the current playing state, it can be `"idle" | "running" | "paused" | "finished"`
-- `getSpeed(): number` - Return the playback speed of the animation
+#### `getAnimation(target: HTMLElement): Animation`
+
+Allows you to select a specific animation from an element
+
+#### `getTiming(value: HTMLElement | Animation): EffectTiming | AnimationOptions`
+
+Returns the timings of an Animation, given a target.
+E.g. { duration, endDelay, delay, iterations, iterationStart, direction, easing, fill, etc... }
+
+#### `getCurrentTime(): number`
+
+Returns the current time of the animation of all elements
+
+#### `getProgress(): number`
+
+Returns the progress of the animation of all elements as a percentage between 0 to 100.
+
+#### `getPlayState(): string`
+
+Returns the current playing state, it can be `"idle" | "running" | "paused" | "finished"`
+
+#### `getSpeed(): number`
+
+Return the playback speed of the animation
 
 ### The almost as long list of Set Methods; these methods are chainable
 
-- `setCurrentTime(time: number)` - Sets the current time of the animation
-- `setProgress(percent: number)` - Similar to `setCurrentTime` except it use a number between 0 and 100 to set the current progress of the animation
-- `setSpeed(speed: number = 1)` - Sets the playback speed of an animation
+#### `setCurrentTime(time: number)`
+
+Sets the current time of the animation
+
+#### `setProgress(percent: number)`
+
+Similar to `setCurrentTime` except it use a number between 0 and 100 to set the current progress of the animation
+
+#### `setSpeed(speed: number = 1)`
+
+Sets the playback speed of an animation
 
 ### then(...), catch(...), and finally(...)
 
@@ -1171,7 +1208,9 @@ the following browsers (`@okikio/animate` may support older browsers, but I have
 
 _**Note**: as it really difficult to get access to older versions of these browsers, I have only tested Chrome 75 and above._
 
-### CSS & SVG Animations Support
+## CSS & SVG Animations Support
+
+_**Warning**: Techinically the `d` attribute is supported in Chromium based browsers, but litterarly no one else supports it so, be carefull and take the following list of attributes with a grain of salt, make sure to test them in the browser enviroments you expect them to be used in._
 
 `Animate` can animate `~197` CSS properties; [MDN Animatable CSS Properties](https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_animated_properties) and `~63` SVG properties; [MDN SVG Presentation Attributes](https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute/Presentation).
 
@@ -1244,6 +1283,7 @@ The animatable SVG properties are:
 - color-profile
 - color-rendering
 - cursor
+- d (only on Chromium browsers)
 - direction
 - display
 - dominant-baseline
@@ -1293,7 +1333,7 @@ The animatable SVG properties are:
 - writing-mode
 - [etc...](https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute/Presentation)
 
-Unfortunately, morphing SVG paths via the `d` property isn't supported yet, as browsers don't yet support it, and there are other limitations to what the Web Animation API will allow 😭, these limitation are covered in detail by an article published by Adobe about [the current state of SVG animation on the web](https://blog.adobe.com/en/publish/2015/06/05/the-state-of-svg-animation.html#gs.pihpjw). However, animation using paths is now viable through [Motion Path](https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Motion_Path) go through
+Unfortunately, morphing SVG paths via the `d` property isn't well supported yet, as Gecko (Firefox) & Webkit (Safari) based browsers don't support it yet, and there are other limitations to what the Web Animation API will allow 😭, these limitation are covered in detail by an article published by Adobe about [the current state of SVG animation on the web](https://blog.adobe.com/en/publish/2015/06/05/the-state-of-svg-animation.html#gs.pihpjw). However, animation using paths is now viable through [Motion Path](https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Motion_Path).
 
 ## Content delivery networks
 
@@ -1315,7 +1355,7 @@ animate({
 
 ## Memory Management
 
-I have found that infinite CSS Animations tend to be the cause of high memory usage in websites. Javascript has become so efficient that it can effectively garbage collect js animations, however, I have also found it exceptionally difficult to manage looped animation so be very careful of memory when dealing with CSS and JS Animations, they eat up large ammounts of memory and CPU when left running for long periods of time. I would suggest making all your animations only occur a couple times and when they are done use the `cancel()` (preference) or `stop()` methods, (you can use the `stop()` method *"if you don't plan on replaying the same animation"*). Don't just use the `stop()` method, test it first on your site before deploying it in a production enviroment.
+I have found that infinite CSS Animations tend to be the cause of high memory usage in websites. Javascript has become so efficient that it can effectively garbage collect js animations, however, I have also found it exceptionally difficult to manage looped animation so be very careful of memory when dealing with CSS and JS Animations, they eat up large ammounts of memory and CPU when left running for extended periods of time. I would suggest making all your animations only occur a couple times and when they are done use the `cancel()` (preference) or `stop()` methods, (you can use the `stop()` method *"if you **don't** plan on replaying the same animation"*). Don't just use the `stop()` method, test it first on your site before deploying it in a production enviroment.
 
 ## Best practices (these are from Animate Plus, but they are true for all Animation libraries)
 
