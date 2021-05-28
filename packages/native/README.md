@@ -594,7 +594,7 @@ e.g.
 
 ```ts
 // ...
-app.on("REQUEST_ERROR" | "TIMEOUT_ERROR", (err: Error) => {
+app.on("REQUEST_ERROR" | "TIMEOUT_ERROR", (err: Error, url: string) => {
     // ...
 })
 ```

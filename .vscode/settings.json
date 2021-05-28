@@ -4,7 +4,8 @@
     "scss.validate": false,
     "conventionalCommits.scopes": [
         "demo",
-        "@okikio/animate"
+        "@okikio/animate",
+        "@okikio/native"
     ],
     "npm.packageManager": "pnpm"
 }
