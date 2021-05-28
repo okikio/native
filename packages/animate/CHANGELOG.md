@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [2.1.7](https://github.com/okikio/native/compare/@okikio/animate@2.1.6...@okikio/animate@2.1.7) (2021-05-28)
+
+
+### Bug Fixes
+
+* **@okikio/animate:** :bug: use -/+ Infinity as initial value for minDelay, maxSpeed, totalDuration ([9aeec2e](https://github.com/okikio/native/commit/9aeec2e249ba50ebabf30273cc0866f48e96c0e1))
+* **@okikio/native:** :bug: add url to request & timeout errors event ([0be77c6](https://github.com/okikio/native/commit/0be77c613c508fc6c68151ed9ce7207760cf6f0e))
+
 ### [2.1.6](https://github.com/okikio/native/compare/@okikio/animate@2.1.5...@okikio/animate@2.1.6) (2021-05-26)
 
 
