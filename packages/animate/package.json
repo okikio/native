@@ -33,7 +33,7 @@
         "watch": "del-cli lib/ && node ./build --watch",
         "dts": "del-cli @types/ && tsc --project dts.tsconfig.json",
         "pre-release": "pnpm build && pnpm dts",
-        "changelog": "standard-version --releaseCommitMessageFormat --tag-prefix \"@okikio/animate@\" \"chore(release): @okikio/animate@{{currentTag}}\""
+        "changelog": "standard-version --releaseCommitMessageFormat --tag-prefix \"@okikio/animate@\" \"chore(release): :rocket: @okikio/animate@{{currentTag}}\""
     },
     "repository": {
         "type": "git",
