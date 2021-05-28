@@ -3,7 +3,8 @@
     "scss.lint.unknownProperties": "ignore",
     "scss.validate": false,
     "conventionalCommits.scopes": [
-        "demo"
+        "demo",
+        "@okikio/animate"
     ],
     "npm.packageManager": "pnpm"
 }
