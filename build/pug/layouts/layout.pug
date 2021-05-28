@@ -22,7 +22,7 @@ html.dark
     link(rel='stylesheet' href='./css/app.css')
 
     script(src='./js/theme.min.js' async)
-
+    script(src="./js/webanimation-polyfill.min.js")
   body
     +navbar
 
@@ -33,9 +33,7 @@ html.dark
 
     +footer
 
-    script(src="https://cdn.polyfill.io/v3/polyfill.min.js?features=default,es2015,es2018,Array.prototype.includes,Map,Set,Promise" defer)
-    script(src="https://cdn.jsdelivr.net/npm/web-animations-js/web-animations-next.min.js" defer)
-
+    script(src="https://cdn.polyfill.io/v3/polyfill.min.js?features=default,es2015,es2018,Array.prototype.includes,Map,Set,Promise" async)
     block scripts
-      script(src='./js/legacy.min.js' nomodule defer)
-      script(src='./js/main.min.js' type='module' defer)
+      script(src='./js/legacy.min.js' nomodule)
+      script(src='./js/main.min.js' type='module' async)

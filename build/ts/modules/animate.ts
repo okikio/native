@@ -123,7 +123,8 @@ export let run = () => {
                 //     ];
                 // },
 
-                backgroundColor(_0, _1, target) {
+                backgroundColor(...args) {
+                    let [, , target] = args;
                     let [r, g, b] = [
                         random(0, 255),
                         random(0, 255),
@@ -136,13 +137,15 @@ export let run = () => {
                 },
 
                 translateX: () => [0, random(50, 400)],
-                translateY(_, total) {
+                translateY(...args) {
+                    let [, total] = args;
                     return [0, (random(-50, 50) * total)];
                 },
                 scale() {
                     return [1, 1 + random(0.025, 1.75)];
                 },
-                opacity(_, total) {
+                opacity(...args) {
+                    let [, total] = args;
                     return [0.5, 0.5 + Math.min(random(0.025, total) / total, 0.5)];
                 },
                 rotate: () => [0, random(-360, 360)],
@@ -151,15 +154,16 @@ export let run = () => {
                 delay: () => random(0, 400),
 
                 // It is best to use the onfinish() method, but in this situation fillMode works best
-                fillMode: "both",
-                easing: "in-out-back",
                 loop: 2,
                 speed: (i) => 1.5 - (i * 0.125),
-                direction: "alternate",
 
+                fillMode: "both",
+                direction: "alternate",
+                easing: "in-out-back",
                 padEndDelay: true,
                 autoplay: true
             });
+
 
             let addBtn = document.querySelector("#add-el") as HTMLElement;
             let removeBtn = document.querySelector("#remove-el") as HTMLElement;
