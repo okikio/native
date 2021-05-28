@@ -39,7 +39,7 @@ importers:
       standard-version: ^9.3.0
       tailwindcss: ^2.1.2
       typedoc: ^0.20.36
-      typescript: ^4.3.2
+      typescript: '4.2'
       ultra-runner: ^3.10.5
     dependencies:
       '@okikio/native': link:packages/native
@@ -64,7 +64,7 @@ importers:
       gulp-rename: 2.0.0
       gulp-size: 4.0.0_gulp@4.0.2
       gulp-terser: 2.0.1
-      gulp-typescript: 6.0.0-alpha.1_typescript@4.3.2
+      gulp-typescript: 6.0.0-alpha.1_typescript@4.2.4
       gzip-size: 6.0.0
       husky: 6.0.0
       lerna-changelog: 1.0.1
@@ -77,8 +77,8 @@ importers:
       sass: 1.34.0
       standard-version: 9.3.0
       tailwindcss: 2.1.2_6daa0ece57b4377652e73c9c66c3b94c
-      typedoc: 0.20.36_typescript@4.3.2
-      typescript: 4.3.2
+      typedoc: 0.20.36_typescript@4.2.4
+      typescript: 4.2.4
       ultra-runner: 3.10.5
 
   packages/animate:
@@ -91,7 +91,7 @@ importers:
       pnpm: ^6.4.0
       pretty-bytes: ^5.6.0
       standard-version: ^9.3.0
-      typescript: ^4.2.4
+      typescript: '4.2'
     dependencies:
       '@okikio/emitter': link:../emitter
       '@okikio/manager': link:../manager
@@ -117,7 +117,7 @@ importers:
       pnpm: ^6.4.0
       pretty-bytes: ^5.6.0
       standard-version: ^9.3.0
-      typescript: ^4.2.4
+      typescript: '4.2'
       ultra-runner: ^3.10.5
     dependencies:
       '@okikio/manager': link:../manager
@@ -148,7 +148,7 @@ importers:
       pnpm: ^6.4.0
       pretty-bytes: ^5.6.0
       standard-version: ^9.3.0
-      typescript: ^4.2.4
+      typescript: '4.2'
       ultra-runner: ^3.10.5
     devDependencies:
       '@types/jest': 26.0.23
@@ -177,7 +177,7 @@ importers:
       pnpm: ^6.4.0
       pretty-bytes: ^5.6.0
       standard-version: ^9.3.0
-      typescript: ^4.2.4
+      typescript: '4.2'
     dependencies:
       '@okikio/animate': link:../animate
       '@okikio/emitter': link:../emitter
@@ -971,7 +971,7 @@ packages:
       typedoc: '>=0.20 <1.0'
     dependencies:
       find-up: 5.0.0
-      typedoc: 0.20.36_typescript@4.3.2
+      typedoc: 0.20.36_typescript@4.2.4
     dev: true
 
   /@tootallnate/once/1.1.2:
@@ -4111,7 +4111,7 @@ packages:
       vinyl-sourcemaps-apply: 0.2.1
     dev: true
 
-  /gulp-typescript/6.0.0-alpha.1_typescript@4.3.2:
+  /gulp-typescript/6.0.0-alpha.1_typescript@4.2.4:
     resolution: {integrity: sha512-KoT0TTfjfT7w3JItHkgFH1T/zK4oXWC+a8xxKfniRfVcA0Fa1bKrIhztYelYmb+95RB80OLMBreknYkdwzdi2Q==}
     engines: {node: '>= 8'}
     peerDependencies:
@@ -4121,7 +4121,7 @@ packages:
       plugin-error: 1.0.1
       source-map: 0.7.3
       through2: 3.0.2
-      typescript: 4.3.2
+      typescript: 4.2.4
       vinyl: 2.2.1
       vinyl-fs: 3.0.3
     dev: true
@@ -8516,7 +8516,7 @@ packages:
     engines: {node: '>= 8'}
     dev: true
 
-  /typedoc/0.20.36_typescript@4.3.2:
+  /typedoc/0.20.36_typescript@4.2.4:
     resolution: {integrity: sha512-qFU+DWMV/hifQ9ZAlTjdFO9wbUIHuUBpNXzv68ZyURAP9pInjZiO4+jCPeAzHVcaBCHER9WL/+YzzTt6ZlN/Nw==}
     engines: {node: '>= 10.8.0'}
     hasBin: true
@@ -8534,17 +8534,11 @@ packages:
       shelljs: 0.8.4
       shiki: 0.9.3
       typedoc-default-themes: 0.12.10
-      typescript: 4.3.2
+      typescript: 4.2.4
     dev: true
 
   /typescript/4.2.4:
     resolution: {integrity: sha512-V+evlYHZnQkaz8TRBuxTA92yZBPotr5H+WhQ7bD3hZUndx5tGOa1fuCgeSjxAzM1RiN5IzvadIXTVefuuwZCRg==}
-    engines: {node: '>=4.2.0'}
-    hasBin: true
-    dev: true
-
-  /typescript/4.3.2:
-    resolution: {integrity: sha512-zZ4hShnmnoVnAHpVHWpTcxdv7dWP60S2FsydQLV8V5PbS3FifjWFFRiHSWpDJahly88PRyV5teTSLoq4eG7mKw==}
     engines: {node: '>=4.2.0'}
     hasBin: true
     dev: true
