@@ -113,10 +113,8 @@
 									</ul>
 								</li>
 								<li><a href="#animations">Animations</a></li>
-								<li><a href="#animation-options--css-properties-as-methods">Animation Options &amp; CSS Properties as Methods</a><ul>
-										<li><a href="#transformable-css-properties">Transformable CSS Properties</a></li>
-									</ul>
-								</li>
+								<li><a href="#animation-options--css-properties-as-methods">Animation Options &amp; CSS Properties as Methods</a></li>
+								<li><a href="#transformable-css-properties">Transformable CSS Properties</a></li>
 								<li><a href="#promises-and-promise-like">Promises and Promise-Like</a></li>
 								<li><a href="#events">Events</a></li>
 								<li><a href="#additional-methods--properties">Additional methods &amp; properties</a><ul>
@@ -131,8 +129,21 @@
 										<li><a href="#on-off-and-emit">on(...), off(...), and emit(...)</a></li>
 										<li><a href="#isplaystate-typeplaystates">is(playstate: TypePlayStates)</a></li>
 										<li><a href="#play-pause-reverse-and-reset">play(), pause(), reverse(), and reset()</a></li>
-										<li><a href="#the-long-list-of-get-methods">The long list of Get Methods</a></li>
-										<li><a href="#the-almost-as-long-list-of-set-methods-these-methods-are-chainable">The almost as long list of Set Methods; these methods are chainable</a></li>
+										<li><a href="#the-long-list-of-get-methods">The long list of Get Methods</a><ul>
+												<li><a href="#getanimationtarget-htmlelement-animation"><code>getAnimation(target: HTMLElement): Animation</code></a></li>
+												<li><a href="#gettimingvalue-htmlelement--animation-effecttiming--animationoptions"><code>getTiming(value: HTMLElement | Animation): EffectTiming | AnimationOptions</code></a></li>
+												<li><a href="#getcurrenttime-number"><code>getCurrentTime(): number</code></a></li>
+												<li><a href="#getprogress-number"><code>getProgress(): number</code></a></li>
+												<li><a href="#getplaystate-string"><code>getPlayState(): string</code></a></li>
+												<li><a href="#getspeed-number"><code>getSpeed(): number</code></a></li>
+											</ul>
+										</li>
+										<li><a href="#the-almost-as-long-list-of-set-methods-these-methods-are-chainable">The almost as long list of Set Methods; these methods are chainable</a><ul>
+												<li><a href="#setcurrenttimetime-number"><code>setCurrentTime(time: number)</code></a></li>
+												<li><a href="#setprogresspercent-number"><code>setProgress(percent: number)</code></a></li>
+												<li><a href="#setspeedspeed-number--1"><code>setSpeed(speed: number = 1)</code></a></li>
+											</ul>
+										</li>
 										<li><a href="#then-catch-and-finally">then(...), catch(...), and finally(...)</a></li>
 										<li><a href="#tojson">toJSON()</a></li>
 										<li><a href="#allmethod-animation-animation-target-htmlelement--void">all(method: (animation: Animation, target?: HTMLElement) =&gt; void)</a></li>
@@ -143,10 +154,8 @@
 								</li>
 								<li><a href="#pause-animation-when-page-is-out-of-focus">Pause Animation when Page is out of Focus</a></li>
 								<li><a href="#examples">Examples</a></li>
-								<li><a href="#browser-support">Browser support</a><ul>
-										<li><a href="#css--svg-animations-support">CSS &amp; SVG Animations Support</a></li>
-									</ul>
-								</li>
+								<li><a href="#browser-support">Browser support</a></li>
+								<li><a href="#css--svg-animations-support">CSS &amp; SVG Animations Support</a></li>
 								<li><a href="#content-delivery-networks">Content delivery networks</a></li>
 								<li><a href="#memory-management">Memory Management</a></li>
 								<li><a href="#best-practices-these-are-from-animate-plus-but-they-are-true-for-all-animation-libraries">Best practices (these are from Animate Plus, but they are true for all Animation libraries)</a></li>
@@ -894,12 +903,13 @@
 						</thead>
 						<tbody><tr>
 								<td align="left"><code>{}</code></td>
-								<td align="left"><a href="https://developer.mozilla.org/en-US/docs/Web/API/KeyframeEffectOptions">KeyframeEffectOptions</a> | <a href="https://okikio.github.io/native/docs/modules/animate.html#typecallback">TypeCallback</a></td>
+								<td align="left"><a href="https://developer.mozilla.org/en-US/docs/Web/API/KeyframeEffectOptions">KeyframeEffectOptions</a></td>
 							</tr>
 					</tbody></table>
-					<p>The properties of the <code>extend</code> animation option are not interperted or computed, they are given directly to the Web Animation API, as way to access features that haven&#39;t been implemented in <code>@okikio/animate</code>, for example, <code>iterationStart</code>.</p>
+					<p>The properties of the <code>extend</code> animation option are computed and can use <a href="https://okikio.github.io/native/docs/modules/animate.html#typecallback">TypeCallback</a>, they are a way to access features that haven&#39;t been implemented in <code>@okikio/animate</code>, for example, <code>iterationStart</code>.</p>
 					<p><code>extend</code> is supposed to future proof the library if new features are added to the Web Animation API that you want to use, but that has not been implemented yet.</p>
 					<p><em><strong>Note</strong>: it doesn&#39;t allow for declaring actual animation keyframes; it&#39;s just for animation timing options, and it overrides all other animation timing options that accomplish the same goal, e.g. <code>loop</code> &amp; <code>iterations</code>, if <code>iterations</code> is a property of <code>extend</code> then <code>iterations</code> will override <code>loop</code>.</em></p>
+					<p><em><strong>Warning</strong>: <code>extend</code> itself <strong>cannont</strong> be computed, so, it doesn&#39;t support TypeCallback.</em></p>
 					<pre><code class="language-ts"><span style="color: #795E26">animate</span><span style="color: #000000">({</span>
 <span style="color: #000000">    </span><span style="color: #001080">target:</span><span style="color: #000000"> </span><span style="color: #A31515">&quot;.div&quot;</span><span style="color: #000000">,</span>
 <span style="color: #000000">    </span><span style="color: #001080">opacity:</span><span style="color: #000000"> [</span><span style="color: #098658">0</span><span style="color: #000000">, </span><span style="color: #098658">1</span><span style="color: #000000">],</span>
@@ -965,7 +975,7 @@
 					<a href="#animation-options-amp-css-properties-as-methods" id="animation-options-amp-css-properties-as-methods" style="color: inherit; text-decoration: none;">
 						<h2>Animation Options &amp; CSS Properties as Methods</h2>
 					</a>
-					<p>All options &amp; properties except <code>target</code>, <code>speed</code>, <code>autoplay</code>, <code>extend</code>, <code>onfinish</code>, and <code>options</code> can be represented by a method with the arguments <code>(index: number, total: number, element: HTMLElement)</code>.</p>
+					<p>All options &amp; properties except <code>target</code>, <code>targets</code>, <code>autoplay</code>, <code>extend</code>, <code>onfinish</code>, and <code>options</code> can be represented by a method with the arguments <code>(index: number, total: number, element: HTMLElement)</code>.</p>
 					<p><em>Note: the <code>keyframes</code> option <strong>can</strong> be a method</em>.</p>
 					<pre><code class="language-ts"><span style="color: #008000">/**</span>
 <span style="color: #008000"> * </span><span style="color: #0000FF">@param</span><span style="color: #008000"> </span><span style="color: #267F99">{number}</span><span style="color: #008000"> </span><span style="color: #001080">[index]</span><span style="color: #008000"> - index of each element</span>
@@ -987,7 +997,7 @@
 <span style="color: #000000">});</span>
 </code></pre>
 					<a href="#transformable-css-properties" id="transformable-css-properties" style="color: inherit; text-decoration: none;">
-						<h3>Transformable CSS Properties</h3>
+						<h2>Transformable CSS Properties</h2>
 					</a>
 					<p>I added the ability to use single value unitless numbers, strings, and arrays, as well as added the transform functions as CSS properties.</p>
 					<p>Single value means,</p>
@@ -1254,22 +1264,46 @@
 					<a href="#the-long-list-of-get-methods" id="the-long-list-of-get-methods" style="color: inherit; text-decoration: none;">
 						<h3>The long list of Get Methods</h3>
 					</a>
-					<ul>
-						<li><code>getAnimation(target: HTMLElement): Animation</code> - Allows you to select a specific animation from an element</li>
-						<li><code>getTiming(value: HTMLElement | Animation): EffectTiming | AnimationOptions</code> - Returns the timings of an Animation, given a target. E.g. { duration, endDelay, delay, iterations, iterationStart, direction, easing, fill, etc... }</li>
-						<li><code>getCurrentTime(): number</code> - Returns the current time of the animation of all elements</li>
-						<li><code>getProgress(): number</code> - Returns the progress of the animation of all elements as a percentage between 0 to 100.</li>
-						<li><code>getPlayState(): string</code> - Returns the current playing state, it can be <code>&quot;idle&quot; | &quot;running&quot; | &quot;paused&quot; | &quot;finished&quot;</code></li>
-						<li><code>getSpeed(): number</code> - Return the playback speed of the animation</li>
-					</ul>
+					<a href="#getanimationtarget-htmlelement-animation" id="getanimationtarget-htmlelement-animation" style="color: inherit; text-decoration: none;">
+						<h4><code>getAnimation(target: HTMLElement): Animation</code></h4>
+					</a>
+					<p>Allows you to select a specific animation from an element</p>
+					<a href="#gettimingvalue-htmlelement--animation-effecttiming--animationoptions" id="gettimingvalue-htmlelement--animation-effecttiming--animationoptions" style="color: inherit; text-decoration: none;">
+						<h4><code>getTiming(value: HTMLElement | Animation): EffectTiming | AnimationOptions</code></h4>
+					</a>
+					<p>Returns the timings of an Animation, given a target.
+					E.g. { duration, endDelay, delay, iterations, iterationStart, direction, easing, fill, etc... }</p>
+					<a href="#getcurrenttime-number" id="getcurrenttime-number" style="color: inherit; text-decoration: none;">
+						<h4><code>getCurrentTime(): number</code></h4>
+					</a>
+					<p>Returns the current time of the animation of all elements</p>
+					<a href="#getprogress-number" id="getprogress-number" style="color: inherit; text-decoration: none;">
+						<h4><code>getProgress(): number</code></h4>
+					</a>
+					<p>Returns the progress of the animation of all elements as a percentage between 0 to 100.</p>
+					<a href="#getplaystate-string" id="getplaystate-string" style="color: inherit; text-decoration: none;">
+						<h4><code>getPlayState(): string</code></h4>
+					</a>
+					<p>Returns the current playing state, it can be <code>&quot;idle&quot; | &quot;running&quot; | &quot;paused&quot; | &quot;finished&quot;</code></p>
+					<a href="#getspeed-number" id="getspeed-number" style="color: inherit; text-decoration: none;">
+						<h4><code>getSpeed(): number</code></h4>
+					</a>
+					<p>Return the playback speed of the animation</p>
 					<a href="#the-almost-as-long-list-of-set-methods-these-methods-are-chainable" id="the-almost-as-long-list-of-set-methods-these-methods-are-chainable" style="color: inherit; text-decoration: none;">
 						<h3>The almost as long list of Set Methods; these methods are chainable</h3>
 					</a>
-					<ul>
-						<li><code>setCurrentTime(time: number)</code> - Sets the current time of the animation</li>
-						<li><code>setProgress(percent: number)</code> - Similar to <code>setCurrentTime</code> except it use a number between 0 and 100 to set the current progress of the animation</li>
-						<li><code>setSpeed(speed: number = 1)</code> - Sets the playback speed of an animation</li>
-					</ul>
+					<a href="#setcurrenttimetime-number" id="setcurrenttimetime-number" style="color: inherit; text-decoration: none;">
+						<h4><code>setCurrentTime(time: number)</code></h4>
+					</a>
+					<p>Sets the current time of the animation</p>
+					<a href="#setprogresspercent-number" id="setprogresspercent-number" style="color: inherit; text-decoration: none;">
+						<h4><code>setProgress(percent: number)</code></h4>
+					</a>
+					<p>Similar to <code>setCurrentTime</code> except it use a number between 0 and 100 to set the current progress of the animation</p>
+					<a href="#setspeedspeed-number--1" id="setspeedspeed-number--1" style="color: inherit; text-decoration: none;">
+						<h4><code>setSpeed(speed: number = 1)</code></h4>
+					</a>
+					<p>Sets the playback speed of an animation</p>
 					<a href="#then-catch-and-finally" id="then-catch-and-finally" style="color: inherit; text-decoration: none;">
 						<h3>then(...), catch(...), and finally(...)</h3>
 					</a>
@@ -1330,8 +1364,9 @@
 					</ul>
 					<p><em><strong>Note</strong>: as it really difficult to get access to older versions of these browsers, I have only tested Chrome 75 and above.</em></p>
 					<a href="#css-amp-svg-animations-support" id="css-amp-svg-animations-support" style="color: inherit; text-decoration: none;">
-						<h3>CSS &amp; SVG Animations Support</h3>
+						<h2>CSS &amp; SVG Animations Support</h2>
 					</a>
+					<p><em><strong>Warning</strong>: Techinically the <code>d</code> attribute is supported in Chromium based browsers, but litterarly no one else supports it so, be carefull and take the following list of attributes with a grain of salt, make sure to test them in the browser enviroments you expect them to be used in.</em></p>
 					<p><code>Animate</code> can animate <code>~197</code> CSS properties; <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_animated_properties">MDN Animatable CSS Properties</a> and <code>~63</code> SVG properties; <a href="https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute/Presentation">MDN SVG Presentation Attributes</a>.</p>
 					<p>The animatable CSS properties are:</p>
 					<ul>
@@ -1402,6 +1437,7 @@
 						<li>color-profile</li>
 						<li>color-rendering</li>
 						<li>cursor</li>
+						<li>d (only on Chromium browsers)</li>
 						<li>direction</li>
 						<li>display</li>
 						<li>dominant-baseline</li>
@@ -1451,7 +1487,7 @@
 						<li>writing-mode</li>
 						<li><a href="https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute/Presentation">etc...</a></li>
 					</ul>
-					<p>Unfortunately, morphing SVG paths via the <code>d</code> property isn&#39;t supported yet, as browsers don&#39;t yet support it, and there are other limitations to what the Web Animation API will allow 😭, these limitation are covered in detail by an article published by Adobe about <a href="https://blog.adobe.com/en/publish/2015/06/05/the-state-of-svg-animation.html#gs.pihpjw">the current state of SVG animation on the web</a>. However, animation using paths is now viable through <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Motion_Path">Motion Path</a> go through</p>
+					<p>Unfortunately, morphing SVG paths via the <code>d</code> property isn&#39;t well supported yet, as Gecko (Firefox) &amp; Webkit (Safari) based browsers don&#39;t support it yet, and there are other limitations to what the Web Animation API will allow 😭, these limitation are covered in detail by an article published by Adobe about <a href="https://blog.adobe.com/en/publish/2015/06/05/the-state-of-svg-animation.html#gs.pihpjw">the current state of SVG animation on the web</a>. However, animation using paths is now viable through <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Motion_Path">Motion Path</a>.</p>
 					<a href="#content-delivery-networks" id="content-delivery-networks" style="color: inherit; text-decoration: none;">
 						<h2>Content delivery networks</h2>
 					</a>
@@ -1471,7 +1507,7 @@
 					<a href="#memory-management" id="memory-management" style="color: inherit; text-decoration: none;">
 						<h2>Memory Management</h2>
 					</a>
-					<p>I have found that infinite CSS Animations tend to be the cause of high memory usage in websites. Javascript has become so efficient that it can effectively garbage collect js animations, however, I have also found it exceptionally difficult to manage looped animation so be very careful of memory when dealing with CSS and JS Animations, they eat up large ammounts of memory and CPU when left running for long periods of time. I would suggest making all your animations only occur a couple times and when they are done use the <code>cancel()</code> (preference) or <code>stop()</code> methods, (you can use the <code>stop()</code> method <em>&quot;if you don&#39;t plan on replaying the same animation&quot;</em>). Don&#39;t just use the <code>stop()</code> method, test it first on your site before deploying it in a production enviroment.</p>
+					<p>I have found that infinite CSS Animations tend to be the cause of high memory usage in websites. Javascript has become so efficient that it can effectively garbage collect js animations, however, I have also found it exceptionally difficult to manage looped animation so be very careful of memory when dealing with CSS and JS Animations, they eat up large ammounts of memory and CPU when left running for extended periods of time. I would suggest making all your animations only occur a couple times and when they are done use the <code>cancel()</code> (preference) or <code>stop()</code> methods, (you can use the <code>stop()</code> method <em>&quot;if you <strong>don&#39;t</strong> plan on replaying the same animation&quot;</em>). Don&#39;t just use the <code>stop()</code> method, test it first on your site before deploying it in a production enviroment.</p>
 					<a href="#best-practices-these-are-from-animate-plus-but-they-are-true-for-all-animation-libraries" id="best-practices-these-are-from-animate-plus-but-they-are-true-for-all-animation-libraries" style="color: inherit; text-decoration: none;">
 						<h2>Best practices (these are from Animate Plus, but they are true for all Animation libraries)</h2>
 					</a>
@@ -1768,7 +1804,7 @@
 					<div class="tsd-signature tsd-kind-icon">Default<wbr>Animation<wbr>Options<span class="tsd-signature-symbol">:</span> <a href="../interfaces/native.ianimationoptions.html" class="tsd-signature-type" data-tsd-kind="Interface">IAnimationOptions</a><span class="tsd-signature-symbol"> = ...</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/okikio/native/blob/ad7089d/packages/animate/src/api.ts#L194">animate/src/api.ts:194</a></li>
+							<li>Defined in <a href="https://github.com/okikio/native/blob/3bc6b91/packages/animate/src/api.ts#L194">animate/src/api.ts:194</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -1800,7 +1836,7 @@
 					<div class="tsd-signature tsd-kind-icon">EASINGS<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol">{ </span>in<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">; </span>in-back<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">; </span>in-circ<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">; </span>in-cubic<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">; </span>in-expo<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">; </span>in-out<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">; </span>in-out-back<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">; </span>in-out-circ<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">; </span>in-out-cubic<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">; </span>in-out-expo<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">; </span>in-out-quad<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">; </span>in-out-quart<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">; </span>in-out-quint<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">; </span>in-out-sine<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">; </span>in-quad<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">; </span>in-quart<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">; </span>in-quint<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">; </span>in-sine<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">; </span>out<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">; </span>out-back<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">; </span>out-circ<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">; </span>out-cubic<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">; </span>out-expo<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">; </span>out-quad<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">; </span>out-quart<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">; </span>out-quint<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">; </span>out-sine<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> }</span><span class="tsd-signature-symbol"> = ...</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/okikio/native/blob/ad7089d/packages/animate/src/api.ts#L108">animate/src/api.ts:108</a></li>
+							<li>Defined in <a href="https://github.com/okikio/native/blob/3bc6b91/packages/animate/src/api.ts#L108">animate/src/api.ts:108</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -1948,7 +1984,7 @@
 					<div class="tsd-signature tsd-kind-icon">Easing<wbr>Keys<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol"> = ...</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/okikio/native/blob/ad7089d/packages/animate/src/api.ts#L160">animate/src/api.ts:160</a></li>
+							<li>Defined in <a href="https://github.com/okikio/native/blob/3bc6b91/packages/animate/src/api.ts#L160">animate/src/api.ts:160</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -1975,7 +2011,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/okikio/native/blob/ad7089d/packages/animate/src/api.ts#L168">animate/src/api.ts:168</a></li>
+									<li>Defined in <a href="https://github.com/okikio/native/blob/3bc6b91/packages/animate/src/api.ts#L168">animate/src/api.ts:168</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -2007,7 +2043,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/okikio/native/blob/ad7089d/packages/animate/src/api.ts#L1169">animate/src/api.ts:1169</a></li>
+									<li>Defined in <a href="https://github.com/okikio/native/blob/3bc6b91/packages/animate/src/api.ts#L1169">animate/src/api.ts:1169</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -2030,7 +2066,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/okikio/native/blob/ad7089d/packages/animate/src/api.ts#L30">animate/src/api.ts:30</a></li>
+									<li>Defined in <a href="https://github.com/okikio/native/blob/3bc6b91/packages/animate/src/api.ts#L30">animate/src/api.ts:30</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -2059,7 +2095,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/okikio/native/blob/ad7089d/packages/animate/src/api.ts#L17">animate/src/api.ts:17</a></li>
+									<li>Defined in <a href="https://github.com/okikio/native/blob/3bc6b91/packages/animate/src/api.ts#L17">animate/src/api.ts:17</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -2082,7 +2118,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/okikio/native/blob/ad7089d/packages/animate/src/api.ts#L13">animate/src/api.ts:13</a></li>
+									<li>Defined in <a href="https://github.com/okikio/native/blob/3bc6b91/packages/animate/src/api.ts#L13">animate/src/api.ts:13</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -2105,7 +2141,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/okikio/native/blob/ad7089d/packages/animate/src/api.ts#L18">animate/src/api.ts:18</a></li>
+									<li>Defined in <a href="https://github.com/okikio/native/blob/3bc6b91/packages/animate/src/api.ts#L18">animate/src/api.ts:18</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -2128,7 +2164,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/okikio/native/blob/ad7089d/packages/animate/src/api.ts#L51">animate/src/api.ts:51</a></li>
+									<li>Defined in <a href="https://github.com/okikio/native/blob/3bc6b91/packages/animate/src/api.ts#L51">animate/src/api.ts:51</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -2157,7 +2193,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/okikio/native/blob/ad7089d/packages/animate/src/api.ts#L39">animate/src/api.ts:39</a></li>
+									<li>Defined in <a href="https://github.com/okikio/native/blob/3bc6b91/packages/animate/src/api.ts#L39">animate/src/api.ts:39</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -2214,7 +2250,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/okikio/native/blob/ad7089d/packages/animate/src/api.ts#L228">animate/src/api.ts:228</a></li>
+									<li>Defined in <a href="https://github.com/okikio/native/blob/3bc6b91/packages/animate/src/api.ts#L228">animate/src/api.ts:228</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -2259,7 +2295,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/okikio/native/blob/ad7089d/packages/animate/src/api.ts#L214">animate/src/api.ts:214</a></li>
+									<li>Defined in <a href="https://github.com/okikio/native/blob/3bc6b91/packages/animate/src/api.ts#L214">animate/src/api.ts:214</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
