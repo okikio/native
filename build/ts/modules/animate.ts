@@ -1,4 +1,5 @@
-import { animate, IAnimationOptions, methodCall, UnitPXCSSValue } from "@okikio/native";
+import { animate, IAnimationOptions, methodCall, TypePlayStates, UnitPXCSSValue } from "@okikio/native";
+import { interpolate } from "flubber";
 
 // I added extra code to the demo to support Chrome 77 and below
 let playbackFn = (containerSel, anims) => {
@@ -6,20 +7,20 @@ let playbackFn = (containerSel, anims) => {
     let progressEl = document.querySelector(`${containerSel} #progress`) as HTMLInputElement;
 
     let progressOutputEl = document.querySelector(`${containerSel} #progress-output`);
-    let oldState: AnimationPlayState;
+    let oldState: "pending" | TypePlayStates;
 
     let updatePlayState = () => {
         oldState = anims[0].getPlayState();
-        if (oldState as string == "pending") oldState = "running";
+        if (oldState == "idle") oldState = "paused";
+        else if (oldState == "pending") oldState = "running";
         playstateEl.setAttribute("data-playstate", oldState);
-
-        methodCall(anims, "loop");
     };
 
     anims[0]
         .on("finish begin", updatePlayState)
         .on("update", (progress) => {
-            progressEl.value = `` + (Math.round(progress) >= 100 ? 100 : progress.toFixed(2));
+            progress = progress.toFixed(4);
+            progressEl.value = `` + progress;
             progressOutputEl.textContent = `${Math.round(progress)}%`;
         });
 
@@ -32,7 +33,7 @@ let playbackFn = (containerSel, anims) => {
     };
 
     let inputFn = () => {
-        let percent = Math.round(+progressEl.value);
+        let percent = Number(progressEl.value);
         methodCall(anims, "setProgress", percent);
         methodCall(anims, "pause");
     }
@@ -52,7 +53,7 @@ let playbackFn = (containerSel, anims) => {
         progressEl.removeEventListener("input", inputFn);
         progressEl.removeEventListener("change", changeFn);
         anims = null;
-    })
+    });
 
 }
 
@@ -60,17 +61,18 @@ let random = (min: number, max: number) => Math.floor(Math.random() * (max - min
 
 /* Properties Section */
 // Playback Controls Demo
-export let anim, motionPath, getTotalLength;
+export let svgAnim1, svgAnim2, empty, anim, motionPath, getTotalLength;
 export let run = () => {
     // Based on an example by animateplus
     (() => {
         let containerSel = ".morph-demo";
-        let pathEl = document.querySelector(`${containerSel} path`);
+        let usingDPathEl = document.querySelector(`${containerSel} #using-d`);
+        let usingFlubberPathEl = document.querySelector(`${containerSel} #using-flubber`);
 
-        if (pathEl) {
-            let InitialStyle = getComputedStyle(pathEl);
-            let anim = animate({
-                target: pathEl,
+        if (usingDPathEl) {
+            let InitialStyle = getComputedStyle(usingDPathEl);
+            svgAnim1 = animate({
+                target: usingDPathEl,
                 duration: 1800,
                 easing: "ease",
                 loop: 4,
@@ -84,8 +86,63 @@ export let run = () => {
                     `rgb(96, 165, 250)`
                 ],
             });
+        }
 
-            playbackFn(containerSel, [anim]);
+        if (usingDPathEl && usingFlubberPathEl) {
+            let InitialStyle = getComputedStyle(usingFlubberPathEl);
+            let startPath = usingFlubberPathEl.getAttribute("d");
+            let endPath =
+                "M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z";
+            let emptyEl = document.querySelector(".empty");
+
+            let options: IAnimationOptions = {
+                duration: 1800,
+                easing: "ease",
+                loop: 4,
+                fillMode: "both",
+                direction: "alternate",
+            };
+
+            empty = animate({
+                target: emptyEl,
+                options,
+                opacity: [0, 1],
+            });
+
+            svgAnim2 = animate({
+                target: usingFlubberPathEl,
+                options,
+                fill: [
+                    InitialStyle.getPropertyValue("stroke"),
+                    `rgb(96, 165, 250)`
+                ],
+
+                // You can also use custom properties when animating
+                // I chose to use them for this example
+                // Read more here [https://css-tricks.com/a-complete-guide-to-custom-properties/]
+                "--stroke": [
+                    InitialStyle.getPropertyValue("stroke"),
+                    `rgb(96, 165, 250)`
+                ],
+            });
+
+            let morph = interpolate(startPath, endPath, {
+                maxSegmentLength: 0.1
+            });
+
+            try {
+                let style = getComputedStyle(emptyEl);
+                empty.on("update", () => {
+                    let progress = Number(style.getPropertyValue("opacity"));
+                    let currentPath = morph(progress);
+                    usingFlubberPathEl.setAttribute("d", `` + currentPath);
+                });
+            } catch (e) {
+                empty?.stopLoop();
+                console.log(e);
+            }
+
+            playbackFn(containerSel, [empty, svgAnim1, svgAnim2]);
         }
     })();
 
@@ -182,6 +239,7 @@ export let run = () => {
 
                 anim.add(el);
 
+                // To support older browsers I can't use partial keyframes
                 let transition = animate({
                     target: _contain,
                     opacity: [0, 1],
@@ -205,17 +263,21 @@ export let run = () => {
 
                 anim.remove(el);
 
+                // To support older browsers I can't use partial keyframes
+                let style = getComputedStyle(contain);
+                let marginBottom = style.getPropertyValue("margin-bottom");
+                let height = style.getPropertyValue("height");
                 let transition = animate({
                     target: contain,
                     opacity: [1, 0],
-                    height: [contain.style.height, 0],
-                    marginBottom: [contain.style.marginBottom, 0],
+                    height: [height, `0px`],
+                    marginBottom: [marginBottom, `0px`],
                     fillMode: "forwards",
                     duration: 400,
                     easing: "out"
                 }).then(() => {
-                    transition.stop();
                     contain?.remove();
+                    transition.stop();
 
                     transition = null;
                     contain = null;
@@ -239,6 +301,7 @@ export let run = () => {
         let containerSel = ".motion-path-demo";
         let el = document.querySelector('.motion-path .el-1') as HTMLElement;
         if (el) {
+            // To support older browsers I can't use partial keyframes
             motionPath = animate({
                 target: el,
                 "offsetDistance": ["0%", "100%"],
@@ -249,7 +312,6 @@ export let run = () => {
         let path = document.querySelector('.motion-path path') as SVGPathElement;
         let el2 = document.querySelector('.motion-path .el-2') as HTMLElement;
         if (path && el2) {
-
             let pts: Set<number[]> = new Set();
             let rotateArr: number[] = [];
             let len = path.getTotalLength();
@@ -279,6 +341,9 @@ export let run = () => {
 };
 
 export let stop = () => {
+    svgAnim1?.stop();
+    svgAnim2?.stop();
+    empty?.stop();
     anim?.stop();
     motionPath?.stop();
     getTotalLength?.stop();

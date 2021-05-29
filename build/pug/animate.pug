@@ -3,49 +3,66 @@ extends /layouts/layout.pug
 block title
   title @okikio/animate (no-pjax)
 
+mixin controls
+  .controls.row.mx-0.mt-5.align-items-center
+    .col-2
+      button#playstate-toggle.btn-icon(
+        type="button",
+        title="Play/Pause Toggle",
+        data-playstate="paused"
+      )
+        i.fa.fa-play(aria-hidden="true")
+        i.fa.fa-pause(aria-hidden="true")
+        i.fa.fa-redo(aria-hidden="true")
+      span.text-center(id=`progress-output`) 0
+    input#progress.col-10.form-control-range(
+      type="range",
+      value="0",
+      min="0",
+      max="100"
+      step="0.001"
+    )
+
+
 block content
   link(rel='stylesheet' href='./css/animate.css' defer)
+  link(rel="stylesheet", href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" defer)
+
+  .empty
   .container.px-5.py-2(class="sm:max-w-screen-xl")
     .rounded-lg.intro-animation
       h1.py-24.text-5xl.font-semibold @okikio/animate
 
       .morph-demo.p-6.bg-gray-200.rounded-lg.intro-animation(class="dark:bg-quaternary")
-        h2.text-lg.font-bold.mb-2 SVG Morphing
-        svg.svg-1(viewbox='0 0 10 10')
-          path(d='M2,5 S2,-2 4,5 S7,8 8,4')
+        //- h2.text-lg.font-bold.mb-2 SVG Morphing
+        .svg-1.flex.justify-evenly.flex-wrap
+          .svg-demo
+            h2.text-center.text-lg.font-bold SVG Morphing (Using d)
+            svg(width="256", height="112", viewbox='0 0 10 10')
+              path#using-d(d='M2,5 S2,-2 4,5 S7,8 8,4')
 
+          .svg-demo
+            h2.text-center.text-lg.font-bold SVG Morphing (Using flubberjs)
+            svg(width="256", height="112", viewbox="0 0 20 23")
+              path#using-flubber(
+                fill="none",
+                stroke="currentColor",
+                stroke-width="1",
+                d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"
+              )
 
-        .controls.row.mx-0.mt-5.align-items-center
-          .col-2
-            button#playstate-toggle.btn-icon(
-              type="button",
-              title="Play/Pause Toggle",
-              data-playstate="paused"
-            )
-              i.fa.fa-play(aria-hidden="true")
-              i.fa.fa-pause(aria-hidden="true")
-              i.fa.fa-redo(aria-hidden="true")
-            span.text-center(id=`progress-output`) 0
-          input#progress.col-10.form-control-range(
-            type="range",
-            value="0",
-            min="0",
-            max="100"
-            step="0.01"
-          )
-
-
+        +controls
 
       .bg-gray-200(class="dark:bg-quaternary").rounded-lg.intro-animation
         .playback-demo.p-6
           h2.text-lg.font-bold.mb-2 Multiple Targets with Random Values
-          //- p Click on the box to play the animation
           .el-placement
             - for (let i = 0; i < 3; i ++) {
               .contain
                 .el
                 .el-initial
             - }
+
           .add-remove-btns.flex.justify-center.my-5.align-items-center
             button#add-el.btn-icon(
               type="button",
@@ -58,29 +75,12 @@ block content
             )
               i.fa.fa-minus(aria-hidden="true")
 
-          .controls.row.mx-0.mt-5.align-items-center
-            .col-2
-              button#playstate-toggle.btn-icon(
-                type="button",
-                title="Play/Pause Toggle",
-                data-playstate="paused"
-              )
-                i.fa.fa-play(aria-hidden="true")
-                i.fa.fa-pause(aria-hidden="true")
-                i.fa.fa-redo(aria-hidden="true")
-              span.text-center(id=`progress-output`) 0
-            input#progress.col-10.form-control-range(
-              type="range",
-              value="0",
-              min="0",
-              max="100"
-              step="0.01"
-            )
+          +controls
 
       .p-6.mt-6.bg-gray-200(class="dark:bg-quaternary").rounded-lg.intro-animation
         .motion-path-demo
           .flex.justify-evenly.flex-wrap
-            .motion-path
+            .motion-path.svg-demo
               h2.text-center.text-lg.font-bold Motion Path/Offset Path
               .relative
                 .small.square.shadow.el-initial
@@ -88,8 +88,7 @@ block content
                 svg(width='256' height='112' viewbox='0 0 256 112')
                   path#follow-path(fill='none' stroke='currentColor' stroke-width='1' d='M8,56 C8,33.90861 25.90861,16 48,16 C70.09139,16 88,33.90861 88,56 C88,78.09139 105.90861,92 128,92 C150.09139,92 160,72 160,56 C160,40 148,24 128,24 C108,24 96,40 96,56 C96,72 105.90861,92 128,92 C154,93 168,78 168,56 C168,33.90861 185.90861,16 208,16 C230.09139,16 248,33.90861 248,56 C248,78.09139 230.09139,96 208,96 L48,96 C25.90861,96 8,78.09139 8,56 Z')
 
-
-            .motion-path
+            .motion-path.svg-demo
               h2.text-center.text-lg.font-bold getTotalLength()
               .relative
                 .small.square.shadow.el-initial
@@ -97,25 +96,4 @@ block content
                 svg(width='256' height='112' viewbox='0 0 256 112')
                   path#follow-path(fill='none' stroke='currentColor' stroke-width='1' d='M8,56 C8,33.90861 25.90861,16 48,16 C70.09139,16 88,33.90861 88,56 C88,78.09139 105.90861,92 128,92 C150.09139,92 160,72 160,56 C160,40 148,24 128,24 C108,24 96,40 96,56 C96,72 105.90861,92 128,92 C154,93 168,78 168,56 C168,33.90861 185.90861,16 208,16 C230.09139,16 248,33.90861 248,56 C248,78.09139 230.09139,96 208,96 L48,96 C25.90861,96 8,78.09139 8,56 Z')
 
-
-          .controls.row.mx-0.mt-5.align-items-center
-            .col-2
-              button#playstate-toggle.btn-icon(
-                type="button",
-                title="Play/Pause Toggle",
-                data-playstate="paused"
-              )
-                i.fa.fa-play(aria-hidden="true")
-                i.fa.fa-pause(aria-hidden="true")
-                i.fa.fa-redo(aria-hidden="true")
-              span.text-center(id=`progress-output`) 0
-            input#progress.col-10.form-control-range(
-              type="range",
-              value="0",
-              min="0",
-              max="100"
-              step="0.01"
-            )
-
-  link(rel="stylesheet", href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css")
-  //- script(src="./js/animate.js" type="module")
+          +controls
