@@ -52,6 +52,7 @@
         "del": "^6.0.0",
         "del-cli": "^3.0.1",
         "esbuild": "^0.12.5",
+        "flubber": "^0.4.2",
         "gulp": "^4.0.2",
         "gulp-esbuild": "^0.8.0",
         "gulp-plumber": "^1.2.1",
@@ -74,7 +75,7 @@
         "standard-version": "^9.3.0",
         "tailwindcss": "^2.1.2",
         "typedoc": "^0.20.36",
-        "typescript": "4.2",
+        "typescript": "~4.2.4",
         "ultra-runner": "^3.10.5"
     }
 }
