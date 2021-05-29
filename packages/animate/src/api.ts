@@ -919,13 +919,8 @@ export class Animate {
             }
 
             if (!this.mainAnimation) {
-                this.mainkeyframeEffect = new KeyframeEffect(this.mainElement, [
-                    { opacity: "0" },
-                    { opacity: "1" }
-                ], {
-                    // Why waste performance on an animation no one can see?
-                    duration: this.totalDuration,
-                    easing: "linear"
+                this.mainkeyframeEffect = new KeyframeEffect(this.mainElement, null, {
+                    duration: this.totalDuration
                 });
 
                 this.mainAnimation = new Animation(this.mainkeyframeEffect, timeline);
@@ -940,23 +935,31 @@ export class Animate {
 
             this.mainAnimation.playbackRate = this.maxSpeed;
             this.mainAnimation.onfinish = () => {
-                this.emit("finish", this);
                 if (this.mainAnimation) {
                     let playstate = this.getPlayState();
                     if (!this.is(playstate))
                         this.emit("playstate-change", playstate, this);
+
+                    // Ensure the progress reaches 100%
+                    this.loop();
                     this.stopLoop();
                 }
+
+                this.emit("finish", this);
             };
 
             this.mainAnimation.oncancel = () => {
-                this.emit("cancel", this);
                 if (this.mainAnimation) {
                     let playstate = this.getPlayState();
                     if (!this.is(playstate))
                         this.emit("playstate-change", playstate, this);
+
+                    // Ensure the progress is accurate
+                    this.loop();
                     this.stopLoop();
                 }
+
+                this.emit("cancel", this);
             };
 
             if (autoplay) {
