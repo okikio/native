@@ -12,6 +12,7 @@ const destFolder = `demo`;
 const tsFolder = `${srcFolder}/ts`;
 const sassFolder = `${srcFolder}/sass`;
 const pugFolder = `${srcFolder}/pug`;
+const assetsFolder = `${srcFolder}/assets`;
 
 // Destination file folders
 const jsFolder = `${destFolder}/js`;
@@ -236,6 +237,17 @@ tasks({
     },
     "js": parallelFn("modern-js", "legacy-js", "other-js")
 });
+
+// Other assets
+task("assets", () => {
+    return stream([`${assetsFolder}/**/*`], {
+        opts: {
+            base: assetsFolder,
+        },
+        dest: destFolder,
+    });
+});
+
 // BrowserSync
 task("reload", (resolve) => {
     if (browserSync) browserSync.reload();
@@ -304,7 +316,9 @@ task("watch", async () => {
         { delay: 300 },
         series("js", "reload")
     );
+
+    watch([`${assetsFolder}/**/*`], { delay: 300 }, series("reload"));
 });
 
-task("build", series("clean", parallel("html", "css", "js"), "minify-css"));
-task("default", series("clean", parallel("html", "css", "js"), "watch"));
+task("build", series("clean", parallel("html", "css", "js", "assets"), "minify-css"));
+task("default", series("clean", parallel("html", "css", "js", "assets"), "watch"));
