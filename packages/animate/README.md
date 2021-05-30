@@ -1,6 +1,6 @@
 # @okikio/animate
 
-An animation library for the modern web, which. Inspired by animate plus, and animejs, [@okikio/animate](https://www.skypack.dev/view/@okikio/animate) is a Javascript animation library focused on performance and ease of use. It  utilizes the Web Animation API to deliver butter smooth animations at a small size, it weighs **~5.36 KB** (minified and gzipped).
+An animation library for the modern web, which. Inspired by animate plus, and animejs, [@okikio/animate](https://www.skypack.dev/view/@okikio/animate) is a Javascript animation library focused on performance and ease of use. It  utilizes the Web Animation API to deliver butter smooth animations at a small size, it weighs **~5.79 KB** (minified and gzipped).
 
 *Before even getting started, you will most likely need the Web Animation API, Promise, Set, and Map polyfills. If you install [@okikio/animate](https://www.skypack.dev/view/@okikio/animate) via [npm](https://www.npmjs.com/package/@okikio/animate) you are most likely going to need [rollup](https://rollupjs.org/) or [esbuild](https://esbuild.github.io/). You can use [web-animations-js](https://github.com/web-animations/web-animations-js), or [polyfill.io](https://polyfill.io/) to create a polyfill. The minimum feature requirement for a polyfill are Maps, Set, Promises, and a WebAnimation polyfill, e.g. [https://cdn.polyfill.io/v3/polyfill.min.js?features=default,es2015,es2018,Array.prototype.includes,Map,Set,Promise,WebAnimations](https://cdn.polyfill.io/v3/polyfill.min.js?features=default,es2015,es2018,Array.prototype.includes,Map,Set,Promise). and [https://cdn.jsdelivr.net/npm/web-animations-js/web-animations-next.min.js](https://cdn.jsdelivr.net/npm/web-animations-js/web-animations-next.min.js)*
 
@@ -834,9 +834,11 @@ Also, adds the ability to use single string or number values for transform funct
 
 _**Note**: the `transform` animation option will override all transform CSS properties_
 
+_**Note**: dash & camel case are supported as CSS property names, this also includes transforms, so, you can use `translate-x` or `translateX`, when setting a CSS property_
+
 _**Note**: all other features will work with Transformable CSS Properties, this includes the `keyframes` animation options and `animation options` as callbacks_
 
-_**Warning**: only the transform CSS properties will get automatic units, but all other CSS properties can be used a a single value option_
+_**Warning**: only the transform function properties and CSS properties with the keys ["margin", "padding", "size", "width", "height", "left", "right", "top", "bottom", "radius", ,"gap", "basis", "inset", "outline-offset", "perspective", "thickness", "position", "distance", "spacing", "rotate"] will get automatic units. It will also work with multiple unit  CSS properties like "margin", "padding", and "inset", etc..., however, no automatic units will be applied to any CSS properties that can accept color, this is to avoid unforseen bugs_
 
 Read more about the [ParseTransformableCSSProperties](https://okikio.github.io/native/docs/modules/animate.html#parsetransformablecssproperties) method.
 
@@ -882,7 +884,8 @@ animate({
         [2, "4", 6, "45turn"],
         ["2", "4", "6", "-1rad"]
     ],
-    opacity: [0, 1]
+    opacity: [0, 1],
+    "border-left": 5
 })
 
 //= {
@@ -892,7 +895,8 @@ animate({
 //=       'translate(35px) translate3d(50px, 60px, 70px) ranslateX(60px) translateY(60px) rotate3d(2, 4, 6, 45turn) scale(2, 1)',
 //=       'translate(60%) translate3d(70px, 50px) translateX(70px) rotate3d(2, 4, 6, -1rad)'
 //=   ],
-//=   opacity: [ '0', '5' ]
+//=   opacity: [ '0', '5' ],
+//=   borderLeft: ["5px"]
 //= }
 ```
 

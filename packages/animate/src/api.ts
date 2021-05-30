@@ -800,7 +800,7 @@ export class Animate {
                 let _offset = offset as (string | number)[];
                 computedKeyframes = Object.assign({},
                     CSSProperties,
-                    !isValid(_offset) ? null : { offset: _offset.map(parseOffset) }
+                    isValid(_offset) ? { offset: _offset.map(parseOffset) } : null
                 ) as PropertyIndexedKeyframes;
             } else {
                 computedKeyframes = animationKeyframe.map((keyframe: Keyframe) => {
