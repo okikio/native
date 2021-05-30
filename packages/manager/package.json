@@ -34,8 +34,7 @@
         "dts": "del-cli @types/ && tsc --project dts.tsconfig.json",
         "test": "jest --maxWorkers=1",
         "test-dev": "jest --maxWorkers=1 --watch --verbose false",
-        "pre-release": "npm run build && npm test && npm run dts",
-        "changelog": "standard-version --releaseCommitMessageFormat --tag-prefix \"@okikio/manager@\" \"chore(release): :rocket: @okikio/manager@{{currentTag}}\""
+        "pre-release": "npm run build && npm test && npm run dts"
     },
     "repository": {
         "type": "git",
@@ -70,7 +69,6 @@
         "node-fetch": "^2.6.1",
         "pnpm": "^6.4.0",
         "pretty-bytes": "^5.6.0",
-        "standard-version": "^9.3.0",
         "typescript": "~4.2.4",
         "ultra-runner": "^3.10.5"
     },
