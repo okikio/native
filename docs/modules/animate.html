@@ -70,7 +70,7 @@
 					<a href="#okikioanimate" id="okikioanimate" style="color: inherit; text-decoration: none;">
 						<h1>@okikio/animate</h1>
 					</a>
-					<p>An animation library for the modern web, which. Inspired by animate plus, and animejs, <a href="https://www.skypack.dev/view/@okikio/animate">@okikio/animate</a> is a Javascript animation library focused on performance and ease of use. It  utilizes the Web Animation API to deliver butter smooth animations at a small size, it weighs <strong>~5.36 KB</strong> (minified and gzipped).</p>
+					<p>An animation library for the modern web, which. Inspired by animate plus, and animejs, <a href="https://www.skypack.dev/view/@okikio/animate">@okikio/animate</a> is a Javascript animation library focused on performance and ease of use. It  utilizes the Web Animation API to deliver butter smooth animations at a small size, it weighs <strong>~5.79 KB</strong> (minified and gzipped).</p>
 					<p><em>Before even getting started, you will most likely need the Web Animation API, Promise, Set, and Map polyfills. If you install <a href="https://www.skypack.dev/view/@okikio/animate">@okikio/animate</a> via <a href="https://www.npmjs.com/package/@okikio/animate">npm</a> you are most likely going to need <a href="https://rollupjs.org/">rollup</a> or <a href="https://esbuild.github.io/">esbuild</a>. You can use <a href="https://github.com/web-animations/web-animations-js">web-animations-js</a>, or <a href="https://polyfill.io/">polyfill.io</a> to create a polyfill. The minimum feature requirement for a polyfill are Maps, Set, Promises, and a WebAnimation polyfill, e.g. <a href="https://cdn.polyfill.io/v3/polyfill.min.js?features=default,es2015,es2018,Array.prototype.includes,Map,Set,Promise">https://cdn.polyfill.io/v3/polyfill.min.js?features=default,es2015,es2018,Array.prototype.includes,Map,Set,Promise,WebAnimations</a>. and <a href="https://cdn.jsdelivr.net/npm/web-animations-js/web-animations-next.min.js">https://cdn.jsdelivr.net/npm/web-animations-js/web-animations-next.min.js</a></em></p>
 					<p><em><strong>Warning</strong>: polyfilling may not fix animation format bugs, e.g. <a href="https://developer.mozilla.org/en-US/docs/Web/API/KeyframeEffect/composite">composite animations</a> don&#39;t work on older browsers, so, if you use <code>polyfill.io</code> and set it to check if the browser supports the feature before applying the polyfill, your project might encounter errors, as the browser may only have partial support of the Web Animation API.</em></p>
 					<p><em><strong>Note</strong>: to properly understand <code>@okikio/animate</code>, please read up on the <a href="https://developer.mozilla.org/en-US/docs/Web/API/Element/animate">Web Animation API</a> on MDN.</em></p>
@@ -1013,8 +1013,9 @@
 					<p>Removes the need for the full transform statement in order to use translate, rotate, scale, skew, or perspective including their X, Y, Z, and 3d varients. Plus adds automatic units to the transform CSS properties.</p>
 					<p>Also, adds the ability to use single string or number values for transform functions.</p>
 					<p><em><strong>Note</strong>: the <code>transform</code> animation option will override all transform CSS properties</em></p>
+					<p><em><strong>Note</strong>: dash &amp; camel case are supported as CSS property names, this also includes transforms, so, you can use <code>translate-x</code> or <code>translateX</code>, when setting a CSS property</em></p>
 					<p><em><strong>Note</strong>: all other features will work with Transformable CSS Properties, this includes the <code>keyframes</code> animation options and <code>animation options</code> as callbacks</em></p>
-					<p><em><strong>Warning</strong>: only the transform CSS properties will get automatic units, but all other CSS properties can be used a a single value option</em></p>
+					<p><em><strong>Warning</strong>: only the transform function properties and CSS properties with the keys [&quot;margin&quot;, &quot;padding&quot;, &quot;size&quot;, &quot;width&quot;, &quot;height&quot;, &quot;left&quot;, &quot;right&quot;, &quot;top&quot;, &quot;bottom&quot;, &quot;radius&quot;, ,&quot;gap&quot;, &quot;basis&quot;, &quot;inset&quot;, &quot;outline-offset&quot;, &quot;perspective&quot;, &quot;thickness&quot;, &quot;position&quot;, &quot;distance&quot;, &quot;spacing&quot;, &quot;rotate&quot;] will get automatic units. It will also work with multiple unit  CSS properties like &quot;margin&quot;, &quot;padding&quot;, and &quot;inset&quot;, etc..., however, no automatic units will be applied to any CSS properties that can accept color, this is to avoid unforseen bugs</em></p>
 					<p>Read more about the <a href="https://okikio.github.io/native/docs/modules/animate.html#parsetransformablecssproperties">ParseTransformableCSSProperties</a> method.</p>
 					<p>Also, read about the <a href="https://okikio.github.io/native/docs/modules/animate.html#parsetransformablecsskeyframes">ParseTransformableCSSKeyframes</a> method.</p>
 					<p>Check out an example on <a href="https://codepen.io/okikio/pen/qBrNXoY?editors=0110">Codepen</a></p>
@@ -1055,7 +1056,8 @@
 <span style="color: #000000">        [</span><span style="color: #098658">2</span><span style="color: #000000">, </span><span style="color: #A31515">&quot;4&quot;</span><span style="color: #000000">, </span><span style="color: #098658">6</span><span style="color: #000000">, </span><span style="color: #A31515">&quot;45turn&quot;</span><span style="color: #000000">],</span>
 <span style="color: #000000">        [</span><span style="color: #A31515">&quot;2&quot;</span><span style="color: #000000">, </span><span style="color: #A31515">&quot;4&quot;</span><span style="color: #000000">, </span><span style="color: #A31515">&quot;6&quot;</span><span style="color: #000000">, </span><span style="color: #A31515">&quot;-1rad&quot;</span><span style="color: #000000">]</span>
 <span style="color: #000000">    ],</span>
-<span style="color: #000000">    </span><span style="color: #001080">opacity:</span><span style="color: #000000"> [</span><span style="color: #098658">0</span><span style="color: #000000">, </span><span style="color: #098658">1</span><span style="color: #000000">]</span>
+<span style="color: #000000">    </span><span style="color: #001080">opacity:</span><span style="color: #000000"> [</span><span style="color: #098658">0</span><span style="color: #000000">, </span><span style="color: #098658">1</span><span style="color: #000000">],</span>
+<span style="color: #000000">    </span><span style="color: #A31515">&quot;border-left&quot;</span><span style="color: #001080">:</span><span style="color: #000000"> </span><span style="color: #098658">5</span>
 <span style="color: #000000">})</span>
 
 <span style="color: #008000">//= {</span>
@@ -1065,7 +1067,8 @@
 <span style="color: #008000">//=       &#039;translate(35px) translate3d(50px, 60px, 70px) ranslateX(60px) translateY(60px) rotate3d(2, 4, 6, 45turn) scale(2, 1)&#039;,</span>
 <span style="color: #008000">//=       &#039;translate(60%) translate3d(70px, 50px) translateX(70px) rotate3d(2, 4, 6, -1rad)&#039;</span>
 <span style="color: #008000">//=   ],</span>
-<span style="color: #008000">//=   opacity: [ &#039;0&#039;, &#039;5&#039; ]</span>
+<span style="color: #008000">//=   opacity: [ &#039;0&#039;, &#039;5&#039; ],</span>
+<span style="color: #008000">//=   borderLeft: [&quot;5px&quot;]</span>
 <span style="color: #008000">//= }</span>
 </code></pre>
 					<a href="#promises-and-promise-like" id="promises-and-promise-like" style="color: inherit; text-decoration: none;">
@@ -1538,6 +1541,7 @@
 							<h3>References</h3>
 							<ul class="tsd-index-list">
 								<li class="tsd-kind-reference tsd-parent-kind-module"><a href="animate.html#cssarrvalue" class="tsd-kind-icon">CSSArr<wbr>Value</a></li>
+								<li class="tsd-kind-reference tsd-parent-kind-module"><a href="animate.html#csspxdatatype" class="tsd-kind-icon">CSSPXData<wbr>Type</a></li>
 								<li class="tsd-kind-reference tsd-parent-kind-module"><a href="animate.html#cssvalue" class="tsd-kind-icon">CSSValue</a></li>
 								<li class="tsd-kind-reference tsd-parent-kind-module"><a href="animate.html#effects" class="tsd-kind-icon">EFFECTS</a></li>
 								<li class="tsd-kind-reference tsd-parent-kind-module"><a href="animate.html#ianimationoptions" class="tsd-kind-icon">IAnimation<wbr>Options</a></li>
@@ -1545,6 +1549,7 @@
 								<li class="tsd-kind-reference tsd-parent-kind-module"><a href="animate.html#icssproperties" class="tsd-kind-icon">ICSSProperties</a></li>
 								<li class="tsd-kind-reference tsd-parent-kind-module"><a href="animate.html#icsstransformableproperties" class="tsd-kind-icon">ICSSTransformable<wbr>Properties</a></li>
 								<li class="tsd-kind-reference tsd-parent-kind-module"><a href="animate.html#keyframeparse" class="tsd-kind-icon">Keyframe<wbr>Parse</a></li>
+								<li class="tsd-kind-reference tsd-parent-kind-module"><a href="animate.html#parsecssproperties" class="tsd-kind-icon">ParseCSSProperties</a></li>
 								<li class="tsd-kind-reference tsd-parent-kind-module"><a href="animate.html#parsetransformablecsskeyframes" class="tsd-kind-icon">Parse<wbr>TransformableCSSKeyframes</a></li>
 								<li class="tsd-kind-reference tsd-parent-kind-module"><a href="animate.html#parsetransformablecssproperties" class="tsd-kind-icon">Parse<wbr>TransformableCSSProperties</a></li>
 								<li class="tsd-kind-reference tsd-parent-kind-module"><a href="animate.html#transformfunctionnames" class="tsd-kind-icon">Transform<wbr>Function<wbr>Names</a></li>
@@ -1568,11 +1573,13 @@
 								<li class="tsd-kind-reference tsd-parent-kind-module"><a href="animate.html#unitpx" class="tsd-kind-icon">UnitPX</a></li>
 								<li class="tsd-kind-reference tsd-parent-kind-module"><a href="animate.html#unitpxcssvalue" class="tsd-kind-icon">UnitPXCSSValue</a></li>
 								<li class="tsd-kind-reference tsd-parent-kind-module"><a href="animate.html#addcssunit" class="tsd-kind-icon">addCSSUnit</a></li>
+								<li class="tsd-kind-reference tsd-parent-kind-module"><a href="animate.html#camelcase" class="tsd-kind-icon">camel<wbr>Case</a></li>
 								<li class="tsd-kind-reference tsd-parent-kind-module"><a href="animate.html#createtransformproperty" class="tsd-kind-icon">create<wbr>Transform<wbr>Property</a></li>
 								<li class="tsd-kind-reference tsd-parent-kind-module"><a href="animate.html#default" class="tsd-kind-icon">default</a></li>
 								<li class="tsd-kind-reference tsd-parent-kind-module"><a href="animate.html#isvalid" class="tsd-kind-icon">is<wbr>Valid</a></li>
 								<li class="tsd-kind-reference tsd-parent-kind-module"><a href="animate.html#parseoffset" class="tsd-kind-icon">parse<wbr>Offset</a></li>
 								<li class="tsd-kind-reference tsd-parent-kind-module"><a href="animate.html#toarr" class="tsd-kind-icon">to<wbr>Arr</a></li>
+								<li class="tsd-kind-reference tsd-parent-kind-module"><a href="animate.html#tostr" class="tsd-kind-icon">to<wbr>Str</a></li>
 								<li class="tsd-kind-reference tsd-parent-kind-module"><a href="animate.html#transpose" class="tsd-kind-icon">transpose</a></li>
 							</ul>
 						</section>
@@ -1616,6 +1623,11 @@
 					Re-exports <a href="native.html#cssarrvalue">CSSArrValue</a>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-reference tsd-parent-kind-module">
+					<a name="csspxdatatype" class="tsd-anchor"></a>
+					<h3>CSSPXData<wbr>Type</h3>
+					Re-exports <a href="native.html#csspxdatatype">CSSPXDataType</a>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-reference tsd-parent-kind-module">
 					<a name="cssvalue" class="tsd-anchor"></a>
 					<h3>CSSValue</h3>
 					Re-exports <a href="native.html#cssvalue">CSSValue</a>
@@ -1649,6 +1661,11 @@
 					<a name="keyframeparse" class="tsd-anchor"></a>
 					<h3>Keyframe<wbr>Parse</h3>
 					Re-exports <a href="native.html#keyframeparse">KeyframeParse</a>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-reference tsd-parent-kind-module">
+					<a name="parsecssproperties" class="tsd-anchor"></a>
+					<h3>ParseCSSProperties</h3>
+					Re-exports <a href="native.html#parsecssproperties">ParseCSSProperties</a>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-reference tsd-parent-kind-module">
 					<a name="parsetransformablecsskeyframes" class="tsd-anchor"></a>
@@ -1766,6 +1783,11 @@
 					Re-exports <a href="native.html#addcssunit">addCSSUnit</a>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-reference tsd-parent-kind-module">
+					<a name="camelcase" class="tsd-anchor"></a>
+					<h3>camel<wbr>Case</h3>
+					Re-exports <a href="native.html#camelcase">camelCase</a>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-reference tsd-parent-kind-module">
 					<a name="createtransformproperty" class="tsd-anchor"></a>
 					<h3>create<wbr>Transform<wbr>Property</h3>
 					Re-exports <a href="native.html#createtransformproperty">createTransformProperty</a>
@@ -1789,6 +1811,11 @@
 					<a name="toarr" class="tsd-anchor"></a>
 					<h3>to<wbr>Arr</h3>
 					Re-exports <a href="native.html#toarr">toArr</a>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-reference tsd-parent-kind-module">
+					<a name="tostr" class="tsd-anchor"></a>
+					<h3>to<wbr>Str</h3>
+					Re-exports <a href="native.html#tostr">toStr</a>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-reference tsd-parent-kind-module">
 					<a name="transpose" class="tsd-anchor"></a>
@@ -2341,6 +2368,9 @@
 								<a href="animate.html#cssarrvalue" class="tsd-kind-icon">CSSArr<wbr>Value</a>
 							</li>
 							<li class=" tsd-kind-reference tsd-parent-kind-module">
+								<a href="animate.html#csspxdatatype" class="tsd-kind-icon">CSSPXData<wbr>Type</a>
+							</li>
+							<li class=" tsd-kind-reference tsd-parent-kind-module">
 								<a href="animate.html#cssvalue" class="tsd-kind-icon">CSSValue</a>
 							</li>
 							<li class=" tsd-kind-reference tsd-parent-kind-module">
@@ -2360,6 +2390,9 @@
 							</li>
 							<li class=" tsd-kind-reference tsd-parent-kind-module">
 								<a href="animate.html#keyframeparse" class="tsd-kind-icon">Keyframe<wbr>Parse</a>
+							</li>
+							<li class=" tsd-kind-reference tsd-parent-kind-module">
+								<a href="animate.html#parsecssproperties" class="tsd-kind-icon">ParseCSSProperties</a>
 							</li>
 							<li class=" tsd-kind-reference tsd-parent-kind-module">
 								<a href="animate.html#parsetransformablecsskeyframes" class="tsd-kind-icon">Parse<wbr>TransformableCSSKeyframes</a>
@@ -2431,6 +2464,9 @@
 								<a href="animate.html#addcssunit" class="tsd-kind-icon">addCSSUnit</a>
 							</li>
 							<li class=" tsd-kind-reference tsd-parent-kind-module">
+								<a href="animate.html#camelcase" class="tsd-kind-icon">camel<wbr>Case</a>
+							</li>
+							<li class=" tsd-kind-reference tsd-parent-kind-module">
 								<a href="animate.html#createtransformproperty" class="tsd-kind-icon">create<wbr>Transform<wbr>Property</a>
 							</li>
 							<li class=" tsd-kind-reference tsd-parent-kind-module">
@@ -2444,6 +2480,9 @@
 							</li>
 							<li class=" tsd-kind-reference tsd-parent-kind-module">
 								<a href="animate.html#toarr" class="tsd-kind-icon">to<wbr>Arr</a>
+							</li>
+							<li class=" tsd-kind-reference tsd-parent-kind-module">
+								<a href="animate.html#tostr" class="tsd-kind-icon">to<wbr>Str</a>
 							</li>
 							<li class=" tsd-kind-reference tsd-parent-kind-module">
 								<a href="animate.html#transpose" class="tsd-kind-icon">transpose</a>

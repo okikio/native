@@ -91,6 +91,16 @@ export declare const UnitLessCSSValue: (input: TypeSingleValueCSSProperty) => an
 export declare const UnitPXCSSValue: (input: TypeSingleValueCSSProperty) => any[];
 /** Parses CSSValues and adds the "deg" unit if required */
 export declare const UnitDEGCSSValue: (input: TypeSingleValueCSSProperty) => any[];
+/** Convert a dash-separated string into camelCase strings */
+export declare const camelCase: (str: string) => string;
+/**
+ * Removes dashes from CSS properties & maps the values to the camelCase keys
+ */
+export declare const ParseCSSProperties: (obj: object) => {};
+/** Converts values to strings */
+export declare const toStr: (input: any) => string;
+/** Common CSS Property names with the units "px" as an acceptable value */
+export declare const CSSPXDataType: string;
 /**
  * Removes the need for the full transform statement in order to use translate, rotate, scale, skew, or perspective including their X, Y, Z, and 3d varients
  * Also, adds the ability to use single string or number values for transform functions
@@ -122,7 +132,17 @@ export declare const UnitDEGCSSValue: (input: TypeSingleValueCSSProperty) => any
  *          [1, 2, 5, "3deg"], // The last value in the array must be a string with units for rotate3d
  *          [2, "4", 6, "45turn"],
  *          ["2", "4", "6", "-1rad"]
- *      ]
+ *      ],
+ *
+ *      // Units are required for non transform CSS properties
+ *      // String won't be split into array, they will be wrappeed in an Array
+ *      // It will transform border-left to camelCase "borderLeft"
+ *      "border-left": 50,
+ *      "offset-rotate": "10, 20",
+ *      margin: 5,
+ *
+ *      // When writing in this formation you must specify the units
+ *      padding: "5px 6px 7px"
  * })
  *
  * //= {
@@ -132,7 +152,13 @@ export declare const UnitDEGCSSValue: (input: TypeSingleValueCSSProperty) => any
  * //=       'translate(35px) translate3d(50px, 60px, 70px) translateX(60px) translateY(60px) rotate3d(2, 4, 6, 45turn) scale(2, 1)',
  * //=       'translate(60%) translate3d(70px, 50px) translateX(70px) rotate3d(2, 4, 6, -1rad)'
  * //=   ],
- * //=   opacity: [ '0', '5' ]
+ * //=   opacity: [ '0', '5' ],
+ * //=   borderLeft: ["50px"],
+ * //=
+ * //=   // Notice the "deg"
+ * //=   offsetRotate: ["10deg", "20deg"],
+ * //=   margin: ["5px"],
+ * //=   padding: ["5px 6px 7px"]
  * //= }
  * ```
  *
@@ -153,6 +179,6 @@ export declare const ParseTransformableCSSProperties: (properties: ICSSComputedT
  */
 export declare const ParseTransformableCSSKeyframes: (keyframes: ICSSComputedTransformableProperties[]) => ({
     transform: string;
-} & (string | number | TypeSingleValueCSSProperty[] | {
+} & {
     [key: string]: TypeSingleValueCSSProperty | TypeSingleValueCSSProperty[];
-}))[];
+})[];

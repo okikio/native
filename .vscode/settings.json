@@ -6,7 +6,8 @@
         "demo",
         "@okikio/animate",
         "@okikio/native",
-        "root"
+        "root",
+        "gulpfile"
     ],
     "npm.packageManager": "pnpm"
 }

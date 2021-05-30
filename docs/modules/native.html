@@ -70,7 +70,7 @@
 					<a href="#okikionative" id="okikionative" style="color: inherit; text-decoration: none;">
 						<h1>@okikio/native</h1>
 					</a>
-					<p><code>native</code> is an initiative that encourages performance, modern technologies, and great user experiences. The idea behind <code>@okikio/native</code> is that it acts as the core framework to the <code>native</code> initiative, it combines all the other package into it a core package that is <strong>~11.6 KB</strong> (minified &amp; gzipped).</p>
+					<p><code>native</code> is an initiative that encourages performance, modern technologies, and great user experiences. The idea behind <code>@okikio/native</code> is that it acts as the core framework to the <code>native</code> initiative, it combines all the other package into it a core package that is <strong>~12.1 KB</strong> (minified &amp; gzipped).</p>
 					<p><em><strong>Note</strong>: <code>@okikio/native</code> is treeshakable, so you only need to use the features required for your project and the other portions can be removed. By default <code>@okikio/native</code> bundles <a href="https://www.npmjs.com/package/@okikio/animate">@okikio/animate</a>, so you don&#39;t need to install extra packages, but if you don&#39;t use it, it can be treeshaken out of your bundle. The absolute minimum functional treeshaken size is <strong>~1.75 KB</strong> (minified &amp; gzipped).</em></p>
 					<p><a href="https://www.skypack.dev/view/@okikio/native">@okikio/native</a> is a guideline on how to create great web experiences that integrate into the system in a way that feels like a cohesive and native experience.</p>
 					<p>The idea behind it is that, when an app feels native, it means that it integrates well into the systems and <code>just works</code>, for example, a dark mode that follows the entire system. The <code>just works</code> aspect is key to the framework, it should work without the user skipping a beat. On the web this boils down to being performant, efficient, and smooth.</p>
@@ -2280,6 +2280,7 @@
 							<h3>Variables</h3>
 							<ul class="tsd-index-list">
 								<li class="tsd-kind-variable tsd-parent-kind-module"><a href="native.html#config_defaults" class="tsd-kind-icon">CONFIG_<wbr>DEFAULTS</a></li>
+								<li class="tsd-kind-variable tsd-parent-kind-module"><a href="native.html#csspxdatatype" class="tsd-kind-icon">CSSPXData<wbr>Type</a></li>
 								<li class="tsd-kind-variable tsd-parent-kind-module"><a href="native.html#effects" class="tsd-kind-icon">EFFECTS</a></li>
 								<li class="tsd-kind-variable tsd-parent-kind-module"><a href="native.html#parser" class="tsd-kind-icon">PARSER</a></li>
 								<li class="tsd-kind-variable tsd-parent-kind-module"><a href="native.html#replace" class="tsd-kind-icon">Replace</a></li>
@@ -2292,6 +2293,7 @@
 								<li class="tsd-kind-function tsd-parent-kind-module"><a href="native.html#cssarrvalue" class="tsd-kind-icon">CSSArr<wbr>Value</a></li>
 								<li class="tsd-kind-function tsd-parent-kind-module"><a href="native.html#cssvalue" class="tsd-kind-icon">CSSValue</a></li>
 								<li class="tsd-kind-function tsd-parent-kind-module"><a href="native.html#keyframeparse" class="tsd-kind-icon">Keyframe<wbr>Parse</a></li>
+								<li class="tsd-kind-function tsd-parent-kind-module"><a href="native.html#parsecssproperties" class="tsd-kind-icon">ParseCSSProperties</a></li>
 								<li class="tsd-kind-function tsd-parent-kind-module"><a href="native.html#parsetransformablecsskeyframes" class="tsd-kind-icon">Parse<wbr>TransformableCSSKeyframes</a></li>
 								<li class="tsd-kind-function tsd-parent-kind-module"><a href="native.html#parsetransformablecssproperties" class="tsd-kind-icon">Parse<wbr>TransformableCSSProperties</a></li>
 								<li class="tsd-kind-function tsd-parent-kind-module"><a href="native.html#unitdeg" class="tsd-kind-icon">UnitDEG</a></li>
@@ -2301,6 +2303,7 @@
 								<li class="tsd-kind-function tsd-parent-kind-module"><a href="native.html#unitpx" class="tsd-kind-icon">UnitPX</a></li>
 								<li class="tsd-kind-function tsd-parent-kind-module"><a href="native.html#unitpxcssvalue" class="tsd-kind-icon">UnitPXCSSValue</a></li>
 								<li class="tsd-kind-function tsd-parent-kind-module"><a href="native.html#addcssunit" class="tsd-kind-icon">addCSSUnit</a></li>
+								<li class="tsd-kind-function tsd-parent-kind-module"><a href="native.html#camelcase" class="tsd-kind-icon">camel<wbr>Case</a></li>
 								<li class="tsd-kind-function tsd-parent-kind-module"><a href="native.html#changestate" class="tsd-kind-icon">change<wbr>State</a></li>
 								<li class="tsd-kind-function tsd-parent-kind-module"><a href="native.html#clean" class="tsd-kind-icon">clean</a></li>
 								<li class="tsd-kind-function tsd-parent-kind-module"><a href="native.html#createtransformproperty" class="tsd-kind-icon">create<wbr>Transform<wbr>Property</a></li>
@@ -2317,6 +2320,7 @@
 								<li class="tsd-kind-function tsd-parent-kind-module"><a href="native.html#parseoffset" class="tsd-kind-icon">parse<wbr>Offset</a></li>
 								<li class="tsd-kind-function tsd-parent-kind-module"><a href="native.html#toarr" class="tsd-kind-icon">to<wbr>Arr</a></li>
 								<li class="tsd-kind-function tsd-parent-kind-module"><a href="native.html#toattr" class="tsd-kind-icon">to<wbr>Attr</a></li>
+								<li class="tsd-kind-function tsd-parent-kind-module"><a href="native.html#tostr" class="tsd-kind-icon">to<wbr>Str</a></li>
 								<li class="tsd-kind-function tsd-parent-kind-module"><a href="native.html#transpose" class="tsd-kind-icon">transpose</a></li>
 							</ul>
 						</section>
@@ -2828,6 +2832,21 @@
 					</aside>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-module">
+					<a name="csspxdatatype" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagConst">Const</span> CSSPXData<wbr>Type</h3>
+					<div class="tsd-signature tsd-kind-icon">CSSPXData<wbr>Type<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> = ...</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/okikio/native/blob/6492cfb/packages/animate/src/css-properties.ts#L225">animate/src/css-properties.ts:225</a></li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>Common CSS Property names with the units &quot;px&quot; as an acceptable value</p>
+						</div>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-module">
 					<a name="effects" class="tsd-anchor"></a>
 					<h3><span class="tsd-flag ts-flagConst">Const</span> EFFECTS</h3>
 					<div class="tsd-signature tsd-kind-icon">EFFECTS<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol">{}</span><span class="tsd-signature-symbol"> = {}</span></div>
@@ -3078,10 +3097,40 @@
 					</ul>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-function tsd-parent-kind-module">
+					<a name="parsecssproperties" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagConst">Const</span> ParseCSSProperties</h3>
+					<ul class="tsd-signatures tsd-kind-function tsd-parent-kind-module">
+						<li class="tsd-signature tsd-kind-icon">ParseCSSProperties<span class="tsd-signature-symbol">(</span>obj<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">object</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">{}</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/okikio/native/blob/6492cfb/packages/animate/src/css-properties.ts#L209">animate/src/css-properties.ts:209</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Removes dashes from CSS properties &amp; maps the values to the camelCase keys</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>obj: <span class="tsd-signature-type">object</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-symbol">{}</span></h4>
+							<ul class="tsd-parameters">
+							</ul>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-function tsd-parent-kind-module">
 					<a name="parsetransformablecsskeyframes" class="tsd-anchor"></a>
 					<h3><span class="tsd-flag ts-flagConst">Const</span> Parse<wbr>TransformableCSSKeyframes</h3>
 					<ul class="tsd-signatures tsd-kind-function tsd-parent-kind-module">
-						<li class="tsd-signature tsd-kind-icon">Parse<wbr>TransformableCSSKeyframes<span class="tsd-signature-symbol">(</span>keyframes<span class="tsd-signature-symbol">: </span><a href="../interfaces/native.icsscomputedtransformableproperties.html" class="tsd-signature-type" data-tsd-kind="Interface">ICSSComputedTransformableProperties</a><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">{ </span>transform<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> }</span><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-symbol">{ </span>transform<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> }</span><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-symbol">{ </span>transform<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> }</span><span class="tsd-signature-symbol"> &amp; </span><a href="native.html#typesinglevaluecssproperty" class="tsd-signature-type" data-tsd-kind="Type alias">TypeSingleValueCSSProperty</a><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-symbol">{ </span>transform<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> }</span><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-symbol">{}</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">[]</span></li>
+						<li class="tsd-signature tsd-kind-icon">Parse<wbr>TransformableCSSKeyframes<span class="tsd-signature-symbol">(</span>keyframes<span class="tsd-signature-symbol">: </span><a href="../interfaces/native.icsscomputedtransformableproperties.html" class="tsd-signature-type" data-tsd-kind="Interface">ICSSComputedTransformableProperties</a><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">{ </span>transform<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> }</span><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-symbol">{}</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">[]</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
@@ -3104,7 +3153,7 @@
 									</div>
 								</li>
 							</ul>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">{ </span>transform<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> }</span><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-symbol">{ </span>transform<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> }</span><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-symbol">{ </span>transform<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> }</span><span class="tsd-signature-symbol"> &amp; </span><a href="native.html#typesinglevaluecssproperty" class="tsd-signature-type" data-tsd-kind="Type alias">TypeSingleValueCSSProperty</a><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-symbol">{ </span>transform<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> }</span><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-symbol">{}</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">[]</span></h4>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">{ </span>transform<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> }</span><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-symbol">{}</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">[]</span></h4>
 							<p>an array of keyframes, with transformed CSS properties</p>
 						</li>
 					</ul>
@@ -3151,7 +3200,17 @@
 <span style="color: #000000">         [</span><span style="color: #098658">1</span><span style="color: #000000">, </span><span style="color: #098658">2</span><span style="color: #000000">, </span><span style="color: #098658">5</span><span style="color: #000000">, </span><span style="color: #A31515">&quot;3deg&quot;</span><span style="color: #000000">], </span><span style="color: #008000">// The last value in the array must be a string with units for rotate3d</span>
 <span style="color: #000000">         [</span><span style="color: #098658">2</span><span style="color: #000000">, </span><span style="color: #A31515">&quot;4&quot;</span><span style="color: #000000">, </span><span style="color: #098658">6</span><span style="color: #000000">, </span><span style="color: #A31515">&quot;45turn&quot;</span><span style="color: #000000">],</span>
 <span style="color: #000000">         [</span><span style="color: #A31515">&quot;2&quot;</span><span style="color: #000000">, </span><span style="color: #A31515">&quot;4&quot;</span><span style="color: #000000">, </span><span style="color: #A31515">&quot;6&quot;</span><span style="color: #000000">, </span><span style="color: #A31515">&quot;-1rad&quot;</span><span style="color: #000000">]</span>
-<span style="color: #000000">     ]</span>
+<span style="color: #000000">     ],</span>
+
+<span style="color: #000000">     </span><span style="color: #008000">// Units are required for non transform CSS properties</span>
+<span style="color: #000000">     </span><span style="color: #008000">// String won&#039;t be split into array, they will be wrappeed in an Array</span>
+<span style="color: #000000">     </span><span style="color: #008000">// It will transform border-left to camelCase &quot;borderLeft&quot;</span>
+<span style="color: #000000">     </span><span style="color: #A31515">&quot;border-left&quot;</span><span style="color: #001080">:</span><span style="color: #000000"> </span><span style="color: #098658">50</span><span style="color: #000000">,</span>
+<span style="color: #000000">     </span><span style="color: #A31515">&quot;offset-rotate&quot;</span><span style="color: #001080">:</span><span style="color: #000000"> </span><span style="color: #A31515">&quot;10, 20&quot;</span><span style="color: #000000">,</span>
+<span style="color: #000000">     </span><span style="color: #001080">margin:</span><span style="color: #000000"> </span><span style="color: #098658">5</span><span style="color: #000000">,</span>
+
+<span style="color: #000000">     </span><span style="color: #008000">// When writing in this formation you must specify the units</span>
+<span style="color: #000000">     </span><span style="color: #001080">padding:</span><span style="color: #000000"> </span><span style="color: #A31515">&quot;5px 6px 7px&quot;</span>
 <span style="color: #000000">})</span>
 
 <span style="color: #008000">//= {</span>
@@ -3161,7 +3220,13 @@
 <span style="color: #008000">//=       &#039;translate(35px) translate3d(50px, 60px, 70px) translateX(60px) translateY(60px) rotate3d(2, 4, 6, 45turn) scale(2, 1)&#039;,</span>
 <span style="color: #008000">//=       &#039;translate(60%) translate3d(70px, 50px) translateX(70px) rotate3d(2, 4, 6, -1rad)&#039;</span>
 <span style="color: #008000">//=   ],</span>
-<span style="color: #008000">//=   opacity: [ &#039;0&#039;, &#039;5&#039; ]</span>
+<span style="color: #008000">//=   opacity: [ &#039;0&#039;, &#039;5&#039; ],</span>
+<span style="color: #008000">//=   borderLeft: [&quot;50px&quot;],</span>
+<span style="color: #008000">//=</span>
+<span style="color: #008000">//=   // Notice the &quot;deg&quot;</span>
+<span style="color: #008000">//=   offsetRotate: [&quot;10deg&quot;, &quot;20deg&quot;],</span>
+<span style="color: #008000">//=   margin: [&quot;5px&quot;],</span>
+<span style="color: #008000">//=   padding: [&quot;5px 6px 7px&quot;]</span>
 <span style="color: #008000">//= }</span>
 </code></pre>
 									</dd>
@@ -3399,6 +3464,34 @@
 									</ul>
 								</li>
 							</ul>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-function tsd-parent-kind-module">
+					<a name="camelcase" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagConst">Const</span> camel<wbr>Case</h3>
+					<ul class="tsd-signatures tsd-kind-function tsd-parent-kind-module">
+						<li class="tsd-signature tsd-kind-icon">camel<wbr>Case<span class="tsd-signature-symbol">(</span>str<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/okikio/native/blob/6492cfb/packages/animate/src/css-properties.ts#L200">animate/src/css-properties.ts:200</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Convert a dash-separated string into camelCase strings</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>str: <span class="tsd-signature-type">string</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">string</span></h4>
 						</li>
 					</ul>
 				</section>
@@ -3874,6 +3967,34 @@
 					</ul>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-function tsd-parent-kind-module">
+					<a name="tostr" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagConst">Const</span> to<wbr>Str</h3>
+					<ul class="tsd-signatures tsd-kind-function tsd-parent-kind-module">
+						<li class="tsd-signature tsd-kind-icon">to<wbr>Str<span class="tsd-signature-symbol">(</span>input<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/okikio/native/blob/6492cfb/packages/animate/src/css-properties.ts#L222">animate/src/css-properties.ts:222</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Converts values to strings</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>input: <span class="tsd-signature-type">any</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">string</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-function tsd-parent-kind-module">
 					<a name="transpose" class="tsd-anchor"></a>
 					<h3><span class="tsd-flag ts-flagConst">Const</span> transpose</h3>
 					<ul class="tsd-signatures tsd-kind-function tsd-parent-kind-module">
@@ -4197,6 +4318,9 @@
 								<a href="native.html#config_defaults" class="tsd-kind-icon">CONFIG_<wbr>DEFAULTS</a>
 							</li>
 							<li class=" tsd-kind-variable tsd-parent-kind-module">
+								<a href="native.html#csspxdatatype" class="tsd-kind-icon">CSSPXData<wbr>Type</a>
+							</li>
+							<li class=" tsd-kind-variable tsd-parent-kind-module">
 								<a href="native.html#effects" class="tsd-kind-icon">EFFECTS</a>
 							</li>
 							<li class=" tsd-kind-variable tsd-parent-kind-module">
@@ -4216,6 +4340,9 @@
 							</li>
 							<li class=" tsd-kind-function tsd-parent-kind-module">
 								<a href="native.html#keyframeparse" class="tsd-kind-icon">Keyframe<wbr>Parse</a>
+							</li>
+							<li class=" tsd-kind-function tsd-parent-kind-module">
+								<a href="native.html#parsecssproperties" class="tsd-kind-icon">ParseCSSProperties</a>
 							</li>
 							<li class=" tsd-kind-function tsd-parent-kind-module">
 								<a href="native.html#parsetransformablecsskeyframes" class="tsd-kind-icon">Parse<wbr>TransformableCSSKeyframes</a>
@@ -4243,6 +4370,9 @@
 							</li>
 							<li class=" tsd-kind-function tsd-parent-kind-module">
 								<a href="native.html#addcssunit" class="tsd-kind-icon">addCSSUnit</a>
+							</li>
+							<li class=" tsd-kind-function tsd-parent-kind-module">
+								<a href="native.html#camelcase" class="tsd-kind-icon">camel<wbr>Case</a>
 							</li>
 							<li class=" tsd-kind-function tsd-parent-kind-module">
 								<a href="native.html#changestate" class="tsd-kind-icon">change<wbr>State</a>
@@ -4291,6 +4421,9 @@
 							</li>
 							<li class=" tsd-kind-function tsd-parent-kind-module">
 								<a href="native.html#toattr" class="tsd-kind-icon">to<wbr>Attr</a>
+							</li>
+							<li class=" tsd-kind-function tsd-parent-kind-module">
+								<a href="native.html#tostr" class="tsd-kind-icon">to<wbr>Str</a>
 							</li>
 							<li class=" tsd-kind-function tsd-parent-kind-module">
 								<a href="native.html#transpose" class="tsd-kind-icon">transpose</a>

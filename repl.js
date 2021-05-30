@@ -115,26 +115,64 @@ export const UnitLessCSSValue = CSSValue(UnitLess);
 export const UnitPXCSSValue = CSSValue(UnitPX);
 export const UnitDEGCSSValue = CSSValue(UnitDEG);
 
-export const CSSPropertiesToArr = (obj) => {
-    for (let [key, value] of Object.entries(obj)) {
-        // Wrap non array values in arrays
-        obj[key] = [].concat(value).map(value => `` + value);
+
+/** Convert a dash-separated string into camelCase strings */
+export const camelCase = (str) => {
+    if (str.includes("--")) return str;
+    let result = `${str}`.replace(/-([a-z])/g, (_, letter) => letter.toUpperCase());
+    return result;
+}
+/**
+ * Acts like array.map(...) but for functions
+ */
+export const mapObject = (obj, fn) => {
+    let keys = Object.keys(obj);
+    let key, value, result = {};
+    for (let i = 0, len = keys.length; i < len; i++) {
+        key = keys[i];
+        value = obj[key];
+        result[key] = fn(value, key, obj);
     }
 
-    return obj;
+    return result;
 };
+
+/**
+ * Remove dashs from CSS properties & maps the values to camelCase keys
+ */
+export const ParseCSSProperties = (obj) => {
+    let keys = Object.keys(obj);
+    let key, value, result = {};
+    for (let i = 0, len = keys.length; i < len; i++) {
+        key = camelCase(keys[i]);
+        value = obj[keys[i]];
+        result[key] = value;
+    }
+
+    return result;
+}
+
+/** Common CSS Property names with the units "px" as an acceptable value */
+export const CSSPXDataType = ["margin", "padding", "size", "width", "height", "left", "right", "top", "bottom", "radius", "gap", "basis", "inset", "outline-offset", "perspective", "thickness", "position", "distance", "spacing"].join("|");
+
+/** Convert the {@link CSSPXDataType} array, to a Regular Expression */
+export const RegExpCSSPXDataType = new RegExp(CSSPXDataType, "gi");
+
+/** Converts values to strings */
+export const toStr = (input) => `` + input;
 export const ParseTransformableCSSProperties = (properties) => {
     let {
-        translate,
-        translate3d,
-        translateX,
-        translateY,
-        translateZ,
+        perspective,
         rotate,
         rotate3d,
         rotateX,
         rotateY,
         rotateZ,
+        translate,
+        translate3d,
+        translateX,
+        translateY,
+        translateZ,
         scale,
         scale3d,
         scaleX,
@@ -143,9 +181,10 @@ export const ParseTransformableCSSProperties = (properties) => {
         skew,
         skewX,
         skewY,
-        perspective,
         ...rest
-    } = properties;
+
+        // Convert dash seperated strings to camelCase strings
+    } = ParseCSSProperties(properties);
 
     translate = CSSArrValue(translate, UnitPX);
     translate3d = CSSArrValue(translate3d, UnitPX);
@@ -177,9 +216,35 @@ export const ParseTransformableCSSProperties = (properties) => {
         scale, scale3d, scaleX, scaleY, scaleZ,
         skew, skewX, skewY,
         perspective
-    ).map(createTransformProperty);
+    ).filter(isValid).map(createTransformProperty);
 
-    rest = CSSPropertiesToArr(rest);
+    // Wrap non array CSS property values in an array
+    rest = mapObject(rest, (value, key) => {
+        let unit;
+
+        // If key doesn't have the word color in it, try to add the default "px" or "deg" to it
+        if (!/color/gi.test(key)) {
+            let isAngle = /rotate/gi.test(key);
+            let isLength = new RegExp(CSSPXDataType, "gi").test(key);
+
+            // There is an intresting bug that occurs if you test a string againt the same instance of a Regular Expression
+            // where the answer will be different every test
+            // so, to avoid this bug, I create a new instance every time
+            if (isAngle || isLength) {
+                // If the key has rotate in it's name use "deg" as a default unit
+                if (isAngle) unit = UnitDEGCSSValue;
+
+                // If it has a common CSS Property name with the units "px" as an acceptable value
+                // try to add "px" as the default unit
+                else if (isLength) unit = UnitPXCSSValue;
+
+                return unit(value).map(str => unit(str.trim().split(" ")).join(" "));
+            }
+        }
+
+        return [].concat(value).map(toStr);
+    });
+
     return Object.assign({},
         isValid(transform) ? { transform } : null,
         rest);
@@ -199,13 +264,18 @@ let x = ParseTransformableCSSProperties({
     //     [1, "2"],
     //     ["2", 1]
     // ],
+    rotateC: "5,6",
+    // "offset-size": 5,
+    inset: "5px",
+    "offset-rotate": "10, 20",
+    margin: "5 5"
     // rotate3d: [
     //     [1, 2, 5, "3deg"], // The last value in the array must be a string with units for rotate3d
     //     [2, "4", 6, "45turn"],
     //     ["2", "4", "6", "-1rad"]
     // ]
 })
-console.log(x) // x,
+// console.log(x) // x,
 
 // console.log(ParseTransformableCSSProperties({
 //     // It will automatically add the "px" units for you, or you can write a string with the units you want
@@ -233,6 +303,7 @@ console.log(x) // x,
 // console.log(CSSArrValue(["6", 5, 5], UnitPX))
 // console.log(CSSValue(UnitPX)(["70px", 50]));
 
+
 export const ParseTransformableCSSKeyframes = (keyframes) => {
     return keyframes.map(properties => {
         let {
@@ -255,8 +326,14 @@ export const ParseTransformableCSSKeyframes = (keyframes) => {
             skewX,
             skewY,
             perspective,
+
+            easing,
+            iterations,
+            offset,
             ...rest
-        } = properties;
+
+            // Convert dash seperated strings to camelCase strings
+        } = ParseCSSProperties(properties);
 
         translate = UnitPXCSSValue(translate);
         translate3d = UnitPXCSSValue(translate3d);
@@ -292,47 +369,79 @@ export const ParseTransformableCSSKeyframes = (keyframes) => {
         ];
     }).map(([rest, ...transformFunctions]) => {
         let transform = createTransformProperty(transformFunctions);
-        rest = CSSPropertiesToArr(rest);
+        let unit;
+
+        // Wrap non array CSS property values in an array
+        rest = mapObject(rest, (value, key) => {
+            // If key doesn't have the word color in it, try to add the default "px" or "deg" to it
+            if (!/color/gi.test(key)) {
+                let isAngle = /rotate/gi.test(key);
+                let isLength = new RegExp(CSSPXDataType, "gi").test(key);
+
+                // There is an intresting bug that occurs if you test a string againt the same instance of a Regular Expression
+                // where the answer will be different every test
+                // so, to avoid this bug, I create a new instance every time
+                if (isAngle || isLength) {
+                    // If the key has rotate in it's name use "deg" as a default unit
+                    if (isAngle) unit = UnitDEGCSSValue;
+
+                    // If it has a common CSS Property name with the units "px" as an acceptable value
+                    // try to add "px" as the default unit
+                    else if (isLength) unit = UnitPXCSSValue;
+
+                    // To support multi-value CSS properties like "margin", "padding", and "inset"
+                    // split the value into an array using spaces as the seperator
+                    // then apply the valid default units and join them back with spaces
+                    // seperating them
+                    let arr = toStr(value).trim().split(" ");
+                    return unit(arr).join(" ");
+                }
+            }
+
+            return toStr(value);
+        });
+
         return Object.assign({},
             isValid(transform) ? { transform } : null,
             rest);
     });
 }
-// console.log(ParseTransformableCSSKeyframes([
-//     {
-//         // It will automatically add the "px" units for you, or you can write a string with the units you want
-//         translate3d: "25, 35, 60%",
-//         translate: "25, 35, 60%",
-//         translateX: 10,
-//         translateY: ["50, 60", "60"], // Note: this will actually result in an error, make sure to pay attention to where you are putting strings and commas
-//         translateZ: 0,
-//         perspective: 0,
-//         opacity: "0, 5",
-//         scale: [1, "2"],
-//         // rotate3d: [
-//         //     [1, 2, 5, "3deg"], // The last value in the array must be a string with units for rotate3d
-//         //     [2, "4", 6, "45turn"],
-//         //     ["2", "4", "6", "-1rad"]
-//         // ]
-//     },
-//     {
-//         // It will automatically add the "px" units for you, or you can write a string with the units you want
-//         // translate3d: "55, 15, 20%",
-//         // translate: "20, 5, 6%",
-//         // translateX: [0, "60px", "70"],
-//         translateX: "5deg",
-//         // translateY: ["0, 0", "0"], // Note: this will actually result in an error, make sure to pay attention to where you are putting strings and commas
-//         // translateZ: 6,
-//         // perspective: 500,
-//         opacity: "5",
-//         // scale: "2",
-//         // rotate3d: [
-//         //     [1, 2, 5, "3deg"], // The last value in the array must be a string with units for rotate3d
-//         //     [2, "4", 6, "45turn"],
-//         //     ["2", "4", "6", "-1rad"]
-//         // ]
-//     },
-// ]))
+console.log(ParseTransformableCSSKeyframes([
+    {
+        // It will automatically add the "px" units for you, or you can write a string with the units you want
+        translate3d: "25, 35, 60%",
+        translate: "25, 35, 60%",
+        translateX: 10,
+        translateY: ["50, 60", "60"], // Note: this will actually result in an error, make sure to pay attention to where you are putting strings and commas
+        translateZ: 0,
+        perspective: 0,
+        opacity: "0, 5",
+        scale: [1, "2"],
+        // rotate3d: [
+        //     [1, 2, 5, "3deg"], // The last value in the array must be a string with units for rotate3d
+        //     [2, "4", 6, "45turn"],
+        //     ["2", "4", "6", "-1rad"]
+        // ]
+    },
+    {
+        // It will automatically add the "px" units for you, or you can write a string with the units you want
+        // translate3d: "55, 15, 20%",
+        // translate: "20, 5, 6%",
+        // translateX: [0, "60px", "70"],
+        translateX: "5deg",
+        // translateY: ["0, 0", "0"], // Note: this will actually result in an error, make sure to pay attention to where you are putting strings and commas
+        // translateZ: 6,
+        // perspective: 500,
+        opacity: "5",
+        margin: "25 65"
+        // scale: "2",
+        // rotate3d: [
+        //     [1, 2, 5, "3deg"], // The last value in the array must be a string with units for rotate3d
+        //     [2, "4", 6, "45turn"],
+        //     ["2", "4", "6", "-1rad"]
+        // ]
+    },
+]))
 // console.log(CSSArrValue(["6", 5, 5], UnitPX))
 // console.log(CSSValue(UnitPX)(["70px", 50]));
 
@@ -342,3 +451,9 @@ export const ParseTransformableCSSKeyframes = (keyframes) => {
 // const mySet = new Set([1,2,3,4]);
 // [...mySet].reduce()
 // console.timeEnd("Test");
+
+
+
+
+
+// console.log(camelCase("-a-stroke"))

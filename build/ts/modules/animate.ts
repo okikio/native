@@ -167,10 +167,10 @@ export let run = () => {
                 //             scale: 1,
                 //             opacity: 0.5,
                 //             rotate: 0,
-                //             backgroundColor: bgColor
+                //             "background-color": bgColor
                 //         },
                 //         {
-                //             translateX: random(50, 400),
+                //             "translate-x": random(50, 400),
                 //             translateY: (random(-50, 50) * total),
                 //             scale: 1 + random(0.025, 1.75),
                 //             opacity: 0.5 + Math.min(random(0.025, total) / total, 0.5),
@@ -180,7 +180,7 @@ export let run = () => {
                 //     ];
                 // },
 
-                backgroundColor(...args) {
+                "background-color": (...args) => {
                     let [, , target] = args;
                     let [r, g, b] = [
                         random(0, 255),
@@ -193,7 +193,7 @@ export let run = () => {
                     ];
                 },
 
-                translateX: () => [0, random(50, 400)],
+                "translate-x": () => [0, random(50, 400)],
                 translateY(...args) {
                     let [, total] = args;
                     return [0, (random(-50, 50) * total)];
@@ -244,7 +244,7 @@ export let run = () => {
                     target: _contain,
                     opacity: [0, 1],
                     height: [0, "4vmin"],
-                    marginBottom: UnitPXCSSValue([0, 5]),
+                    marginBottom: [0, 5],
                     fillMode: "forwards",
                     duration: 400,
                     easing: "out"
@@ -270,8 +270,8 @@ export let run = () => {
                 let transition = animate({
                     target: contain,
                     opacity: [1, 0],
-                    height: [height, `0px`],
-                    marginBottom: [marginBottom, `0px`],
+                    height: [height, 0],
+                    "margin-bottom": [marginBottom, 0],
                     fillMode: "forwards",
                     duration: 400,
                     easing: "out"

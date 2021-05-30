@@ -1,6 +1,6 @@
 # @okikio/native
 
-`native` is an initiative that encourages performance, modern technologies, and great user experiences. The idea behind `@okikio/native` is that it acts as the core framework to the `native` initiative, it combines all the other package into it a core package that is **~11.6 KB** (minified & gzipped).
+`native` is an initiative that encourages performance, modern technologies, and great user experiences. The idea behind `@okikio/native` is that it acts as the core framework to the `native` initiative, it combines all the other package into it a core package that is **~12.1 KB** (minified & gzipped).
 
 _**Note**: `@okikio/native` is treeshakable, so you only need to use the features required for your project and the other portions can be removed. By default `@okikio/native` bundles [@okikio/animate](https://www.npmjs.com/package/@okikio/animate), so you don't need to install extra packages, but if you don't use it, it can be treeshaken out of your bundle. The absolute minimum functional treeshaken size is **~1.75 KB** (minified & gzipped)._
 
