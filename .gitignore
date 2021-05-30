@@ -196,6 +196,7 @@ $RECYCLE.BIN/
 
 /demo
 /docs
+/.vscode
 
 # Thumbnails
 ._*
