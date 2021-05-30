@@ -9,7 +9,7 @@ import { TypeSingleValueCSSProperty, ICSSComputedTransformableProperties } from 
  * if value already has a unit (we assume the value has a unit if it's a string), we return it;
  * else return the value plus the default unit
  */
- export const addCSSUnit = (unit: string = "") => {
+export const addCSSUnit = (unit: string = "") => {
     return (value: string | number) => typeof value == "string" ? value : `${value}${unit}`;
 }
 
@@ -196,6 +196,34 @@ export const UnitPXCSSValue = CSSValue(UnitPX);
 /** Parses CSSValues and adds the "deg" unit if required */
 export const UnitDEGCSSValue = CSSValue(UnitDEG);
 
+/** Convert a dash-separated string into camelCase strings */
+export const camelCase = (str: string) => {
+    if (str.includes("--")) return str;
+    let result = `${str}`.replace(/-([a-z])/g, (_, letter) => letter.toUpperCase());
+    return result;
+}
+
+/**
+ * Removes dashes from CSS properties & maps the values to the camelCase keys
+ */
+export const ParseCSSProperties = (obj: object) => {
+    let keys = Object.keys(obj);
+    let key, value, result = {};
+    for (let i = 0, len = keys.length; i < len; i++) {
+        key = camelCase(keys[i]);
+        value = obj[keys[i]];
+        result[key] = value;
+    }
+
+    return result;
+}
+
+/** Converts values to strings */
+export const toStr = (input: any) => `` + input;
+
+/** Common CSS Property names with the units "px" as an acceptable value */
+export const CSSPXDataType = ["margin", "padding", "size", "width", "height", "left", "right", "top", "bottom", "radius", "gap", "basis", "inset", "outline-offset", "perspective", "thickness", "position", "distance", "spacing"].join("|");
+
 /**
  * Removes the need for the full transform statement in order to use translate, rotate, scale, skew, or perspective including their X, Y, Z, and 3d varients
  * Also, adds the ability to use single string or number values for transform functions
@@ -227,7 +255,17 @@ export const UnitDEGCSSValue = CSSValue(UnitDEG);
  *          [1, 2, 5, "3deg"], // The last value in the array must be a string with units for rotate3d
  *          [2, "4", 6, "45turn"],
  *          ["2", "4", "6", "-1rad"]
- *      ]
+ *      ],
+ *
+ *      // Units are required for non transform CSS properties
+ *      // String won't be split into array, they will be wrappeed in an Array
+ *      // It will transform border-left to camelCase "borderLeft"
+ *      "border-left": 50,
+ *      "offset-rotate": "10, 20",
+ *      margin: 5,
+ *
+ *      // When writing in this formation you must specify the units
+ *      padding: "5px 6px 7px"
  * })
  *
  * //= {
@@ -237,7 +275,13 @@ export const UnitDEGCSSValue = CSSValue(UnitDEG);
  * //=       'translate(35px) translate3d(50px, 60px, 70px) translateX(60px) translateY(60px) rotate3d(2, 4, 6, 45turn) scale(2, 1)',
  * //=       'translate(60%) translate3d(70px, 50px) translateX(70px) rotate3d(2, 4, 6, -1rad)'
  * //=   ],
- * //=   opacity: [ '0', '5' ]
+ * //=   opacity: [ '0', '5' ],
+ * //=   borderLeft: ["50px"],
+ * //=
+ * //=   // Notice the "deg"
+ * //=   offsetRotate: ["10deg", "20deg"],
+ * //=   margin: ["5px"],
+ * //=   padding: ["5px 6px 7px"]
  * //= }
  * ```
  *
@@ -267,7 +311,9 @@ export const ParseTransformableCSSProperties = (properties: ICSSComputedTransfor
         skewX,
         skewY,
         ...rest
-    } = properties;
+
+        // Convert dash seperated strings to camelCase strings
+    } = ParseCSSProperties(properties) as ICSSComputedTransformableProperties;
 
     translate = CSSArrValue(translate, UnitPX);
     translate3d = CSSArrValue(translate3d, UnitPX);
@@ -302,7 +348,43 @@ export const ParseTransformableCSSProperties = (properties: ICSSComputedTransfor
     ).filter(isValid).map(createTransformProperty);
 
     // Wrap non array CSS property values in an array
-    rest = mapObject(rest, value => [].concat(value).map(v => `` + v));
+    rest = mapObject(rest, (value, key) => {
+        let unit: typeof UnitDEGCSSValue | typeof UnitPXCSSValue;
+
+        // If key doesn't have the word color in it, try to add the default "px" or "deg" to it
+        if (!/color/gi.test(key)) {
+            let isAngle = /rotate/gi.test(key);
+            let isLength = new RegExp(CSSPXDataType, "gi").test(key);
+
+            // There is an intresting bug that occurs if you test a string againt the same instance of a Regular Expression
+            // where the answer will be different every test
+            // so, to avoid this bug, I create a new instance every time
+            if (isAngle || isLength) {
+                // If the key has rotate in it's name use "deg" as a default unit
+                if (isAngle) unit = UnitDEGCSSValue;
+
+                // If the key is for a common CSS Property name which has the units "px" as an acceptable value
+                // try to add "px" as the default unit
+                else if (isLength) unit = UnitPXCSSValue;
+
+                // Note: we first apply units, to make sure if it's a simple number, then units are added
+                // but otherwise, if it's "margin", "padding", "inset", etc.. with values like "55 60 70 5em"
+                // it can easily include the units required
+                return unit(value).map(str => {
+                    // To support multi-value CSS properties like "margin", "padding", and "inset"
+                    // split the value into an array using spaces as the seperator
+                    // then apply the valid default units and join them back with spaces
+                    // seperating them
+
+                    let arr = str.trim().split(" ");
+                    return unit(arr).join(" ");
+                });
+            }
+        }
+
+        return [].concat(value).map(toStr);
+    });
+
     return Object.assign({},
         isValid(transform) ? { transform } : null,
         rest);
@@ -341,7 +423,9 @@ export const ParseTransformableCSSKeyframes = (keyframes: ICSSComputedTransforma
             iterations,
             offset,
             ...rest
-        } = properties;
+
+            // Convert dash seperated strings to camelCase strings
+        } = ParseCSSProperties(properties) as ICSSComputedTransformableProperties;
 
         translate = UnitPXCSSValue(translate as TypeSingleValueCSSProperty);
         translate3d = UnitPXCSSValue(translate3d as TypeSingleValueCSSProperty);
@@ -377,7 +461,37 @@ export const ParseTransformableCSSKeyframes = (keyframes: ICSSComputedTransforma
         ];
     }).map(([rest, ...transformFunctions]) => {
         let transform = createTransformProperty(transformFunctions);
-        
+        rest = mapObject(rest as object, (value, key) => {
+            let unit: typeof UnitDEGCSSValue | typeof UnitPXCSSValue;
+
+            // If key doesn't have the word color in it, try to add the default "px" or "deg" to it
+            if (!/color/gi.test(key)) {
+                let isAngle = /rotate/gi.test(key);
+                let isLength = new RegExp(CSSPXDataType, "gi").test(key);
+
+                // There is an intresting bug that occurs if you test a string againt the same instance of a Regular Expression
+                // where the answer will be different every test
+                // so, to avoid this bug, I create a new instance every time
+                if (isAngle || isLength) {
+                    // If the key has rotate in it's name use "deg" as a default unit
+                    if (isAngle) unit = UnitDEGCSSValue;
+
+                    // If the key is for a common CSS Property name which has the units "px" as an acceptable value
+                    // try to add "px" as the default unit
+                    else if (isLength) unit = UnitPXCSSValue;
+
+                    // To support multi-value CSS properties like "margin", "padding", and "inset"
+                    // with values like "55 60 70 5em", split the value into an array using spaces as the seperator
+                    // then apply the valid default units and join them back with spaces
+                    // seperating them
+                    let arr = toStr(value).trim().split(" ");
+                    return unit(arr).join(" ");
+                }
+            }
+
+            return toStr(value);
+        });
+
         return Object.assign({},
             isValid(transform) ? { transform } : null,
             rest);

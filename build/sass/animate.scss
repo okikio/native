@@ -13,23 +13,30 @@
     @apply mb-6;
 }
 
-.svg-1 {
-    width: 30%;
-    height: 30%;
-    margin: 0 auto;
+@property --stroke {
+    syntax: '<color>';
+    inherits: false;
+    initial-value: theme("colors.white");
 }
 
 .svg-1 path {
     fill: none;
-    stroke: #000;
-    stroke: theme("colors.white");
+    stroke: var(--stroke);
     stroke-linecap: round;
     stroke-linejoin: round;
-    transition: 0.2s;
+
+
+    &#using-flubber {
+        fill: theme("colors.white");
+    }
 }
 
 .dark .svg-1 path {
-    stroke: theme("colors.tertiary");
+    --stroke: theme("colors.tertiary");
+
+    &#using-flubber {
+        fill: theme("colors.tertiary");
+    }
 }
 
 .add-remove-btns {
