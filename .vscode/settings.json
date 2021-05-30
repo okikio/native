@@ -6,6 +6,8 @@
         "demo",
         "@okikio/animate",
         "@okikio/native",
+        "@okikio/manager",
+        "@okikio/emitter",
         "root",
         "gulpfile"
     ],
