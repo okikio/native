@@ -44,7 +44,7 @@ jobs:
       run: pnpm pre-release
 
     - name: Add docs and demo to Git
-      if: ${{ github.ref == 'master' }}
+      if: ${{ github.ref == 'refs/heads/master' }}
       run: |
         git add --force demo/
         git add --force docs/
