@@ -18,7 +18,6 @@ importers:
       del: ^6.0.0
       del-cli: ^3.0.1
       esbuild: ^0.12.5
-      flubber: ^0.4.2
       gulp: ^4.0.2
       gulp-esbuild: ^0.8.0
       gulp-plumber: ^1.2.1
@@ -32,7 +31,8 @@ importers:
       husky: ^6.0.0
       lerna-changelog: ^1.0.1
       path-to-regexp: ^6.2.0
-      pnpm: ^6.6.1
+      pnpm: ^6.6.2
+      polymorph-js: ^1.0.2
       postcss: ^8.3.0
       postcss-csso: ^5.0.1
       postcss-scss: ^3.0.5
@@ -40,11 +40,11 @@ importers:
       sass: ^1.34.0
       tailwindcss: ^2.1.2
       typedoc: ^0.20.36
-      typescript: ~4.2.4
+      typescript: '4.2'
       ultra-runner: ^3.10.5
     dependencies:
       '@okikio/native': link:packages/native
-      flubber: 0.4.2
+      polymorph-js: 1.0.2
     devDependencies:
       '@changesets/cli': 2.16.0
       '@commitlint/cli': 12.1.4
@@ -72,7 +72,7 @@ importers:
       husky: 6.0.0
       lerna-changelog: 1.0.1
       path-to-regexp: 6.2.0
-      pnpm: 6.6.1
+      pnpm: 6.6.2
       postcss: 8.3.0
       postcss-csso: 5.0.1_postcss@8.3.0
       postcss-scss: 3.0.5
@@ -2576,6 +2576,7 @@ packages:
 
   /commander/2.20.3:
     resolution: {integrity: sha512-GpVkmM8vF2vQUkj2LvZmD35JxeJOLCwJ9cUkugyk2nuhbv3+mJvpLYYt+0+USMxE+oj+ey/lJEnhZw75x/OMcQ==}
+    dev: true
 
   /commander/6.2.1:
     resolution: {integrity: sha512-U7VdrJFnJgo4xjrHpTzu0yrHPGImdsmD95ZlgYSEajAn2JKzDhDTPG9kBTefmObL2w/ngeZnilk+OV9CG3d7UA==}
@@ -2875,14 +2876,6 @@ packages:
       type: 1.2.0
     dev: true
 
-  /d3-array/1.2.4:
-    resolution: {integrity: sha512-KHW6M86R+FUPYGb3R5XiYjXPq7VzwxZ22buHhAEVG5ztoEcZZMLov530mmccaqA1GghZArjQV46fuc8kUqhhHw==}
-    dev: false
-
-  /d3-polygon/1.0.6:
-    resolution: {integrity: sha512-k+RF7WvI08PC8reEoXa/w2nSg5AUMTi+peBD9cmFc+0ixHfbs4QmxxkarVal1IkVkgxVuk9JSHhJURHiyHKAuQ==}
-    dev: false
-
   /dargs/7.0.0:
     resolution: {integrity: sha512-2iy1EkLdlBzQGvbweYRFxmFath8+K7+AKB0TlhHWkNuH+TmovaMH/Wp7V7R4u7f4SnX3OgLsU9t1NI9ioDnUpg==}
     engines: {node: '>=8'}
@@ -3167,10 +3160,6 @@ packages:
       is-plain-object: 2.0.4
       object.defaults: 1.1.0
     dev: true
-
-  /earcut/2.2.2:
-    resolution: {integrity: sha512-eZoZPPJcUHnfRZ0PjLvx2qBordSiO8ofC3vt+qACLM95u+4DovnbYNpQtJh0DNsWj8RnxrQytD4WA8gj5cRIaQ==}
-    dev: false
 
   /easy-extender/2.3.4:
     resolution: {integrity: sha512-8cAwm6md1YTiPpOvDULYJL4ZS6WfM5/cTeVVh4JsvyYZAoqlRVUpHL9Gr5Fy7HA6xcSZicUia3DeAgO3Us8E+Q==}
@@ -3731,17 +3720,6 @@ packages:
     resolution: {integrity: sha512-lNaHNVymajmk0OJMBn8fVUAU1BtDeKIqKoVhk4xAALB57aALg6b4W0MfJ/cUE0g9YBXy5XhSlPIpYIJ7HaY/3Q==}
     engines: {node: '>= 0.10'}
     dev: true
-
-  /flubber/0.4.2:
-    resolution: {integrity: sha512-79RkJe3rA4nvRCVc2uXjj7U/BAUq84TS3KHn6c0Hr9K64vhj83ZNLUziNx4pJoBumSPhOl5VjH+Z0uhi+eE8Uw==}
-    dependencies:
-      d3-array: 1.2.4
-      d3-polygon: 1.0.6
-      earcut: 2.2.2
-      svg-path-properties: 0.2.2
-      svgpath: 2.3.1
-      topojson-client: 3.1.0
-    dev: false
 
   /flush-write-stream/1.1.1:
     resolution: {integrity: sha512-3Z4XhFZ3992uIq0XOqb9AreonueSYphE6oYbpt5+3u06JWklbsPkNv3ZKkP9Bz/r+1MWCaMoSQ28P85+1Yc77w==}
@@ -4384,7 +4362,7 @@ packages:
       depd: 1.1.2
       inherits: 2.0.3
       setprototypeof: 1.1.0
-      statuses: 1.5.0
+      statuses: 1.4.0
     dev: true
 
   /http-errors/1.7.3:
@@ -6841,11 +6819,15 @@ packages:
     hasBin: true
     dev: true
 
-  /pnpm/6.6.1:
-    resolution: {integrity: sha512-viktTHmFzFckpvY/Gwtl8esjeOItpCgycIrVgLPh4qbxK4f+JqkEM+3LZF5dudyWzBZCOspZHePNuxeM0zn/Ew==}
+  /pnpm/6.6.2:
+    resolution: {integrity: sha512-w1YEyx+xiTbrxVt5OP6JG0LqwkK/hq2OkCYj7RZhK9oyv7cCEkgkX5Z5MPVC1wTCv2kQDJRoXzBeedPiIhzN8Q==}
     engines: {node: '>=12.17'}
     hasBin: true
     dev: true
+
+  /polymorph-js/1.0.2:
+    resolution: {integrity: sha512-moIVGNoyYwhzzl6DWssvJyUxE4y6Coe06JGaQ0tUd+DBzZLC5SD4Vc4fH3Etk9bJ2633AozHF2x00/IqH/iXYg==}
+    dev: false
 
   /portscanner/2.1.1:
     resolution: {integrity: sha1-6rtAnk3iSVD1oqUW01rnaTQ/u5Y=}
@@ -8211,14 +8193,6 @@ packages:
       es6-symbol: 3.1.3
     dev: true
 
-  /svg-path-properties/0.2.2:
-    resolution: {integrity: sha1-sHPYG+cpLq4OIzq4qD9Y3CcRMpY=}
-    dev: false
-
-  /svgpath/2.3.1:
-    resolution: {integrity: sha512-wNz6lCoj+99GMoyU7SozTfPqiLHz6WcJYZ30Z+F4lF/gPtxWHBCpZ4DhoDI0+oZ0dObKyYsJdSPGbL2mJq/qCg==}
-    dev: false
-
   /symbol-observable/1.0.1:
     resolution: {integrity: sha1-g0D8RwLDEi310iKI+IKD9RPT/dQ=}
     engines: {node: '>=0.10.0'}
@@ -8463,13 +8437,6 @@ packages:
   /token-stream/0.0.1:
     resolution: {integrity: sha1-zu78cXp2xDFvEm0LnbqlXX598Bo=}
     dev: true
-
-  /topojson-client/3.1.0:
-    resolution: {integrity: sha512-605uxS6bcYxGXw9qi62XyrV6Q3xwbndjachmNxu8HWTtVPxZfEJN9fd/SZS1Q54Sn2y0TMyMxFj/cJINqGHrKw==}
-    hasBin: true
-    dependencies:
-      commander: 2.20.3
-    dev: false
 
   /tough-cookie/4.0.0:
     resolution: {integrity: sha512-tHdtEpQCMrc1YLrMaqXXcj6AxhYi/xgit6mZu1+EDWUn+qhUf8wMQoFIy9NXuq23zAwtcB0t/MjACGR18pcRbg==}

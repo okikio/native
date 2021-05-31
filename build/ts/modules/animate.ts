@@ -1,5 +1,5 @@
 import { animate, IAnimationOptions, methodCall, TypePlayStates, UnitPXCSSValue } from "@okikio/native";
-import { interpolate } from "flubber";
+import { interpolate } from "polymorph-js";
 
 // I added extra code to the demo to support Chrome 77 and below
 let playbackFn = (containerSel, anims) => {
@@ -67,7 +67,7 @@ export let run = () => {
     (() => {
         let containerSel = ".morph-demo";
         let usingDPathEl = document.querySelector(`${containerSel} #using-d`);
-        let usingFlubberPathEl = document.querySelector(`${containerSel} #using-flubber`);
+        let usingPolymorphPathEl = document.querySelector(`${containerSel} #using-polymorph-js`);
 
         if (usingDPathEl) {
             let InitialStyle = getComputedStyle(usingDPathEl);
@@ -88,9 +88,9 @@ export let run = () => {
             });
         }
 
-        if (usingDPathEl && usingFlubberPathEl) {
-            let InitialStyle = getComputedStyle(usingFlubberPathEl);
-            let startPath = usingFlubberPathEl.getAttribute("d");
+        if (usingDPathEl && usingPolymorphPathEl) {
+            let InitialStyle = getComputedStyle(usingPolymorphPathEl);
+            let startPath = usingPolymorphPathEl.getAttribute("d");
             let endPath =
                 "M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z";
             let emptyEl = document.querySelector(".empty");
@@ -110,7 +110,7 @@ export let run = () => {
             });
 
             svgAnim2 = animate({
-                target: usingFlubberPathEl,
+                target: usingPolymorphPathEl,
                 options,
                 fill: [
                     InitialStyle.getPropertyValue("stroke"),
@@ -126,8 +126,11 @@ export let run = () => {
                 ],
             });
 
-            let morph = interpolate(startPath, endPath, {
-                maxSegmentLength: 0.1
+            let morph = interpolate([startPath, endPath], {
+                addPoints: 0,
+                origin: { x: 0, y: 0 },
+                optimize: "fill",
+                precision: 3
             });
 
             try {
@@ -135,7 +138,7 @@ export let run = () => {
                 empty.on("update", () => {
                     let progress = Number(style.getPropertyValue("opacity"));
                     let currentPath = morph(progress);
-                    usingFlubberPathEl.setAttribute("d", `` + currentPath);
+                    usingPolymorphPathEl.setAttribute("d", `` + currentPath);
                 });
             } catch (e) {
                 empty?.stopLoop();
