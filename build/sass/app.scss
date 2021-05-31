@@ -6,6 +6,7 @@
 body {
     @apply bg-white text-black;
     @apply dark:bg-black dark:text-label;
+    @apply font-manrope;
     font-size: 1rem;
     line-height: 1.5;
 }
