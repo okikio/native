@@ -50,12 +50,14 @@ jobs:
         git add --force docs/
 
     - name: Commit files
+      if: ${{ github.ref == 'refs/heads/master' }}
       run: |
         git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
         git config --local user.name "github-actions[bot]"
         git commit -m "chore(gh-bot): :rocket: build demo, types, api & library files" -a
 
     - name: Push changes
+      if: ${{ github.ref == 'refs/heads/master' }}
       uses: ad-m/github-push-action@master
       with:
         github_token: ${{ secrets.GITHUB_TOKEN }}
