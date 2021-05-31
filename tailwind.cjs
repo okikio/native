@@ -7,6 +7,7 @@ module.exports = {
 
     theme: {
         extend: {
+            fontFamily: { "manrope": ["Manrope", "Century Gothic", "sans-serif"] },
             colors: {
                 "elevated": "#1C1C1E",
                 "elevated-2": "#262628",
