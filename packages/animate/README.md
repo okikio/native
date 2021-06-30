@@ -1,12 +1,18 @@
 # @okikio/animate
 
-An animation library for the modern web, which. Inspired by animate plus, and animejs, [@okikio/animate](https://www.skypack.dev/view/@okikio/animate) is a Javascript animation library focused on performance and ease of use. It  utilizes the Web Animation API to deliver butter smooth animations at a small size, it weighs **~5.79 KB** (minified and gzipped).
+[![npm](https://img.shields.io/npm/v/@okikio/animate?style=for-the-badge)](https://www.npmjs.com/package/@okikio/animate) [![npm bundle size](https://img.shields.io/bundlephobia/minzip/@okikio/animate?style=for-the-badge)](https://bundlephobia.com/package/@okikio/animate) ![GitHub issues](https://img.shields.io/github/issues/okikio/native?style=for-the-badge) ![GitHub](https://img.shields.io/github/license/okikio/native?style=for-the-badge)
 
-*Before even getting started, you will most likely need the Web Animation API, Promise, Set, and Map polyfills. If you install [@okikio/animate](https://www.skypack.dev/view/@okikio/animate) via [npm](https://www.npmjs.com/package/@okikio/animate) you are most likely going to need [rollup](https://rollupjs.org/) or [esbuild](https://esbuild.github.io/). You can use [web-animations-js](https://github.com/web-animations/web-animations-js), or [polyfill.io](https://polyfill.io/) to create a polyfill. The minimum feature requirement for a polyfill are Maps, Set, Promises, and a WebAnimation polyfill, e.g. [https://cdn.polyfill.io/v3/polyfill.min.js?features=default,es2015,es2018,Array.prototype.includes,Map,Set,Promise,WebAnimations](https://cdn.polyfill.io/v3/polyfill.min.js?features=default,es2015,es2018,Array.prototype.includes,Map,Set,Promise). and [https://cdn.jsdelivr.net/npm/web-animations-js/web-animations-next.min.js](https://cdn.jsdelivr.net/npm/web-animations-js/web-animations-next.min.js)*
+An animation library for the modern web. Inspired by animate plus, and animejs, [@okikio/animate](https://www.skypack.dev/view/@okikio/animate) is a Javascript animation library focused on performance and ease of use. It utilizes the Web Animation API to deliver butter smooth animations at a small size, it weighs **~11.6 KB** (minified and gzipped), since, `@okiko/animate` is treeshakeable the minimum usable file size you can reach is **~5.6 KB** (minified and gzipped).
+
+I suggest reading the in depth article I made on CSS-Tricks about `@okikio/animate`, <https://css-tricks.com/how-i-used-the-waapi-to-build-an-animation-library/>, it will help you determine if `@okikio/animate` is right for your project.
+
+_**Note**: [Custom Easing](#custom-easing), as well as a proper [Timeline](#timeline-class) are now supported._
+
+*Before even getting started, you will most likely need the Web Animation API, Promise, WeakMap, Set, and Map polyfills. If you install [@okikio/animate](https://www.skypack.dev/view/@okikio/animate) via [npm](https://www.npmjs.com/package/@okikio/animate) you are most likely going to need [rollup](https://rollupjs.org/) or [esbuild](https://esbuild.github.io/). You can use [web-animations-js](https://github.com/web-animations/web-animations-js), or [polyfill.io](https://polyfill.io/) to create a polyfill. The minimum feature requirement for a polyfill are Maps, Set, WeakMap, Promise, and a WebAnimation polyfill (that supports KeyframeEffect), e.g. [https://cdn.polyfill.io/v3/polyfill.min.js?features=default,es2015,es2018,Array.prototype.includes,Map,WeakMap,Set,Promise,WebAnimations](https://cdn.polyfill.io/v3/polyfill.min.js?features=default,es2015,es2018,Array.prototype.includes,Map,WeakMap,Set,Promise), and [https://cdn.jsdelivr.net/npm/web-animations-js/web-animations-next.min.js](https://cdn.jsdelivr.net/npm/web-animations-js/web-animations-next.min.js). I suggest checking out the [demo](../../build/ts/webanimation-polyfill.ts) to see how I setup the Web Animation Polyfill*
 
 ***Warning**: polyfilling may not fix animation format bugs, e.g. [composite animations](https://developer.mozilla.org/en-US/docs/Web/API/KeyframeEffect/composite) don't work on older browsers, so, if you use `polyfill.io` and set it to check if the browser supports the feature before applying the polyfill, your project might encounter errors, as the browser may only have partial support of the Web Animation API.*
 
-***Note**: to properly understand `@okikio/animate`, please read up on the [Web Animation API](https://developer.mozilla.org/en-US/docs/Web/API/Element/animate) on MDN.*
+***Also Note**: to properly understand `@okikio/animate`, please read up on the [Web Animation API](https://developer.mozilla.org/en-US/docs/Web/API/Element/animate) on MDN.*
 
 You can try out `@okikio/animate` using Gitpod:
 
@@ -19,6 +25,24 @@ pnpm demo
 ```
 
 Once Gitpod has booted up, click on the `@okikio/animate (no-pjax)` button in the preview, then go to [../../build/pug/animate.pug](../../build/pug/animate.pug) and [../../build/ts/animate.ts](../../build/ts/animate.ts) and start tweaking and testing to your hearts content.
+
+You can run `@okikio/animate` locally by first installing some packages via these commands into your terminal,
+
+```bash
+npm install -g pnpm && pnpm install -g gulp ultra-runner commitizen && pnpm install && pnpm build
+```
+
+and then you can test/demo it using this command,
+
+```bash
+pnpm demo 
+```
+
+You can build your changes/contributions using,
+
+```bash
+pnpm build
+```
 
 ## Table of Contents
 
@@ -47,12 +71,21 @@ Once Gitpod has booted up, click on the `@okikio/animate (no-pjax)` button in th
     - [offset](#offset)
     - [timeline](#timeline)
     - [keyframes](#keyframes)
+    - [composite](#composite)
     - [extend](#extend)
   - [Animations](#animations)
   - [Animation Options & CSS Properties as Methods](#animation-options--css-properties-as-methods)
   - [Transformable CSS Properties](#transformable-css-properties)
   - [Promises and Promise-Like](#promises-and-promise-like)
   - [Events](#events)
+  - [Custom Easing](#custom-easing)
+    - [SpringEasing](#springeasing)
+    - [ApplyCustomEasing](#applycustomeasing)
+  - [DestroyableAnimate](#destroyableanimate)
+  - [Tweens](#tweens)
+    - [tween](#tween)
+    - [tweenAttr](#tweenattr)
+  - [Effects](#effects)
   - [Additional methods & properties](#additional-methods--properties)
     - [mainAnimation: Animation](#mainanimation-animation)
     - [targetIndexes: WeakMap<Node, number>](#targetindexes-weakmapnode-number)
@@ -211,7 +244,7 @@ animate({
 
 ## API Documentation
 
-Not all available methods and properties are listed here (otherwise this README would be too long), so  go through the [API documentation](https://okikio.github.io/native/docs/modules/animate.html) for the full documented API.
+Not all available methods and properties are listed here (otherwise this README would be too long), so  go through the [API documentation](https://okikio.github.io/native/docs/modules/_okikio_animate.html) for the full documented API.
 
 ## Options
 
@@ -261,25 +294,32 @@ animate({
 
 ### easing
 
-| Default | Type                                                                                             |
-| :------ | :----------------------------------------------------------------------------------------------- |
-| `ease`  | String \| [TypeCallback](https://okikio.github.io/native/docs/modules/animate.html#typecallback) |
+| Default | Type                                                                                                     |
+| :------ | :------------------------------------------------------------------------------------------------------- |
+| `ease`  | String \| [TypeCallback](https://okikio.github.io/native/docs/modules/_okikio_animate.html#typecallback) |
 
 Determines the acceleration curve of your animation.
 Based on the easings of [easings.net](https://easings.net)
 
-| constant | accelerate | decelerate | accelerate-decelerate |
-| :------- | :--------- | :--------- | :-------------------- |
-| linear   | in-cubic   | out-cubic  | in-out-cubic          |
-| ease     | in-quart   | out-quart  | in-out-quart          |
-|          | in-quint   | out-quint  | in-out-quint          |
-|          | in-expo    | out-expo   | in-out-expo           |
-|          | in-circ    | out-circ   | in-out-circ           |
-|          | in-back    | out-back   | in-out-back           |
+| constant   | accelerate   | decelerate     | accelerate-decelerate |
+| :--------- | :----------- | :------------- | :-------------------- |
+| linear     | ease-in / in | ease-out / out | ease-in-out / in-out  |
+| ease       | in-sine      | out-sine       | in-out-sine           |
+| steps      | in-quad      | out-quad       | in-out-quad           |
+| step-start | in-cubic     | out-cubic      | in-out-cubic          |
+| step-end   | in-quart     | out-quart      | in-out-quart          |
+|            | in-quint     | out-quint      | in-out-quint          |
+|            | in-expo      | out-expo       | in-out-expo           |
+|            | in-circ      | out-circ       | in-out-circ           |
+|            | in-back      | out-back       | in-out-back           |
 
 You can create your own custom cubic-bezier easing curves. Similar to css you type `cubic-bezier(...)` with 4 numbers representing the shape of the bezier curve, for example, `cubic-bezier(0.47, 0, 0.745, 0.715)` this is the bezier curve for `in-sine`.
 
 _**Note**: the `easing` property supports the original values and functions for easing as well, for example, `steps(1)`, and etc... are supported._
+
+_**Note**: you can also use camelCase when defining easing functions, e.g. `inOutCubic` to represent `in-out-cubic`_
+
+Yay, [Custom Easing](#custom-easing) are now supported, they have limitations, but those shouldn't affect too much.
 
 ```ts
 // cubic-bezier easing
@@ -288,6 +328,8 @@ animate({
     easing: "cubic-bezier(0.47, 0, 0.745, 0.715)",
     /* or */
     // easing: "in-sine",
+    /* or */
+    // easing: "inSine",
     transform: ["translate(0px)", "translate(500px)"],
 });
 ```
@@ -302,9 +344,9 @@ Here are some standards in discussion:
 
 ### duration
 
-| Default | Type                                                                                                       |
-| :------ | :--------------------------------------------------------------------------------------------------------- |
-| `1000`  | Number \| String \| [TypeCallback](https://okikio.github.io/native/docs/modules/animate.html#typecallback) |
+| Default | Type                                                                                                               |
+| :------ | :----------------------------------------------------------------------------------------------------------------- |
+| `1000`  | Number \| String \| [TypeCallback](https://okikio.github.io/native/docs/modules/_okikio_animate.html#typecallback) |
 
 Determines the duration of your animation in milliseconds. By passing it a callback, you can define a different duration for each element. The callback takes the index of each element, the target dom element, and the total number of target elements as its argument and returns a number.
 
@@ -322,9 +364,9 @@ animate({
 
 ### delay
 
-| Default | Type                                                                                             |
-| :------ | :----------------------------------------------------------------------------------------------- |
-| `0`     | Number \| [TypeCallback](https://okikio.github.io/native/docs/modules/animate.html#typecallback) |
+| Default | Type                                                                                                     |
+| :------ | :------------------------------------------------------------------------------------------------------- |
+| `0`     | Number \| [TypeCallback](https://okikio.github.io/native/docs/modules/_okikio_animate.html#typecallback) |
 
 Determines the delay of your animation in milliseconds. By passing it a callback, you can define a different delay for each element. The callback takes the index of each element, the target dom element, and the total number of target elements as its argument and returns a number.
 
@@ -342,9 +384,9 @@ animate({
 
 ### timelineOffset
 
-| Default | Type                                                                                             |
-| :------ | :----------------------------------------------------------------------------------------------- |
-| `0`     | Number \| [TypeCallback](https://okikio.github.io/native/docs/modules/animate.html#typecallback) |
+| Default | Type                                                                                                     |
+| :------ | :------------------------------------------------------------------------------------------------------- |
+| `0`     | Number \| [TypeCallback](https://okikio.github.io/native/docs/modules/_okikio_animate.html#typecallback) |
 
 Adds an offset amount to the `delay` option, for creating a timeline similar to `animejs`.
 
@@ -352,9 +394,9 @@ I don't intend to create a `timeline` function for this library but if you wish 
 
 ### endDelay
 
-| Default | Type                                                                                             |
-| :------ | :----------------------------------------------------------------------------------------------- |
-| `0`     | Number \| [TypeCallback](https://okikio.github.io/native/docs/modules/animate.html#typecallback) |
+| Default | Type                                                                                                     |
+| :------ | :------------------------------------------------------------------------------------------------------- |
+| `0`     | Number \| [TypeCallback](https://okikio.github.io/native/docs/modules/_okikio_animate.html#typecallback) |
 
 Similar to delay but it indicates the number of milliseconds to delay **after** the full animation has played **not before**.
 
@@ -386,9 +428,9 @@ When creating progress/seek bars this needs to be enabled for the animation to f
 
 ### loop
 
-| Default | Type                                                                                                        |
-| :------ | :---------------------------------------------------------------------------------------------------------- |
-| `1`     | Boolean \| Number \| [TypeCallback](https://okikio.github.io/native/docs/modules/animate.html#typecallback) |
+| Default | Type                                                                                                                |
+| :------ | :------------------------------------------------------------------------------------------------------------------ |
+| `1`     | Boolean \| Number \| [TypeCallback](https://okikio.github.io/native/docs/modules/_okikio_animate.html#typecallback) |
 
 Determines if the animation should repeat, and how many times it should repeat.
 
@@ -489,9 +531,9 @@ Determines if the animation should automatically play, immediately after being i
 
 ### direction
 
-| Default  | Type                                                                                             |
-| :------- | :----------------------------------------------------------------------------------------------- |
-| `normal` | String \| [TypeCallback](https://okikio.github.io/native/docs/modules/animate.html#typecallback) |
+| Default  | Type                                                                                                     |
+| :------- | :------------------------------------------------------------------------------------------------------- |
+| `normal` | String \| [TypeCallback](https://okikio.github.io/native/docs/modules/_okikio_animate.html#typecallback) |
 
 Determines the direction of the animation, the directions available are:
 
@@ -502,9 +544,9 @@ Determines the direction of the animation, the directions available are:
 
 ### speed
 
-| Default | Type                                                                                             |
-| :------ | :----------------------------------------------------------------------------------------------- |
-| `1`     | Number \| [TypeCallback](https://okikio.github.io/native/docs/modules/animate.html#typecallback) |
+| Default | Type                                                                                                     |
+| :------ | :------------------------------------------------------------------------------------------------------- |
+| `1`     | Number \| [TypeCallback](https://okikio.github.io/native/docs/modules/_okikio_animate.html#typecallback) |
 
 Determines the animation playback rate. Useful in the authoring process to speed up some parts of a
 long sequence (value above 1) or slow down a specific animation to observe it (value between 0 to 1),
@@ -513,9 +555,9 @@ _**Note**: negative numbers reverse the animation._
 
 ### fillMode
 
-| Default | Type                                                                                             |
-| :------ | :----------------------------------------------------------------------------------------------- |
-| `auto`  | String \| [TypeCallback](https://okikio.github.io/native/docs/modules/animate.html#typecallback) |
+| Default | Type                                                                                                     |
+| :------ | :------------------------------------------------------------------------------------------------------- |
+| `auto`  | String \| [TypeCallback](https://okikio.github.io/native/docs/modules/_okikio_animate.html#typecallback) |
 
 _Be careful when using fillMode, it has some problems when it comes to concurrency of animations read more on [MDN](https://developer.mozilla.org/en-US/docs/Web/API/EffectTiming/fill), if browser support were better I would remove fillMode and use Animation.commitStyles, I'll have to change the way `fillMode` functions later. Use the onfinish method to commit styles [onfinish](#onfinish)._
 
@@ -531,9 +573,9 @@ You can learn more here on [MDN](https://developer.mozilla.org/en-US/docs/Web/AP
 
 ### options
 
-| Default | Type                                                                                                                                 |
-| :------ | :----------------------------------------------------------------------------------------------------------------------------------- |
-| `{}`    | [IAnimationOptions](https://okikio.github.io/native/docs/interfaces/animate.ianimationoptions.html) = Object \| Animate \| Animate[] |
+| Default | Type                                                                                                                                         |
+| :------ | :------------------------------------------------------------------------------------------------------------------------------------------- |
+| `{}`    | [IAnimationOptions](https://okikio.github.io/native/docs/interfaces/_okikio_animate.ianimationoptions.html) = Object \| Animate \| Animate[] |
 
 Another way to input options for an animation, it's also used to chain animations.
 
@@ -620,9 +662,9 @@ _**Note**: you can't use this property as a method._
 
 ### offset
 
-| Default     | Type                                                                                                           |
-| :---------- | :------------------------------------------------------------------------------------------------------------- |
-| `undefined` | (Number \| String)[] \| [TypeCallback](https://okikio.github.io/native/docs/modules/animate.html#typecallback) |
+| Default     | Type                                                                                                                   |
+| :---------- | :--------------------------------------------------------------------------------------------------------------------- |
+| `undefined` | (Number \| String)[] \| [TypeCallback](https://okikio.github.io/native/docs/modules/_okikio_animate.html#typecallback) |
 
 Controls the starting point of certain parts of an animation.
 
@@ -658,11 +700,11 @@ _**Note**: timeline cannot be a callback/function_
 
 ### keyframes
 
-| Default | Type                                                                                                                                                                            |
-| :------ | :------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| `[]`    | TypeCSSLikeKeyframe \| ICSSComputedTransformableProperties[] & Keyframe[] \| object[] \| [TypeCallback](https://okikio.github.io/native/docs/modules/animate.html#typecallback) |
+| Default | Type                                                                                                                                                                                    |
+| :------ | :-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `[]`    | TypeCSSLikeKeyframe \| ICSSComputedTransformableProperties[] & Keyframe[] \| object[] \| [TypeCallback](https://okikio.github.io/native/docs/modules/_okikio_animate.html#typecallback) |
 
-I highly suggest going through the API documentation to better understand [keyframes](https://okikio.github.io/native/docs/interfaces/animate.ianimationoptions.html#keyframes).
+I highly suggest going through the API documentation to better understand [keyframes](https://okikio.github.io/native/docs/interfaces/_okikio_animate.ianimationoptions.html#keyframes).
 
 Allows you to manually set keyframes using a `keyframe` array
 
@@ -670,9 +712,11 @@ Read more on [MDN](https://developer.mozilla.org/en-US/docs/Web/API/KeyframeEffe
 
 An `array` of objects (keyframes) consisting of properties and values to iterate over. This is the canonical format returned by the [getKeyframes()](https://developer.mozilla.org/en-US/docs/Web/API/KeyframeEffect/getKeyframes) method.
 
-`@okikio/animate` also offers another format called `CSSLikeKeyframe`, read more about [KeyframeParse](https://okikio.github.io/native/docs/modules/native.html#keyframeparse)
+`@okikio/animate` also offers another format called `CSSLikeKeyframe`, read more about [KeyframeParse](https://okikio.github.io/native/docs/modules/_okikio_native.html#keyframeparse)
 
-It basically functions the same way CSS's `@keyframe` works
+It basically functions the same way CSS's `@keyframe` works.
+
+_**Note**: the order of `transform` functions in CSS Property form...matter, meanwhile in keyframes the transform order doesn't, keep this in mind when you are try to create complex rotation based animations or other complex animations in general._
 
 ```ts
 animate({
@@ -696,13 +740,27 @@ animate({
 //= ]
 ```
 
+### composite
+
+The `composite` property of a `KeyframeEffect` resolves how an element's animation impacts its underlying property values.
+
+To understand these values, take the example of a `keyframeEffect` value of `blur(2)` working on an underlying property value of `blur(3)`.
+
+- `replace` - The keyframeEffect overrides the underlying value it is combined with: `blur(2)` replaces `blur(3)`.
+- `add` - The keyframeEffect is added to the underlying value with which it is combined (aka additive):  `blur(2) blur(3)`.
+- `accumulate` - The keyframeEffect is accumulated on to the underlying value: `blur(5)`.
+
+Read more on [MDN](https://developer.mozilla.org/en-US/docs/Web/API/KeyframeEffect/composite)
+
+I recommend reading [web.dev](https://web.dev)'s article on [web-animations](https://web.dev/web-animations/#smoother-animations-with-composite-modes).
+
 ### extend
 
 | Default | Type                                                                                            |
 | :------ | :---------------------------------------------------------------------------------------------- |
 | `{}`    | [KeyframeEffectOptions](https://developer.mozilla.org/en-US/docs/Web/API/KeyframeEffectOptions) |
 
-The properties of the `extend` animation option are computed and can use [TypeCallback](https://okikio.github.io/native/docs/modules/animate.html#typecallback), they are a way to access features that haven't been implemented in `@okikio/animate`, for example, `iterationStart`.
+The properties of the `extend` animation option are computed and can use [TypeCallback](https://okikio.github.io/native/docs/modules/_okikio_animate.html#typecallback), they are a way to access features that haven't been implemented in `@okikio/animate`, for example, `iterationStart`.
 
 `extend` is supposed to future proof the library if new features are added to the Web Animation API that you want to use, but that has not been implemented yet.
 
@@ -838,11 +896,13 @@ _**Note**: dash & camel case are supported as CSS property names, this also incl
 
 _**Note**: all other features will work with Transformable CSS Properties, this includes the `keyframes` animation options and `animation options` as callbacks_
 
+_**Note**: the order of `transform` functions in CSS Property form...matter, meanwhile in keyframes the transform order doesn't, keep this in mind when you are try to create complex rotation based animations or other complex animations in general._
+
 _**Warning**: only the transform function properties and CSS properties with the keys ["margin", "padding", "size", "width", "height", "left", "right", "top", "bottom", "radius", ,"gap", "basis", "inset", "outline-offset", "perspective", "thickness", "position", "distance", "spacing", "rotate"] will get automatic units. It will also work with multiple unit  CSS properties like "margin", "padding", and "inset", etc..., however, no automatic units will be applied to any CSS properties that can accept color, this is to avoid unforseen bugs_
 
-Read more about the [ParseTransformableCSSProperties](https://okikio.github.io/native/docs/modules/animate.html#parsetransformablecssproperties) method.
+Read more about the [ParseTransformableCSSProperties](https://okikio.github.io/native/docs/modules/_okikio_animate.html#parsetransformablecssproperties) method.
 
-Also, read about the [ParseTransformableCSSKeyframes](https://okikio.github.io/native/docs/modules/animate.html#parsetransformablecsskeyframes) method.
+Also, read about the [ParseTransformableCSSKeyframes](https://okikio.github.io/native/docs/modules/_okikio_animate.html#parsetransformablecsskeyframes) method.
 
 Check out an example on [Codepen](https://codepen.io/okikio/pen/qBrNXoY?editors=0110)
 
@@ -969,7 +1029,17 @@ There are `8` events in total, they are:
 - "playstate-change"
 
 ```ts
-// The update event is triggered continously while an animation is playing.
+/* 
+    The update event is triggered continously while an animation is playing, it does this by calling requestAnimationFrame.
+    By default, whenever an animation is played, the current Animate instance is added to `Animate.RUNNING` WeakSet and 
+    a requests for an animation frame is called, where it checks if there are any listeners for the "update" event. 
+    If there are none, the Animate instance is removed from the `Animate.RUNNING` WeakSet. 
+    If there are listeners the Animate instances loop method is called, and the "update" event is emitted every frame until,
+    the Animation is done, where it stops
+
+    If there are no Animate instances in the `Animate.RUNNING` WeakSet, the requestAnimationFrame loop, is stopped, 
+    until there are other Animate instances that are played
+*/
 ....on("update", (progress, instance) => {
     /**
      * @param {number} progress - it is the animation progress from 0 to 100
@@ -1010,6 +1080,244 @@ There are `8` events in total, they are:
 // The stop event is triggered when an `Animate` instance has been permanently stopped via the `.stop()` method.
 ....on("stop", () => { });
 ```
+
+## Custom Easing
+
+Custom Easing isn't currently a thing in the Web Animation API (WAAPI), so, the next best thing is to emulate the effect of Custom Easing. I added the `CustomEasing` function for this reason, you can use it like this,
+
+```ts
+import { animate, CustomEasing, EaseOut, Quad } from "@okikio/animate"; 
+
+animate({
+    // Notice how only, the first value in the Array uses the "px" unit
+    border: CustomEasing(["1px solid red", "3 dashed green", "2 solid black"], {
+        // This is a custom easing function
+        easing: EaseOut(Quad)
+    }),
+
+    translateX: CustomEasing([0, 250], {
+        easing: "linear",
+
+        // You can change the size of Array for the CustomEasing function to generate  
+        numPoints: 200,
+
+        // The number of decimal places to round, final values in the generated Array
+        decimal: 5,
+    }),
+
+    // You can set the easing without an object
+    // Also, if units are detected in the values Array, 
+    // the unit of the first value in the values Array are
+    // applied to other values in the values Array, even if they
+    // have prior units 
+    rotate: CustomEasing(["0turn", 1, 0, 0.5], "out"),
+    "background-color": CustomEasing(["#616aff", "white"]),
+    easing: "linear"
+})
+```
+
+You can view a demo of Custom Easing on [Codepen](https://codepen.io/okikio/pen/abJMWNy). I based the Custom Easing implementation on a comment by [@jakearchibald](https://github.com/jakearchibald) on [Github](https://github.com/w3c/csswg-drafts/issues/229#issuecomment-860778689) and an article by [kirillvasiltsov](https://www.kirillvasiltsov.com/writing/how-to-create-a-spring-animation-with-web-animation-api/).
+
+Custom Easing uses the fact that WAAPI allows for linear easing, and for users to set multiple different values in Array format, thus, I created a small function that generates a set of arrays that create custom easing effects like bounce, elastic, and spring. As of right now it builds on top of `@okikio/animate` but `@okikio/animate` isn't absolutely necessary, it just may not be as comfortable to using it without `@okikio/animate`.
+
+Custom Easing has 3 properties they are `easing` (all the easings from [#easing](#easing) are supported on top of custom easing functions, like spring, bounce, etc...), `numPoints` (the size of the Array the Custom Easing function should create), and `decimal` (the number of decimal places of the values within said Array).
+
+| Properties  | Default Value           |
+| ----------- | ----------------------- |
+| `easing`    | `spring(1, 100, 10, 0)` |
+| `numPoints` | `50`                    |
+| `decimal`   | `3`                     |
+
+By default, Custom Easing support easing functions, in the form,
+
+| constant   | accelerate         | decelerate     | accelerate-decelerate | decelerate-accelerate |
+| :--------- | :----------------- | :------------- | :-------------------- | :-------------------- |
+| linear     | ease-in / in       | ease-out / out | ease-in-out / in-out  | ease-out-in / out-in  |
+| ease       | in-sine            | out-sine       | in-out-sine           | out-in-sine           |
+| steps      | in-quad            | out-quad       | in-out-quad           | out-in-quad           |
+| step-start | in-cubic           | out-cubic      | in-out-cubic          | out-in-cubic          |
+| step-end   | in-quart           | out-quart      | in-out-quart          | out-in-quart          |
+|            | in-quint           | out-quint      | in-out-quint          | out-in-quint          |
+|            | in-expo            | out-expo       | in-out-expo           | out-in-expo           |
+|            | in-circ            | out-circ       | in-out-circ           | out-in-circ           |
+|            | in-back            | out-back       | in-out-back           | out-in-back           |
+|            | in-bounce          | out-bounce     | in-out-bounce         | out-in-bounce         |
+|            | in-elastic         | out-elastic    | in-out-elastic        | out-in-elastic        |
+|            | spring / spring-in | spring-out     | spring-in-out         | spring-out-in         |
+
+All **Elastic** easing's can be configured using theses parameters,
+
+`*-elastic(amplitude, period)`
+
+Each parameter comes with these defaults
+
+| Parameter | Default Value |
+| --------- | ------------- |
+| amplitude | `1`           |
+| period    | `0.5`         |
+
+***
+
+All **Spring** easing's can be configured using theses parameters,
+
+`spring-*(mass, stiffness, damping, velocity)`
+
+Each parameter comes with these defaults
+
+| Parameter | Default Value |
+| --------- | ------------- |
+| mass      | `1`           |
+| stiffness | `100`         |
+| damping   | `10`          |
+| velocity  | `0`           |
+
+You can create your own custom cubic-bezier easing curves. Similar to css you type `cubic-bezier(...)` with 4 numbers representing the shape of the bezier curve, for example, `cubic-bezier(0.47, 0, 0.745, 0.715)` this is the bezier curve for `in-sine`.
+
+_**Note**: the `easing` property supports the original values and functions for easing as well, for example, `steps(1)`, and etc... are supported._
+
+_**Note**: you can also use camelCase when defining easing functions, e.g. `inOutCubic` to represent `in-out-cubic`_
+
+### SpringEasing
+
+Returns an array containing `[easing points, duration]`, it's meant to be a self enclosed way to create spring easing.
+Springs have an optimal duration; using [`getEasingDuration()`](https://okikio.github.io/native/docs/modules/_okikio_animate.html#geteasingduration) we are able to have the determine the optimal duration for a spring with given parameters.
+
+By default it will only give the optimal duration for `spring` or `spring-in` easing, this is to avoid infinite loops caused by the `getEasingDuration()` function.
+
+Internally the `SpringEasing` uses [CustomEasing](https://okikio.github.io/native/docs/modules/_okikio_animate.html#applycustomeasing), read more on it, to understand how the `SpringEasing` function works.
+
+e.g.
+
+```ts
+import { animate, SpringEasing } from "@okikio/animate";
+
+// `duration` is the optimal duration for the spring with the set parameters
+let [translateX, duration] = SpringEasing([0, 250], "spring(5, 100, 10, 1)");
+// or
+// `duration` is 5000 here
+let [translateX, duration] = SpringEasing([0, 250], { 
+     easing: "spring(5, 100, 10, 1)",
+     numPoints: 50,
+     duration: 5000,
+     decimal: 3
+});
+
+animate({
+     target: "div",
+     translateX,
+     duration
+});
+```
+
+### ApplyCustomEasing
+
+You can also use `ApplyCustomEasing`. It applies the same custom easings to all properties of an object it also returns an object with each property having an array of custom eased values
+
+If you use the `spring` or `spring-in` easings it will also return the optimal duration as a key in the object it returns.
+If you set `duration` to a number, it will prioritize that `duration` over optimal duration given by the spring easings.
+
+Read more about [CustomEasing](https://okikio.github.io/native/docs/modules/_okikio_animate.html#applycustomeasing).
+
+e.g.
+
+```ts
+import { animate, ApplyCustomEasing } from "@okikio/animate";
+animate({
+     target: "div",
+
+     ...ApplyCustomEasing({
+       border: ["1px solid red", "3 dashed green", "2 solid black"],
+       translateX: [0, 250],
+       rotate: ["0turn", 1, 0, 0.5],
+       "background-color": ["#616aff", "white"],
+
+       // You don't need to enter any parameters, you can just use the default values
+       easing: "spring",
+       // You can change the size of Array for the CustomEasing function to generate  
+       numPoints: 200,
+       // The number of decimal places to round, final values in the generated Array
+       decimal: 5,
+       
+       // You can also set the duration from here.
+       // When using spring animations, the duration you set here is not nesscary,
+       // since by default springs will try to determine the most appropriate duration for the spring animation.
+       // But the duration value here will override `spring` easings optimal duration value
+       duration: 3000
+     })
+})
+```
+
+## DestroyableAnimate
+
+[`DestroyableAnimate`](https://okikio.github.io/native/docs/modules/_okikio_animate.html#destroyableanimate) is an extended varient of [`Animate`](https://okikio.github.io/native/docs/classes/_okikio_animate.animate.html) that automatically removes the target elements from the DOM, when the [`stop()`](https://okikio.github.io/native/docs/classes/_okikio_animate.animate.html#stop) method is called.
+
+## Tweens
+
+### tween
+
+[`tween()`](https://okikio.github.io/native/docs/modules/_okikio_animate.html#tween) creates an empty new element with an id of `empty-animate-el-${number...}` with a display style of `none`, and then attaches it to the DOM. `tween()` returns a new instance of the `DestroyableAnimate` class and then animates the opacity of the empty element.
+
+You can then use the "update" event to watch for changes in opacity and use the opacity as a progress bar of values between 0 to 1. This enables you to animate properties and attributes the Web Animation API (WAAPI) doesn't yet support.
+
+### tweenAttr
+
+[`tweenAttr()`](https://okikio.github.io/native/docs/modules/_okikio_animate.html#tweenattr) uses the change in opacity (from the [tween](https://okikio.github.io/native/docs/modules/_okikio_animate.html#tween) function) to interpolate the value of other elements.
+
+e.g.
+
+```ts
+import { tweenAttr } from "@okikio/animate";
+import { interpolate } from "polymorph-js";
+
+let startPath = usingPolymorphPathEl.getAttribute("d");
+let endPath = "M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z";
+
+// This is an svg path interpolate function
+// If used in tandem with `tweenAttr`, you can create morphing animations
+let morph = interpolate([startPath, endPath], {
+     addPoints: 0,
+     origin: { x: 0, y: 0 },
+     optimize: "fill",
+     precision: 3
+});
+
+// `tweenAttr` supports all Animation Options.
+// The first argument in Animation Options callbacks are set to the progress of the animation beteen 0 and 1, while the other arguments are moved 1 right
+
+// So, animation options can look like this 
+// `(progress: number, i: number, len: number, el: HTMLElement) => {
+//   return progress;
+// }`
+
+tweenAttr({
+     target: "svg path",
+     d: progress => morph(progress)
+});
+
+// `tweenAttr` can automatically choose between custom easing functions and or normal easings
+tweenAttr({
+     target: ".div",
+     targets: ".el",
+     width: 250,
+     height: ["500px", 600],
+     easing: "spring"
+
+// If you want to update styles instead of attributes, 
+// you can change this to "style"
+}, "style");
+```
+
+Read more about [tween](https://okikio.github.io/native/docs/modules/_okikio_animate.html#tween).
+
+## Effects
+
+You may want to use premade effects like the onces [animate.css](https://www.npmjs.com/package/animate.css) provide, I initially planned on bundling this functionality in, but because of the plentiful number of libraries that do the same thing, I suggest using those instead, and if you want to create your own effects from CSS, you can use CSS Keyframe style JSON object, make sure to read the documentation for [KeyframeParse](https://okikio.github.io/native/docs/modules/_okikio_animate.html#keyframeparse)
+
+I suggest [@shoelace-style/animations](https://www.npmjs.com/package/@shoelace-style/animations) for all your animate.css needs.
+
+or
+
+if you just need some quick effects go to [github.com/wellyshen/use-web-animations/](https://github.com/wellyshen/use-web-animations/tree/master/src/animations) and copy the `keyframes` array for the effect you want, remember to say thank you to [@wellyshen](https://github.com/wellyshen) for all his hardwork, 😂.
 
 ## Additional methods & properties
 
