@@ -1,12 +1,12 @@
 import { Manager, methodCall } from "@okikio/manager";
-import { ICONFIG } from "./config";
-import { IApp } from "./app";
 import { EventEmitter } from "@okikio/emitter";
-export declare type IAdvancedManager = AdvancedManager<any, ManagerItem>;
+import type { ICONFIG } from "./config";
+import type { IApp } from "./app";
+export declare type TypeAdvancedManager = AdvancedManager<any, ManagerItem>;
 /** The base class for AdvancedManager items */
 export declare class ManagerItem {
     /** The AdvancedManager the ManagerItem is attached to */
-    manager: IAdvancedManager;
+    manager: TypeAdvancedManager;
     /** The App the ManagerItem is attached to */
     app: IApp;
     /** The Config of the App the ManagerItem is attached to */
@@ -19,7 +19,7 @@ export declare class ManagerItem {
     /** Run after the Manager Item has been registered */
     install(): any;
     /** Register the current Manager Item's manager */
-    register(manager: IAdvancedManager, key: any): ManagerItem;
+    register(manager: TypeAdvancedManager, key: any): ManagerItem;
     /** Run before the ManagerItem has been unregistered */
     uninstall(): any;
     /** Basically removes a ManagerItem, in order to recover the ManagerItem, it needs to be re-added to an AdvancedManager */

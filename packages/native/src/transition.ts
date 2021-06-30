@@ -66,7 +66,7 @@ export const TRANSITION_REPLACE: ITransition = { name: "replace" };
 /** Controls which Transition between pages to use */
 export class TransitionManager extends Service {
     public transitions: Manager<string, ITransition>;
-    private _arg: Array<[string, ITransition]>;
+    public _arg: Array<[string, ITransition]>;
     constructor(transitions?: Array<[string, ITransition]>) {
         super();
         this._arg = transitions;

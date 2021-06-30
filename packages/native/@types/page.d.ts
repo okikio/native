@@ -1,6 +1,6 @@
 import { Manager, ManagerItem, AdvancedManager } from "./manager";
 import { Service } from "./service";
-import { IgnoreURLsList } from "./pjax";
+import type { TypeIgnoreURLsList } from "./pjax";
 /**
  * Parses strings to DOM
  */
@@ -37,7 +37,7 @@ export declare class PageManager extends Service {
     loading: Manager<string, Promise<string>>;
     pages: AdvancedManager<string, Page>;
     /** URLs to ignore caching */
-    cacheIgnore: IgnoreURLsList | boolean;
+    cacheIgnore: TypeIgnoreURLsList | boolean;
     constructor();
     /** Instantiate pages, and add the current page to pages */
     install(): void;
@@ -55,6 +55,6 @@ export declare class PageManager extends Service {
     request(url: string): Promise<string>;
 }
 /** Check if url is supposed to be ignored */
-export declare const ignoreURLs: (urlString: string, ignoreList: boolean | IgnoreURLsList) => boolean;
+export declare const ignoreURLs: (urlString: string, ignoreList: boolean | TypeIgnoreURLsList) => boolean;
 export interface IPageManager extends PageManager {
 }

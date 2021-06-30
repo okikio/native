@@ -18,7 +18,7 @@ export const createEmptyEl = () => {
 }
 
 /** Extends {@link Animate} stop method, so, it automatically removes the target elements from the dom */
-export const DestroyableAnimate = class extends Animate {
+export class DestroyableAnimate extends Animate {
     constructor(options: IAnimationOptions = {}) {
         super(options);
     }
