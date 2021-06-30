@@ -167,14 +167,7 @@ tasks({
                 }),
 
                 // Minify
-                terser({
-                    keep_fnames: false, // change to true here
-                    toplevel: true,
-                    compress: {
-                        dead_code: true,
-                    },
-                    ecma: 5,
-                }),
+                terser(),
 
                 size({ gzip: true, showFiles: true, showTotal: false  })
             ],
@@ -222,14 +215,7 @@ tasks({
                 }),
 
                 // Minify
-                terser({
-                    keep_fnames: false, // change to true here
-                    toplevel: true,
-                    compress: {
-                        dead_code: true,
-                    },
-                    ecma: 5,
-                }),
+                terser(),
                 size({ gzip: true, showFiles: true, showTotal: false  })
             ],
             dest: jsFolder, // Output
@@ -303,8 +289,8 @@ task("watch", async () => {
         }
     );
 
-    watch(`${pugFolder}/**/*.pug`, series("html", "css", "reload"));
-    watch([`${sassFolder}/**/*.scss`, `./tailwind.cjs`], series("css"));
+    watch(`${pugFolder}/**/*.pug`, series("html", "reload"));
+    watch([`${sassFolder}/**/*.scss`, `${pugFolder}/**/*.pug`, `./tailwind.cjs`], series("css"));
     watch(
         [
             `${tsFolder}/**/*.ts`,
