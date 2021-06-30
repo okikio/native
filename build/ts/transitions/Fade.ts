@@ -1,4 +1,6 @@
-import { ITransition, ITransitionData, animate } from "@okikio/native";
+import { animate } from "@okikio/animate";
+
+import type { ITransition, ITransitionData } from "@okikio/native";
 
 //== Transition
 export const Fade: ITransition = {

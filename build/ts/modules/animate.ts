@@ -1,5 +1,8 @@
-import { animate, IAnimationOptions, methodCall, TypePlayStates, UnitPXCSSValue } from "@okikio/native";
+import { methodCall } from "@okikio/manager";
+import { animate, tweenAttr } from "@okikio/animate";
 import { interpolate } from "polymorph-js";
+
+import type { IAnimationOptions, TypePlayStates } from "@okikio/animate";
 
 // I added extra code to the demo to support Chrome 77 and below
 let playbackFn = (containerSel, anims) => {
@@ -93,7 +96,6 @@ export let run = () => {
             let startPath = usingPolymorphPathEl.getAttribute("d");
             let endPath =
                 "M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z";
-            let emptyEl = document.querySelector(".empty");
 
             let options: IAnimationOptions = {
                 duration: 1800,
@@ -102,12 +104,6 @@ export let run = () => {
                 fillMode: "both",
                 direction: "alternate",
             };
-
-            empty = animate({
-                target: emptyEl,
-                options,
-                opacity: [0, 1],
-            });
 
             svgAnim2 = animate({
                 target: usingPolymorphPathEl,
@@ -133,19 +129,14 @@ export let run = () => {
                 precision: 3
             });
 
-            try {
-                let style = getComputedStyle(emptyEl);
-                empty.on("update", () => {
-                    let progress = Number(style.getPropertyValue("opacity"));
-                    let currentPath = morph(progress);
-                    usingPolymorphPathEl.setAttribute("d", `` + currentPath);
-                });
-            } catch (e) {
-                empty?.stopLoop();
-                console.log(e);
-            }
+            empty = tweenAttr({
+                target: usingPolymorphPathEl,
+                options,
+                d: progress => morph(progress),
+                easing: "linear"
+            });
 
-            playbackFn(containerSel, [empty, svgAnim1, svgAnim2]);
+            playbackFn(containerSel, [empty, svgAnim1, svgAnim2]); 
         }
     })();
 

@@ -1,4 +1,6 @@
-import { ITransition, ITransitionData, animate } from "@okikio/native";
+import { animate } from "@okikio/animate";
+
+import type { ITransition } from "@okikio/native";
 
 //== Transitions
 export const Slide: ITransition = {
