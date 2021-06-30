@@ -1,5 +1,31 @@
 # Changelog
 
+## 2.3.0
+
+### Minor Changes
+
+- add custom-easing with support for complex easing functions like spring, elastic, and bounce;
+
+  the CustomEasing, SpringEasing, and ApplyCustomEasing functions generate Array's that emulate custom easing;
+  add `out-in` as an extra supported easing variation for custom-easing alone;
+
+  add support for ordered transform functions as CSS properties, so, the resulting transform depends on the order you define the transform functions;
+
+  add `DestroyableAnimate`, a extended varient of the `Animate` class, that removes all targets from the DOM when it is stopped via the `stop()` method;
+
+  add `tween()` & `tweenAttr()` for animating empty elements that are forced on to the DOM, which are removed when the animation is stopped.
+
+  `tweenAttr` uses the "update" event together with an opacity animation of a hidden empty element to animate `attributes` and `styles`;
+
+  update docs with detailed info.;
+  add `Effects` section to docs;
+  add `composite` to Animation Options;
+  add docs on running, testing, & building locally;
+  add badges to docs;
+  update API docs;
+
+  Go through the `@okikio/animate` README.md for more det
+
 ## 2.2.0
 
 ### Minor Changes

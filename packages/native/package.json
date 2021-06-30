@@ -1,6 +1,6 @@
 {
     "name": "@okikio/native",
-    "version": "2.1.8",
+    "version": "3.0.0",
     "type": "module",
     "sideEffects": false,
     "description": "A framework who's goal is to make it easier to create complex, light-weight, and performant web applications using modern js apis.",

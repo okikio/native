@@ -1,5 +1,18 @@
 # Changelog
 
+## 3.0.0
+
+### Major Changes
+
+- remove all exported native initiative packages, including animate, emitter, & manager;
+
+  clean up code;
+
+### Patch Changes
+
+- Updated dependencies [undefined]
+  - @okikio/animate@2.3.0
+
 ## 2.1.8
 
 ### Patch Changes
