@@ -1,5 +1,7 @@
 # native
 
+![GitHub issues](https://img.shields.io/github/issues/okikio/native?style=for-the-badge) ![GitHub](https://img.shields.io/github/license/okikio/native?style=for-the-badge)
+
 `native` is an initiative which aims to make it easy to create complex, light-weight, and performant web applications using modern js.
 
 ## Table of Contents
@@ -11,7 +13,7 @@
     - [@okikio/emitter](#okikioemitter)
     - [@okikio/animate](#okikioanimate)
     - [@okikio/native](#okikionative)
-    - [etc](#etc)
+  - [Bundling](#bundling)
   - [API Documentation](#api-documentation)
   - [Usage](#usage)
   - [Trying it Out](#trying-it-out)
@@ -21,39 +23,53 @@
 
 ## Getting started
 
-The `native` project repo is a monorepo with 4 smaller packages within it, they are:
+The `native` initiative repo is a monorepo with 4 smaller packages within it, they are:
 
 ### [@okikio/manager](./packages/manager#readme)
+
+[![npm](https://img.shields.io/npm/v/@okikio/manager?style=flat-square)](https://www.npmjs.com/package/@okikio/manager) [![npm bundle size](https://img.shields.io/bundlephobia/minzip/@okikio/manager?style=flat-square)](https://bundlephobia.com/package/@okikio/manager)
 
 The Map class is the most efficient way to handle large amounts of controlled data, but it has some inconvient quirks that would be annoying to handle, so I built this package to avoid some of it's quirks and introduce new features.
 
 _Note: you can install it as a seperate package from the rest of the `@okikio/native` framework._
+
 [Read more...](./packages/manager/README.md)
 
 ### [@okikio/emitter](./packages/emitter#readme)
 
+[![npm](https://img.shields.io/npm/v/@okikio/emitter?style=flat-square)](https://www.npmjs.com/package/@okikio/emitter) [![npm bundle size](https://img.shields.io/bundlephobia/minzip/@okikio/emitter?style=flat-square)](https://bundlephobia.com/package/@okikio/emitter)
+
 A small Event Emitter written in typescript with performance and ease of use in mind. It's pretty self explanitory, there are millions of event emitters like this one, the only difference is that this one is optimized for use in the `@okikio/native` framework.
 
 _Note: you can install it as a seperate package from the rest of the `@okikio/native` framework._
+
 [Read more...](./packages/emitter/README.md)
 
 ### [@okikio/animate](./packages/animate#readme)
 
+[![npm](https://img.shields.io/npm/v/@okikio/animate?style=flat-square)](https://www.npmjs.com/package/@okikio/animate) [![npm bundle size](https://img.shields.io/bundlephobia/minzip/@okikio/animate?style=flat-square)](https://bundlephobia.com/package/@okikio/animate)
+
 A truly native animation library that takes full advantage of the Web Animation API to create amazingly pollished experiences on all devices. To future proof animation in an easy to use and effiecient manner, I built this library as a light wrapper around the Web Animation API, that takes on conventional means for creating animation today, allowing developers to get started with modern animation today.
 
 _Note: you can install it as a seperate package from the rest of the `@okikio/native` framework._
+
 [Read more...](./packages/animate/README.md)
 
 ### [@okikio/native](./packages/native#readme)
 
-`@okikio/native` is the framework component of the `native` initiative, it bundles all the other packages into iteself. This package encourages the user to download/copy-and-paste the code into their development enviroment of choice, and tweak it to match their projects needs.
+[![npm](https://img.shields.io/npm/v/@okikio/native?style=flat-square)](https://npmjs.com/package/@okikio/native) [![npm bundle size](https://img.shields.io/bundlephobia/minzip/@okikio/native?style=flat-square)](https://bundlephobia.com/package/@okikio/native)
+
+`@okikio/native` is the framework component of the `native` initiative. This package encourages the user to download/copy-and-paste the code into their development enviroment of choice, and tweak it to match their projects needs.
+
 [Read more...](./packages/native/README.md)
 
-### etc
+## Bundling
 
 ***Note**: All package in the `native` initiative are built for ES2020, This project expects the user to use a build tool to support older versions of browsers, the idea being most people are using evergreen browsers, so, why are web developers piling on polyfill code that most users don't need. I suggest `esbuild`, `rollup`, `*typescript`, or `webpack` for bundling the library, and for polyfills `babel` or `polyfill.io`.*
 
 **I have found typescript to be the best method for bundling for older browsers e.g. IE11. I only suggest you use `babel` for polyfilling `Promise`, `fetch`, etc...*
+
+I suggest using [bundle.js.org](https://bundle.js.org), if you would like to quickly bundle the package online or check the size of your final bundle.
 
 ## API Documentation
 

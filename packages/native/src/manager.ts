@@ -1,14 +1,15 @@
 import { Manager, methodCall } from "@okikio/manager";
-import { ICONFIG } from "./config";
-import { IApp } from "./app";
 import { EventEmitter } from "@okikio/emitter";
 
-export type IAdvancedManager = AdvancedManager<any, ManagerItem>;
+import type { ICONFIG } from "./config";
+import type { IApp } from "./app";
+
+export type TypeAdvancedManager = AdvancedManager<any, ManagerItem>;
 
 /** The base class for AdvancedManager items */
 export class ManagerItem {
     /** The AdvancedManager the ManagerItem is attached to */
-    public manager: IAdvancedManager;
+    public manager: TypeAdvancedManager;
 
     /** The App the ManagerItem is attached to */
     public app: IApp;
@@ -28,7 +29,7 @@ export class ManagerItem {
     public install(): any { }
 
     /** Register the current Manager Item's manager */
-    public register(manager: IAdvancedManager, key: any): ManagerItem {
+    public register(manager: TypeAdvancedManager, key: any): ManagerItem {
         this.manager = manager;
         this.app = manager.app;
         this.config = manager.config;

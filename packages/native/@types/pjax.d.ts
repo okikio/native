@@ -1,17 +1,17 @@
-import { TypeTrigger } from "./history";
 import { Service } from "./service";
-export declare type LinkEvent = MouseEvent | TouchEvent;
-export declare type StateEvent = LinkEvent | PopStateEvent;
-export declare type IgnoreURLsList = Array<RegExp | string>;
+import type { TypeTrigger } from "./history";
+export declare type TypeLinkEvent = MouseEvent | TouchEvent;
+export declare type TypeStateEvent = TypeLinkEvent | PopStateEvent;
+export declare type TypeIgnoreURLsList = Array<RegExp | string>;
 /**
  * Creates a barbajs based PJAX Service, for the native framework
  * Based on barbajs and StartingBlocks
  */
 export declare class PJAX extends Service {
     /** URLs to disable PJAX for */
-    preventURLs: boolean | IgnoreURLsList;
+    preventURLs: boolean | TypeIgnoreURLsList;
     /** URLs to ignore when prefetching / Whether or not to disable prefetching */
-    prefetchIgnore: boolean | IgnoreURLsList;
+    prefetchIgnore: boolean | TypeIgnoreURLsList;
     /** Current state of transitions */
     isTransitioning: boolean;
     /** Ignore extra clicks of an anchor element if a transition has already started */
@@ -32,13 +32,13 @@ export declare class PJAX extends Service {
     /** Gets the transition to use for a certain anchor */
     getTransitionName(el: HTMLAnchorElement): string | null;
     /** Checks to see if the anchor is valid */
-    validLink(el: HTMLAnchorElement, event: LinkEvent | KeyboardEvent, href: string): boolean;
+    validLink(el: HTMLAnchorElement, event: TypeLinkEvent | KeyboardEvent, href: string): boolean;
     /** Returns the href of an Anchor element */
     getHref(el: HTMLAnchorElement): string | null;
     /** Check if event target is a valid anchor with an href, if so, return the anchor */
-    getLink(event: LinkEvent): HTMLAnchorElement;
+    getLink(event: TypeLinkEvent): HTMLAnchorElement;
     /** When an element is clicked, get valid anchor element, go for a transition */
-    onClick(event: LinkEvent): void;
+    onClick(event: TypeLinkEvent): void;
     /** Returns the direction of the State change as a String, either the Back button or the Forward button */
     getDirection(value: number): TypeTrigger;
     /** Force a page to go to a certain URL */
@@ -52,7 +52,7 @@ export declare class PJAX extends Service {
     go({ href, trigger, event }: {
         href: string;
         trigger?: TypeTrigger;
-        event?: StateEvent;
+        event?: TypeStateEvent;
     }): Promise<void>;
     /** Load the new Page as well as a Transition; starts the Transition */
     load({ oldHref, href, trigger, transitionName, scroll, }: {
@@ -66,7 +66,7 @@ export declare class PJAX extends Service {
         };
     }): Promise<any>;
     /** When you hover over an anchor, prefetch the event target's href */
-    onHover(event: LinkEvent): Promise<void>;
+    onHover(event: TypeLinkEvent): Promise<void>;
     /** When History state changes, get url from State, go for a Transition. */
     onStateChange(event: PopStateEvent): void;
     /** Initialize DOM Events */

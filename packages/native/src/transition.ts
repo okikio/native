@@ -1,9 +1,11 @@
 import { Manager } from "./manager";
-import { ICoords, newCoords, TypeTrigger } from "./history";
-import { IPage } from "./page";
+import { newCoords } from "./history";
 import { toAttr } from "./config";
 import { Service } from "./service";
 import { newURL } from "./url";
+
+import type { ICoords, TypeTrigger } from "./history";
+import type { IPage } from "./page";
 
 /**
  * The async function type, allows for smooth transition between Promises
@@ -15,13 +17,13 @@ export interface ITransition {
     trigger?: TypeTrigger;
     scroll?: { x: number; y: number };
     manualScroll?: boolean;
-    init?: (data: InitialTransitionData) => void;
+    init?: (data: IInitialTransitionData) => void;
     in?: (data: ITransitionData) => any;
     out?: (data: ITransitionData) => any;
     [key: string]: any;
 }
 
-export interface InitialTransitionData {
+export interface IInitialTransitionData {
     trigger?: TypeTrigger;
     scroll?: ICoords;
     oldPage: IPage;
@@ -29,7 +31,7 @@ export interface InitialTransitionData {
     ignoreHashAction: boolean;
 }
 
-export interface ITransitionData extends InitialTransitionData {
+export interface ITransitionData extends IInitialTransitionData {
     from?: IPage;
     to?: IPage;
     done: TypeAsyncFn;
@@ -58,13 +60,13 @@ export const hashAction = (coords?: ICoords, hash: string = window.location.hash
     return coords ?? newCoords(0, 0);
 };
 
-// The Default Transition
-export const Replace: ITransition = { name: "replace" };
+/** The Default Transition, it replaces the container with the new page container */
+export const TRANSITION_REPLACE: ITransition = { name: "replace" };
 
 /** Controls which Transition between pages to use */
 export class TransitionManager extends Service {
     public transitions: Manager<string, ITransition>;
-    private _arg: Array<[string, ITransition]>;
+    public _arg: Array<[string, ITransition]>;
     constructor(transitions?: Array<[string, ITransition]>) {
         super();
         this._arg = transitions;
@@ -79,8 +81,8 @@ export class TransitionManager extends Service {
         // Manager like Maps use the most recent [key, value] Array it knows, replacing the default transition
         // with any other transitions called ["default", ...]
         this.transitions = new Manager([
-            ["default", Replace],
-            ["replace", Replace],
+            ["default", TRANSITION_REPLACE],
+            ["replace", TRANSITION_REPLACE],
         ].concat(transitions) as Array<[string, ITransition]>);
     }
 
@@ -90,7 +92,7 @@ export class TransitionManager extends Service {
     has(key: string) { return this.transitions.has(key); }
 
     /** Starts a transition */
-    public async start(name: string, data: InitialTransitionData): Promise<InitialTransitionData> {
+    public async start(name: string, data: IInitialTransitionData): Promise<IInitialTransitionData> {
         let transition: ITransition = this.transitions.get(name);
         let { oldPage, newPage, ignoreHashAction, trigger } = data;
         this.emitter.emit("TRANSITION_START", { transitionName: name, ...data });

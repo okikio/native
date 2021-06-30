@@ -1,7 +1,7 @@
 import { Manager } from "./manager";
-import { ICoords, TypeTrigger } from "./history";
-import { IPage } from "./page";
 import { Service } from "./service";
+import type { ICoords, TypeTrigger } from "./history";
+import type { IPage } from "./page";
 /**
  * The async function type, allows for smooth transition between Promises
  */
@@ -15,30 +15,31 @@ export interface ITransition {
         y: number;
     };
     manualScroll?: boolean;
-    init?: (data: InitialTransitionData) => void;
+    init?: (data: IInitialTransitionData) => void;
     in?: (data: ITransitionData) => any;
     out?: (data: ITransitionData) => any;
     [key: string]: any;
 }
-export interface InitialTransitionData {
+export interface IInitialTransitionData {
     trigger?: TypeTrigger;
     scroll?: ICoords;
     oldPage: IPage;
     newPage: IPage;
     ignoreHashAction: boolean;
 }
-export interface ITransitionData extends InitialTransitionData {
+export interface ITransitionData extends IInitialTransitionData {
     from?: IPage;
     to?: IPage;
     done: TypeAsyncFn;
 }
 /** Auto scrolls to an elements position if the element has an hash */
 export declare const hashAction: (coords?: ICoords, hash?: string) => ICoords;
-export declare const Replace: ITransition;
+/** The Default Transition, it replaces the container with the new page container */
+export declare const TRANSITION_REPLACE: ITransition;
 /** Controls which Transition between pages to use */
 export declare class TransitionManager extends Service {
     transitions: Manager<string, ITransition>;
-    private _arg;
+    _arg: Array<[string, ITransition]>;
     constructor(transitions?: Array<[string, ITransition]>);
     /** On Service install set Config */
     install(): void;
@@ -47,7 +48,7 @@ export declare class TransitionManager extends Service {
     add(value: ITransition): this;
     has(key: string): boolean;
     /** Starts a transition */
-    start(name: string, data: InitialTransitionData): Promise<InitialTransitionData>;
+    start(name: string, data: IInitialTransitionData): Promise<IInitialTransitionData>;
 }
 export interface ITransitionManager extends TransitionManager {
 }

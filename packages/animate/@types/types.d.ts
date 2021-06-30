@@ -60,18 +60,23 @@ export interface IAnimationOptions extends ICSSTransformableProperties {
      * Read More about easings on [MDN](https://developer.mozilla.org/en-US/docs/Web/API/EffectTiming/easing)
      *
      *
-     * | constant | accelerate | decelerate | accelerate-decelerate |
-     * | :------- | :--------- | :--------- | :-------------------- |
-     * | linear   | in-cubic   | out-cubic  | in-out-cubic          |
-     * | ease     | in-quart   | out-quart  | in-out-quart          |
-     * |          | in-quint   | out-quint  | in-out-quint          |
-     * |          | in-expo    | out-expo   | in-out-expo           |
-     * |          | in-circ    | out-circ   | in-out-circ           |
-     * |          | in-back    | out-back   | in-out-back           |
+     * | constant   | accelerate   | decelerate     | accelerate-decelerate |
+     * | :--------- | :----------- | :------------- | :-------------------- |
+     * | linear     | ease-in / in | ease-out / out | ease-in-out / in-out  |
+     * | ease       | in-sine      | out-sine       | in-out-sine           |
+     * | steps      | in-quad      | out-quad       | in-out-quad           |
+     * | step-start | in-cubic     | out-cubic      | in-out-cubic          |
+     * | step-end   | in-quart     | out-quart      | in-out-quart          |
+     * |            | in-quint     | out-quint      | in-out-quint          |
+     * |            | in-expo      | out-expo       | in-out-expo           |
+     * |            | in-circ      | out-circ       | in-out-circ           |
+     * |            | in-back      | out-back       | in-out-back           |
      *
      * You can create your own custom cubic-bezier easing curves. Similar to css you type `cubic-bezier(...)` with 4 numbers representing the shape of the bezier curve, for example, `cubic-bezier(0.47, 0, 0.745, 0.715)` this is the bezier curve for `in-sine`.
      *
      * *Note: the `easing` property supports the original values and functions for easing as well, for example, `steps(1)`, and etc... are supported.*
+     *
+     * *Note: you can also use camelCase when defining easing functions, e.g. `inOutCubic` to represent `in-out-cubic`*
      *
      * @example
      * ```ts
@@ -82,6 +87,10 @@ export interface IAnimationOptions extends ICSSTransformableProperties {
      *
      *     // or
      *     easing: "in-sine",
+     *
+     *     // or
+     *     easing: "inSine",
+     *
      *     transform: ["translate(0px)", "translate(500px)"],
      * });
      * ```
@@ -411,6 +420,19 @@ export interface IAnimationOptions extends ICSSTransformableProperties {
      */
     keyframes?: TypeCSSLikeKeyframe | ICSSComputedTransformableProperties[] & Keyframe[] | object[] | TypeCallback;
     /**
+     * The `composite` property of a `KeyframeEffect` resolves how an element's animation impacts its underlying property values.
+     *
+     * To understand these values, take the example of a `keyframeEffect` value of `blur(2)` working on an underlying property value of `blur(3)`.
+     * - `replace` - The keyframeEffect overrides the underlying value it is combined with: `blur(2)` replaces `blur(3)`.
+     * - `add` - The keyframeEffect is added to the underlying value with which it is combined (aka additive):  `blur(2) blur(3)`.
+     * - `accumulate` - The keyframeEffect is accumulated on to the underlying value: `blur(5)`.
+     *
+     * Read more on [MDN](https://developer.mozilla.org/en-US/docs/Web/API/KeyframeEffect/composite)
+     *
+     * I recommend reading [web.dev](https://web.dev)'s article on [web-animations](https://web.dev/web-animations/#smoother-animations-with-composite-modes).
+    */
+    composite?: TypeCallback | string;
+    /**
      * The properties of the `extend` animation option are not interperted or computed, they are given directly to the `Web Animation API`, as way to access features that haven't been implemented in `@okikio/animate`, for example, `iterationStart`.
      *
      * `extend` is supposed to future proof the library if new features are added to the `Web Animation API` that you want to use, but that has not been implemented yet.
@@ -428,7 +450,6 @@ export interface IAnimationOptions extends ICSSTransformableProperties {
      *         // etc...
      *         fill: "both", // This overrides fillMode
      *         iteration: 2, // This overrides loop
-     *         composite: "add"
      *     }
      * });
      * ```

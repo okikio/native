@@ -1,8 +1,9 @@
-import { EventEmitter, TypeEventInput } from "@okikio/emitter";
+import { EventEmitter } from "@okikio/emitter";
 import { ServiceManager, Service } from "./service";
-import { ICONFIG } from "./config";
-import { ITransitionData } from "./transition";
-import { StateEvent } from "./pjax";
+import type { TypeEventInput } from "@okikio/emitter";
+import type { ICONFIG } from "./config";
+import type { ITransitionData } from "./transition";
+import type { TypeStateEvent } from "./pjax";
 export interface IApp extends App {
 }
 export declare type TypeAllEvents = "REQUEST_ERROR" | "TIMEOUT_ERROR" | "ANCHOR_HOVER" | "HOVER" | "ANCHOR_CLICK" | "CLICK" | "PREFETCH" | "POPSTATE" | "POPSTATE_BACK" | "POPSTATE_FORWARD" | "HISTORY_NEW_ITEM" | "GO" | "NAVIGATION_START" | "PAGE_LOADING" | "PAGE_LOAD_COMPLETE" | "NAVIGATION_END" | "TRANSITION_START" | "TRANSITION_END" | "BEFORE_TRANSITION_OUT" | "AFTER_TRANSITION_OUT" | "CONTENT_INSERT" | "CONTENT_REPLACED" | "BEFORE_TRANSITION_IN" | "AFTER_TRANSITION_IN" | "READY" | "ready" | "SCROLL" | "scroll" | "RESIZE" | "resize";
@@ -10,7 +11,7 @@ export declare type TypeEmitArgs = ((ITransitionData & {
     oldHref: string;
     href: string;
     transitionName: string;
-}) | StateEvent | Error | void | any)[];
+}) | TypeStateEvent | Error | void | any)[];
 export declare type TypeAppListenerCallback = (...args: TypeEmitArgs) => void;
 /** The App class starts the entire process, it controls all managers and all services */
 export declare class App {

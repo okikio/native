@@ -1,4 +1,4 @@
-import { TypeSingleValueCSSProperty, ICSSComputedTransformableProperties } from "./types";
+import type { TypeSingleValueCSSProperty, ICSSComputedTransformableProperties } from "./types";
 /**
  * Returns a closure Function, which adds a unit to numbers but simply returns strings with no edits assuming the value has a unit if it's a string
  *
@@ -15,23 +15,6 @@ export declare const UnitPX: (value: string | number) => string;
 /** Function adds "deg" unit to numbers */
 export declare const UnitDEG: (value: string | number) => string;
 /**
- * Convert the input to an array
- * For strings split them at commas
- * For array do nothing
- * For everything else wrap the input in an array
- */
-export declare const toArr: (input: any) => any[];
-/**
- * Checks if value is valid/truthy; it counts empty arrays and strings as falsey,
- * as well as null and undefined everything else is valid
- *
- * _**Note:** 0 counts as valid_
- *
- * @param value - anything
- * @returns true or false
- */
-export declare const isValid: (value: any) => boolean;
-/**
  * Returns a closure function, which adds units to numbers, strings or arrays of both
  *
  * @param unit - a unit function to use to add units to {@link TypeSingleValueCSSProperty | TypeSingleValueCSSProperty's }
@@ -41,29 +24,6 @@ export declare const isValid: (value: any) => boolean;
  * otherwise if the input is an array of both add units according to {@link addCSSUnit}
  */
 export declare const CSSValue: (unit: typeof UnitLess) => (input: TypeSingleValueCSSProperty) => any[];
-/**
- * Flips the rows and columns of 2-dimensional arrays
- *
- * Read more on [underscorejs.org](https://underscorejs.org/#zip) & [lodash.com](https://lodash.com/docs/4.17.15#zip)
- *
- * @example
- * ```ts
- * transpose(
- *      ['moe', 'larry', 'curly'],
- *      [30, 40, 50],
- *      [true, false, false]
- * );
- * // [
- * //     ["moe", 30, true],
- * //     ["larry", 40, false],
- * //     ["curly", 50, false]
- * // ]
- * ```
- * @param [...args] - the arrays to process as a set of arguments
- * @returns
- * returns the new array of grouped elements
- */
-export declare const transpose: (...args: TypeSingleValueCSSProperty[] | TypeSingleValueCSSProperty[][]) => any[];
 /**
  * Takes `TypeSingleValueCSSProperty` or an array of `TypeSingleValueCSSProperty` and adds units approriately
  *
@@ -80,25 +40,31 @@ export declare const transpose: (...args: TypeSingleValueCSSProperty[] | TypeSin
  * ```
  */
 export declare const CSSArrValue: (arr: TypeSingleValueCSSProperty | TypeSingleValueCSSProperty[], unit: typeof UnitLess) => TypeSingleValueCSSProperty[];
-export declare const TransformFunctionNames: string[];
-/**
- * Creates the transform property text
- */
-export declare const createTransformProperty: (arr: any) => string;
 /** Parses CSSValues without adding any units */
 export declare const UnitLessCSSValue: (input: TypeSingleValueCSSProperty) => any[];
 /** Parses CSSValues and adds the "px" unit if required */
 export declare const UnitPXCSSValue: (input: TypeSingleValueCSSProperty) => any[];
 /** Parses CSSValues and adds the "deg" unit if required */
 export declare const UnitDEGCSSValue: (input: TypeSingleValueCSSProperty) => any[];
-/** Convert a dash-separated string into camelCase strings */
-export declare const camelCase: (str: string) => string;
 /**
  * Removes dashes from CSS properties & maps the values to the camelCase keys
  */
 export declare const ParseCSSProperties: (obj: object) => {};
-/** Converts values to strings */
-export declare const toStr: (input: any) => string;
+export interface ITransformFunctions {
+    [key: string]: (value: TypeSingleValueCSSProperty | Array<TypeSingleValueCSSProperty>) => TypeSingleValueCSSProperty | Array<TypeSingleValueCSSProperty>;
+}
+/**
+ * Details how to compute each transform function
+ */
+export declare const TransformFunctions: ITransformFunctions;
+/**
+ * Store all the supported transform functions as an Array
+ */
+export declare const TransformFunctionNames: string[];
+/**
+ * Creates the transform property text
+ */
+export declare const createTransformProperty: (transformFnNames: string[], arr: any[]) => string;
 /** Common CSS Property names with the units "px" as an acceptable value */
 export declare const CSSPXDataType: string;
 /**
@@ -106,6 +72,8 @@ export declare const CSSPXDataType: string;
  * Also, adds the ability to use single string or number values for transform functions
  *
  * _**Note**: the `transform` animation option will override all transform function properties_
+ *
+ * _**Note**: the order of where/when you define transform function matters, for example, depending on the order you define `translate`, and `rotate`, you can create change the radius of the rotation_
  *
  * @param properties - the CSS properties to transform
  *
@@ -169,7 +137,7 @@ export declare const CSSPXDataType: string;
 export declare const ParseTransformableCSSProperties: (properties: ICSSComputedTransformableProperties) => {
     transform: string[];
 } & {
-    [key: string]: TypeSingleValueCSSProperty | TypeSingleValueCSSProperty[];
+    [x: string]: any;
 };
 /**
  * Similar to {@link ParseTransformableCSSProperties} except it transforms the CSS properties in each Keyframe

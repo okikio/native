@@ -1,5 +1,5 @@
-import { IgnoreURLsList } from "./pjax";
-import { ITransition } from "./transition";
+import type { TypeIgnoreURLsList } from "./pjax";
+import type { ITransition } from "./transition";
 export interface ICONFIG {
     /**
      * The Prefix attached to data attributes
@@ -70,7 +70,7 @@ export interface ICONFIG {
      * - `false` means always try to fetch from the cache
      * @default `false`
      */
-    cacheIgnore?: boolean | IgnoreURLsList;
+    cacheIgnore?: boolean | TypeIgnoreURLsList;
     /**
      * Specifies which urls to not prefetch
      * It also accepts boolean values:
@@ -78,12 +78,12 @@ export interface ICONFIG {
      * - `false` means always prefetch all anchors
      * @default `false`
      */
-    prefetchIgnore?: boolean | IgnoreURLsList;
+    prefetchIgnore?: boolean | TypeIgnoreURLsList;
     /**
      * Specifies which urls to not use PJAX for
      * @default `[]`
      */
-    preventURLs?: boolean | IgnoreURLsList;
+    preventURLs?: boolean | TypeIgnoreURLsList;
     /**
      * On page change (excluding popstate events, and hashes) keep current scroll position
      * @default `false`
@@ -107,7 +107,7 @@ export interface ICONFIG {
     [key: string]: any;
 }
 export declare const CONFIG_DEFAULTS: ICONFIG;
-export declare type ConfigKeys = keyof typeof CONFIG_DEFAULTS | string;
+export declare type TypeConfigKeys = keyof typeof CONFIG_DEFAULTS | string;
 export declare const newConfig: (config: ICONFIG) => ICONFIG;
 /** Converts config properties into properly formatted data attributes */
-export declare const toAttr: (config: ICONFIG, value?: ConfigKeys, brackets?: boolean) => any;
+export declare const toAttr: (config: ICONFIG, value?: TypeConfigKeys, brackets?: boolean) => any;

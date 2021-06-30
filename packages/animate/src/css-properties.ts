@@ -1,5 +1,6 @@
-import { mapObject } from "./api";
-import { TypeSingleValueCSSProperty, ICSSComputedTransformableProperties } from "./types";
+import { camelCase, isValid, mapObject, omit, toArr, toStr, transpose } from "./utils";
+
+import type { TypeSingleValueCSSProperty, ICSSComputedTransformableProperties } from "./types";
 
 /**
  * Returns a closure Function, which adds a unit to numbers but simply returns strings with no edits assuming the value has a unit if it's a string
@@ -21,36 +22,6 @@ export const UnitPX = addCSSUnit("px");
 
 /** Function adds "deg" unit to numbers */
 export const UnitDEG = addCSSUnit("deg");
-
-/**
- * Convert the input to an array
- * For strings split them at commas
- * For array do nothing
- * For everything else wrap the input in an array
- */
-export const toArr = (input: any): any[] => {
-    if (Array.isArray(input) || typeof input == "string") {
-        if (typeof input == "string") input = input.split(",");
-        return input;
-    }
-
-    return [input];
-}
-
-/**
- * Checks if value is valid/truthy; it counts empty arrays and strings as falsey,
- * as well as null and undefined everything else is valid
- *
- * _**Note:** 0 counts as valid_
- *
- * @param value - anything
- * @returns true or false
- */
-export const isValid = (value: any) => {
-    if (Array.isArray(value) || typeof value == "string")
-        return Boolean(value.length);
-    return value != null && value != undefined;
-}
 
 /**
  * Returns a closure function, which adds units to numbers, strings or arrays of both
@@ -77,57 +48,6 @@ export const CSSValue = (unit: typeof UnitLess) => {
 }
 
 /**
- * Flips the rows and columns of 2-dimensional arrays
- *
- * Read more on [underscorejs.org](https://underscorejs.org/#zip) & [lodash.com](https://lodash.com/docs/4.17.15#zip)
- *
- * @example
- * ```ts
- * transpose(
- *      ['moe', 'larry', 'curly'],
- *      [30, 40, 50],
- *      [true, false, false]
- * );
- * // [
- * //     ["moe", 30, true],
- * //     ["larry", 40, false],
- * //     ["curly", 50, false]
- * // ]
- * ```
- * @param [...args] - the arrays to process as a set of arguments
- * @returns
- * returns the new array of grouped elements
- */
-export const transpose = (...args: TypeSingleValueCSSProperty[] | TypeSingleValueCSSProperty[][]) => {
-    let largestArrLen = 0;
-    args = args.map(arr => {
-        // Convert all values in arrays to an array
-        // This ensures that `arrays` is an array of arrays
-        let result = toArr(arr);
-
-        // Finds the largest array
-        let len = result.length;
-        if (len > largestArrLen) largestArrLen = len;
-        return result;
-    });
-
-    // Flip the rows and columns of arrays
-    let result = [];
-    let len = args.length;
-    for (let col = 0; col < largestArrLen; col++) {
-        result[col] = [];
-
-        for (let row = 0; row < len; row++) {
-            let val = args[row][col];
-            if (isValid(val))
-                result[col][row] = val;
-        }
-    }
-
-    return result;
-}
-
-/**
  * Takes `TypeSingleValueCSSProperty` or an array of `TypeSingleValueCSSProperty` and adds units approriately
  *
  * @param arr - array of numbers, strings and/or an array of array of both e.g. ```[[25, "50px", "60%"], "25, 35, 60%", 50]```
@@ -149,44 +69,6 @@ export const CSSArrValue = (arr: TypeSingleValueCSSProperty | TypeSingleValueCSS
     return toArr(arr).map(CSSValue(unit)) as TypeSingleValueCSSProperty[];
 }
 
-export const TransformFunctionNames = [
-    "translate",
-    "translate3d",
-    "translateX",
-    "translateY",
-    "translateZ",
-    "rotate",
-    "rotate3d",
-    "rotateX",
-    "rotateY",
-    "rotateZ",
-    "scale",
-    "scale3d",
-    "scaleX",
-    "scaleY",
-    "scaleZ",
-    "skew",
-    "skewX",
-    "skewY",
-    "perspective"
-];
-
-/**
- * Creates the transform property text
- */
-export const createTransformProperty = (arr) => {
-    let result = "";
-    let len = TransformFunctionNames.length;
-    for (let i = 0; i < len; i++) {
-        let name = TransformFunctionNames[i];
-        let value = arr[i];
-        if (isValid(value))
-            result += `${name}(${Array.isArray(value) ? value.join(", ") : value}) `;
-    }
-
-    return result.trim();
-}
-
 /** Parses CSSValues without adding any units */
 export const UnitLessCSSValue = CSSValue(UnitLess);
 
@@ -195,13 +77,6 @@ export const UnitPXCSSValue = CSSValue(UnitPX);
 
 /** Parses CSSValues and adds the "deg" unit if required */
 export const UnitDEGCSSValue = CSSValue(UnitDEG);
-
-/** Convert a dash-separated string into camelCase strings */
-export const camelCase = (str: string) => {
-    if (str.includes("--")) return str;
-    let result = `${str}`.replace(/-([a-z])/g, (_, letter) => letter.toUpperCase());
-    return result;
-}
 
 /**
  * Removes dashes from CSS properties & maps the values to the camelCase keys
@@ -218,17 +93,70 @@ export const ParseCSSProperties = (obj: object) => {
     return result;
 }
 
-/** Converts values to strings */
-export const toStr = (input: any) => `` + input;
+export interface ITransformFunctions {
+    [key: string]: (value: TypeSingleValueCSSProperty | Array<TypeSingleValueCSSProperty>) => TypeSingleValueCSSProperty | Array<TypeSingleValueCSSProperty>;
+}
+
+/**
+ * Details how to compute each transform function
+ */
+export const TransformFunctions: ITransformFunctions = {
+    "translate": value => CSSArrValue(value, UnitPX),
+    "translate3d": value => CSSArrValue(value, UnitPX),
+    "translateX": (value: TypeSingleValueCSSProperty) => UnitPXCSSValue(value),
+    "translateY": (value: TypeSingleValueCSSProperty) => UnitPXCSSValue(value),
+    "translateZ": (value: TypeSingleValueCSSProperty) => UnitPXCSSValue(value),
+
+    "rotate": value => CSSArrValue(value, UnitDEG),
+    "rotate3d": value => CSSArrValue(value, UnitLess),
+    "rotateX": (value: TypeSingleValueCSSProperty) => UnitDEGCSSValue(value),
+    "rotateY": (value: TypeSingleValueCSSProperty) => UnitDEGCSSValue(value),
+    "rotateZ": (value: TypeSingleValueCSSProperty) => UnitDEGCSSValue(value),
+
+    "scale": value => CSSArrValue(value, UnitLess),
+    "scale3d": value => CSSArrValue(value, UnitLess),
+    "scaleX": (value: TypeSingleValueCSSProperty) => UnitLessCSSValue(value),
+    "scaleY": (value: TypeSingleValueCSSProperty) => UnitLessCSSValue(value),
+    "scaleZ": (value: TypeSingleValueCSSProperty) => UnitLessCSSValue(value),
+
+    "skew": value => CSSArrValue(value, UnitDEG),
+    "skewX": (value: TypeSingleValueCSSProperty) => UnitDEGCSSValue(value),
+    "skewY": (value: TypeSingleValueCSSProperty) => UnitDEGCSSValue(value),
+
+    "perspective": (value: TypeSingleValueCSSProperty) => UnitPXCSSValue(value),
+};
+
+/**
+ * Store all the supported transform functions as an Array
+ */
+export const TransformFunctionNames = Object.keys(TransformFunctions);
+
+/**
+ * Creates the transform property text
+ */
+export const createTransformProperty = (transformFnNames: string[], arr: any[]) => {
+    let result = "";
+    let len = transformFnNames.length;
+    for (let i = 0; i < len; i++) {
+        let name = transformFnNames[i];
+        let value = arr[i];
+        if (isValid(value))
+            result += `${name}(${Array.isArray(value) ? value.join(", ") : value}) `;
+    }
+
+    return result.trim();
+}
 
 /** Common CSS Property names with the units "px" as an acceptable value */
-export const CSSPXDataType = ["margin", "padding", "size", "width", "height", "left", "right", "top", "bottom", "radius", "gap", "basis", "inset", "outline-offset", "perspective", "thickness", "position", "distance", "spacing"].join("|");
+export const CSSPXDataType = ["margin", "padding", "size", "width", "height", "left", "right", "top", "bottom", "radius", "gap", "basis", "inset", "outline-offset", "perspective", "thickness", "position", "distance", "spacing"].map(camelCase).join("|");
 
 /**
  * Removes the need for the full transform statement in order to use translate, rotate, scale, skew, or perspective including their X, Y, Z, and 3d varients
  * Also, adds the ability to use single string or number values for transform functions
  *
  * _**Note**: the `transform` animation option will override all transform function properties_
+ * 
+ * _**Note**: the order of where/when you define transform function matters, for example, depending on the order you define `translate`, and `rotate`, you can create change the radius of the rotation_
  *
  * @param properties - the CSS properties to transform
  *
@@ -290,71 +218,30 @@ export const CSSPXDataType = ["margin", "padding", "size", "width", "height", "l
  * ```
  */
 export const ParseTransformableCSSProperties = (properties: ICSSComputedTransformableProperties) => {
-    let {
-        perspective,
-        rotate,
-        rotate3d,
-        rotateX,
-        rotateY,
-        rotateZ,
-        translate,
-        translate3d,
-        translateX,
-        translateY,
-        translateZ,
-        scale,
-        scale3d,
-        scaleX,
-        scaleY,
-        scaleZ,
-        skew,
-        skewX,
-        skewY,
-        ...rest
+    // Convert dash seperated strings to camelCase strings
+    let AllCSSProperties = ParseCSSProperties(properties) as ICSSComputedTransformableProperties;
+    let rest = omit(TransformFunctionNames, AllCSSProperties);
 
-        // Convert dash seperated strings to camelCase strings
-    } = ParseCSSProperties(properties) as ICSSComputedTransformableProperties;
+    // Adds support for ordered transforms 
+    let transformFunctionNames = Object.keys(AllCSSProperties)
+        .filter(key => TransformFunctionNames.includes(key));
+    
+    let transformFunctionValues = transformFunctionNames
+        .map((key) => TransformFunctions[key](AllCSSProperties[key]));
 
-    translate = CSSArrValue(translate, UnitPX);
-    translate3d = CSSArrValue(translate3d, UnitPX);
-    translateX = UnitPXCSSValue(translateX);
-    translateY = UnitPXCSSValue(translateY);
-    translateZ = UnitPXCSSValue(translateZ);
-
-    rotate = CSSArrValue(rotate, UnitDEG);
-    rotate3d = CSSArrValue(rotate3d, UnitLess);
-    rotateX = UnitDEGCSSValue(rotateX);
-    rotateY = UnitDEGCSSValue(rotateY);
-    rotateZ = UnitDEGCSSValue(rotateZ);
-
-    scale = CSSArrValue(scale, UnitLess);
-    scale3d = CSSArrValue(scale3d, UnitLess);
-    scaleX = UnitLessCSSValue(scaleX);
-    scaleY = UnitLessCSSValue(scaleY);
-    scaleZ = UnitLessCSSValue(scaleZ);
-
-    skew = CSSArrValue(skew, UnitDEG);
-    skewX = UnitDEGCSSValue(skewX);
-    skewY = UnitDEGCSSValue(skewY);
-
-    perspective = UnitPXCSSValue(perspective);
-
-    let transform = transpose(
-        translate, translate3d, translateX, translateY, translateZ,
-        rotate, rotate3d, rotateX, rotateY, rotateZ,
-        scale, scale3d, scaleX, scaleY, scaleZ,
-        skew, skewX, skewY,
-        perspective
-    ).filter(isValid).map(createTransformProperty);
+    // The transform string
+    let transform = transpose(...transformFunctionValues)
+        .filter(isValid)
+        .map(arr => createTransformProperty(transformFunctionNames, arr));
 
     // Wrap non array CSS property values in an array
     rest = mapObject(rest, (value, key) => {
         let unit: typeof UnitDEGCSSValue | typeof UnitPXCSSValue;
 
         // If key doesn't have the word color in it, try to add the default "px" or "deg" to it
-        if (!/color/gi.test(key)) {
-            let isAngle = /rotate/gi.test(key);
-            let isLength = new RegExp(CSSPXDataType, "gi").test(key);
+        if (!/color/i.test(key)) {
+            let isAngle = /rotate/i.test(key);
+            let isLength = new RegExp(CSSPXDataType, "i").test(key);
 
             // There is an intresting bug that occurs if you test a string againt the same instance of a Regular Expression
             // where the answer will be different every test
@@ -460,14 +347,14 @@ export const ParseTransformableCSSKeyframes = (keyframes: ICSSComputedTransforma
             perspective
         ];
     }).map(([rest, ...transformFunctions]) => {
-        let transform = createTransformProperty(transformFunctions);
+        let transform = createTransformProperty(TransformFunctionNames, transformFunctions);
         rest = mapObject(rest as object, (value, key) => {
             let unit: typeof UnitDEGCSSValue | typeof UnitPXCSSValue;
 
             // If key doesn't have the word color in it, try to add the default "px" or "deg" to it
-            if (!/color/gi.test(key)) {
-                let isAngle = /rotate/gi.test(key);
-                let isLength = new RegExp(CSSPXDataType, "gi").test(key);
+            if (!/color/i.test(key)) {
+                let isAngle = /rotate/i.test(key);
+                let isLength = new RegExp(CSSPXDataType, "i").test(key);
 
                 // There is an intresting bug that occurs if you test a string againt the same instance of a Regular Expression
                 // where the answer will be different every test

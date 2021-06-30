@@ -1,8 +1,10 @@
 # @okikio/native
 
-`native` is an initiative that encourages performance, modern technologies, and great user experiences. The idea behind `@okikio/native` is that it acts as the core framework to the `native` initiative, it combines all the other package into it a core package that is **~12.1 KB** (minified & gzipped).
+[![npm](https://img.shields.io/npm/v/@okikio/native?style=for-the-badge)](https://www.npmjs.com/package/@okikio/native) [![npm bundle size](https://img.shields.io/bundlephobia/minzip/@okikio/native?style=for-the-badge)](https://bundlephobia.com/package/@okikio/native) ![GitHub issues](https://img.shields.io/github/issues/okikio/native?style=for-the-badge) ![GitHub](https://img.shields.io/github/license/okikio/native?style=for-the-badge)
 
-_**Note**: `@okikio/native` is treeshakable, so you only need to use the features required for your project and the other portions can be removed. By default `@okikio/native` bundles [@okikio/animate](https://www.npmjs.com/package/@okikio/animate), so you don't need to install extra packages, but if you don't use it, it can be treeshaken out of your bundle. The absolute minimum functional treeshaken size is **~1.75 KB** (minified & gzipped)._
+`native` is an initiative that encourages performance, modern technologies, and great user experiences. The idea behind `@okikio/native` is that it acts as the core framework to the `native` initiative, it combines all the other package into it a core package that is **~7.21 KB** (minified & gzipped).
+
+_**Note**: `@okikio/native` is treeshakable, so you only need to use the features required for your project and the other portions can be removed. The absolute minimum functional treeshaken size is **~1.75 KB** (minified & gzipped)._
 
 [@okikio/native](https://www.skypack.dev/view/@okikio/native) is a guideline on how to create great web experiences that integrate into the system in a way that feels like a cohesive and native experience.
 
@@ -12,9 +14,9 @@ The `@okikio/native` package achieves performance, high efficiency, and a smooth
 
 Currently many websites rely on older code to make sure they reach as wide an audience as possible, hurting performance with large amounts of overhead.
 
-`@okikio/native` uses modern browser api's like the Web Animation API, Maps, pushState, etc.... to achieve high efficiency and performance. The browser API's can be difficult to work with, so, I developed `@okikio/manager`, `@okikio/emitter`, and `@okiko/animate` libraries to make them more managable. I developed these libraries to ensure the framework is well optimized and to avoid large number of dependencies.
+`@okikio/native` uses modern browser api's like the Maps, pushState, etc.... to achieve high efficiency and performance. The browser API's can be difficult to work with, so, I developed [@okikio/manager](https://www.npmjs.com/package/@okikio/manager), [@okikio/emitter](https://www.npmjs.com/package/@okikio/emitter), and [@okiko/animate](https://www.npmjs.com/package/@okikio/animate) libraries to make them more managable. I developed these libraries to ensure the framework is well optimized and to avoid large number of dependencies.
 
-*You will need a Map, Promise, fetch, and WebAnimation polyfill for older browsers. If you install `@okikio/native` via [npm](https://www.npmjs.com/package/@okikio/native) you are most likely going to need [rollup](https://rollupjs.org/) or [esbuild](https://esbuild.github.io/). You can use [polyfill.io](https://polyfill.io/), or another source to create a polyfill. The minimum feature requirement for a polyfill are Map, Promise, fetch, and WebAnimations e.g. [https://cdn.polyfill.io/v3/polyfill.min.js?features=default,es2015,es2018,Array.prototype.includes,Map,Promise,fetch,WebAnimations](https://cdn.polyfill.io/v3/polyfill.min.js?features=default,es2015,Array.prototype.includes,Object.values,es2018,Map,Promise,fetch,WebAnimations).*
+*You will need a Map, Promise, and fetch polyfill for older browsers. If you install `@okikio/native` via [npm](https://www.npmjs.com/package/@okikio/native) you are most likely going to need [rollup](https://rollupjs.org/) or [esbuild](https://esbuild.github.io/). You can use [polyfill.io](https://polyfill.io/), or another source to create a polyfill. The minimum feature requirement for a polyfill are Map, Promise, and fetch e.g. [https://cdn.polyfill.io/v3/polyfill.min.js?features=default,es2015,es2018,Array.prototype.includes,Map,Promise,fetch](https://cdn.polyfill.io/v3/polyfill.min.js?features=default,es2015,Array.prototype.includes,Object.values,es2018,Map,Promise,fetch).*
 
 You can try out `@okikio/native` using Gitpod:
 
@@ -27,6 +29,24 @@ pnpm demo
 ```
 
 Once Gitpod has booted up, go to [../../build/pug/](../../build/pug/) and [../../build/ts/](../../build/ts/) and start tweaking and testing to your hearts content.
+
+You can run `@okikio/native` locally by first installing some packages via these commands into your terminal,
+
+```bash
+npm install -g pnpm && pnpm install -g gulp ultra-runner commitizen && pnpm install && pnpm build 
+```
+
+and then you can test/demo it using this command,
+
+```bash
+pnpm demo 
+```
+
+You can build your changes/contributions using,
+
+```bash
+pnpm build
+```
 
 ## Table of Contents
 
@@ -327,7 +347,8 @@ Setup your HTML pages with this,
 Then add this to your javascript,
 
 ```ts
-import {  App, PJAX, TransitionManager, HistoryManager, PageManager, Router, animate } from "@okikio/native";
+import {  App, PJAX, TransitionManager, HistoryManager, PageManager, Router } from "@okikio/native";
+import { animate } from "@okikio/animate";
 const app = new App();
 
 //= Fade Transition
@@ -540,18 +561,17 @@ export interface ICONFIG {
 
 ## Animations & extras
 
-By default `@okikio/native` comes bundled with [@okikio/animate](https://www.npmjs.com/package/@okikio/animate), [@okikio/emitter](https://www.npmjs.com/package/@okikio/emitter), and [@okikio/manager](https://www.npmjs.com/package/@okikio/manager). Theses packages are all part of the [native initiative](https://github.com/okikio/native), which aims to create smooth modern experiences that feel native to whatever and wherever you engage with a website or webapp. Unlike some other PJAX projects `@okikio/native` is the only package you need, to create beautiful experiences.
+By default `@okikio/native` doesn't come bundled with [@okikio/animate](https://www.npmjs.com/package/@okikio/animate), [@okikio/emitter](https://www.npmjs.com/package/@okikio/emitter), and [@okikio/manager](https://www.npmjs.com/package/@okikio/manager). Theses packages are all part of the [native initiative](https://github.com/okikio/native), which aims to create smooth modern experiences that feel native to whatever and wherever you engage with a website or webapp. You will probably need to install `@okikio/animate` as a seperate package before you can have smooth transtions when using `@okikio/native`.
 
 ```ts
-import { animate, manager, emitter, App } from "@okikio/native";
+import { App } from "@okikio/native";
+import { animate } from "@okikio/animate";
 // ...
 ```
 
 ## API Documentation
 
-I highly suggest going through the [API documentation](https://okikio.github.io/native/docs/modules/native.html), for a more detailed documentation of the API's.
-
-Also, `@okikio/native` bundles and re-exports [@okikio/manager](https://www.npmjs.com/package/@okikio/manager), [@okikio/emitter](https://www.npmjs.com/package/@okikio/emitter), and [@okikio/animate](https://www.npmjs.com/package/@okikio/animate), this is to avoid needing to download a bunch of packages that use the same libraries.
+I highly suggest going through the [API documentation](https://okikio.github.io/native/docs/modules/_okikio_native.html), for a more detailed documentation of the API's.
 
 ### API
 
@@ -1073,7 +1093,8 @@ Service.prototype.stop(): void;
 To create a new `Service` you have to extend the `Service` class, like, so,
 
 ```typescript
-import { Service, App, animate } from "@okikio/native";
+import { Service, App } from "@okikio/native";
+import { animate } from "@okikio/animate";
 
 // Imagine a DIV element with the class name of ".div" exists in the DOM
 // This Service animates the motion of a moving DIV
@@ -1310,7 +1331,8 @@ App.prototype.emit(events: string | any[], ...args: any): App;
 #### Example
 
 ```typescript
-import { Service, App, animate } from "@okikio/native";
+import { Service, App } from "@okikio/native";
+import { animate } from "@okikio/animate";
 
 let el = document.querySelector(".div");
 
@@ -1785,12 +1807,7 @@ const Fade = {
         return animate({
             target: fromWrapper,
             opacity: [1, 0],
-            duration,
-            onfinish(el: { style: { opacity: string } }) {
-                requestAnimationFrame(() => {
-                    el.style.opacity = "0";
-                });
-            }
+            duration
         }).on("finish", function () {
             this.stop();
         });
@@ -1799,22 +1816,13 @@ const Fade = {
     in({ to, scroll }: ITransitionData) {
         let { duration } = this;
         let toWrapper = to.wrapper;
-        requestAnimationFrame(() => {
-            toWrapper.style.transform = "translateX(0%)";
-        });
 
         // Support for hashes are built in
         window.scroll(scroll.x, scroll.y);
         return animate({
             target: toWrapper,
             opacity: [0, 1],
-            duration,
-            onfinish(el: { style: { opacity?: string } }) {
-                requestAnimationFrame(() => {
-                    el.style.opacity = "1";
-                    el.style = {};
-                });
-            }
+            duration
         }).then(function () {
             this.stop();
         });
@@ -1860,19 +1868,13 @@ const Fade = {
     in({ to, scroll }) {
         let { duration } = this;
         let toWrapper = to.wrapper;
-        requestAnimationFrame(() => {
-            toWrapper.style.transform = "translateX(0%)";
-        });
 
         // Support for hashes are built in
         window.scroll(scroll.x, scroll.y);
         return animate({
             target: toWrapper,
             opacity: [0, 1],
-            duration,
-            onfinish(el: { style: { opacity?: string } }) {
-                el.style.opacity = "1";
-            }
+            duration
         }).then(function () {
             this.stop();
         });

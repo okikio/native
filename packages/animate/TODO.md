@@ -10,5 +10,5 @@
 * [ ] Automatically commitStyles
 * [x] Support non array values / ending values in animation properties
 * [ ] Create more advanced tests
-* [ ] Support advanced SVG properties
-* [ ] Add a `remove` target method
+* [x] Support advanced SVG properties
+* [x] Add a `remove` target method

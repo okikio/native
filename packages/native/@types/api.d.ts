@@ -1,6 +1,3 @@
-export * from "@okikio/manager";
-export * from "@okikio/emitter";
-export * from "@okikio/animate";
 export * from "./config";
 export * from "./manager";
 export * from "./url";
