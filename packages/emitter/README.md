@@ -1,5 +1,7 @@
 # @okikio/emitter
 
+[![npm](https://img.shields.io/npm/v/@okikio/emitter?style=for-the-badge)](https://www.npmjs.com/package/@okikio/emitter) [![npm bundle size](https://img.shields.io/bundlephobia/minzip/@okikio/emitter?style=for-the-badge)](https://bundlephobia.com/package/@okikio/emitter) ![GitHub issues](https://img.shields.io/github/issues/okikio/native?style=for-the-badge) ![GitHub](https://img.shields.io/github/license/okikio/native?style=for-the-badge)
+
 A small Event Emitter written in typescript with performance and ease of use in mind, it weighs **~838 B** (minified and gzipped).
 
 *You will need a Map and Promise polyfill for older browsers. If you install `@okikio/emitter` via [npm](https://www.npmjs.com/package/@okikio/emitter) you are most likely going to need [rollup](https://rollupjs.org/) or [esbuild](https://esbuild.github.io/). You can use [polyfill.io](https://polyfill.io/), or another source to create a polyfill. The minimum feature requirement for a polyfill are Maps and Promises e.g. [https://polyfill.io/v3/polyfill.min.js?features=Promise,Map](https://polyfill.io/v3/polyfill.min.js?features=Promise,Map).*
@@ -9,6 +11,24 @@ You can try out `@okikio/emitter` using Gitpod:
 [![Open In Gitpod](https://gitpod.io/button/open-in-gitpod.svg)](https://gitpod.io/#https://github.com/okikio/native/blob/beta/packages/emitter/README.md)
 
 By default Gitpod will start the dev script for you, but if you need to restart the dev script you can do so by typing into the terminal.
+
+```bash
+pnpm test-dev --filter "@okikio/emitter"
+```
+
+You can run `@okikio/emitter` locally by first installing some packages via these commands into your terminal,
+
+```bash
+npm install -g pnpm && pnpm install -g gulp ultra-runner commitizen && pnpm install && pnpm build
+```
+
+You can build your changes/contributions using,
+
+```bash
+pnpm build
+```
+
+You can test your changes/contributions using,
 
 ```bash
 pnpm test-dev --filter "@okikio/emitter"
@@ -79,7 +99,7 @@ setTimeout(() => {
 
 ### API Documentation
 
-You can also go through the [API documentation](https://okikio.github.io/native/docs/modules/emitter.html), for a more detailed documentation of the API.
+You can also go through the [API documentation](https://okikio.github.io/native/docs/modules/_okikio_emitter.html), for a more detailed documentation of the API.
 
 ## API
 
