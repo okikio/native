@@ -1,9 +1,12 @@
+
 import { Manager, ManagerItem, AdvancedManager } from "./manager";
 import { equal, newURL } from "./url";
-import { toAttr } from "./config";
 import { Service } from "./service";
-import { IgnoreURLsList } from "./pjax";
+import { toAttr } from "./config";
+
 import { pathToRegexp } from "path-to-regexp";
+
+import type { TypeIgnoreURLsList } from "./pjax";
 
 /**
  * Parses strings to DOM
@@ -85,7 +88,7 @@ export class PageManager extends Service {
     public pages: AdvancedManager<string, Page>;
 
     /** URLs to ignore caching */
-    public cacheIgnore: IgnoreURLsList | boolean;
+    public cacheIgnore: TypeIgnoreURLsList | boolean;
 
     constructor() {
         super();
@@ -183,12 +186,12 @@ export class PageManager extends Service {
 
 
 /** Check if url is supposed to be ignored */
-export const ignoreURLs = (urlString: string, ignoreList: boolean | IgnoreURLsList) => {
+export const ignoreURLs = (urlString: string, ignoreList: boolean | TypeIgnoreURLsList) => {
     if (typeof ignoreList == "boolean")
         return ignoreList;
 
     let _keys = [];
-    return !(ignoreList as IgnoreURLsList)
+    return !(ignoreList as TypeIgnoreURLsList)
         .every(val => pathToRegexp(val, _keys, {
             start: false,
             end: false

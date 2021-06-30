@@ -1,8 +1,11 @@
-import { EventEmitter, TypeEventInput } from "@okikio/emitter";
+import { EventEmitter } from "@okikio/emitter";
 import { ServiceManager, Service } from "./service";
-import { newConfig, ICONFIG } from "./config";
-import { ITransitionData } from "./transition";
-import { StateEvent } from "./pjax";
+import { newConfig } from "./config";
+
+import type { TypeEventInput } from "@okikio/emitter";
+import type { ICONFIG } from "./config";
+import type { ITransitionData } from "./transition";
+import type { TypeStateEvent } from "./pjax";
 
 export interface IApp extends App { }
 
@@ -10,7 +13,7 @@ export type TypeAllEvents = "REQUEST_ERROR" | "TIMEOUT_ERROR" | "ANCHOR_HOVER" |
 
 export type TypeEmitArgs = (
     (ITransitionData & { oldHref: string, href: string, transitionName: string })
-    | StateEvent | Error | void | any
+    | TypeStateEvent | Error | void | any
 )[];
 export type TypeAppListenerCallback = (...args: TypeEmitArgs) => void;
 

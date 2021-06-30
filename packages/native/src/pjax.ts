@@ -1,13 +1,16 @@
-import { newState, TypeTrigger, newCoords, IHistoryItem, IHistoryManager } from "./history";
-import { Service } from "./service";
-import { ignoreURLs, IPage, IPageManager } from "./page";
 import { newURL, getHashedPath, equal } from "./url";
+import { newState, newCoords } from "./history";
+import { Service } from "./service";
+import { ignoreURLs } from "./page";
 import { toAttr } from "./config";
-import { ITransitionManager } from "./transition";
 
-export type LinkEvent = MouseEvent | TouchEvent;
-export type StateEvent = LinkEvent | PopStateEvent;
-export type IgnoreURLsList = Array<RegExp | string>;
+import type { TypeTrigger, IHistoryItem, IHistoryManager } from "./history";
+import type { IPage, IPageManager } from "./page";
+import type { ITransitionManager } from "./transition";
+
+export type TypeLinkEvent = MouseEvent | TouchEvent;
+export type TypeStateEvent = TypeLinkEvent | PopStateEvent;
+export type TypeIgnoreURLsList = Array<RegExp | string>;
 
 /**
  * Creates a barbajs based PJAX Service, for the native framework
@@ -15,10 +18,10 @@ export type IgnoreURLsList = Array<RegExp | string>;
  */
 export class PJAX extends Service {
     /** URLs to disable PJAX for */
-    public preventURLs: boolean | IgnoreURLsList;
+    public preventURLs: boolean | TypeIgnoreURLsList;
 
     /** URLs to ignore when prefetching / Whether or not to disable prefetching */
-    public prefetchIgnore: boolean | IgnoreURLsList;
+    public prefetchIgnore: boolean | TypeIgnoreURLsList;
 
     /** Current state of transitions */
     public isTransitioning: boolean;
@@ -84,7 +87,7 @@ export class PJAX extends Service {
     /** Checks to see if the anchor is valid */
     public validLink(
         el: HTMLAnchorElement,
-        event: LinkEvent | KeyboardEvent,
+        event: TypeLinkEvent | KeyboardEvent,
         href: string
     ): boolean {
         let pushStateSupport = !window.history.pushState;
@@ -134,7 +137,7 @@ export class PJAX extends Service {
     }
 
     /** Check if event target is a valid anchor with an href, if so, return the anchor */
-    public getLink(event: LinkEvent): HTMLAnchorElement {
+    public getLink(event: TypeLinkEvent): HTMLAnchorElement {
         let el = event.target as HTMLAnchorElement;
         let href: string = this.getHref(el);
 
@@ -149,7 +152,7 @@ export class PJAX extends Service {
     }
 
     /** When an element is clicked, get valid anchor element, go for a transition */
-    public onClick(event: LinkEvent) {
+    public onClick(event: TypeLinkEvent) {
         let el = this.getLink(event);
         if (!el) return;
 
@@ -192,7 +195,7 @@ export class PJAX extends Service {
     public go({ href, trigger = "HistoryManager", event }: {
         href: string;
         trigger?: TypeTrigger;
-        event?: StateEvent;
+        event?: TypeStateEvent;
     }): Promise<void> {
         // If transition is already running and the go method is called again, force load page
         if (this.isTransitioning && !this.onTransitionPreventClick || !(
@@ -319,7 +322,7 @@ export class PJAX extends Service {
     }
 
     /** When you hover over an anchor, prefetch the event target's href */
-    public onHover(event: LinkEvent): Promise<void> {
+    public onHover(event: TypeLinkEvent): Promise<void> {
         let el = this.getLink(event);
         if (!el || !this.manager.has("PageManager")) return;
 

@@ -1,5 +1,5 @@
-import { IgnoreURLsList } from "./pjax";
-import { ITransition } from "./transition";
+import type { TypeIgnoreURLsList } from "./pjax";
+import type { ITransition } from "./transition";
 
 export interface ICONFIG {
     /**
@@ -81,7 +81,7 @@ export interface ICONFIG {
      * - `false` means always try to fetch from the cache
      * @default `false`
      */
-    cacheIgnore?: boolean | IgnoreURLsList;
+    cacheIgnore?: boolean | TypeIgnoreURLsList;
 
     /**
      * Specifies which urls to not prefetch
@@ -90,13 +90,13 @@ export interface ICONFIG {
      * - `false` means always prefetch all anchors
      * @default `false`
      */
-    prefetchIgnore?: boolean | IgnoreURLsList;
+    prefetchIgnore?: boolean | TypeIgnoreURLsList;
 
     /**
      * Specifies which urls to not use PJAX for
      * @default `[]`
      */
-    preventURLs?: boolean | IgnoreURLsList;
+    preventURLs?: boolean | TypeIgnoreURLsList;
 
     /**
      * On page change (excluding popstate events, and hashes) keep current scroll position
@@ -144,13 +144,13 @@ export const CONFIG_DEFAULTS: ICONFIG = {
     transitions: []
 };
 
-export type ConfigKeys = keyof typeof CONFIG_DEFAULTS | string;
+export type TypeConfigKeys = keyof typeof CONFIG_DEFAULTS | string;
 export const newConfig = (config: ICONFIG): ICONFIG => {
     return Object.assign({ ...CONFIG_DEFAULTS }, config);
 };
 
 /** Converts config properties into properly formatted data attributes */
-export const toAttr = (config: ICONFIG, value?: ConfigKeys, brackets: boolean = true): any => {
+export const toAttr = (config: ICONFIG, value?: TypeConfigKeys, brackets: boolean = true): any => {
     let { prefix } = config;
     let prop = config[value];
     let attr = `data${prefix ? "-" + prefix : ""}-${prop}`;

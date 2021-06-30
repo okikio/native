@@ -1,26 +1,27 @@
 import { Service } from "./service";
 import { Manager } from "./manager";
 import { newURL, getHashedPath } from "./url";
-import { IHistoryManager } from "./history";
 import { Path, pathToRegexp } from "path-to-regexp";
 
-export type RouteMethod = (...args: any) => any;
-export type RouteStyle = string | RegExp | boolean | RouteStyle[];
+import type { IHistoryManager } from "./history";
+
+export type TypeRouteMethod = (...args: any) => any;
+export type TypeRouteStyle = string | RegExp | boolean | TypeRouteStyle[];
 export interface IRouteToFrom {
-    to?: RouteStyle,
-    from?: RouteStyle
+    to?: TypeRouteStyle,
+    from?: TypeRouteStyle
 }
 
-export type RoutePath = IRouteToFrom & ({ to: RouteStyle } | { from: RouteStyle }) | RouteStyle;
+export type TypeRoutePath = IRouteToFrom & ({ to: TypeRouteStyle } | { from: TypeRouteStyle }) | TypeRouteStyle;
 export interface IRoute {
-    path: RoutePath,
-    method: RouteMethod
+    path: TypeRoutePath,
+    method: TypeRouteMethod
 }
 
 /** Controls what happens when certain url paths match a set of criteria */
 export class Router extends Service {
     /** List of routes */
-    protected routes: Manager<IRouteToFrom, RouteMethod>;
+    protected routes: Manager<IRouteToFrom, TypeRouteMethod>;
     constructor(routes: IRoute[] = []) {
         super();
         this.routes = new Manager();
@@ -37,7 +38,7 @@ export class Router extends Service {
     }
 
     /** Convert strings into path match functions */
-    public parsePath(path: RouteStyle): RegExp | boolean {
+    public parsePath(path: TypeRouteStyle): RegExp | boolean {
         if (typeof path === "string" || path instanceof RegExp || Array.isArray(path)) {
             let _keys = [];
             return pathToRegexp(path as Path, _keys, {
@@ -51,7 +52,7 @@ export class Router extends Service {
     }
 
     /** Determines if a strings counts has a path */
-    public isPath(input: RouteStyle): boolean {
+    public isPath(input: TypeRouteStyle): boolean {
         return (
             typeof input === "string" ||
             input instanceof RegExp ||
@@ -61,19 +62,19 @@ export class Router extends Service {
     }
 
     /** Parse the multiple different formats for paths, into a { from, to } object */
-    public parse(input: RoutePath): IRouteToFrom {
+    public parse(input: TypeRoutePath): IRouteToFrom {
         let route = input as IRouteToFrom;
         let toFromPath: IRouteToFrom = {
             from: /.*/,
             to: /.*/,
         };
 
-        if (this.isPath(input as RouteStyle))
+        if (this.isPath(input as TypeRouteStyle))
             toFromPath = {
                 from: true,
-                to: input as RouteStyle,
+                to: input as TypeRouteStyle,
             };
-        else if (this.isPath(route.from) && this.isPath(route.to as RouteStyle))
+        else if (this.isPath(route.from) && this.isPath(route.to as TypeRouteStyle))
             toFromPath = Object.assign({}, toFromPath, route);
         else
             throw "[Router] path is neither a string, regular expression, or a { from, to } object.";
@@ -92,7 +93,7 @@ export class Router extends Service {
             let from: string = getHashedPath(newURL((history.length > 1 ? history.previous : history.current).url));
             let to: string = getHashedPath(newURL());
 
-            this.routes.forEach((method: RouteMethod, path: IRouteToFrom) => {
+            this.routes.forEach((method: TypeRouteMethod, path: IRouteToFrom) => {
                 let fromRegExp = path.from as RegExp | boolean;
                 let toRegExp = path.to as RegExp | boolean;
 
