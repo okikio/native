@@ -7,7 +7,7 @@
         "packages/*"
     ],
     "scripts": {
-        "commit": "git cz",
+        "commit": "cz",
         "typedoc": "del-cli docs/ && typedoc",
         "build": "pnpm -r build",
         "watch": "pnpm -r watch --parallel",

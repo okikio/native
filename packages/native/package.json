@@ -64,12 +64,12 @@
         "path-to-regexp": "^6.2.0"
     },
     "devDependencies": {
-        "del-cli": "^3.0.1",
-        "esbuild": "^0.12.5",
+        "del-cli": "^4.0.0",
+        "esbuild": "^0.12.12",
         "gzip-size": "^6.0.0",
-        "pnpm": "^6.4.0",
+        "pnpm": "^6.9.1",
         "pretty-bytes": "^5.6.0",
-        "typescript": "~4.2.4"
+        "typescript": "~4.3.4"
     },
     "gitHead": "ad422076cdb57d570426f786886129d5bca2f90f"
 }
