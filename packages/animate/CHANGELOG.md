@@ -1,5 +1,11 @@
 # Changelog
 
+## 2.3.1
+
+### Patch Changes
+
+- fix(@okikio/animate): :bug: export utils
+
 ## 2.3.0
 
 ### Minor Changes
