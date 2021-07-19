@@ -1,4 +1,4 @@
-import { isValid, transpose, toStr, convertToDash, mapObject } from "./utils";
+import { isValid, transpose, toStr, convertToDash, mapObject, getUnit } from "./utils";
 import bezier from "./bezier-easing";
 import rgba from "./color-rgba";
 
@@ -267,7 +267,7 @@ export const ComplexEasingSyntax = (ease: string) =>
 
 /** Re-maps a number from one range to another. Numbers outside the range are not clamped to 0 and 1, because out-of-range values are often intentional and useful. */
 export const GetEasingFunction = (ease: string) => {
-    let search = ComplexEasingSyntax(ease);
+    let search = ComplexEasingSyntax(toStr(ease));
 
     if (EasingFunctionKeys.includes(search))
         return EasingFunctions[search];
@@ -276,7 +276,7 @@ export const GetEasingFunction = (ease: string) => {
 
 /** Convert easing parameters to Array of numbers, e.g. "spring(2, 500)" to [2, 500] */
 export const parseEasingParameters = (str: string) => {
-    const match = /(\(|\s)([^)]+)\)?/.exec(str);
+    const match = /(\(|\s)([^)]+)\)?/.exec(toStr(str));
     return match ? match[2].split(",").map(value => {
         let num = parseFloat(value);
         return !Number.isNaN(num) ? num : value.trim();
@@ -353,7 +353,7 @@ export const interpolateString = (t: number, values: (string | number)[], decima
 
     // If the first value looks like a number with a unit
     if (isNumberLike(values[0]))
-        units = toStr(values[0]).replace(/^\d+/, "");
+        units = getUnit(values[0]);
 
     return interpolateNumber(t, values.map(parseFloat), decimal) + units;
 };
@@ -623,6 +623,8 @@ const updateDuration = (optionsObj: TypeCustomEasingOptions = {}) => {
  * _**Note**: the `easing` property supports the original values and functions for easing as well, for example, `steps(1)`, and etc... are supported._
  * 
  * _**Note**: you can also use camelCase when defining easing functions, e.g. `inOutCubic` to represent `in-out-cubic`_
+ * 
+ * _**Suggestion**: if you decide to use CustomEasing on one CSS property, I suggest using CustomEasing or {@link ApplyCustomEasing} on the rest (this is no longer necessary, but for the sake of readability it's better to do)_
  *
  *  e.g. 
  *  ```ts
