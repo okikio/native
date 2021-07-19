@@ -145,3 +145,20 @@ html:not(.unsupported) .support {
         display: none;
     }
 }
+
+svg .fa {
+    fill: currentColor;
+    width: 24px;
+    height: 24px;
+
+    path {
+        fill: currentColor;
+        width: 100%;
+        height: 100%;
+    }
+}
+
+.btn-icon {
+    display: grid;
+    place-content: center;
+}

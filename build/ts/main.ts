@@ -5,9 +5,7 @@ import { BigTransition } from "./transitions/BigTransition";
 import { Slide, SlideLeft, SlideRight } from "./transitions/Slide";
 
 import { Navbar } from "./services/Navbar";
-import { stop, run } from "./modules/animate";
 
-const router = new Router();
 const pjax = new PJAX();
 const navbar = new Navbar();
 const app = new App({
@@ -28,21 +26,7 @@ app
     .set("TransitionManager", new TransitionManager())
 
     .add(navbar)
-    .add(router)
     .add(pjax);
-
-router
-    .add({
-        path: {
-            from: "/animate(.html)?",
-            to: false,
-        },
-        method: stop
-    })
-    .add({
-        path: /\/animate(.html)?/,
-        method: run
-    });
 
 try {
     app.boot();
