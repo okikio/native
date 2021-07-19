@@ -1,14 +1,21 @@
-
-// TypeAnimationTarget
 /** Merges 2-dimensional Arrays into a single 1-dimensional array */
 export const flatten = (arr: any[]) => [].concat(...arr);
+
+/** Determines whether value is an pure object (not array, not function, etc...) */
+export const isObject = (obj: any) => typeof obj == "object" && !Array.isArray(obj) && typeof obj != "function";
+
+/** Determines if an object is empty */
+export const isEmpty = (obj: any) => {
+    for (let _ in obj) { return false; }
+    return true;
+}
 
 /**
  * Acts like array.map(...) but for functions
  */
- export const mapObject = (obj: object, fn: (value, key, obj) => any) => {
+export const mapObject = (obj: object, fn: (value, key, obj) => any) => {
     let keys = Object.keys(obj);
-    let key, value, result = {};
+    let key: any, value: any, result = {};
     for (let i = 0, len = keys.length; i < len; i++) {
         key = keys[i];
         value = obj[key];
@@ -74,7 +81,7 @@ export const camelCase = (str: string) => {
  * @returns
  * a copy of the object without certain keys
  */
- export const omit = (keys: string[], obj: { [key: string]: any }) => {
+export const omit = (keys: string[], obj: { [key: string]: any }) => {
     let arr = [...keys];
     let rest = { ...obj };
     while (arr.length) {
@@ -154,4 +161,12 @@ export const transpose = (...args: (any | any[])[]) => {
     }
 
     return result;
+}
+
+/**
+ * Returns the unit of a string, it does this by removing the number in the string 
+ */
+export const getUnit = (str: string | number) => {
+    let num = parseFloat(str as string);
+    return toStr(str).replace(toStr(num), "");
 }
