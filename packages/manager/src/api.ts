@@ -114,14 +114,4 @@ export const methodCall = (manager: Manager<any, any>, method: string, ...args: 
 	});
 };
 
-/**
- * Asynchronously calls the method of a certain name for all items that are currently installed, similar to methodCall
- */
-export const asyncMethodCall = async (manager: Manager<any, any>, method: string, ...args: any): Promise<void> => {
-	for (let [, item] of manager) {
-		// @ts-ignore
-		await item[method](...args);
-	}
-};
-
 export default Manager;
