@@ -7,5 +7,5 @@
     ],
     "packages": ".",
     "name": "The Native Initiative",
-    "out": "docs"
+    "out": "api"
 }
