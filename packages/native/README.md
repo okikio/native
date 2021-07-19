@@ -12,11 +12,9 @@ The idea behind it is that, when an app feels native, it means that it integrate
 
 The `@okikio/native` package achieves performance, high efficiency, and a smooth experience by being heavily modern (relying on passive polyfills to support older browsers) and being well optimized.
 
-Currently many websites rely on older code to make sure they reach as wide an audience as possible, hurting performance with large amounts of overhead.
-
 `@okikio/native` uses modern browser api's like the Maps, pushState, etc.... to achieve high efficiency and performance. The browser API's can be difficult to work with, so, I developed [@okikio/manager](https://www.npmjs.com/package/@okikio/manager), [@okikio/emitter](https://www.npmjs.com/package/@okikio/emitter), and [@okiko/animate](https://www.npmjs.com/package/@okikio/animate) libraries to make them more managable. I developed these libraries to ensure the framework is well optimized and to avoid large number of dependencies.
 
-*You will need a Map, Promise, and fetch polyfill for older browsers. If you install `@okikio/native` via [npm](https://www.npmjs.com/package/@okikio/native) you are most likely going to need [rollup](https://rollupjs.org/) or [esbuild](https://esbuild.github.io/). You can use [polyfill.io](https://polyfill.io/), or another source to create a polyfill. The minimum feature requirement for a polyfill are Map, Promise, and fetch e.g. [https://cdn.polyfill.io/v3/polyfill.min.js?features=default,es2015,es2018,Array.prototype.includes,Map,Promise,fetch](https://cdn.polyfill.io/v3/polyfill.min.js?features=default,es2015,Array.prototype.includes,Object.values,es2018,Map,Promise,fetch).*
+## Using Gitpod
 
 You can try out `@okikio/native` using Gitpod:
 
@@ -30,6 +28,8 @@ pnpm demo
 
 Once Gitpod has booted up, go to [../../build/pug/](../../build/pug/) and [../../build/ts/](../../build/ts/) and start tweaking and testing to your hearts content.
 
+## Runing Locally
+
 You can run `@okikio/native` locally by first installing some packages via these commands into your terminal,
 
 ```bash
@@ -42,6 +42,8 @@ and then you can test/demo it using this command,
 pnpm demo 
 ```
 
+Once it has booted up, go to [../../build/pug/](../../build/pug/) and [../../build/ts/](../../build/ts/) and start tweaking and testing to your hearts content.
+
 You can build your changes/contributions using,
 
 ```bash
@@ -51,6 +53,8 @@ pnpm build
 ## Table of Contents
 
 - [@okikio/native](#okikionative)
+  - [Using Gitpod](#using-gitpod)
+  - [Runing Locally](#runing-locally)
   - [Table of Contents](#table-of-contents)
   - [Getting Started](#getting-started)
   - [Installation](#installation)
@@ -130,6 +134,8 @@ pnpm build
     - [**PageManager/Page**](#pagemanagerpage)
     - [**PJAX**](#pjax-1)
     - [**Router**](#router)
+  - [Browser support](#browser-support)
+  - [Polyfills & Bundling](#polyfills--bundling)
   - [Contributing](#contributing)
   - [Licence](#licence)
 
@@ -147,16 +153,20 @@ You can install [@okikio/native](https://www.skypack.dev/view/@okikio/native) fr
 
 You can use `@okikio/native` on the web via:
 
-- [https://unpkg.com/@okikio/native/lib/api.es.js](https://unpkg.com/@okikio/native/lib/api.es.js),
+- [https://unpkg.com/@okikio/native](https://unpkg.com/@okikio/native),
 - [https://cdn.skypack.dev/@okikio/native](https://cdn.skypack.dev/@okikio/native) or
-- [https://cdn.jsdelivr.net/npm/@okikio/native/lib/api.es.js](https://cdn.jsdelivr.net/npm/@okikio/native/lib/api.es.js).
+- [https://cdn.jsdelivr.net/npm/@okikio/native](https://cdn.jsdelivr.net/npm/@okikio/native).
 
 Once installed it can be used like this:
 
 ```typescript
+// There is,
+//      .cjs - Common JS Module
+//      .mjs - Modern ES Module
+//      .js - IIFE
 import { App, PJAX } from "@okikio/native";
-import { App, PJAX } from "https://unpkg.com/@okikio/native/lib/api.es.js";
-import { App, PJAX } from "https://cdn.jsdelivr.net/npm/@okikio/native/lib/api.es.js";
+import { App, PJAX } from "https://unpkg.com/@okikio/native";
+import { App, PJAX } from "https://cdn.jsdelivr.net/npm/@okikio/native";
 // Or
 import { App, PJAX } from "https://cdn.skypack.dev/@okikio/native";
 
@@ -571,7 +581,7 @@ import { animate } from "@okikio/animate";
 
 ## API Documentation
 
-I highly suggest going through the [API documentation](https://okikio.github.io/native/docs/modules/_okikio_native.html), for a more detailed documentation of the API's.
+I highly suggest going through the [API documentation](https://okikio.github.io/native/api/modules/_okikio_native.html), for a more detailed documentation of the API's.
 
 ### API
 
@@ -2238,13 +2248,34 @@ router
 // ...
 ```
 
+## Browser support
+
+`@okikio/native` is provided as a native ES6 module, which means you may need to transpile it depending on your browser support policy. The library works using `<script type="module">` in
+the following browsers (`@okikio/native` may support older browsers, but I haven't tested those browsers):
+
+- Chrome > 51
+- Edge > 14
+- Firefox > 54
+
+I recommend **only** using `@okikio/native` on browsers that support `ES6+`, the experience on older legacy browsers can be hit or miss, so, it's better to support `ES6+` browsers.
+
+## Polyfills & Bundling
+
+If you install [@okikio/native](https://www.skypack.dev/view/@okikio/native) via [npm](https://www.npmjs.com/package/@okikio/native) you are most likely going to need [rollup](https://rollupjs.org/) or [esbuild](https://esbuild.github.io/).
+
+Currently many websites rely on older code to make sure they reach as wide an audience as possible, hurting performance with large amounts of overhead.
+
+You will need Promise, Object.values, Array.from, Array.prototype.includes, and fetch polyfills for older browsers.
+
+You can use [polyfill.io](https://polyfill.io/), or another source to create a polyfill. The minimum feature requirement for a polyfill are Promise, and fetch e.g. <https://cdn.polyfill.io/v3/polyfill.min.js?features=default,es2015,es2018,Array.prototype.includes,Object.values,Promise,fetch>.
+
 ## Contributing
 
 If there is something I missed, a mistake, or a feature you would like added please create an issue or a pull request and I'll try to get to it.
 
-_**Note**: all contributions must be done on the `beta` branch, using the Conventional Commits style._
+_**Note**: all contributions must be done on the `beta` branch._
 
-*The `native` project uses [Conventional Commits](https://www.conventionalcommits.org/en/v1.0.0/) as the style of commit, we even use the [Commitizen CLI](http://commitizen.github.io/cz-cli/) to make commits easier.*
+*The `native` initiative uses [Changesets](https://github.com/atlassian/changesets/blob/main/docs/intro-to-using-changesets.md#adding-changesets), for versioning and Changelog generation, you don't need to create one, but it would be amazing if you could.*
 
 ## Licence
 

@@ -73,7 +73,7 @@ I suggest using [bundle.js.org](https://bundle.js.org), if you would like to qui
 
 ## API Documentation
 
-Go to [okikio.github.io/native/docs](https://okikio.github.io/native/docs), for a more detailed API documentation on the native initiative.
+Go to [okikio.github.io/native/api](https://okikio.github.io/native/api), for a more detailed API documentation on the native initiative.
 
 ## Usage
 
@@ -101,13 +101,11 @@ Read [#Usage](#usage) to find the code for the demo.
 
 ## Contributing
 
-[![Commitizen friendly](https://img.shields.io/badge/commitizen-friendly-brightgreen.svg)](http://commitizen.github.io/cz-cli/)
-
 If there is something I missed, a mistake, or a feature you would like added please create an issue or a pull request and I'll try to get to it.
 
-_**Note**: all contributions must be done on the `beta` branch, using the Conventional Commits style._
+_**Note**: all contributions must be done on the `beta` branch._
 
-*The `native` project uses [Conventional Commits](https://www.conventionalcommits.org/en/v1.0.0/) as the style of commit, we also use the [Commitizen CLI](http://commitizen.github.io/cz-cli/) to make commits easier.*
+*The `native` initiative uses [Changesets](https://github.com/atlassian/changesets/blob/main/docs/intro-to-using-changesets.md#adding-changesets), for versioning and Changelog generation, you don't need to create one, but it would be amazing if you could.*
 
 ## Licence
 
