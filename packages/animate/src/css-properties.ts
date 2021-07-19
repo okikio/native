@@ -1,6 +1,7 @@
 import { camelCase, isValid, mapObject, omit, toArr, toStr, transpose } from "./utils";
+import { interpolateString } from "./custom-easing";
 
-import type { TypeSingleValueCSSProperty, ICSSComputedTransformableProperties } from "./types";
+import type { TypeSingleValueCSSProperty, ICSSComputedTransformableProperties, ICSSProperties } from "./types";
 
 /**
  * Returns a closure Function, which adds a unit to numbers but simply returns strings with no edits assuming the value has a unit if it's a string
@@ -83,7 +84,7 @@ export const UnitDEGCSSValue = CSSValue(UnitDEG);
  */
 export const ParseCSSProperties = (obj: object) => {
     let keys = Object.keys(obj);
-    let key, value, result = {};
+    let key: any, value: any, result = {};
     for (let i = 0, len = keys.length; i < len; i++) {
         key = camelCase(keys[i]);
         value = obj[keys[i]];
@@ -124,6 +125,9 @@ export const TransformFunctions: ITransformFunctions = {
     "skewY": (value: TypeSingleValueCSSProperty) => UnitDEGCSSValue(value),
 
     "perspective": (value: TypeSingleValueCSSProperty) => UnitPXCSSValue(value),
+
+    "matrix": value => CSSArrValue(value, UnitLess),
+    "matrix3d": value => CSSArrValue(value, UnitLess),
 };
 
 /**
@@ -149,6 +153,43 @@ export const createTransformProperty = (transformFnNames: string[], arr: any[]) 
 
 /** Common CSS Property names with the units "px" as an acceptable value */
 export const CSSPXDataType = ["margin", "padding", "size", "width", "height", "left", "right", "top", "bottom", "radius", "gap", "basis", "inset", "outline-offset", "perspective", "thickness", "position", "distance", "spacing"].map(camelCase).join("|");
+
+/**
+ * It fills in the gap between different size transform functions, so, for example, 
+ * ```ts
+ * {
+ *      translateX: [50, 60, 80, 90],
+ *      scale: [0.5, 2]
+ * }
+ * ```
+ * 
+ * There are more values of `translateX`, so the `transform` property created will look like this,
+ * {
+ *      transform: ["translateX(50px) scale(0.5)"]
+ * }
+ * 
+ * `arrFill` interpolates between all missing portions of transform functions, and creates a uniform size transform property,
+ * e.g.  
+ * ```ts
+ * 
+ * ```
+ */
+export const arrFill = (arr: any[] | any[][], maxLen?: number) => {
+    // Ensure all transform function Arrays are the same length to create smooth motion
+    maxLen = maxLen ?? Math.max(...arr.map((value: any[]) => value.length));
+    return arr.map((value: any[]) => {
+        let len = value.length;
+        let isComplexTransform = value.every(v => Array.isArray(v));
+
+        if (!isComplexTransform) {
+            if (len !== maxLen) {
+                return Array.from(Array(maxLen), (_, i) => {
+                    return interpolateString(i / (maxLen - 1), value); // i > len - 1 ? value[len - 1] : value[i]
+                });
+            } else return value;
+        } else return transpose(...arrFill(transpose(...value), maxLen));
+    });
+}
 
 /**
  * Removes the need for the full transform statement in order to use translate, rotate, scale, skew, or perspective including their X, Y, Z, and 3d varients
@@ -217,7 +258,7 @@ export const CSSPXDataType = ["margin", "padding", "size", "width", "height", "l
  * an object with a properly formatted `transform` and `opactity`, as well as other unformatted CSS properties
  * ```
  */
-export const ParseTransformableCSSProperties = (properties: ICSSComputedTransformableProperties) => {
+export const ParseTransformableCSSProperties = (properties: ICSSProperties) => {
     // Convert dash seperated strings to camelCase strings
     let AllCSSProperties = ParseCSSProperties(properties) as ICSSComputedTransformableProperties;
     let rest = omit(TransformFunctionNames, AllCSSProperties);
@@ -225,9 +266,11 @@ export const ParseTransformableCSSProperties = (properties: ICSSComputedTransfor
     // Adds support for ordered transforms 
     let transformFunctionNames = Object.keys(AllCSSProperties)
         .filter(key => TransformFunctionNames.includes(key));
-    
+
     let transformFunctionValues = transformFunctionNames
         .map((key) => TransformFunctions[key](AllCSSProperties[key]));
+
+    transformFunctionValues = arrFill(transformFunctionValues);
 
     // The transform string
     let transform = transpose(...transformFunctionValues)
@@ -283,7 +326,7 @@ export const ParseTransformableCSSProperties = (properties: ICSSComputedTransfor
  * @returns
  * an array of keyframes, with transformed CSS properties
  */
-export const ParseTransformableCSSKeyframes = (keyframes: ICSSComputedTransformableProperties[]) => {
+export const ParseTransformableCSSKeyframes = (keyframes: (ICSSComputedTransformableProperties & Keyframe)[]) => {
     return keyframes.map(properties => {
         let {
             translate,
@@ -305,6 +348,8 @@ export const ParseTransformableCSSKeyframes = (keyframes: ICSSComputedTransforma
             skewX,
             skewY,
             perspective,
+            matrix,
+            matrix3d,
 
             easing,
             iterations,
@@ -312,7 +357,7 @@ export const ParseTransformableCSSKeyframes = (keyframes: ICSSComputedTransforma
             ...rest
 
             // Convert dash seperated strings to camelCase strings
-        } = ParseCSSProperties(properties) as ICSSComputedTransformableProperties;
+        } = ParseCSSProperties(properties) as ICSSComputedTransformableProperties & Keyframe;
 
         translate = UnitPXCSSValue(translate as TypeSingleValueCSSProperty);
         translate3d = UnitPXCSSValue(translate3d as TypeSingleValueCSSProperty);
@@ -338,13 +383,16 @@ export const ParseTransformableCSSKeyframes = (keyframes: ICSSComputedTransforma
 
         perspective = UnitPXCSSValue(perspective)[0];
 
+        matrix = UnitLessCSSValue(matrix as TypeSingleValueCSSProperty);
+        matrix3d = UnitLessCSSValue(matrix3d as TypeSingleValueCSSProperty);
+
         return [
             rest,
             translate, translate3d, translateX, translateY, translateZ,
             rotate, rotate3d, rotateX, rotateY, rotateZ,
             scale, scale3d, scaleX, scaleY, scaleZ,
             skew, skewX, skewY,
-            perspective
+            perspective, matrix, matrix3d
         ];
     }).map(([rest, ...transformFunctions]) => {
         let transform = createTransformProperty(TransformFunctionNames, transformFunctions);
