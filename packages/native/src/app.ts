@@ -53,16 +53,15 @@ export class App {
 
     protected _resize() {
         if (this.canResize) {
-            let timer: number | void, raf: number | void;
+            let timer: number | void;
             this.canResize = false;
-            raf = window.requestAnimationFrame(() => {
+            window.requestAnimationFrame(() => {
                 this.emitter.emit("RESIZE resize");
 
-                // set a timeout to un-throttle
+                // Set a timeout to un-throttle
                 timer = window.setTimeout(() => {
                     this.canResize = true;
                     timer = window.clearTimeout(timer as number);
-                    raf = window.cancelAnimationFrame(raf as number);
                 }, this.config.resizeDelay);
             });
         }
@@ -70,13 +69,10 @@ export class App {
 
     protected _scroll() {
         if (this.canScroll) {
-            let raf: number | void;
             this.canScroll = false;
-            raf = requestAnimationFrame(() => {
+            window.requestAnimationFrame(() => {
                 this.emitter.emit("SCROLL scroll");
-
                 this.canScroll = true;
-                raf = window.cancelAnimationFrame(raf as number);
             });
         }
     }
