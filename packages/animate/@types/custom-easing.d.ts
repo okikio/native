@@ -291,6 +291,8 @@ export declare const EasingPts: ({ easing, numPoints, duration }?: TypeCustomEas
  *
  * _**Note**: you can also use camelCase when defining easing functions, e.g. `inOutCubic` to represent `in-out-cubic`_
  *
+ * _**Suggestion**: if you decide to use CustomEasing on one CSS property, I suggest using CustomEasing or {@link ApplyCustomEasing} on the rest_
+ *
  *  e.g.
  *  ```ts
  *  import { animate, CustomEasing, EaseOut, Quad } from "@okikio/animate";
@@ -381,7 +383,7 @@ export declare const SpringEasing: (values: (string | number)[], options?: TypeC
  *        "background-color": ["#616aff", "white"],
  *
  *        // You don't need to enter any parameters, you can just use the default values
- *        easing: "spring",
+ *        easing: "spring",kkk
  *
  *        // You can change the size of Array for the CustomEasing function to generate
  *        numPoints: 200,

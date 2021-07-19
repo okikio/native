@@ -1,5 +1,9 @@
 /** Merges 2-dimensional Arrays into a single 1-dimensional array */
 export declare const flatten: (arr: any[]) => any[];
+/** Determines whether value is an pure object (not array, not function, etc...) */
+export declare const isObject: (obj: any) => boolean;
+/** Determines if an object is empty */
+export declare const isEmpty: (obj: any) => boolean;
 /**
  * Acts like array.map(...) but for functions
  */
@@ -74,3 +78,7 @@ export declare const pick: (keys: string[], obj: {
  * returns the new array of grouped elements
  */
 export declare const transpose: (...args: (any | any[])[]) => any[];
+/**
+ * Returns the unit of a string, it does this by removing the number in the string
+ */
+export declare const getUnit: (str: string | number) => string;

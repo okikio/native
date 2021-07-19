@@ -1,5 +1,5 @@
 /// <reference types="jest" />
-import { Manager, methodCall, asyncMethodCall } from "../src/api";
+import { Manager, methodCall } from "../src/api";
 import fetch from "node-fetch";
 import "jest-chain";
 
@@ -155,31 +155,6 @@ describe("Manager", () => {
             manager.set("y", { print: fn(3) });
             methodCall(manager, "print", 2);
             expect(num).toBe(8);
-        });
-    });
-
-    describe("#asyncMethodCall()", function () {
-        test("test whether asyncMethodCall is calling methods properly", async () => {
-            let list = [];
-            let fn = (url = "https://google.com") => {
-                return async (newUrl = "") => {
-                    let oldUrl = url + newUrl;
-                    let data = await fetch(oldUrl);
-                    list.push(`${data.url}`);
-                };
-            };
-
-            manager = new Manager();
-            manager.set("x", { print: fn() });
-            manager.set("y", { print: fn("https://github.com") });
-
-            let x = await asyncMethodCall(manager, "print", "/favicon.ico");
-            expect(x).toBeUndefined();
-            expect(list).toEqual([
-                "https://www.google.com/favicon.ico",
-                "https://github.com/favicon.ico",
-            ]);
-            console.log(list);
         });
     });
 

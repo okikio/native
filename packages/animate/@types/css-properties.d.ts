@@ -1,4 +1,4 @@
-import type { TypeSingleValueCSSProperty, ICSSComputedTransformableProperties } from "./types";
+import type { TypeSingleValueCSSProperty, ICSSComputedTransformableProperties, ICSSProperties } from "./types";
 /**
  * Returns a closure Function, which adds a unit to numbers but simply returns strings with no edits assuming the value has a unit if it's a string
  *
@@ -68,6 +68,27 @@ export declare const createTransformProperty: (transformFnNames: string[], arr: 
 /** Common CSS Property names with the units "px" as an acceptable value */
 export declare const CSSPXDataType: string;
 /**
+ * It fills in the gap between different size transform functions, so, for example,
+ * ```ts
+ * {
+ *      translateX: [50, 60, 80, 90],
+ *      scale: [0.5, 2]
+ * }
+ * ```
+ *
+ * There are more values of `translateX`, so the `transform` property created will look like this,
+ * {
+ *      transform: ["translateX(50px) scale(0.5)"]
+ * }
+ *
+ * `arrFill` interpolates between all missing portions of transform functions, and creates a uniform size transform property,
+ * e.g.
+ * ```ts
+ *
+ * ```
+ */
+export declare const arrFill: (arr: any[] | any[][], maxLen?: number) => any;
+/**
  * Removes the need for the full transform statement in order to use translate, rotate, scale, skew, or perspective including their X, Y, Z, and 3d varients
  * Also, adds the ability to use single string or number values for transform functions
  *
@@ -134,7 +155,7 @@ export declare const CSSPXDataType: string;
  * an object with a properly formatted `transform` and `opactity`, as well as other unformatted CSS properties
  * ```
  */
-export declare const ParseTransformableCSSProperties: (properties: ICSSComputedTransformableProperties) => {
+export declare const ParseTransformableCSSProperties: (properties: ICSSProperties) => {
     transform: string[];
 } & {
     [x: string]: any;
@@ -145,8 +166,9 @@ export declare const ParseTransformableCSSProperties: (properties: ICSSComputedT
  * @returns
  * an array of keyframes, with transformed CSS properties
  */
-export declare const ParseTransformableCSSKeyframes: (keyframes: ICSSComputedTransformableProperties[]) => ({
+export declare const ParseTransformableCSSKeyframes: (keyframes: (ICSSComputedTransformableProperties & Keyframe)[]) => ({
     transform: string;
 } & {
-    [key: string]: TypeSingleValueCSSProperty | TypeSingleValueCSSProperty[];
+    [property: string]: string | number;
+    composite?: CompositeOperationOrAuto;
 })[];

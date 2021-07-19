@@ -1,6 +1,8 @@
+import type { KebabCase, CamelCase, KebabCasedProperties } from "type-fest";
+import type colors from "./colors";
 export declare type TypeAnimationTarget = string | Node | NodeList | HTMLCollection | HTMLElement[] | TypeAnimationTarget[];
 export declare type TypeCallbackArgs = [number, number, HTMLElement];
-export declare type TypeGeneric = boolean | object | string | number;
+export declare type TypeGeneric = boolean | object | string | number | keyof typeof colors;
 export declare type TypeCSSLikeKeyframe = {
     [key: string]: Keyframe & ICSSComputedTransformableProperties;
 };
@@ -14,37 +16,73 @@ export declare type TypeComputedOptions = {
 };
 export declare type TypeSingleValueCSSProperty = string | number | TypeCSSPropertyValue;
 /**
+ * [Animatable CSS Properties](https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_animated_properties)
+ *
+ */
+export declare type TypeAnimatableCSSProperties = CamelCase<"-webkit-line-clamp" | "-webkit-text-fill-color" | "-webkit-text-stroke" | "-webkit-text-stroke-color" | "all" | "background" | "background-color" | "background-position" | "background-size" | "block-size" | "border" | "border-block-end" | "border-block-end-color" | "border-block-end-width" | "border-block-start" | "border-block-start-color" | "border-block-start-width" | "border-bottom" | "border-bottom-color" | "border-bottom-left-radius" | "border-bottom-right-radius" | "border-bottom-width" | "border-color" | "border-end-end-radius" | "border-end-start-radius" | "border-image-outset" | "border-image-slice" | "border-image-width" | "border-inline-end" | "border-inline-end-color" | "border-inline-end-width" | "border-inline-start" | "border-inline-start-color" | "border-inline-start-width" | "border-left" | "border-left-color" | "border-left-width" | "border-radius" | "border-right" | "border-right-color" | "border-right-width" | "border-start-end-radius" | "border-start-start-radius" | "border-top" | "border-top-color" | "border-top-left-radius" | "border-top-right-radius" | "border-top-width" | "border-width" | "bottom" | "box-shadow" | "caret-color" | "clip" | "clip-path" | "color" | "column-count" | "column-gap" | "column-rule" | "column-rule-color" | "column-rule-width" | "column-width" | "columns" | "filter" | "flex" | "flex-basis" | "flex-grow" | "flex-shrink" | "font" | "font-size" | "font-size-adjust" | "font-stretch" | "font-variation-settings" | "font-weight" | "gap" | "grid-column-gap" | "grid-gap" | "grid-row-gap" | "grid-template-columns" | "grid-template-rows" | "height" | "inline-size" | "inset" | "inset-block" | "inset-block-end" | "inset-block-start" | "inset-inline" | "inset-inline-end" | "inset-inline-start" | "left" | "letter-spacing" | "line-height" | "margin" | "margin-block-end" | "margin-block-start" | "margin-bottom" | "margin-inline-end" | "margin-inline-start" | "margin-left" | "margin-right" | "margin-top" | "mask" | "max-block-size" | "max-height" | "max-inline-size" | "max-width" | "min-block-size" | "min-height" | "min-inline-size" | "min-width" | "object-position" | "offset" | "offset-anchor" | "offset-distance" | "offset-path" | "offset-rotate" | "opacity" | "order" | "outline" | "outline-color" | "outline-offset" | "outline-width" | "padding" | "padding-block-end" | "padding-block-start" | "padding-bottom" | "padding-inline-end" | "padding-inline-start" | "padding-left" | "padding-right" | "padding-top" | "perspective" | "perspective-origin" | "right" | "rotate" | "row-gap" | "scale" | "scroll-margin" | "scroll-margin-block" | "scroll-margin-block-end" | "scroll-margin-block-start" | "scroll-margin-bottom" | "scroll-margin-inline" | "scroll-margin-inline-end" | "scroll-margin-inline-start" | "scroll-margin-left" | "scroll-margin-right" | "scroll-margin-top" | "scroll-padding" | "scroll-padding-block" | "scroll-padding-block-end" | "scroll-padding-block-start" | "scroll-padding-bottom" | "scroll-padding-inline" | "scroll-padding-inline-end" | "scroll-padding-inline-start" | "scroll-padding-left" | "scroll-padding-right" | "scroll-padding-top" | "shape-image-threshold" | "shape-margin" | "shape-outside" | "tab-size" | "text-decoration" | "text-decoration-color" | "text-decoration-thickness" | "text-emphasis" | "text-emphasis-color" | "text-indent" | "text-shadow" | "text-underline-offset" | "top" | "transform" | "transform-origin" | "translate" | "vertical-align" | "visibility" | "width" | "word-spacing" | "z-index" | "opacity">;
+/**
+ * [SVG Presentation Attributes](https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute/Presentation)
+ */
+export declare type TypeSVGPresentationAttributes = CamelCase<"alignment-baseline" | "baseline-shift" | "clip-rule" | "color-interpolation" | "color-interpolation-filters" | "color-profile" | "color-rendering" | "cursor" | "direction" | "display" | "fill" | "fill-opacity" | "fill-rule" | "flood-color" | "flood-opacity" | "font-family" | "font-style" | "font-variant" | "kerning" | "lighting-color" | "marker-end" | "marker-mid" | "marker-start" | "overflow" | "pointer-events" | "stroke" | "stroke-dasharray" | "stroke-dashoffset" | "stroke-linecap" | "stroke-linejoin" | "stroke-miterlimit" | "stroke-opacity" | "stroke-width" | "text-anchor" | "text-rendering" | "vector-effect" | "writing-mode">;
+/**
+ * [SVG Presentation Attributes](https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute/Presentation)
+ */
+export declare type TypeAnimatableSVGAttributes = {
+    [property in TypeSVGPresentationAttributes]?: TypeAnimationOptionTypes;
+};
+/**
  * CSS properties the `ParseTransformableCSSProperties` can parse
  */
-export interface ICSSTransformableProperties {
-    perspective?: TypeSingleValueCSSProperty | TypeCallback;
-    rotate?: TypeSingleValueCSSProperty | Array<TypeSingleValueCSSProperty> | TypeCallback;
-    rotate3d?: TypeSingleValueCSSProperty | Array<TypeSingleValueCSSProperty> | TypeCallback;
-    rotateX?: TypeSingleValueCSSProperty | TypeCallback;
-    rotateY?: TypeSingleValueCSSProperty | TypeCallback;
-    rotateZ?: TypeSingleValueCSSProperty | TypeCallback;
-    translate?: TypeSingleValueCSSProperty | Array<TypeSingleValueCSSProperty> | TypeCallback;
-    translate3d?: TypeSingleValueCSSProperty | Array<TypeSingleValueCSSProperty> | TypeCallback;
-    translateX?: TypeSingleValueCSSProperty | TypeCallback;
-    translateY?: TypeSingleValueCSSProperty | TypeCallback;
-    translateZ?: TypeSingleValueCSSProperty | TypeCallback;
-    scale?: TypeSingleValueCSSProperty | Array<TypeSingleValueCSSProperty> | TypeCallback;
-    scale3d?: TypeSingleValueCSSProperty | Array<TypeSingleValueCSSProperty> | TypeCallback;
-    scaleX?: TypeSingleValueCSSProperty | TypeCallback;
-    scaleY?: TypeSingleValueCSSProperty | TypeCallback;
-    scaleZ?: TypeSingleValueCSSProperty | TypeCallback;
-    skew?: TypeSingleValueCSSProperty | Array<TypeSingleValueCSSProperty> | TypeCallback;
-    skewX?: TypeSingleValueCSSProperty | TypeCallback;
-    skewY?: TypeSingleValueCSSProperty | TypeCallback;
-    opacity?: TypeSingleValueCSSProperty | TypeCallback;
-}
+export declare type TypeCSSTransformableProperties = {
+    [K in keyof ICSSComputedTransformableProperties]?: ICSSComputedTransformableProperties[K] | TypeCallback;
+};
+/**
+ * CSS Properties that are missing from the type definition
+ */
+export declare type TypeMissingCSSProperties = {
+    /**
+     * Morphing SVG paths via the `d` property isn't well supported yet, as Gecko (Firefox) & Webkit (Safari) based browsers don't support it yet, and there are other limitations to what the Web Animation API will allow 😭, these limitation are covered in detail by an article published by Adobe about [the current state of SVG animation on the web](https://blog.adobe.com/en/publish/2015/06/05/the-state-of-svg-animation.html#gs.pihpjw). However, animation using paths is now viable through [Motion Path](https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Motion_Path).
+     *
+     * You use it like this:
+     * ```ts
+     * // ...
+     * animate({
+     *      // ...
+     *      // The paths have to have the same number of points, that is why the 2 paths below seem similar
+     *      d: [
+     *          `path("M2,5 S2,14 4,5 S7,8 8,4")`,
+     *          `path("M2,5 S2,-2 4,5 S7,8 8,4")`
+     *      ]
+     * })
+     * ```
+     */
+    d?: string | string[] | TypeCallback;
+    backdropFilter?: string | string[] | TypeCallback;
+    lineClamp?: number | string | (string | number)[] | TypeCallback;
+    maskBorder?: string | string[] | TypeCallback;
+    maskPosition?: number | string | (string | number)[] | TypeCallback;
+    maskSize?: number | string | (string | number)[] | TypeCallback;
+    maxLines?: number | string | (string | number)[] | TypeCallback;
+    offsetPosition?: number | string | (string | number)[] | TypeCallback;
+    scrollbarColor?: string | string[] | keyof typeof colors | Array<keyof typeof colors> | TypeCallback;
+} & {
+    [K in TypeAnimatableCSSProperties]?: TypeAnimationOptionTypes;
+};
+/**
+ * Full list of CSS & SVG Animatable Properties & Animation Options that are supported
+*/
+export declare type TypeCSSAnimationOptions = {
+    [K in keyof CSSStyleDeclaration]?: CSSStyleDeclaration[K] | CSSStyleDeclaration[K][] | TypeAnimationOptionTypes;
+} & {
+    [K in keyof CSSStyleDeclaration as KebabCase<K>]?: CSSStyleDeclaration[K] | CSSStyleDeclaration[K][] | TypeAnimationOptionTypes;
+} & TypeCSSTransformableProperties & KebabCasedProperties<TypeCSSTransformableProperties> & TypeMissingCSSProperties & KebabCasedProperties<TypeMissingCSSProperties> & TypeAnimatableSVGAttributes & KebabCasedProperties<TypeAnimatableSVGAttributes>;
 /**
  * Animation options control how an animation is produced, it shouldn't be too different for those who have used `animejs`, or `jquery`'s animate method.
  *
  * @remark
  * An animation option is an object with keys and values that are computed and passed to the `Animate` class to create animations that match the specified options.
  */
-export interface IAnimationOptions extends ICSSTransformableProperties {
+export interface IAnimationOptions extends TypeCSSAnimationOptions {
     /**
      * Determines the DOM elements to animate. You can pass it a CSS selector, DOM elements, or an Array of DOM Elements and/or CSS Selectors.
      */
@@ -95,7 +133,7 @@ export interface IAnimationOptions extends ICSSTransformableProperties {
      * });
      * ```
      */
-    easing?: TypeCallback | string | string[];
+    easing?: KeyframeEffectOptions["easing"] | TypeCallback | string | string[];
     /**
      * Determines the duration of your animation in milliseconds. By passing it a callback, you can define a different duration for each element. The callback takes the index of each element, the target dom element, and the total number of target elements as its argument and returns a number.
      *
@@ -112,7 +150,7 @@ export interface IAnimationOptions extends ICSSTransformableProperties {
      * });
      * ```
      */
-    duration?: number | string | TypeCallback;
+    duration?: KeyframeEffectOptions["duration"] | number | string | TypeCallback;
     /**
      * Determines the delay of your animation in milliseconds. By passing it a callback, you can define a different delay for each element. The callback takes the index of each element, the target dom element, and the total number of target elements as its argument and returns a number.
      *
@@ -129,11 +167,11 @@ export interface IAnimationOptions extends ICSSTransformableProperties {
      * });
      * ```
      */
-    delay?: number | TypeCallback;
+    delay?: KeyframeEffectOptions["delay"] | string | number | TypeCallback;
     /**
      * Adds an offset ammount to the `delay`, for creating a timeline similar to `animejs`
      */
-    timelineOffset?: number | TypeCallback;
+    timelineOffset?: number | string;
     /**
      * Similar to delay but it indicates the number of milliseconds to delay **after** the full animation has played **not before**.
      *
@@ -152,7 +190,7 @@ export interface IAnimationOptions extends ICSSTransformableProperties {
      * });
      * ```
      */
-    endDelay?: number | TypeCallback;
+    endDelay?: KeyframeEffectOptions["endDelay"] | string | number | TypeCallback;
     /**
      *
      * This ensures all `animations` match up to the total duration, and don't finish too early, if animations finish too early when the `.play()` method is called specific animations  that are finished will restart while the rest of the animations will continue playing.
@@ -176,7 +214,7 @@ export interface IAnimationOptions extends ICSSTransformableProperties {
      * });
      * ```
      */
-    loop?: number | boolean | TypeCallback;
+    loop?: KeyframeEffectOptions["iterations"] | number | boolean | TypeCallback;
     /**
      * Occurs when the animation for one of the targets completes, meaning when animating many targets that finish at different times this will run multiple times. The arguments it takes is slightly different from the rest of the animation options.
      *
@@ -216,7 +254,7 @@ export interface IAnimationOptions extends ICSSTransformableProperties {
      * - `alternate-reverse` starts the animation at what would be the end of the animation if the direction were
      * - `normal` but then when the animation reaches the beginning of the animation it alternates going back to the position it started at.
      */
-    direction?: PlaybackDirection;
+    direction?: KeyframeEffectOptions["direction"] | PlaybackDirection;
     /**
      * Determines the animation playback rate. Useful in the authoring process to speed up some parts of a long sequence (value above 1) or slow down a specific animation to observe it (value between 0 to 1).
      *
@@ -238,7 +276,7 @@ export interface IAnimationOptions extends ICSSTransformableProperties {
 
      * _Be careful when using fillMode, it has some problems when it comes to concurrency of animations read more on [MDN](https://developer.mozilla.org/en-US/docs/Web/API/EffectTiming/fill), if browser support were better I would remove fillMode and use Animation.commitStyles, I'll have to change the way `fillMode` functions later. Use the onfinish method to commit styles [onfinish](#onfinish)._
      */
-    fillMode?: FillMode;
+    fillMode?: KeyframeEffectOptions["fill"] | FillMode;
     /**
      * Another way to input options for an animation, it's also used to chain animations.
      *
@@ -332,13 +370,13 @@ export interface IAnimationOptions extends ICSSTransformableProperties {
      * });
      * ```
      */
-    offset?: (number | string)[] | TypeCallback;
+    offset?: PropertyIndexedKeyframes["offset"] | (number | string)[] | TypeCallback;
     /**
      * Represents the timeline of animation. It exists to pass timeline features to Animations (default is [DocumentTimeline](https://developer.mozilla.org/en-US/docs/Web/API/DocumentTimeline)).
      *
      * As of right now it doesn't contain any features but in the future when other timelines like the [ScrollTimeline](https://drafts.csswg.org/scroll-animations-1/#scrolltimeline), read the Google Developer article for [examples and demos of ScrollTimeLine](https://developers.google.com/web/updates/2018/10/animation-worklet#hooking_into_the_space-time_continuum_scrolltimeline)
      */
-    timeline?: AnimationTimeline;
+    timeline?: AnimationTimeline | null;
     /**
      * Allows you to manually set keyframes using a `keyframe` array
      *
@@ -431,7 +469,7 @@ export interface IAnimationOptions extends ICSSTransformableProperties {
      *
      * I recommend reading [web.dev](https://web.dev)'s article on [web-animations](https://web.dev/web-animations/#smoother-animations-with-composite-modes).
     */
-    composite?: TypeCallback | string;
+    composite?: KeyframeEffectOptions["composite"] | TypeCallback;
     /**
      * The properties of the `extend` animation option are not interperted or computed, they are given directly to the `Web Animation API`, as way to access features that haven't been implemented in `@okikio/animate`, for example, `iterationStart`.
      *
@@ -498,7 +536,7 @@ export interface IAnimationOptions extends ICSSTransformableProperties {
      *
      * _**Note**: to use `composite` you will need to add it to the {@link AnimationOptions.extend | extend} object as an option_
      */
-    [property: string]: TypeAnimationOptionTypes;
+    [property: `--${string}`]: TypeAnimationOptionTypes;
 }
 export declare type TypeAnimationEvents = "update" | "play" | "pause" | "begin" | "cancel" | "finish" | "error" | "stop" | "playstate-change";
 export declare type TypePlayStates = "idle" | "running" | "paused" | "finished";
@@ -511,7 +549,7 @@ export interface ICSSProperties {
 /**
  * After being computed as an animation option
  */
-export interface ICSSComputedTransformableProperties extends ICSSProperties {
+export interface ICSSComputedTransformableProperties {
     perspective?: TypeSingleValueCSSProperty;
     rotate?: TypeSingleValueCSSProperty | Array<TypeSingleValueCSSProperty>;
     rotate3d?: TypeSingleValueCSSProperty | Array<TypeSingleValueCSSProperty>;
@@ -531,4 +569,6 @@ export interface ICSSComputedTransformableProperties extends ICSSProperties {
     skew?: TypeSingleValueCSSProperty | Array<TypeSingleValueCSSProperty>;
     skewX?: TypeSingleValueCSSProperty;
     skewY?: TypeSingleValueCSSProperty;
+    matrix?: TypeSingleValueCSSProperty | Array<TypeSingleValueCSSProperty>;
+    matrix3d?: TypeSingleValueCSSProperty | Array<TypeSingleValueCSSProperty>;
 }

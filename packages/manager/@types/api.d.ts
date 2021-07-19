@@ -45,8 +45,4 @@ export declare class Manager<K, V> {
  * Calls the method of a certain name for all items that are currently installed
  */
 export declare const methodCall: (manager: Manager<any, any>, method: string, ...args: any) => void;
-/**
- * Asynchronously calls the method of a certain name for all items that are currently installed, similar to methodCall
- */
-export declare const asyncMethodCall: (manager: Manager<any, any>, method: string, ...args: any) => Promise<void>;
 export default Manager;

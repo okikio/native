@@ -19,6 +19,8 @@ export declare class Event extends Manager<number, IListener> {
     name: string;
     constructor(name?: string);
 }
+/** Determines whether value is an pure object (not array, not function, etc...) */
+export declare const isObject: (obj: any) => boolean;
 /**
  * The types of values `EventEmitter.prototype.on(...), EventEmitter.prototype.once(...), and EventEmitter.prototype.off(...)` accept
  */

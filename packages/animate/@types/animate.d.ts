@@ -137,11 +137,15 @@ export declare const ALL_TIMING_KEYS: string[];
  */
 export declare class Animate {
     /**
-     * Stores the options for the current animation
+     * Stores the options for the current animation **with** the {@link DefaultAnimationOptions}
      *
      * Read more about the {@link DefaultAnimationOptions}
      */
     options: IAnimationOptions;
+    /**
+     * Stores the options for the current animation `without` the {@link DefaultAnimationOptions}
+    */
+    initialOptions: IAnimationOptions;
     /**
      * The properties to animate
      */
@@ -151,13 +155,33 @@ export declare class Animate {
      */
     totalDuration: number;
     /**
+     * The computed options that are used for the total duration
+     */
+    totalDurationOptions: TypeComputedOptions;
+    /**
+     * The largest duration out of all Animation's
+     */
+    maxDuration: number;
+    /**
      * The smallest delay out of all Animation's
      */
     minDelay: number;
     /**
-     * The smallest speed out of all Animation's
+     * The fastest speed out of all Animation's
      */
     maxSpeed: number;
+    /**
+     * The largest end delay out of all Animation's
+     */
+    maxEndDelay: number;
+    /**
+     * The timelineOffset of the current Animate instance
+     */
+    timelineOffset: number;
+    /**
+     * States whether autoplay is allowed for this Animat instance
+    */
+    autoplay: boolean;
     /**
      * The Element the mainAnimation runs on
      */
@@ -212,11 +236,7 @@ export declare class Animate {
      * _**Note**: the computedKeyframes are changed to their proper Animation instance options, so, some of the names are different, and options that can't be computed are not present. E.g. translateX, skew, etc..., they've all been turned into the transform property.*_
      */
     computedKeyframes: WeakMap<HTMLElement, TypeKeyFrameOptionsType>;
-    constructor(options: IAnimationOptions);
-    /**
-     * Tells all animate instances to pause when the page is hidden
-     */
-    static pauseOnPageHidden: Boolean;
+    constructor(options?: IAnimationOptions);
     /**
      * Stores all currently running instances of the Animate Class that are actively using requestAnimationFrame to check progress,
      * it's meant to ensure you don't have multiple instances of the Animate Class creating multiple requestAnimationFrames at the same time
@@ -228,9 +248,21 @@ export declare class Animate {
      */
     static animationFrame: number;
     /**
-     * Calls requestAnimationFrame for each running instance of Animate
+     * Specifies the maximum number of times per second the "update" event fires.
      */
-    static requestFrame(): void;
+    static FRAME_RATE: number;
+    /**
+     * Stores frame start time to ensure framerates are met
+     */
+    protected static FRAME_START_TIME: number;
+    /**
+     * Calls requestAnimationFrame for each running instance of Animate.
+     * Often the "update" event is used for heavy animations that the browser can't handle natively via WAAPI, or
+     * for keeping track of the progress of Animations, for those use cases, using a full 60fps or 120fps is not nessecary,
+     * you can force a maximum constant framerate by setting `Animate.FRAME_RATE` to the framerate you wish,
+     * by default it's `60` frames per second
+     */
+    static requestFrame(time?: DOMHighResTimeStamp): void;
     /**
      * Cancels animationFrame
      */
@@ -244,13 +276,17 @@ export declare class Animate {
      */
     stopLoop(): void;
     /**
+     * Tells all animate instances to pause when the page is hidden
+     */
+    static pauseOnPageHidden: Boolean;
+    /**
      * Store the last remebered playstate before page was hidden
      */
-    protected visibilityPlayState: TypePlayStates;
+    visibilityPlayState: TypePlayStates;
     /**
      * document `visibilitychange` event handler
      */
-    protected onVisibilityChange(): void;
+    onVisibilityChange(): void;
     /**
      * Returns a new Promise that is resolved when the animation finishes
      */
@@ -258,21 +294,21 @@ export declare class Animate {
     /**
      * Fulfills the `this.promise` Promise
      */
-    then(onFulfilled?: (value?: any) => any, onRejected?: (reason?: any) => any): Animate;
+    then(onFulfilled?: (value?: any) => any, onRejected?: (reason?: any) => any): this;
     /**
      * Catches error that occur in the `this.promise` Promise
      */
-    catch(onRejected: (reason?: any) => any): Animate;
+    catch(onRejected: (reason?: any) => any): this;
     /**
      * If you don't care if the `this.promise` Promise has either been rejected or resolved
      */
-    finally(onFinally: () => any): Animate;
+    finally(onFinally: () => any): this;
     /**
-     * Calls a method that affects all animations **excluding** the mainAnimation; the method only allows the animation parameter
+     * Calls a method that affects all animations **excluding** the mainAnimation
     */
     allAnimations(method: (animation?: Animation, target?: HTMLElement) => void): this;
     /**
-     * Calls a method that affects all animations **including** the mainAnimation; the method only allows the animation parameter
+     * Calls a method that affects all animations **including** the mainAnimation
     */
     all(method: (animation?: Animation, target?: HTMLElement) => void): this;
     /**
@@ -282,11 +318,11 @@ export declare class Animate {
     /**
      * Play Animation
      */
-    play(): Animate;
+    play(): this;
     /**
      * Pause Animation
      */
-    pause(): Animate;
+    pause(): this;
     /**
      * Reverse Animation
      */
@@ -295,6 +331,16 @@ export declare class Animate {
      * Reset all Animations
      */
     reset(): this;
+    /**
+     * Commits the end styling state of an animation to the element being animated, even after that animation has been removed. It will cause the end styling state to be written to the element being animated, in the form of properties inside a style attribute.
+     * Learn more on [MDN](https://developer.mozilla.org/en-US/docs/Web/API/Animation/commitStyles)
+     */
+    commitStyles(): this;
+    /**
+     * Explicitly persists an animation, when it would otherwise be removed due to the browser's Automatically removing filling animations behavior.
+     * Learn more on [MDN](https://developer.mozilla.org/en-US/docs/Web/API/Animation/persist)
+     */
+    persist(): this;
     /**
      * Cancels all Animations
      */
@@ -339,15 +385,15 @@ export declare class Animate {
     /**
      * Set the current time of the Main Animation
      */
-    setCurrentTime(time: number): Animate;
+    setCurrentTime(time: number): this;
     /**
      * Set the Animation progress as a value from 0 to 100
      */
-    setProgress(percent: number): Animate;
+    setProgress(percent: number): this;
     /**
      * Set the playback speed of an Animation
      */
-    setSpeed(speed?: number): Animate;
+    setSpeed(speed?: number): this;
     /**
      * Returns an array of computed options
      */
@@ -378,13 +424,13 @@ export declare class Animate {
      *
      * @beta
      */
-    add(target: HTMLElement): void;
+    add(target: HTMLElement): this;
     /**
      * Removes a target from an Animate instance
      *
      * _**Note**: it doesn't update the current running options, you need to use the `Animate.prototype.remove(...)` method if you want to also update the running options_
      */
-    removeTarget(target: HTMLElement): void;
+    removeTarget(target: HTMLElement): this;
     /**
      * Removes a target from an Animate instance, and update the animation options with the change
      *
@@ -392,19 +438,19 @@ export declare class Animate {
      *
      * @beta
      */
-    remove(target: HTMLElement): void;
+    remove(target: HTMLElement): this;
     /**
      * Adds a listener for a given event
      */
-    on(events: TypeAnimationEvents[] | TypeAnimationEvents | TypeEventInput, callback?: TypeListenerCallback | object, scope?: object): Animate;
+    on(events: TypeAnimationEvents[] | TypeAnimationEvents | TypeEventInput, callback?: TypeListenerCallback | object, scope?: object): this;
     /**
      * Removes a listener from an event
      */
-    off(events: TypeAnimationEvents[] | TypeAnimationEvents | TypeEventInput, callback?: TypeListenerCallback | object, scope?: object): Animate;
+    off(events: TypeAnimationEvents[] | TypeAnimationEvents | TypeEventInput, callback?: TypeListenerCallback | object, scope?: object): this;
     /**
      * Call all listeners within an event
      */
-    emit(events: TypeAnimationEvents[] | TypeAnimationEvents | string | any[], ...args: any): Animate;
+    emit(events: TypeAnimationEvents[] | TypeAnimationEvents | string | any[], ...args: any): this;
     /** Returns the Animate options, as JSON  */
     toJSON(): IAnimationOptions;
     /**
