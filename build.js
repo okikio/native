@@ -5,10 +5,10 @@ import prettyBytes from "pretty-bytes";
 
 let arrPromises, promise, newTime, oldTime;
 export default async (source = "src/api.ts", globalName, mode) => {
-    const fileSize = async (inputFile = "lib/api.es.js") => `${prettyBytes(await file(inputFile))}`;
+    const fileSize = async (inputFile = "lib/api.mjs") => `${prettyBytes(await file(inputFile))}`;
     const outputs = [
         {
-            outfile: "lib/api.es.js",
+            outfile: "lib/api.mjs",
             format: "esm",
             target: ["es2020"],
         },
@@ -18,7 +18,7 @@ export default async (source = "src/api.ts", globalName, mode) => {
             target: ["es2020"],
         },
         {
-            outfile: "lib/api.cjs.js",
+            outfile: "lib/api.cjs",
             platform: "node",
             target: ["es2020"],
             format: "cjs",

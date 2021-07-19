@@ -63,7 +63,7 @@ task("css", async () => {
             // Minify scss to css
             postcss([
                 sass({ outputStyle: "compressed" }),
-                tailwind("./tailwind.cjs"),
+                tailwind("./tailwind.config.cjs"),
             ], { syntax: scss }),
 
             rename({ extname: ".css" }),
@@ -98,130 +98,32 @@ task("minify-css", async () => {
 });
 
 // JS Tasks
-tasks({
-    "modern-js": async () => {
-        const [
-            { default: gulpEsBuild, createGulpEsbuild },
-            { default: size },
-        ] = await Promise.all([
-            import("gulp-esbuild"),
-            import("gulp-size"),
-        ]);
+task("js", async () => {
+    const [
+        { default: gulpEsBuild, createGulpEsbuild },
+        { default: size },
+    ] = await Promise.all([
+        import("gulp-esbuild"),
+        import("gulp-size"),
+    ]);
 
-        const esbuild = mode == "watch" ? createGulpEsbuild() : gulpEsBuild;
-        return stream(`${tsFolder}/${tsFile}`, {
-            pipes: [
-                // Bundle Modules
-                esbuild({
-                    bundle: true,
-                    minify: true,
-                    sourcemap: true,
-                    format: "esm",
-                    platform: "browser",
-                    target: ["es2018"],
-                    entryNames: '[name].min',
-                }),
-                size({ gzip: true, showFiles: true, showTotal: false })
-            ],
-            dest: jsFolder, // Output
-        });
-    },
-
-    "legacy-js": async () => {
-        let [
-            { default: gulpEsBuild, createGulpEsbuild },
-            { default: typescript },
-            { default: terser },
-            { default: size },
-        ] = await Promise.all([
-            import("gulp-esbuild"),
-            import("gulp-typescript"),
-            import("gulp-terser"),
-            import("gulp-size"),
-        ]);
-
-        let esbuild = mode == "watch" ? createGulpEsbuild() : gulpEsBuild;
-        return stream([`${tsFolder}/${tsFile}`], {
-            pipes: [
-                // Bundle Modules
-                esbuild({
-                    bundle: true,
-                    minify: false,
-                    sourcemap: false,
-                    format: "iife",
-                    platform: "browser",
-                    target: ["es6"],
-                    outfile: "legacy.min.js",
-                }),
-
-                // Support for es5
-                typescript({
-                    target: "ES5",
-                    allowJs: true,
-                    checkJs: false,
-                    noEmit: true,
-                    noEmitOnError: true,
-                    sourceMap: false,
-                    declaration: false,
-                    isolatedModules: true,
-                }),
-
-                // Minify
-                terser(),
-
-                size({ gzip: true, showFiles: true, showTotal: false  })
-            ],
-            dest: jsFolder, // Output
-        });
-    },
-
-    "other-js": async () => {
-        let [
-            { default: gulpEsBuild, createGulpEsbuild },
-            { default: typescript },
-            { default: terser },
-            { default: size },
-        ] = await Promise.all([
-            import("gulp-esbuild"),
-            import("gulp-typescript"),
-            import("gulp-terser"),
-            import("gulp-size"),
-        ]);
-
-        let esbuild = mode == "watch" ? createGulpEsbuild() : gulpEsBuild;
-        return stream([`${tsFolder}/*.ts`, `!${tsFolder}/${tsFile}`], {
-            pipes: [
-                // Bundle Modules
-                esbuild({
-                    bundle: true,
-                    minify: false,
-                    sourcemap: false,
-                    format: "iife",
-                    platform: "browser",
-                    target: ["es6"],
-                    entryNames: '[name].min',
-                }),
-
-                // Support for es5
-                typescript({
-                    target: "ES5",
-                    allowJs: true,
-                    checkJs: false,
-                    noEmit: true,
-                    noEmitOnError: true,
-                    sourceMap: true,
-                    declaration: false,
-                    isolatedModules: true,
-                }),
-
-                // Minify
-                terser(),
-                size({ gzip: true, showFiles: true, showTotal: false  })
-            ],
-            dest: jsFolder, // Output
-        });
-    },
-    "js": parallelFn("modern-js", "legacy-js", "other-js")
+    const esbuild = mode == "watch" ? createGulpEsbuild() : gulpEsBuild;
+    return stream(`${tsFolder}/*.ts`, {
+        pipes: [
+            // Bundle Modules
+            esbuild({
+                bundle: true,
+                minify: true,
+                sourcemap: true,
+                format: "esm",
+                platform: "browser",
+                target: ["es2019"],
+                entryNames: '[name].min',
+            }),
+            size({ gzip: true, showFiles: true, showTotal: false })
+        ],
+        dest: jsFolder, // Output
+    });
 });
 
 // Other assets
@@ -272,8 +174,8 @@ task("watch", async () => {
                     dir: ["./lib"],
                 },
                 {
-                    route: "/docs",
-                    dir: ["./docs"],
+                    route: "/api",
+                    dir: ["./api"],
                 },
             ],
             reloadOnRestart: true,
@@ -290,7 +192,7 @@ task("watch", async () => {
     );
 
     watch(`${pugFolder}/**/*.pug`, series("html", "reload"));
-    watch([`${sassFolder}/**/*.scss`, `${pugFolder}/**/*.pug`, `./tailwind.cjs`], series("css"));
+    watch([`${sassFolder}/**/*.scss`, `${pugFolder}/**/*.pug`, `./tailwind.config.cjs`], series("css"));
     watch(
         [
             `${tsFolder}/**/*.ts`,
