@@ -1,6 +1,6 @@
-import { isValid, transpose, toStr, convertToDash, mapObject, getUnit } from "./utils";
+import { isValid, transpose, toStr, convertToDash, mapObject, getUnit, trim } from "./utils";
+import { toRGBAArr } from "./unit-conversion";
 import bezier from "./bezier-easing";
-import rgba from "./color-rgba";
 
 export const limit = (value: number, min: number, max: number) => Math.min(Math.max(value, min), max);
 
@@ -8,8 +8,6 @@ export const limit = (value: number, min: number, max: number) => Math.min(Math.
  * The format to use when defining custom easing functions
  */
 export type TypeEasingFunction = (t: number, params?: (string | number)[], duration?: number) => number;
-export type TypeColor = string | number | Array<string | number>;
-export type TypeRGBAFunction = (color: TypeColor) => number[];
 
 /**
   Easing Functions from anime.js, they are tried and true, so, its better to use them instead of other alternatives 
@@ -354,8 +352,8 @@ export const interpolateString = (t: number, values: (string | number)[], decima
     // If the first value looks like a number with a unit
     if (isNumberLike(values[0]))
         units = getUnit(values[0]);
-
-    return interpolateNumber(t, values.map(parseFloat), decimal) + units;
+    
+    return interpolateNumber(t, values.map(v => typeof v == "number" ? v : parseFloat(v)), decimal) + units;
 };
 
 /** 
@@ -367,17 +365,12 @@ export const interpolateString = (t: number, values: (string | number)[], decima
 
   Make sure to read {@link interpolateNumber}.
 */
-export const interpolateColor = (t: number, values: TypeColor[], decimal = 3) => {
-    return transpose(...values.map(rgba as TypeRGBAFunction)).map((colors: number[], i) => {
+export const interpolateColor = (t: number, values: string[], decimal = 3) => {
+    return transpose(...values.map(v => toRGBAArr(v))).map((colors: number[], i) => {
         let result = interpolateNumber(t, colors);
         return i < 3 ? Math.round(result) : toFixed(result, decimal);
     });
 };
-
-/** 
-  Convert value to string, then trim any extra white space and line terminator characters from the string. 
-*/
-export const trim = (str: string) => toStr(str).trim();
 
 /** 
   Converts "10px solid red #555   rgba(255, 0,5,6, 7)  " 
@@ -401,16 +394,16 @@ export const ComplexStrtoArr = (str: string) => {
 
   Make sure to read {@link interpolateNumber}, {@link interpolateString}, {@link interpolateColor}, and {@link interpolateUsingIndex}.
 */
-export const interpolateComplex = (t: number, values: (string | number | TypeColor)[], decimal = 3) => {
+export const interpolateComplex = (t: number, values: (string | number)[], decimal = 3) => {
     // Interpolate numbers
     let isNumber = values.every(v => typeof v == "number");
     if (isNumber)
         return interpolateNumber(t, values as number[], decimal);
 
     // Interpolate colors
-    let isColor = values.every(v => isValid(rgba(v ?? null)));
+    let isColor = values.every(v => CSS.supports("color", toStr(v)));
     if (isColor)
-        return `rgba(${interpolateColor(t, values, decimal)})`;
+        return `rgba(${interpolateColor(t, values as string[], decimal)})`;
 
     // Interpolate complex values and strings
     let isString = values.some(v => typeof v == "string");
