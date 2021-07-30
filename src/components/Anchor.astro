@@ -1,8 +1,0 @@
----
-const { href = "/" } = Astro.props;
-if (/^(http|mailto)/.test(href)) 
-    Object.assign(props, { target: "_blank", rel: "noopener" });
----
-<a href={href} {...props}>
-  <slot />
-</a>
