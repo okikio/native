@@ -82,7 +82,7 @@ export class EventEmitter extends Manager<string, Event> {
         ) return this;
 
         // Create a new event every space
-        if (typeof events == "string") events = events.trim().split(/\s/g);
+        if (typeof events == "string") events = events.trim().split(/\s+/);
 
         let _name: string;
         let _callback: TypeListenerCallback;
@@ -138,7 +138,7 @@ export class EventEmitter extends Manager<string, Event> {
         ) return this;
 
         // Create a new event every space
-        if (typeof events == "string") events = events.trim().split(/\s/g);
+        if (typeof events == "string") events = events.trim().split(/\s+/);
 
         let _name: string;
         let _callback: TypeListenerCallback;
@@ -178,7 +178,7 @@ export class EventEmitter extends Manager<string, Event> {
         ) return this;
 
         // Create a new event every space
-        if (typeof events == "string") events = events.trim().split(/\s/g);
+        if (typeof events == "string") events = events.trim().split(/\s+/);
 
         let isObj = isObject(events);
 
@@ -212,7 +212,7 @@ export class EventEmitter extends Manager<string, Event> {
         ) return this;
 
         // Create a new event every space
-        if (typeof events == "string") events = events.trim().split(/\s/g);
+        if (typeof events == "string") events = events.trim().split(/\s+/);
 
         // Loop through the list of events
         events.forEach((event: string) => {
