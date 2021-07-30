@@ -126,8 +126,8 @@ export const TransformFunctions: ITransformFunctions = {
 
     "perspective": (value: TypeSingleValueCSSProperty) => UnitPXCSSValue(value),
 
-    "matrix": value => CSSArrValue(value, UnitLess),
-    "matrix3d": value => CSSArrValue(value, UnitLess),
+    // "matrix": value => CSSArrValue(value, UnitLess),
+    // "matrix3d": value => CSSArrValue(value, UnitLess),
 };
 
 /**
@@ -348,12 +348,12 @@ export const ParseTransformableCSSKeyframes = (keyframes: (ICSSComputedTransform
             skewX,
             skewY,
             perspective,
-            matrix,
-            matrix3d,
+            // matrix,
+            // matrix3d,
 
-            easing,
-            iterations,
-            offset,
+            // easing,
+            // iterations,
+            // offset,
             ...rest
 
             // Convert dash seperated strings to camelCase strings
@@ -383,24 +383,25 @@ export const ParseTransformableCSSKeyframes = (keyframes: (ICSSComputedTransform
 
         perspective = UnitPXCSSValue(perspective)[0];
 
-        matrix = UnitLessCSSValue(matrix as TypeSingleValueCSSProperty);
-        matrix3d = UnitLessCSSValue(matrix3d as TypeSingleValueCSSProperty);
+        // matrix = UnitLessCSSValue(matrix as TypeSingleValueCSSProperty);
+        // matrix3d = UnitLessCSSValue(matrix3d as TypeSingleValueCSSProperty);
 
-        return [
+        return {
             rest,
-            translate, translate3d, translateX, translateY, translateZ,
-            rotate, rotate3d, rotateX, rotateY, rotateZ,
-            scale, scale3d, scaleX, scaleY, scaleZ,
+            transformFunctions: [translate3d, translate, translateX, translateY, translateZ,
+                rotate3d, rotate, rotateX, rotateY, rotateZ,
+                scale3d, scale, scaleX, scaleY, scaleZ,
             skew, skewX, skewY,
-            perspective, matrix, matrix3d
-        ];
-    }).map(([rest, ...transformFunctions]) => {
-        let transform = createTransformProperty(TransformFunctionNames, transformFunctions);
+                perspective] //, matrix, matrix3d
+        };
+    }).map(({ rest, transformFunctions }) => {
+        let transform = CSSVarSupport ? null : createTransformProperty(TransformFunctionNames, transformFunctions);
         rest = mapObject(rest as object, (value, key) => {
             let unit: typeof UnitDEGCSSValue | typeof UnitPXCSSValue;
+            value = toStr(value);
 
             // If key doesn't have the word color in it, try to add the default "px" or "deg" to it
-            if (!/color/i.test(key)) {
+            if (!/color|shadow/i.test(key)) {
                 let isAngle = /rotate/i.test(key);
                 let isLength = new RegExp(CSSPXDataType, "i").test(key);
 
@@ -419,12 +420,11 @@ export const ParseTransformableCSSKeyframes = (keyframes: (ICSSComputedTransform
                     // with values like "55 60 70 5em", split the value into an array using spaces as the seperator
                     // then apply the valid default units and join them back with spaces
                     // seperating them
-                    let arr = toStr(value).trim().split(" ");
-                    return unit(arr).join(" ");
+                    return unit(value).join(" ");
                 }
             }
 
-            return toStr(value);
+            return value;
         });
 
         return Object.assign({},

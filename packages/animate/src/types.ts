@@ -1,11 +1,10 @@
 import type { KebabCase, CamelCase, KebabCasedProperties } from "type-fest";
-import type colors from "./colors";
 
 // Types
 export type TypeAnimationTarget = string | Node | NodeList | HTMLCollection | HTMLElement[] | TypeAnimationTarget[];
 
 export type TypeCallbackArgs = [number, number, HTMLElement];
-export type TypeGeneric = boolean | object | string | number | keyof typeof colors;
+export type TypeGeneric = boolean | object | string | number;
 export type TypeCSSLikeKeyframe = { [key: string]: Keyframe & ICSSComputedTransformableProperties };
 export type TypeKeyFrameOptionsType = TypeCSSLikeKeyframe | Keyframe[] | PropertyIndexedKeyframes;
 export type TypeCSSPropertyValue = (string | number)[];
@@ -13,7 +12,6 @@ export type TypeComputedAnimationOptions = TypeGeneric | TypeGeneric[] | TypeKey
 export type TypeCallback = (index?: number, total?: number, element?: HTMLElement) => TypeComputedAnimationOptions;
 export type TypeAnimationOptionTypes = TypeCallback | TypeComputedAnimationOptions;
 export type TypeComputedOptions = { [key: string]: TypeComputedAnimationOptions };
-
 export type TypeSingleValueCSSProperty = string | number | TypeCSSPropertyValue;
 
 /** 
@@ -69,7 +67,7 @@ export type TypeMissingCSSProperties = {
     maskSize?: number | string | (string | number)[] | TypeCallback,
     maxLines?: number | string | (string | number)[] | TypeCallback,
     offsetPosition?: number | string | (string | number)[] | TypeCallback,
-    scrollbarColor?: string | string[] | keyof typeof colors | Array<keyof typeof colors> | TypeCallback,
+    scrollbarColor?: string | string[] | TypeCallback,
 } & {
     [K in TypeAnimatableCSSProperties]?: TypeAnimationOptionTypes
 }
@@ -606,6 +604,6 @@ export interface ICSSComputedTransformableProperties {
     skewX?: TypeSingleValueCSSProperty,
     skewY?: TypeSingleValueCSSProperty,
     
-    matrix?: TypeSingleValueCSSProperty | Array<TypeSingleValueCSSProperty>,
-    matrix3d?: TypeSingleValueCSSProperty | Array<TypeSingleValueCSSProperty>,
+    // matrix?: TypeSingleValueCSSProperty | Array<TypeSingleValueCSSProperty>,
+    // matrix3d?: TypeSingleValueCSSProperty | Array<TypeSingleValueCSSProperty>,
 }
