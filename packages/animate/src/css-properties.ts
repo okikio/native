@@ -1,98 +1,9 @@
-import { camelCase, isValid, mapObject, omit, toArr, toStr, transpose } from "./utils";
+import { CSSArrValue, UnitPX, UnitPXCSSValue, UnitDEG, UnitLess, UnitDEGCSSValue, UnitLessCSSValue } from "./unit-conversion";
+import { camelCase, convertToDash, isValid, mapObject, omit, toStr, transpose, trim } from "./utils";
+import { CSSVarSupport, toCSSVars, transformProperyNames } from "./css-vars";
 import { interpolateString } from "./custom-easing";
 
 import type { TypeSingleValueCSSProperty, ICSSComputedTransformableProperties, ICSSProperties } from "./types";
-
-/**
- * Returns a closure Function, which adds a unit to numbers but simply returns strings with no edits assuming the value has a unit if it's a string
- *
- * @param unit - the default unit to give the CSS Value
- * @returns
- * if value already has a unit (we assume the value has a unit if it's a string), we return it;
- * else return the value plus the default unit
- */
-export const addCSSUnit = (unit: string = "") => {
-    return (value: string | number) => typeof value == "string" ? value : `${value}${unit}`;
-}
-
-/** Function doesn't add any units by default */
-export const UnitLess = addCSSUnit();
-
-/** Function adds "px" unit to numbers */
-export const UnitPX = addCSSUnit("px");
-
-/** Function adds "deg" unit to numbers */
-export const UnitDEG = addCSSUnit("deg");
-
-/**
- * Returns a closure function, which adds units to numbers, strings or arrays of both
- *
- * @param unit - a unit function to use to add units to {@link TypeSingleValueCSSProperty | TypeSingleValueCSSProperty's }
- * @returns
- * if input is a string split it into an array at the comma's, and add units
- * else if the input is a number add the default units
- * otherwise if the input is an array of both add units according to {@link addCSSUnit}
- */
-export const CSSValue = (unit: typeof UnitLess) => {
-    return (input: TypeSingleValueCSSProperty) => {
-        return isValid(input) ? toArr(input).map(val => {
-            if (typeof val != "number" && typeof val != "string")
-                return val;
-
-            // Basically if you can convert it to a number try to,
-            // otherwise just return whatever you can
-            let num = Number(val);
-            let value = Number.isNaN(num) ? (typeof val == "string" ? val.trim() : val) : num;
-            return unit(value); // Add the default units
-        }) : [];
-    };
-}
-
-/**
- * Takes `TypeSingleValueCSSProperty` or an array of `TypeSingleValueCSSProperty` and adds units approriately
- *
- * @param arr - array of numbers, strings and/or an array of array of both e.g. ```[[25, "50px", "60%"], "25, 35, 60%", 50]```
- * @param unit - a unit function to use to add units to {@link TypeSingleValueCSSProperty | TypeSingleValueCSSProperty's }
- * @returns
- * an array of an array of strings with units
- * e.g.
- * ```ts
- * [
- *      [ '25px', '35px', ' 60%' ],
- *      [ '50px', '60px', '70px' ]
- * ]
- * ```
- */
-export const CSSArrValue = (arr: TypeSingleValueCSSProperty | TypeSingleValueCSSProperty[], unit: typeof UnitLess) => {
-    // This is for the full varients of the transform function as well as the 3d varients
-    // zipping the `CSSValue` means if a user enters a string, it will treat each value (seperated by a comma) in that
-    // string as a seperate transition state
-    return toArr(arr).map(CSSValue(unit)) as TypeSingleValueCSSProperty[];
-}
-
-/** Parses CSSValues without adding any units */
-export const UnitLessCSSValue = CSSValue(UnitLess);
-
-/** Parses CSSValues and adds the "px" unit if required */
-export const UnitPXCSSValue = CSSValue(UnitPX);
-
-/** Parses CSSValues and adds the "deg" unit if required */
-export const UnitDEGCSSValue = CSSValue(UnitDEG);
-
-/**
- * Removes dashes from CSS properties & maps the values to the camelCase keys
- */
-export const ParseCSSProperties = (obj: object) => {
-    let keys = Object.keys(obj);
-    let key: any, value: any, result = {};
-    for (let i = 0, len = keys.length; i < len; i++) {
-        key = camelCase(keys[i]);
-        value = obj[keys[i]];
-        result[key] = value;
-    }
-
-    return result;
-}
 
 export interface ITransformFunctions {
     [key: string]: (value: TypeSingleValueCSSProperty | Array<TypeSingleValueCSSProperty>) => TypeSingleValueCSSProperty | Array<TypeSingleValueCSSProperty>;
@@ -136,6 +47,21 @@ export const TransformFunctions: ITransformFunctions = {
 export const TransformFunctionNames = Object.keys(TransformFunctions);
 
 /**
+ * Removes dashes from CSS properties & maps the values to camelCase keys
+ */
+export const CSSCamelCase = (obj: object) => {
+    let keys = Object.keys(obj);
+    let key: any, value: any, result = {};
+    for (let i = 0, len = keys.length; i < len; i++) {
+        key = camelCase(keys[i]);
+        value = obj[keys[i]];
+        result[key] = value;
+    }
+
+    return result;
+}
+
+/**
  * Creates the transform property text
  */
 export const createTransformProperty = (transformFnNames: string[], arr: any[]) => {
@@ -152,26 +78,40 @@ export const createTransformProperty = (transformFnNames: string[], arr: any[]) 
 }
 
 /** Common CSS Property names with the units "px" as an acceptable value */
-export const CSSPXDataType = ["margin", "padding", "size", "width", "height", "left", "right", "top", "bottom", "radius", "gap", "basis", "inset", "outline-offset", "perspective", "thickness", "position", "distance", "spacing"].map(camelCase).join("|");
+export const CSSPXDataType = ["margin", "padding", "size", "width", "height", "left", "right", "top", "bottom", "radius", "gap", "basis", "inset", "outline-offset", "translate", "perspective", "thickness", "position", "distance", "spacing"].map(camelCase).join("|");
 
 /**
- * It fills in the gap between different size transform functions, so, for example, 
+ * It fills in the gap between different size transform functions, so, for example,
  * ```ts
  * {
  *      translateX: [50, 60, 80, 90],
  *      scale: [0.5, 2]
  * }
  * ```
- * 
+ *
  * There are more values of `translateX`, so the `transform` property created will look like this,
- * {
- *      transform: ["translateX(50px) scale(0.5)"]
- * }
- * 
- * `arrFill` interpolates between all missing portions of transform functions, and creates a uniform size transform property,
- * e.g.  
  * ```ts
- * 
+ * {
+ *      transform: [
+ *          "translateX(50px) scale(0.5)",
+ *          "translateX(60px) scale(2)",
+ *          "translateX(80px)",
+ *          "translateX(90px)"
+ *      ]
+ * }
+ * ```
+ *
+ * `arrFill` interpolates between all missing portions of transform functions, and helps create a uniform size transform property,
+ * e.g.
+ * ```ts
+ * {
+ *      transform: [
+ *          "translateX(50px) scale(0.5)",
+ *          "translateX(60px) scale(1)",
+ *          "translateX(80px) scale(1.5)",
+ *          "translateX(90px) scale(2)"
+ *      ]
+ * }
  * ```
  */
 export const arrFill = (arr: any[] | any[][], maxLen?: number) => {
@@ -179,15 +119,24 @@ export const arrFill = (arr: any[] | any[][], maxLen?: number) => {
     maxLen = maxLen ?? Math.max(...arr.map((value: any[]) => value.length));
     return arr.map((value: any[]) => {
         let len = value.length;
-        let isComplexTransform = value.every(v => Array.isArray(v));
+        let is2dArray = value.every(v => Array.isArray(v));
 
-        if (!isComplexTransform) {
+        // If value is a one dimensional Array
+        if (!is2dArray) {
             if (len !== maxLen) {
                 return Array.from(Array(maxLen), (_, i) => {
-                    return interpolateString(i / (maxLen - 1), value); // i > len - 1 ? value[len - 1] : value[i]
+                    // `interpolateString` requires a minimum of 2 elements in an array to interploate between,
+                    // repeat the first value twice if there are not enough values to satisfy `interpolateString`
+                    let values = len == 1 ? Array(2).fill(value[0]) : value;
+                    return interpolateString(i / (maxLen - 1), values);
                 });
             } else return value;
-        } else return transpose(...arrFill(transpose(...value), maxLen));
+        }
+
+        // * transpose 2d Array (because of what the array row and col's represent, to ensure we are calling arrFill on the proper axes),
+        // * run arrFill to ensure a set size,
+        // * transpose once more to return to it's original form but with all Arrays in the 2d array having the same size
+        else return transpose(...arrFill(transpose(...value), maxLen));
     });
 }
 
@@ -206,13 +155,13 @@ export const arrFill = (arr: any[] | any[][], maxLen?: number) => {
  * ParseTransformableCSSProperties({
  *      // It will automatically add the "px" units for you, or you can write a string with the units you want
  *      translate3d: [
- *          "25, 35, 60%",
+ *          "25 35 60%",
  *          [50, "60px", 70],
  *          ["70", 50]
  *      ],
- *      translate: "25, 35, 60%",
+ *      translate: "25 35 60%",
  *      translateX: [50, "60px", "70"],
- *      translateY: ["50, 60", "60"], // Note: this will actually result in an error, make sure to pay attention to where you are putting strings and commas
+ *      translateY: ["50, 60", "60"], // Note: this will actually result in an error, make sure to pay attention to where you are putting commas
  *      translateZ: 0,
  *      perspective: 0,
  *      opacity: "0, 5",
@@ -230,13 +179,38 @@ export const arrFill = (arr: any[] | any[][], maxLen?: number) => {
  *      // String won't be split into array, they will be wrappeed in an Array
  *      // It will transform border-left to camelCase "borderLeft"
  *      "border-left": 50,
- *      "offset-rotate": "10, 20",
+ *      "offset-rotate": "10 20",
  *      margin: 5,
  *
  *      // When writing in this formation you must specify the units
  *      padding: "5px 6px 7px"
  * })
- *
+ * 
+ * // On Chromium based browsers, e.g. Chrome, Edge, Brave, Opera, etc... or browsers that support `CSS.registerProperty` this will be the result
+ * //= {
+ * //=      "--translate3d0": [ "25px", "50px", "70px" ],
+ * //=      "--translate3d1": [ "35px", "60px", "50px" ],
+ * //=      "--translate3d2": [ "60%", "70px" ],
+ * //=      "--translate0": [ "25px" ],
+ * //=      "--translate1": [ "35px" ],
+ * //=      "--translateX": [ "50px", "60px", "70px" ],
+ * //=      "--translateY": [ "50,,60", "60px" ],
+ * //=      "--translateZ": [ "0px" ],
+ * //=      "--rotate3d0": [ "1deg", "2deg", "2deg" ],
+ * //=      "--rotate3d1": [ "2deg", "4deg", "4deg" ],
+ * //=      "--rotate3d2": [ "5deg", "6deg", "6deg" ],
+ * //=      "--rotate3d3": [ "3deg", "45turn", "-1rad" ],
+ * //=      "--scale0": [ "1", "2" ],
+ * //=      "--scale1": [ "2", "1" ],
+ * //=      "--perspective": [ "0px" ],
+ * //=      "opacity": [ "0, 5" ],
+ * //=      "borderLeft": [ "50px" ],
+ * //=      "offsetRotate": [ "10deg", "20deg" ],
+ * //=      "margin": [ "5px" ],
+ * //=      "padding": [ "5px", "6px", "7px" ]
+ * //= }
+ * 
+ * // Browsers that don't support `CSS.registerProperty` will result in the following, namely Firefox and Safari
  * //= {
  * //=   transform: [
  * //=       // `translateY(50, 60)` will actually result in an error
@@ -252,39 +226,55 @@ export const arrFill = (arr: any[] | any[][], maxLen?: number) => {
  * //=   margin: ["5px"],
  * //=   padding: ["5px 6px 7px"]
  * //= }
+ * 
+ * // The key difference between the two is that the former will allow other animations to be used to 
+ * // manipulate multiple different transforms at the same time, 
+ * // while the latter will not, and must continously update the transform property,
+ * // meaning that new animations will always override the previous ones on the same element,
+ * // on browsers that *don't* support `CSS.registerProperty`
  * ```
  *
  * @returns
  * an object with a properly formatted `transform` and `opactity`, as well as other unformatted CSS properties
  * ```
  */
-export const ParseTransformableCSSProperties = (properties: ICSSProperties) => {
+export const ParseTransformableCSSProperties = (properties: ICSSProperties): ICSSProperties => {
     // Convert dash seperated strings to camelCase strings
-    let AllCSSProperties = ParseCSSProperties(properties) as ICSSComputedTransformableProperties;
-    let rest = omit(TransformFunctionNames, AllCSSProperties);
+    let AllCSSProperties = CSSCamelCase(properties) as ICSSProperties;
+    let rest: ICSSProperties;
+    let transform: string[];
 
+    if (CSSVarSupport) {
+        rest = Object.assign({}, toCSSVars(AllCSSProperties), omit(transformProperyNames, AllCSSProperties));
+    } else {
+        // Adds support for ordered transforms 
     // Adds support for ordered transforms 
-    let transformFunctionNames = Object.keys(AllCSSProperties)
-        .filter(key => TransformFunctionNames.includes(key));
+        // Adds support for ordered transforms 
+        let transformFunctionNames = Object.keys(AllCSSProperties)
+            .filter(key => TransformFunctionNames.includes(key));
 
-    let transformFunctionValues = transformFunctionNames
-        .map((key) => TransformFunctions[key](AllCSSProperties[key]));
+        let transformFunctionValues = transformFunctionNames
+            .map((key) => TransformFunctions[key](AllCSSProperties[key]));
 
-    transformFunctionValues = arrFill(transformFunctionValues);
+        transformFunctionValues = arrFill(transformFunctionValues);
 
-    // The transform string
-    let transform = transpose(...transformFunctionValues)
-        .filter(isValid)
-        .map(arr => createTransformProperty(transformFunctionNames, arr));
+        // The transform string
+        transform = transpose(...transformFunctionValues)
+            .filter(isValid)
+            .map(arr => createTransformProperty(transformFunctionNames, arr));
+
+        rest = omit(TransformFunctionNames, AllCSSProperties);
+    }
 
     // Wrap non array CSS property values in an array
     rest = mapObject(rest, (value, key) => {
         let unit: typeof UnitDEGCSSValue | typeof UnitPXCSSValue;
 
         // If key doesn't have the word color in it, try to add the default "px" or "deg" to it
-        if (!/color/i.test(key)) {
+        if (!/color|shadow/i.test(key)) {
             let isAngle = /rotate/i.test(key);
-            let isLength = new RegExp(CSSPXDataType, "i").test(key);
+            let isLength = new RegExp(CSSPXDataType, "i").test(key) ||
+                CSS.supports(convertToDash(key), "1px");
 
             // There is an intresting bug that occurs if you test a string againt the same instance of a Regular Expression
             // where the answer will be different every test
@@ -306,7 +296,7 @@ export const ParseTransformableCSSProperties = (properties: ICSSProperties) => {
                     // then apply the valid default units and join them back with spaces
                     // seperating them
 
-                    let arr = str.trim().split(" ");
+                    let arr = trim(str).split(/\s+/);
                     return unit(arr).join(" ");
                 });
             }
@@ -328,6 +318,15 @@ export const ParseTransformableCSSProperties = (properties: ICSSProperties) => {
  */
 export const ParseTransformableCSSKeyframes = (keyframes: (ICSSComputedTransformableProperties & Keyframe)[]) => {
     return keyframes.map(properties => {
+        // Convert dash seperated strings to camelCase strings
+        let AllCSSProperties = CSSCamelCase(properties) as ICSSComputedTransformableProperties & ICSSProperties & Keyframe;
+        if (CSSVarSupport) {
+            return {
+                rest: Object.assign({}, toCSSVars(AllCSSProperties), omit(transformProperyNames, AllCSSProperties)),
+                transformFunctions: null
+            };
+        }
+
         let {
             translate,
             translate3d,
@@ -356,8 +355,7 @@ export const ParseTransformableCSSKeyframes = (keyframes: (ICSSComputedTransform
             // offset,
             ...rest
 
-            // Convert dash seperated strings to camelCase strings
-        } = ParseCSSProperties(properties) as ICSSComputedTransformableProperties & Keyframe;
+        } = AllCSSProperties;
 
         translate = UnitPXCSSValue(translate as TypeSingleValueCSSProperty);
         translate3d = UnitPXCSSValue(translate3d as TypeSingleValueCSSProperty);
@@ -391,7 +389,7 @@ export const ParseTransformableCSSKeyframes = (keyframes: (ICSSComputedTransform
             transformFunctions: [translate3d, translate, translateX, translateY, translateZ,
                 rotate3d, rotate, rotateX, rotateY, rotateZ,
                 scale3d, scale, scaleX, scaleY, scaleZ,
-            skew, skewX, skewY,
+                skew, skewX, skewY,
                 perspective] //, matrix, matrix3d
         };
     }).map(({ rest, transformFunctions }) => {

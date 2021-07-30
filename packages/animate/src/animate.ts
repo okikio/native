@@ -2,8 +2,9 @@ import { EventEmitter } from "@okikio/emitter";
 import { Manager } from "@okikio/manager";
 
 import { KeyframeParse, parseOffset } from "./builtin-effects";
-import { ParseTransformableCSSProperties, ParseTransformableCSSKeyframes } from "./css-properties";
+import { ParseTransformableCSSProperties, ParseTransformableCSSKeyframes, CSSCamelCase } from "./css-properties";
 import { flatten, mapObject, convertToDash, isValid, omit, isObject } from "./utils";
+import { createTransformValue, CSSVarSupport, transformCSSVars } from "./css-vars";
 
 import type { TypeEventInput, TypeListenerCallback } from "@okikio/emitter";
 import type { TypeAnimationTarget, TypeAnimationOptionTypes, TypeCallbackArgs, TypeComputedAnimationOptions, IAnimationOptions, TypeComputedOptions, TypeKeyFrameOptionsType, TypeCSSLikeKeyframe, TypeAnimationEvents, TypePlayStates, ICSSProperties } from "./types";
@@ -743,7 +744,7 @@ export class Animate {
             }, getOption("extend") ?? {});
         };
 
-        // This sets good defaults for situations where no targets are given e.g. AnimateTimeline's mainAnimateInstance
+        // This sets good defaults for situations where no targets are given e.g. Timeline's mainAnimateInstance
         // If the total number of targets is zero or less, it means there not values in  `arrOfComputedOptions`
         // So, set the values for `totalDuration`, `minDelay`, `maxSpeed`, etc... to the options directly
         if (this.targets.size == 0) {
@@ -866,6 +867,7 @@ export class Animate {
 
         this.targets.forEach((target: HTMLElement, i) => {
             let { speed, keyframes, tempDurations, timelineOffset, ...computedOptions } = arrOfComputedOptions[i];
+            let transformValue: string;
 
             // You cannot use the `padEndDelay` option and set a value for `endDelay`, the `endDelay` value will
             // replace the padded endDelay
@@ -911,6 +913,10 @@ export class Animate {
                 let remaining: IAnimationOptions = omit(["keyframes"], animationKeyframe);
                 let { offset, ...CSSProperties } = mapAnimationOptions(remaining, [i, len, target], this);
 
+                // Convert dashed case properties to camelCase, then create a transform CSS value with CSS Vars. as transform functions, 
+                // and with each CSS variable/transform function running in the order they were defined as Animation Options.
+                transformValue = createTransformValue(CSSCamelCase(CSSProperties));
+
                 // transform, is often used so, to make them easier to use we parse them for strings, number, and/or arrays of both;
                 // for transform we parse the translate, skew, scale, and perspective functions (including all their varients) as CSS properties;
                 // it then turns these properties into valid `PropertyIndexedKeyframes`
@@ -934,6 +940,9 @@ export class Animate {
                             ? { offset: parseOffset(offset) } : null
                     );
                 });
+
+                // The transform CSS value with CSS Vars support, and with each transform function running in order
+                transformValue = createTransformValue(transformCSSVars);
 
                 // Transform transformable CSS properties in each keyframe of the keyframe array
                 computedKeyframes = ParseTransformableCSSKeyframes(computedKeyframes) as Keyframe[];
@@ -970,6 +979,10 @@ export class Animate {
                 typeof oncancel == "function" && oncancel.call(this, target, i, len, animation);
             };
 
+            // To avoid bugs, we manually apply the transform property from the computed CSS properties if CSS Vars are supported
+            if (CSSVarSupport)
+                Object.assign(target.style, { transform: transformValue });
+
             // Set the calculated options & keyframes for each individual animation
             this.computedOptions.set(target, computedOptions);
             this.computedKeyframes.set(target, computedKeyframes);
@@ -980,8 +993,6 @@ export class Animate {
      * Update the options for all targets
      *
      * _**Note**: `KeyframeEffect` support is really low, so, I am suggest that you avoid using the `updateOptions` method, until browser support for `KeyframeEffect.updateTiming(...)` and `KeyframeEffefct.setKeyframes(...)` is better_
-     *
-     * @beta
      */
     public updateOptions(options: IAnimationOptions = {}) {
         try {
@@ -1047,7 +1058,10 @@ export class Animate {
                     console.warn("@okikio/animate - `KeyframeEffect.setKeyframes` and/or `KeyframeEffect.updateTiming` are not supported in this browser.");
             }
 
-            this.mainAnimation.playbackRate = this.maxSpeed;
+            if (this.mainAnimation.updatePlaybackRate)
+                this.mainAnimation.updatePlaybackRate(this.maxSpeed);
+            else this.mainAnimation.playbackRate = this.maxSpeed;
+
             this.mainAnimation.onfinish = () => {
                 if (this.mainAnimation) {
                     let playstate = this.getPlayState();
@@ -1075,7 +1089,6 @@ export class Animate {
             };
 
             if (autoplay) {
-
                 // By the time events are registered the animation would have started and there wouldn't have be a `begin` event listener to actually emit
                 // So, this defers the emitting for a 0ms time allowing the rest of the js to run, the `begin` event to be registered thus
                 // the `begin` event can be emitter
@@ -1098,8 +1111,6 @@ export class Animate {
      * Adds a target to the Animate instance, and update the animation options with the change
      *
      * _**Note**: `KeyframeEffect` support is really low, so, I am suggest that you avoid using the `add` method, until browser support for `KeyframeEffect.updateTiming(...)` and `KeyframeEffefct.setKeyframes(...)` is better_
-     *
-     * @beta
      */
     public add(target: HTMLElement) {
         let progress = this.getProgress();
@@ -1138,8 +1149,6 @@ export class Animate {
      * Removes a target from an Animate instance, and update the animation options with the change
      *
      * _**Note**: `KeyframeEffect` support is really low, so, I am suggest that you avoid using the `remove` method, until browser support for `KeyframeEffect.updateTiming(...)` and `KeyframeEffefct.setKeyframes(...)` is better_
-     *
-     * @beta
      */
     public remove(target: HTMLElement) {
         this.removeTarget(target);
