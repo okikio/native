@@ -1,55 +1,4 @@
 import type { TypeSingleValueCSSProperty, ICSSComputedTransformableProperties, ICSSProperties } from "./types";
-/**
- * Returns a closure Function, which adds a unit to numbers but simply returns strings with no edits assuming the value has a unit if it's a string
- *
- * @param unit - the default unit to give the CSS Value
- * @returns
- * if value already has a unit (we assume the value has a unit if it's a string), we return it;
- * else return the value plus the default unit
- */
-export declare const addCSSUnit: (unit?: string) => (value: string | number) => string;
-/** Function doesn't add any units by default */
-export declare const UnitLess: (value: string | number) => string;
-/** Function adds "px" unit to numbers */
-export declare const UnitPX: (value: string | number) => string;
-/** Function adds "deg" unit to numbers */
-export declare const UnitDEG: (value: string | number) => string;
-/**
- * Returns a closure function, which adds units to numbers, strings or arrays of both
- *
- * @param unit - a unit function to use to add units to {@link TypeSingleValueCSSProperty | TypeSingleValueCSSProperty's }
- * @returns
- * if input is a string split it into an array at the comma's, and add units
- * else if the input is a number add the default units
- * otherwise if the input is an array of both add units according to {@link addCSSUnit}
- */
-export declare const CSSValue: (unit: typeof UnitLess) => (input: TypeSingleValueCSSProperty) => any[];
-/**
- * Takes `TypeSingleValueCSSProperty` or an array of `TypeSingleValueCSSProperty` and adds units approriately
- *
- * @param arr - array of numbers, strings and/or an array of array of both e.g. ```[[25, "50px", "60%"], "25, 35, 60%", 50]```
- * @param unit - a unit function to use to add units to {@link TypeSingleValueCSSProperty | TypeSingleValueCSSProperty's }
- * @returns
- * an array of an array of strings with units
- * e.g.
- * ```ts
- * [
- *      [ '25px', '35px', ' 60%' ],
- *      [ '50px', '60px', '70px' ]
- * ]
- * ```
- */
-export declare const CSSArrValue: (arr: TypeSingleValueCSSProperty | TypeSingleValueCSSProperty[], unit: typeof UnitLess) => TypeSingleValueCSSProperty[];
-/** Parses CSSValues without adding any units */
-export declare const UnitLessCSSValue: (input: TypeSingleValueCSSProperty) => any[];
-/** Parses CSSValues and adds the "px" unit if required */
-export declare const UnitPXCSSValue: (input: TypeSingleValueCSSProperty) => any[];
-/** Parses CSSValues and adds the "deg" unit if required */
-export declare const UnitDEGCSSValue: (input: TypeSingleValueCSSProperty) => any[];
-/**
- * Removes dashes from CSS properties & maps the values to the camelCase keys
- */
-export declare const ParseCSSProperties: (obj: object) => {};
 export interface ITransformFunctions {
     [key: string]: (value: TypeSingleValueCSSProperty | Array<TypeSingleValueCSSProperty>) => TypeSingleValueCSSProperty | Array<TypeSingleValueCSSProperty>;
 }
@@ -61,6 +10,10 @@ export declare const TransformFunctions: ITransformFunctions;
  * Store all the supported transform functions as an Array
  */
 export declare const TransformFunctionNames: string[];
+/**
+ * Removes dashes from CSS properties & maps the values to camelCase keys
+ */
+export declare const CSSCamelCase: (obj: object) => {};
 /**
  * Creates the transform property text
  */
@@ -77,14 +30,28 @@ export declare const CSSPXDataType: string;
  * ```
  *
  * There are more values of `translateX`, so the `transform` property created will look like this,
+ * ```ts
  * {
- *      transform: ["translateX(50px) scale(0.5)"]
+ *      transform: [
+ *          "translateX(50px) scale(0.5)",
+ *          "translateX(60px) scale(2)",
+ *          "translateX(80px)",
+ *          "translateX(90px)"
+ *      ]
  * }
+ * ```
  *
- * `arrFill` interpolates between all missing portions of transform functions, and creates a uniform size transform property,
+ * `arrFill` interpolates between all missing portions of transform functions, and helps create a uniform size transform property,
  * e.g.
  * ```ts
- *
+ * {
+ *      transform: [
+ *          "translateX(50px) scale(0.5)",
+ *          "translateX(60px) scale(1)",
+ *          "translateX(80px) scale(1.5)",
+ *          "translateX(90px) scale(2)"
+ *      ]
+ * }
  * ```
  */
 export declare const arrFill: (arr: any[] | any[][], maxLen?: number) => any;
@@ -103,13 +70,13 @@ export declare const arrFill: (arr: any[] | any[][], maxLen?: number) => any;
  * ParseTransformableCSSProperties({
  *      // It will automatically add the "px" units for you, or you can write a string with the units you want
  *      translate3d: [
- *          "25, 35, 60%",
+ *          "25 35 60%",
  *          [50, "60px", 70],
  *          ["70", 50]
  *      ],
- *      translate: "25, 35, 60%",
+ *      translate: "25 35 60%",
  *      translateX: [50, "60px", "70"],
- *      translateY: ["50, 60", "60"], // Note: this will actually result in an error, make sure to pay attention to where you are putting strings and commas
+ *      translateY: ["50, 60", "60"], // Note: this will actually result in an error, make sure to pay attention to where you are putting commas
  *      translateZ: 0,
  *      perspective: 0,
  *      opacity: "0, 5",
@@ -127,13 +94,38 @@ export declare const arrFill: (arr: any[] | any[][], maxLen?: number) => any;
  *      // String won't be split into array, they will be wrappeed in an Array
  *      // It will transform border-left to camelCase "borderLeft"
  *      "border-left": 50,
- *      "offset-rotate": "10, 20",
+ *      "offset-rotate": "10 20",
  *      margin: 5,
  *
  *      // When writing in this formation you must specify the units
  *      padding: "5px 6px 7px"
  * })
  *
+ * // On Chromium based browsers, e.g. Chrome, Edge, Brave, Opera, etc... or browsers that support `CSS.registerProperty` this will be the result
+ * //= {
+ * //=      "--translate3d0": [ "25px", "50px", "70px" ],
+ * //=      "--translate3d1": [ "35px", "60px", "50px" ],
+ * //=      "--translate3d2": [ "60%", "70px" ],
+ * //=      "--translate0": [ "25px" ],
+ * //=      "--translate1": [ "35px" ],
+ * //=      "--translateX": [ "50px", "60px", "70px" ],
+ * //=      "--translateY": [ "50,,60", "60px" ],
+ * //=      "--translateZ": [ "0px" ],
+ * //=      "--rotate3d0": [ "1deg", "2deg", "2deg" ],
+ * //=      "--rotate3d1": [ "2deg", "4deg", "4deg" ],
+ * //=      "--rotate3d2": [ "5deg", "6deg", "6deg" ],
+ * //=      "--rotate3d3": [ "3deg", "45turn", "-1rad" ],
+ * //=      "--scale0": [ "1", "2" ],
+ * //=      "--scale1": [ "2", "1" ],
+ * //=      "--perspective": [ "0px" ],
+ * //=      "opacity": [ "0, 5" ],
+ * //=      "borderLeft": [ "50px" ],
+ * //=      "offsetRotate": [ "10deg", "20deg" ],
+ * //=      "margin": [ "5px" ],
+ * //=      "padding": [ "5px", "6px", "7px" ]
+ * //= }
+ *
+ * // Browsers that don't support `CSS.registerProperty` will result in the following, namely Firefox and Safari
  * //= {
  * //=   transform: [
  * //=       // `translateY(50, 60)` will actually result in an error
@@ -149,17 +141,19 @@ export declare const arrFill: (arr: any[] | any[][], maxLen?: number) => any;
  * //=   margin: ["5px"],
  * //=   padding: ["5px 6px 7px"]
  * //= }
+ *
+ * // The key difference between the two is that the former will allow other animations to be used to
+ * // manipulate multiple different transforms at the same time,
+ * // while the latter will not, and must continously update the transform property,
+ * // meaning that new animations will always override the previous ones on the same element,
+ * // on browsers that *don't* support `CSS.registerProperty`
  * ```
  *
  * @returns
  * an object with a properly formatted `transform` and `opactity`, as well as other unformatted CSS properties
  * ```
  */
-export declare const ParseTransformableCSSProperties: (properties: ICSSProperties) => {
-    transform: string[];
-} & {
-    [x: string]: any;
-};
+export declare const ParseTransformableCSSProperties: (properties: ICSSProperties) => ICSSProperties;
 /**
  * Similar to {@link ParseTransformableCSSProperties} except it transforms the CSS properties in each Keyframe
  * @param keyframes - an array of keyframes with transformable CSS properties
@@ -168,7 +162,11 @@ export declare const ParseTransformableCSSProperties: (properties: ICSSPropertie
  */
 export declare const ParseTransformableCSSKeyframes: (keyframes: (ICSSComputedTransformableProperties & Keyframe)[]) => ({
     transform: string;
-} & {
-    [property: string]: string | number;
+} & ({
+    [x: string]: any;
+} | {
+    [x: string]: (TypeSingleValueCSSProperty | TypeSingleValueCSSProperty[]) & (string | number);
     composite?: CompositeOperationOrAuto;
-})[];
+    easing?: string;
+    offset?: number;
+}))[];

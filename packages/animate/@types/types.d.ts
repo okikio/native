@@ -1,8 +1,7 @@
 import type { KebabCase, CamelCase, KebabCasedProperties } from "type-fest";
-import type colors from "./colors";
 export declare type TypeAnimationTarget = string | Node | NodeList | HTMLCollection | HTMLElement[] | TypeAnimationTarget[];
 export declare type TypeCallbackArgs = [number, number, HTMLElement];
-export declare type TypeGeneric = boolean | object | string | number | keyof typeof colors;
+export declare type TypeGeneric = boolean | object | string | number;
 export declare type TypeCSSLikeKeyframe = {
     [key: string]: Keyframe & ICSSComputedTransformableProperties;
 };
@@ -64,7 +63,7 @@ export declare type TypeMissingCSSProperties = {
     maskSize?: number | string | (string | number)[] | TypeCallback;
     maxLines?: number | string | (string | number)[] | TypeCallback;
     offsetPosition?: number | string | (string | number)[] | TypeCallback;
-    scrollbarColor?: string | string[] | keyof typeof colors | Array<keyof typeof colors> | TypeCallback;
+    scrollbarColor?: string | string[] | TypeCallback;
 } & {
     [K in TypeAnimatableCSSProperties]?: TypeAnimationOptionTypes;
 };
@@ -569,6 +568,4 @@ export interface ICSSComputedTransformableProperties {
     skew?: TypeSingleValueCSSProperty | Array<TypeSingleValueCSSProperty>;
     skewX?: TypeSingleValueCSSProperty;
     skewY?: TypeSingleValueCSSProperty;
-    matrix?: TypeSingleValueCSSProperty | Array<TypeSingleValueCSSProperty>;
-    matrix3d?: TypeSingleValueCSSProperty | Array<TypeSingleValueCSSProperty>;
 }

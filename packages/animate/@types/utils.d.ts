@@ -11,12 +11,20 @@ export declare const mapObject: (obj: object, fn: (value: any, key: any, obj: an
 /** Converts values to strings */
 export declare const toStr: (input: any) => string;
 /**
+ * Returns the unit of a string, it does this by removing the number in the string
+ */
+export declare const getUnit: (str: string | number) => string;
+/**
+  Convert value to string, then trim any extra white space and line terminator characters from the string.
+*/
+export declare const trim: (str: string) => string;
+/**
  * Convert the input to an array
- * For strings split them at commas
+ * For strings if type == "split", split the string at spaces, if type == "wrap" wrap the string in an array
  * For array do nothing
  * For everything else wrap the input in an array
  */
-export declare const toArr: (input: any) => any[];
+export declare const toArr: (input: any, type?: string) => any[];
 /**
  * Checks if a value is valid/truthy; it counts empty arrays and strings as falsey,
  * as well as null, undefined, and NaN, everything else is valid
@@ -78,7 +86,3 @@ export declare const pick: (keys: string[], obj: {
  * returns the new array of grouped elements
  */
 export declare const transpose: (...args: (any | any[])[]) => any[];
-/**
- * Returns the unit of a string, it does this by removing the number in the string
- */
-export declare const getUnit: (str: string | number) => string;

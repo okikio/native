@@ -179,10 +179,6 @@ export declare class Animate {
      */
     timelineOffset: number;
     /**
-     * States whether autoplay is allowed for this Animat instance
-    */
-    autoplay: boolean;
-    /**
      * The Element the mainAnimation runs on
      */
     mainElement: HTMLElement;
@@ -413,16 +409,12 @@ export declare class Animate {
      * Update the options for all targets
      *
      * _**Note**: `KeyframeEffect` support is really low, so, I am suggest that you avoid using the `updateOptions` method, until browser support for `KeyframeEffect.updateTiming(...)` and `KeyframeEffefct.setKeyframes(...)` is better_
-     *
-     * @beta
      */
     updateOptions(options?: IAnimationOptions): void;
     /**
      * Adds a target to the Animate instance, and update the animation options with the change
      *
      * _**Note**: `KeyframeEffect` support is really low, so, I am suggest that you avoid using the `add` method, until browser support for `KeyframeEffect.updateTiming(...)` and `KeyframeEffefct.setKeyframes(...)` is better_
-     *
-     * @beta
      */
     add(target: HTMLElement): this;
     /**
@@ -435,8 +427,6 @@ export declare class Animate {
      * Removes a target from an Animate instance, and update the animation options with the change
      *
      * _**Note**: `KeyframeEffect` support is really low, so, I am suggest that you avoid using the `remove` method, until browser support for `KeyframeEffect.updateTiming(...)` and `KeyframeEffefct.setKeyframes(...)` is better_
-     *
-     * @beta
      */
     remove(target: HTMLElement): this;
     /**

@@ -1,5 +1,5 @@
 import { Animate } from "./animate";
-import Manager from "@okikio/manager";
+import { Manager } from "@okikio/manager";
 import type { IAnimationOptions } from "./types";
 import type { TypeCustomEasingOptions } from "./custom-easing";
 import type { TypeListenerCallback } from "@okikio/emitter";
@@ -62,7 +62,7 @@ export declare const createTweenOptions: (options?: IAnimationOptions & TypeCust
 export declare class AnimateAttributes extends DestroyableAnimate {
     /**
      * Stores all updateListeners for the corresponding tweens, to avoid leaving unused listeners
-    */
+     */
     updateListeners: Manager<number, TypeListenerCallback>;
     updateOptions(options?: IAnimationOptions & TypeCustomEasingOptions): this;
 }

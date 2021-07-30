@@ -3,8 +3,6 @@ export declare const limit: (value: number, min: number, max: number) => number;
  * The format to use when defining custom easing functions
  */
 export declare type TypeEasingFunction = (t: number, params?: (string | number)[], duration?: number) => number;
-export declare type TypeColor = string | number | Array<string | number>;
-export declare type TypeRGBAFunction = (color: TypeColor) => number[];
 /**
   Easing Functions from anime.js, they are tried and true, so, its better to use them instead of other alternatives
 */
@@ -117,11 +115,7 @@ export declare const interpolateString: (t: number, values: (string | number)[],
 
   Make sure to read {@link interpolateNumber}.
 */
-export declare const interpolateColor: (t: number, values: TypeColor[], decimal?: number) => number[];
-/**
-  Convert value to string, then trim any extra white space and line terminator characters from the string.
-*/
-export declare const trim: (str: string) => string;
+export declare const interpolateColor: (t: number, values: string[], decimal?: number) => number[];
 /**
   Converts "10px solid red #555   rgba(255, 0,5,6, 7)  "
   to [ '10px', 'solid', 'red', '#555', 'rgba(255, 0,5,6, 7)' ]
@@ -133,7 +127,7 @@ export declare const ComplexStrtoArr: (str: string) => string[];
 
   Make sure to read {@link interpolateNumber}, {@link interpolateString}, {@link interpolateColor}, and {@link interpolateUsingIndex}.
 */
-export declare const interpolateComplex: (t: number, values: (string | number | TypeColor)[], decimal?: number) => any;
+export declare const interpolateComplex: (t: number, values: (string | number)[], decimal?: number) => any;
 /**
  * Custom Easing has 3 properties they are `easing` (all the easings from [#easing](#easing) are supported on top of custom easing functions, like spring, bounce, etc...), `numPoints` (the size of the Array the Custom Easing function should create), and `decimal` (the number of decimal places of the values within said Array).
  *
@@ -291,7 +285,7 @@ export declare const EasingPts: ({ easing, numPoints, duration }?: TypeCustomEas
  *
  * _**Note**: you can also use camelCase when defining easing functions, e.g. `inOutCubic` to represent `in-out-cubic`_
  *
- * _**Suggestion**: if you decide to use CustomEasing on one CSS property, I suggest using CustomEasing or {@link ApplyCustomEasing} on the rest_
+ * _**Suggestion**: if you decide to use CustomEasing on one CSS property, I suggest using CustomEasing or {@link ApplyCustomEasing} on the rest (this is no longer necessary, but for the sake of readability it's better to do)_
  *
  *  e.g.
  *  ```ts
@@ -383,7 +377,7 @@ export declare const SpringEasing: (values: (string | number)[], options?: TypeC
  *        "background-color": ["#616aff", "white"],
  *
  *        // You don't need to enter any parameters, you can just use the default values
- *        easing: "spring",kkk
+ *        easing: "spring",
  *
  *        // You can change the size of Array for the CustomEasing function to generate
  *        numPoints: 200,

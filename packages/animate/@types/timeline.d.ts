@@ -8,48 +8,102 @@ import type { TypeEventInput, TypeListenerCallback } from "@okikio/emitter";
  */
 export declare const relativeTo: (input: string | number, base: number) => number;
 /**
+ * Timeline acts as a playback manager for a set of Animate instances.
+ * It is responsible for controlling the chronological order of Animate instances, as well as the general playback state of all Animate instances.
+ *
+ * It's used like this,
+ * ```ts
+ * import { Timeline, Animate, CustomEasing } from "@okikio/animate";
+ *
+ * new Timeline({
+ *    // These options are passed to each Animate instance that is added to the timeline,
+ *    // this is the only way to pass animation options to the Animate instance.
+ *    target: ".div",
+ *
+ *    // You don't set the timeline options at all, you set the animation options for each Animate instance attached to the timeline,
+ *    // you use the `.updateTimings()` method when you update an Animate instance.
+ *    duration: 1000,
+ * })
+ *
+ * // You add Animate instances to a timeline using the `.add(AnimationOptions, TimelineOffset)` method (`.add()` is chainable)
+ * .add({
+ *    // You can set the animation options for each Animate instance,
+ *    // these options are passed to the Animate instance when it's created.
+ *
+ *    translateX: 500,
+ *    scale: 2,
+ *    // ...
+ * })
+ *
+ * .add(
+ *      new Animate({
+ *          translateX: CustomEasing([0, 500])
+ *      }),
+ *
+ * // The timeline offset states where relative to the other Animate instances to place the new Animate instance on the chronological timeline,
+ * // by default you can use string and numbers as relative timeline offsets, to use absolute timeline offsests you need to use this format "= number" as,
+ * // you timeline offset, e.g. `new Timeline(...).add({ ... }, "= 0")`, start at absolute `0` (the beginning) of the timeline
+ * // NOTE: if you can use negative "relative" and "absolute" timeline offsets, so, "-50" and "= -50" are viable timeline offsets
+ *
+ * // Start at relative "50" (add "50") to the position of the last Animate instance in the timelines chronologial order
+ * 50)
+ *
+ * // You can also pass a function that returns an Animate instance
+ * .add((() => {
+ *      let options = {
+ *          width: 600,
+ *          rotate: 45
+ *      };
+ *
+ *      return new Animate(options);
+ * })(), "= 50"); // Start at absolute "50" of the timeline (add "50" to the start of the timeline)
+ * ```
+ *
+ * _**NOTE**: `Timeline` does not in any way replace the {@link IAnimationOptions.timeline}, it supplements it, with a format similar to [animejs's timeline](https://animejs.com/documentation/#timelineBasics).
+ * As of the writing this documentations, devs are not yet able to interact with [AnimationTimeline](https://developer.mozilla.org/en-US/docs/Web/API/AnimationTimeline), in a way that create timeline like effects, aside from [ScrollTimeline](https://drafts.csswg.org/scroll-animations-1/#scroll-driven-animations), thus,
+ * this the `Timeline` class should tide us over until such a day, that devs can use `AnimationTimeline` to create cool animations_
  *
  * @beta WIP
  */
 export declare class Timeline {
     /**
-     * The main Animate instance, it controls playback, speed, and generally cause the AnimateTimeline to move.
+     * The main Animate instance, it controls playback, speed, and generally cause the Timeline to move.
     */
     mainInstance: Animate;
     /**
-     * Stores all Animate instances that are attached to the AnimateTimeline
+     * Stores all Animate instances that are attached to the Timeline
      */
     animateInstances: Manager<number, Animate>;
     /**
      * The total duration of the mainInstance
      */
     get totalDuration(): number;
-    set totalDuration(value: number);
+    set totalDuration(num: number);
     /**
      * The maximum duration of the mainInstance
      */
     get maxDuration(): number;
-    set maxDuration(value: number);
+    set maxDuration(num: number);
     /**
      * The smallest delay out of the mainInstance
      */
     get minDelay(): number;
-    set minDelay(value: number);
+    set minDelay(num: number);
     /**
      * The smallest speed out of the mainInstance
      */
     get maxSpeed(): number;
-    set maxSpeed(value: number);
+    set maxSpeed(num: number);
     /**
      * The largest end delay out of the mainInstance
      */
     get maxEndDelay(): number;
-    set maxEndDelay(value: number);
+    set maxEndDelay(num: number);
     /**
      * The timelineOffset of the mainInstance
      */
     get timelineOffset(): number;
-    set timelineOffset(value: number);
+    set timelineOffset(num: number);
     /**
      * The options from the mainInstance
      */
@@ -67,7 +121,7 @@ export declare class Timeline {
     get promise(): Promise<Animate[]>;
     constructor(options?: IAnimationOptions);
     /**
-     * Allows a user to add a new Animate instances to an AnimateTimeline
+     * Allows a user to add a new Animate instances to an Timeline
      * @param options - you can add an Animate instance by either using animation options or by adding a pre-existing Animate Instance.
      * @param timelineOffset - by default the timelineOffset is 0, which means the Animation will play in chronological order of when it was defined; a different value, specifies how many miliseconds off from the chronological order before it starts playing the Animation. You can also use absolute values, for exmple, if you want your animation to start at 0ms, setting timelineOffset to 0, or "0" will use relative offsets, while using "= 0" will use absolute offsets. Read more on {@link relativeTo}
      */
@@ -75,7 +129,7 @@ export declare class Timeline {
     /** Update the timeline's duration, endDelay, etc... based on the `animateInstances` */
     updateTiming(): this;
     /**
-     * Remove an Animate instance from the AnimateTimeline using it's index in animateInstances
+     * Remove an Animate instance from the Timeline using it's index in animateInstances
     */
     remove(index: number): Animate | null;
     /**
@@ -175,4 +229,7 @@ export declare class Timeline {
      */
     get [Symbol.toStringTag](): string;
 }
+/**
+ * Creates a new {@link Timeline} instance, and passes the options to the constructor
+*/
 export declare const timeline: (options?: IAnimationOptions) => Timeline;

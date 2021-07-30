@@ -5,7 +5,9 @@
     "sideEffects": false,
     "description": "A superset of the Map class, it gives the Map class superpowers.",
     "publishConfig": {
+        "umd": "manager",
         "access": "public",
+        "legacy": "lib/api.js",
         "main": "lib/api.cjs",
         "types": "@types/api.d.ts",
         "browser": "lib/api.mjs",
@@ -30,12 +32,10 @@
         "@types"
     ],
     "scripts": {
-        "build": "del-cli lib/ && node ./build",
-        "watch": "del-cli lib/ && node ./build --watch",
-        "dts": "del-cli @types/ && tsc --project dts.tsconfig.json",
+        "dts": "rm -r -f @types/ && tsc --project tsconfig.json",
         "test": "jest --maxWorkers=1",
         "test-dev": "jest --maxWorkers=1 --watch --verbose false",
-        "pre-release": "npm run build && npm test && npm run dts"
+        "pre-release": "npm test && npm run dts"
     },
     "repository": {
         "type": "git",
@@ -61,16 +61,12 @@
     "homepage": "https://github.com/okikio/native/tree/master/packages/manager#readme",
     "devDependencies": {
         "@types/jest": "^26.0.24",
-        "del-cli": "^4.0.1",
-        "esbuild": "^0.12.15",
+        "esbuild": "^0.12.17",
         "esbuild-jest": "^0.5.0",
-        "gzip-size": "^6.0.0",
         "jest": "^27.0.6",
         "jest-chain": "^1.1.5",
         "node-fetch": "^2.6.1",
-        "pnpm": "^6.10.2",
-        "pretty-bytes": "^5.6.0",
-        "typescript": "~4.4.0-beta",
+        "typescript": "^4.4.0-beta",
         "ultra-runner": "^3.10.5"
     },
     "gitHead": "ad422076cdb57d570426f786886129d5bca2f90f"
