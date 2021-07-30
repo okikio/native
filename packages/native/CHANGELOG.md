@@ -1,5 +1,11 @@
 # Changelog
 
+## 3.1.0
+
+### Minor Changes
+
+- Pre-release
+
 ## 3.0.0
 
 ### Major Changes
