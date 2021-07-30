@@ -2,8 +2,7 @@
 import { ApplyCustomEasing, ComplexEasingSyntax, EasingFunctionKeys, GetEasingFunction, interpolateComplex } from "./custom-easing";
 import { Animate, parseOptions, ALL_TIMING_KEYS, EasingKeys, GetEase, getTargets } from "./animate";
 import { pick, omit, mapObject, isValid } from "./utils";
-
-import Manager from "@okikio/manager";
+import { Manager } from "@okikio/manager";
 
 import type { IAnimationOptions } from "./types";
 import type { TypeCustomEasingOptions, TypeEasingFunction } from "./custom-easing";
@@ -118,9 +117,8 @@ export const createTweenOptions = (options: IAnimationOptions & TypeCustomEasing
 export class AnimateAttributes extends DestroyableAnimate {
     /** 
      * Stores all updateListeners for the corresponding tweens, to avoid leaving unused listeners
-    */
+     */
     public updateListeners = new Manager<number, TypeListenerCallback>();
-    
     public updateOptions(options: IAnimationOptions & TypeCustomEasingOptions = {}) {
         let optionsObj = parseOptions(options) as IAnimationOptions & TypeCustomEasingOptions;
 
@@ -129,7 +127,6 @@ export class AnimateAttributes extends DestroyableAnimate {
         super.updateOptions(opts);
 
         let Properties = omit(ALL_TIMING_KEYS, optionsObj);
-
         try {
             this.updateListeners = this.updateListeners ?? new Manager<number, TypeListenerCallback>()
             this.updateListeners.forEach((listener, index) => {
