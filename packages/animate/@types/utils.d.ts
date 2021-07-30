@@ -24,7 +24,7 @@ export declare const trim: (str: string) => string;
  * For array do nothing
  * For everything else wrap the input in an array
  */
-export declare const toArr: (input: any, type?: string) => any[];
+export declare const toArr: (input: any) => any[];
 /**
  * Checks if a value is valid/truthy; it counts empty arrays and strings as falsey,
  * as well as null, undefined, and NaN, everything else is valid
