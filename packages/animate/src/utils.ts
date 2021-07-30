@@ -13,7 +13,7 @@ export const isEmpty = (obj: any) => {
 /**
  * Acts like array.map(...) but for functions
  */
-export const mapObject = (obj: object, fn: (value, key, obj) => any) => {
+export const mapObject = (obj: object, fn: (value: any, key: any, obj: any) => any) => {
     let keys = Object.keys(obj);
     let key: any, value: any, result = {};
     for (let i = 0, len = keys.length; i < len; i++) {
@@ -29,14 +29,27 @@ export const mapObject = (obj: object, fn: (value, key, obj) => any) => {
 export const toStr = (input: any) => `` + input;
 
 /**
+ * Returns the unit of a string, it does this by removing the number in the string 
+ */
+export const getUnit = (str: string | number) => {
+    let num = parseFloat(str as string);
+    return toStr(str).replace(toStr(num), "");
+}
+
+/** 
+  Convert value to string, then trim any extra white space and line terminator characters from the string. 
+*/
+export const trim = (str: string) => toStr(str).trim();
+
+/**
  * Convert the input to an array
- * For strings split them at commas
+ * For strings if type == "split", split the string at spaces, if type == "wrap" wrap the string in an array
  * For array do nothing
  * For everything else wrap the input in an array
  */
 export const toArr = (input: any): any[] => {
     if (Array.isArray(input) || typeof input == "string") {
-        if (typeof input == "string") input = input.split(",");
+        if (typeof input == "string") input = input.split(/\s+/);
         return input;
     }
 
@@ -161,12 +174,4 @@ export const transpose = (...args: (any | any[])[]) => {
     }
 
     return result;
-}
-
-/**
- * Returns the unit of a string, it does this by removing the number in the string 
- */
-export const getUnit = (str: string | number) => {
-    let num = parseFloat(str as string);
-    return toStr(str).replace(toStr(num), "");
 }
