@@ -2,13 +2,13 @@
 
 [![npm](https://img.shields.io/npm/v/@okikio/animate?style=for-the-badge)](https://www.npmjs.com/package/@okikio/animate) [![npm bundle size](https://img.shields.io/bundlephobia/minzip/@okikio/animate?style=for-the-badge)](https://bundlephobia.com/package/@okikio/animate) ![GitHub issues](https://img.shields.io/github/issues/okikio/native?style=for-the-badge) ![GitHub](https://img.shields.io/github/license/okikio/native?style=for-the-badge)
 
-An animation library for the modern web. Inspired by animate plus, and animejs, [@okikio/animate](https://www.skypack.dev/view/@okikio/animate) is a Javascript animation library focused on performance and ease of use. It utilizes the Web Animation API to deliver fluid animations at a *semi-small* size, it weighs **~13.3 KB** (minified and gzipped), since `@okiko/animate` is treeshakeable, the minimum usable file size you can reach is **~7.66 KB** (minified and gzipped).
+An animation library for the modern web. Inspired by animate plus, and animejs, [@okikio/animate](https://www.skypack.dev/view/@okikio/animate) is a Javascript animation library focused on performance and ease of use. It utilizes the Web Animation API to deliver fluid animations at a *semi-small* size, it weighs **~11.27 KB** (minified and gzipped), since `@okiko/animate` is treeshakeable, the minimum usable file size you can reach is **~7.07 KB** (minified and gzipped).
 
 _**A quick note on size**: After I added [CustomEasing](#custom-easing) functionality the total library doubled in size, so, when I mean minimum size, I mean when you are only using the `animate` function or the `Animate` class_
 
 I suggest reading the in depth article I made on CSS-Tricks about `@okikio/animate`, <https://css-tricks.com/how-i-used-the-waapi-to-build-an-animation-library/>, it will help you determine if `@okikio/animate` is right for your project.
 
-_**Note**: [Custom Easing](#custom-easing), [staggers](#stagger), and [timelines](#animatetimeline) are now supported._
+_**Note**: [Custom Easing](#custom-easing), [staggers](#stagger), and [timelines](#timeline-class) are now supported._
 
 > *To properly understand `@okikio/animate`, please read up on the [Web Animation API](https://developer.mozilla.org/en-US/docs/Web/API/Element/animate) on MDN.*
 

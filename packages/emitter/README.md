@@ -2,7 +2,7 @@
 
 [![npm](https://img.shields.io/npm/v/@okikio/emitter?style=for-the-badge)](https://www.npmjs.com/package/@okikio/emitter) [![npm bundle size](https://img.shields.io/bundlephobia/minzip/@okikio/emitter?style=for-the-badge)](https://bundlephobia.com/package/@okikio/emitter) [![GitHub](https://img.shields.io/github/license/okikio/native?style=for-the-badge)](../../LICENSE)
 
-A small Event Emitter written in typescript with performance and ease of use in mind, it weighs **~838 B** (minified and gzipped).
+A small Event Emitter written in typescript with performance and ease of use in mind, it weighs **~834 B** (minified and gzipped).
 
 ## Table of Contents
 

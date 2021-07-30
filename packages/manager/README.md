@@ -2,7 +2,7 @@
 
 [![npm](https://img.shields.io/npm/v/@okikio/manager?style=for-the-badge)](https://www.npmjs.com/package/@okikio/manager) [![npm bundle size](https://img.shields.io/bundlephobia/minzip/@okikio/manager?style=for-the-badge)](https://bundlephobia.com/package/@okikio/manager) [![GitHub](https://img.shields.io/github/license/okikio/native?style=for-the-badge)](../../LICENSE)
 
-A superset of the Map class, it extends the Map classes capabilities with awesome new features; it weighs **~331 B** (minified and gzipped).
+A superset of the Map class, it extends the Map classes capabilities with awesome new features; it weighs **~325 B** (minified and gzipped).
 
 ## Table of Contents
 
