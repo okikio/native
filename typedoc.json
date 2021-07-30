@@ -7,5 +7,6 @@
     ],
     "packages": ".",
     "name": "The Native Initiative",
-    "out": "api"
+    "out": "api",
+    "readme": "none" 
 }
