@@ -1,18 +1,8 @@
 # @okikio/emitter
 
-[![npm](https://img.shields.io/npm/v/@okikio/emitter?style=for-the-badge)](https://www.npmjs.com/package/@okikio/emitter) [![npm bundle size](https://img.shields.io/bundlephobia/minzip/@okikio/emitter?style=for-the-badge)](https://bundlephobia.com/package/@okikio/emitter) [![GitHub](https://img.shields.io/github/license/okikio/native?style=for-the-badge)](../../LICENSE)
+[NPM](https://www.npmjs.com/package/@okikio/emitter) <span style="padding-inline: 1rem">|</span> [API Guide](./api.md) <span style="padding-inline: 1rem">|</span> [Licence](../../packages/emitter/LICENSE) 
 
 A small Event Emitter written in typescript with performance and ease of use in mind, it weighs **~834 B** (minified and gzipped).
-
-
-## Table of Contents
-
-- [@okikio/emitter](#okikioemitter)
-  - [Table of Contents](#table-of-contents)
-  - [Installation](#installation)
-  - [Getting started](#getting-started)
-  - [Browser & Node Support](#browser--node-support)
-  - [Contributing](#contributing)
 
 ## Installation
 
@@ -20,9 +10,9 @@ You can install [@okikio/emitter](https://www.skypack.dev/view/@okikio/emitter) 
 
 You can use `@okikio/emitter` on the web via:
 
-- [https://unpkg.com/@okikio/emitter](https://unpkg.com/@okikio/emitter@latest),
-- [https://cdn.skypack.dev/@okikio/emitter](https://cdn.skypack.dev/@okikio/emitter) or
-- [https://cdn.jsdelivr.net/npm/@okikio/emitter](https://cdn.jsdelivr.net/npm/@okikio/emitter).
+- [https://unpkg.com/@okikio/emitter](https://unpkg.com/@okikio/emitter@latest)
+- [https://cdn.skypack.dev/@okikio/emitter](https://cdn.skypack.dev/@okikio/emitter)
+- [https://cdn.jsdelivr.net/npm/@okikio/emitter](https://cdn.jsdelivr.net/npm/@okikio/emitter)
 
 Once installed it can be used like this:
 
@@ -73,7 +63,7 @@ Read through the [API guide](./api.md) to learn more.
 | ------ | ---- | ------- | ---- |
 | > 38   | > 12 | > 13    | > 11 |
 
-Learn about polyfilling, bundling, and more in the [platform support guide](./browser-and-node-support.md).
+Learn about polyfilling, bundling, and more in the [platform support guide](./platform-support.md).
 
 ## Contributing
 
