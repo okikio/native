@@ -15,7 +15,7 @@ You can try out `@okikio/animate` using Gitpod:
 By default Gitpod will start the dev script for you, but if you need to restart the dev script you can do so by typing into the terminal.
 
 ```bash
-pnpm demo
+pnpm start
 ```
 
 Once Gitpod has booted up, click on the `@okikio/animate (no-pjax)` button in the preview, then go to [build/pug/animate.pug](../../build/pug/animate.pug) and [build/ts/animate.ts](../../build/ts/animate.ts) and start tweaking and testing to your hearts content.
@@ -34,7 +34,7 @@ pnpm build
 and then you can test/demo it using this command,
 
 ```bash
-pnpm demo 
+pnpm start 
 ```
 
 Once it has booted up, go to [build/pug/](../../build/pug/) and [build/ts/](../../build/ts/) and start tweaking and testing to your hearts content.

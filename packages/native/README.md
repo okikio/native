@@ -23,7 +23,7 @@ You can try out `@okikio/native` using Gitpod:
 By default Gitpod will start the dev script for you, but if you need to restart the dev script you can do so by typing into the terminal.
 
 ```bash
-pnpm demo
+pnpm start
 ```
 
 Once Gitpod has booted up, go to [../../build/pug/](../../build/pug/) and [../../build/ts/](../../build/ts/) and start tweaking and testing to your hearts content.
@@ -39,7 +39,7 @@ npm install -g pnpm && pnpm install -g ultra-runner && pnpm install && pnpm buil
 and then you can test/demo it using this command,
 
 ```bash
-pnpm demo 
+pnpm start 
 ```
 
 Once it has booted up, go to [../../build/pug/](../../build/pug/) and [../../build/ts/](../../build/ts/) and start tweaking and testing to your hearts content.

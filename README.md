@@ -51,7 +51,7 @@ Go to [okikio.github.io/native/api](https://okikio.github.io/native/api), for de
 By default Gitpod will start the dev script for you, but if you need to restart the dev script you can do so by typing into the terminal.
 
 ```bash
-pnpm demo
+pnpm start
 ```
 
 Once Gitpod has booted up, go to the [build/pug/](./build/pug/) and [build/ts/](./build/ts/) folders to try out the packages under the `native` initiative.
