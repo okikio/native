@@ -7,7 +7,7 @@
 - Firefox > 13
 - IE > 11
 
-`@okikio/manager` doesn't rely on any browser api's, so, you can use it in Node js without much worry.
+`@okikio/manager` doesn't rely on any browser specific api's, so, you can use it in Node js without much worry.
 
 ## Polyfills & Bundling
 
