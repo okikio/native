@@ -9,11 +9,11 @@ If there is something I missed, a mistake, or a feature you would like added ple
 
 ### Using Gitpod
 
-You can try out `@okikio/manager` using Gitpod:
+You can try out `@okikio/manager` using [Gitpod](https://www.gitpod.io/) (it's a free to use online IDE):
 
 [![Open In Gitpod](https://gitpod.io/button/open-in-gitpod.svg)](https://gitpod.io/#https://github.com/okikio/native/blob/beta/packages/manager/README.md)
 
-By default Gitpod will start the dev script for you, but if you need to restart the dev script you can do so by typing into the terminal.
+You can start the dev script by typing into the terminal,
 
 ```bash
 pnpm --filter "@okikio/manager" exec -- npm test --watch
@@ -29,7 +29,6 @@ You can run `@okikio/manager` locally by first installing some packages via thes
 npm install -g pnpm
 pnpm install -g ultra-runner
 pnpm install
-pnpm build
 ```
 
 You can build your changes/contributions using,
