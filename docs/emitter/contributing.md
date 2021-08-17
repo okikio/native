@@ -27,7 +27,7 @@ You can run `@okikio/emitter` locally by first installing some packages via thes
 
 ```bash
 npm install -g pnpm
-pnpm install -g gulp ultra-runner
+pnpm install -g ultra-runner
 pnpm install
 pnpm build
 ```

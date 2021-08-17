@@ -16,4 +16,4 @@ FROM mcr.microsoft.com/vscode/devcontainers/typescript-node:0-${VARIANT}
 # RUN su node -c "npm install -g <your-package-list -here>"
 
 RUN su node -c "npm install -g pnpm"
-Run pnpm install -g gulp ultra-runner && pnpm install && pnpm build
+Run pnpm install -g ultra-runner && pnpm install && pnpm build

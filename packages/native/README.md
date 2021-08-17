@@ -33,7 +33,7 @@ Once Gitpod has booted up, go to [../../build/pug/](../../build/pug/) and [../..
 You can run `@okikio/native` locally by first installing some packages via these commands into your terminal,
 
 ```bash
-npm install -g pnpm && pnpm install -g gulp ultra-runner && pnpm install && pnpm build 
+npm install -g pnpm && pnpm install -g ultra-runner && pnpm install && pnpm build 
 ```
 
 and then you can test/demo it using this command,

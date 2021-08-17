@@ -16,4 +16,4 @@ install:
   - pnpm install
 
 script:
-  - pnpm test && pnpm dts && pnpm build && pnpm demo-build
+  - pnpm test && pnpm dts && pnpm build && pnpm docs

@@ -11,11 +11,10 @@
         "build": "rm -r -f packages/**/lib/ && node ./build",
         "start": "astro dev",
         "docs": "astro build",
-        "demo-build": "gulp build",
         "dts": "ultra -r dts",
         "test": "ultra -r test",
         "test-dev": "ultra -r test-dev",
-        "pre-release": "ultra -r pre-release && pnpm demo-build && pnpm typedoc",
+        "pre-release": "ultra -r pre-release && pnpm docs && pnpm typedoc",
         "changelog": "changeset version && git add -A && git commit -m 'chore(release): :rocket:'",
         "release": "pnpm -r publish --tag latest"
     },

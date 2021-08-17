@@ -29,9 +29,9 @@ github:
 tasks:
   - init: >
       npm install -g pnpm &&
-      pnpm install -g gulp ultra-runner &&
+      pnpm install -g ultra-runner &&
       pnpm install
     command: >
       npm install -g pnpm &&
-      pnpm install -g gulp ultra-runner &&
+      pnpm install -g ultra-runner &&
       pnpm build 
