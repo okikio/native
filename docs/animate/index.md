@@ -63,7 +63,7 @@ const { default: anime } = window.animate; // LOL
 
 ## Demo
 
-I built a small demo showing off the abilities of the `@okikio/animate` library. You can find the files for the demo in [build/](/build) folder. For more info on how to use the demo go to [okikio/native#usage](https://github.com/okikio/native/blob/beta/README.md#usage) on Github.
+I built a small demo showing off the abilities of the `@okikio/animate` library. You can find the files for the demo in the [build](/build) folder. For more info on how to use the demo go to [okikio/native#usage](/packages/native/README.md#usage) on Github.
 
 I recommend using the Gitpod link at the top of the page to get started with development, as it removes the need for setup.
 
@@ -163,11 +163,18 @@ animate({
 
 ## Examples
 
-[![@okikio/animate - playground](https://raw.githubusercontent.com/okikio/native/beta/packages/animate/assets/Web%20Animation%20API%20Library%20Playground.png)](https://codepen.io/collection/rxOEBO) [![@okikio/animate - playground](https://raw.githubusercontent.com/okikio/native/beta/packages/animate/assets/Web%20Animation%20API%20Library%20Playground.png)](https://codepen.io/collection/rxOEBO)
+<a href="https://codepen.io/collection/rxOEBO">
+  <img src="https://raw.githubusercontent.com/okikio/native/beta/packages/animate/assets/Code%20for%20Web%20Animation%20API%20Library%20Playground.png" alt="@okikio/animate - playground code">
+</a>
 
-[Go through this collection of examples for more detailed demos   &#8594;](https://codepen.io/collection/rxOEBO)
+<video controls width="250">
+<source src="/packages/animate/assets/getting%20started%20video.mp4"
+        type="video/mp4">
 
-Check out the [examples page](/docs/animate/examples.md) to view more examples, and showcases of `@okikio/animate` in production sites.
+Sorry, your browser doesn't support embedded videos.
+</video>
+
+Check out the [examples page](/docs/animate/examples.md) to view more examples and showcases of `@okikio/animate`.
 
 ## Limitations
 
