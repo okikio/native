@@ -19,7 +19,7 @@ You can start the dev script by typing into the terminal,
 pnpm --filter "@okikio/manager" exec -- npm test --watch
 ```
 
-Once Gitpod has booted up, go to [packages/manager/tests/test.ts](../../packages/manager/tests/test.ts) and start tweaking and testing to your hearts content.
+Once Gitpod has booted up, go to [packages/manager/tests/test.ts](/packages/manager/tests/test.ts) and start tweaking and testing to your hearts content.
 
 ### Runing Locally
 
@@ -46,4 +46,4 @@ pnpm --filter "@okikio/manager" test
 pnpm --filter "@okikio/manager" exec -- npm test --watch
 ```
 
-Once it has booted up, go to [packages/manager/tests/test.ts](../../packages/manager/tests/test.ts) and start tweaking and testing to your hearts content.
+Once it has booted up, go to [packages/manager/tests/test.ts](/packages/manager/tests/test.ts) and start tweaking and testing to your hearts content.

@@ -17,7 +17,7 @@ _**Note**: as it really difficult to get access to older versions of these brows
 
 ## Polyfills & Bundling
 
-If you install [@okikio/animate](https://www.skypack.dev/view/@okikio/animate) via [npm](https://www.npmjs.com/package/@okikio/animate) you are most likely going to need [rollup](https://rollupjs.org/) or [esbuild](https://esbuild.github.io/).
+If you install [@okikio/animate](/docs/animate/index.md) via [npm](https://www.npmjs.com/package/@okikio/animate) you are most likely going to need [rollup](https://rollupjs.org/) or [esbuild](https://esbuild.github.io/).
 
 You will most likely need the Web Animation API, Promise, Object.values, Array.prototype.includes and Array.from polyfills.
 
@@ -28,6 +28,6 @@ For a quick polyfill I suggest using both of these on your project.
 
 - [https://cdn.jsdelivr.net/npm/web-animations-js/web-animations-next.min.js](https://cdn.jsdelivr.net/npm/web-animations-js/web-animations-next.min.js).
 
-I suggest checking out the [demo](../../build/ts/webanimation-polyfill.ts) to see how I setup the Web Animation Polyfill*
+I suggest checking out the [demo](/build/ts/webanimation-polyfill.ts) to see how I setup the Web Animation Polyfill*
 
 ***Warning**: polyfilling may not fix animation format bugs, e.g. [composite animations](https://developer.mozilla.org/en-US/docs/Web/API/KeyframeEffect/composite) don't work on older browsers, so, if you use `polyfill.io` and set it to check if the browser supports the feature before applying the polyfill, your project might encounter errors, as the browser may only have partial support of the Web Animation API.*

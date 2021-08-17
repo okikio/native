@@ -6,7 +6,7 @@
 
 _**Note**: `@okikio/native` is treeshakable, so you only need to use the features required for your project and the other portions can be removed. The absolute minimum functional treeshaken size is **~1.75 KB** (minified & gzipped)._
 
-[@okikio/native](https://www.skypack.dev/view/@okikio/native) is a guideline on how to create great web experiences that integrate into the system in a way that feels like a cohesive and native experience.
+[@okikio/native](/docs/native/index.md) is a guideline on how to create great web experiences that integrate into the system in a way that feels like a cohesive and native experience.
 
 The idea behind it is that, when an app feels native, it means that it integrates well into the systems and `just works`, for example, a dark mode that follows the entire system. The `just works` aspect is key to the framework, it should work without the user skipping a beat. On the web this boils down to being performant, efficient, and smooth.
 
@@ -26,7 +26,7 @@ By default Gitpod will start the dev script for you, but if you need to restart 
 pnpm start
 ```
 
-Once Gitpod has booted up, go to [../../build/pug/](../../build/pug/) and [../../build/ts/](../../build/ts/) and start tweaking and testing to your hearts content.
+Once Gitpod has booted up, go to [/build/pug/](/build/pug/) and [/build/ts/](/build/ts/) and start tweaking and testing to your hearts content.
 
 ## Runing Locally
 
@@ -42,7 +42,7 @@ and then you can test/demo it using this command,
 pnpm start 
 ```
 
-Once it has booted up, go to [../../build/pug/](../../build/pug/) and [../../build/ts/](../../build/ts/) and start tweaking and testing to your hearts content.
+Once it has booted up, go to [/build/pug/](/build/pug/) and [/build/ts/](/build/ts/) and start tweaking and testing to your hearts content.
 
 You can build your changes/contributions using,
 
@@ -141,7 +141,7 @@ pnpm build
 
 ## Getting Started
 
-[@okikio/native](https://www.skypack.dev/view/@okikio/native) was inspired by Rezo Zero's Starting Blocks project, and barbajs. Both libraries had a major impact on the development of this project. barbajs is easy to use and elevates the experience of a site with the use of PJAX, while Starting Blocks uses modern apis to create performant but complex web experiences. This project exists as a more flexible alternative to Starting Blocks, but with the same intuitive design and experience (UX/DX) barbajs provides. The framework doesn't need PJAX to function, and best of all if PJAX is enabled it can safely switch back to normal browser controls if something goes wrong.
+[@okikio/native](/docs/native/index.md) was inspired by Rezo Zero's Starting Blocks project, and barbajs. Both libraries had a major impact on the development of this project. barbajs is easy to use and elevates the experience of a site with the use of PJAX, while Starting Blocks uses modern apis to create performant but complex web experiences. This project exists as a more flexible alternative to Starting Blocks, but with the same intuitive design and experience (UX/DX) barbajs provides. The framework doesn't need PJAX to function, and best of all if PJAX is enabled it can safely switch back to normal browser controls if something goes wrong.
 
 This project is called a framework but it is more like a guideline, if all you want is a simple starter project that has PJAX built in then you install the project from [npm](https://www.npmjs.com/package/@okikio/native), but otherwise you download the project into you workspace and tweak it to match your projects needs and remove all the extra fluff you don't want (this project works best with treeshaking, you can use rollup, webpack, or esbuild for this; esbuild is preferred).
 
@@ -149,7 +149,7 @@ This package is built for ES2020, it expects the user to use a build tool to sup
 
 ## Installation
 
-You can install [@okikio/native](https://www.skypack.dev/view/@okikio/native) from [npm](https://www.npmjs.com/package/@okikio/native) via `npm i @okikio/native`, `pnpm i @okikio/native` or `yarn add @okikio/native`.
+You can install [@okikio/native](/docs/native/index.md) from [npm](https://www.npmjs.com/package/@okikio/native) via `npm i @okikio/native`, `pnpm i @okikio/native` or `yarn add @okikio/native`.
 
 You can use `@okikio/native` on the web via:
 
@@ -178,7 +178,7 @@ const { App, PJAX } = window.native;
 
 ## Demo
 
-Located in [./build](https://github.com/okikio/native/tree/beta/build), you will find multiple build files that can help you create your setup. The [./pug folder](https://github.com/okikio/native/tree/beta/build/pug) contains [pug](https://pugjs.org/api/getting-started.html) files that format my html in a clean and clear way. The [./sass folder](https://github.com/okikio/native/tree/beta/build/sass) contains [scss](https://sass-lang.com/guide) files that allow for modern css without the need of polyfills. The [./ts folder](https://github.com/okikio/native/tree/beta/build/ts) contains [typescript](https://www.typescriptlang.org/) files that the framework runs on; typescript is used, because Intellisense is better with typescript. Outside the build folder, the [gulpfile.js](https://github.com/okikio/native/tree/beta/gulpfile.js) file, is part of my [gulp](https://gulpjs.com/) config, and is the tool I use to build the demo, for your project other tools should also work, with some amoount of work. Explore the files stated above to learn how to get started.
+Located in [build/](/build), you will find multiple build files that can help you create your setup. The [pug folder](/build/pug) contains [pug](https://pugjs.org/api/getting-started.html) files that format my html in a clean and clear way. The [scss folder](/build/scss) contains [scss](https://sass-lang.com/guide) files that allow for modern css without the need of polyfills. The [ts folder](/build/ts) contains [typescript](https://www.typescriptlang.org/) files that the framework runs on; typescript is used, because Intellisense is better with typescript. Outside the build folder, the [gulpfile.js](/gulpfile.js) file, is part of my [gulp](https://gulpjs.com/) config, and is the tool I use to build the demo, for your project other tools should also work, with some amoount of work. Explore the files stated above to learn how to get started.
 
 I recommend using the Gitpod link at the top of the page to get started with development, as it removes the need for setup.
 
@@ -609,7 +609,7 @@ The `5 base classes` are mandatory classes that are built into the framework (tr
 
 ### Types
 
-Many typescript types are used in the docs, for more info about these types go to [./@types](https://github.com/okikio/native/tree/beta/packages/native/@types).
+Many typescript types are used in the docs, for more info about these types go to [@types](/packages/native/@types).
 
 ### Events
 
@@ -950,7 +950,7 @@ console.log(item.key); // => "item"
 
 #### AdvancedManager#....Manager#
 
-All the properties and methods of the `Manager` class, read [@okikio/manager's README](../manager/README.md) to learn more.
+All the properties and methods of the `Manager` class, read [@okikio/manager's docs](/docs/manager/index.md) to learn more.
 
 #### AdvancedManager#app: IApp
 
@@ -1028,7 +1028,7 @@ The life-cycle methods of a `Service` are register(), install(), init(), boot(),
 #### *Life-cycle*
 
 Here is a diagram that may aid in your understanding.
-[![Life Cycle Diagram](https://raw.githubusercontent.com/okikio/native/beta/packages/native/assets/lifecycle.png)](https://github.com/okikio/native/tree/beta/packages/native/assets/lifecycle.png)
+[![Life Cycle Diagram](https://raw.githubusercontent.com/okikio/native/beta/packages/native/assets/lifecycle.png)](/packages/native/assets/lifecycle.png)
 
 The life-cycle is controlled by the `ServiceManager`, the `Service`'s themselves have the life-cycle methods, but only the `ServiceManager` can decide when to call the life-cycle methods of all `Service`'s.
 
@@ -1315,7 +1315,7 @@ App.prototype.on(events: EventInput, callback?: ListenerCallback): App;
 App.prototype.off(events: EventInput, callback?: ListenerCallback): App;
 
 /**
- * Shortcuts to the App EventEmitter on and off methods, they create and remove events and event listeners, read more about @okikio/emitter in [../emitter/README.md](https://github.com/okikio/native/tree/beta/packages/emitter/README.md).
+ * Shortcuts to the App EventEmitter on and off methods, they create and remove events and event listeners, read more about @okikio/emitter in [/packages/emitter/README.md](/packages/emitter/README.md).
  * Note: the scope of the events are automatically set to the App
  *
  * @param  {EventInput} events - Takes event name, and supports all the different ways to represent events that @okikio/amitter offers
@@ -1330,7 +1330,7 @@ App.prototype.off(events: EventInput, callback?: ListenerCallback): App;
 App.prototype.emit(events: string | any[], ...args: any): App;
 
 /**
- * Shortcuts to the App EventEmitter emit method, emits (triggers) events and event listeners, read more about @okikio/emitter in [../emitter/README.md](https://github.com/okikio/native/tree/beta/packages/emitter/README.md)
+ * Shortcuts to the App EventEmitter emit method, emits (triggers) events and event listeners, read more about @okikio/emitter in [/packages/emitter/README.md](/packages/emitter/README.md)
  *
  * @param  {string | any[]} events - Takes event names, and supports all the different ways to represent events that @okikio/amitter offers
  * @param  {any} [...args] - Arguments to pass to the events
@@ -1788,7 +1788,7 @@ go({
 
 ---
 
-*Note: thus far I have given you a detailed overview of the API's that make up the base classes as well as the `HistoryManager` (as an example of a complex project based class), but from this point onward the difficulty will drastically increaase, but because the next classes are project based classes they will only need to be instantiated into an `App`'s `ServiceManager` using a specific name to be used, with little to no config required on you part. PS. this is getting really tiring to document, so, for the next classes I will skimp out on aspects I feel aren't useful for the type of projects you want or need, if you would like more detail just look through the code for the framework, as well as the [./build/ts folder](https://github.com/okikio/native/tree/beta/build/ts/). Also, **all classes that aren't base classes are `Service`'s, or they extend the `Service` class in some way.***
+*Note: thus far I have given you a detailed overview of the API's that make up the base classes as well as the `HistoryManager` (as an example of a complex project based class), but from this point onward the difficulty will drastically increaase, but because the next classes are project based classes they will only need to be instantiated into an `App`'s `ServiceManager` using a specific name to be used, with little to no config required on you part. PS. this is getting really tiring to document, so, for the next classes I will skimp out on aspects I feel aren't useful for the type of projects you want or need, if you would like more detail just look through the code for the framework, as well as the [build/ts folder](/build/ts/). Also, **all classes that aren't base classes are `Service`'s, or they extend the `Service` class in some way.***
 
 ---
 
@@ -2261,7 +2261,7 @@ I recommend **only** using `@okikio/native` on browsers that support `ES6+`, the
 
 ## Polyfills & Bundling
 
-If you install [@okikio/native](https://www.skypack.dev/view/@okikio/native) via [npm](https://www.npmjs.com/package/@okikio/native) you are most likely going to need [rollup](https://rollupjs.org/) or [esbuild](https://esbuild.github.io/).
+If you install [@okikio/native](/docs/native/index.md) via [npm](https://www.npmjs.com/package/@okikio/native) you are most likely going to need [rollup](https://rollupjs.org/) or [esbuild](https://esbuild.github.io/).
 
 Currently many websites rely on older code to make sure they reach as wide an audience as possible, hurting performance with large amounts of overhead.
 
@@ -2279,4 +2279,4 @@ _**Note**: all contributions must be done on the `beta` branch._
 
 ## Licence
 
-See the [LICENSE](./LICENSE) file for license rights and limitations (MIT).
+See the [LICENSE](/LICENSE) file for license rights and limitations (MIT).

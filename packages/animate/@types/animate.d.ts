@@ -393,7 +393,7 @@ export declare class Animate {
     /**
      * Returns an array of computed options
      */
-    protected createArrayOfComputedOptions(optionsFromParam: IAnimationOptions, len: number): object | import("./types").TypeGeneric[] | Keyframe[];
+    protected createArrayOfComputedOptions(optionsFromParam: IAnimationOptions, len: number): object | Keyframe[] | import("./types").TypeGeneric[];
     /**
      * Creates animations out of an array of computed options
      */

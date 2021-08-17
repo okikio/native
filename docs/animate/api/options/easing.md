@@ -25,7 +25,7 @@ _**Note**: the `easing` property supports the original values and functions for 
 
 _**Note**: you can also use camelCase when defining easing functions, e.g. `inOutCubic` to represent `in-out-cubic`_
 
-Yay, [Custom Easing](../custom-easing.md) are now supported, they have limitations, but those shouldn't affect too much.
+Yay, [Custom Easing](/docs/animate/api/custom-easing.md) are now supported, they have limitations, but those shouldn't affect too much.
 
 ```ts
 // cubic-bezier easing

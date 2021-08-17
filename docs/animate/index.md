@@ -1,8 +1,8 @@
 # @okikio/animate
 
-[![npm](https://img.shields.io/npm/v/@okikio/animate?style=for-the-badge)](https://www.npmjs.com/package/@okikio/animate) [![npm bundle size](https://img.shields.io/bundlephobia/minzip/@okikio/animate?style=for-the-badge)](https://bundlephobia.com/package/@okikio/animate) [![GitHub](https://img.shields.io/github/license/okikio/native?style=for-the-badge)](../../LICENSE)
+[![npm](https://img.shields.io/npm/v/@okikio/animate?style=for-the-badge)](https://www.npmjs.com/package/@okikio/animate) [![npm bundle size](https://img.shields.io/bundlephobia/minzip/@okikio/animate?style=for-the-badge)](https://bundlephobia.com/package/@okikio/animate) [![GitHub](https://img.shields.io/github/license/okikio/native?style=for-the-badge)](/LICENSE)
 
-An animation library for the modern web. Inspired by animate plus, and animejs, [@okikio/animate](https://www.skypack.dev/view/@okikio/animate) is a Javascript animation library focused on performance and ease of use. It utilizes the Web Animation API to deliver fluid animations at a *semi-small* size, it weighs **~11.27 KB** (minified and gzipped), since `@okiko/animate` is treeshakeable, the minimum usable file size you can reach is **~7.07 KB** (minified and gzipped).
+An animation library for the modern web. Inspired by animate plus, and animejs, [@okikio/animate](/docs/animate/index.md) is a Javascript animation library focused on performance and ease of use. It utilizes the Web Animation API to deliver fluid animations at a *semi-small* size, it weighs **~11.27 KB** (minified and gzipped), since `@okiko/animate` is treeshakeable, the minimum usable file size you can reach is **~7.07 KB** (minified and gzipped).
 
 _**A quick note on size**: After I added [CustomEasing](#custom-easing) functionality the total library doubled in size, so, when I mean minimum size, I mean when you are only using the `animate` function or the `Animate` class_
 
@@ -28,7 +28,7 @@ _**Note**: [Custom Easing](#custom-easing), [staggers](#stagger), and [timelines
 
 ## Installation
 
-You can install [@okikio/animate](https://www.skypack.dev/view/@okikio/animate) from [npm](https://www.npmjs.com/package/@okikio/animate) via `npm i @okikio/animate`, `pnpm i @okikio/animate` or `yarn add @okikio/animate`.
+You can install [@okikio/animate](/docs/animate/index.md) from [npm](https://www.npmjs.com/package/@okikio/animate) via `npm i @okikio/animate`, `pnpm i @okikio/animate` or `yarn add @okikio/animate`.
 
 You can use `@okikio/animate` on the web via
 
@@ -63,7 +63,7 @@ const { default: anime } = window.animate; // LOL
 
 ## Demo
 
-I built a small demo showing off the abilities of the `@okikio/animate` library. You can find the files for the demo in [./build](https://github.com/okikio/native/tree/beta/build) folder. For more info on how to use the demo go to [okikio/native#usage](https://github.com/okikio/native/blob/beta/README.md#usage) on Github.
+I built a small demo showing off the abilities of the `@okikio/animate` library. You can find the files for the demo in [build/](/build) folder. For more info on how to use the demo go to [okikio/native#usage](https://github.com/okikio/native/blob/beta/README.md#usage) on Github.
 
 I recommend using the Gitpod link at the top of the page to get started with development, as it removes the need for setup.
 
@@ -167,7 +167,7 @@ animate({
 
 [Go through this collection of examples for more detailed demos   &#8594;](https://codepen.io/collection/rxOEBO)
 
-Check out the [examples page](./examples.md) to view more examples, and showcases of `@okikio/animate` in production sites.
+Check out the [examples page](/docs/animate/examples.md) to view more examples, and showcases of `@okikio/animate` in production sites.
 
 ## Limitations
 
@@ -177,11 +177,11 @@ There are other limitations to what the Web Animation API will allow 😭, these
 
 Some of these limitations have been unlocked recently with Chrome, Firefox, and Safari adding more WAAPI features, and `@okikio/animate` doing some background work to enable these features. Animation using motion paths are now possible through [Motion Path](https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Motion_Path), and morphing can be emulated through [tweenAttr](#tweenattr).
 
-Not all limitations are covered here, look through the [limitations doc](./limitations.md) for more.
+Not all limitations are covered here, look through the [limitations doc](/docs/animate/limitations.md) for more.
 
 ## Best practices 
 
-Read through the [best practices guide](./best-practices.md) for ways to control memory usage, and to create accessible animations.
+Read through the [best practices guide](/docs/animate/best-practices.md) for ways to control memory usage, and to create accessible animations.
 
 
 ## Browser Support
@@ -190,10 +190,10 @@ Read through the [best practices guide](./best-practices.md) for ways to control
 | ------ | ---- | ------- |
 | > 84   | > 84 | > 63    |
 
-Learn about polyfilling, bundling, and more in the [platform support guide](./browser-support.md).
+Learn about polyfilling, bundling, and more in the [platform support guide](/docs/animate/browser-support.md).
 
 ## Contributing
 
 If there is something I missed, a mistake, or a feature you would like added please create an issue or a pull request on the `beta` branch and I'll try to get to it.
 
-Read through the [contributing documentation](./contributing.md) for detailed guides.
+Read through the [contributing documentation](/docs/animate/contributing.md) for detailed guides.

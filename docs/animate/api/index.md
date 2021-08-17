@@ -77,19 +77,19 @@ animate({
 
 ### Destroyable Animate
 
-Remove elements and animations from the DOM when the `.stop()` method is called. Read more on the [destroyable animate doc](./api/destroyable-animate.md)
+Remove elements and animations from the DOM when the `.stop()` method is called. Read more on the [Destroyable Animate docs](/docs/animate/api/destroyable-animate.md)
 
 ### TweenAttributes & tweenAttr
 
-Create morphing animations using the `tweenAttr` method, read more on the [tween attributes doc](./api/tween-attributes.md).
+Create morphing animations using the `tweenAttr` method, read more on the [tween attributes doc](/docs/animate/api/tween-attributes.md).
 
 ### Effects
 
-Use pre-made effects in `@okikio/animate`, for example, the `animate.css` effects can be used via `@shoelace-style/animations`, read the [effects doc](./api/effects.md), to learn more.
+Use pre-made effects in `@okikio/animate`, for example, the `animate.css` effects can be used via `@shoelace-style/animations`, read the [effects doc](/docs/animate/api/effects.md), to learn more.
 
 ### Methods & properties
 
-Read through the [methods and properties doc](./api/methods-and-properties.md), to learn some of the most usefull methods and properties of `Animate` class.
+Read through the [methods and properties doc](/docs/animate/api/methods-and-properties.md), to learn some of the most usefull methods and properties of `Animate` class.
 
 ### Complete API Documentation
 

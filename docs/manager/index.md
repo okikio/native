@@ -1,6 +1,6 @@
 # @okikio/manager
 
-[NPM](https://www.npmjs.com/package/@okikio/manager) <span style="padding-inline: 1rem">|</span> [API Guide](./api.md) <span style="padding-inline: 1rem">|</span> [Licence](../../packages/manager/LICENSE) 
+[NPM](https://www.npmjs.com/package/@okikio/manager) <span style="padding-inline: 1rem">|</span> [API Guide](/docs/manager/api.md) <span style="padding-inline: 1rem">|</span> [Licence](/packages/manager/LICENSE) 
 
 A superset of the Map class, it extends the Map classes capabilities with awesome new features; it weighs **~325 B** (minified and gzipped).
 
@@ -13,7 +13,7 @@ The `Manager` class makes Maps easier to use, as well as adding 7 methods, **get
 
 ### Installation
 
-You can install [@okikio/manager](https://www.skypack.dev/view/@okikio/manager) from [npm](https://www.npmjs.com/package/@okikio/manager) via `npm i @okikio/manager`, `pnpm i @okikio/animate` or `yarn add @okikio/manager`.
+You can install [@okikio/manager](/docs/manager/index.md) from [npm](https://www.npmjs.com/package/@okikio/manager) via `npm i @okikio/manager`, `pnpm i @okikio/animate` or `yarn add @okikio/manager`.
 
 You can use `@okikio/manager` on the web via:
 
@@ -66,7 +66,7 @@ elements.add(el);
 elements.set(1, el.cloneNode());
 ```
 
-Read through the [API guide](./api.md) to learn more. 
+Read through the [API guide](/docs/manager/api.md) to learn more. 
 
 ## Browser & Node Support
 
@@ -74,10 +74,10 @@ Read through the [API guide](./api.md) to learn more.
 | ------ | ---- | ------- | ---- |
 | > 38   | > 12 | > 13    | > 11 |
 
-Learn about polyfilling, bundling, and more in the [platform support guide](./platform-support.md).
+Learn about polyfilling, bundling, and more in the [platform support guide](/docs/manager/platform-support.md).
 
 ## Contributing
 
 If there is something I missed, a mistake, or a feature you would like added please create an issue or a pull request on the `beta` branch and I'll try to get to it.
 
-Read through the [contributing documentation](./contributing.md) for detailed guides.
+Read through the [contributing documentation](/docs/manager/contributing.md) for detailed guides.

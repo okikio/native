@@ -19,7 +19,7 @@ By default Gitpod will start the dev script for you, but if you need to restart 
 pnpm --filter "@okikio/emitter" exec -- npm test --watch
 ```
 
-Once Gitpod has booted up, go to [packages/manager/tests/test.ts](../../packages/emitter/tests/test.ts) and start tweaking and testing to your hearts content.
+Once Gitpod has booted up, go to [packages/manager/tests/test.ts](/packages/emitter/tests/test.ts) and start tweaking and testing to your hearts content.
 
 ### Runing Locally
 
@@ -29,7 +29,6 @@ You can run `@okikio/emitter` locally by first installing some packages via thes
 npm install -g pnpm
 pnpm install -g ultra-runner
 pnpm install
-pnpm build
 ```
 
 You can build your changes/contributions using,
@@ -42,9 +41,9 @@ You can test your changes/contributions using,
 
 ```bash
 # For a single test
-pnpm test-dev --filter "@okikio/emitter"
+pnpm test --filter "@okikio/emitter"
 # For continouous testing
 pnpm --filter "@okikio/emitter" exec -- npm test --watch
 ```
 
-Once it has booted up, go to [packages/emitter/tests/test.ts](../../packages/emitter/tests/test.ts) and start tweaking and testing to your hearts content.
+Once it has booted up, go to [packages/emitter/tests/test.ts](/packages/emitter/tests/test.ts) and start tweaking and testing to your hearts content.

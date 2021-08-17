@@ -11,7 +11,7 @@
 
 ## Polyfills & Bundling
 
-If you install [@okikio/emitter](https://www.skypack.dev/view/@okikio/emitter) via [npm](https://www.npmjs.com/package/@okikio/emitter) you are most likely going to need [rollup](https://rollupjs.org/) or [esbuild](https://esbuild.github.io/).
+If you install [@okikio/emitter](/docs/emitter/index.md) via [npm](https://www.npmjs.com/package/@okikio/emitter) you are most likely going to need [rollup](https://rollupjs.org/) or [esbuild](https://esbuild.github.io/).
 
 You will most likely need Object.values, Array.prototype.includes and Array.from polyfills.
 

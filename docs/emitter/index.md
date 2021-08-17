@@ -1,12 +1,12 @@
 # @okikio/emitter
 
-[NPM](https://www.npmjs.com/package/@okikio/emitter) <span style="padding-inline: 1rem">|</span> [API Guide](./api.md) <span style="padding-inline: 1rem">|</span> [Licence](../../packages/emitter/LICENSE) 
+[NPM](https://www.npmjs.com/package/@okikio/emitter) <span style="padding-inline: 1rem">|</span> [API Guide](/docs/emitter/api.md) <span style="padding-inline: 1rem">|</span> [Licence](/packages/emitter/LICENSE) 
 
 A small Event Emitter written in typescript with performance and ease of use in mind, it weighs **~834 B** (minified and gzipped).
 
 ## Installation
 
-You can install [@okikio/emitter](https://www.skypack.dev/view/@okikio/emitter) from [npm](https://www.npmjs.com/package/@okikio/emitter) via `npm i @okikio/emitter`, `pnpm i @okikio/emitter` or `yarn add @okikio/emitter`.
+You can install [@okikio/emitter](/docs/emitter/index.md) from [npm](https://www.npmjs.com/package/@okikio/emitter) via `npm i @okikio/emitter`, `pnpm i @okikio/emitter` or `yarn add @okikio/emitter`.
 
 You can use `@okikio/emitter` on the web via:
 
@@ -37,7 +37,7 @@ const { EventEmitter } = window.emitter;
 
 The `EventEmitter` class is what runs the show for the `@okikio/emitter` library. To use it properly you need to create a new instance of `EventEmitter`, the instance of `EventEmitter` is what allows for event emitting, and listening.
 
-`EventEmitter` allows for an easy way to manage events. It inherits properties/methods from [@okikio/manager](https://www.npmjs.com/package/@okikio/manager).
+`EventEmitter` allows for an easy way to manage events. It inherits properties/methods from [@okikio/manager](/docs/manager/index.md).
 
 ```ts
 // You need to first initialize a new Event Emitter
@@ -55,7 +55,7 @@ setTimeout(() => {
 }, 3000);
 ```
 
-Read through the [API guide](./api.md) to learn more.
+Read through the [API guide](/docs/emitter/api.md) to learn more.
 
 ## Browser & Node Support
 
@@ -63,10 +63,10 @@ Read through the [API guide](./api.md) to learn more.
 | ------ | ---- | ------- | ---- |
 | > 38   | > 12 | > 13    | > 11 |
 
-Learn about polyfilling, bundling, and more in the [platform support guide](./platform-support.md).
+Learn about polyfilling, bundling, and more in the [platform support guide](/docs/emitter/platform-support.md).
 
 ## Contributing
 
 If there is something I missed, a mistake, or a feature you would like added please create an issue or a pull request on the `beta` branch and I'll try to get to it.
 
-Read through the [contributing documentation](./contributing.md) for detailed guides.
+Read through the [contributing documentation](/docs/emitter/contributing.md) for detailed guides.
