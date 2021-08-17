@@ -33,7 +33,6 @@ export const transformCSSVars = {
 
 export const CSSVarSupport = "registerProperty" in CSS;
 export const transformProperyNames = Object.keys(transformCSSVars);
-(window as any).RegisteredCSSVars = (window as any).RegisteredCSSVars ?? {};
 
 export const createTransformValue = (opts = {}) => {
     return Object.keys(opts)
@@ -46,7 +45,8 @@ export const createTransformValue = (opts = {}) => {
 
             // Create a new CSS property from the values in the properties object
             value.forEach((name) => {
-                if ((window as any).RegisteredCSSVars[name]) return;
+                // This is a workaround for a bug in `CSS.registerProperty` where a CSS variable can't be re-registed and the browser doesn't store a recored of which CSS variables have been registered
+                if (globalThis.RegisteredCSSVars?.[name]) return;
 
                 let opts = {
                     name,
@@ -82,8 +82,10 @@ export const createTransformValue = (opts = {}) => {
                         initialValue: "0deg"
                     });
                 }
-
-                (window as any).RegisteredCSSVars[name] = true;
+                
+                // Store a record of which CSS variables have been registered
+                globalThis.RegisteredCSSVars ??= {};
+                globalThis.RegisteredCSSVars[name] = true;
             });
 
             // Return the string representing a CSS transform property

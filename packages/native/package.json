@@ -59,12 +59,14 @@
     },
     "homepage": "https://github.com/okikio/native/tree/master/packages/native#readme",
     "dependencies": {
-        "@okikio/emitter": "workspace:*",
-        "@okikio/manager": "workspace:*",
         "path-to-regexp": "^6.2.0"
     },
+    "peerDependencies": {
+        "@okikio/emitter": "workspace:*",
+        "@okikio/manager": "workspace:*"
+    },
     "devDependencies": {
-        "typescript": "^4.4.0-beta"
+        "typescript": "^4.4.0-insiders.20210805"
     },
     "gitHead": "ad422076cdb57d570426f786886129d5bca2f90f"
 }

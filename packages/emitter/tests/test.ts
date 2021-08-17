@@ -1,11 +1,5 @@
-/// <reference types="jest" />
+import { describe, expect, test, beforeEach } from '@jest/globals';
 import { EventEmitter, Event } from "../src/api";
-import "jest-chain";
-
-/*
-    Find: @(returns|type) \{([\w_-{,<[\]\s>]+)\}
-    Replace: @$1 $2
-*/
 
 describe("EventEmitter", () => {
     let emitter: EventEmitter;

@@ -1,12 +1,5 @@
-/// <reference types="jest" />
+import { jest, describe, expect, test, beforeEach } from '@jest/globals';
 import { Manager, methodCall } from "../src/api";
-import fetch from "node-fetch";
-import "jest-chain";
-
-/*
-    Find: @(returns|type) \{([\w_-{,<[\]\s>]+)\}
-    Replace: @$1 $2
-*/
 
 describe("Manager", () => {
     let arr = [1, 2, 3, 4, 5];
@@ -113,7 +106,8 @@ describe("Manager", () => {
     describe("#entries()", function () {
         test("test Manager#entries()", () => {
             let value = manager.entries();
-            expect(value).toHaveProperty("next").toBeDefined();
+            expect(value).toHaveProperty("next");
+            expect(value).toBeDefined();
             expect(value.next().value).toBeInstanceOf(Array);
             expect(value.next().value).toEqual([1, 2]);
         });
@@ -125,7 +119,8 @@ describe("Manager", () => {
             manager.forEach((value, key, obj) => {
                 let [$key, $value] = entries.next().value;
                 expect([key, value]).toEqual([$key, $value]);
-                expect(obj).toBeInstanceOf(Map).toEqual(manager.getMap());
+                expect(obj).toBeInstanceOf(Map);
+                expect(obj).toEqual(manager.getMap());
                 expect(this).not.toHaveProperty("clear");
             }, manager);
         });
@@ -135,7 +130,8 @@ describe("Manager", () => {
             manager.forEach(function (value, key, obj) {
                 let [$key, $value] = entries.next().value;
                 expect([key, value]).toEqual([$key, $value]);
-                expect(obj).toBeInstanceOf(Map).toEqual(manager.getMap());
+                expect(obj).toBeInstanceOf(Map);
+                expect(obj).toEqual(manager.getMap());
                 expect(this).toHaveProperty("clear");
                 expect(this.get(key)).toBe(value);
             }, manager);
@@ -168,3 +164,4 @@ describe("Manager", () => {
         });
     });
 });
+

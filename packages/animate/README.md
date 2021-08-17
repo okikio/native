@@ -31,7 +31,7 @@ Once Gitpod has booted up, click on the `@okikio/animate (no-pjax)` button in th
 You can run `@okikio/animate` locally by first installing some packages via these commands into your terminal,
 
 ```bash
-npm install -g pnpm && pnpm install -g gulp ultra-runner commitizen && pnpm install && pnpm build
+npm install -g pnpm && pnpm install -g gulp ultra-runner && pnpm install && pnpm build
 ```
 
 and then you can test/demo it using this command,

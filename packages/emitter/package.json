@@ -33,8 +33,7 @@
     ],
     "scripts": {
         "dts": "rm -r -f @types/ && tsc --project tsconfig.json",
-        "test": "jest --maxWorkers=1",
-        "test-dev": "jest --maxWorkers=1 --watch --verbose false",
+        "test": "jest",
         "pre-release": "npm test && npm run dts"
     },
     "repository": {
@@ -60,17 +59,16 @@
         "url": "https://github.com/okikio/native/issues"
     },
     "homepage": "https://github.com/okikio/native/tree/master/packages/emitter#readme",
-    "dependencies": {
+    "peerDependencies": {
         "@okikio/manager": "workspace:*"
     },
     "devDependencies": {
-        "@types/jest": "^26.0.24",
-        "esbuild": "^0.12.17",
+        "esbuild": "^0.12.20",
         "esbuild-jest": "^0.5.0",
         "jest": "^27.0.6",
         "jest-chain": "^1.1.5",
-        "typescript": "^4.4.0-beta",
-        "ultra-runner": "^3.10.5"
+        "jest-extended": "^0.11.5",
+        "typescript": "^4.4.0-insiders.20210805"
     },
     "gitHead": "ad422076cdb57d570426f786886129d5bca2f90f"
 }

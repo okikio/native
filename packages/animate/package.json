@@ -58,13 +58,13 @@
         "url": "https://github.com/okikio/native/issues"
     },
     "homepage": "https://github.com/okikio/native/tree/master/packages/animate#readme",
-    "dependencies": {
+    "peerDependencies": {
         "@okikio/emitter": "workspace:*",
         "@okikio/manager": "workspace:*"
     },
     "devDependencies": {
-        "type-fest": "^1.2.3",
-        "typescript": "^4.4.0-beta"
+        "type-fest": "^2.0.0",
+        "typescript": "^4.4.0-insiders.20210805"
     },
     "gitHead": "ad422076cdb57d570426f786886129d5bca2f90f"
 }

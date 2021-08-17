@@ -15,4 +15,4 @@ If you install [@okikio/manager](https://www.skypack.dev/view/@okikio/manager) v
 
 You will most likely need Object.values, Array.prototype.includes and Array.from polyfills.
 
-You can use [polyfill.io](https://polyfill.io/), or another source to create a polyfill. You can use this polyfill for you projects e.g. <https://cdn.polyfill.io/v3/polyfill.min.js?features=default,es2015,es2018,Array.prototype.includes,Object.values>.
+You can use [polyfill.io](https://polyfill.io/), or another source to create a polyfill. You can use this polyfill for you projects e.g. <https://cdn.polyfill.io/v3/polyfill.min.js?features=default,es2015,es2018,Array.prototype.includes,Object.values>

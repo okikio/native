@@ -1,52 +1,33 @@
 // For format details, see https://aka.ms/devcontainer.json. For config options, see the README at:
-// https://github.com/microsoft/vscode-dev-containers/tree/v0.162.0/containers/typescript-node
+// https://github.com/microsoft/vscode-dev-containers/tree/v0.187.0/containers/typescript-node
 {
 	"name": "Node.js & TypeScript",
 	"build": {
 		"dockerfile": "Dockerfile",
-		// Update 'VARIANT' to pick a Node version: 10, 12, 14
-		"args": {
-			"VARIANT": "14"
+		// Update 'VARIANT' to pick a Node version: 12, 14, 16
+		"args": { 
+			"VARIANT": "16"
 		}
 	},
 
 	// Set *default* container specific settings.json values on container create.
-	"settings": {
-		"scss.lint.unknownAtRules": "ignore",
-		"scss.lint.unknownProperties": "ignore",
-		"scss.validate": false,
-		"conventionalCommits.scopes": [
-			"demo",
-			"@okikio/animate",
-			"@okikio/native",
-			"@okikio/manager",
-			"@okikio/emitter",
-			"root",
-			"gulpfile"
-		],
-		"npm.packageManager": "pnpm"
-	},
+	"settings": {},
+
 
 	// Add the IDs of extensions you want installed when the container is created.
 	"extensions": [
-		"vivaxy.vscode-conventional-commits",
 		"bierner.jsdoc-markdown-highlighting",
-		"yzhang.markdown-all-in-one",
-		"shd101wyy.markdown-preview-enhanced",
+		"astro-build.astro-vscode",
 		"bradlc.vscode-tailwindcss",
-		"macieklad.tailwind-sass-syntax",
-		"visualstudioexptteam.vscodeintellicode",
-		"voorjaar.windicss-intellisense",
-		"github.github-vscode-theme",
-		"folke.vscode-monorepo-workspace"
+		"jock.svg",
+		"macieklad.tailwind-sass-syntax"
 	],
 
 	// Use 'forwardPorts' to make a list of ports inside the container available locally.
 	// "forwardPorts": [],
 
 	// Use 'postCreateCommand' to run commands after the container is created.
-	// "postCreateCommand": "npm install -g pnpm",
-	// "postAttachCommand": "pnpm demo",
+	// "postCreateCommand": "yarn install",
 
 	// Comment out connect as root instead. More info: https://aka.ms/vscode-remote/containers/non-root.
 	"remoteUser": "node"

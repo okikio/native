@@ -24,7 +24,7 @@ const __dirname = path.dirname(__filename);
  *    want to build everything)
  * @param {string}[ignore] - packages to not build
  *
- * @returns {string[]} - sorted list of Package objects that
+ * @returns string[] - sorted list of Package objects that
  *    represent packages to be built.
  */
 export const getSortedPackages = async (scope = [], ignore = []) => {
@@ -43,7 +43,7 @@ export const getSortedPackages = async (scope = [], ignore = []) => {
 
 export const rollupConfig = async ({ scope, ignore } = {}) => {
     /**
-     * @type {import('rollup').RollupOptions}
+     * @type {import('rollup').RollupOptions[]}
      */
     const config = [];
     const packages = await getSortedPackages(scope, ignore);
@@ -59,10 +59,12 @@ export const rollupConfig = async ({ scope, ignore } = {}) => {
 
         /* "main" & "module" field from package.json file. */
         const { main, module, umd: name, legacy } = pkgObj.publishConfig;
+        // const external = Object.keys(pkgObj?.peerDependencies ?? {});
 
         /* Push build config for this package. */
         config.push({
             input,
+            // external,
             output: [
                 {
                     file: path.join(basePath, module),
@@ -72,7 +74,7 @@ export const rollupConfig = async ({ scope, ignore } = {}) => {
                 {
                     file: path.join(basePath, main),
                     exports: "named",
-                    format: "cjs",
+                    format: "cjs"
                 },
                 {
                     file: path.join(basePath, legacy),
@@ -92,10 +94,10 @@ const args = minimist(process.argv.slice(2));
 const configs = await rollupConfig(args);
 
 export async function build() {
-    for (let { input, output } of configs) {
+    for (let { input, output, external, umd } of configs) {
         let title = chalk`{gray Bundled in}`;
         console.time(title);
-        console.log(`\n` + chalk`Building {red ${input}}`)
+        console.log(`\n` + chalk`Building {red ${input}}`);
 
         // Create a bundle
         const bundle = await rollup({
@@ -104,11 +106,11 @@ export async function build() {
                 esbuild({
                     target: "es2021", // default, or 'es20XX', 'esnext'
                     logLevel: "info",
-                
+
                     color: true,
                     bundle: true,
                     minify: true,
-                
+
                     sourcemap: false,
                     platform: "browser",
                     tsconfig: "./tsconfig.json",
