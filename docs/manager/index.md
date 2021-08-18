@@ -81,3 +81,7 @@ Learn about polyfilling, bundling, and more in the [platform support guide](/doc
 If there is something I missed, a mistake, or a feature you would like added please create an issue or a pull request on the `beta` branch and I'll try to get to it.
 
 Read through the [contributing documentation](/docs/manager/contributing.md) for detailed guides.
+
+## Licence
+
+See the [LICENSE](/LICENSE) file for license rights and limitations (MIT).

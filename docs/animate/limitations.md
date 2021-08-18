@@ -1,4 +1,6 @@
-## CSS & SVG Animations Support
+## Limitations
+
+### CSS & SVG Animations Support
 
 _**Warning**: Techinically the `d` attribute is supported in Chromium based browsers, but litterarly no one else supports it so, be carefull and take the following list of attributes with a grain of salt, make sure to test them in the browser enviroments you expect them to be used in._
 
@@ -125,4 +127,4 @@ The animatable SVG properties are:
 
 Unfortunately, morphing SVG paths via the `d` property isn't well supported yet, as Gecko (Firefox) & Webkit (Safari) based browsers don't natively support it yet, and there are other limitations to what the Web Animation API will allow 😭, these limitation are covered in detail by an article published by Adobe about [the current state of SVG animation on the web](https://blog.adobe.com/en/publish/2015/06/05/the-state-of-svg-animation.html#gs.pihpjw). 
 
-However, animation using motion paths is now possible through [Motion Path](https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Motion_Path), and morphing can be emulated through  [tweenAttr](#tweenattr).
+However, animation using motion paths is now possible through [Motion Path](https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Motion_Path), and morphing can be emulated through  [tweenAttr](/docs/animate/api/tween-attributes.md).

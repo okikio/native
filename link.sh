@@ -1,5 +1,5 @@
 #!/bin/bash     
-for folder in "manager" "emitter" "animate" # "native"
+for folder in "manager" "emitter" "animate" "native"
 do    
     cd ../$folder 
     ln -fs ../../docs/$folder/index.md README.md

@@ -7,26 +7,26 @@ An initiative which aims to make it easy to create complex, light-weight, and pe
 
 A superset of the Map class, it extends the Map classes capabilities with awesome new features, and relieves some of the inconvient quirks of the Map class.
 
-[Dobumentation](/packages/manager/README.md) <span style="padding-inline: 1rem">|</span> [NPM](https://www.npmjs.com/package/@okikio/manager)
+[Dobumentation](/docs/manager/index.md) <span style="padding-inline: 1rem">|</span> [NPM](https://www.npmjs.com/package/@okikio/manager)
 
 
 ## [@okikio/emitter](/packages/emitter#readme)
 
 A small Event Emitter written in typescript with performance and ease of use in mind.
 
-[Dobumentation](/packages/emitter/README.md) <span style="padding-inline: 1rem">|</span> [NPM](https://www.npmjs.com/package/@okikio/emitter)
+[Dobumentation](/docs/emitter/index.md) <span style="padding-inline: 1rem">|</span> [NPM](https://www.npmjs.com/package/@okikio/emitter)
 
 ## [@okikio/animate](/packages/animate#readme)
 
 An animation library for the modern web. Inspired by animate plus, and animejs, it is a Javascript animation library focused on performance and ease of use. It utilizes the Web Animation API (WAAPI) to deliver fluid animations at a *semi-small* size.
 
-[Dobumentation](/packages/animate/README.md) <span style="padding-inline: 1rem">|</span> [NPM](https://www.npmjs.com/package/@okikio/animate)
+[Dobumentation](/docs/animate/index.md) <span style="padding-inline: 1rem">|</span> [NPM](https://www.npmjs.com/package/@okikio/animate)
 
 ## [@okikio/native](/packages/native#readme)
 
 A framework to build custom dynamic web experiences around. It acts as a very light weight to build complex web apps, ranging from PJAX based sites to other Single Page Applications (SPA) (React, Vue, etc...) based sites and web apps.
 
-[Dobumentation](/packages/native/README.md) <span style="padding-inline: 1rem">|</span> [NPM](https://www.npmjs.com/package/@okikio/native)
+[Dobumentation](/docs/native/index.md) <span style="padding-inline: 1rem">|</span> [NPM](https://www.npmjs.com/package/@okikio/native)
 
 ## Demo & Showcases
 
@@ -60,7 +60,7 @@ If there is something I missed, a mistake, or a feature you would like added ple
 
 *The `native` initiative uses [Changesets](https://github.com/atlassian/changesets/blob/main/docs/intro-to-using-changesets.md#adding-changesets), for versioning and Changelog generation, you don't need to create one, but it would be amazing if you could.*
 
-> _**Warning**: all contributions must be done on the `beta` branch, by default Gitpod will open on the `beta` branch, but still keep this in mind._
+> _**Warning**: all contributions must be done on the `beta` branch. By default Gitpod will open on the `beta` branch, but still keep this in mind._
 
 ### Bundling
 
@@ -97,6 +97,7 @@ I use a couple conventions when naming my files, these will help you navigate th
 11. `tailwind.config.cjs` - configurations for `tailwind`
 12. `tsconfig.json` - config for `typescript`
 13. `repl.js` - a small js files for testing concepts and finding logic errors, you run it by typing `node repl.js` into your terminal.
+14. `api.ts` - the typescript file that exports all available modules
 
 ```
 📦native

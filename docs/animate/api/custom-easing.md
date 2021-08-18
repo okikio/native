@@ -37,7 +37,7 @@ You can view a demo of Custom Easing on [Codepen](https://codepen.io/okikio/pen/
 
 Custom Easing uses the fact that WAAPI allows for linear easing, and for users to set multiple different values in Array format, thus, I created a small function that generates a set of arrays that create custom easing effects like bounce, elastic, and spring. As of right now it builds on top of `@okikio/animate` but `@okikio/animate` isn't absolutely necessary, it just may not be as comfortable to using it without `@okikio/animate`.
 
-Custom Easing has 3 properties they are `easing` (all the easings from [#easing](#easing) are supported on top of custom easing functions, like spring, bounce, etc...), `numPoints` (the size of the Array the Custom Easing function should create), and `decimal` (the number of decimal places of the values within said Array).
+Custom Easing has 3 properties they are `easing` (all the easings from [#easing](/docs/animate/api/options/easing.md) are supported on top of custom easing functions, like spring, bounce, etc...), `numPoints` (the size of the Array the Custom Easing function should create), and `decimal` (the number of decimal places of the values within said Array).
 
 | Properties  | Default Value           |
 | ----------- | ----------------------- |

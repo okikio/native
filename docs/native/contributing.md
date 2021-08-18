@@ -1,3 +1,4 @@
+
 ## Contributing
 
 If there is something I missed, a mistake, or a feature you would like added please create an issue or a pull request and I'll try to get to it.
@@ -6,11 +7,11 @@ If there is something I missed, a mistake, or a feature you would like added ple
 
 *The `native` initiative uses [Changesets](https://github.com/atlassian/changesets/blob/main/docs/intro-to-using-changesets.md#adding-changesets), for versioning and Changelog generation, you don't need to create one, but it would be amazing if you could.*
 
-## Using Gitpod
+### Using Gitpod
 
-You can try out `@okikio/animate` using Gitpod:
+You can try out `@okikio/native` using [Gitpod](https://www.gitpod.io/) (it's a free to use online IDE):
 
-[![Open In Gitpod](https://gitpod.io/button/open-in-gitpod.svg)](https://gitpod.io/#https://github.com/okikio/native/blob/beta/packages/animate/README.md)
+[![Open In Gitpod](https://gitpod.io/button/open-in-gitpod.svg)](https://gitpod.io/#https://github.com/okikio/native/blob/beta/packages/native/README.md)
 
 You can start the dev script by typing into the terminal,
 
