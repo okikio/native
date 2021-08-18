@@ -34,10 +34,3 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
-
-      - name: Push master branch to latest branch
-        if: steps.changesets.outputs.published == 'true'
-        id: git-push-latest
-        # Note: this will fail if "latest" and "master" have different commit history,
-        # which is a good thing! Also, don't push if in pre-release mode.
-        run: '(test -f .changeset/pre.json && echo "pre-release: skip pushing to latest branch.") || git push origin master:latest'
