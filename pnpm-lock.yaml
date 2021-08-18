@@ -11,7 +11,7 @@ importers:
       '@okikio/native': workspace:*
       '@rollup/plugin-commonjs': ^20.0.0
       '@rollup/plugin-node-resolve': ^13.0.4
-      astro: ^0.18.13
+      astro: ^0.19.0
       chalk: ^4.1.2
       esbuild: ^0.12.20
       globby: ^12.0.1
@@ -40,7 +40,7 @@ importers:
       '@changesets/cli': 2.16.0
       '@rollup/plugin-commonjs': 20.0.0_rollup@2.56.2
       '@rollup/plugin-node-resolve': 13.0.4_rollup@2.56.2
-      astro: 0.18.13_typescript@4.4.1-rc
+      astro: 0.19.0_typescript@4.4.1-rc
       chalk: 4.1.2
       esbuild: 0.12.20
       globby: 12.0.1
@@ -132,8 +132,8 @@ packages:
       - supports-color
     dev: true
 
-  /@astrojs/parser/0.18.5:
-    resolution: {integrity: sha512-YspNUbrFpZtwnwQAJcG/w8Z6JM+4uENNFsZcQtKH0ncVMCCdHsTrytLBIX3MqSSu3FRODiakj92oU8QRpAWIcw==}
+  /@astrojs/parser/0.18.6:
+    resolution: {integrity: sha512-aJyrZG2FKkOxgP/HcRLCI4q+iC2DTSjdYMKHSJKk7k/2aDpbAUWJ6Z3dGlWQ+vviK52wxm0PyDQh9YjYbEtLwA==}
     engines: {node: ^12.20.0 || ^14.13.1 || >=16.0.0, npm: '>=6.14.0'}
     dependencies:
       acorn: 7.4.1
@@ -260,7 +260,7 @@ packages:
       '@babel/compat-data': 7.15.0
       '@babel/core': 7.15.0
       '@babel/helper-validator-option': 7.14.5
-      browserslist: 4.16.7
+      browserslist: 4.16.8
       semver: 6.3.0
     dev: true
 
@@ -1986,13 +1986,13 @@ packages:
     hasBin: true
     dev: true
 
-  /astro/0.18.13_typescript@4.4.1-rc:
-    resolution: {integrity: sha512-HWQA/C+M6Mht2Jmy6gC6Pyh4qKxQC1doMBJR9cYrCDaJs+Reyz1CkKcndI/PeJcpz3HSxAlo77sfMCXtsg8SeQ==}
+  /astro/0.19.0_typescript@4.4.1-rc:
+    resolution: {integrity: sha512-V2E1Qcnm66/FBxE1UGQknYKAXNxBd6NEYkkMQfvAX4fWkjlX+NixlaQIkF9C26+y/hhISAsAquvljq1aGqtP8Q==}
     engines: {node: ^12.20.0 || ^14.13.1 || >=16.0.0, npm: '>=6.14.0'}
     hasBin: true
     dependencies:
       '@astrojs/markdown-support': 0.2.3
-      '@astrojs/parser': 0.18.5
+      '@astrojs/parser': 0.18.6
       '@astrojs/prism': 0.2.2
       '@astrojs/renderer-preact': 0.2.1_@babel+core@7.15.0
       '@astrojs/renderer-react': 0.2.0_@babel+core@7.15.0
@@ -2075,7 +2075,7 @@ packages:
     peerDependencies:
       postcss: ^8.1.0
     dependencies:
-      browserslist: 4.16.7
+      browserslist: 4.16.8
       caniuse-lite: 1.0.30001251
       colorette: 1.3.0
       fraction.js: 4.1.1
@@ -2349,8 +2349,8 @@ packages:
     resolution: {integrity: sha512-9o5UecI3GhkpM6DrXr69PblIuWxPKk9Y0jHBRhdocZ2y7YECBFCsHm79Pr3OyR2AvjhDkabFJaDJMYRazHgsow==}
     dev: true
 
-  /browserslist/4.16.7:
-    resolution: {integrity: sha512-7I4qVwqZltJ7j37wObBe3SoTz+nS8APaNcrBOlgoirb6/HbEU2XxW/LpUDTCngM6iauwFqmRTuOMfyKnFGY5JA==}
+  /browserslist/4.16.8:
+    resolution: {integrity: sha512-sc2m9ohR/49sWEbPj14ZSSZqp+kbi16aLao42Hmn3Z8FpjuMaq2xCA2l4zl9ITfyzvnvyE0hcg62YkIGKxgaNQ==}
     engines: {node: ^6 || ^7 || ^8 || ^9 || ^10 || ^11 || ^12 || >=13.7}
     hasBin: true
     dependencies:

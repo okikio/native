@@ -1,0 +1,43 @@
+name: Changelog
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  release:
+    name: Changelog
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out branch
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 0 # This makes Actions fetch all Git history so that Changesets can generate changelogs with the correct commits
+
+      - name: Set up Node.js 16.x
+        uses: actions/setup-node@v2
+        with:
+          node-version: 16.x
+          
+      - name: Install dependencies
+        run: pnpm install
+
+      - name: Create Release Pull Request or Publish to npm
+        id: changesets
+        uses: changesets/action@master
+        with:
+          # this expects you to have a npm script called version that runs some logic and then calls `changeset version`.
+          version: pnpm pre-release && pnpm changelog
+          # This expects you to have a script called release which does a build for your packages and calls changeset publish
+          publish: pnpm release
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+      - name: Push master branch to latest branch
+        if: steps.changesets.outputs.published == 'true'
+        id: git-push-latest
+        # Note: this will fail if "latest" and "master" have different commit history,
+        # which is a good thing! Also, don't push if in pre-release mode.
+        run: '(test -f .changeset/pre.json && echo "pre-release: skip pushing to latest branch.") || git push origin master:latest'
