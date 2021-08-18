@@ -32,7 +32,7 @@
         "@types"
     ],
     "scripts": {
-        "dts": "rm -r -f @types/ && tsc --project tsconfig.json",
+        "dts": "rm -r -f @types/ && tsc --project dts.tsconfig.json",
         "pre-release": "npm run dts"
     },
     "repository": {

@@ -190,4 +190,4 @@ console.log(on.get("test").size) //= 0
 
 ### Complete API Documentation
 
-You can also go through the full [API documentation](https://okikio.github.io/native/api/modules/_okikio_emitter.html), for a more detailed documentation of the API.
+You can also go through the full [API documentation](/docs/api/modules/_okikio_emitter.md), for a more detailed documentation of the API.

@@ -35,12 +35,12 @@ A framework to build custom dynamic web experiences around. It acts as a very li
   * [bundle.js.org](https://bundle.js.org)
   * Your site here...
   
-> [View a demo &#8594;](https://okikio.github.io/native/demo/)
+> [View a demo &#8594;](/docs/demo/)
 
 
 ## API Documentation
 
-Go to [okikio.github.io/native/api](https://okikio.github.io/native/api), for detailed API documentation on the packages under native initiative.
+Go to [/docs/api](/docs/api/index.md), for detailed API documentation on the packages under native initiative.
 
 ## Contributing
 
@@ -54,7 +54,7 @@ By default Gitpod will start the dev script for you, but if you need to restart 
 pnpm start
 ```
 
-Once Gitpod has booted up, go to the [build/pug/](/build/pug/) and [build/ts/](/build/ts/) folders to try out the packages under the `native` initiative.
+Once Gitpod has booted up, go to the [demo/pug/](/docs/demo/pug/) and [demo/ts/](/docs/demo/ts/) folders to try out the packages under the `native` initiative.
 
 If there is something I missed, a mistake, or a feature you would like added please create an issue or a pull request and I'll try to get to it.
 
@@ -72,11 +72,11 @@ I suggest using [bundle.js.org](https://bundle.js.org), if you would like to qui
 
 ### File Structure
 
-* [build/](/build) - contains the build files for the demo.
-  * [pug/](/build/pug/) - contains the [pug](https://pugjs.org/api/getting-started.html) files for the demo.
-  * [scss/](/build/scss/) - contains the [scss](https://sass-lang.com/guide) files for the demo.
-  * [ts/](/build/ts/) - contains [typescript](https://www.typescriptlang.org/) files for the demo.
-  * [assets/](/build/assets/) - contains favicon, manifest.json, and other assets that we don't want to be processed for the demo.
+* [demo/](/docs/demo) - contains the build files for the demo.
+  * [pug/](/docs/demo/pug/) - contains the [pug](https://pugjs.org/api/getting-started.html) files for the demo.
+  * [scss/](/docs/demo/scss/) - contains the [scss](https://sass-lang.com/guide) files for the demo.
+  * [ts/](/docs/demo/ts/) - contains [typescript](https://www.typescriptlang.org/) files for the demo.
+  * [assets/](/docs/demo/assets/) - contains favicon, manifest.json, and other assets that we don't want to be processed for the demo.
 * [packages/](/packages) - contains the packages under the native initiative.
   * [manager/](/packages/manager) - contains the [@okikio/manager](https://npmjs.com/@okikio/manager) package.
   * [emitter/](/packages/emitter) - contains the [@okikio/emitter](https://npmjs.com/@okikio/emitter) package.
@@ -101,12 +101,12 @@ I use a couple conventions when naming my files, these will help you navigate th
 
 ```
 📦native
- ┣ 📂build
- ┃ ┣ 📂assets
- ┃ ┣ 📂pug
- ┃ ┣ 📂scss
- ┃ ┗ 📂ts
  ┣ 📂docs
+ ┃ ┣ 📂demo
+ ┃ ┃ ┣ 📂assets
+ ┃ ┃ ┣ 📂pug
+ ┃ ┃ ┣ 📂scss
+ ┃ ┃ ┗ 📂ts
  ┣ 📂packages
  ┃ ┣ 📂animate
  ┃ ┣ 📂emitter

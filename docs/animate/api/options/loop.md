@@ -2,7 +2,7 @@
 
 | Default | Type                                                                                                               |
 | :------ | :----------------------------------------------------------------------------------------------------------------- |
-| `1`     | Boolean \| Number \| [TypeCallback](https://okikio.github.io/native/api/modules/_okikio_animate.html#typecallback) |
+| `1`     | Boolean \| Number \| [TypeCallback](/docs/api/modules/_okikio_animate.md#typecallback) |
 
 Determines if the animation should repeat, and how many times it should repeat.
 

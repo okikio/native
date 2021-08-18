@@ -23,7 +23,7 @@ pnpm start
 
 > _**Note**: I used [`Astro`](https://astro.build) & [`solidjs`](https://www.solidjs.com/) for the demo website, you may need to go through those resources before you understand how the demo works._
 
-Once Gitpod has booted up, go to the [build folder](/build) and start tweaking and testing to your hearts content. 
+Once Gitpod has booted up, go to the [demo folder](/docs/demo) and start tweaking and testing to your hearts content. 
 
 ### Runing Locally
 
@@ -51,4 +51,4 @@ pnpm build
 
 > _**Note**: I used [`Astro`](https://astro.build) & [`solidjs`](https://www.solidjs.com/) for the demo website, you may need to go through those resources before you understand how the demo works._
 
-Once Gitpod has booted up, go to the [build folder](/build) and start tweaking and testing to your hearts content.
+Once Gitpod has booted up, go to the [demo folder](/docs/demo) and start tweaking and testing to your hearts content.

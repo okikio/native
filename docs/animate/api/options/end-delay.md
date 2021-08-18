@@ -2,7 +2,7 @@
 
 | Default | Type                                                                                                    |
 | :------ | :------------------------------------------------------------------------------------------------------ |
-| `0`     | Number \| [TypeCallback](https://okikio.github.io/native/api/modules/_okikio_animate.html#typecallback) |
+| `0`     | Number \| [TypeCallback](/docs/api/modules/_okikio_animate.md#typecallback) |
 
 Similar to delay but it indicates the number of milliseconds to delay **after** the full animation has played **not before**.
 

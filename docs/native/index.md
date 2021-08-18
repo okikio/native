@@ -58,7 +58,7 @@ const { App, PJAX } = window.native;
   * [jabodent.com](https://jabodent.com)
   * Your site here...
 
-> [View the Demo  &#8594;](https://okikio.github.io/native/demo/)
+> [View the Demo  &#8594;](/docs/demo/)
 
 ## Usage
 

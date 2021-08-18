@@ -1,6 +1,6 @@
 ## API
 
-I highly suggest going through the [API documentation](https://okikio.github.io/native/api/modules/_okikio_native.html), for a more detailed documentation of the API's.
+I highly suggest going through the [API documentation](/docs/api/modules/_okikio_native.md), for a more detailed documentation of the API's.
 
 ### Summary 
 
@@ -1207,7 +1207,7 @@ go({
 
 ---
 
-*Note: thus far I have given you a detailed overview of the API's that make up the base classes as well as the `HistoryManager` (as an example of a complex project based class), but from this point onward the difficulty will drastically increaase, but because the next classes are project based classes they will only need to be instantiated into an `App`'s `ServiceManager` using a specific name to be used, with little to no config required on you part. PS. this is getting really tiring to document, so, for the next classes I will skimp out on aspects I feel aren't useful for the type of projects you want or need, if you would like more detail just look through the code for the framework, as well as the [build/ts folder](/build/ts/). Also, **all classes that aren't base classes are `Service`'s, or they extend the `Service` class in some way.***
+*Note: thus far I have given you a detailed overview of the API's that make up the base classes as well as the `HistoryManager` (as an example of a complex project based class), but from this point onward the difficulty will drastically increaase, but because the next classes are project based classes they will only need to be instantiated into an `App`'s `ServiceManager` using a specific name to be used, with little to no config required on you part. PS. this is getting really tiring to document, so, for the next classes I will skimp out on aspects I feel aren't useful for the type of projects you want or need, if you would like more detail just look through the code for the framework, as well as the [demo/ts folder](/docs/demo/ts/). Also, **all classes that aren't base classes are `Service`'s, or they extend the `Service` class in some way.***
 
 ---
 

@@ -1,8 +1,8 @@
 ## tweenAttr & TweenAttributes
 
-[`tweenAttr()`](https://okikio.github.io/native/api/modules/_okikio_animate.html#tweenattr) uses the change in opacity (from the [tween](https://okikio.github.io/native/api/modules/_okikio_animate.html#tween) function) to interpolate the value of other elements.
+[`tweenAttr()`](/docs/api/modules/_okikio_animate.md#tweenattr) uses the change in opacity (from the [tween](/docs/api/modules/_okikio_animate.md#tween) function) to interpolate the value of other elements.
 
-`tweenAttr` returns a new instance of [TweenAttributes](https://okikio.github.io/native/api/modules/_okikio_animate.html#tweenattributes) which is an extension of the `DestroyableAnimate` class.
+`tweenAttr` returns a new instance of [TweenAttributes](/docs/api/modules/_okikio_animate.md#tweenattributes) which is an extension of the `DestroyableAnimate` class.
 
 `TweenAttributes` creates an empty new element with an id of `empty-animate-el-${number...}`, and a display style of `none`. `TweenAttributes` then attaches the empty element to the DOM and then animates the opacity of the empty element. It then use the "update" event to watch for changes in opacity and use the opacity as a progress bar (with values between 0 to 1). This enables you to animate properties and attributes the Web Animation API (WAAPI) doesn't yet support.
 
@@ -48,4 +48,4 @@ new TweenAttributes({
 })
 ```
 
-Read more about [TweenAttributes](https://okikio.github.io/native/api/modules/_okikio_animate.html#tweenattributes).
+Read more about [TweenAttributes](/docs/api/modules/_okikio_animate.md#tweenattributes).

@@ -93,4 +93,4 @@ Read through the [methods and properties doc](/docs/animate/api/methods-and-prop
 
 ### Complete API Documentation
 
-Not all available methods and properties are listed here (otherwise this README would be too long), go through the [API documentation](https://okikio.github.io/native/api/modules/_okikio_animate.html) for the full documented API.
+Not all available methods and properties are listed here (otherwise this README would be too long), go through the [API documentation](/docs/api/modules/_okikio_animate.md) for the full documented API.

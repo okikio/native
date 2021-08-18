@@ -194,8 +194,7 @@ Desktop.ini
 # Recycle Bin used on file shares
 $RECYCLE.BIN/
 
-/demo
-/api
+/docs/api
 /.vscode
 
 # Thumbnails

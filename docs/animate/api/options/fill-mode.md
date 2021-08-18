@@ -2,7 +2,7 @@
 
 | Default | Type                                                                                                    |
 | :------ | :------------------------------------------------------------------------------------------------------ |
-| `auto`  | String \| [TypeCallback](https://okikio.github.io/native/api/modules/_okikio_animate.html#typecallback) |
+| `auto`  | String \| [TypeCallback](/docs/api/modules/_okikio_animate.md#typecallback) |
 
 _Be careful when using fillMode, it has some problems when it comes to concurrency of animations read more on [MDN](https://developer.mozilla.org/en-US/docs/Web/API/EffectTiming/fill), if browser support were better I would remove fillMode and use Animation.commitStyles, I'll have to change the way `fillMode` functions later. Use the onfinish method to commit styles [onfinish](/docs/animate/api/options/onfinish.md)._
 

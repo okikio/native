@@ -137,7 +137,7 @@ They represent the then, catch, and finally methods of a Promise that is resolve
 
 ### toJSON()
 
-An alias for [options](https://okikio.github.io/native/api/classes/animate.animate-1.html#options)
+An alias for [options](/docs/api/classes/animate.animate-1.md#options)
 
 ### all(method: (animation: Animation, target?: HTMLElement) => void)
 

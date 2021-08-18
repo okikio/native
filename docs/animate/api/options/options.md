@@ -2,7 +2,7 @@
 
 | Default | Type                                                                                                                                        |
 | :------ | :------------------------------------------------------------------------------------------------------------------------------------------ |
-| `{}`    | [IAnimationOptions](https://okikio.github.io/native/api/interfaces/_okikio_animate.ianimationoptions.html) = Object \| Animate \| Animate[] |
+| `{}`    | [IAnimationOptions](/docs/api/interfaces/_okikio_animate.ianimationoptions.md) = Object \| Animate \| Animate[] |
 
 Another way to input options for an animation, it's also used to chain animations.
 

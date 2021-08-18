@@ -222,4 +222,4 @@ methodCall(manager, "print", Date.now()); // Eg. 1598772789150, 1598772801639
 
 ## Complete API Documentation
 
-You can also go through the full [API documentation](https://okikio.github.io/native/api/modules/_okikio_manager.html), for a more detailed documentation of the API.
+You can also go through the full [API documentation](/docs/api/modules/_okikio_manager.md), for a more detailed documentation of the API.

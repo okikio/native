@@ -2,9 +2,9 @@
 
 | Default | Type                                                                                                                                                                                   |
 | :------ | :------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `[]`    | TypeCSSLikeKeyframe \| ICSSComputedTransformableProperties[] & Keyframe[] \| object[] \| [TypeCallback](https://okikio.github.io/native/api/modules/_okikio_animate.html#typecallback) |
+| `[]`    | TypeCSSLikeKeyframe \| ICSSComputedTransformableProperties[] & Keyframe[] \| object[] \| [TypeCallback](/docs/api/modules/_okikio_animate.md#typecallback) |
 
-I highly suggest going through the API documentation to better understand [keyframes](https://okikio.github.io/native/api/interfaces/_okikio_animate.ianimationoptions.html#keyframes).
+I highly suggest going through the API documentation to better understand [keyframes](/docs/api/interfaces/_okikio_animate.ianimationoptions.md#keyframes).
 
 Allows you to manually set keyframes using a `keyframe` array
 
@@ -12,7 +12,7 @@ Read more on [MDN](https://developer.mozilla.org/en-US/docs/Web/API/KeyframeEffe
 
 An `array` of objects (keyframes) consisting of properties and values to iterate over. This is the canonical format returned by the [getKeyframes()](https://developer.mozilla.org/en-US/docs/Web/API/KeyframeEffect/getKeyframes) method.
 
-`@okikio/animate` also offers another format called `CSSLikeKeyframe`, read more about [KeyframeParse](https://okikio.github.io/native/api/modules/_okikio_native.html#keyframeparse)
+`@okikio/animate` also offers another format called `CSSLikeKeyframe`, read more about [KeyframeParse](/docs/api/modules/_okikio_native.md#keyframeparse)
 
 It basically functions the same way CSS's `@keyframe` works.
 

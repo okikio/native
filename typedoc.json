@@ -6,7 +6,8 @@
         "**/@types/*.d.ts"
     ],
     "packages": ".",
-    "name": "The Native Initiative",
-    "out": "api",
-    "readme": "none" 
+    "name": "API",
+    "out": "docs/api",
+    "readme": "none",
+    "entryDocument": "index.md"
 }

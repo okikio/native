@@ -6,16 +6,11 @@
         
         "lib": ["ES2020", "ESNext", "DOM"],
 
-        "sourceMap": true,
-        "declaration": true,
-        "emitDeclarationOnly": true,
-
         "incremental": true,
 
         "isolatedModules": true,
         "esModuleInterop": true,
 
-        "outDir": "./lib",
-        "declarationDir": "./@types"
+        "outDir": "./lib"
     }
 }

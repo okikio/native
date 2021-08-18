@@ -1,6 +1,6 @@
 ## Effects
 
-You may want to use pre-made effects like the onces [animate.css](https://www.npmjs.com/package/animate.css) provide, I initially planned on bundling this functionality in, but because of the plentiful number of libraries that do the same thing, I suggest using those instead, and if you want to create your own effects from CSS, you can use CSS Keyframe style JSON object, make sure to read the documentation for [KeyframeParse](https://okikio.github.io/native/api/modules/_okikio_animate.html#keyframeparse)
+You may want to use pre-made effects like the onces [animate.css](https://www.npmjs.com/package/animate.css) provide, I initially planned on bundling this functionality in, but because of the plentiful number of libraries that do the same thing, I suggest using those instead, and if you want to create your own effects from CSS, you can use CSS Keyframe style JSON object, make sure to read the documentation for [KeyframeParse](/docs/api/modules/_okikio_animate.md#keyframeparse)
 
 I suggest [@shoelace-style/animations](https://www.npmjs.com/package/@shoelace-style/animations) for all your animate.css needs, you can use it like this,
 

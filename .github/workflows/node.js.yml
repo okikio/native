@@ -15,7 +15,7 @@ jobs:
 
         strategy:
             matrix:
-                node-version: [14.x]
+                node-version: [16.x]
                 # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
 
         steps:
@@ -45,8 +45,7 @@ jobs:
             - name: Add api and demo to Git
               if: ${{ github.ref == 'refs/heads/master' }}
               run: |
-                  git add --force demo/
-                  git add --force api/
+                  git add --force docs/api/
 
             - name: Commit files
               if: ${{ github.ref == 'refs/heads/master' }}

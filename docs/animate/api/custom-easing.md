@@ -94,18 +94,18 @@ _**Note**: the `easing` property supports the original values and functions for 
 
 _**Note**: you can also use camelCase when defining easing functions, e.g. `inOutCubic` to represent `in-out-cubic`_
 
-_**Suggestion**: if you decide to use [CustomEasing](https://okikio.github.io/native/api/modules/_okikio_animate.html#customeasing) on one CSS property, I suggest using [CustomEasing](https://okikio.github.io/native/api/modules/_okikio_animate.html#customeasing) or [ApplyCustomEasing](https://okikio.github.io/native/api/modules/_okikio_animate.html#applycustomeasing) on the rest_
+_**Suggestion**: if you decide to use [CustomEasing](/docs/api/modules/_okikio_animate.md#customeasing) on one CSS property, I suggest using [CustomEasing](/docs/api/modules/_okikio_animate.md#customeasing) or [ApplyCustomEasing](/docs/api/modules/_okikio_animate.md#applycustomeasing) on the rest_
 
 ***
 
 ### SpringEasing
 
 Returns an array containing `[easing points, duration]`, it's meant to be a self enclosed way to create spring easing.
-Springs have an optimal duration; using [`getEasingDuration()`](https://okikio.github.io/native/api/modules/_okikio_animate.html#geteasingduration) we are able to have the determine the optimal duration for a spring with given parameters.
+Springs have an optimal duration; using [`getEasingDuration()`](/docs/api/modules/_okikio_animate.md#geteasingduration) we are able to have the determine the optimal duration for a spring with given parameters.
 
 By default it will only give the optimal duration for `spring` or `spring-in` easing, this is to avoid infinite loops caused by the `getEasingDuration()` function.
 
-Internally the `SpringEasing` uses [CustomEasing](https://okikio.github.io/native/api/modules/_okikio_animate.html#customeasing), read more on it, to understand how the `SpringEasing` function works.
+Internally the `SpringEasing` uses [CustomEasing](/docs/api/modules/_okikio_animate.md#customeasing), read more on it, to understand how the `SpringEasing` function works.
 
 e.g.
 
@@ -139,9 +139,9 @@ You can also use `ApplyCustomEasing`. It applies the same custom easings to all 
 If you use the `spring` or `spring-in` easings it will also return the optimal duration as a key in the object it returns.
 If you set `duration` to a number, it will prioritize that `duration` over optimal duration given by the spring easings.
 
-Read more about [CustomEasing](https://okikio.github.io/native/api/modules/_okikio_animate.html#applycustomeasing).
+Read more about [CustomEasing](/docs/api/modules/_okikio_animate.md#applycustomeasing).
 
-_**Suggestion**: if you decide to use [CustomEasing](https://okikio.github.io/native/api/modules/_okikio_animate.html#customeasing) on one CSS property, I suggest using [CustomEasing](https://okikio.github.io/native/api/modules/_okikio_animate.html#customeasing) or [ApplyCustomEasing](https://okikio.github.io/native/api/modules/_okikio_animate.html#applycustomeasing) on the rest_
+_**Suggestion**: if you decide to use [CustomEasing](/docs/api/modules/_okikio_animate.md#customeasing) on one CSS property, I suggest using [CustomEasing](/docs/api/modules/_okikio_animate.md#customeasing) or [ApplyCustomEasing](/docs/api/modules/_okikio_animate.md#applycustomeasing) on the rest_
 
 e.g.
 

@@ -53,7 +53,7 @@ const { default: anime } = window.animate; // LOL
 * [jabodent.com](https://jabodent.com)
 * Your project name here...
 
-> [Click to view demo &#8594;](https://okikio.github.io/native/demo/animate)
+> [Click to view demo &#8594;](/docs/demo/animate)
 
 ## Getting started
 

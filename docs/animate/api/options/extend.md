@@ -4,7 +4,7 @@
 | :------ | :---------------------------------------------------------------------------------------------- |
 | `{}`    | [KeyframeEffectOptions](https://developer.mozilla.org/en-US/docs/Web/API/KeyframeEffectOptions) |
 
-The properties of the `extend` animation option are computed and can use [TypeCallback](https://okikio.github.io/native/api/modules/_okikio_animate.html#typecallback), they are a way to access features that haven't been implemented in `@okikio/animate`, for example, `iterationStart`.
+The properties of the `extend` animation option are computed and can use [TypeCallback](/docs/api/modules/_okikio_animate.md#typecallback), they are a way to access features that haven't been implemented in `@okikio/animate`, for example, `iterationStart`.
 
 `extend` is supposed to future proof the library if new features are added to the Web Animation API that you want to use, but that has not been implemented yet.
 

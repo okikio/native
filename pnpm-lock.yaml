@@ -25,6 +25,7 @@ importers:
       sass: ^1.38.0
       tailwindcss: ^2.2.7
       typedoc: 0.21.5
+      typedoc-plugin-markdown: ^3.10.4
       typescript: ~4.4.1-rc
       ultra-runner: ^3.10.5
       web-animations-js: ^2.3.2
@@ -52,6 +53,7 @@ importers:
       sass: 1.38.0
       tailwindcss: 2.2.7
       typedoc: 0.21.5_typescript@4.4.1-rc
+      typedoc-plugin-markdown: 3.10.4_typedoc@0.21.5
       typescript: 4.4.1-rc
       ultra-runner: 3.10.5
 
@@ -2354,9 +2356,9 @@ packages:
     dependencies:
       caniuse-lite: 1.0.30001251
       colorette: 1.3.0
-      electron-to-chromium: 1.3.808
+      electron-to-chromium: 1.3.811
       escalade: 3.1.1
-      node-releases: 1.1.74
+      node-releases: 1.1.75
     dev: true
 
   /bser/2.1.1:
@@ -3200,8 +3202,8 @@ packages:
       safer-buffer: 2.1.2
     dev: true
 
-  /electron-to-chromium/1.3.808:
-    resolution: {integrity: sha512-espnsbWTuUw0a2jMwfabCc09py2ujB+FZZE1hZWn5yYijEmxzEhdhTLKUfZGjynHvdIMQ4X/Pr/t8s4eiyH/QQ==}
+  /electron-to-chromium/1.3.811:
+    resolution: {integrity: sha512-hv3kgf6YSd+jQ7J+7Kdm44yux/1vxcAwfGV/6M6Nq4E9zJ3Bml/P2+vULCvqLS6Lh9knBCQ7iEMvyeDiGe5EbA==}
     dev: true
 
   /emittery/0.8.1:
@@ -6307,8 +6309,8 @@ packages:
     engines: {node: '>=0.10.0'}
     dev: true
 
-  /node-releases/1.1.74:
-    resolution: {integrity: sha512-caJBVempXZPepZoZAPCWRTNxYQ+xtG/KAi4ozTA5A+nJ7IU+kLQCbqaUjb5Rwy14M9upBWiQ4NutcmW04LJSRw==}
+  /node-releases/1.1.75:
+    resolution: {integrity: sha512-Qe5OUajvqrqDSy6wrWFmMwfJ0jVgwiw4T3KqmbTcZ62qW0gQkheXYhcFM1+lOVcGUoRxcEcfyvFMAnDgaF1VWw==}
     dev: true
 
   /nopt/5.0.0:
@@ -8546,6 +8548,15 @@ packages:
   /typedoc-default-themes/0.12.10:
     resolution: {integrity: sha512-fIS001cAYHkyQPidWXmHuhs8usjP5XVJjWB8oZGqkTowZaz3v7g3KDZeeqE82FBrmkAnIBOY3jgy7lnPnqATbA==}
     engines: {node: '>= 8'}
+    dev: true
+
+  /typedoc-plugin-markdown/3.10.4_typedoc@0.21.5:
+    resolution: {integrity: sha512-if9w7S9fXLg73AYi/EoRSEhTOZlg3I8mIP8YEmvzSE33VrNXC9/hA0nVcLEwFVJeQY7ay6z67I6kW0KIv7LjeA==}
+    peerDependencies:
+      typedoc: '>=0.21.2'
+    dependencies:
+      handlebars: 4.7.7
+      typedoc: 0.21.5_typescript@4.4.1-rc
     dev: true
 
   /typedoc/0.21.5_typescript@4.4.1-rc:

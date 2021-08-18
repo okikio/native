@@ -2,7 +2,7 @@
 
 | Default | Type                                                                                                    |
 | :------ | :------------------------------------------------------------------------------------------------------ |
-| `ease`  | String \| [TypeCallback](https://okikio.github.io/native/api/modules/_okikio_animate.html#typecallback) |
+| `ease`  | String \| [TypeCallback](/docs/api/modules/_okikio_animate.md#typecallback) |
 
 Determines the acceleration curve of your animation.
 Based on the easings of [easings.net](https://easings.net)

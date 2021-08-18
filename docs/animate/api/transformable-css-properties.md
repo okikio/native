@@ -30,9 +30,9 @@ _**Note**: the order of `transform` functions as CSS Properties, matter. Meanwhi
 
 _**Warning**: only the transform function CSS properties and CSS properties with the keys ["margin", "padding", "size", "width", "height", "left", "right", "top", "bottom", "radius", ,"gap", "basis", "inset", "outline-offset", "perspective", "thickness", "position", "distance", "spacing", "rotate"] will get automatic units. It will also work with multiple unit CSS properties like "margin", "padding", and "inset", etc..., however, no automatic units will be applied to any CSS properties that can accept color, this is to avoid unforseen bugs._
 
-Read more about the [ParseTransformableCSSProperties](https://okikio.github.io/native/api/modules/_okikio_animate.html#parsetransformablecssproperties) method.
+Read more about the [ParseTransformableCSSProperties](/docs/api/modules/_okikio_animate.md#parsetransformablecssproperties) method.
 
-Also, read about the [ParseTransformableCSSKeyframes](https://okikio.github.io/native/api/modules/_okikio_animate.html#parsetransformablecsskeyframes) method.
+Also, read about the [ParseTransformableCSSKeyframes](/docs/api/modules/_okikio_animate.md#parsetransformablecsskeyframes) method.
 
 Check out an example on [Codepen](https://codepen.io/okikio/pen/qBrNXoY?editors=0110)
 

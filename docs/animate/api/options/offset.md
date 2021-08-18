@@ -2,7 +2,7 @@
 
 | Default     | Type                                                                                                                  |
 | :---------- | :-------------------------------------------------------------------------------------------------------------------- |
-| `undefined` | (Number \| String)[] \| [TypeCallback](https://okikio.github.io/native/api/modules/_okikio_animate.html#typecallback) |
+| `undefined` | (Number \| String)[] \| [TypeCallback](/docs/api/modules/_okikio_animate.md#typecallback) |
 
 Controls the starting point of certain parts of an animation.
 
