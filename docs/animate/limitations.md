@@ -2,7 +2,7 @@
 
 ### CSS & SVG Animations Support
 
-_**Warning**: Techinically the `d` attribute is supported in Chromium based browsers, but litterarly no one else supports it so, be carefull and take the following list of attributes with a grain of salt, make sure to test them in the browser enviroments you expect them to be used in._
+> _**Warning**: Techinically the `d` attribute is supported in Chromium based browsers, but litterarly no one else supports it so, be carefull and take the following list of attributes with a grain of salt, make sure to test them in the browser enviroments you expect them to be used in._
 
 `Animate` can animate `~197` CSS properties; [MDN Animatable CSS Properties](https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_animated_properties) and `~63` SVG properties; [MDN SVG Presentation Attributes](https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute/Presentation).
 
