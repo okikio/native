@@ -20,7 +20,9 @@
 		"astro-build.astro-vscode",
 		"bradlc.vscode-tailwindcss",
 		"jock.svg",
-		"macieklad.tailwind-sass-syntax"
+		"macieklad.tailwind-sass-syntax",
+		"github.github-vscode-theme",
+		"shd101wyy.markdown-preview-enhanced"
 	],
 
 	// Use 'forwardPorts' to make a list of ports inside the container available locally.
