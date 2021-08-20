@@ -1,4 +1,4 @@
 [build]
-    command = "[[ $CI = true ]] && npx pnpm install -r --store-dir=node_modules/.pnpm-store && pnpm docs"
+    command = "[[ $CI = true ]] && npx pnpm install -r --store-dir=node_modules/.pnpm-store && npm run docs"
 [build.environment]
     NPM_FLAGS="--prefix=./bin/empty-project/"
