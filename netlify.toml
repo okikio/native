@@ -1,4 +1,4 @@
 [build]
-    command = "./bin/netlify.sh"
+    command = "/bin/netlify.sh"
 [build.environment]
     NPM_FLAGS="--prefix=./bin/empty-project/"
