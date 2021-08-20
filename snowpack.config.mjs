@@ -5,9 +5,16 @@
 export default {
   mount: {
     docs: "/docs",
-    packages: "/packages",
+    packages: "/packages"
     /* ... */
   },
+  alias: {
+    components: './src/components',
+    layouts: './src/layouts',
+    '~': './src',
+  },
+  workspaceRoot: '../..',
+  
   plugins: [
     /* ... */
   ],

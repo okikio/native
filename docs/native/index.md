@@ -476,7 +476,7 @@ Read through the [API guide](/docs/native/api.md) to learn more.
 
 > _**Note**: This package is built for ES2020, it expects the user to use a build tool to support older versions of browsers, the idea being most people are using evergreen browsers, so, why are web developers piling on polyfill code that most users don't need._
 
-Learn about polyfilling, bundling, and more in the [platform support guide](/docs/native/platform-support.md).
+Learn about polyfilling, bundling, and more in the [browser support guide](/docs/native/browser-support.md).
 
 
 ## Contributing
