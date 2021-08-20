@@ -1,0 +1,35 @@
+---
+import { globby } from 'globby';
+import { Markdown } from 'astro/components';
+import { readFileSync } from "node:fs";
+
+export async function getStaticPaths() {
+    let res = await globby(["docs/**/*.md", "!docs/api"]);
+    let pages = res.map(x => {
+        return { 
+            path: x, 
+            page: x
+              .replace(/^docs\//, "")
+              .replace(/\.md$/, "")
+        }
+    });
+
+    let result = pages.map(x => {
+      const { page, path } = x;
+      const content = readFileSync(`${path}`, "utf-8");
+      return { params: { page }, props: { content } }
+    });
+    
+    result.forEach(v => {
+      if (/\/index$/.test(v.params.page)) {
+        result.push({ ...v, params: { page: v.params.page.replace(/\/index$/, "") } })
+      }
+    })
+    return result;
+}
+
+const {content} = Astro.props;
+---
+<html>
+  <Markdown content={content} />
+</html>

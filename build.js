@@ -94,7 +94,7 @@ const args = minimist(process.argv.slice(2));
 const configs = await rollupConfig(args);
 
 export async function build() {
-    for (let { input, output, external, umd } of configs) {
+    for (let { input, output, external } of configs) {
         let title = chalk`{gray Bundled in}`;
         console.time(title);
         console.log(`\n` + chalk`Building {red ${input}}`);

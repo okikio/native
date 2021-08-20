@@ -1574,7 +1574,7 @@ app
 
 The `Router` service uses a list of objects called IRoute which complete certain actions when route paths match the current url, or when moving from one url to another.
 
-Also, `Router` supports [path-to-regexp](https://www.npmjs.com/package/path-to-regexp), so, you can use all the express like url syntax's you are used to.
+Also, `Router` supports [path-to-regexp](https://www.npmjs.com/package/path-to-regexp), so, you can use all the express like url syntax's you are used to, however, I might refactor it to use the new `URLPattern` web standard in a future update. `URLPattern` accomplishes the same goal in a similar way to `path-to-regex` without needing to install `path-to-regex`. I suggest learning more about `URLPattern` on [web.dev/urlpattern](https://web.dev/urlpattern/).
 
 _**Note**: at least either `to` or `from` must be present, in `to, from` path mode_
 

@@ -2,26 +2,22 @@
 
 [NPM](https://www.npmjs.com/package/@okikio/native) <span style="padding-inline: 1rem">|</span> [API Guide](/docs/native/api.md) <span style="padding-inline: 1rem">|</span> [Licence](/packages/native/LICENSE) 
 
-`native` is an initiative that encourages performance, modern technologies, and great user experiences. The idea behind `@okikio/native` is that it acts as the core framework to the `native` initiative, it combines all the other package into it a core package that is **~7.21 KB** (minified & gzipped).
+`@okikio/native` is a js framework for creating amazing web experience through composable services, it acts as a sort of guideline on how to create great web experiences that integrate into the system in a way that feels cohesive and natural, in total it weighs **~7.21 KB** (minified & gzipped).
 
-> _**Note**: `@okikio/native` is treeshakable, so you only need to use the features required for your project and the other portions can be removed. The absolute minimum functional treeshaken size is **~1.75 KB** (minified & gzipped)._
+> _**Note**: `@okikio/native` is treeshakable, so only the features you need actually get bundled into your project. The absolute minimum functional treeshaken size is **~1.75 KB** (minified & gzipped)._
 
-[@okikio/native](/docs/native/index.md) is a guideline on how to create great web experiences that integrate into the system in a way that feels like a cohesive and native experience.
+The idea behind `@okikio/animate` is that, when an application feels native/natural, it means that it integrates well into the OS and just works, for example, an apps dark mode that follows the entire system. The just works aspect is key to the framework, it should work without the user skipping a beat. On the web this boils down to being performant, efficient, and relegating to the browser as much as possible.
 
-The idea behind it is that, when an app feels native, it means that it integrates well into the systems and `just works`, for example, a dark mode that follows the entire system. The `just works` aspect is key to the framework, it should work without the user skipping a beat. On the web this boils down to being performant, efficient, and smooth.
+The `@okikio/native` package achieves performance, high efficiency, and a natural experience by being heavily modern (relying on passive polyfills to support older browsers) and being well optimized.
 
-The `@okikio/native` package achieves performance, high efficiency, and a smooth experience by being heavily modern (relying on passive polyfills to support older browsers) and being well optimized.
-
-`@okikio/native` uses modern browser api's like the Maps, pushState, etc.... to achieve high efficiency and performance. The browser API's can be difficult to work with, so, I developed [@okikio/manager](https://www.npmjs.com/package/@okikio/manager), [@okikio/emitter](https://www.npmjs.com/package/@okikio/emitter), and [@okiko/animate](https://www.npmjs.com/package/@okikio/animate) libraries to make them more managable. I developed these libraries to ensure the framework is well optimized and to avoid large number of dependencies.
+`@okikio/native` uses modern browser api's like the Maps, pushState, etc.... to achieve high efficiency and performance, however, some of the browser API's can be difficult to work with, so, I developed [@okikio/manager](https://www.npmjs.com/package/@okikio/manager), [@okikio/emitter](https://www.npmjs.com/package/@okikio/emitter), and [@okiko/animate](https://www.npmjs.com/package/@okikio/animate) libraries to make them more managable. I developed these libraries to ensure the framework is well optimized and to avoid large numbers of dependencies.
 
 
 ## Getting Started
 
-[@okikio/native](/docs/native/index.md) was inspired by Rezo Zero's Starting Blocks project, and barbajs. Both libraries had a major impact on the development of this project. barbajs is easy to use and elevates the experience of a site with the use of PJAX, while Starting Blocks uses modern apis to create performant but complex web experiences. This project exists as a more flexible alternative to Starting Blocks, but with the same intuitive design and experience (UX/DX) barbajs provides. The framework doesn't need PJAX to function, and best of all if PJAX is enabled it can safely switch back to normal browser controls if something goes wrong.
+[@okikio/native](/docs/native/index.md) was inspired by [Rezo Zero's - Starting Blocks](https://github.com/rezozero/starting-blocks) project, and [barbajs](https://barba.js.org/). Both libraries had a major impact on the development of this project. `barbajs` is easy to use and elevates the experience of a site with the use of PJAX, while `Starting Blocks` uses modern apis to create performant but complex web experiences. This project exists as a more flexible alternative to `Starting Blocks`, but with the same intuitive design and experience (UX/DX) `barbajs` provides. `@kikio/animate` doesn't need PJAX to function, and best of all if PJAX is enabled it can safely switch back to normal browser controls if something goes wrong.
 
-This project is called a framework but it is more like a guideline, if all you want is a simple starter project that has PJAX built in then you install the project from [npm](https://www.npmjs.com/package/@okikio/native), but otherwise you download the project into you workspace and tweak it to match your projects needs and remove all the extra fluff you don't want (this project works best with treeshaking, you can use rollup, webpack, or esbuild for this; esbuild is preferred).
-
-This package is built for ES2020, it expects the user to use a build tool to support older versions of browsers, the idea being most people are using evergreen browsers, so, why are web developers piling on polyfill code that most users don't need.
+> _**Note**: if you don’t know what a PJAX is I suggest checking out [MoOx/pjax](https://github.com/MoOx/pjax); in short, PJAX allows for smooth transitions between pages by switching out DOM Elements, after fetching them._
 
 ## Installation
 
@@ -62,7 +58,7 @@ const { App, PJAX } = window.native;
 
 ## Usage
 
-By default `@okikio/native` is very open ended in how you use it. You first create a new App, and then add Services, the App is the boss of the operation, while Services are workers that accomplish specific tasks.
+By default `@okikio/native` is very open ended in how you use it. You first create a new `App`, and then add `Services`, the `App` is the boss of the operation, while `Services` are workers that accomplish specific tasks.
 
 For example,
 
@@ -197,6 +193,8 @@ try {
 }
 ```
 
+Read through the [API guide](/docs/native/api.md) to learn more. 
+
 ### PJAX
 
 If you would like to use PJAX on your site you would probably want a setup like this,
@@ -233,7 +231,7 @@ Setup your HTML pages with this,
 Then add this to your javascript,
 
 ```ts
-import {  App, PJAX, TransitionManager, HistoryManager, PageManager, Router } from "@okikio/native";
+import { App, PJAX, TransitionManager, HistoryManager, PageManager, Router } from "@okikio/native";
 import { animate } from "@okikio/animate";
 const app = new App();
 
@@ -278,7 +276,10 @@ app
 
 try {
     // Router is a router, depending on the page path it will run certain tasks
-    // It support regexp and paths that path-to-regex supports
+    // It support regexp and paths that `path-to-regex` supports, 
+    // however, I might refactor it to use the new `URLPattern` web standard in a future update. 
+    // `URLPattern` accomplishes the same goal in a similar way to `path-to-regex` without needing to install `path-to-regex`. 
+    // I suggest learning more about `URLPattern` on https://web.dev/urlpattern/
     const router = app.get("Router");
     router.add({
         path: "./index?(.html)?",
@@ -296,10 +297,10 @@ try {
             console.log("Print something when a link is clicked")
         },
         NAVIGATION_START() {
-            console.log("Print before you start loading pages and prior to transitioning")
+            console.log("Print before you start loading pages")
         },
         // etc...
-    })
+    });
 
     // While this event is emitted by the App
     app.on("resize", () => {
@@ -312,9 +313,13 @@ try {
 }
 ```
 
+Read through the [API guide](/docs/native/api.md) to learn more. 
+
 ### Wrapper
 
 The `wrapper` is the element with the `data-wrapper` attribute; it's the part of the page that get's switched out with new content. There can only be one `wrapper` per page, if there are multiple `wrapper`s the first `wrapper` will count as the wrapper for the page.
+
+Read through the [API guide](/docs/native/api.md) to learn more. 
 
 ### Configuration
 
@@ -445,9 +450,15 @@ export interface ICONFIG {
 }
 ```
 
+Read through the [API guide](/docs/native/api.md) to learn more. 
+
 ### Animations & extras
 
-By default `@okikio/native` doesn't come bundled with [@okikio/animate](https://www.npmjs.com/package/@okikio/animate), [@okikio/emitter](https://www.npmjs.com/package/@okikio/emitter), and [@okikio/manager](https://www.npmjs.com/package/@okikio/manager). Theses packages are all part of the [native initiative](https://github.com/okikio/native). You can install `@okikio/animate` as a seperate package and use it to create smooth transtions when using `@okikio/native`, however, you can also use other animations libraries if you wish.
+When using PJAX on sites you may want to use an animation library to transition between pages, (slight shameless plug [^1]) might I suggest [@okikio/animate](/docs/animate/api/index.md). You can use `@okikio/animate` to create smooth and fluid transtions, however, you aren't limited to just `@okikio/animate`, you can use any other animation libraries, or if you are daring you can also just use CSS for your transitions. 
+
+[^1]: A “shameless plug” is a term often used on the Internet to refer to a time when someone tries to include (or “plug”) some information that helps advance their own selfish interests. And that information is usually a little bit off-topic.
+
+By default `@okikio/native` doesn't come bundled with [@okikio/animate](https://www.npmjs.com/package/@okikio/animate), [@okikio/emitter](https://www.npmjs.com/package/@okikio/emitter), and [@okikio/manager](https://www.npmjs.com/package/@okikio/manager). Theses packages are all part of the [native initiative](https://github.com/okikio/native), together with `@okikio/native`, but to reduce package size I seperated them.
 
 ```ts
 import { App } from "@okikio/native";
@@ -462,6 +473,8 @@ Read through the [API guide](/docs/native/api.md) to learn more.
 | Chrome | Edge | Firefox |
 | ------ | ---- | ------- |
 | > 51   | > 14 | > 54    |
+
+> _**Note**: This package is built for ES2020, it expects the user to use a build tool to support older versions of browsers, the idea being most people are using evergreen browsers, so, why are web developers piling on polyfill code that most users don't need._
 
 Learn about polyfilling, bundling, and more in the [platform support guide](/docs/native/platform-support.md).
 

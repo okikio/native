@@ -12,7 +12,7 @@ importers:
       '@okikio/native': workspace:*
       '@rollup/plugin-commonjs': ^20.0.0
       '@rollup/plugin-node-resolve': ^13.0.4
-      astro: ^0.19.0
+      astro: ^0.19.1
       chalk: ^4.1.2
       esbuild: ^0.12.21
       globby: ^12.0.1
@@ -42,7 +42,7 @@ importers:
       '@changesets/cli': 2.16.0
       '@rollup/plugin-commonjs': 20.0.0_rollup@2.56.2
       '@rollup/plugin-node-resolve': 13.0.4_rollup@2.56.2
-      astro: 0.19.0_typescript@4.4.1-rc
+      astro: 0.19.1_typescript@4.4.1-rc
       chalk: 4.1.2
       esbuild: 0.12.21
       globby: 12.0.1
@@ -112,8 +112,8 @@ importers:
 
 packages:
 
-  /@astrojs/markdown-support/0.2.3:
-    resolution: {integrity: sha512-n8DVsJGAOGyAnaHl/SE32MXJSsFhw57nm0VbWg6ehxg0+5hcNNGtfpG/cWrIMoler1GIbs6HWT66vrWZqraGYw==}
+  /@astrojs/markdown-support/0.2.4:
+    resolution: {integrity: sha512-a/b9CZbB1YXanruPyMvp88Qn2q3mo3WdQK/PWbNzbFWz9pPSetj4SWxdu1rPbwkWSENX/t4Dso8/xv+eAJHkFg==}
     dependencies:
       '@silvenon/remark-smartypants': 1.0.0
       github-slugger: 1.3.0
@@ -1112,7 +1112,7 @@ packages:
     engines: {node: '>= 8'}
     dependencies:
       '@nodelib/fs.scandir': 2.1.5
-      fastq: 1.11.1
+      fastq: 1.12.0
     dev: true
 
   /@npmcli/arborist/2.8.2:
@@ -1569,8 +1569,8 @@ packages:
       '@types/node': 16.6.2
     dev: true
 
-  /@types/mdast/3.0.7:
-    resolution: {integrity: sha512-YwR7OK8aPmaBvMMUi+pZXBNoW2unbVbfok4YRqGMJBe1dpDlzpRkJrYEYmvjxgs5JhuQmKfDexrN98u941Zasg==}
+  /@types/mdast/3.0.8:
+    resolution: {integrity: sha512-HdUXWDNtDenuVJFrV2xBCLEMiw1Vn7FMuJxqJC5oBvC2adA3pgtp6CPCIMQdz3pmWxGuJjT+hOp6FnOXy6dXoQ==}
     dependencies:
       '@types/unist': 2.0.6
     dev: true
@@ -2006,12 +2006,12 @@ packages:
     hasBin: true
     dev: true
 
-  /astro/0.19.0_typescript@4.4.1-rc:
-    resolution: {integrity: sha512-V2E1Qcnm66/FBxE1UGQknYKAXNxBd6NEYkkMQfvAX4fWkjlX+NixlaQIkF9C26+y/hhISAsAquvljq1aGqtP8Q==}
+  /astro/0.19.1_typescript@4.4.1-rc:
+    resolution: {integrity: sha512-UMkdu+gKnoCDrMzv5WF3OAcwCKeAuFGMQoshHXGpcIJKWL1hjKYHk1nlhR9KfiPlqe7/rSaxZ7SrCaBpz7ouqg==}
     engines: {node: ^12.20.0 || ^14.13.1 || >=16.0.0, npm: '>=6.14.0'}
     hasBin: true
     dependencies:
-      '@astrojs/markdown-support': 0.2.3
+      '@astrojs/markdown-support': 0.2.4
       '@astrojs/parser': 0.18.6
       '@astrojs/prism': 0.2.2
       '@astrojs/renderer-preact': 0.2.1_@babel+core@7.15.0
@@ -2394,7 +2394,7 @@ packages:
     dependencies:
       caniuse-lite: 1.0.30001251
       colorette: 1.3.0
-      electron-to-chromium: 1.3.812
+      electron-to-chromium: 1.3.813
       escalade: 3.1.1
       node-releases: 1.1.75
     dev: true
@@ -3240,8 +3240,8 @@ packages:
       safer-buffer: 2.1.2
     dev: true
 
-  /electron-to-chromium/1.3.812:
-    resolution: {integrity: sha512-7KiUHsKAWtSrjVoTSzxQ0nPLr/a+qoxNZwkwd9LkylTOgOXSVXkQbpIVT0WAUQcI5gXq3SwOTCrK+WfINHOXQg==}
+  /electron-to-chromium/1.3.813:
+    resolution: {integrity: sha512-YcSRImHt6JZZ2sSuQ4Bzajtk98igQ0iKkksqlzZLzbh4p0OIyJRSvUbsgqfcR8txdfsoYCc4ym306t4p2kP/aw==}
     dev: true
 
   /emittery/0.8.1:
@@ -3625,8 +3625,8 @@ packages:
     hasBin: true
     dev: true
 
-  /fastq/1.11.1:
-    resolution: {integrity: sha512-HOnr8Mc60eNYl1gzwp6r5RoUyAn5/glBolUzP/Ez6IFVPMPirxn/9phgL6zhOtaTy7ISwPvQ+wT+hfcRZh/bzw==}
+  /fastq/1.12.0:
+    resolution: {integrity: sha512-VNX0QkHK3RsXVKr9KrlUv/FoTa0NdbYoHHl7uXHv2rzyHSlxjdNAKug2twd9luJxpcyNeAgf5iPPMutJO67Dfg==}
     dependencies:
       reusify: 1.0.4
     dev: true
@@ -5693,8 +5693,8 @@ packages:
       semver: 6.3.0
     dev: true
 
-  /make-fetch-happen/9.0.4:
-    resolution: {integrity: sha512-sQWNKMYqSmbAGXqJg2jZ+PmHh5JAybvwu0xM8mZR/bsTjGiTASj3ldXJV7KFHy1k/IJIBkjxQFoWIVsv9+PQMg==}
+  /make-fetch-happen/9.0.5:
+    resolution: {integrity: sha512-XN0i/VqHsql30Oq7179spk6vu3IuaPL1jaivNYhBrJtK7tkOuJwMK2IlROiOnJ40b9SvmOo2G86FZyI6LD2EsQ==}
     engines: {node: '>= 10'}
     dependencies:
       agentkeepalive: 4.1.4
@@ -5711,7 +5711,7 @@ packages:
       minipass-pipeline: 1.2.4
       negotiator: 0.6.2
       promise-retry: 2.0.1
-      socks-proxy-agent: 5.0.1
+      socks-proxy-agent: 6.0.0
       ssri: 8.0.1
     transitivePeerDependencies:
       - supports-color
@@ -5793,7 +5793,7 @@ packages:
   /mdast-util-from-markdown/0.8.5:
     resolution: {integrity: sha512-2hkTXtYYnr+NubD/g6KGBS/0mFmBcifAsI0yIWRiRo0PjVs6SSOSOdtzbp6kSGnShDN6G5aWZpKQ2lWRy27mWQ==}
     dependencies:
-      '@types/mdast': 3.0.7
+      '@types/mdast': 3.0.8
       mdast-util-to-string: 2.0.0
       micromark: 2.11.4
       parse-entities: 2.0.0
@@ -5853,7 +5853,7 @@ packages:
   /mdast-util-to-hast/10.2.0:
     resolution: {integrity: sha512-JoPBfJ3gBnHZ18icCwHR50orC9kNH81tiR1gs01D8Q5YpV6adHNO9nKNuFBCJQ941/32PT1a63UF/DitmS3amQ==}
     dependencies:
-      '@types/mdast': 3.0.7
+      '@types/mdast': 3.0.8
       '@types/unist': 2.0.6
       mdast-util-definitions: 4.0.0
       mdurl: 1.0.1
@@ -6440,7 +6440,7 @@ packages:
     resolution: {integrity: sha512-jmlgSxoDNuhAtxUIG6pVwwtz840i994dL14FoNVZisrmZW5kWd63IUTNv1m/hyRSGSqWjCUp/YZlS1BJyNp9XA==}
     engines: {node: '>=10'}
     dependencies:
-      make-fetch-happen: 9.0.4
+      make-fetch-happen: 9.0.5
       minipass: 3.1.3
       minipass-fetch: 1.3.4
       minipass-json-stream: 1.0.1
@@ -7738,8 +7738,8 @@ packages:
     resolution: {integrity: sha512-4uZTHR2P7zKRZmSoOiUCFK1K+5LlDxay/RVNWDDImnGG1/4r/dZ2Y3rzpo871Iche913yOgYeKrrxl+3vengFw==}
     dev: true
 
-  /shiki/0.9.6:
-    resolution: {integrity: sha512-h2y5Uq9QEWsEmi97n+BOdPOVxkOUdVunl+jVIzU9EqJ6/QbIX+U6F7TsrWZQ2xqwPgvvQaC9r7/zeegi1b48dQ==}
+  /shiki/0.9.7:
+    resolution: {integrity: sha512-rOoAmwRWDiGKjQ1GaSKmbp1J5CamCera+I+DMM3wG/phbwNYQPt1mrjBBZbK66v80Vl1/A9TTLgXVHMbgtOCIQ==}
     dependencies:
       json5: 2.2.0
       onigasm: 2.2.5
@@ -7905,9 +7905,9 @@ packages:
       - supports-color
     dev: true
 
-  /socks-proxy-agent/5.0.1:
-    resolution: {integrity: sha512-vZdmnjb9a2Tz6WEQVIurybSwElwPxMZaIc7PzqbJTrezcKNznv6giT7J7tZDZ1BojVaa1jvO/UiUdhDVB0ACoQ==}
-    engines: {node: '>= 6'}
+  /socks-proxy-agent/6.0.0:
+    resolution: {integrity: sha512-FIgZbQWlnjVEQvMkylz64/rUggGtrKstPnx8OZyYFG0tAFR8CSBtpXxSwbFLHyeXFn/cunFL7MpuSOvDSOPo9g==}
+    engines: {node: '>= 10'}
     dependencies:
       agent-base: 6.0.2
       debug: 4.3.2
@@ -8614,7 +8614,7 @@ packages:
       marked: 2.1.3
       minimatch: 3.0.4
       progress: 2.0.3
-      shiki: 0.9.6
+      shiki: 0.9.7
       typedoc-default-themes: 0.12.10
       typescript: 4.4.1-rc
     dev: true

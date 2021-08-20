@@ -2,9 +2,9 @@
 
 [NPM](https://www.npmjs.com/package/@okikio/animate) <span style="padding-inline: 1rem">|</span> [API Guide](/docs/animate/api.md) <span style="padding-inline: 1rem">|</span> [Licence](/packages/animate/LICENSE) 
 
-Inspired by animate plus, and animejs, [@okikio/animate](/docs/animate/index.md) is a js animation library for the modern web, it's focused on performance and ease of use. It utilizes the Web Animation API (WAAPI) to deliver fluid animations at a *semi-small* size, in total it weighs **~11.27 KB** (minified and gzipped), however, most devs will only really be using a few of `@okiko/animate`'s features once at a time, so it's minimum usable [treeshakeable](https://developer.mozilla.org/en-US/docs/Glossary/Tree_shaking) file size is actually **~7.07 KB** (minified and gzipped).
+[@okikio/animate](/docs/animate/index.md) is a js animation library for the modern web. It was inspired by [animateplus](https://github.com/bendc/animateplus) and [animejs](https://animejs.com/), and is focused on performance and ease of use. It utilizes the Web Animation API (WAAPI) to deliver fluid animations at a *semi-small* size, in total it weighs **~11.27 KB** (minified and gzipped). Most devs will only really be using a few of `@okiko/animate`'s features once at a time, so the actual minimum usable [treeshakeable](https://developer.mozilla.org/en-US/docs/Glossary/Tree_shaking) file size is **~7.07 KB** (minified and gzipped).
 
-> _**A quick note on size**: [CustomEasing](/docs/animate/api/custom-easing.md), [staggers](/docs/animate/api/stagger-and-random.md), and [timelines](/docs/animate/api/timeline-class.md) are now supported, after these additions the total library size doubled, so when I mean minimum size, I mean when you are only using the `animate` function or the `Animate` class._
+> _**A quick note on size**: [CustomEasing](/docs/animate/api/custom-easing.md), [staggers](/docs/animate/api/stagger-and-random.md), and [timelines](/docs/animate/api/timeline-class.md) are now supported. After these additions the total library size doubled, so when I mean minimum usable size, I mean when you are only using the `animate` function or the `Animate` class._
 
 I suggest reading the in depth [CSS-Tricks article](https://css-tricks.com/how-i-used-the-waapi-to-build-an-animation-library/) I made on `@okikio/animate`, it will help you determine if `@okikio/animate` is right for your project.
 
@@ -79,20 +79,20 @@ animate({
 });
 ```
 
-The `Animate` class recieves a set of [targets](/docs/animate/api/options/target.md) to animate, it then creates a list of `Animation` instances corrosponding to the respective target elements, along side a main `Animation` it play for the total duration of all target animations, and alerts the user when all target animations have completed. 
+The `Animate` class recieves a set of [targets](/docs/animate/api/options/target.md) to animate, it then creates a list of `Animation` instances corrosponding to the respective target elements. In order to determine when all target animations are complete, the `Animate` class also creates a main `Animation` instance. The main `Animation` instance plays for the total duration of all target animations, and alerts the user when all target animations have completed. 
 
-Target animations are stored in `Animate.prototype.animations: WeakMap<KeyframeEffect, Animation>`, using their [KeyframeEffect](https://developer.mozilla.org/en-US/docs/Web/API/KeyframeEffect) as the key, while the the main animation is stored in `Animate.prototype.mainAnimation: Animation`.
+Target animations are stored in `Animate.prototype.animations: WeakMap<KeyframeEffect, Animation>`, using their [KeyframeEffect](https://developer.mozilla.org/en-US/docs/Web/API/KeyframeEffect) as the key, while the the main animation is stored in `Animate.prototype.mainAnimation: Animation`. You can actually access the animation for a specific target using `Animate.prototype.getAnimation(target: HTMLElement): Animation`, meaning you aren't limited by what `@okikio/animate` provides, you can use the WAAPI api's you know and love directly.
 
- [Read the API docs to learn more...](/docs/api/classes/_okikio_animate.Animate.md#animations).
+[Read the API docs to learn more  &#8594;](/docs/api/classes/_okikio_animate.Animate.md#animations)
 
-> _**Note**: `Animation` instances come from the `Animation` class of the Web Animations API, the `Animation` class represents a single animation player and provides playback controls and a timeline for an animation node or source, [Read more...](https://developer.mozilla.org/en-US/docs/Web/API/Animation)_
+> _**Note**: `Animation` instances come from the `Animation` class of the Web Animations API. The `Animation` class represents a single animation player and provides playback controls and a timeline for an animation node or source, [Read more...](https://developer.mozilla.org/en-US/docs/Web/API/Animation)_
 
 
 
 
 ## Usage
 
-Using `@okikio/animate` is actually fairly easy to use, in fact you can use it in **10 lines or less**, check it out,
+`@okikio/animate` is actually fairly easy to use, in fact you can use it in **10 lines or less**, check it out,
 
 
 [![@okikio/animate - starting demo](/packages/animate/assets/Code%20for%20Web%20Animation%20API%20Library%20Playground.png)](https://codepen.io/okikio/pen/RwVpvRz?editors=0010)
@@ -104,7 +104,7 @@ Read through the [API guide](/docs/native/api.md) to learn more.
 ## Examples
 
 
-Using these basics you can create some truly stunning and complex animations, with promises, transforms, staggers, etc..., check out the example below.
+Using these basics you can create some truly stunning and complex animations, with promises, transforms, CSS property methods, etc..., check out the example below.
 
 ```ts
 import animate from "@okikio/animate";
@@ -177,24 +177,23 @@ animate({
 ```
 
 [![@okikio/animate - playground](/packages/animate/assets/Web%20Animation%20API%20Library%20Playground.png)](https://codepen.io/okikio/pen/mdPwNbJ?editors=0010)
-
 [Preview this example &#8594;](https://codepen.io/okikio/pen/mdPwNbJ?editors=0010)
 
-[Go through a collection of examples & demos on Codepen   &#8594;](https://codepen.io/collection/rxOEBO)
+> [Go through a collection of examples & demos on Codepen   &#8594;](https://codepen.io/collection/rxOEBO)
 
 ## Limitations
 
-Unfortunately, the Web Animation API still has some constraints, for example, it can't animate all CSS properties just yet; morphing SVG paths via the `d` property isn't well supported yet, as Gecko (Firefox) & Webkit (Safari) based browsers don't natively support it. 
+Unfortunately, the Web Animation API still has some constraints, as it can't animate all CSS properties just yet, for example, morphing SVG paths via the `d` property isn't well supported yet, as Gecko (Firefox) & Webkit (Safari) based browsers don't natively support it. 
 
 There are other limitations to what the Web Animation API will allow, most of these limitation are covered in detail by an article published by Adobe about [the current state of SVG animation on the web](https://blog.adobe.com/en/publish/2015/06/05/the-state-of-svg-animation.html#gs.pihpjw) 😭. 
 
-Some of these limitations have been recently released, with Chrome, Firefox, and Safari adding more WAAPI features, and `@okikio/animate` doing some background work to enable these features. For one, animations using motion paths are now possible through [Motion Path](https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Motion_Path), and morphing can be emulated through [tweenAttr](/docs/animate/api/tween-attributes.md).
+Some of these constraints have been recently unlocked, with Chrome, Firefox, and Safari adding more WAAPI features, and `@okikio/animate` doing some background work to enable cool new features. For one, animations using motion paths are now possible through [Motion Path](https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Motion_Path), and morphing can be emulated through [tweenAttr](/docs/animate/api/tween-attributes.md).
 
 Not all limitations are covered here, look through the [limitations doc](/docs/animate/limitations.md) for more.
 
 ## Best practices 
 
-Read through the [best practices guide](/docs/animate/best-practices.md) for ways to control memory usage, and to create accessible animations, the best advice I can give is to respect users preferences, and don't go overboard with animation, it can sometimes overwhelm users.
+Read through the [best practices guide](/docs/animate/best-practices.md) for ways to control memory usage, and to create accessible animations, the best advice I can give is to respect users preferences, and don't go overboard with animation as it can sometimes overwhelm users.
 
 ## Browser Support
 
