@@ -27,7 +27,7 @@ importers:
       tailwindcss: ^2.2.7
       typedoc: 0.21.6
       typedoc-plugin-markdown: ^3.10.4
-      typescript: ~4.3.5
+      typescript: ~4.4.1-rc
       ultra-runner: ^3.10.5
       web-animations-js: ^2.3.2
     dependencies:
@@ -42,7 +42,7 @@ importers:
       '@changesets/cli': 2.16.0
       '@rollup/plugin-commonjs': 20.0.0_rollup@2.56.2
       '@rollup/plugin-node-resolve': 13.0.4_rollup@2.56.2
-      astro: 0.19.1_typescript@4.3.5
+      astro: 0.19.1_typescript@4.4.1-rc
       chalk: 4.1.2
       esbuild: 0.12.21
       globby: 12.0.1
@@ -54,9 +54,9 @@ importers:
       rollup-plugin-terser: 7.0.2_rollup@2.56.2
       sass: 1.38.0
       tailwindcss: 2.2.7
-      typedoc: 0.21.6_typescript@4.3.5
+      typedoc: 0.21.6_typescript@4.4.1-rc
       typedoc-plugin-markdown: 3.10.4_typedoc@0.21.6
-      typescript: 4.3.5
+      typescript: 4.4.1-rc
       ultra-runner: 3.10.5
 
   packages/animate:
@@ -180,11 +180,11 @@ packages:
       - '@babel/core'
     dev: true
 
-  /@astrojs/renderer-svelte/0.1.1_cc85a0cbaedb7461e8d3d7541d517595:
+  /@astrojs/renderer-svelte/0.1.1_2bcdc156401e90628d01dcf0e5ddcc8d:
     resolution: {integrity: sha512-SP7DLnTpsb/mua5lQ/H4iYVoAqpw0oJKm0U5DPmauL/sBWZDYf+dSKLRZKX6KBYpxP+QR7BInTUTEwDWKnMDQQ==}
     engines: {node: ^12.20.0 || ^14.13.1 || >=16.0.0}
     dependencies:
-      '@snowpack/plugin-svelte': 3.7.0_f6526ee19f7ead68cb0a7429d0abd3e7
+      '@snowpack/plugin-svelte': 3.7.0_9ac01f79488d4b668c11897b0c75a4d4
       svelte: 3.42.2
     transitivePeerDependencies:
       - '@babel/core'
@@ -1416,7 +1416,7 @@ packages:
       sass: 1.38.0
     dev: true
 
-  /@snowpack/plugin-svelte/3.7.0_f6526ee19f7ead68cb0a7429d0abd3e7:
+  /@snowpack/plugin-svelte/3.7.0_9ac01f79488d4b668c11897b0c75a4d4:
     resolution: {integrity: sha512-YR2t/aMswjUV0D/qFBjIGA7VIgl5IrNHIuJbNtj2YR2heRWaSm7LYLUJKbnho7iKUqCtc+ZcwpgGZO/VNYlLNg==}
     peerDependencies:
       svelte: ^3.21.0
@@ -1424,7 +1424,7 @@ packages:
       rollup-plugin-svelte: 7.1.0_rollup@2.56.2+svelte@3.42.2
       svelte: 3.42.2
       svelte-hmr: 0.13.5_svelte@3.42.2
-      svelte-preprocess: 4.7.4_9c3b128e9c707ee56de9f4db6273caf9
+      svelte-preprocess: 4.7.4_8cdea9d8bfb9e2637a83ba8be5ef4b57
     transitivePeerDependencies:
       - '@babel/core'
       - coffeescript
@@ -2010,7 +2010,7 @@ packages:
     hasBin: true
     dev: true
 
-  /astro/0.19.1_typescript@4.3.5:
+  /astro/0.19.1_typescript@4.4.1-rc:
     resolution: {integrity: sha512-UMkdu+gKnoCDrMzv5WF3OAcwCKeAuFGMQoshHXGpcIJKWL1hjKYHk1nlhR9KfiPlqe7/rSaxZ7SrCaBpz7ouqg==}
     engines: {node: ^12.20.0 || ^14.13.1 || >=16.0.0, npm: '>=6.14.0'}
     hasBin: true
@@ -2020,7 +2020,7 @@ packages:
       '@astrojs/prism': 0.2.2
       '@astrojs/renderer-preact': 0.2.1_@babel+core@7.15.0
       '@astrojs/renderer-react': 0.2.0_@babel+core@7.15.0
-      '@astrojs/renderer-svelte': 0.1.1_cc85a0cbaedb7461e8d3d7541d517595
+      '@astrojs/renderer-svelte': 0.1.1_2bcdc156401e90628d01dcf0e5ddcc8d
       '@astrojs/renderer-vue': 0.1.7_rollup@2.56.2
       '@babel/code-frame': 7.14.5
       '@babel/core': 7.15.0
@@ -8259,7 +8259,7 @@ packages:
       svelte: 3.42.2
     dev: true
 
-  /svelte-preprocess/4.7.4_9c3b128e9c707ee56de9f4db6273caf9:
+  /svelte-preprocess/4.7.4_8cdea9d8bfb9e2637a83ba8be5ef4b57:
     resolution: {integrity: sha512-mDAmaltQl6e5zU2VEtoWEf7eLTfuOTGr9zt+BpA3AGHo8MIhKiNSPE9OLTCTOMgj0vj/uL9QBbaNmpG4G1CgIA==}
     engines: {node: '>= 9.11.2'}
     requiresBuild: true
@@ -8308,7 +8308,7 @@ packages:
       sass: 1.38.0
       strip-indent: 3.0.0
       svelte: 3.42.2
-      typescript: 4.3.5
+      typescript: 4.4.1-rc
     dev: true
 
   /svelte/3.42.2:
@@ -8602,10 +8602,10 @@ packages:
       typedoc: '>=0.21.2'
     dependencies:
       handlebars: 4.7.7
-      typedoc: 0.21.6_typescript@4.3.5
+      typedoc: 0.21.6_typescript@4.4.1-rc
     dev: true
 
-  /typedoc/0.21.6_typescript@4.3.5:
+  /typedoc/0.21.6_typescript@4.4.1-rc:
     resolution: {integrity: sha512-+4u3PEBjQdaL5/yfus5WJbjIdQHv7E/FpZq3cNki9BBdGmZhqnTF6JLIXDQ2EfVggojOJG9/soB5QVFgXRYnIw==}
     engines: {node: '>= 12.10.0'}
     hasBin: true
@@ -8620,13 +8620,7 @@ packages:
       progress: 2.0.3
       shiki: 0.9.7
       typedoc-default-themes: 0.12.10
-      typescript: 4.3.5
-    dev: true
-
-  /typescript/4.3.5:
-    resolution: {integrity: sha512-DqQgihaQ9cUrskJo9kIyW/+g0Vxsk8cDtZ52a3NGh0YNTfpUSArXSohyUGnvbPazEPLu398C0UxmKSOrPumUzA==}
-    engines: {node: '>=4.2.0'}
-    hasBin: true
+      typescript: 4.4.1-rc
     dev: true
 
   /typescript/4.4.1-rc:
