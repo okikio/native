@@ -4,19 +4,20 @@
  * Project: https://github.com/oxalorg/sakura/
  */
 
- $color-force: #DA4453;
- $color-blossom: lighten($color-force, 20%);
- $color-fade: $color-force;
- 
- $color-bg: #120c0e;
- $color-bg-alt: #40363a;
- 
- /* $color-text: #dedce5; */
- $color-text: #d9d8dc;
- $font-size-base: 1.8rem;
- 
- $font-family-base: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif;
- $font-family-heading: $font-family-base;
+$color-force: #3b82f6;
+$color-blossom: lighten($color-force, 20%);
+$color-fade: $color-force;
+
+$color-bg: #120c0e;
+$color-bg-alt: darken(#1e3a8a, 20%);
+
+/* $color-text: #dedce5; */
+$color-text: #d9d8dc;
+$font-size-base: 1.8rem;
+
+$font-family-base: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    "Helvetica Neue", Arial, "Noto Sans", sans-serif;
+$font-family-heading: $font-family-base;
 
 /* Body */
 
@@ -55,7 +56,12 @@ body {
     word-break: break-word;
 }
 
-h1, h2, h3, h4, h5, h6 {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
     line-height: 1.1;
     font-family: $font-family-heading;
     font-weight: 700;
@@ -64,19 +70,33 @@ h1, h2, h3, h4, h5, h6 {
     @include word-wrap;
 }
 
-h1 { font-size: 2.35em }
-h2 { font-size: 2.00em }
-h3 { font-size: 1.75em }
-h4 { font-size: 1.5em }
-h5 { font-size: 1.25em }
-h6 { font-size: 1em }
+h1 {
+    font-size: 2.35em;
+}
+h2 {
+    font-size: 2em;
+}
+h3 {
+    font-size: 1.75em;
+}
+h4 {
+    font-size: 1.5em;
+}
+h5 {
+    font-size: 1.25em;
+}
+h6 {
+    font-size: 1em;
+}
 
 p {
     margin-top: 0px;
     margin-bottom: 2.5rem;
 }
 
-small, sub, sup {
+small,
+sub,
+sup {
     font-size: 75%;
 }
 
@@ -88,15 +108,28 @@ a {
     text-decoration: none;
     color: $color-blossom;
 
+    @media (prefers-color-scheme: light) {
+        color: darken($color-blossom, 20%);
+    }
+
     &:hover {
         color: $color-fade;
         border-bottom: 2px solid $color-text;
+
+        @media (prefers-color-scheme: light) {
+            border-bottom-color: darken($color-blossom, 25%);
+        }
     }
 
     &:visited {
         color: darken($color-blossom, 10%);
-    }
+        border-bottom: 2px solid $color-text;
 
+        @media (prefers-color-scheme: light) {
+            color: darken($color-blossom, 5%);
+            border-bottom-color: darken($color-blossom, 35%);
+        }
+    }
 }
 
 ul {
@@ -125,7 +158,8 @@ blockquote p {
     margin-bottom: 0;
 }
 
-img, video {
+img,
+video {
     height: auto;
     max-width: 100%;
     margin-top: 0px;
@@ -135,18 +169,17 @@ img, video {
 /* Pre and Code */
 
 pre {
-    background-color: $color-bg-alt;
+    // background-color: $color-bg-alt;
     display: block;
-    padding: 1em;
+    padding-block: 1em;
     overflow-x: auto;
     margin-top: 0px;
-    margin-bottom: 2.5rem;
 }
 
 code {
     font-size: 0.9em;
     padding: 0 0.5em;
-    background-color: $color-bg-alt;
+    // background-color: $color-bg-alt;
     white-space: pre-wrap;
 }
 
@@ -164,14 +197,16 @@ table {
     border-collapse: collapse;
 }
 
-td, th {
+td,
+th {
     padding: 0.5em;
-    border-bottom: 1px solid $color-bg-alt;
+    border-bottom: 1px solid #313e47;
 }
 
 /* Buttons, forms and input */
 
-input, textarea {
+input,
+textarea {
     border: 1px solid $color-text;
 
     &:focus {
@@ -183,7 +218,11 @@ textarea {
     width: 100%;
 }
 
-.button, button, input[type="submit"], input[type="reset"], input[type="button"] {
+.button,
+button,
+input[type="submit"],
+input[type="reset"],
+input[type="button"] {
     display: inline-block;
     padding: 5px 10px;
     text-align: center;
@@ -199,10 +238,11 @@ textarea {
 
     &[disabled] {
         cursor: default;
-        opacity: .5;
+        opacity: 0.5;
     }
 
-    &:focus:enabled, &:hover:enabled {
+    &:focus:enabled,
+    &:hover:enabled {
         background-color: $color-fade;
         border-color: $color-fade;
         color: $color-bg;
@@ -210,7 +250,9 @@ textarea {
     }
 }
 
-textarea, select, input {
+textarea,
+select,
+input {
     color: $color-text;
     padding: 6px 10px; /* The 6px vertically centers text on FF, ignored by Webkit */
     margin-bottom: 10px;
@@ -230,8 +272,10 @@ input[type="checkbox"]:focus {
     outline: 1px dotted $color-blossom;
 }
 
-label, legend, fieldset {
+label,
+legend,
+fieldset {
     display: block;
-    margin-bottom: .5rem;
+    margin-bottom: 0.5rem;
     font-weight: 600;
 }

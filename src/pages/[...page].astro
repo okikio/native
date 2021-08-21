@@ -1,6 +1,7 @@
 ---
-import { Markdown } from 'astro/components';
-import BaseLayout from "../layouts/BaseLayout";
+// import { Markdown } from 'astro/components';
+import Markdown from "~/components/Markdown";
+import BaseLayout from "~/layouts/BaseLayout";
 
 import { globby } from 'globby';
 import { readFileSync } from "node:fs";
@@ -27,13 +28,15 @@ export async function getStaticPaths() {
         result.push({ ...v, params: { page: v.params.page.replace(/\/index$/, "") } })
       }
     })
+    
     return result;
 }
+
 const {content} = Astro.props;
 ---
 
 <>
-  <BaseLayout>
-    <Markdown content={content} />
+  <Markdown content={content} />
+    <BaseLayout>
   </BaseLayout>
 </>

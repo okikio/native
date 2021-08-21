@@ -3,6 +3,7 @@
 @tailwind utilities;
 
 @import "./base.scss";
+@import "./components/hightlightjs";
 
 body {
     @apply bg-white text-black;
@@ -10,6 +11,65 @@ body {
     @apply font-manrope;
     // font-size: 1rem;
     line-height: 1.5;
+}
+
+:focus {
+    outline-color: theme("colors.blue.500");
+
+    @media (prefers-color-scheme: dark) {
+        outline-color: theme("colors.blue.500");
+    }
+}
+
+blockquote {
+    @apply rounded-lg;
+}
+
+.icon {
+    -webkit-font-feature-settings: "liga" off, "dlig";
+    -moz-font-feature-settings: "liga=0, dlig=1";
+    font-feature-settings: "liga", "dlig";
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+    font-family: "Material Icons Round", "Material Icons";
+    vertical-align: middle;
+    letter-spacing: normal;
+    display: inline-block;
+    text-decoration: none;
+    text-transform: none;
+    white-space: nowrap;
+    font-weight: normal;
+    position: relative;
+    font-style: normal;
+    word-wrap: normal;
+    font-size: 24px;
+    line-height: 1;
+    direction: ltr;
+    height: 1em;
+    width: 1em;
+}
+
+h1, h2, h3,h4,h5,h6 {
+    .icon {
+        visibility: hidden;
+        font-size: 0.75em;
+    }
+
+    a {
+        @apply p-2;
+    }
+
+    &:hover .icon {
+        visibility: visible;
+        border-bottom-color: transparent
+    }
+    
+
+    a:is(:hover,:focus) {
+        visibility: visible;
+        border-bottom-color: transparent
+    }
 }
 
 // a {
