@@ -20,18 +20,18 @@ export async function getStaticPaths() {
       return { params: { page }, props: { content } }
     });
     
-    result.forEach(v => {
-      if (/index$/.test(v.params.page)) {
-        let page = v.params.page.replace(/index$/, "");
-        if (!(/^\//).test(page)) page = "/" + page; 
-        result.push({ ...v, params: { page } })
-      }
-    })
+    // result.forEach(v => {
+    //   if (/index$/.test(v.params.page)) {
+    //     let page = v.params.page.replace(/index$/, "");
+    //     if (!(/^\//).test(page)) page = "/" + page; 
+    //     result.push({ ...v, params: { page } })
+    //   }
+    // })
 
     
-    result.forEach(v => {
-      console.log(v.params.page)
-    })
+    // result.forEach(v => {
+    //   console.log(v.params.page)
+    // })
 
     return result;
 }

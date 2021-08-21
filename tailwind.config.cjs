@@ -2,7 +2,8 @@ module.exports = {
     darkMode: 'class',
     mode: "jit",
     purge: [
-        './build/pug/**/*.pug'
+        './docs/**/*.{md,astro}',
+        './src/**/*.{md,astro}'
     ],
 
     theme: {
