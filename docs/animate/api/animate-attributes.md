@@ -1,17 +1,17 @@
-## tweenAttr & TweenAttributes
+## tweenAttr & AnimateAttributes
 
-[`tweenAttr()`](/docs/api/modules/_okikio_animate.md#tweenattr) uses the change in opacity (from the [tween](/docs/api/modules/_okikio_animate.md#tween) function) to interpolate the value of other elements.
+[`tweenAttr()`](/docs/api/modules/_okikio_animate.md#tweenattr) uses the change in opacity (from the [AnimateAttributes](/docs/api/classes/_okikio_animate.AnimateAttributes.md) class) to interpolate the attribute value of other elements.
 
-`tweenAttr` returns a new instance of [TweenAttributes](/docs/api/modules/_okikio_animate.md#tweenattributes) which is an extension of the `DestroyableAnimate` class.
+`tweenAttr` returns a new instance of [AnimateAttributes](/docs/api/classes/_okikio_animate.AnimateAttributes.md) which is an extension of the [DestroyableAnimate](/docs/api/classes/_okikio_animate.DestroyableAnimate.md) class.
 
-`TweenAttributes` creates an empty new element with an id of `empty-animate-el-${number...}`, and a display style of `none`. `TweenAttributes` then attaches the empty element to the DOM and then animates the opacity of the empty element. It then use the "update" event to watch for changes in opacity and use the opacity as a progress bar (with values between 0 to 1). This enables you to animate properties and attributes the Web Animation API (WAAPI) doesn't yet support.
+`AnimateAttributes` creates an empty new element with an id of `empty-animate-el-${number...}`, and a display style of `none`. `AnimateAttributes` then attaches the empty element to the DOM and then animates the opacity of the empty element. It then use the "update" event to watch for changes in opacity and use the opacity as a progress bar (with values between 0 to 1). This enables you to animate properties and attributes the Web Animation API (WAAPI) doesn't yet support.
 
 With this you can animate the `d` attribute on svg paths, and create morphing svg shapes.
 
 e.g.
 
 ```ts
-import { tweenAttr, TweenAttributes } from "@okikio/animate";
+import { tweenAttr, AnimateAttributes } from "@okikio/animate";
 import { interpolate } from "polymorph-js";
 
 let startPath = "M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z";
@@ -42,10 +42,10 @@ tweenAttr({
 });
 
 // or
-new TweenAttributes({
+new AnimateAttributes({
     target: "svg path",
     d: progress => morph(progress)
 })
 ```
 
-Read more about [TweenAttributes](/docs/api/modules/_okikio_animate.md#tweenattributes).
+Read more about [AnimateAttributes](/docs/api/classes/_okikio_animate.AnimateAttributes.md).

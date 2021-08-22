@@ -1,6 +1,6 @@
 # @okikio/animate
 
-[NPM](https://www.npmjs.com/package/@okikio/animate) <span style="padding-inline: 1rem">|</span> [API Guide](/docs/animate/api.md) <span style="padding-inline: 1rem">|</span> [Licence](/packages/animate/LICENSE) 
+[NPM](https://www.npmjs.com/package/@okikio/animate) <span style="padding-inline: 1rem">|</span> [API Guide](/docs/animate/api/index.md) <span style="padding-inline: 1rem">|</span> [Licence](/packages/animate/LICENSE) 
 
 [@okikio/animate](/docs/animate/index.md) is a js animation library for the modern web. It was inspired by [animateplus](https://github.com/bendc/animateplus) and [animejs](https://animejs.com/), and is focused on performance and ease of use. It utilizes the Web Animation API (WAAPI) to deliver fluid animations at a *semi-small* size, in total it weighs **~11.27 KB** (minified and gzipped). Most devs will only really be using a few of `@okiko/animate`'s features once at a time, so the actual minimum usable [treeshakeable](https://developer.mozilla.org/en-US/docs/Glossary/Tree_shaking) file size is **~7.07 KB** (minified and gzipped).
 
@@ -99,7 +99,7 @@ Target animations are stored in `Animate.prototype.animations: WeakMap<KeyframeE
 
 > [Check out this demo on Codepen  &#8594;](https://codepen.io/okikio/pen/RwVpvRz) 
 
-Read through the [API guide](/docs/native/api.md) to learn more. 
+Read through the [API guide](/docs/native/api/index.md) to learn more. 
 
 ## Examples
 
@@ -187,7 +187,7 @@ Unfortunately, the Web Animation API still has some constraints, as it can't ani
 
 There are other limitations to what the Web Animation API will allow, most of these limitation are covered in detail by an article published by Adobe about [the current state of SVG animation on the web](https://blog.adobe.com/en/publish/2015/06/05/the-state-of-svg-animation.html#gs.pihpjw) 😭. 
 
-Some of these constraints have been recently unlocked, with Chrome, Firefox, and Safari adding more WAAPI features, and `@okikio/animate` doing some background work to enable cool new features. For one, animations using motion paths are now possible through [Motion Path](https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Motion_Path), and morphing can be emulated through [tweenAttr](/docs/animate/api/tween-attributes.md).
+Some of these constraints have been recently unlocked, with Chrome, Firefox, and Safari adding more WAAPI features, and `@okikio/animate` doing some background work to enable cool new features. For one, animations using motion paths are now possible through [Motion Path](https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Motion_Path), and morphing can be emulated through [tweenAttr](/docs/animate/api/animate-attributes.md).
 
 Not all limitations are covered here, look through the [limitations doc](/docs/animate/limitations.md) for more.
 
