@@ -1,0 +1,1336 @@
+<!doctype html>
+<html class="default no-js">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>IAnimationOptions | The Native Initiative</title>
+	<meta name="description" content="Documentation for The Native Initiative">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="../assets/css/main.css">
+	<script async src="../assets/js/search.js" id="search-script"></script>
+</head>
+<body>
+<header>
+	<div class="tsd-page-toolbar">
+		<div class="container">
+			<div class="table-wrap">
+				<div class="table-cell" id="tsd-search" data-index="../assets/js/search.json" data-base="..">
+					<div class="field">
+						<label for="tsd-search-field" class="tsd-widget search no-caption">Search</label>
+						<input id="tsd-search-field" type="text" />
+					</div>
+					<ul class="results">
+						<li class="state loading">Preparing search index...</li>
+						<li class="state failure">The search index is not available</li>
+					</ul>
+					<a href="../index.html" class="title">The Native Initiative</a>
+				</div>
+				<div class="table-cell" id="tsd-widgets">
+					<div id="tsd-filter">
+						<a href="#" class="tsd-widget options no-caption" data-toggle="options">Options</a>
+						<div class="tsd-filter-group">
+							<div class="tsd-select" id="tsd-filter-visibility">
+								<span class="tsd-select-label">All</span>
+								<ul class="tsd-select-list">
+									<li data-value="public">Public</li>
+									<li data-value="protected">Public/Protected</li>
+									<li data-value="private" class="selected">All</li>
+								</ul>
+							</div>
+							<input type="checkbox" id="tsd-filter-inherited" checked />
+							<label class="tsd-widget" for="tsd-filter-inherited">Inherited</label>
+							<input type="checkbox" id="tsd-filter-externals" checked />
+							<label class="tsd-widget" for="tsd-filter-externals">Externals</label>
+						</div>
+					</div>
+					<a href="#" class="tsd-widget menu no-caption" data-toggle="menu">Menu</a>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="tsd-page-title">
+		<div class="container">
+			<ul class="tsd-breadcrumb">
+				<li>
+					<a href="../modules.html">The Native Initiative</a>
+				</li>
+				<li>
+					<a href="../modules/_okikio_animate.html">@okikio/animate</a>
+				</li>
+				<li>
+					<a href="_okikio_animate.IAnimationOptions.html">IAnimationOptions</a>
+				</li>
+			</ul>
+			<h1>Interface IAnimationOptions</h1>
+		</div>
+	</div>
+</header>
+<div class="container container-main">
+	<div class="row">
+		<div class="col-8 col-content">
+			<section class="tsd-panel tsd-comment">
+				<div class="tsd-comment tsd-typography">
+					<div class="lead">
+						<p>Animation options control how an animation is produced, it shouldn&#39;t be too different for those who have used <code>animejs</code>, or <code>jquery</code>&#39;s animate method.</p>
+					</div>
+					<dl class="tsd-comment-tags">
+						<dt>remark</dt>
+						<dd><p>An animation option is an object with keys and values that are computed and passed to the <code>Animate</code> class to create animations that match the specified options.</p>
+						</dd>
+					</dl>
+				</div>
+			</section>
+			<section class="tsd-panel tsd-hierarchy">
+				<h3>Hierarchy</h3>
+				<ul class="tsd-hierarchy">
+					<li>
+						<a href="_okikio_animate.ICSSTransformableProperties.html" class="tsd-signature-type" data-tsd-kind="Interface">ICSSTransformableProperties</a>
+						<ul class="tsd-hierarchy">
+							<li>
+								<span class="target">IAnimationOptions</span>
+							</li>
+						</ul>
+					</li>
+				</ul>
+			</section>
+			<section class="tsd-panel tsd-kind-interface tsd-parent-kind-module">
+				<h3 class="tsd-before-signature">Indexable</h3>
+				<div class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">[</span>property: <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">]: </span><a href="../modules/_okikio_animate.html#TypeAnimationOptionTypes" class="tsd-signature-type" data-tsd-kind="Type alias">TypeAnimationOptionTypes</a></div>
+				<div class="tsd-comment tsd-typography">
+					<div class="lead">
+						<p>Theses are the CSS properties to be animated as Keyframes</p>
+					</div>
+					<p>Read more on <a href="https://developer.mozilla.org/en-US/docs/Web/API/KeyframeEffect/setKeyframes">MDN</a></p>
+					<dl class="tsd-comment-tags">
+						<dt>remark</dt>
+						<dd><p>An <code>object</code> containing key-value pairs consisting of the property to animate and an <code>array</code> of values to iterate over.</p>
+						</dd>
+						<dt>example</dt>
+						<dd><pre><code class="language-ts"><span style="color: #001080">element</span><span style="color: #000000">.</span><span style="color: #795E26">animate</span><span style="color: #000000">({</span>
+<span style="color: #000000">  </span><span style="color: #001080">opacity:</span><span style="color: #000000"> [ </span><span style="color: #098658">0</span><span style="color: #000000">, </span><span style="color: #098658">1</span><span style="color: #000000"> ],          </span><span style="color: #008000">// [ from, to ]</span>
+<span style="color: #000000">  </span><span style="color: #001080">color:</span><span style="color: #000000">   [ </span><span style="color: #A31515">&quot;#fff&quot;</span><span style="color: #000000">, </span><span style="color: #A31515">&quot;#000&quot;</span><span style="color: #000000"> ] </span><span style="color: #008000">// [ from, to ]</span>
+<span style="color: #000000">}, </span><span style="color: #098658">2000</span><span style="color: #000000">);</span>
+</code></pre>
+							<p>Using this format, the number of elements in each array does not need to be equal. The provided values will be spaced out independently.</p>
+						</dd>
+						<dt>example</dt>
+						<dd><pre><code class="language-ts"><span style="color: #001080">element</span><span style="color: #000000">.</span><span style="color: #795E26">animate</span><span style="color: #000000">({</span>
+<span style="color: #000000">  </span><span style="color: #001080">opacity:</span><span style="color: #000000"> [ </span><span style="color: #098658">0</span><span style="color: #000000">, </span><span style="color: #098658">1</span><span style="color: #000000"> ], </span><span style="color: #008000">// offset: 0, 1</span>
+<span style="color: #000000">  </span><span style="color: #001080">backgroundColor:</span><span style="color: #000000"> [ </span><span style="color: #A31515">&quot;red&quot;</span><span style="color: #000000">, </span><span style="color: #A31515">&quot;yellow&quot;</span><span style="color: #000000">, </span><span style="color: #A31515">&quot;green&quot;</span><span style="color: #000000"> ], </span><span style="color: #008000">// offset: 0, 0.5, 1</span>
+<span style="color: #000000">}, </span><span style="color: #098658">2000</span><span style="color: #000000">);</span>
+</code></pre>
+							<p>The special keys <code>offset</code>, <code>easing</code>, and <code>composite</code> (described below) may be specified alongside the property values.</p>
+						</dd>
+						<dt>example</dt>
+						<dd><pre><code class="language-ts"><span style="color: #001080">element</span><span style="color: #000000">.</span><span style="color: #795E26">animate</span><span style="color: #000000">({</span>
+<span style="color: #000000">  </span><span style="color: #001080">opacity:</span><span style="color: #000000"> [ </span><span style="color: #098658">0</span><span style="color: #000000">, </span><span style="color: #098658">0.9</span><span style="color: #000000">, </span><span style="color: #098658">1</span><span style="color: #000000"> ],</span>
+<span style="color: #000000">  </span><span style="color: #001080">offset:</span><span style="color: #000000"> [ </span><span style="color: #098658">0</span><span style="color: #000000">, </span><span style="color: #098658">0.8</span><span style="color: #000000"> ], </span><span style="color: #008000">// Shorthand for [ 0, 0.8, 1 ]</span>
+<span style="color: #000000">  </span><span style="color: #001080">easing:</span><span style="color: #000000"> [ </span><span style="color: #A31515">&#039;ease-in&#039;</span><span style="color: #000000">, </span><span style="color: #A31515">&#039;ease-out&#039;</span><span style="color: #000000"> ],</span>
+<span style="color: #000000">}, </span><span style="color: #098658">2000</span><span style="color: #000000">);</span>
+</code></pre>
+							<p>After generating a suitable set of keyframes from the property value lists, each supplied offset is applied to the corresponding keyframe. If there are insufficient values, or if the list contains <code>null</code> values, the keyframes without specified offsets will be evenly spaced as with the array format described above.</p>
+							<p>If there are too few <code>easing</code> or <code>composite</code> values, the corresponding list will be repeated as needed.</p>
+							<p><em><strong>Note</strong>: to use <code>composite</code> you will need to add it to the {@link AnimationOptions.extend | extend} object as an option</em></p>
+						</dd>
+					</dl>
+				</div>
+			</section>
+			<section class="tsd-panel-group tsd-index-group">
+				<h2>Index</h2>
+				<section class="tsd-panel tsd-index-panel">
+					<div class="tsd-index-content">
+						<section class="tsd-index-section ">
+							<h3>Properties</h3>
+							<ul class="tsd-index-list">
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="_okikio_animate.IAnimationOptions.html#autoplay" class="tsd-kind-icon">autoplay</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="_okikio_animate.IAnimationOptions.html#composite" class="tsd-kind-icon">composite</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="_okikio_animate.IAnimationOptions.html#delay" class="tsd-kind-icon">delay</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="_okikio_animate.IAnimationOptions.html#direction" class="tsd-kind-icon">direction</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="_okikio_animate.IAnimationOptions.html#duration" class="tsd-kind-icon">duration</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="_okikio_animate.IAnimationOptions.html#easing" class="tsd-kind-icon">easing</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="_okikio_animate.IAnimationOptions.html#endDelay" class="tsd-kind-icon">end<wbr>Delay</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="_okikio_animate.IAnimationOptions.html#extend" class="tsd-kind-icon">extend</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="_okikio_animate.IAnimationOptions.html#fillMode" class="tsd-kind-icon">fill<wbr>Mode</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="_okikio_animate.IAnimationOptions.html#keyframes" class="tsd-kind-icon">keyframes</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="_okikio_animate.IAnimationOptions.html#loop" class="tsd-kind-icon">loop</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="_okikio_animate.IAnimationOptions.html#offset" class="tsd-kind-icon">offset</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-inherited"><a href="_okikio_animate.IAnimationOptions.html#opacity" class="tsd-kind-icon">opacity</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="_okikio_animate.IAnimationOptions.html#options" class="tsd-kind-icon">options</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="_okikio_animate.IAnimationOptions.html#padEndDelay" class="tsd-kind-icon">pad<wbr>End<wbr>Delay</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-inherited"><a href="_okikio_animate.IAnimationOptions.html#perspective" class="tsd-kind-icon">perspective</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-inherited"><a href="_okikio_animate.IAnimationOptions.html#rotate" class="tsd-kind-icon">rotate</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-inherited"><a href="_okikio_animate.IAnimationOptions.html#rotate3d" class="tsd-kind-icon">rotate3d</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-inherited"><a href="_okikio_animate.IAnimationOptions.html#rotateX" class="tsd-kind-icon">rotateX</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-inherited"><a href="_okikio_animate.IAnimationOptions.html#rotateY" class="tsd-kind-icon">rotateY</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-inherited"><a href="_okikio_animate.IAnimationOptions.html#rotateZ" class="tsd-kind-icon">rotateZ</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-inherited"><a href="_okikio_animate.IAnimationOptions.html#scale" class="tsd-kind-icon">scale</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-inherited"><a href="_okikio_animate.IAnimationOptions.html#scale3d" class="tsd-kind-icon">scale3d</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-inherited"><a href="_okikio_animate.IAnimationOptions.html#scaleX" class="tsd-kind-icon">scaleX</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-inherited"><a href="_okikio_animate.IAnimationOptions.html#scaleY" class="tsd-kind-icon">scaleY</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-inherited"><a href="_okikio_animate.IAnimationOptions.html#scaleZ" class="tsd-kind-icon">scaleZ</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-inherited"><a href="_okikio_animate.IAnimationOptions.html#skew" class="tsd-kind-icon">skew</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-inherited"><a href="_okikio_animate.IAnimationOptions.html#skewX" class="tsd-kind-icon">skewX</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-inherited"><a href="_okikio_animate.IAnimationOptions.html#skewY" class="tsd-kind-icon">skewY</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="_okikio_animate.IAnimationOptions.html#speed" class="tsd-kind-icon">speed</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="_okikio_animate.IAnimationOptions.html#target" class="tsd-kind-icon">target</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="_okikio_animate.IAnimationOptions.html#targets" class="tsd-kind-icon">targets</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="_okikio_animate.IAnimationOptions.html#timeline" class="tsd-kind-icon">timeline</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="_okikio_animate.IAnimationOptions.html#timelineOffset" class="tsd-kind-icon">timeline<wbr>Offset</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-inherited"><a href="_okikio_animate.IAnimationOptions.html#translate" class="tsd-kind-icon">translate</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-inherited"><a href="_okikio_animate.IAnimationOptions.html#translate3d" class="tsd-kind-icon">translate3d</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-inherited"><a href="_okikio_animate.IAnimationOptions.html#translateX" class="tsd-kind-icon">translateX</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-inherited"><a href="_okikio_animate.IAnimationOptions.html#translateY" class="tsd-kind-icon">translateY</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-inherited"><a href="_okikio_animate.IAnimationOptions.html#translateZ" class="tsd-kind-icon">translateZ</a></li>
+							</ul>
+						</section>
+						<section class="tsd-index-section ">
+							<h3>Methods</h3>
+							<ul class="tsd-index-list">
+								<li class="tsd-kind-method tsd-parent-kind-interface"><a href="_okikio_animate.IAnimationOptions.html#oncancel" class="tsd-kind-icon">oncancel</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-interface"><a href="_okikio_animate.IAnimationOptions.html#onfinish" class="tsd-kind-icon">onfinish</a></li>
+							</ul>
+						</section>
+					</div>
+				</section>
+			</section>
+			<section class="tsd-panel-group tsd-member-group ">
+				<h2>Properties</h2>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+					<a name="autoplay" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagOptional">Optional</span> autoplay</h3>
+					<div class="tsd-signature tsd-kind-icon">autoplay<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">boolean</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/okikio/native/blob/285f23f/packages/animate/src/types.ts#L223">animate/src/types.ts:223</a></li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>Determines if the animation should automatically play immediately after being instantiated.</p>
+						</div>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+					<a name="composite" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagOptional">Optional</span> composite</h3>
+					<div class="tsd-signature tsd-kind-icon">composite<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><a href="../modules/_okikio_animate.html#TypeCallback" class="tsd-signature-type" data-tsd-kind="Type alias">TypeCallback</a></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/okikio/native/blob/285f23f/packages/animate/src/types.ts#L454">animate/src/types.ts:454</a></li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>The <code>composite</code> property of a <code>KeyframeEffect</code> resolves how an element&#39;s animation impacts its underlying property values.</p>
+						</div>
+						<p>To understand these values, take the example of a <code>keyframeEffect</code> value of <code>blur(2)</code> working on an underlying property value of <code>blur(3)</code>.</p>
+						<ul>
+							<li><code>replace</code> - The keyframeEffect overrides the underlying value it is combined with: <code>blur(2)</code> replaces <code>blur(3)</code>.</li>
+							<li><code>add</code> - The keyframeEffect is added to the underlying value with which it is combined (aka additive):  <code>blur(2) blur(3)</code>.</li>
+							<li><code>accumulate</code> - The keyframeEffect is accumulated on to the underlying value: <code>blur(5)</code>.</li>
+						</ul>
+						<p>Read more on <a href="https://developer.mozilla.org/en-US/docs/Web/API/KeyframeEffect/composite">MDN</a></p>
+						<p>I recommend reading <a href="https://web.dev">web.dev</a>&#39;s article on <a href="https://web.dev/web-animations/#smoother-animations-with-composite-modes">web-animations</a>.</p>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+					<a name="delay" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagOptional">Optional</span> delay</h3>
+					<div class="tsd-signature tsd-kind-icon">delay<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> | </span><a href="../modules/_okikio_animate.html#TypeCallback" class="tsd-signature-type" data-tsd-kind="Type alias">TypeCallback</a></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/okikio/native/blob/285f23f/packages/animate/src/types.ts#L137">animate/src/types.ts:137</a></li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>Determines the delay of your animation in milliseconds. By passing it a callback, you can define a different delay for each element. The callback takes the index of each element, the target dom element, and the total number of target elements as its argument and returns a number.</p>
+						</div>
+						<dl class="tsd-comment-tags">
+							<dt>example</dt>
+							<dd><pre><code class="language-ts"><span style="color: #008000">// First element starts fading out after 1s, second element after 2s, etc.</span>
+<span style="color: #795E26">animate</span><span style="color: #000000">({</span>
+<span style="color: #000000">    </span><span style="color: #001080">target:</span><span style="color: #000000"> </span><span style="color: #A31515">&quot;.div&quot;</span><span style="color: #000000">,</span>
+<span style="color: #000000">    </span><span style="color: #001080">easing:</span><span style="color: #000000"> </span><span style="color: #A31515">&quot;linear&quot;</span><span style="color: #000000">,</span>
+<span style="color: #000000">    </span><span style="color: #001080">delay:</span><span style="color: #000000"> </span><span style="color: #098658">5</span><span style="color: #000000">,</span>
+<span style="color: #000000">    </span><span style="color: #008000">// or</span>
+<span style="color: #000000">    </span><span style="color: #795E26">delay</span><span style="color: #001080">:</span><span style="color: #000000"> (</span><span style="color: #001080">index</span><span style="color: #000000">) </span><span style="color: #0000FF">=&gt;</span><span style="color: #000000"> (</span><span style="color: #001080">index</span><span style="color: #000000"> + </span><span style="color: #098658">1</span><span style="color: #000000">) * </span><span style="color: #098658">1000</span><span style="color: #000000">,</span>
+<span style="color: #000000">    </span><span style="color: #001080">opacity:</span><span style="color: #000000"> [</span><span style="color: #098658">1</span><span style="color: #000000">, </span><span style="color: #098658">0</span><span style="color: #000000">],</span>
+<span style="color: #000000">});</span>
+</code></pre>
+							</dd>
+						</dl>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+					<a name="direction" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagOptional">Optional</span> direction</h3>
+					<div class="tsd-signature tsd-kind-icon">direction<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">PlaybackDirection</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/okikio/native/blob/285f23f/packages/animate/src/types.ts#L232">animate/src/types.ts:232</a></li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>Determines the direction of the animation;</p>
+							<ul>
+								<li><code>reverse</code> runs the animation backwards,</li>
+								<li><code>alternate</code> switches direction after each iteration if the animation loops.</li>
+								<li><code>alternate-reverse</code> starts the animation at what would be the end of the animation if the direction were</li>
+								<li><code>normal</code> but then when the animation reaches the beginning of the animation it alternates going back to the position it started at.</li>
+							</ul>
+						</div>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+					<a name="duration" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagOptional">Optional</span> duration</h3>
+					<div class="tsd-signature tsd-kind-icon">duration<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> | </span><a href="../modules/_okikio_animate.html#TypeCallback" class="tsd-signature-type" data-tsd-kind="Type alias">TypeCallback</a></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/okikio/native/blob/285f23f/packages/animate/src/types.ts#L119">animate/src/types.ts:119</a></li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>Determines the duration of your animation in milliseconds. By passing it a callback, you can define a different duration for each element. The callback takes the index of each element, the target dom element, and the total number of target elements as its argument and returns a number.</p>
+						</div>
+						<dl class="tsd-comment-tags">
+							<dt>example</dt>
+							<dd><pre><code class="language-ts"><span style="color: #008000">// First element fades out in 1s, second element in 2s, etc.</span>
+<span style="color: #795E26">animate</span><span style="color: #000000">({</span>
+<span style="color: #000000">     </span><span style="color: #001080">target:</span><span style="color: #000000"> </span><span style="color: #A31515">&quot;.div&quot;</span><span style="color: #000000">,</span>
+<span style="color: #000000">     </span><span style="color: #001080">easing:</span><span style="color: #000000"> </span><span style="color: #A31515">&quot;linear&quot;</span><span style="color: #000000">,</span>
+<span style="color: #000000">     </span><span style="color: #001080">duration:</span><span style="color: #000000"> </span><span style="color: #098658">1000</span><span style="color: #000000">,</span>
+<span style="color: #000000">     </span><span style="color: #008000">// or</span>
+<span style="color: #000000">     </span><span style="color: #795E26">duration</span><span style="color: #001080">:</span><span style="color: #000000"> (</span><span style="color: #001080">index</span><span style="color: #000000">) </span><span style="color: #0000FF">=&gt;</span><span style="color: #000000"> (</span><span style="color: #001080">index</span><span style="color: #000000"> + </span><span style="color: #098658">1</span><span style="color: #000000">) * </span><span style="color: #098658">1000</span><span style="color: #000000">,</span>
+<span style="color: #000000">     </span><span style="color: #001080">opacity:</span><span style="color: #000000"> [</span><span style="color: #098658">1</span><span style="color: #000000">, </span><span style="color: #098658">0</span><span style="color: #000000">],</span>
+<span style="color: #000000">});</span>
+</code></pre>
+							</dd>
+						</dl>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+					<a name="easing" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagOptional">Optional</span> easing</h3>
+					<div class="tsd-signature tsd-kind-icon">easing<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><a href="../modules/_okikio_animate.html#TypeCallback" class="tsd-signature-type" data-tsd-kind="Type alias">TypeCallback</a><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">[]</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/okikio/native/blob/285f23f/packages/animate/src/types.ts#L101">animate/src/types.ts:101</a></li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>Determines the acceleration curve of your animation. Based on the easings of <a href="https://easings.net">easings.net</a></p>
+						</div>
+						<p>Read More about easings on <a href="https://developer.mozilla.org/en-US/docs/Web/API/EffectTiming/easing">MDN</a></p>
+						<table>
+							<thead>
+								<tr>
+									<th align="left">constant</th>
+									<th align="left">accelerate</th>
+									<th align="left">decelerate</th>
+									<th align="left">accelerate-decelerate</th>
+								</tr>
+							</thead>
+							<tbody><tr>
+									<td align="left">linear</td>
+									<td align="left">ease-in / in</td>
+									<td align="left">ease-out / out</td>
+									<td align="left">ease-in-out / in-out</td>
+								</tr>
+								<tr>
+									<td align="left">ease</td>
+									<td align="left">in-sine</td>
+									<td align="left">out-sine</td>
+									<td align="left">in-out-sine</td>
+								</tr>
+								<tr>
+									<td align="left">steps</td>
+									<td align="left">in-quad</td>
+									<td align="left">out-quad</td>
+									<td align="left">in-out-quad</td>
+								</tr>
+								<tr>
+									<td align="left">step-start</td>
+									<td align="left">in-cubic</td>
+									<td align="left">out-cubic</td>
+									<td align="left">in-out-cubic</td>
+								</tr>
+								<tr>
+									<td align="left">step-end</td>
+									<td align="left">in-quart</td>
+									<td align="left">out-quart</td>
+									<td align="left">in-out-quart</td>
+								</tr>
+								<tr>
+									<td align="left"></td>
+									<td align="left">in-quint</td>
+									<td align="left">out-quint</td>
+									<td align="left">in-out-quint</td>
+								</tr>
+								<tr>
+									<td align="left"></td>
+									<td align="left">in-expo</td>
+									<td align="left">out-expo</td>
+									<td align="left">in-out-expo</td>
+								</tr>
+								<tr>
+									<td align="left"></td>
+									<td align="left">in-circ</td>
+									<td align="left">out-circ</td>
+									<td align="left">in-out-circ</td>
+								</tr>
+								<tr>
+									<td align="left"></td>
+									<td align="left">in-back</td>
+									<td align="left">out-back</td>
+									<td align="left">in-out-back</td>
+								</tr>
+						</tbody></table>
+						<p>You can create your own custom cubic-bezier easing curves. Similar to css you type <code>cubic-bezier(...)</code> with 4 numbers representing the shape of the bezier curve, for example, <code>cubic-bezier(0.47, 0, 0.745, 0.715)</code> this is the bezier curve for <code>in-sine</code>.</p>
+						<p><em>Note: the <code>easing</code> property supports the original values and functions for easing as well, for example, <code>steps(1)</code>, and etc... are supported.</em></p>
+						<p><em>Note: you can also use camelCase when defining easing functions, e.g. <code>inOutCubic</code> to represent <code>in-out-cubic</code></em></p>
+						<dl class="tsd-comment-tags">
+							<dt>example</dt>
+							<dd><pre><code class="language-ts"><span style="color: #008000">// cubic-bezier easing</span>
+<span style="color: #795E26">animate</span><span style="color: #000000">({</span>
+<span style="color: #000000">    </span><span style="color: #001080">target:</span><span style="color: #000000"> </span><span style="color: #A31515">&quot;.div&quot;</span><span style="color: #000000">,</span>
+<span style="color: #000000">    </span><span style="color: #001080">easing:</span><span style="color: #000000"> </span><span style="color: #A31515">&quot;cubic-bezier(0.47, 0, 0.745, 0.715)&quot;</span><span style="color: #000000">,</span>
+
+<span style="color: #000000">    </span><span style="color: #008000">// or</span>
+<span style="color: #000000">    </span><span style="color: #001080">easing:</span><span style="color: #000000"> </span><span style="color: #A31515">&quot;in-sine&quot;</span><span style="color: #000000">,</span>
+<span style="color: #000000">    </span>
+<span style="color: #000000">    </span><span style="color: #008000">// or</span>
+<span style="color: #000000">    </span><span style="color: #001080">easing:</span><span style="color: #000000"> </span><span style="color: #A31515">&quot;inSine&quot;</span><span style="color: #000000">,</span>
+
+<span style="color: #000000">    </span><span style="color: #001080">transform:</span><span style="color: #000000"> [</span><span style="color: #A31515">&quot;translate(0px)&quot;</span><span style="color: #000000">, </span><span style="color: #A31515">&quot;translate(500px)&quot;</span><span style="color: #000000">],</span>
+<span style="color: #000000">});</span>
+</code></pre>
+							</dd>
+						</dl>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+					<a name="endDelay" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagOptional">Optional</span> end<wbr>Delay</h3>
+					<div class="tsd-signature tsd-kind-icon">end<wbr>Delay<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> | </span><a href="../modules/_okikio_animate.html#TypeCallback" class="tsd-signature-type" data-tsd-kind="Type alias">TypeCallback</a></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/okikio/native/blob/285f23f/packages/animate/src/types.ts#L162">animate/src/types.ts:162</a></li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>Similar to delay but it indicates the number of milliseconds to delay <strong>after</strong> the full animation has played <strong>not before</strong>.</p>
+						</div>
+						<p><em><strong>Note</strong>: <code>endDelay</code> will delay the <code>onfinish</code> method and event, but will not reserve the current state of the CSS animation, if you need to use endDelay you may need to use the <code>fillMode</code> property to reserve the changes to the animation target.</em></p>
+						<dl class="tsd-comment-tags">
+							<dt>example</dt>
+							<dd><pre><code class="language-ts"><span style="color: #008000">// First element fades out but then after 1s finishes, the second element after 2s, etc.</span>
+<span style="color: #795E26">animate</span><span style="color: #000000">({</span>
+<span style="color: #000000">    </span><span style="color: #001080">target:</span><span style="color: #000000"> </span><span style="color: #A31515">&quot;.div&quot;</span><span style="color: #000000">,</span>
+<span style="color: #000000">    </span><span style="color: #001080">easing:</span><span style="color: #000000"> </span><span style="color: #A31515">&quot;linear&quot;</span><span style="color: #000000">,</span>
+<span style="color: #000000">    </span><span style="color: #001080">endDelay:</span><span style="color: #000000"> </span><span style="color: #098658">1000</span><span style="color: #000000">,</span>
+<span style="color: #000000">    </span><span style="color: #008000">// or</span>
+<span style="color: #000000">    </span><span style="color: #795E26">endDelay</span><span style="color: #001080">:</span><span style="color: #000000"> (</span><span style="color: #001080">index</span><span style="color: #000000">) </span><span style="color: #0000FF">=&gt;</span><span style="color: #000000"> (</span><span style="color: #001080">index</span><span style="color: #000000"> + </span><span style="color: #098658">1</span><span style="color: #000000">) * </span><span style="color: #098658">1000</span><span style="color: #000000">,</span>
+<span style="color: #000000">    </span><span style="color: #001080">opacity:</span><span style="color: #000000"> [</span><span style="color: #098658">1</span><span style="color: #000000">, </span><span style="color: #098658">0</span><span style="color: #000000">],</span>
+<span style="color: #000000">});</span>
+</code></pre>
+							</dd>
+						</dl>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+					<a name="extend" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagOptional">Optional</span> extend</h3>
+					<div class="tsd-signature tsd-kind-icon">extend<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">KeyframeEffectOptions</span><span class="tsd-signature-symbol"> | </span><a href="../modules/_okikio_animate.html#TypeCallback" class="tsd-signature-type" data-tsd-kind="Type alias">TypeCallback</a></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/okikio/native/blob/285f23f/packages/animate/src/types.ts#L478">animate/src/types.ts:478</a></li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>The properties of the <code>extend</code> animation option are not interperted or computed, they are given directly to the <code>Web Animation API</code>, as way to access features that haven&#39;t been implemented in <code>@okikio/animate</code>, for example, <code>iterationStart</code>.</p>
+						</div>
+						<p><code>extend</code> is supposed to future proof the library if new features are added to the <code>Web Animation API</code> that you want to use, but that has not been implemented yet.</p>
+						<p><em><strong>Note</strong>: it doesn&#39;t allow for declaring actual animation keyframes; it&#39;s just for animation timing options, and it overrides all other animation timing options that accomplish the same goal, e.g. <code>loop</code> &amp; <code>iterations</code>, if <code>iterations</code> is a property of <code>extend</code> then <code>iterations</code> will override <code>loop</code>.</em></p>
+						<dl class="tsd-comment-tags">
+							<dt>example</dt>
+							<dd><pre><code class="language-ts"><span style="color: #795E26">animate</span><span style="color: #000000">({</span>
+<span style="color: #000000">    </span><span style="color: #001080">target:</span><span style="color: #000000"> </span><span style="color: #A31515">&quot;.div&quot;</span><span style="color: #000000">,</span>
+<span style="color: #000000">    </span><span style="color: #001080">opacity:</span><span style="color: #000000"> [</span><span style="color: #098658">0</span><span style="color: #000000">, </span><span style="color: #098658">1</span><span style="color: #000000">],</span>
+<span style="color: #000000">    </span><span style="color: #001080">loop:</span><span style="color: #000000"> </span><span style="color: #098658">5</span><span style="color: #000000">,</span>
+<span style="color: #000000">    </span><span style="color: #001080">extend:</span><span style="color: #000000"> {</span>
+<span style="color: #000000">        </span><span style="color: #001080">iterationStart:</span><span style="color: #000000"> </span><span style="color: #098658">0.5</span><span style="color: #000000">,</span>
+<span style="color: #000000">        </span><span style="color: #008000">// etc...</span>
+<span style="color: #000000">        </span><span style="color: #001080">fill:</span><span style="color: #000000"> </span><span style="color: #A31515">&quot;both&quot;</span><span style="color: #000000">, </span><span style="color: #008000">// This overrides fillMode</span>
+<span style="color: #000000">        </span><span style="color: #001080">iteration:</span><span style="color: #000000"> </span><span style="color: #098658">2</span><span style="color: #000000">, </span><span style="color: #008000">// This overrides loop</span>
+<span style="color: #000000">    }</span>
+<span style="color: #000000">});</span>
+</code></pre>
+							</dd>
+						</dl>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+					<a name="fillMode" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagOptional">Optional</span> fill<wbr>Mode</h3>
+					<div class="tsd-signature tsd-kind-icon">fill<wbr>Mode<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">FillMode</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/okikio/native/blob/285f23f/packages/animate/src/types.ts#L256">animate/src/types.ts:256</a></li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>Defines how an element should look after the animation.</p>
+						</div>
+						<dl class="tsd-comment-tags">
+							<dt>remark</dt>
+							<dd><p>fillMode of:</p>
+								<ul>
+									<li><code>none</code> means the animation&#39;s effects are only visible while the animation is playing.</li>
+									<li><code>forwards</code> the affected element will continue to be rendered in the state of the final animation frame.</li>
+									<li><code>backwards</code> the animation&#39;s effects should be reflected by the element(s) state prior to playing.</li>
+									<li><code>both</code> combining the effects of both forwards and backwards; The animation&#39;s effects should be reflected by the element(s) state prior to playing and retained after the animation has completed playing.</li>
+									<li><code>auto</code> if the animation effect fill mode is being applied to is a keyframe effect. &quot;auto&quot; is equivalent to &quot;none&quot;. Otherwise, the result is &quot;both&quot;.</li>
+								</ul>
+								<p>You can learn more here on <a href="https://developer.mozilla.org/en-US/docs/Web/API/EffectTiming/fill">MDN</a>.</p>
+								<p><em>Be careful when using fillMode, it has some problems when it comes to concurrency of animations read more on <a href="https://developer.mozilla.org/en-US/docs/Web/API/EffectTiming/fill">MDN</a>, if browser support were better I would remove fillMode and use Animation.commitStyles, I&#39;ll have to change the way <code>fillMode</code> functions later. Use the onfinish method to commit styles <a href="#onfinish">onfinish</a>.</em></p>
+							</dd>
+						</dl>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+					<a name="keyframes" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagOptional">Optional</span> keyframes</h3>
+					<div class="tsd-signature tsd-kind-icon">keyframes<span class="tsd-signature-symbol">:</span> <a href="../modules/_okikio_animate.html#TypeCSSLikeKeyframe" class="tsd-signature-type" data-tsd-kind="Type alias">TypeCSSLikeKeyframe</a><span class="tsd-signature-symbol"> | </span><a href="../modules/_okikio_animate.html#TypeCallback" class="tsd-signature-type" data-tsd-kind="Type alias">TypeCallback</a><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-symbol">(</span><a href="_okikio_animate.ICSSComputedTransformableProperties.html" class="tsd-signature-type" data-tsd-kind="Interface">ICSSComputedTransformableProperties</a><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">Keyframe</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">object</span><span class="tsd-signature-symbol">[]</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/okikio/native/blob/285f23f/packages/animate/src/types.ts#L440">animate/src/types.ts:440</a></li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>Allows you to manually set keyframes using a <code>keyframe</code> array</p>
+						</div>
+						<p>Read more on <a href="https://developer.mozilla.org/en-US/docs/Web/API/KeyframeEffect/setKeyframes">MDN</a></p>
+						<dl class="tsd-comment-tags">
+							<dt>remark</dt>
+							<dd><p>An <code>array</code> of objects (keyframes) consisting of properties and values to iterate over. This is the canonical format returned by the <a href="https://developer.mozilla.org/en-US/docs/Web/API/KeyframeEffect/getKeyframes">getKeyframes()</a> method.</p>
+							</dd>
+							<dt>example</dt>
+							<dd><pre><code class="language-ts"><span style="color: #001080">element</span><span style="color: #000000">.</span><span style="color: #795E26">animate</span><span style="color: #000000">([</span>
+<span style="color: #000000">  { </span><span style="color: #008000">// from</span>
+<span style="color: #000000">    </span><span style="color: #001080">opacity:</span><span style="color: #000000"> </span><span style="color: #098658">0</span><span style="color: #000000">,</span>
+<span style="color: #000000">    </span><span style="color: #001080">color:</span><span style="color: #000000"> </span><span style="color: #A31515">&quot;#fff&quot;</span>
+<span style="color: #000000">  },</span>
+<span style="color: #000000">  { </span><span style="color: #008000">// to</span>
+<span style="color: #000000">    </span><span style="color: #001080">opacity:</span><span style="color: #000000"> </span><span style="color: #098658">1</span><span style="color: #000000">,</span>
+<span style="color: #000000">    </span><span style="color: #001080">color:</span><span style="color: #000000"> </span><span style="color: #A31515">&quot;#000&quot;</span>
+<span style="color: #000000">  }</span>
+<span style="color: #000000">], </span><span style="color: #098658">2000</span><span style="color: #000000">);</span>
+</code></pre>
+								<p>Offsets for each keyframe can be specified by providing an <code>offset</code> value.</p>
+							</dd>
+							<dt>example</dt>
+							<dd><pre><code class="language-ts"><span style="color: #001080">element</span><span style="color: #000000">.</span><span style="color: #795E26">animate</span><span style="color: #000000">([ { </span><span style="color: #001080">opacity:</span><span style="color: #000000"> </span><span style="color: #098658">1</span><span style="color: #000000"> },</span>
+<span style="color: #000000">                  { </span><span style="color: #001080">opacity:</span><span style="color: #000000"> </span><span style="color: #098658">0.1</span><span style="color: #000000">, </span><span style="color: #001080">offset:</span><span style="color: #000000"> </span><span style="color: #098658">0.7</span><span style="color: #000000"> },</span>
+<span style="color: #000000">                  { </span><span style="color: #001080">opacity:</span><span style="color: #000000"> </span><span style="color: #098658">0</span><span style="color: #000000"> } ],</span>
+<span style="color: #000000">                </span><span style="color: #098658">2000</span><span style="color: #000000">);</span>
+</code></pre>
+								<p><em><strong>Note</strong>: <code>offset</code> values, if provided, must be between 0.0 and 1.0 (inclusive) and arranged in ascending order.</em></p>
+								<p>It is not necessary to specify an offset for every keyframe. Keyframes without a specified offset will be evenly spaced between adjacent keyframes.</p>
+								<hr>
+								<p>The easing to apply between keyframes can be specified by providing an easing <code>value</code> as illustrated below.</p>
+								<p><em><strong>Note</strong>: the values for easing in keyframes are limited to &quot;ease&quot;, &quot;ease-in&quot;, &quot;ease-out&quot;, &quot;ease-in-out&quot;, &quot;linear&quot;, &quot;steps(...)&quot;, and &quot;cubic-bezier(...)&quot;, to get access to the predefined <a href="../modules/_okikio_animate.html#EASINGS">easings</a>, you will need to use the function <a href="../modules/_okikio_animate.html#GetEase">GetEase</a>.</em></p>
+							</dd>
+							<dt>example</dt>
+							<dd><pre><code class="language-ts"><span style="color: #001080">element</span><span style="color: #000000">.</span><span style="color: #795E26">animate</span><span style="color: #000000">([ { </span><span style="color: #001080">opacity:</span><span style="color: #000000"> </span><span style="color: #098658">1</span><span style="color: #000000">, </span><span style="color: #001080">easing:</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;ease-out&#039;</span><span style="color: #000000"> },</span>
+<span style="color: #000000">                  { </span><span style="color: #001080">opacity:</span><span style="color: #000000"> </span><span style="color: #098658">0.1</span><span style="color: #000000">, </span><span style="color: #001080">easing:</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;ease-in&#039;</span><span style="color: #000000"> },</span>
+<span style="color: #000000">                  { </span><span style="color: #001080">opacity:</span><span style="color: #000000"> </span><span style="color: #098658">0</span><span style="color: #000000"> } ],</span>
+<span style="color: #000000">                </span><span style="color: #098658">2000</span><span style="color: #000000">);</span>
+</code></pre>
+								<p>In this example, the specified easing only applies from the keyframe where it is specified until the next keyframe. Any easing value specified on the options argument, however, applies across a single iteration of the animation — for the entire duration.</p>
+								<p><code>@okikio/animate</code> also offers another format called <code>CSSLikeKeyframe</code>,
+								it basically functions the same way CSS <code>@keyframe</code> functions</p>
+							</dd>
+							<dt>example</dt>
+							<dd><pre><code class="language-ts"><span style="color: #795E26">animate</span><span style="color: #000000">({</span>
+<span style="color: #000000">     </span><span style="color: #001080">keyframes:</span><span style="color: #000000"> {</span>
+<span style="color: #000000">         </span><span style="color: #A31515">&quot;from, 50%, to&quot;</span><span style="color: #001080">:</span><span style="color: #000000"> {</span>
+<span style="color: #000000">             </span><span style="color: #001080">opacity:</span><span style="color: #000000"> </span><span style="color: #098658">1</span>
+<span style="color: #000000">         },</span>
+
+<span style="color: #000000">         </span><span style="color: #A31515">&quot;25%, 0.7&quot;</span><span style="color: #001080">:</span><span style="color: #000000"> {</span>
+<span style="color: #000000">             </span><span style="color: #001080">opacity:</span><span style="color: #000000"> </span><span style="color: #098658">0</span>
+<span style="color: #000000">         }</span>
+<span style="color: #000000">     }</span>
+<span style="color: #000000">})</span>
+<span style="color: #008000">// Results in a keyframe array like this</span>
+<span style="color: #008000">//= [</span>
+<span style="color: #008000">//=   { opacity: 1, offset: 0 },</span>
+<span style="color: #008000">//=   { opacity: 0, offset: 0.25 },</span>
+<span style="color: #008000">//=   { opacity: 1, offset: 0.5 },</span>
+<span style="color: #008000">//=   { opacity: 0, offset: 0.7 },</span>
+<span style="color: #008000">//=   { opacity: 1, offset: 1 }</span>
+<span style="color: #008000">//= ]</span>
+</code></pre>
+							</dd>
+						</dl>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+					<a name="loop" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagOptional">Optional</span> loop</h3>
+					<div class="tsd-signature tsd-kind-icon">loop<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol"> | </span><a href="../modules/_okikio_animate.html#TypeCallback" class="tsd-signature-type" data-tsd-kind="Type alias">TypeCallback</a></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/okikio/native/blob/285f23f/packages/animate/src/types.ts#L188">animate/src/types.ts:188</a></li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>Determines if the animation should repeat, and how many times it should repeat.</p>
+						</div>
+						<dl class="tsd-comment-tags">
+							<dt>example</dt>
+							<dd><pre><code class="language-ts"><span style="color: #008000">// Loop forever</span>
+<span style="color: #795E26">animate</span><span style="color: #000000">({</span>
+<span style="color: #000000">    </span><span style="color: #001080">target:</span><span style="color: #000000"> </span><span style="color: #A31515">&quot;.div&quot;</span><span style="color: #000000">,</span>
+<span style="color: #000000">    </span><span style="color: #001080">easing:</span><span style="color: #000000"> </span><span style="color: #A31515">&quot;linear&quot;</span><span style="color: #000000">,</span>
+<span style="color: #000000">    </span><span style="color: #001080">loop:</span><span style="color: #000000"> </span><span style="color: #0000FF">true</span><span style="color: #000000">, </span><span style="color: #008000">// If you want it to continously loop</span>
+<span style="color: #000000">    </span><span style="color: #008000">// or</span>
+<span style="color: #000000">    </span><span style="color: #008000">// loop: 5, // If you want the animation to loop 5 times</span>
+<span style="color: #000000">    </span><span style="color: #001080">opacity:</span><span style="color: #000000"> [</span><span style="color: #098658">1</span><span style="color: #000000">, </span><span style="color: #098658">0</span><span style="color: #000000">],</span>
+<span style="color: #000000">});</span>
+</code></pre>
+							</dd>
+						</dl>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+					<a name="offset" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagOptional">Optional</span> offset</h3>
+					<div class="tsd-signature tsd-kind-icon">offset<span class="tsd-signature-symbol">:</span> <a href="../modules/_okikio_animate.html#TypeCallback" class="tsd-signature-type" data-tsd-kind="Type alias">TypeCallback</a><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-symbol">(</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">[]</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/okikio/native/blob/285f23f/packages/animate/src/types.ts#L352">animate/src/types.ts:352</a></li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>Contols the starting point of certain parts of an animation</p>
+						</div>
+						<dl class="tsd-comment-tags">
+							<dt>remark</dt>
+							<dd><p>The offset of the keyframe specified as a number between <code>0.0</code> and <code>1.0</code> inclusive or null. This is equivalent to specifying start and end states in percentages in CSS stylesheets using @keyframes. If this value is null or missing, the keyframe will be evenly spaced between adjacent keyframes.</p>
+								<p>Read more on <a href="https://developer.mozilla.org/en-US/docs/Web/API/Web_Animations_API/Keyframe_Formats">MDN</a></p>
+							</dd>
+							<dt>example</dt>
+							<dd><pre><code class="language-ts"><span style="color: #795E26">animate</span><span style="color: #000000">({</span>
+<span style="color: #000000">     </span><span style="color: #001080">duration:</span><span style="color: #000000"> </span><span style="color: #098658">2000</span><span style="color: #000000">,</span>
+<span style="color: #000000">     </span><span style="color: #001080">opacity:</span><span style="color: #000000"> [ </span><span style="color: #098658">0</span><span style="color: #000000">, </span><span style="color: #098658">0.9</span><span style="color: #000000">, </span><span style="color: #098658">1</span><span style="color: #000000"> ],</span>
+<span style="color: #000000">     </span><span style="color: #001080">easing:</span><span style="color: #000000"> [ </span><span style="color: #A31515">&#039;ease-in&#039;</span><span style="color: #000000">, </span><span style="color: #A31515">&#039;ease-out&#039;</span><span style="color: #000000"> ],</span>
+
+<span style="color: #000000">     </span><span style="color: #001080">offset:</span><span style="color: #000000"> [ </span><span style="color: #A31515">&quot;from&quot;</span><span style="color: #000000">, </span><span style="color: #098658">0.8</span><span style="color: #000000"> ], </span><span style="color: #008000">// Shorthand for [ 0, 0.8, 1 ]</span>
+<span style="color: #000000">     </span><span style="color: #008000">// or</span>
+<span style="color: #000000">     </span><span style="color: #001080">offset:</span><span style="color: #000000"> [ </span><span style="color: #098658">0</span><span style="color: #000000">, </span><span style="color: #A31515">&quot;80%&quot;</span><span style="color: #000000">, </span><span style="color: #A31515">&quot;to&quot;</span><span style="color: #000000"> ], </span><span style="color: #008000">// Shorthand for [ 0, 0.8, 1 ]</span>
+<span style="color: #000000">     </span><span style="color: #008000">// or</span>
+<span style="color: #000000">     </span><span style="color: #001080">offset:</span><span style="color: #000000"> [ </span><span style="color: #A31515">&quot;0&quot;</span><span style="color: #000000">, </span><span style="color: #A31515">&quot;0.8&quot;</span><span style="color: #000000">, </span><span style="color: #A31515">&quot;to&quot;</span><span style="color: #000000"> ], </span><span style="color: #008000">// Shorthand for [ 0, 0.8, 1 ]</span>
+<span style="color: #000000">});</span>
+</code></pre>
+							</dd>
+						</dl>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
+					<a name="opacity" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagOptional">Optional</span> opacity</h3>
+					<div class="tsd-signature tsd-kind-icon">opacity<span class="tsd-signature-symbol">:</span> <a href="../modules/_okikio_animate.html#TypeCallback" class="tsd-signature-type" data-tsd-kind="Type alias">TypeCallback</a><span class="tsd-signature-symbol"> | </span><a href="../modules/_okikio_animate.html#TypeSingleValueCSSProperty" class="tsd-signature-type" data-tsd-kind="Type alias">TypeSingleValueCSSProperty</a></div>
+					<aside class="tsd-sources">
+						<p>Inherited from <a href="_okikio_animate.ICSSTransformableProperties.html">ICSSTransformableProperties</a>.<a href="_okikio_animate.ICSSTransformableProperties.html#opacity">opacity</a></p>
+						<ul>
+							<li>Defined in <a href="https://github.com/okikio/native/blob/285f23f/packages/animate/src/types.ts#L39">animate/src/types.ts:39</a></li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+					<a name="options" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagOptional">Optional</span> options</h3>
+					<div class="tsd-signature tsd-kind-icon">options<span class="tsd-signature-symbol">:</span> <a href="_okikio_animate.IAnimationOptions.html" class="tsd-signature-type" data-tsd-kind="Interface">IAnimationOptions</a></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/okikio/native/blob/285f23f/packages/animate/src/types.ts#L327">animate/src/types.ts:327</a></li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>Another way to input options for an animation, it&#39;s also used to chain animations.</p>
+						</div>
+						<dl class="tsd-comment-tags">
+							<dt>remarks</dt>
+							<dd><p>The <code>options</code> animation option is another way to declare options, it can take an instance of <code>Animate</code>, a single <code>Animate</code> instance in an Array, e.g. <code>[Animate]</code> or an object containing animation options.</p>
+								<p><code>options</code> extends the animation properties of an animation, but more importance is given to the actual animation options object, so, the properties from <code>options</code> will be ignored if there is already an animation option with the same name declared.</p>
+								<p><em><strong>Note</strong>: you can&#39;t use this property as a method.</em></p>
+							</dd>
+							<dt>example</dt>
+							<dd><pre><code class="language-ts"><span style="color: #000000">(</span><span style="color: #0000FF">async</span><span style="color: #000000"> () </span><span style="color: #0000FF">=&gt;</span><span style="color: #000000"> {</span>
+<span style="color: #000000">    </span><span style="color: #008000">// animate is Promise-like, as in it has a then() method like a Promise but it isn&#039;t a Promise.</span>
+<span style="color: #000000">    </span><span style="color: #008000">// animate resolves to an Array that contains the Animate instance, e.g. [Animate]</span>
+<span style="color: #000000">    </span><span style="color: #0000FF">let</span><span style="color: #000000"> [</span><span style="color: #001080">options</span><span style="color: #000000">] = </span><span style="color: #AF00DB">await</span><span style="color: #000000"> </span><span style="color: #795E26">animate</span><span style="color: #000000">({</span>
+<span style="color: #000000">        </span><span style="color: #001080">target:</span><span style="color: #000000"> </span><span style="color: #A31515">&quot;.div&quot;</span><span style="color: #000000">,</span>
+<span style="color: #000000">        </span><span style="color: #001080">opacity:</span><span style="color: #000000"> [</span><span style="color: #098658">0</span><span style="color: #000000">, </span><span style="color: #098658">1</span><span style="color: #000000">],</span>
+<span style="color: #000000">    });</span>
+
+<span style="color: #000000">    </span><span style="color: #795E26">animate</span><span style="color: #000000">({</span>
+<span style="color: #000000">        </span><span style="color: #001080">options</span><span style="color: #000000">,</span>
+
+<span style="color: #000000">        </span><span style="color: #008000">// opacity overrides the opacity property from `options`</span>
+<span style="color: #000000">        </span><span style="color: #001080">opacity:</span><span style="color: #000000"> [</span><span style="color: #098658">1</span><span style="color: #000000">, </span><span style="color: #098658">0</span><span style="color: #000000">],</span>
+<span style="color: #000000">    });</span>
+
+<span style="color: #000000">    </span><span style="color: #001080">console</span><span style="color: #000000">.</span><span style="color: #795E26">log</span><span style="color: #000000">(</span><span style="color: #001080">options</span><span style="color: #000000">); </span><span style="color: #008000">//= Animate</span>
+<span style="color: #000000">})();</span>
+
+<span style="color: #008000">// or</span>
+<span style="color: #000000">(</span><span style="color: #0000FF">async</span><span style="color: #000000"> () </span><span style="color: #0000FF">=&gt;</span><span style="color: #000000"> {</span>
+<span style="color: #000000">    </span><span style="color: #0000FF">let</span><span style="color: #000000"> </span><span style="color: #001080">options</span><span style="color: #000000"> = </span><span style="color: #AF00DB">await</span><span style="color: #000000"> </span><span style="color: #795E26">animate</span><span style="color: #000000">({</span>
+<span style="color: #000000">        </span><span style="color: #001080">target:</span><span style="color: #000000"> </span><span style="color: #A31515">&quot;.div&quot;</span><span style="color: #000000">,</span>
+<span style="color: #000000">        </span><span style="color: #001080">opacity:</span><span style="color: #000000"> [</span><span style="color: #098658">0</span><span style="color: #000000">, </span><span style="color: #098658">1</span><span style="color: #000000">],</span>
+<span style="color: #000000">        </span><span style="color: #001080">duration:</span><span style="color: #000000"> </span><span style="color: #098658">2000</span><span style="color: #000000">,</span>
+
+<span style="color: #000000">    });</span>
+
+<span style="color: #000000">    </span><span style="color: #008000">// Remeber, the `options` animation option can handle Arrays with an Animate instance, e.g. [Animate]</span>
+<span style="color: #000000">    </span><span style="color: #008000">// Also, remeber that Animate resolves to an Arrays with an Animate instance, e.g. [Animate]</span>
+<span style="color: #000000">    </span><span style="color: #008000">// Note: the `options` animation option can only handle one Animate instance in an Array and that is alway the first element in the Array</span>
+<span style="color: #000000">    </span><span style="color: #795E26">animate</span><span style="color: #000000">({</span>
+<span style="color: #000000">        </span><span style="color: #001080">options</span><span style="color: #000000">,</span>
+<span style="color: #000000">        </span><span style="color: #001080">opacity:</span><span style="color: #000000"> [</span><span style="color: #098658">1</span><span style="color: #000000">, </span><span style="color: #098658">0</span><span style="color: #000000">],</span>
+<span style="color: #000000">    });</span>
+
+<span style="color: #000000">    </span><span style="color: #001080">console</span><span style="color: #000000">.</span><span style="color: #795E26">log</span><span style="color: #000000">(</span><span style="color: #001080">options</span><span style="color: #000000">); </span><span style="color: #008000">//= [Animate]</span>
+<span style="color: #000000">})();</span>
+
+<span style="color: #008000">// or</span>
+<span style="color: #000000">(</span><span style="color: #0000FF">async</span><span style="color: #000000"> () </span><span style="color: #0000FF">=&gt;</span><span style="color: #000000"> {</span>
+<span style="color: #000000">    </span><span style="color: #0000FF">let</span><span style="color: #000000"> </span><span style="color: #001080">options</span><span style="color: #000000"> = {</span>
+<span style="color: #000000">        </span><span style="color: #001080">target:</span><span style="color: #000000"> </span><span style="color: #A31515">&quot;.div&quot;</span><span style="color: #000000">,</span>
+<span style="color: #000000">        </span><span style="color: #001080">opacity:</span><span style="color: #000000"> [</span><span style="color: #098658">0</span><span style="color: #000000">, </span><span style="color: #098658">1</span><span style="color: #000000">],</span>
+<span style="color: #000000">    };</span>
+
+<span style="color: #000000">    </span><span style="color: #AF00DB">await</span><span style="color: #000000"> </span><span style="color: #795E26">animate</span><span style="color: #000000">(</span><span style="color: #001080">options</span><span style="color: #000000">);</span>
+<span style="color: #000000">    </span><span style="color: #795E26">animate</span><span style="color: #000000">({</span>
+<span style="color: #000000">        </span><span style="color: #001080">options</span><span style="color: #000000">,</span>
+<span style="color: #000000">        </span><span style="color: #001080">opacity:</span><span style="color: #000000"> [</span><span style="color: #098658">1</span><span style="color: #000000">, </span><span style="color: #098658">0</span><span style="color: #000000">],</span>
+<span style="color: #000000">    });</span>
+
+<span style="color: #000000">    </span><span style="color: #001080">console</span><span style="color: #000000">.</span><span style="color: #795E26">log</span><span style="color: #000000">(</span><span style="color: #001080">options</span><span style="color: #000000">); </span><span style="color: #008000">//= { ... }</span>
+<span style="color: #000000">})();</span>
+</code></pre>
+							</dd>
+						</dl>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+					<a name="padEndDelay" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagOptional">Optional</span> pad<wbr>End<wbr>Delay</h3>
+					<div class="tsd-signature tsd-kind-icon">pad<wbr>End<wbr>Delay<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">Boolean</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/okikio/native/blob/285f23f/packages/animate/src/types.ts#L170">animate/src/types.ts:170</a></li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>This ensures all <code>animations</code> match up to the total duration, and don&#39;t finish too early, if animations finish too early when the <code>.play()</code> method is called specific animations  that are finished will restart while the rest of the animations will continue playing.</p>
+						</div>
+						<p><em><strong>Note</strong>: you cannot use the <code>padEndDelay</code> option and set a value for <code>endDelay</code>, the <code>endDelay</code> value will replace the padded endDelay</em></p>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
+					<a name="perspective" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagOptional">Optional</span> perspective</h3>
+					<div class="tsd-signature tsd-kind-icon">perspective<span class="tsd-signature-symbol">:</span> <a href="../modules/_okikio_animate.html#TypeCallback" class="tsd-signature-type" data-tsd-kind="Type alias">TypeCallback</a><span class="tsd-signature-symbol"> | </span><a href="../modules/_okikio_animate.html#TypeSingleValueCSSProperty" class="tsd-signature-type" data-tsd-kind="Type alias">TypeSingleValueCSSProperty</a></div>
+					<aside class="tsd-sources">
+						<p>Inherited from <a href="_okikio_animate.ICSSTransformableProperties.html">ICSSTransformableProperties</a>.<a href="_okikio_animate.ICSSTransformableProperties.html#perspective">perspective</a></p>
+						<ul>
+							<li>Defined in <a href="https://github.com/okikio/native/blob/285f23f/packages/animate/src/types.ts#L20">animate/src/types.ts:20</a></li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
+					<a name="rotate" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagOptional">Optional</span> rotate</h3>
+					<div class="tsd-signature tsd-kind-icon">rotate<span class="tsd-signature-symbol">:</span> <a href="../modules/_okikio_animate.html#TypeCallback" class="tsd-signature-type" data-tsd-kind="Type alias">TypeCallback</a><span class="tsd-signature-symbol"> | </span><a href="../modules/_okikio_animate.html#TypeSingleValueCSSProperty" class="tsd-signature-type" data-tsd-kind="Type alias">TypeSingleValueCSSProperty</a><span class="tsd-signature-symbol"> | </span><a href="../modules/_okikio_animate.html#TypeSingleValueCSSProperty" class="tsd-signature-type" data-tsd-kind="Type alias">TypeSingleValueCSSProperty</a><span class="tsd-signature-symbol">[]</span></div>
+					<aside class="tsd-sources">
+						<p>Inherited from <a href="_okikio_animate.ICSSTransformableProperties.html">ICSSTransformableProperties</a>.<a href="_okikio_animate.ICSSTransformableProperties.html#rotate">rotate</a></p>
+						<ul>
+							<li>Defined in <a href="https://github.com/okikio/native/blob/285f23f/packages/animate/src/types.ts#L21">animate/src/types.ts:21</a></li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
+					<a name="rotate3d" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagOptional">Optional</span> rotate3d</h3>
+					<div class="tsd-signature tsd-kind-icon">rotate3d<span class="tsd-signature-symbol">:</span> <a href="../modules/_okikio_animate.html#TypeCallback" class="tsd-signature-type" data-tsd-kind="Type alias">TypeCallback</a><span class="tsd-signature-symbol"> | </span><a href="../modules/_okikio_animate.html#TypeSingleValueCSSProperty" class="tsd-signature-type" data-tsd-kind="Type alias">TypeSingleValueCSSProperty</a><span class="tsd-signature-symbol"> | </span><a href="../modules/_okikio_animate.html#TypeSingleValueCSSProperty" class="tsd-signature-type" data-tsd-kind="Type alias">TypeSingleValueCSSProperty</a><span class="tsd-signature-symbol">[]</span></div>
+					<aside class="tsd-sources">
+						<p>Inherited from <a href="_okikio_animate.ICSSTransformableProperties.html">ICSSTransformableProperties</a>.<a href="_okikio_animate.ICSSTransformableProperties.html#rotate3d">rotate3d</a></p>
+						<ul>
+							<li>Defined in <a href="https://github.com/okikio/native/blob/285f23f/packages/animate/src/types.ts#L22">animate/src/types.ts:22</a></li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
+					<a name="rotateX" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagOptional">Optional</span> rotateX</h3>
+					<div class="tsd-signature tsd-kind-icon">rotateX<span class="tsd-signature-symbol">:</span> <a href="../modules/_okikio_animate.html#TypeCallback" class="tsd-signature-type" data-tsd-kind="Type alias">TypeCallback</a><span class="tsd-signature-symbol"> | </span><a href="../modules/_okikio_animate.html#TypeSingleValueCSSProperty" class="tsd-signature-type" data-tsd-kind="Type alias">TypeSingleValueCSSProperty</a></div>
+					<aside class="tsd-sources">
+						<p>Inherited from <a href="_okikio_animate.ICSSTransformableProperties.html">ICSSTransformableProperties</a>.<a href="_okikio_animate.ICSSTransformableProperties.html#rotateX">rotateX</a></p>
+						<ul>
+							<li>Defined in <a href="https://github.com/okikio/native/blob/285f23f/packages/animate/src/types.ts#L23">animate/src/types.ts:23</a></li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
+					<a name="rotateY" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagOptional">Optional</span> rotateY</h3>
+					<div class="tsd-signature tsd-kind-icon">rotateY<span class="tsd-signature-symbol">:</span> <a href="../modules/_okikio_animate.html#TypeCallback" class="tsd-signature-type" data-tsd-kind="Type alias">TypeCallback</a><span class="tsd-signature-symbol"> | </span><a href="../modules/_okikio_animate.html#TypeSingleValueCSSProperty" class="tsd-signature-type" data-tsd-kind="Type alias">TypeSingleValueCSSProperty</a></div>
+					<aside class="tsd-sources">
+						<p>Inherited from <a href="_okikio_animate.ICSSTransformableProperties.html">ICSSTransformableProperties</a>.<a href="_okikio_animate.ICSSTransformableProperties.html#rotateY">rotateY</a></p>
+						<ul>
+							<li>Defined in <a href="https://github.com/okikio/native/blob/285f23f/packages/animate/src/types.ts#L24">animate/src/types.ts:24</a></li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
+					<a name="rotateZ" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagOptional">Optional</span> rotateZ</h3>
+					<div class="tsd-signature tsd-kind-icon">rotateZ<span class="tsd-signature-symbol">:</span> <a href="../modules/_okikio_animate.html#TypeCallback" class="tsd-signature-type" data-tsd-kind="Type alias">TypeCallback</a><span class="tsd-signature-symbol"> | </span><a href="../modules/_okikio_animate.html#TypeSingleValueCSSProperty" class="tsd-signature-type" data-tsd-kind="Type alias">TypeSingleValueCSSProperty</a></div>
+					<aside class="tsd-sources">
+						<p>Inherited from <a href="_okikio_animate.ICSSTransformableProperties.html">ICSSTransformableProperties</a>.<a href="_okikio_animate.ICSSTransformableProperties.html#rotateZ">rotateZ</a></p>
+						<ul>
+							<li>Defined in <a href="https://github.com/okikio/native/blob/285f23f/packages/animate/src/types.ts#L25">animate/src/types.ts:25</a></li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
+					<a name="scale" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagOptional">Optional</span> scale</h3>
+					<div class="tsd-signature tsd-kind-icon">scale<span class="tsd-signature-symbol">:</span> <a href="../modules/_okikio_animate.html#TypeCallback" class="tsd-signature-type" data-tsd-kind="Type alias">TypeCallback</a><span class="tsd-signature-symbol"> | </span><a href="../modules/_okikio_animate.html#TypeSingleValueCSSProperty" class="tsd-signature-type" data-tsd-kind="Type alias">TypeSingleValueCSSProperty</a><span class="tsd-signature-symbol"> | </span><a href="../modules/_okikio_animate.html#TypeSingleValueCSSProperty" class="tsd-signature-type" data-tsd-kind="Type alias">TypeSingleValueCSSProperty</a><span class="tsd-signature-symbol">[]</span></div>
+					<aside class="tsd-sources">
+						<p>Inherited from <a href="_okikio_animate.ICSSTransformableProperties.html">ICSSTransformableProperties</a>.<a href="_okikio_animate.ICSSTransformableProperties.html#scale">scale</a></p>
+						<ul>
+							<li>Defined in <a href="https://github.com/okikio/native/blob/285f23f/packages/animate/src/types.ts#L31">animate/src/types.ts:31</a></li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
+					<a name="scale3d" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagOptional">Optional</span> scale3d</h3>
+					<div class="tsd-signature tsd-kind-icon">scale3d<span class="tsd-signature-symbol">:</span> <a href="../modules/_okikio_animate.html#TypeCallback" class="tsd-signature-type" data-tsd-kind="Type alias">TypeCallback</a><span class="tsd-signature-symbol"> | </span><a href="../modules/_okikio_animate.html#TypeSingleValueCSSProperty" class="tsd-signature-type" data-tsd-kind="Type alias">TypeSingleValueCSSProperty</a><span class="tsd-signature-symbol"> | </span><a href="../modules/_okikio_animate.html#TypeSingleValueCSSProperty" class="tsd-signature-type" data-tsd-kind="Type alias">TypeSingleValueCSSProperty</a><span class="tsd-signature-symbol">[]</span></div>
+					<aside class="tsd-sources">
+						<p>Inherited from <a href="_okikio_animate.ICSSTransformableProperties.html">ICSSTransformableProperties</a>.<a href="_okikio_animate.ICSSTransformableProperties.html#scale3d">scale3d</a></p>
+						<ul>
+							<li>Defined in <a href="https://github.com/okikio/native/blob/285f23f/packages/animate/src/types.ts#L32">animate/src/types.ts:32</a></li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
+					<a name="scaleX" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagOptional">Optional</span> scaleX</h3>
+					<div class="tsd-signature tsd-kind-icon">scaleX<span class="tsd-signature-symbol">:</span> <a href="../modules/_okikio_animate.html#TypeCallback" class="tsd-signature-type" data-tsd-kind="Type alias">TypeCallback</a><span class="tsd-signature-symbol"> | </span><a href="../modules/_okikio_animate.html#TypeSingleValueCSSProperty" class="tsd-signature-type" data-tsd-kind="Type alias">TypeSingleValueCSSProperty</a></div>
+					<aside class="tsd-sources">
+						<p>Inherited from <a href="_okikio_animate.ICSSTransformableProperties.html">ICSSTransformableProperties</a>.<a href="_okikio_animate.ICSSTransformableProperties.html#scaleX">scaleX</a></p>
+						<ul>
+							<li>Defined in <a href="https://github.com/okikio/native/blob/285f23f/packages/animate/src/types.ts#L33">animate/src/types.ts:33</a></li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
+					<a name="scaleY" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagOptional">Optional</span> scaleY</h3>
+					<div class="tsd-signature tsd-kind-icon">scaleY<span class="tsd-signature-symbol">:</span> <a href="../modules/_okikio_animate.html#TypeCallback" class="tsd-signature-type" data-tsd-kind="Type alias">TypeCallback</a><span class="tsd-signature-symbol"> | </span><a href="../modules/_okikio_animate.html#TypeSingleValueCSSProperty" class="tsd-signature-type" data-tsd-kind="Type alias">TypeSingleValueCSSProperty</a></div>
+					<aside class="tsd-sources">
+						<p>Inherited from <a href="_okikio_animate.ICSSTransformableProperties.html">ICSSTransformableProperties</a>.<a href="_okikio_animate.ICSSTransformableProperties.html#scaleY">scaleY</a></p>
+						<ul>
+							<li>Defined in <a href="https://github.com/okikio/native/blob/285f23f/packages/animate/src/types.ts#L34">animate/src/types.ts:34</a></li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
+					<a name="scaleZ" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagOptional">Optional</span> scaleZ</h3>
+					<div class="tsd-signature tsd-kind-icon">scaleZ<span class="tsd-signature-symbol">:</span> <a href="../modules/_okikio_animate.html#TypeCallback" class="tsd-signature-type" data-tsd-kind="Type alias">TypeCallback</a><span class="tsd-signature-symbol"> | </span><a href="../modules/_okikio_animate.html#TypeSingleValueCSSProperty" class="tsd-signature-type" data-tsd-kind="Type alias">TypeSingleValueCSSProperty</a></div>
+					<aside class="tsd-sources">
+						<p>Inherited from <a href="_okikio_animate.ICSSTransformableProperties.html">ICSSTransformableProperties</a>.<a href="_okikio_animate.ICSSTransformableProperties.html#scaleZ">scaleZ</a></p>
+						<ul>
+							<li>Defined in <a href="https://github.com/okikio/native/blob/285f23f/packages/animate/src/types.ts#L35">animate/src/types.ts:35</a></li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
+					<a name="skew" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagOptional">Optional</span> skew</h3>
+					<div class="tsd-signature tsd-kind-icon">skew<span class="tsd-signature-symbol">:</span> <a href="../modules/_okikio_animate.html#TypeCallback" class="tsd-signature-type" data-tsd-kind="Type alias">TypeCallback</a><span class="tsd-signature-symbol"> | </span><a href="../modules/_okikio_animate.html#TypeSingleValueCSSProperty" class="tsd-signature-type" data-tsd-kind="Type alias">TypeSingleValueCSSProperty</a><span class="tsd-signature-symbol"> | </span><a href="../modules/_okikio_animate.html#TypeSingleValueCSSProperty" class="tsd-signature-type" data-tsd-kind="Type alias">TypeSingleValueCSSProperty</a><span class="tsd-signature-symbol">[]</span></div>
+					<aside class="tsd-sources">
+						<p>Inherited from <a href="_okikio_animate.ICSSTransformableProperties.html">ICSSTransformableProperties</a>.<a href="_okikio_animate.ICSSTransformableProperties.html#skew">skew</a></p>
+						<ul>
+							<li>Defined in <a href="https://github.com/okikio/native/blob/285f23f/packages/animate/src/types.ts#L36">animate/src/types.ts:36</a></li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
+					<a name="skewX" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagOptional">Optional</span> skewX</h3>
+					<div class="tsd-signature tsd-kind-icon">skewX<span class="tsd-signature-symbol">:</span> <a href="../modules/_okikio_animate.html#TypeCallback" class="tsd-signature-type" data-tsd-kind="Type alias">TypeCallback</a><span class="tsd-signature-symbol"> | </span><a href="../modules/_okikio_animate.html#TypeSingleValueCSSProperty" class="tsd-signature-type" data-tsd-kind="Type alias">TypeSingleValueCSSProperty</a></div>
+					<aside class="tsd-sources">
+						<p>Inherited from <a href="_okikio_animate.ICSSTransformableProperties.html">ICSSTransformableProperties</a>.<a href="_okikio_animate.ICSSTransformableProperties.html#skewX">skewX</a></p>
+						<ul>
+							<li>Defined in <a href="https://github.com/okikio/native/blob/285f23f/packages/animate/src/types.ts#L37">animate/src/types.ts:37</a></li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
+					<a name="skewY" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagOptional">Optional</span> skewY</h3>
+					<div class="tsd-signature tsd-kind-icon">skewY<span class="tsd-signature-symbol">:</span> <a href="../modules/_okikio_animate.html#TypeCallback" class="tsd-signature-type" data-tsd-kind="Type alias">TypeCallback</a><span class="tsd-signature-symbol"> | </span><a href="../modules/_okikio_animate.html#TypeSingleValueCSSProperty" class="tsd-signature-type" data-tsd-kind="Type alias">TypeSingleValueCSSProperty</a></div>
+					<aside class="tsd-sources">
+						<p>Inherited from <a href="_okikio_animate.ICSSTransformableProperties.html">ICSSTransformableProperties</a>.<a href="_okikio_animate.ICSSTransformableProperties.html#skewY">skewY</a></p>
+						<ul>
+							<li>Defined in <a href="https://github.com/okikio/native/blob/285f23f/packages/animate/src/types.ts#L38">animate/src/types.ts:38</a></li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+					<a name="speed" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagOptional">Optional</span> speed</h3>
+					<div class="tsd-signature tsd-kind-icon">speed<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> | </span><a href="../modules/_okikio_animate.html#TypeCallback" class="tsd-signature-type" data-tsd-kind="Type alias">TypeCallback</a></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/okikio/native/blob/285f23f/packages/animate/src/types.ts#L239">animate/src/types.ts:239</a></li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>Determines the animation playback rate. Useful in the authoring process to speed up some parts of a long sequence (value above 1) or slow down a specific animation to observe it (value between 0 to 1).</p>
+						</div>
+						<p><em><strong>Note</strong>: negative numbers reverse the animation.</em></p>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+					<a name="target" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagOptional">Optional</span> target</h3>
+					<div class="tsd-signature tsd-kind-icon">target<span class="tsd-signature-symbol">:</span> <a href="../modules/_okikio_animate.html#TypeAnimationTarget" class="tsd-signature-type" data-tsd-kind="Type alias">TypeAnimationTarget</a></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/okikio/native/blob/285f23f/packages/animate/src/types.ts#L52">animate/src/types.ts:52</a></li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>Determines the DOM elements to animate. You can pass it a CSS selector, DOM elements, or an Array of DOM Elements and/or CSS Selectors.</p>
+						</div>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+					<a name="targets" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagOptional">Optional</span> targets</h3>
+					<div class="tsd-signature tsd-kind-icon">targets<span class="tsd-signature-symbol">:</span> <a href="../modules/_okikio_animate.html#TypeAnimationTarget" class="tsd-signature-type" data-tsd-kind="Type alias">TypeAnimationTarget</a></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/okikio/native/blob/285f23f/packages/animate/src/types.ts#L58">animate/src/types.ts:58</a></li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>Alias of <code>target</code>
+							{@link AnimationOptions.target | target }</p>
+						</div>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+					<a name="timeline" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagOptional">Optional</span> timeline</h3>
+					<div class="tsd-signature tsd-kind-icon">timeline<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">AnimationTimeline</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/okikio/native/blob/285f23f/packages/animate/src/types.ts#L359">animate/src/types.ts:359</a></li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>Represents the timeline of animation. It exists to pass timeline features to Animations (default is <a href="https://developer.mozilla.org/en-US/docs/Web/API/DocumentTimeline">DocumentTimeline</a>).</p>
+						</div>
+						<p>As of right now it doesn&#39;t contain any features but in the future when other timelines like the <a href="https://drafts.csswg.org/scroll-animations-1/#scrolltimeline">ScrollTimeline</a>, read the Google Developer article for <a href="https://developers.google.com/web/updates/2018/10/animation-worklet#hooking_into_the_space-time_continuum_scrolltimeline">examples and demos of ScrollTimeLine</a></p>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+					<a name="timelineOffset" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagOptional">Optional</span> timeline<wbr>Offset</h3>
+					<div class="tsd-signature tsd-kind-icon">timeline<wbr>Offset<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> | </span><a href="../modules/_okikio_animate.html#TypeCallback" class="tsd-signature-type" data-tsd-kind="Type alias">TypeCallback</a></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/okikio/native/blob/285f23f/packages/animate/src/types.ts#L142">animate/src/types.ts:142</a></li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>Adds an offset ammount to the <code>delay</code>, for creating a timeline similar to <code>animejs</code></p>
+						</div>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
+					<a name="translate" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagOptional">Optional</span> translate</h3>
+					<div class="tsd-signature tsd-kind-icon">translate<span class="tsd-signature-symbol">:</span> <a href="../modules/_okikio_animate.html#TypeCallback" class="tsd-signature-type" data-tsd-kind="Type alias">TypeCallback</a><span class="tsd-signature-symbol"> | </span><a href="../modules/_okikio_animate.html#TypeSingleValueCSSProperty" class="tsd-signature-type" data-tsd-kind="Type alias">TypeSingleValueCSSProperty</a><span class="tsd-signature-symbol"> | </span><a href="../modules/_okikio_animate.html#TypeSingleValueCSSProperty" class="tsd-signature-type" data-tsd-kind="Type alias">TypeSingleValueCSSProperty</a><span class="tsd-signature-symbol">[]</span></div>
+					<aside class="tsd-sources">
+						<p>Inherited from <a href="_okikio_animate.ICSSTransformableProperties.html">ICSSTransformableProperties</a>.<a href="_okikio_animate.ICSSTransformableProperties.html#translate">translate</a></p>
+						<ul>
+							<li>Defined in <a href="https://github.com/okikio/native/blob/285f23f/packages/animate/src/types.ts#L26">animate/src/types.ts:26</a></li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
+					<a name="translate3d" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagOptional">Optional</span> translate3d</h3>
+					<div class="tsd-signature tsd-kind-icon">translate3d<span class="tsd-signature-symbol">:</span> <a href="../modules/_okikio_animate.html#TypeCallback" class="tsd-signature-type" data-tsd-kind="Type alias">TypeCallback</a><span class="tsd-signature-symbol"> | </span><a href="../modules/_okikio_animate.html#TypeSingleValueCSSProperty" class="tsd-signature-type" data-tsd-kind="Type alias">TypeSingleValueCSSProperty</a><span class="tsd-signature-symbol"> | </span><a href="../modules/_okikio_animate.html#TypeSingleValueCSSProperty" class="tsd-signature-type" data-tsd-kind="Type alias">TypeSingleValueCSSProperty</a><span class="tsd-signature-symbol">[]</span></div>
+					<aside class="tsd-sources">
+						<p>Inherited from <a href="_okikio_animate.ICSSTransformableProperties.html">ICSSTransformableProperties</a>.<a href="_okikio_animate.ICSSTransformableProperties.html#translate3d">translate3d</a></p>
+						<ul>
+							<li>Defined in <a href="https://github.com/okikio/native/blob/285f23f/packages/animate/src/types.ts#L27">animate/src/types.ts:27</a></li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
+					<a name="translateX" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagOptional">Optional</span> translateX</h3>
+					<div class="tsd-signature tsd-kind-icon">translateX<span class="tsd-signature-symbol">:</span> <a href="../modules/_okikio_animate.html#TypeCallback" class="tsd-signature-type" data-tsd-kind="Type alias">TypeCallback</a><span class="tsd-signature-symbol"> | </span><a href="../modules/_okikio_animate.html#TypeSingleValueCSSProperty" class="tsd-signature-type" data-tsd-kind="Type alias">TypeSingleValueCSSProperty</a></div>
+					<aside class="tsd-sources">
+						<p>Inherited from <a href="_okikio_animate.ICSSTransformableProperties.html">ICSSTransformableProperties</a>.<a href="_okikio_animate.ICSSTransformableProperties.html#translateX">translateX</a></p>
+						<ul>
+							<li>Defined in <a href="https://github.com/okikio/native/blob/285f23f/packages/animate/src/types.ts#L28">animate/src/types.ts:28</a></li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
+					<a name="translateY" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagOptional">Optional</span> translateY</h3>
+					<div class="tsd-signature tsd-kind-icon">translateY<span class="tsd-signature-symbol">:</span> <a href="../modules/_okikio_animate.html#TypeCallback" class="tsd-signature-type" data-tsd-kind="Type alias">TypeCallback</a><span class="tsd-signature-symbol"> | </span><a href="../modules/_okikio_animate.html#TypeSingleValueCSSProperty" class="tsd-signature-type" data-tsd-kind="Type alias">TypeSingleValueCSSProperty</a></div>
+					<aside class="tsd-sources">
+						<p>Inherited from <a href="_okikio_animate.ICSSTransformableProperties.html">ICSSTransformableProperties</a>.<a href="_okikio_animate.ICSSTransformableProperties.html#translateY">translateY</a></p>
+						<ul>
+							<li>Defined in <a href="https://github.com/okikio/native/blob/285f23f/packages/animate/src/types.ts#L29">animate/src/types.ts:29</a></li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
+					<a name="translateZ" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagOptional">Optional</span> translateZ</h3>
+					<div class="tsd-signature tsd-kind-icon">translateZ<span class="tsd-signature-symbol">:</span> <a href="../modules/_okikio_animate.html#TypeCallback" class="tsd-signature-type" data-tsd-kind="Type alias">TypeCallback</a><span class="tsd-signature-symbol"> | </span><a href="../modules/_okikio_animate.html#TypeSingleValueCSSProperty" class="tsd-signature-type" data-tsd-kind="Type alias">TypeSingleValueCSSProperty</a></div>
+					<aside class="tsd-sources">
+						<p>Inherited from <a href="_okikio_animate.ICSSTransformableProperties.html">ICSSTransformableProperties</a>.<a href="_okikio_animate.ICSSTransformableProperties.html#translateZ">translateZ</a></p>
+						<ul>
+							<li>Defined in <a href="https://github.com/okikio/native/blob/285f23f/packages/animate/src/types.ts#L30">animate/src/types.ts:30</a></li>
+						</ul>
+					</aside>
+				</section>
+			</section>
+			<section class="tsd-panel-group tsd-member-group ">
+				<h2>Methods</h2>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-interface">
+					<a name="oncancel" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagOptional">Optional</span> oncancel</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-interface">
+						<li class="tsd-signature tsd-kind-icon">oncancel<span class="tsd-signature-symbol">(</span>element<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">HTMLElement</span>, index<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">number</span>, total<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">number</span>, animation<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">Animation</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/okikio/native/blob/285f23f/packages/animate/src/types.ts#L217">animate/src/types.ts:217</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Occurs when the animation for one of the targets is cancelled, meaning when animating many targets that are cancelled at different times this will run multiple times. The arguments it takes is slightly different from the rest of the animation options.</p>
+								</div>
+								<p>The animation argument represents the animation for the current target.</p>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5><span class="tsd-flag ts-flagOptional">Optional</span> element: <span class="tsd-signature-type">HTMLElement</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>the current target element</p>
+									</div>
+								</li>
+								<li>
+									<h5><span class="tsd-flag ts-flagOptional">Optional</span> index: <span class="tsd-signature-type">number</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>the index of the current target element in <code>Animate.prototype.targets</code></p>
+									</div>
+								</li>
+								<li>
+									<h5><span class="tsd-flag ts-flagOptional">Optional</span> total: <span class="tsd-signature-type">number</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>the total number of target elements</p>
+									</div>
+								</li>
+								<li>
+									<h5><span class="tsd-flag ts-flagOptional">Optional</span> animation: <span class="tsd-signature-type">Animation</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>the animation of the current target element</p>
+										<p><strong>Warning</strong>: the order of the callback&#39;s arguments are in a different order, with the target element first, and the index second.</p>
+									</div>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-interface">
+					<a name="onfinish" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagOptional">Optional</span> onfinish</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-interface">
+						<li class="tsd-signature tsd-kind-icon">onfinish<span class="tsd-signature-symbol">(</span>element<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">HTMLElement</span>, index<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">number</span>, total<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">number</span>, animation<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">Animation</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/okikio/native/blob/285f23f/packages/animate/src/types.ts#L202">animate/src/types.ts:202</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Occurs when the animation for one of the targets completes, meaning when animating many targets that finish at different times this will run multiple times. The arguments it takes is slightly different from the rest of the animation options.</p>
+								</div>
+								<p>The animation argument represents the animation for the current target.</p>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5><span class="tsd-flag ts-flagOptional">Optional</span> element: <span class="tsd-signature-type">HTMLElement</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>the current target element</p>
+									</div>
+								</li>
+								<li>
+									<h5><span class="tsd-flag ts-flagOptional">Optional</span> index: <span class="tsd-signature-type">number</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>the index of the current target element in <code>Animate.prototype.targets</code></p>
+									</div>
+								</li>
+								<li>
+									<h5><span class="tsd-flag ts-flagOptional">Optional</span> total: <span class="tsd-signature-type">number</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>the total number of target elements</p>
+									</div>
+								</li>
+								<li>
+									<h5><span class="tsd-flag ts-flagOptional">Optional</span> animation: <span class="tsd-signature-type">Animation</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>the animation of the current target element</p>
+										<p><strong>Warning</strong>: the order of the callback&#39;s arguments are in a different order, with the target element first, and the index second.</p>
+									</div>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+						</li>
+					</ul>
+				</section>
+			</section>
+		</div>
+		<div class="col-4 col-menu menu-sticky-wrap menu-highlight">
+			<nav class="tsd-navigation primary">
+				<ul>
+					<li class=" ">
+						<a href="../modules.html">Modules</a>
+					</li>
+					<li class="current tsd-kind-module">
+						<a href="../modules/_okikio_animate.html">@okikio/animate</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="../modules/_okikio_emitter.html">@okikio/emitter</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="../modules/_okikio_manager.html">@okikio/manager</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="../modules/_okikio_native.html">@okikio/native</a>
+					</li>
+				</ul>
+			</nav>
+			<nav class="tsd-navigation secondary menu-sticky">
+				<ul class="before-current">
+				</ul>
+				<ul class="current">
+					<li class="current tsd-kind-interface tsd-parent-kind-module">
+						<a href="_okikio_animate.IAnimationOptions.html" class="tsd-kind-icon">IAnimation<wbr>Options</a>
+						<ul>
+							<li class=" tsd-kind-property tsd-parent-kind-interface">
+								<a href="_okikio_animate.IAnimationOptions.html#autoplay" class="tsd-kind-icon">autoplay</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-interface">
+								<a href="_okikio_animate.IAnimationOptions.html#composite" class="tsd-kind-icon">composite</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-interface">
+								<a href="_okikio_animate.IAnimationOptions.html#delay" class="tsd-kind-icon">delay</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-interface">
+								<a href="_okikio_animate.IAnimationOptions.html#direction" class="tsd-kind-icon">direction</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-interface">
+								<a href="_okikio_animate.IAnimationOptions.html#duration" class="tsd-kind-icon">duration</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-interface">
+								<a href="_okikio_animate.IAnimationOptions.html#easing" class="tsd-kind-icon">easing</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-interface">
+								<a href="_okikio_animate.IAnimationOptions.html#endDelay" class="tsd-kind-icon">end<wbr>Delay</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-interface">
+								<a href="_okikio_animate.IAnimationOptions.html#extend" class="tsd-kind-icon">extend</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-interface">
+								<a href="_okikio_animate.IAnimationOptions.html#fillMode" class="tsd-kind-icon">fill<wbr>Mode</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-interface">
+								<a href="_okikio_animate.IAnimationOptions.html#keyframes" class="tsd-kind-icon">keyframes</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-interface">
+								<a href="_okikio_animate.IAnimationOptions.html#loop" class="tsd-kind-icon">loop</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-interface">
+								<a href="_okikio_animate.IAnimationOptions.html#offset" class="tsd-kind-icon">offset</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
+								<a href="_okikio_animate.IAnimationOptions.html#opacity" class="tsd-kind-icon">opacity</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-interface">
+								<a href="_okikio_animate.IAnimationOptions.html#options" class="tsd-kind-icon">options</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-interface">
+								<a href="_okikio_animate.IAnimationOptions.html#padEndDelay" class="tsd-kind-icon">pad<wbr>End<wbr>Delay</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
+								<a href="_okikio_animate.IAnimationOptions.html#perspective" class="tsd-kind-icon">perspective</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
+								<a href="_okikio_animate.IAnimationOptions.html#rotate" class="tsd-kind-icon">rotate</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
+								<a href="_okikio_animate.IAnimationOptions.html#rotate3d" class="tsd-kind-icon">rotate3d</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
+								<a href="_okikio_animate.IAnimationOptions.html#rotateX" class="tsd-kind-icon">rotateX</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
+								<a href="_okikio_animate.IAnimationOptions.html#rotateY" class="tsd-kind-icon">rotateY</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
+								<a href="_okikio_animate.IAnimationOptions.html#rotateZ" class="tsd-kind-icon">rotateZ</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
+								<a href="_okikio_animate.IAnimationOptions.html#scale" class="tsd-kind-icon">scale</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
+								<a href="_okikio_animate.IAnimationOptions.html#scale3d" class="tsd-kind-icon">scale3d</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
+								<a href="_okikio_animate.IAnimationOptions.html#scaleX" class="tsd-kind-icon">scaleX</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
+								<a href="_okikio_animate.IAnimationOptions.html#scaleY" class="tsd-kind-icon">scaleY</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
+								<a href="_okikio_animate.IAnimationOptions.html#scaleZ" class="tsd-kind-icon">scaleZ</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
+								<a href="_okikio_animate.IAnimationOptions.html#skew" class="tsd-kind-icon">skew</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
+								<a href="_okikio_animate.IAnimationOptions.html#skewX" class="tsd-kind-icon">skewX</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
+								<a href="_okikio_animate.IAnimationOptions.html#skewY" class="tsd-kind-icon">skewY</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-interface">
+								<a href="_okikio_animate.IAnimationOptions.html#speed" class="tsd-kind-icon">speed</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-interface">
+								<a href="_okikio_animate.IAnimationOptions.html#target" class="tsd-kind-icon">target</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-interface">
+								<a href="_okikio_animate.IAnimationOptions.html#targets" class="tsd-kind-icon">targets</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-interface">
+								<a href="_okikio_animate.IAnimationOptions.html#timeline" class="tsd-kind-icon">timeline</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-interface">
+								<a href="_okikio_animate.IAnimationOptions.html#timelineOffset" class="tsd-kind-icon">timeline<wbr>Offset</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
+								<a href="_okikio_animate.IAnimationOptions.html#translate" class="tsd-kind-icon">translate</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
+								<a href="_okikio_animate.IAnimationOptions.html#translate3d" class="tsd-kind-icon">translate3d</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
+								<a href="_okikio_animate.IAnimationOptions.html#translateX" class="tsd-kind-icon">translateX</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
+								<a href="_okikio_animate.IAnimationOptions.html#translateY" class="tsd-kind-icon">translateY</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
+								<a href="_okikio_animate.IAnimationOptions.html#translateZ" class="tsd-kind-icon">translateZ</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-interface">
+								<a href="_okikio_animate.IAnimationOptions.html#oncancel" class="tsd-kind-icon">oncancel</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-interface">
+								<a href="_okikio_animate.IAnimationOptions.html#onfinish" class="tsd-kind-icon">onfinish</a>
+							</li>
+						</ul>
+					</li>
+				</ul>
+				<ul class="after-current">
+				</ul>
+			</nav>
+		</div>
+	</div>
+</div>
+<footer class="with-border-bottom">
+	<div class="container">
+		<h2>Legend</h2>
+		<div class="tsd-legend-group">
+			<ul class="tsd-legend">
+				<li class="tsd-kind-variable"><span class="tsd-kind-icon">Variable</span></li>
+				<li class="tsd-kind-function"><span class="tsd-kind-icon">Function</span></li>
+				<li class="tsd-kind-type-alias"><span class="tsd-kind-icon">Type alias</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-interface"><span class="tsd-kind-icon">Interface</span></li>
+				<li class="tsd-kind-property tsd-parent-kind-interface"><span class="tsd-kind-icon">Property</span></li>
+				<li class="tsd-kind-method tsd-parent-kind-interface"><span class="tsd-kind-icon">Method</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-class"><span class="tsd-kind-icon">Class</span></li>
+				<li class="tsd-kind-class tsd-has-type-parameter"><span class="tsd-kind-icon">Class with type parameter</span></li>
+			</ul>
+		</div>
+	</div>
+</footer>
+<div class="container tsd-generator">
+	<p>Generated using <a href="https://typedoc.org/" target="_blank">TypeDoc</a></p>
+</div>
+<div class="overlay"></div>
+<script src="../assets/js/main.js"></script>
+</body>
+</html>

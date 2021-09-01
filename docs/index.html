@@ -1,0 +1,215 @@
+<!doctype html>
+<html class="default no-js">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>The Native Initiative</title>
+	<meta name="description" content="Documentation for The Native Initiative">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="assets/css/main.css">
+	<script async src="assets/js/search.js" id="search-script"></script>
+</head>
+<body>
+<header>
+	<div class="tsd-page-toolbar">
+		<div class="container">
+			<div class="table-wrap">
+				<div class="table-cell" id="tsd-search" data-index="assets/js/search.json" data-base=".">
+					<div class="field">
+						<label for="tsd-search-field" class="tsd-widget search no-caption">Search</label>
+						<input id="tsd-search-field" type="text" />
+					</div>
+					<ul class="results">
+						<li class="state loading">Preparing search index...</li>
+						<li class="state failure">The search index is not available</li>
+					</ul>
+					<a href="index.html" class="title">The Native Initiative</a>
+				</div>
+				<div class="table-cell" id="tsd-widgets">
+					<div id="tsd-filter">
+						<a href="#" class="tsd-widget options no-caption" data-toggle="options">Options</a>
+						<div class="tsd-filter-group">
+							<div class="tsd-select" id="tsd-filter-visibility">
+								<span class="tsd-select-label">All</span>
+								<ul class="tsd-select-list">
+									<li data-value="public">Public</li>
+									<li data-value="protected">Public/Protected</li>
+									<li data-value="private" class="selected">All</li>
+								</ul>
+							</div>
+							<input type="checkbox" id="tsd-filter-inherited" checked />
+							<label class="tsd-widget" for="tsd-filter-inherited">Inherited</label>
+							<input type="checkbox" id="tsd-filter-externals" checked />
+							<label class="tsd-widget" for="tsd-filter-externals">Externals</label>
+						</div>
+					</div>
+					<a href="#" class="tsd-widget menu no-caption" data-toggle="menu">Menu</a>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="tsd-page-title">
+		<div class="container">
+			<h1>The Native Initiative</h1>
+		</div>
+	</div>
+</header>
+<div class="container container-main">
+	<div class="row">
+		<div class="col-8 col-content">
+			<div class="tsd-panel tsd-typography">
+				<a href="#native" id="native" style="color: inherit; text-decoration: none;">
+					<h1>native</h1>
+				</a>
+				<p><img src="https://img.shields.io/github/issues/okikio/native?style=for-the-badge" alt="GitHub issues"> <img src="https://img.shields.io/github/license/okikio/native?style=for-the-badge" alt="GitHub"></p>
+				<p><code>native</code> is an initiative which aims to make it easy to create complex, light-weight, and performant web applications using modern js.</p>
+				<a href="#table-of-contents" id="table-of-contents" style="color: inherit; text-decoration: none;">
+					<h2>Table of Contents</h2>
+				</a>
+				<ul>
+					<li><a href="#native">native</a><ul>
+							<li><a href="#table-of-contents">Table of Contents</a></li>
+							<li><a href="#getting-started">Getting started</a><ul>
+									<li><a href="#okikiomanager">@okikio/manager</a></li>
+									<li><a href="#okikioemitter">@okikio/emitter</a></li>
+									<li><a href="#okikioanimate">@okikio/animate</a></li>
+									<li><a href="#okikionative">@okikio/native</a></li>
+								</ul>
+							</li>
+							<li><a href="#bundling">Bundling</a></li>
+							<li><a href="#api-documentation">API Documentation</a></li>
+							<li><a href="#usage">Usage</a></li>
+							<li><a href="#trying-it-out">Trying it Out</a></li>
+							<li><a href="#demo">Demo</a></li>
+							<li><a href="#contributing">Contributing</a></li>
+							<li><a href="#licence">Licence</a></li>
+						</ul>
+					</li>
+				</ul>
+				<a href="#getting-started" id="getting-started" style="color: inherit; text-decoration: none;">
+					<h2>Getting started</h2>
+				</a>
+				<p>The <code>native</code> initiative repo is a monorepo with 4 smaller packages within it, they are:</p>
+				<a href="#okikiomanager" id="okikiomanager" style="color: inherit; text-decoration: none;">
+					<h3><a href="./packages/manager#readme">@okikio/manager</a></h3>
+				</a>
+				<p><a href="https://www.npmjs.com/package/@okikio/manager"><img src="https://img.shields.io/npm/v/@okikio/manager?style=flat-square" alt="npm"></a> <a href="https://bundlephobia.com/package/@okikio/manager"><img src="https://img.shields.io/bundlephobia/minzip/@okikio/manager?style=flat-square" alt="npm bundle size"></a></p>
+				<p>The Map class is the most efficient way to handle large amounts of controlled data, but it has some inconvient quirks that would be annoying to handle, so I built this package to avoid some of it&#39;s quirks and introduce new features.</p>
+				<p><em>Note: you can install it as a separate package from the rest of the <code>@okikio/native</code> framework.</em></p>
+				<p><a href="./packages/manager/README.md">Read more...</a></p>
+				<a href="#okikioemitter" id="okikioemitter" style="color: inherit; text-decoration: none;">
+					<h3><a href="./packages/emitter#readme">@okikio/emitter</a></h3>
+				</a>
+				<p><a href="https://www.npmjs.com/package/@okikio/emitter"><img src="https://img.shields.io/npm/v/@okikio/emitter?style=flat-square" alt="npm"></a> <a href="https://bundlephobia.com/package/@okikio/emitter"><img src="https://img.shields.io/bundlephobia/minzip/@okikio/emitter?style=flat-square" alt="npm bundle size"></a></p>
+				<p>A small Event Emitter written in typescript with performance and ease of use in mind. It&#39;s pretty self explanitory, there are millions of event emitters like this one, the only difference is that this one is optimized for use in the <code>@okikio/native</code> framework.</p>
+				<p><em>Note: you can install it as a separate package from the rest of the <code>@okikio/native</code> framework.</em></p>
+				<p><a href="./packages/emitter/README.md">Read more...</a></p>
+				<a href="#okikioanimate" id="okikioanimate" style="color: inherit; text-decoration: none;">
+					<h3><a href="./packages/animate#readme">@okikio/animate</a></h3>
+				</a>
+				<p><a href="https://www.npmjs.com/package/@okikio/animate"><img src="https://img.shields.io/npm/v/@okikio/animate?style=flat-square" alt="npm"></a> <a href="https://bundlephobia.com/package/@okikio/animate"><img src="https://img.shields.io/bundlephobia/minzip/@okikio/animate?style=flat-square" alt="npm bundle size"></a></p>
+				<p>A truly native animation library that takes full advantage of the Web Animation API to create amazingly pollished experiences on all devices. To future proof animation in an easy to use and effiecient manner, I built this library as a light wrapper around the Web Animation API, that takes on conventional means for creating animation today, allowing developers to get started with modern animation today.</p>
+				<p><em>Note: you can install it as a separate package from the rest of the <code>@okikio/native</code> framework.</em></p>
+				<p><a href="./packages/animate/README.md">Read more...</a></p>
+				<a href="#okikionative" id="okikionative" style="color: inherit; text-decoration: none;">
+					<h3><a href="./packages/native#readme">@okikio/native</a></h3>
+				</a>
+				<p><a href="https://npmjs.com/package/@okikio/native"><img src="https://img.shields.io/npm/v/@okikio/native?style=flat-square" alt="npm"></a> <a href="https://bundlephobia.com/package/@okikio/native"><img src="https://img.shields.io/bundlephobia/minzip/@okikio/native?style=flat-square" alt="npm bundle size"></a></p>
+				<p><code>@okikio/native</code> is the framework component of the <code>native</code> initiative. This package encourages the user to download/copy-and-paste the code into their development enviroment of choice, and tweak it to match their projects needs.</p>
+				<p><a href="./packages/native/README.md">Read more...</a></p>
+				<a href="#bundling" id="bundling" style="color: inherit; text-decoration: none;">
+					<h2>Bundling</h2>
+				</a>
+				<p><em><strong>Note</strong>: All package in the <code>native</code> initiative are built for ES2020, This project expects the user to use a build tool to support older versions of browsers, the idea being most people are using evergreen browsers, so, why are web developers piling on polyfill code that most users don&#39;t need. I suggest <code>esbuild</code>, <code>rollup</code>, <code>*typescript</code>, or <code>webpack</code> for bundling the library, and for polyfills <code>babel</code> or <code>polyfill.io</code>.</em></p>
+				<p>*<em>I have found typescript to be the best method for bundling for older browsers e.g. IE11. I only suggest you use <code>babel</code> for polyfilling <code>Promise</code>, <code>fetch</code>, etc...</em></p>
+				<p>I suggest using <a href="https://bundle.js.org">bundle.js.org</a>, if you would like to quickly bundle the package online or check the size of your final bundle.</p>
+				<a href="#api-documentation" id="api-documentation" style="color: inherit; text-decoration: none;">
+					<h2>API Documentation</h2>
+				</a>
+				<p>Go to <a href="https://okikio.github.io/native/docs">okikio.github.io/native/docs</a>, for a more detailed API documentation on the native initiative.</p>
+				<a href="#usage" id="usage" style="color: inherit; text-decoration: none;">
+					<h2>Usage</h2>
+				</a>
+				<p>Located in <a href="./build">./build</a>, you will find multiple build files that can help you create your setup. The <a href="./build/pug">./build/pug/</a> folder contains <a href="https://pugjs.org/api/getting-started.html">pug</a> files; <code>pug</code> has features that normal <code>html</code> just doesn&#39;t have. The <a href="./build/sass">./build/sass/</a> folder contains <a href="https://sass-lang.com/guide">scss</a> files that allow for modern css without the need of polyfills. The <a href="./build/ts/">./build/ts/</a> folder contains <a href="https://www.typescriptlang.org/">typescript</a> files that the framework runs on; typescript is used because Intellisense is better with typescript. Outside the build folder, the <a href="./gulpfile.js">./gulpfile.js</a> file, is part of my <a href="https://gulpjs.com/">gulp</a> config, and is the tool I use to build the <code>demo</code>. For your project other tools should also work with some tweaks. Explore the files stated above to learn how to get started. Read more about <code>native</code> in the <code>@okikio/native</code> <a href="./packages/native/README.md">README</a>. Explore the other packages as well to learn how they all work together.</p>
+				<a href="#trying-it-out" id="trying-it-out" style="color: inherit; text-decoration: none;">
+					<h2>Trying it Out</h2>
+				</a>
+				<p>You can try out the <code>native</code> initiative via the <code>@okikio/native</code> framework.</p>
+				<p><a href="https://gitpod.io/#https://github.com/okikio/native/blob/beta/README.md"><img src="https://gitpod.io/button/open-in-gitpod.svg" alt="Open In Gitpod"></a></p>
+				<p>By default Gitpod will start the dev script for you, but if you need to restart the dev script you can do so by typing into the terminal.</p>
+				<pre><code class="language-bash"><span style="color: #000000">pnpm demo</span>
+</code></pre>
+				<p>Once Gitpod has booted up, go to the <a href="./build/pug/">./build/pug/</a> and <a href="./build/ts/">./build/ts/</a> folders to try out the packages under the <code>native</code> initiative.</p>
+				<a href="#demo" id="demo" style="color: inherit; text-decoration: none;">
+					<h2>Demo</h2>
+				</a>
+				<blockquote>
+					<p><a href="https://okikio.github.io/native/demo/">View a demo &#8594;</a></p>
+				</blockquote>
+				<p>Read <a href="#usage">#Usage</a> to find the code for the demo.</p>
+				<a href="#contributing" id="contributing" style="color: inherit; text-decoration: none;">
+					<h2>Contributing</h2>
+				</a>
+				<p><a href="http://commitizen.github.io/cz-cli/"><img src="https://img.shields.io/badge/commitizen-friendly-brightgreen.svg" alt="Commitizen friendly"></a></p>
+				<p>If there is something I missed, a mistake, or a feature you would like added please create an issue or a pull request and I&#39;ll try to get to it.</p>
+				<p><em><strong>Note</strong>: all contributions must be done on the <code>beta</code> branch, using the Conventional Commits style.</em></p>
+				<p><em>The <code>native</code> project uses <a href="https://www.conventionalcommits.org/en/v1.0.0/">Conventional Commits</a> as the style of commit, we also use the <a href="http://commitizen.github.io/cz-cli/">Commitizen CLI</a> to make commits easier.</em></p>
+				<a href="#licence" id="licence" style="color: inherit; text-decoration: none;">
+					<h2>Licence</h2>
+				</a>
+				<p>See the <a href="./LICENSE">LICENSE</a> file for license rights and limitations (MIT).</p>
+			</div>
+		</div>
+		<div class="col-4 col-menu menu-sticky-wrap menu-highlight">
+			<nav class="tsd-navigation primary">
+				<ul>
+					<li class=" ">
+						<a href="modules.html">Modules</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/_okikio_animate.html">@okikio/animate</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/_okikio_emitter.html">@okikio/emitter</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/_okikio_manager.html">@okikio/manager</a>
+					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/_okikio_native.html">@okikio/native</a>
+					</li>
+				</ul>
+			</nav>
+			<nav class="tsd-navigation secondary menu-sticky">
+				<ul class="before-current">
+				</ul>
+			</nav>
+		</div>
+	</div>
+</div>
+<footer class="with-border-bottom">
+	<div class="container">
+		<h2>Legend</h2>
+		<div class="tsd-legend-group">
+			<ul class="tsd-legend">
+				<li class="tsd-kind-variable"><span class="tsd-kind-icon">Variable</span></li>
+				<li class="tsd-kind-function"><span class="tsd-kind-icon">Function</span></li>
+				<li class="tsd-kind-type-alias"><span class="tsd-kind-icon">Type alias</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-class"><span class="tsd-kind-icon">Class</span></li>
+				<li class="tsd-kind-class tsd-has-type-parameter"><span class="tsd-kind-icon">Class with type parameter</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-interface"><span class="tsd-kind-icon">Interface</span></li>
+			</ul>
+		</div>
+	</div>
+</footer>
+<div class="container tsd-generator">
+	<p>Generated using <a href="https://typedoc.org/" target="_blank">TypeDoc</a></p>
+</div>
+<div class="overlay"></div>
+<script src="assets/js/main.js"></script>
+</body>
+</html>
