@@ -35,9 +35,9 @@ animate({
 
 You can view a demo of Custom Easing on [Codepen](https://codepen.io/okikio/pen/abJMWNy). I based the Custom Easing implementation on a comment by [@jakearchibald](https://github.com/jakearchibald) on [Github](https://github.com/w3c/csswg-drafts/issues/229#issuecomment-860778689) and an article by [kirillvasiltsov](https://www.kirillvasiltsov.com/writing/how-to-create-a-spring-animation-with-web-animation-api/).
 
-Custom Easing uses the fact that WAAPI allows for linear easing, and for users to set multiple different values in Array format, thus, I created a small function that generates a set of arrays that create custom easing effects like bounce, elastic, and spring. As of right now it builds on top of `@okikio/animate` but `@okikio/animate` isn't absolutely necessary, it just may not be as comfortable to using it without `@okikio/animate`.
+Custom Easing uses the fact that WAAPI allows for [linear easing](https://developer.mozilla.org/en-US/docs/Web/CSS/animation-timing-function) and [interpolation](https://developer.mozilla.org/en-US/docs/Web/API/Web_Animations_API/Keyframe_Formats#syntax) between Array values, for CSS propertyies, to generate an arrays of values that the WAAPI can linearly interpolate between, thus emulating custom easing effects like bounce, elastic, and spring. As of right now, the `CustomEasing function` builds on top of `@okikio/animate`, but `@okikio/animate` isn't absolutely necessary, it just may not be as comfortable to use it without `@okikio/animate`.
 
-Custom Easing has 3 properties they are `easing` (all the easings from [#easing](/docs/animate/api/options/easing.md) are supported on top of custom easing functions, like spring, bounce, etc...), `numPoints` (the size of the Array the Custom Easing function should create), and `decimal` (the number of decimal places of the values within said Array).
+Custom Easing has 3 properties they are `easing` (all the easings from [animation options easing](/docs/animate/api/options/easing.md) are supported, on top of custom easing functions, like spring, bounce, etc...), `numPoints` (the size of the Array the Custom Easing function should create), and `decimal` (the number of decimal places of the values within said Array).
 
 | Properties  | Default Value           |
 | ----------- | ----------------------- |
@@ -62,6 +62,9 @@ By default, Custom Easing support easing functions, in the form,
 |            | in-elastic         | out-elastic    | in-out-elastic        | out-in-elastic        |
 |            | spring / spring-in | spring-out     | spring-in-out         | spring-out-in         |
 
+
+### Elastic easing
+
 All **Elastic** easing's can be configured using theses parameters,
 
 `*-elastic(amplitude, period)`
@@ -73,7 +76,7 @@ Each parameter comes with these defaults
 | amplitude | `1`           |
 | period    | `0.5`         |
 
-***
+### Spring easing
 
 All **Spring** easing's can be configured using theses parameters,
 
@@ -96,16 +99,16 @@ _**Note**: you can also use camelCase when defining easing functions, e.g. `inOu
 
 _**Suggestion**: if you decide to use [CustomEasing](/docs/api/modules/_okikio_animate.md#customeasing) on one CSS property, I suggest using [CustomEasing](/docs/api/modules/_okikio_animate.md#customeasing) or [ApplyCustomEasing](/docs/api/modules/_okikio_animate.md#applycustomeasing) on the rest_
 
-***
 
-### SpringEasing
+## SpringEasing(...) Function
 
 Returns an array containing `[easing points, duration]`, it's meant to be a self enclosed way to create spring easing.
-Springs have an optimal duration; using [`getEasingDuration()`](/docs/api/modules/_okikio_animate.md#geteasingduration) we are able to have the determine the optimal duration for a spring with given parameters.
 
-By default it will only give the optimal duration for `spring` or `spring-in` easing, this is to avoid infinite loops caused by the `getEasingDuration()` function.
+Springs have an optimal duration; using [getEasingDuration()](/docs/api/modules/_okikio_animate.md#geteasingduration) we are able to have the determine the optimal duration for a spring with given parameters. 
 
-Internally the `SpringEasing` uses [CustomEasing](/docs/api/modules/_okikio_animate.md#customeasing), read more on it, to understand how the `SpringEasing` function works.
+By default the `SpringEasing(...)` function will only give the optimal duration for `spring` or `spring-in` easing, this is to avoid infinite loops caused by the `getEasingDuration()` function.
+
+Internally the `SpringEasing` uses [CustomEasing](/docs/animate/api/custom-easing.md), read through the [api docs](/docs/api/modules/_okikio_animate.md#customeasing) on it, to understand how the `SpringEasing` function works.
 
 e.g.
 
@@ -130,18 +133,19 @@ animate({
 });
 ```
 
-***
+Check out the [api docs](/docs/api/modules/_okikio_animate.md#springeasing) to for further detail.
 
-### ApplyCustomEasing
+## ApplyCustomEasing(...) Function
 
-You can also use `ApplyCustomEasing`. It applies the same custom easings to all properties of an object it also returns an object with each property having an array of custom eased values
+Applies the same custom easings to all properties of an object it also returns an object with each property having an array of custom eased values.
 
 If you use the `spring` or `spring-in` easings it will also return the optimal duration as a key in the object it returns.
+
 If you set `duration` to a number, it will prioritize that `duration` over optimal duration given by the spring easings.
 
-Read more about [CustomEasing](/docs/api/modules/_okikio_animate.md#applycustomeasing).
+Read through the [CustomEasing docs](/docs/animate/api/custom-easing.md), also check out the [CustomEasing api docs](/docs/api/modules/_okikio_animate.md#applycustomeasing).
 
-_**Suggestion**: if you decide to use [CustomEasing](/docs/api/modules/_okikio_animate.md#customeasing) on one CSS property, I suggest using [CustomEasing](/docs/api/modules/_okikio_animate.md#customeasing) or [ApplyCustomEasing](/docs/api/modules/_okikio_animate.md#applycustomeasing) on the rest_
+<!-- _**Suggestion**: if you decide to use [CustomEasing](/docs/api/modules/_okikio_animate.md#customeasing) on one CSS property, I suggest using [CustomEasing](/docs/api/modules/_okikio_animate.md#customeasing) or [ApplyCustomEasing](/docs/api/modules/_okikio_animate.md#applycustomeasing) on the rest_ -->
 
 e.g.
 
@@ -171,3 +175,5 @@ animate({
      })
 })
 ```
+
+Check out the [api docs](/docs/api/modules/_okikio_animate.md#applycustomeasing) to for further detail.

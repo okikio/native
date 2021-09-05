@@ -3,8 +3,6 @@
 
 ### Animations
 
-> **Note**: `@okikio/animate` lets you animate HTML and SVG elements with any CSS property that is animatable, you might be surprised to learn many CSS properties fall under this perview, including `display` and `visibility`. 
-
 ```ts
 // Animate the fill color of an SVG circle
 animate({
@@ -35,6 +33,8 @@ animate({
 });
 ```
 
+> **Info**: `@okikio/animate` lets you animate HTML and SVG elements with any CSS property that is [animatable](/docs/animate/limitations.md#css--svg-animations-support), you might be surprised to learn many CSS properties fall under this perview, including `display` and `visibility`. 
+
 The `Animate` class recieves a set of [targets](/docs/animate/api/options/target.md) to animate, it then creates a list of `Animation` instances corrosponding to the respective target elements. In order to determine when all target animations are complete, the `Animate` class also creates a main `Animation` instance. The main `Animation` instance plays for the total duration of all target animations, and alerts the user when all target animations have completed. 
 
 Target animations are stored in `Animate.prototype.animations: WeakMap<KeyframeEffect, Animation>`, using their [KeyframeEffect](https://developer.mozilla.org/en-US/docs/Web/API/KeyframeEffect) as the key, while the the main animation is stored in `Animate.prototype.mainAnimation: Animation`. You can actually access the animation for a specific target using `Animate.prototype.getAnimation(target: HTMLElement): Animation`, meaning you aren't limited by what `@okikio/animate` provides, you can use the WAAPI api's you know and love directly.
@@ -42,6 +42,8 @@ Target animations are stored in `Animate.prototype.animations: WeakMap<KeyframeE
 > _**Note**: `Animation` instances come from the `Animation` class of the Web Animations API. The `Animation` class represents a single animation player and provides playback controls and a timeline for an animation node or source, [Read more...](https://developer.mozilla.org/en-US/docs/Web/API/Animation)_
 
 Each property you animate needs an array defining the start and end values, or an Array of keyframes.
+
+> _**Info**: `Implicit to/from keyframes` are now supported in all [evergreen browsers](https://www.techopedia.com/definition/31094/evergreen-browser), In newer browser versions, you are able to set a beginning or end state for an animation only (i.e. a single keyframe), and the browser will infer the other end of the animation if it is able to. [Read more...](https://developer.mozilla.org/en-US/docs/Web/API/Web_Animations_API/Keyframe_Formats#implicit_tofrom_keyframes)_
 
 ```ts
 animate({
@@ -63,7 +65,7 @@ animate({
 
 > _**Note**: you can only use one of these formats for an animation, and if `Animate` sees the `keyframes` property, it ignores all other css properties, in situations where `Animate` sees the keyframes property it will still accept animation properties like `easing`, `duration`, etc..._
 
-These value arrays can optionally be returned by an [animation option callback](/docs/animate/api/animation-options-as-methods.md) that takes the index of each element, the total number of elements, and each specific element, just like with other properties.
+These value arrays can optionally be returned by an [animation option method](/docs/animate/api/animation-options-as-methods.md) that takes the index of each element, the total number of elements, and each specific element, just like with other properties.
 
 ```ts
 // First element translates by 100px, second element by 200px, etc.
@@ -95,9 +97,9 @@ All options & properties except `target`, `targets`, `autoplay`, `extend`, `onfi
 
 ### Transformable CSS Properties
 
-By default the WAAPI only support string values with the unit specified for CSS properties to be animated, however, this is generally a bad Developer Experience, so, `@okikio/animate` does some computations on the given Animation Options, allowing you to use single value unitless `numbers`, `strings`, and `arrays`, as well as removing the need for the `transform` CSS property, as it exposes all the [transform functions as CSS properties](/docs/animate/api/transformable-css-properties.md#css-transform-functions-as-css-properties).
+By default WAAPI only supports string values with the unit specified for CSS properties to be animated, however, this is generally a bad Developer Experience, so, `@okikio/animate` does some computations on the given Animation Options, allowing you to use single value unitless `numbers`, `strings`, and `arrays`, as well as removing the need for the `transform` CSS property, as it exposes all the [transform functions as CSS properties](/docs/animate/api/transformable-css-properties.md#css-transform-functions-as-css-properties).
 
-> [Learn more about Transformable CSS Properties   &#8594;](/docs/animate/api/animation-options-as-methods.md)
+> [Learn more about Transformable CSS Properties   &#8594;](/docs/animate/api/transformable-css-properties.md)
 
 ### Animation Progress and the requestAnimationFrame
 
@@ -116,7 +118,7 @@ animation.on("update", () => {
 Animate.FRAME_RATE = 30; // 30 fps
 ```
 
-> [Read through the Animte request animation frame docs    &#8594;](/docs/animate/api/request-animation-frame.md)
+> [Read through the request animation frame docs    &#8594;](/docs/animate/api/request-animation-frame.md)
 
 ### Promises and Promise-Like
 
@@ -127,7 +129,7 @@ provide, such as `Promise.all`, `Promise.race`, and especially `async/await` whi
 
 > *An interesting quirk of Promises is that even though `Animate` is not a Promise, async/await still work with it because it has a `then`, and `catch`.*
 
-> Read through the [promises doc](/docs/animate/api/promises.md) to learn how to chain animations using promises.
+Read through the [promises doc](/docs/animate/api/promises.md) to learn how to chain animations using promises.
 
 
 ### Events
@@ -177,7 +179,7 @@ animate({
 })
 ```
 
-> Check out a demo of Custom Easing on [Codepen](https://codepen.io/okikio/pen/abJMWNy).
+> Check out a demo of Custom Easing on [Codepen   &#8594;](https://codepen.io/okikio/pen/abJMWNy)
 
 This technique has some benefits and drawbacks, you can learn all about these on the [custom easing doc](/docs/animate/api/custom-easing.md).
 
