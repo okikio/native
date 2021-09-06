@@ -3,7 +3,19 @@ export default {
     remarkPlugins: ['remark-code-titles', 'remark-gfm', 'remark-footnotes', '@silvenon/remark-smartypants'],
     rehypePlugins: [
         ['rehype-slug'],
-        ['rehype-toc', { headings: ['h2', 'h3'] }],
+        ['rehype-wrap', {wrapper: 'div.markdown-body'}],
+        ['rehype-toc', {
+            headings: ['h2', 'h3'],
+            position: "beforeend",
+            customizeTOC(toc) {
+                let div = h("div.toc-sticky", [
+                    h("h4.toc-title", "Table of Contents"),
+                    ...toc.children
+                ])
+                toc.children = [div];
+                return toc;
+            }
+        }],
         ['rehype-autolink-headings', {
             behavior: 'append',
             content: [

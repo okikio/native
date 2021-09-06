@@ -72,6 +72,24 @@ h1, h2, h3,h4,h5,h6 {
     }
 }
 
+main[data-wrapper] {
+    @apply md:grid gap-x-4 container max-w-screen-lg;
+    grid-template-columns: minmax(0, 1fr) 250px;
+}
+
+.toc {
+    @apply md:text-right;
+    
+
+    .toc-sticky {
+        @apply sticky top-24;
+    }
+
+    .toc-title {
+        @apply pb-4;
+    }
+}
+
 // a {
 //     @apply text-blue-500 hover:text-blue-700 underline;
 //     @apply dark:text-blue-400 dark:hover:text-blue-200;

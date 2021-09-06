@@ -47,6 +47,7 @@
         "rehype-slug": "^5.0.0",
         "rehype-toc": "^3.0.2",
         "rehype-urls": "^1.1.1",
+        "rehype-wrap": "^1.0.10",
         "remark-code-titles": "^0.1.2",
         "remark-footnotes": "^4.0.1",
         "remark-gfm": "^2.0.0",
