@@ -82,7 +82,8 @@ main[data-wrapper] {
     
 
     .toc-sticky {
-        @apply sticky top-24;
+        @apply sticky top-24 overflow-y-auto overflow-x-visible;
+        height: calc(100vh - theme("spacing.24"));
     }
 
     .toc-title {
