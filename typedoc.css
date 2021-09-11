@@ -69,12 +69,12 @@ body.light .tsd-panel {
     border-bottom: 1px solid var(--color-panel-divider);
 }
 
-.tsd-panel:is(.tsd-typography, .tsd-index-panel, .tsd-member, .tsd-comment, .tsd-hierarchy) {
+.tsd-panel:is(.tsd-typography, .tsd-index-panel, .tsd-member, .tsd-comment, .tsd-hierarchy, .tsd-type-parameters, .tsd-kind-interface) {
     border: 1px solid var(--color-panel-divider);
     border-radius: 0.65em;
 }
 
-:is(.tsd-typography, .tsd-index-panel, .tsd-member, .tsd-comment, .tsd-hierarchy) p {
+:is(.tsd-typography, .tsd-index-panel, .tsd-member, .tsd-comment, .tsd-hierarchy, .tsd-type-parameters, .tsd-kind-interface) p {
     line-height: 1.85em;
 }
 
