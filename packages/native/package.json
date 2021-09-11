@@ -66,7 +66,7 @@
         "@okikio/manager": "workspace:*"
     },
     "devDependencies": {
-        "typescript": "^4.4.1-rc"
+        "typescript": "^4.4.2"
     },
     "gitHead": "ad422076cdb57d570426f786886129d5bca2f90f"
 }

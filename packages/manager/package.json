@@ -60,12 +60,12 @@
     "homepage": "https://github.com/okikio/native/tree/master/packages/manager#readme",
     "devDependencies": {
         "@okikio/emitter": "workspace:^2.1.8",
-        "esbuild": "^0.12.22",
+        "esbuild": "^0.12.26",
         "esbuild-jest": "^0.5.0",
-        "jest": "^27.0.6",
+        "jest": "^27.1.1",
         "jest-chain": "^1.1.5",
         "jest-extended": "^0.11.5",
-        "typescript": "^4.4.1-rc"
+        "typescript": "^4.4.2"
     },
     "gitHead": "ad422076cdb57d570426f786886129d5bca2f90f"
 }

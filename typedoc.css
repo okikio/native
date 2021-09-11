@@ -1,0 +1,146 @@
+@import url("https://fonts.googleapis.com/css2?family=Lexend:wght@300;600&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Material+Icons&family=Material+Icons+Round&display=block");
+
+:root {
+    --light-color-background: #f8f9fa;
+    --light-color-panel-divider: #dadce0;
+    --light-link-color: #1155cc;
+    --light-external-icon: url(/assets/light-external.svg);
+    --dark-external-icon: url(/assets/dark-external.svg);
+}
+
+pre {
+    border-radius: 6px;
+    padding: 14px;
+}
+
+html,
+body {
+    font-family: "Lexend", "Manrope", "Century Gothic", sans-serif;
+}
+
+@media (prefers-color-scheme: dark) {
+    html {
+        color-scheme: dark;
+    }
+}
+
+body:not(.light) {
+    color-scheme: dark;
+}
+
+body.light {
+    color-scheme: light;
+}
+
+body:not(.light) :is(.tsd-page-title, .tsd-panel) {
+    box-shadow: none;
+}
+
+body.light .tsd-panel {
+    box-shadow: 0 1px 3px 1px rgba(60, 64, 67, 0.15);
+}
+
+.tsd-page-title {
+    border-bottom: 1px solid var(--color-panel-divider);
+}
+
+.tsd-panel:is(.tsd-typography, tsd-index-panel) {
+    border: 1px solid var(--color-panel-divider);
+    border-radius: 0.65em;
+}
+
+.tsd-navigation {
+    position: sticky;
+    top: 60px;
+}
+
+.tsd-panel {
+    padding: 45px 45px;
+}
+
+@media (max-width: 700px) {
+    .tsd-panel {
+        padding: 35px 35px;
+    }
+}
+
+@media (max-width: 500px) {
+    .tsd-panel {
+        padding: 25px 25px;
+    }
+}
+
+:is(.tsd-panel, .tsd-index-panel) > :is(h1, h2, h3) {
+    margin: 1.5em 0px 10px 0px;
+    padding: 0 0 10px 0;
+    font-weight: 600;
+}
+
+.tsd-panel a {
+    white-space: nowrap;
+    text-decoration: underline solid;
+    text-underline-offset: 0.25em;
+}
+
+.tsd-panel a:is([href*="http://"], [href*="https://"]):not([href*="https://gitpod.io/#"]):after
+{
+    display: inline;
+    content: var(--external-icon);
+    stroke: currentColor;
+    margin-left: 0.2rem;
+    margin-right: 0.1rem;
+    opacity: 0.6;
+    transition: all 0.2s 50ms;
+}
+
+.tsd-widget:is(.search, .options, .menu):after {
+    font-family: "Material Icons Round";
+    font-weight: normal;
+    font-style: normal;
+    line-height: 1;
+    letter-spacing: normal;
+    text-transform: none;
+    white-space: nowrap;
+    word-wrap: normal;
+    direction: ltr;
+    -webkit-font-smoothing: antialiased;
+    display: inline-block;
+    font-size: 24px;
+    color: var(--color-toolbar-text);
+    width: 100%;
+    height: 100%;
+
+    position: absolute;
+    text-align: center;
+    display: flex;
+    top: 0;
+    left: 0;
+    align-items: center;
+    justify-content: center;
+}
+
+.tsd-widget.no-caption {
+    color: transparent;
+}
+
+.tsd-widget.no-caption:before {
+    background-image: none;
+    filter: none;
+}
+
+.tsd-widget.search:after {
+    content: "search";
+}
+
+.tsd-widget.options:after {
+    content: "filter_list";
+}
+
+.tsd-widget.menu {
+    display: none;
+}
+
+.tsd-panel > :is(h1, h2, h3) a {
+    text-decoration: none;
+}

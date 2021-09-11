@@ -5,9 +5,14 @@
         "**/*.d.ts",
         "**/@types/*.d.ts"
     ],
-    "packages": ".",
+    "entryPoints": ["."],
+    "entryPointStrategy": "packages",
     "name": "API",
-    "out": "docs/api",
-    "readme": "none",
-    "entryDocument": "index.md"
+    "out": "public/api",
+    "theme": "default",
+    "lightHighlightTheme": "github-light",
+    "darkHighlightTheme": "github-dark",
+    "includeVersion": "true",
+    "readme": "./README.md",
+    "customCss": "./typedoc.css"
 }

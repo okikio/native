@@ -63,8 +63,8 @@
         "@okikio/manager": "workspace:*"
     },
     "devDependencies": {
-        "type-fest": "^2.0.0",
-        "typescript": "^4.4.1-rc"
+        "type-fest": "^2.3.2",
+        "typescript": "^4.4.2"
     },
     "gitHead": "ad422076cdb57d570426f786886129d5bca2f90f"
 }
