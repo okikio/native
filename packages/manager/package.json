@@ -65,7 +65,7 @@
         "jest": "^27.1.1",
         "jest-chain": "^1.1.5",
         "jest-extended": "^0.11.5",
-        "typescript": "^4.4.2"
+        "typescript": "^4.4.3"
     },
     "gitHead": "ad422076cdb57d570426f786886129d5bca2f90f"
 }

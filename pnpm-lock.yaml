@@ -92,10 +92,10 @@ importers:
   packages/animate:
     specifiers:
       type-fest: ^2.3.2
-      typescript: ^4.4.2
+      typescript: ^4.4.3
     devDependencies:
       type-fest: 2.3.2
-      typescript: 4.4.2
+      typescript: 4.4.3
 
   packages/emitter:
     specifiers:
@@ -104,14 +104,14 @@ importers:
       jest: ^27.1.1
       jest-chain: ^1.1.5
       jest-extended: ^0.11.5
-      typescript: ^4.4.2
+      typescript: ^4.4.3
     devDependencies:
       esbuild: 0.12.26
       esbuild-jest: 0.5.0_esbuild@0.12.26
       jest: 27.1.1
       jest-chain: 1.1.5
       jest-extended: 0.11.5
-      typescript: 4.4.2
+      typescript: 4.4.3
 
   packages/manager:
     specifiers:
@@ -121,7 +121,7 @@ importers:
       jest: ^27.1.1
       jest-chain: ^1.1.5
       jest-extended: ^0.11.5
-      typescript: ^4.4.2
+      typescript: ^4.4.3
     devDependencies:
       '@okikio/emitter': link:../emitter
       esbuild: 0.12.26
@@ -129,16 +129,16 @@ importers:
       jest: 27.1.1
       jest-chain: 1.1.5
       jest-extended: 0.11.5
-      typescript: 4.4.2
+      typescript: 4.4.3
 
   packages/native:
     specifiers:
       path-to-regexp: ^6.2.0
-      typescript: ^4.4.2
+      typescript: ^4.4.3
     dependencies:
       path-to-regexp: 6.2.0
     devDependencies:
-      typescript: 4.4.2
+      typescript: 4.4.3
 
 packages:
 
@@ -8752,7 +8752,7 @@ packages:
     dependencies:
       emoji-regex: 9.2.2
       is-fullwidth-code-point: 4.0.0
-      strip-ansi: 7.0.0
+      strip-ansi: 7.0.1
     dev: true
 
   /string_decoder/1.1.1:
@@ -8789,8 +8789,8 @@ packages:
       ansi-regex: 5.0.0
     dev: true
 
-  /strip-ansi/7.0.0:
-    resolution: {integrity: sha512-UhDTSnGF1dc0DRbUqr1aXwNoY3RgVkSWG8BrpnuFIxhP57IqbS7IRta2Gfiavds4yCxc5+fEAVVOgBZWnYkvzg==}
+  /strip-ansi/7.0.1:
+    resolution: {integrity: sha512-cXNxvT8dFNRVfhVME3JAe98mkXDYN2O1l7jmcwMnOslDeESg1rF/OZMtK0nRAhiari1unG5cD4jG3rapUAkLbw==}
     engines: {node: '>=12'}
     dependencies:
       ansi-regex: 6.0.1
@@ -9263,12 +9263,6 @@ packages:
       minimatch: 3.0.4
       shiki: 0.9.10
       typescript: 4.4.3
-    dev: true
-
-  /typescript/4.4.2:
-    resolution: {integrity: sha512-gzP+t5W4hdy4c+68bfcv0t400HVJMMd2+H9B7gae1nQlBzCqvrXX+6GL/b3GAgyTH966pzrZ70/fRjwAtZksSQ==}
-    engines: {node: '>=4.2.0'}
-    hasBin: true
     dev: true
 
   /typescript/4.4.3:

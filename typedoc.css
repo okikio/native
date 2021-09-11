@@ -1,29 +1,19 @@
 @import url("https://fonts.googleapis.com/css2?family=Lexend:wght@300;600&display=swap");
-@import url("https://fonts.googleapis.com/css2?family=Material+Icons&family=Material+Icons+Round&display=block");
+@import url("https://cdn.jsdelivr.net/gh/microsoft/fluentui-system-icons/fonts/FluentSystemIcons-Regular.css");
+/* @import url("https://fonts.googleapis.com/css2?family=Material+Icons&family=Material+Icons+Round&display=block"); */
 
-@font-face {
+/* @font-face {
     font-family: "FluentSystemIcons-Regular";
     src: url("/fonts/FluentSystemIcons-Regular.ttf") format("truetype");
-}
-
-i[class^="icon-"]:before,
-i[class*=" icon-"]:before {
-    font-family: FluentSystemIcons-Regular !important;
-    font-style: normal;
-    font-weight: normal !important;
-    font-variant: normal;
-    text-transform: none;
-    line-height: 1;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-}
+} */
 
 :root {
     --light-color-background: #f8f9fa;
     --light-color-panel-divider: #dadce0;
     --light-link-color: #1155cc;
     --light-external-icon: url(/assets/light-external.svg);
-    --dark-external-icon: url(/assets/dark-external.svg);
+    --dark-external-icon: url(/assets/dark-external.svg);    
+    --dark-color-panel-divider: #47474d;
     --dark-color-menu-divider-focus: #d73a49;
     --dark-color-background: #1b1c1f;
     --dark-color-secondary-background: #2d2f34;
@@ -56,13 +46,32 @@ body.light {
     color-scheme: light;
 }
 
+blockquote {  
+    padding: .2em .8em .2em 1em;
+    border-left: 5px solid gray;
+    margin-bottom: 2.5rem;
+    background-color: var(--color-background);
+}
+
 .tsd-page-title,
 body:not(.light) :is(.tsd-panel) {
     box-shadow: none;
 }
 
+@media (prefers-color-scheme: dark) {
+    .tsd-panel {
+        box-shadow: none;
+    }    
+}
+
 body.light .tsd-panel {
     box-shadow: 0 1px 3px 1px rgba(60, 64, 67, 0.15);
+}
+
+@media (prefers-color-scheme: light) {
+    .tsd-panel {
+        box-shadow: 0 1px 3px 1px rgba(60, 64, 67, 0.15);
+    }    
 }
 
 .tsd-page-title {
@@ -104,8 +113,21 @@ body.light .tsd-panel {
     border-bottom: none;
 }
 
+.tsd-navigation.primary li:not(.tsd-kind-module) {
+    text-decoration: underline solid;
+    text-underline-offset: 0.5em;
+}
+
 .tsd-navigation.secondary {
     transition: top 0.3s;
+}
+
+.tsd-navigation.secondary ul li a {
+    border-radius: 0.25em;
+}
+
+.tsd-navigation.secondary li.focus > a {
+    background-color: var(--color-secondary-background);
 }
 
 .tsd-panel {
@@ -148,18 +170,6 @@ body.light .tsd-panel {
 }
 
 .tsd-widget:is(.search, .options, .menu):after {
-    /* font-family: "Material Icons Round";
-    font-weight: normal;
-    font-style: normal;
-    line-height: 1;
-    letter-spacing: normal;
-    text-transform: none;
-    white-space: nowrap;
-    word-wrap: normal;
-    direction: ltr;
-    -webkit-font-smoothing: antialiased;
-    display: inline-block; */
-
     font-family: FluentSystemIcons-Regular !important;
     font-style: normal;
     font-weight: normal !important;
@@ -193,16 +203,15 @@ body.light .tsd-panel {
 }
 
 .tsd-widget.search:after {
-    /* content: "search"; */
     content: "\f690";
 }
 
 .tsd-widget.options:after {
-    /* content: "filter_list"; */
     content: "\f407";
 }
 
 .tsd-widget.menu {
+    content: "\f561";
     display: none;
 }
 
