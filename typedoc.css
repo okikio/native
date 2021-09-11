@@ -1,17 +1,40 @@
 @import url("https://fonts.googleapis.com/css2?family=Lexend:wght@300;600&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Material+Icons&family=Material+Icons+Round&display=block");
 
+@font-face {
+    font-family: "FluentSystemIcons-Regular";
+    src: url("/fonts/FluentSystemIcons-Regular.ttf") format("truetype");
+}
+
+i[class^="icon-"]:before,
+i[class*=" icon-"]:before {
+    font-family: FluentSystemIcons-Regular !important;
+    font-style: normal;
+    font-weight: normal !important;
+    font-variant: normal;
+    text-transform: none;
+    line-height: 1;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
 :root {
     --light-color-background: #f8f9fa;
     --light-color-panel-divider: #dadce0;
     --light-link-color: #1155cc;
     --light-external-icon: url(/assets/light-external.svg);
     --dark-external-icon: url(/assets/dark-external.svg);
+    --dark-color-menu-divider-focus: #d73a49;
+    --dark-color-background: #1b1c1f;
+    --dark-color-secondary-background: #2d2f34;
 }
 
 pre {
-    border-radius: 6px;
     padding: 14px;
+}
+
+pre, code {
+    border-radius: 6px;
 }
 
 html,
@@ -33,7 +56,8 @@ body.light {
     color-scheme: light;
 }
 
-body:not(.light) :is(.tsd-page-title, .tsd-panel) {
+.tsd-page-title,
+body:not(.light) :is(.tsd-panel) {
     box-shadow: none;
 }
 
@@ -45,14 +69,43 @@ body.light .tsd-panel {
     border-bottom: 1px solid var(--color-panel-divider);
 }
 
-.tsd-panel:is(.tsd-typography, tsd-index-panel) {
+.tsd-panel:is(.tsd-typography, .tsd-index-panel, .tsd-member, .tsd-comment, .tsd-hierarchy) {
     border: 1px solid var(--color-panel-divider);
     border-radius: 0.65em;
 }
 
-.tsd-navigation {
+:is(.tsd-typography, .tsd-index-panel, .tsd-member, .tsd-comment, .tsd-hierarchy) p {
+    line-height: 1.85em;
+}
+
+.menu-highlight {
+    display: grid;
+    grid-auto-rows: minmax(260px, auto) 2fr;
+    padding-top: 50px;
+}
+
+@media (min-width: 901px) and (max-width: 1024px) {
+    html.default .col-menu {
+        width: 33.3333333333%;
+    }
+
+    html.default .tsd-navigation {
+        padding-left: 0;
+    }
+}
+
+.tsd-navigation.primary ul {
     position: sticky;
     top: 60px;
+}
+
+.tsd-navigation.primary :is(ul, li) {
+    border-top: none;
+    border-bottom: none;
+}
+
+.tsd-navigation.secondary {
+    transition: top 0.3s;
 }
 
 .tsd-panel {
@@ -80,11 +133,11 @@ body.light .tsd-panel {
 .tsd-panel a {
     white-space: nowrap;
     text-decoration: underline solid;
-    text-underline-offset: 0.25em;
+    text-underline-offset: 0.2em;
+    line-height: 1.85em;
 }
 
-.tsd-panel a:is([href*="http://"], [href*="https://"]):not([href*="https://gitpod.io/#"]):after
-{
+.tsd-panel a:is([href*="http://"], [href*="https://"]):not([href*="https://gitpod.io/#"]):after {
     display: inline;
     content: var(--external-icon);
     stroke: currentColor;
@@ -95,7 +148,7 @@ body.light .tsd-panel {
 }
 
 .tsd-widget:is(.search, .options, .menu):after {
-    font-family: "Material Icons Round";
+    /* font-family: "Material Icons Round";
     font-weight: normal;
     font-style: normal;
     line-height: 1;
@@ -105,7 +158,17 @@ body.light .tsd-panel {
     word-wrap: normal;
     direction: ltr;
     -webkit-font-smoothing: antialiased;
-    display: inline-block;
+    display: inline-block; */
+
+    font-family: FluentSystemIcons-Regular !important;
+    font-style: normal;
+    font-weight: normal !important;
+    font-variant: normal;
+    text-transform: none;
+    line-height: 1;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+
     font-size: 24px;
     color: var(--color-toolbar-text);
     width: 100%;
@@ -130,11 +193,13 @@ body.light .tsd-panel {
 }
 
 .tsd-widget.search:after {
-    content: "search";
+    /* content: "search"; */
+    content: "\f690";
 }
 
 .tsd-widget.options:after {
-    content: "filter_list";
+    /* content: "filter_list"; */
+    content: "\f407";
 }
 
 .tsd-widget.menu {
@@ -144,3 +209,4 @@ body.light .tsd-panel {
 .tsd-panel > :is(h1, h2, h3) a {
     text-decoration: none;
 }
+
