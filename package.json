@@ -10,7 +10,7 @@
         "typedoc": "rm -r -f public/api/ && typedoc",
         "build": "rm -r -f packages/**/lib/ && node ./build",
         "start": "astro dev",
-        "docs": "astro build",
+        "docs": "pnpm typedoc && astro build",
         "dts": "ultra -r dts",
         "test": "ultra -r test",
         "pre-release": "ultra -r pre-release && pnpm docs && pnpm typedoc",
