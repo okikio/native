@@ -51,7 +51,7 @@ blockquote {
     border-left: 5px solid gray;
     margin-bottom: 2.5rem;
     background-color: var(--color-background);
-    border-radius: 0.25em;
+    border-radius: 0.45em;
 }
 
 .tsd-page-title,
