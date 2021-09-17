@@ -75,6 +75,10 @@ body.light .tsd-panel {
     }    
 }
 
+.tsd-page-toolbar {
+    z-index: 1025;
+}
+
 .tsd-page-title {
     border-bottom: 1px solid var(--color-panel-divider);
 }
