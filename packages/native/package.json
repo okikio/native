@@ -24,7 +24,8 @@
     "main": "src/api.ts",
     "directories": {
         "lib": "./lib",
-        "src": "./src"
+        "src": "./src",
+        "@types": "./@types"
     },
     "files": [
         "lib",

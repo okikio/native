@@ -24,7 +24,8 @@
     "main": "src/api.ts",
     "directories": {
         "lib": "./lib",
-        "src": "./src"
+        "src": "./src",
+        "@types": "./@types"
     },
     "files": [
         "lib",
@@ -63,7 +64,7 @@
         "@okikio/manager": "workspace:*"
     },
     "devDependencies": {
-        "type-fest": "^2.3.2",
+        "type-fest": "^2.3.4",
         "typescript": "^4.4.3"
     },
     "gitHead": "ad422076cdb57d570426f786886129d5bca2f90f"

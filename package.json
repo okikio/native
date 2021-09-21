@@ -55,9 +55,9 @@
         "rollup-plugin-bundle-size": "^1.0.3",
         "rollup-plugin-esbuild": "^4.5.0",
         "rollup-plugin-terser": "^7.0.2",
-        "sass": "^1.41.1",
+        "sass": "^1.42.0",
         "tailwindcss": "^2.2.15",
-        "typedoc": "0.22.3",
+        "typedoc": "0.22.4",
         "typedoc-plugin-mdn-links": "^1.0.4",
         "typescript": "~4.4.3",
         "ultra-runner": "^3.10.5"
