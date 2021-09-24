@@ -1,6 +1,6 @@
 # @okikio/animate
 
-[NPM](https://www.npmjs.com/package/@okikio/animate) <span style="padding-inline: 1rem">|</span> [API Guide](/docs/animate/api/index.md) <span style="padding-inline: 1rem">|</span> [Licence](/packages/animate/LICENSE) 
+[NPM](https://www.npmjs.com/package/@okikio/animate) <span style="padding-inline: 1rem">|</span> [Github](https://github.com/okikio/native/tree/beta/packages/animate#readme) <span style="padding-inline: 1rem">|</span> [API Guide](/docs/animate/api/index.md) <span style="padding-inline: 1rem">|</span> [Licence](/packages/animate/LICENSE)  
 
 [@okikio/animate](/docs/animate/index.md) is a js animation library for the modern web. It was inspired by [animateplus](https://github.com/bendc/animateplus) and [animejs](https://animejs.com/), and is focused on performance and ease of use. It utilizes the Web Animation API (WAAPI) to deliver fluid animations at a *semi-small* size, in total it weighs **~11.27 KB** (minified and gzipped). Most devs will only really be using a few of `@okiko/animate`'s features once at a time, so the actual minimum usable [treeshakeable](https://developer.mozilla.org/en-US/docs/Glossary/Tree_shaking) file size is **~7.07 KB** (minified and gzipped).
 
