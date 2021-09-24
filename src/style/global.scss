@@ -109,7 +109,7 @@ main ul {
     @apply md:text-right;
 
     .toc-sticky {
-        @apply sticky py-24 top-0 overflow-y-auto overflow-x-visible;
+        @apply sticky pb-24 top-0 overflow-y-auto overflow-x-visible;
         height: 100vh;
 
         @supports (height: 100dvh) {
