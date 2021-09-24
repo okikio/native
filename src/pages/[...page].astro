@@ -33,17 +33,18 @@ export async function getStaticPaths() {
 }
 
 const {content} = Astro.props;
-let pathArr = Astro.request.url.pathname.split("/");
+let pathArr = Astro.request.params.page.split("/");
 ---
 
 <BaseLayout>
   <main data-wrapper>
     <p>
-      <span>Home</span>
+      <span>Home / </span>
       {pathArr.map((path, i) => {
-        return `<a href="${pathArr.slice(0, i).join("/")}">${path}</a>` 
+        return `<a href="/${pathArr.slice(0, i + 1).join("/")}">${path}</a>` 
       }).join(" / ")}
     </p> 
+
     <article main-content>
       <Markdown content={content} />
     </article> 
