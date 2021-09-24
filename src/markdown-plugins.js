@@ -45,6 +45,7 @@ const __dirname = path.resolve(path.dirname(""));
 // console.log(fs.existsSync(path.join(__dirname, `/docs/animate`)));
 function redirectDocsURL(url) {
     if (/^\/docs/.test(url.path)) {
+        if (/^\/docs\/demo/.test(url.path)) return `https://github.com/okikio/native/tree/master` + url.path.replace(/^\/docs\//, "/");
        // if (fs.existsSync(path.join(__dirname, url.path))) {
            return url.path.replace(/^\/docs\//, "/").replace(/\.md$/, "");
         // } else {
