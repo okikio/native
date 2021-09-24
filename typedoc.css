@@ -220,6 +220,10 @@ body.light .tsd-panel {
     content: "\f561";
     /* display: none; */
 }
+.tsd-widget.menu {
+    /* content: "\f561"; */
+    display: none;
+}
 
 .tsd-panel > :is(h1, h2, h3) a {
     text-decoration: none;
