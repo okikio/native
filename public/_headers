@@ -10,7 +10,6 @@
   Content-Security-Policy: default-src 'self'; font-src 'self' https://fonts.gstatic.com https://cdn.jsdelivr.net; style-src 'self' https://fonts.googleapis.com/ https://cdn.jsdelivr.net 'unsafe-inline'; img-src 'self' https://gitpod.io/ data:; script-src 'self' 'unsafe-eval'; connect-src 'self' https:; block-all-mixed-content; upgrade-insecure-requests; base-uri 'self'; object-src 'none'; worker-src 'self'; manifest-src 'self'; media-src 'self' https://res.cloudinary.com/; form-action 'self'; frame-ancestors 'self' https:;
   Permissions-Policy: geolocation=(), microphone=(), usb=(), sync-xhr=(self), camera=(), interest-cohort=()
   Link: <https://fonts.gstatic.com/s/lexend/v7/~CggKBkxleGVuZBAHIAU=.woff2>; rel=preload; as=font; type=font/woff2; crossorigin=anonymous
-  Link: <https://fonts.gstatic.com/s/materialiconsround/v78/LDItaoyNOAY6Uewc665JcIzCKsKc_M9flwmP.woff2>; rel=preload; as=font; type=font/woff2; crossorigin=anonymous
   
 /api/*
   Link: <https://cdn.jsdelivr.net/gh/microsoft/fluentui-system-icons/fonts/FluentSystemIcons-Regular.css>; rel=preload; as=style;
