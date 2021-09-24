@@ -109,6 +109,12 @@ body.light .tsd-panel {
     }
 }
 
+@media (max-width: 900px) {
+    html .col-menu.menu-sticky-wrap {
+        transform: translate(0, 0);
+    }
+}
+
 .tsd-navigation.primary ul {
     position: sticky;
     top: 60px;
@@ -215,14 +221,18 @@ body.light .tsd-panel {
 .tsd-widget.options:after {
     content: "\f407";
 }
+.tsd-widget.menu {
+    position: relative;
+    display: inline-block;
+    height: 40px;
+    vertical-align: bottom;
+    /* content: "\f561"; */
+    /* display: none; */
+}
 
 .tsd-widget.menu:after {
     content: "\f561";
     /* display: none; */
-}
-.tsd-widget.menu {
-    /* content: "\f561"; */
-    display: none;
 }
 
 .tsd-panel > :is(h1, h2, h3) a {
