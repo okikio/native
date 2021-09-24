@@ -62,7 +62,7 @@ function redirectDocsURL(url) {
                 "https://github.com/okikio/native/tree/beta/packages"
             );
         }
+    } else if (/LICENSE$/i.test(url.path)) {
+        return "https://github.com/okikio/native/tree/beta/LICENSE";
     }
-
-    return `https://github.com/okikio/native/tree/beta` + url.path;
 }
