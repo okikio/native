@@ -35,7 +35,7 @@ A framework to build custom dynamic web experiences around. It acts as a very li
   * [bundle.js.org](https://bundle.js.org)
   * Your site here...
   
-> [View a demo &#8594;](/docs/demo/)
+> [View a demo &#8594;](https://okikio.github.io/native/demo)
 
 
 ## API Documentation
