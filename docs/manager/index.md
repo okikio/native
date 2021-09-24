@@ -7,7 +7,7 @@ A superset of the Map class, it extends the Map classes capabilities with awesom
 
 ## Getting started
 
-The `Manager` class makes Maps easier to use, as well as adding 7 methods, **getMap**, **last**, **methodCall**, **add**, **remove**, **keys** and **values**, (**methodCall** is a seperate method from the `Manager` class, so treeshaking can get rid of it, if it isn't need).
+The `Manager` class makes Maps easier to use, as well as adding 7 methods, **getMap**, **last**, **methodCall**, **add**, **remove**, **keys** and **values**, (**methodCall** is a separate method from the `Manager` class, so treeshaking can get rid of it, if it isn't need).
 
 > _**Note**: the behavior of the keys and values methods are slightly modified, to return an Array of keys/values instead of an iterator. You can get the keys and values original effects by using `.getMap().keys()` or `.getMap().values()`._
 

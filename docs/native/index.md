@@ -458,7 +458,7 @@ When using PJAX on sites you may want to use an animation library to transition 
 
 [^1]: A “shameless plug” is a term often used on the Internet to refer to a time when someone tries to include (or “plug”) some information that helps advance their own selfish interests. And that information is usually a little bit off-topic.
 
-By default `@okikio/native` doesn't come bundled with [@okikio/animate](https://www.npmjs.com/package/@okikio/animate), [@okikio/emitter](https://www.npmjs.com/package/@okikio/emitter), and [@okikio/manager](https://www.npmjs.com/package/@okikio/manager). Theses packages are all part of the [native initiative](https://github.com/okikio/native), together with `@okikio/native`, but to reduce package size I seperated them.
+By default `@okikio/native` doesn't come bundled with [@okikio/animate](https://www.npmjs.com/package/@okikio/animate), [@okikio/emitter](https://www.npmjs.com/package/@okikio/emitter), and [@okikio/manager](https://www.npmjs.com/package/@okikio/manager). Theses packages are all part of the [native initiative](https://github.com/okikio/native), together with `@okikio/native`, but to reduce package size I separated them.
 
 ```ts
 import { App } from "@okikio/native";

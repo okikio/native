@@ -438,7 +438,7 @@ The example above should also work to explain how to use the `AdvancedManager` A
 
 ### **Service**
 
-`Service` does everything, it is what enables, `PJAX`, `HistoryManager`, `Router`, `PageManager`, and `TransitionManager` to function, even though they are seperate from the `App` class.
+`Service` does everything, it is what enables, `PJAX`, `HistoryManager`, `Router`, `PageManager`, and `TransitionManager` to function, even though they are separate from the `App` class.
 
 `Service` is an extention of `ManagerItem`, that adds extra life-cycle methods for controlling specific kinds of actions that require js.
 
