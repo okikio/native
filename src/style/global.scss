@@ -102,10 +102,10 @@ main ul {
 }
 
 .toc {
-    @apply md:text-right;
+    @apply md:text-right pt-48;
 
     .toc-sticky {
-        @apply sticky pb-24 top-0 overflow-y-auto overflow-x-visible;
+        @apply sticky top-0 overflow-y-auto pr-2 overflow-x-visible;
         height: 100vh;
 
         @supports (height: 100dvh) {
@@ -114,7 +114,8 @@ main ul {
     }
 
     .toc-title {
-        @apply pb-4;
+        @apply pb-4 text-3xl uppercase;
+
     }
 
     a {
