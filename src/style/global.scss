@@ -8,7 +8,8 @@
 body {
     @apply bg-white text-black;
     @apply dark:bg-black dark:text-label;
-    @apply font-manrope;
+    @apply font-lexend;
+    font-weight: 300;
     // font-size: 1rem;
     line-height: 1.5;
 }
@@ -23,6 +24,11 @@ body {
 
 blockquote {
     @apply rounded-lg;
+    background-color: theme("colors.blue.100");
+
+    @media (prefers-color-scheme: dark) {
+        background-color: $color-bg-alt;
+    }
 }
 
 .icon {
@@ -50,7 +56,12 @@ blockquote {
     width: 1em;
 }
 
-h1, h2, h3,h4,h5,h6 {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
     .icon {
         visibility: hidden;
         font-size: 0.75em;
@@ -62,24 +73,22 @@ h1, h2, h3,h4,h5,h6 {
 
     &:hover .icon {
         visibility: visible;
-        border-bottom-color: transparent
+        border-bottom-color: transparent;
     }
-    
 
-    a:is(:hover,:focus) {
+    a:is(:hover, :focus) {
         visibility: visible;
-        border-bottom-color: transparent
+        border-bottom-color: transparent;
     }
 }
 
-main[data-wrapper] {
+article[main-content] {
     @apply md:grid gap-x-4 container max-w-screen-lg;
     grid-template-columns: minmax(0, 1fr) 250px;
 }
 
 .toc {
     @apply md:text-right;
-    
 
     .toc-sticky {
         @apply sticky top-24 overflow-y-auto overflow-x-visible;
@@ -88,6 +97,10 @@ main[data-wrapper] {
 
     .toc-title {
         @apply pb-4;
+    }
+
+    a {
+        @apply no-underline;
     }
 }
 

@@ -7,12 +7,14 @@
         <meta name="description" content="">
         <meta name="color-scheme" content="dark light">
         <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="viewport" content="initial-scale=1, viewport-fit=cover">
         <link rel="icon" type="image/svg+xml" href="/assets/favicon.svg">
 
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com">
 
-        <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@500;600;700;800&amp;display=swap" rel="stylesheet">
+        <!-- <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@500;600;700;800&amp;display=swap" rel="stylesheet"> -->
+        <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;500;600;700&display=swap" rel="stylesheet">
         <link href="https://fonts.googleapis.com/css2?family=Material+Icons+Round&amp;family=Material+Icons&amp;display=block" rel="stylesheet">
 
         <link rel="stylesheet" href={Astro.resolve("../style/global.css")}>
@@ -23,6 +25,7 @@
         <!--+big-transition-->
         <div class="navbar-offset"></div>
         <main data-wrapper>
+            <slot name="breadcrum" />
             <slot />
         </main>
         <!--+footer-->

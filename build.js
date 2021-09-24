@@ -110,8 +110,9 @@ export async function build() {
                     color: true,
                     bundle: true,
                     minify: true,
+                    treeShaking: true,
 
-                    sourcemap: false,
+                    sourcemap: true,
                     platform: "browser",
                     tsconfig: "./tsconfig.json",
                 }),
