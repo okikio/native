@@ -1,11 +1,27 @@
 @import url("https://fonts.googleapis.com/css2?family=Lexend:wght@400;500;700&display=swap");
-@import url("https://cdn.jsdelivr.net/gh/microsoft/fluentui-system-icons/fonts/FluentSystemIcons-Regular.css");
+/* @import url("https://cdn.jsdelivr.net/gh/microsoft/fluentui-system-icons/fonts/FluentSystemIcons-Regular.css"); */
 /* @import url("https://fonts.googleapis.com/css2?family=Material+Icons&family=Material+Icons+Round&display=block"); */
 
-/* @font-face {
+@font-face {
     font-family: "FluentSystemIcons-Regular";
-    src: url("/fonts/FluentSystemIcons-Regular.ttf") format("truetype");
-} */
+    src: url("/fonts/FluentSystemIcons-Regular.ttf?996016c73e71cbeaf86416d20483c9db") format("truetype");
+}
+
+.icon:before {
+    font-family: FluentSystemIcons-Regular !important;
+    font-style: normal;
+    font-weight: normal !important;
+    font-variant: normal;
+    text-transform: none;
+    line-height: 1;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-link:before {
+    content: "\f4e5";
+}
+
 
 :root {
     --light-color-background: #f8f9fa;
@@ -111,6 +127,7 @@ body.light .tsd-panel {
 
 @media (max-width: 900px) {
     html .col-menu.menu-sticky-wrap {
+    grid-template-rows: auto 1fr;
         transform: translate(0, 0);
     }
 }
@@ -171,7 +188,17 @@ body.light .tsd-panel {
     line-height: 1.85em;
 }
 
-.tsd-panel a:is([href*="http://"], [href*="https://"]):not([href*="https://gitpod.io/#"]):after {
+/* .tsd-panel a:is([href*="http://"], [href*="https://"]):not([href*="https://gitpod.io/#"]):after {
+    display: inline;
+    content: var(--external-icon);
+    stroke: currentColor;
+    margin-left: 0.2rem;
+    margin-right: 0.1rem;
+    opacity: 0.6;
+    transition: all 0.2s 50ms;
+} */
+
+.tsd-panel a[target]:not([href*="https://gitpod.io/#"]):after {
     display: inline;
     content: var(--external-icon);
     stroke: currentColor;
@@ -221,11 +248,12 @@ body.light .tsd-panel {
 .tsd-widget.options:after {
     content: "\f407";
 }
+
 .tsd-widget.menu {
     position: relative;
-    display: inline-block;
+    /* display: inline-block; */
     height: 40px;
-    vertical-align: bottom;
+    vertical-align: bottom; 
     /* content: "\f561"; */
     /* display: none; */
 }

@@ -30,7 +30,7 @@ export default {
             "rehype-autolink-headings",
             {
                 behavior: "append",
-                content: [h("span.icon", "link")],
+                content: [h("i.icon.icon-link")],
             },
         ],
         ["rehype-add-classes", { "h1,h2,h3": "title" }],
@@ -42,15 +42,19 @@ export default {
 };
 
 const __dirname = path.resolve(path.dirname(""));
-// console.log(fs.existsSync(path.join(__dirname, `/docs/animate`)));
-function redirectDocsURL(url) {
+export function redirectDocsURL(url) {
     if (/^\/docs/.test(url.path)) {
-        if (/^\/docs\/demo/.test(url.path)) return `https://github.com/okikio/native/tree/master` + url.path.replace(/^\/docs\//, "/");
-       // if (fs.existsSync(path.join(__dirname, url.path))) {
-           return url.path.replace(/^\/docs\//, "/").replace(/\.md$/, "");
-        // } else {
-         //   return `https://github.com/okikio/native/tree/beta` + url.path;
-        // }
+        if (/(^\/docs\/demo)/.test(url.path))
+            return (
+                `https://github.com/okikio/native/tree/master` +
+                url.path.replace(/^\/docs\/demo/, "/build").replace("scss", "sass")
+            );
+        return url.path.replace(/^\/docs\//, "/").replace(/\.md$/, "");
+    } else if (/^\/?demo/.test(url.path)) {
+            return (
+                `https://github.com/okikio/native/tree/master` +
+                url.path.replace(/\/?demo/, "/build").replace("scss", "sass")
+            );
     } else if (/\.md$/.test(url.path)) {
         return url.path.replace(/\.md$/, "");
     } else if (/^\/packages/.test(url.path)) {

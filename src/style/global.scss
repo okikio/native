@@ -2,6 +2,27 @@
 @tailwind components;
 @tailwind utilities;
 
+
+@font-face {
+    font-family: "FluentSystemIcons-Regular";
+    src: url("/fonts/FluentSystemIcons-Regular.ttf?996016c73e71cbeaf86416d20483c9db") format("truetype");
+}
+
+.icon:before {
+    font-family: FluentSystemIcons-Regular !important;
+    font-style: normal;
+    font-weight: normal !important;
+    font-variant: normal;
+    text-transform: none;
+    line-height: 1;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-link:before {
+    content: "\f4e5";
+}
+
 @import "./base.scss";
 @import "./components/hightlightjs";
 
@@ -31,30 +52,30 @@ blockquote {
     }
 }
 
-.icon {
-    -webkit-font-feature-settings: "liga" off, "dlig";
-    -moz-font-feature-settings: "liga=0, dlig=1";
-    font-feature-settings: "liga", "dlig";
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-    text-rendering: optimizeLegibility;
-    font-family: "Material Icons Round", "Material Icons";
-    vertical-align: middle;
-    letter-spacing: normal;
-    display: inline-block;
-    text-decoration: none;
-    text-transform: none;
-    white-space: nowrap;
-    font-weight: normal;
-    position: relative;
-    font-style: normal;
-    word-wrap: normal;
-    font-size: 24px;
-    line-height: 1;
-    direction: ltr;
-    height: 1em;
-    width: 1em;
-}
+// .icon {
+//     -webkit-font-feature-settings: "liga" off, "dlig";
+//     -moz-font-feature-settings: "liga=0, dlig=1";
+//     font-feature-settings: "liga", "dlig";
+//     -webkit-font-smoothing: antialiased;
+//     -moz-osx-font-smoothing: grayscale;
+//     text-rendering: optimizeLegibility;
+//     font-family: "Material Icons Round", "Material Icons";
+//     vertical-align: middle;
+//     letter-spacing: normal;
+//     display: inline-block;
+//     text-decoration: none;
+//     text-transform: none;
+//     white-space: nowrap;
+//     font-weight: normal;
+//     position: relative;
+//     font-style: normal;
+//     word-wrap: normal;
+//     font-size: 24px;
+//     line-height: 1;
+//     direction: ltr;
+//     height: 1em;
+//     width: 1em;
+// }
 
 h1,
 h2,
