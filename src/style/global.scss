@@ -82,8 +82,12 @@ h6 {
     }
 }
 
+main[data-wrapper] {
+    @apply  container max-w-screen-lg;
+}
+
 article[main-content] {
-    @apply md:grid gap-x-4 container max-w-screen-lg;
+    @apply md:grid gap-x-4;
     grid-template-columns: minmax(0, 1fr) 250px;
 }
 
