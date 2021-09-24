@@ -216,9 +216,9 @@ body.light .tsd-panel {
     content: "\f407";
 }
 
-.tsd-widget.menu {
+.tsd-widget.menu:after {
     content: "\f561";
-    display: none;
+    /* display: none; */
 }
 
 .tsd-panel > :is(h1, h2, h3) a {
