@@ -1,6 +1,6 @@
 # @okikio/native
 
-[NPM](https://www.npmjs.com/package/@okikio/native) <span style="padding-inline: 1rem">|</span> [API Guide](/docs/native/api.md) <span style="padding-inline: 1rem">|</span> [Licence](/packages/native/LICENSE) 
+[NPM](https://www.npmjs.com/package/@okikio/native) <span style="padding-inline: 1rem">|</span> [Github](https://github.com/okikio/native/tree/beta/packages/native#readme) <span style="padding-inline: 1rem">|</span> [API Guide](/docs/native/api.md) <span style="padding-inline: 1rem">|</span> [Licence](/packages/native/LICENSE) 
 
 `@okikio/native` is a js framework for creating amazing web experience through composable services, it acts as a sort of guideline on how to create great web experiences that integrate into the system in a way that feels cohesive and natural, in total it weighs **~7.21 KB** (minified & gzipped).
 

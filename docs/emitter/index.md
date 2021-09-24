@@ -1,6 +1,6 @@
 # @okikio/emitter
 
-[NPM](https://www.npmjs.com/package/@okikio/emitter) <span style="padding-inline: 1rem">|</span> [API Guide](/docs/emitter/api.md) <span style="padding-inline: 1rem">|</span> [Licence](/packages/emitter/LICENSE) 
+[NPM](https://www.npmjs.com/package/@okikio/emitter) <span style="padding-inline: 1rem">|</span> [Github](https://github.com/okikio/native/tree/beta/packages/emitter#readme) <span style="padding-inline: 1rem">|</span> [API Guide](/docs/emitter/api.md) <span style="padding-inline: 1rem">|</span> [Licence](/packages/emitter/LICENSE) 
 
 A small Event Emitter written in typescript with performance and ease of use in mind, it weighs **~834 B** (minified and gzipped).
 

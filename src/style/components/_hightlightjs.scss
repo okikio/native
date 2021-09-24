@@ -1,5 +1,5 @@
 code {
-    @apply rounded-lg border border-gray-200 dark:border-transparent;
+    @apply border-2 border-gray-500 dark:border-gray-500;
     // shadow-lg
 }
 
@@ -7,12 +7,15 @@ code {
     color: #24292e;
     background: #fff;
 
-    @apply px-2 py-2 rounded-xl;
+    @apply px-2 py-1 rounded-lg;
     font-family: Consolas, "Courier New", monospace;
     font-weight: normal;
     font-size: 14px;
     font-feature-settings: "liga" 0, "calt" 0;
     line-height: 19px;
+    
+    font-weight: 600;
+    @apply leading-5;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -23,9 +26,11 @@ code {
 }
 
 pre code {
+    @apply rounded-lg;
     display: block;
     overflow-x: auto;
     padding: 15px;
+    line-height: 19px;
 }
 
 /*!

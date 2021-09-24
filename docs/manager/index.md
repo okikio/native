@@ -1,6 +1,6 @@
 # @okikio/manager
 
-[NPM](https://www.npmjs.com/package/@okikio/manager) <span style="padding-inline: 1rem">|</span> [API Guide](/docs/manager/api.md) <span style="padding-inline: 1rem">|</span> [Licence](/packages/manager/LICENSE) 
+[NPM](https://www.npmjs.com/package/@okikio/manager) <span style="padding-inline: 1rem">|</span> [Github](https://github.com/okikio/native/tree/beta/packages/manager#readme) <span style="padding-inline: 1rem">|</span> [API Guide](/docs/manager/api.md) <span style="padding-inline: 1rem">|</span> [Licence](/packages/manager/LICENSE) 
 
 A superset of the Map class, it extends the Map classes capabilities with awesome new features; it weighs **~325 B** (minified and gzipped).
 
