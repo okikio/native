@@ -36,15 +36,16 @@ const {content} = Astro.props;
 let pathArr = Astro.request.url.pathname.split("/");
 ---
 
-<>
-  <BaseLayout>
-    <p name="breadcrum">
+<BaseLayout>
+  <main data-wrapper>
+    <p>
+      <span>Home</span>
       {pathArr.map((path, i) => {
         return `<a href="${pathArr.slice(0, i).join("/")}">${path}</a>` 
       }).join(" / ")}
-    </p>
+    </p> 
     <article main-content>
       <Markdown content={content} />
-    </article>
-  </BaseLayout>
-</>
+    </article> 
+  </main>
+</BaseLayout>

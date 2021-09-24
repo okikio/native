@@ -7,7 +7,7 @@ code {
     color: #24292e;
     background: #fff;
 
-    @apply px-1 py-0.5 rounded-xl;
+    @apply px-2 py-2 rounded-xl;
     font-family: Consolas, "Courier New", monospace;
     font-weight: normal;
     font-size: 14px;
@@ -16,7 +16,7 @@ code {
 }
 
 @media (prefers-color-scheme: dark) {
-    .dark code {
+    code {
         color: #adbac7;
         background: #22272e;
     }

@@ -91,6 +91,13 @@ article[main-content] {
     grid-template-columns: minmax(0, 1fr) 250px;
 }
 
+main ul {
+    list-style-type: disc;
+    li {
+        margin-bottom: 0.2em;
+    }
+}
+
 .toc {
     @apply md:text-right;
 
