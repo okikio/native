@@ -39,7 +39,7 @@ let pathArr = Astro.request.params.page.split("/");
 <BaseLayout>
   <main data-wrapper>
     <p>
-      <span><a href="/">Home / </a></span>
+      <span><a href="/">Home</a>{ pathArr.length ? " / " : "" }</span>
       {pathArr.map((path, i) => {
         return `<a href="/${pathArr.slice(0, i + 1).join("/")}">${path}</a>` 
       }).join(" / ")}

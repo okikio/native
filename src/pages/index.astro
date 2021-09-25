@@ -1,0 +1,21 @@
+---
+// import { Markdown } from 'astro/components';
+import Markdown from "~/components/Markdown";
+import BaseLayout from "~/layouts/BaseLayout";
+
+const content = Astro.fetchContent('../../README.md')[0].astro.source;
+// let pathArr = Astro.request.url.pathname.split("/");
+// console.log(content)
+---
+
+<BaseLayout>
+  <main data-wrapper>
+    <p>
+      <span><a href="/">Home</a> / </span>
+    </p> 
+
+    <article main-content>
+      <Markdown content={content} />
+    </article> 
+  </main>
+</BaseLayout>
