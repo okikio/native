@@ -1,28 +1,28 @@
 # native
 
-An initiative which aims to make it easy to create complex, light-weight, and performant web applications using modern js. The initiative is a monorepo with 4 smaller packages within it, they are [@okikio/manager](/packages/manager#readme), [@okikio/emitter](/packages/emitter#readme), [@okikio/animate](/packages/animate#readme), and [@okikio/native](/packages/native#readme).
+An initiative which aims to make it easy to create complex, light-weight, and performant web applications using modern js. The initiative is a monorepo with 4 smaller packages within it, they are [@okikio/manager](/docs/manager/index.md), [@okikio/emitter](/docs/emitter/index.md), [@okikio/animate](/docs/animate/index.md), and [@okikio/native](/docs/native/index.md).
 
 
-## [@okikio/manager](/packages/manager#readme)
+## [@okikio/manager](/docs/manager/index.md)
 
 A superset of the Map class, it extends the Map classes capabilities with awesome new features, and relieves some of the inconvient quirks of the Map class.
 
 [Dobumentation](/docs/manager/index.md) <span style="padding-inline: 1rem">|</span> [NPM](https://www.npmjs.com/package/@okikio/manager)
 
 
-## [@okikio/emitter](/packages/emitter#readme)
+## [@okikio/emitter](/docs/emitter/index.md)
 
 A small Event Emitter written in typescript with performance and ease of use in mind.
 
 [Dobumentation](/docs/emitter/index.md) <span style="padding-inline: 1rem">|</span> [NPM](https://www.npmjs.com/package/@okikio/emitter)
 
-## [@okikio/animate](/packages/animate#readme)
+## [@okikio/animate](/docs/animate/index.md)
 
 An animation library for the modern web. Inspired by animate plus, and animejs, it is a Javascript animation library focused on performance and ease of use. It utilizes the Web Animation API (WAAPI) to deliver fluid animations at a *semi-small* size.
 
 [Dobumentation](/docs/animate/index.md) <span style="padding-inline: 1rem">|</span> [NPM](https://www.npmjs.com/package/@okikio/animate)
 
-## [@okikio/native](/packages/native#readme)
+## [@okikio/native](/docs/native/index.md)
 
 A framework to build custom dynamic web experiences around. It acts as a very light weight to build complex web apps, ranging from PJAX based sites to other Single Page Applications (SPA) (React, Vue, etc...) based sites and web apps.
 
@@ -66,7 +66,7 @@ If there is something I missed, a mistake, or a feature you would like added ple
 
 > ***Note**: All package in the `native` initiative are built for ES2020, This project expects the user to use a build tool to support older versions of browsers, the idea being most people are using evergreen browsers, so, why are web developers piling on polyfill code that most users don't need. I suggest `esbuild`, `rollup`, `typescript` [^1], or `webpack` for bundling the library, and for polyfills `babel` or `polyfill.io`.*
 
-[^1]: **I have found typescript to be the best method for bundling for older browsers e.g. IE11. I only suggest you use `babel` for polyfilling `Promise`, `fetch`, etc...*
+[^1]: - *I have found typescript to be the best method for bundling for older browsers e.g. IE11. I only suggest you use `babel` for polyfilling `Promise`, `fetch`, etc...* 
 
 I suggest using [bundle.js.org](https://bundle.js.org), if you would like to quickly bundle the package online or check the size of your final bundle.
 

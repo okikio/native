@@ -4,7 +4,7 @@
   X-XSS-Protection: 1; mode=block
   Referrer-Policy: strict-origin-when-cross-origin
   Strict-Transport-Security: max-age=63072000; includeSubDomains; preload
-  Cache-Control: max-age=360, stale-while-revalidate=480, public
+  Cache-Control: max-age=1360, stale-while-revalidate=480, public
   Accept-CH: DPR, Viewport-Width, Width
   X-UA-Compatible: IE=edge
   Content-Security-Policy: default-src 'self'; font-src 'self' https://fonts.gstatic.com; style-src 'self' https://fonts.googleapis.com/ 'unsafe-inline'; img-src 'self' https://gitpod.io/ data:; script-src 'self' 'unsafe-eval'; connect-src 'self' https:; block-all-mixed-content; upgrade-insecure-requests; base-uri 'self'; object-src 'none'; worker-src 'self'; manifest-src 'self'; media-src 'self' https://res.cloudinary.com/; form-action 'self'; frame-ancestors 'self' https:;
@@ -17,15 +17,15 @@
   Content-Type: text/css
 
 /*.ttf
-  Cache-Control: public, max-age=31536000, immutable
+  Cache-Control: public, max-age=31536000, stale-while-revalidate=480
   Content-Type: font/ttf
 
 /*.js
-  Cache-Control: public, max-age=31536000, immutable
+  Cache-Control: public, max-age=604800, stale-while-revalidate=480
   Content-Type: text/javascript
 
 /js/theme.min.js
-  Cache-Control: public, max-age=31536000, immutable
+  Cache-Control: public, max-age=31536000, stale-while-revalidate=2480
   Content-Type: text/javascript
 
 /manifest.json
@@ -33,8 +33,8 @@
   Content-Type: application/manifest+json
 
 /assets/*
-  Cache-Control: public, max-age=31536000, immutable
+  Cache-Control: public, max-age=31536000, stale-while-revalidate=23480
 
 /*.svg
-  Cache-Control: public, max-age=31536000, immutable
+  Cache-Control: public, max-age=31536000, stale-while-revalidate=23480
   Content-Type: image/svg+xml
