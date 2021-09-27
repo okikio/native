@@ -744,7 +744,7 @@ export class Animate {
             }, getOption("extend") ?? {});
         };
 
-        // This sets good defaults for situations where no targets are given e.g. Timeline's mainAnimateInstance
+        // This sets good defaults for situations where no targets are given e.g. Queue's mainAnimateInstance
         // If the total number of targets is zero or less, it means there not values in  `arrOfComputedOptions`
         // So, set the values for `totalDuration`, `minDelay`, `maxSpeed`, etc... to the options directly
         if (this.targets.size == 0) {
@@ -792,9 +792,7 @@ export class Animate {
             if (computedOptions.iterations === true)
                 computedOptions.iterations = Infinity;
 
-            // Add timelineOffset to delay, this is future proofing;
-            // if you want to create a custom timeline similar to animejs this will help you
-            // I don't intend to make a timeline function for this project
+            // Add timelineOffset to delay, this is future proofing, it's what allows the Queue class to act like animejs's timeline functions
             let {
                 timelineOffset,
                 speed,

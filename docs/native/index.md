@@ -21,7 +21,27 @@ The `@okikio/native` package achieves performance, high efficiency, and a natura
 
 ## Installation
 
-You can install [@okikio/native](/docs/native/index.md) from [npm](https://www.npmjs.com/package/@okikio/native) via `npm i @okikio/native`, `pnpm i @okikio/native` or `yarn add @okikio/native`.
+You can install [@okikio/native](/docs/native/index.md) from [npm](https://www.npmjs.com/package/@okikio/native) via 
+
+
+```bash
+npm i @okikio/native
+```
+
+<details>
+<summary>Others</summary>
+
+```bash
+yarn add @okikio/native
+```
+or
+```bash
+pnpm i @okikio/native
+```
+</details>
+
+<br/>
+
 
 You can use `@okikio/native` on the web via:
 

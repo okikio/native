@@ -10,7 +10,7 @@ Returns a specified element from a Map object. If the value that is associated t
 
 Adds or updates an element with a specified key and a value to a Map object. Returns the Manager class (it is chainable).
 
-***Note**: techincally the values being returned are different from a normal Map. The Map `.set()` method returns the Map class while the `Manager` `.set()` method return the `Manager` class, this shouldn't leave much of an effect on use, but should be kept in mind.*
+> ***Note**: techincally the values being returned are different from a normal Map. The Map `.set()` method returns the Map class while the `Manager` `.set()` method return the `Manager` class, this shouldn't leave much of an effect on use, but should be kept in mind.*
 
 `Manager.prototype.size: number`
 

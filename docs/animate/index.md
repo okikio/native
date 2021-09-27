@@ -2,9 +2,9 @@
 
 [NPM](https://www.npmjs.com/package/@okikio/animate) <span style="padding-inline: 1rem">|</span> [Github](https://github.com/okikio/native/tree/beta/packages/animate#readme) <span style="padding-inline: 1rem">|</span> [API Guide](/docs/animate/api/index.md) <span style="padding-inline: 1rem">|</span> [Licence](/packages/animate/LICENSE)  
 
-[@okikio/animate](/docs/animate/index.md) is a js animation library for the modern web. It was inspired by [animateplus](https://github.com/bendc/animateplus) and [animejs](https://animejs.com/), and is focused on performance and ease of use. It utilizes the Web Animation API (WAAPI) to deliver fluid animations at a *semi-small* size, in total it weighs **~11.27 KB** (minified and gzipped). Most devs will only really be using a few of `@okiko/animate`'s features once at a time, so the actual minimum usable [treeshakeable](https://developer.mozilla.org/en-US/docs/Glossary/Tree_shaking) file size is **~7.07 KB** (minified and gzipped).
+[@okikio/animate](/docs/animate/index.md) is a js animation library for the modern web. It was inspired by [animateplus](https://github.com/bendc/animateplus) and [animejs](https://animejs.com/), it is focused on performance and ease of use. It utilizes the Web Animation API (WAAPI) to deliver fluid animations at a *semi-small* size, in total it weighs **~11.27 KB** (minified and gzipped). Most devs will only really be using a few of `@okiko/animate`'s features at a time, so the actual minimum usable [treeshakeable](https://developer.mozilla.org/en-US/docs/Glossary/Tree_shaking) file size is [**~7.07 KB** (minified and gzipped)](https://bundle.js.org/?q=@okikio/animate&treeshake=animate).
 
-> _**A quick note on size**: [CustomEasing](/docs/animate/api/custom-easing.md), [staggers](/docs/animate/api/stagger-and-random.md), and [timelines](/docs/animate/api/timeline-class.md) are now supported. After these additions the total library size doubled, so when I mean minimum usable size, I mean when you are only using the `animate` function or the `Animate` class._
+> _**A quick note on size**: [CustomEasing](/docs/animate/api/custom-easing.md), [staggers](/docs/animate/api/stagger-and-random.md), and [Queues](/docs/animate/api/queues-class.md) are now supported. After these additions the total library size doubled, so when I mean minimum usable size, I mean when you are only using the `animate` function or the `Animate` class._
 
 I suggest reading the in depth [CSS-Tricks article](https://css-tricks.com/how-i-used-the-waapi-to-build-an-animation-library/) I made on `@okikio/animate`, it will help you determine if `@okikio/animate` is right for your project.
 
@@ -14,7 +14,25 @@ I suggest reading the in depth [CSS-Tricks article](https://css-tricks.com/how-i
 
 ## Installation
 
-You can install [@okikio/animate](/docs/animate/index.md) from [npm](https://www.npmjs.com/package/@okikio/animate) via `npm i @okikio/animate`, `pnpm i @okikio/animate` or `yarn add @okikio/animate`.
+You can install [@okikio/animate](/docs/animate/index.md) from [npm](https://www.npmjs.com/package/@okikio/animate) via 
+
+```bash
+npm i @okikio/animate
+```
+
+<details>
+<summary>Others</summary>
+
+```bash
+yarn add @okikio/animate
+```
+or
+```bash
+pnpm i @okikio/animate
+```
+</details>
+
+<br/>
 
 You can use `@okikio/animate` on the web via
 

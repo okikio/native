@@ -6,7 +6,26 @@ A small Event Emitter written in typescript with performance and ease of use in 
 
 ## Installation
 
-You can install [@okikio/emitter](/docs/emitter/index.md) from [npm](https://www.npmjs.com/package/@okikio/emitter) via `npm i @okikio/emitter`, `pnpm i @okikio/emitter` or `yarn add @okikio/emitter`.
+You can install [@okikio/emitter](/docs/emitter/index.md) from [npm](https://www.npmjs.com/package/@okikio/emitter) via 
+
+
+```bash
+npm i @okikio/emitter
+```
+
+<details>
+<summary>Others</summary>
+
+```bash
+yarn add @okikio/emitter
+```
+or
+```bash
+pnpm i @okikio/emitter
+```
+</details>
+
+<br/>
 
 You can use `@okikio/emitter` on the web via:
 

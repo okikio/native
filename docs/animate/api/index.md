@@ -198,7 +198,7 @@ Use pre-made effects in `@okikio/animate`, for example, the `animate.css` effect
 
 ### Stagger and Random
 
-### Timeline Class
+### Queues Class
 
 
 ### Methods & properties

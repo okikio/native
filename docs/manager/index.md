@@ -13,7 +13,26 @@ The `Manager` class makes Maps easier to use, as well as adding 7 methods, **get
 
 ### Installation
 
-You can install [@okikio/manager](/docs/manager/index.md) from [npm](https://www.npmjs.com/package/@okikio/manager) via `npm i @okikio/manager`, `pnpm i @okikio/animate` or `yarn add @okikio/manager`.
+You can install [@okikio/manager](/docs/manager/index.md) from [npm](https://www.npmjs.com/package/@okikio/manager) via 
+
+
+```bash
+npm i @okikio/manager
+```
+
+<details>
+<summary>Others</summary>
+
+```bash
+yarn add @okikio/manager
+```
+or
+```bash
+pnpm i @okikio/manager
+```
+</details>
+
+<br/>
 
 You can use `@okikio/manager` on the web via:
 
@@ -44,9 +63,9 @@ const { default: Manager, methodCall } = window.manager;
 
 ## Usage
 
-`@okikio/manager` is used the same way `Map` is used. Like this,
+`@okikio/manager` is used the same way `Map` is used. 
 
-in `typescript`,
+Like this, in `typescript`,
 ```ts
 import { Manager } from "@okikio/manager";
 

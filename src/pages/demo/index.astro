@@ -2,8 +2,6 @@
 // import { Markdown } from 'astro/components';
 import Markdown from "~/components/Markdown";
 import BaseLayout from "~/layouts/BaseLayout";
-
-const content = Astro.fetchContent('../../README.md')[0].astro.source;
 ---
 
 <BaseLayout>
@@ -12,8 +10,9 @@ const content = Astro.fetchContent('../../README.md')[0].astro.source;
       <span><a href="/">Home</a> / </span>
     </p> 
 
-    <article main-content>
-      <Markdown content={content} />
-    </article> 
+    <div id="block" class="block w-36 h-36 bg-blue-500 rounded">
+    </div>
+
+    <script src={Astro.resolve("./animate.js")} async type="module"></script>
   </main>
 </BaseLayout>

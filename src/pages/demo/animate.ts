@@ -1,12 +1,13 @@
-import { animate, tweenAttr, random, timeline, AnimateAttributes } from "@okikio/animate";
+import { animate, tweenAttr, random, queue, AnimateAttributes } from "@okikio/animate";
 import { interpolate } from "polymorph-js";
 
-import type { IAnimationOptions, TypePlayStates, Timeline, Animate } from "@okikio/animate";
+import type { IAnimationOptions, TypePlayStates, Queue, Animate } from "@okikio/animate";
 
 // Based on an example by animateplus
-(() => {
+/**
+( () => {
     let containerSel = ".morph-demo";
-    let timelineInst = timeline({
+    let queueInst = queue({
         duration: 1800,
         easing: "ease",
         loop: 4,
@@ -14,7 +15,7 @@ import type { IAnimationOptions, TypePlayStates, Timeline, Animate } from "@okik
         direction: "alternate"
     });
 
-    timelineInst.add(((): IAnimationOptions => {
+    queueInst.add(((): IAnimationOptions => {
         let usingDPathEl = document.querySelector(`${containerSel} #using-d`);
         let InitialStyle = window.getComputedStyle(usingDPathEl);
 
@@ -31,7 +32,7 @@ import type { IAnimationOptions, TypePlayStates, Timeline, Animate } from "@okik
         }
     })(), "= 0");
 
-    timelineInst.add(((): IAnimationOptions => {
+    queueInst.add(((): IAnimationOptions => {
         let usingPolymorphPathEl = document.querySelector(`${containerSel} #using-polymorph-js`);
         let InitialStyle = window.getComputedStyle(usingPolymorphPathEl);
 
@@ -52,7 +53,7 @@ import type { IAnimationOptions, TypePlayStates, Timeline, Animate } from "@okik
         };
     })(), "= 0");
 
-    timelineInst.add(((): AnimateAttributes => {
+    queueInst.add(((): AnimateAttributes => {
         let usingPolymorphPathEl = document.querySelector(`${containerSel} #using-polymorph-js`);
         let startPath = usingPolymorphPathEl.getAttribute("d");
         let endPath =
@@ -72,14 +73,14 @@ import type { IAnimationOptions, TypePlayStates, Timeline, Animate } from "@okik
         });
     })(), "= 0");
 
-    playbackFn(containerSel, timelineInst);
+    playbackFn(containerSel, queueInst);
 })();
 
 (() => {
     let containerSel = ".playback-demo";
-    let timelineInst = timeline();
+    let queueInst = queue();
 
-    timelineInst.add(((): Animate => {
+    queueInst.add(((): Animate => {
         let DOMNodes = document.querySelectorAll(`${containerSel} .el`);
         let anim = animate({
             target: DOMNodes,
@@ -116,7 +117,7 @@ import type { IAnimationOptions, TypePlayStates, Timeline, Animate } from "@okik
             loop: 2,
             speed: (i) => 1.5 - (i * 0.125),
 
-            // You can't use `fillMode` if you want to have a timeline of animations on the same target,
+            // You can't use `fillMode` if you want to have a queue of animations on the same target,
             // instead you can use `onfinish: () => {}`
             // fillMode: "both",
 
@@ -197,12 +198,12 @@ import type { IAnimationOptions, TypePlayStates, Timeline, Animate } from "@okik
         return anim;
     })(), "= 0");
 
-    playbackFn(containerSel, timelineInst);
+    playbackFn(containerSel, queueInst);
 })();
 
 (() => {
     let containerSel = ".motion-path-demo";
-    let timelineInst = timeline({
+    let queueInst = queue({
         padEndDelay: true,
         easing: "linear",
         duration: 2000,
@@ -210,7 +211,7 @@ import type { IAnimationOptions, TypePlayStates, Timeline, Animate } from "@okik
         speed: 1,
     });
 
-    timelineInst.add(((): IAnimationOptions => {
+    queueInst.add(((): IAnimationOptions => {
         let el = document.querySelector('.motion-path .el-1') as HTMLElement;
 
         // To support older browsers I can't use partial keyframes
@@ -220,7 +221,7 @@ import type { IAnimationOptions, TypePlayStates, Timeline, Animate } from "@okik
         };
     })(), "= 0");
 
-    timelineInst.add(((): IAnimationOptions => {
+    queueInst.add(((): IAnimationOptions => {
         let path = document.querySelector('.motion-path path') as SVGPathElement;
         let el2 = document.querySelector('.motion-path .el-2') as HTMLElement;
 
@@ -247,11 +248,11 @@ import type { IAnimationOptions, TypePlayStates, Timeline, Animate } from "@okik
         };
     })(), "= 0");
 
-    playbackFn(containerSel, timelineInst);
+    playbackFn(containerSel, queueInst);
 })();
 
 // I added extra code to the demo to support Chrome 77 and below
-function playbackFn(containerSel: string, timelineInst: Timeline) {
+function playbackFn(containerSel: string, queueInst: Queue) {
     let container = document.querySelector(containerSel);
 
     let playstateEl = container.querySelector(`#playstate-toggle`) as HTMLInputElement;
@@ -261,34 +262,34 @@ function playbackFn(containerSel: string, timelineInst: Timeline) {
     let oldState: "pending" | TypePlayStates;
 
     let updatePlayState = () => {
-        oldState = timelineInst.getPlayState() as TypePlayStates | "pending";
+        oldState = queueInst.getPlayState() as TypePlayStates | "pending";
         if (oldState == "idle") oldState = "paused";
         else if (oldState == "pending") oldState = "running";
         playstateEl.setAttribute("data-playstate", oldState);
     };
 
     const clickFn = () => {
-        if (timelineInst.is("running"))
-            timelineInst.pause();
-        else if (timelineInst.is("finished"))
-            timelineInst.reset();
+        if (queueInst.is("running"))
+            queueInst.pause();
+        else if (queueInst.is("finished"))
+            queueInst.reset();
         else
-            timelineInst.play();
+            queueInst.play();
 
         updatePlayState();
     };
 
     const inputFn = () => {
         let percent = Number(progressEl.value);
-        timelineInst.pause();
-        timelineInst.setProgress(percent);
+        queueInst.pause();
+        queueInst.setProgress(percent);
     };
 
     const changeFn = () => {
         if (oldState !== "paused")
-            timelineInst.play();
+            queueInst.play();
         else
-            timelineInst.pause();
+            queueInst.pause();
 
         updatePlayState();
     };
@@ -297,7 +298,7 @@ function playbackFn(containerSel: string, timelineInst: Timeline) {
     progressEl.addEventListener("input", inputFn);
     progressEl.addEventListener("change", changeFn);
 
-    timelineInst
+    queueInst
         .on("finish begin", updatePlayState)
         .on({
             update: (progress: number) => {
@@ -311,7 +312,28 @@ function playbackFn(containerSel: string, timelineInst: Timeline) {
                 playstateEl.removeEventListener("click", clickFn);
                 progressEl.removeEventListener("input", inputFn);
                 progressEl.removeEventListener("change", changeFn);
-                timelineInst = null;
+                queueInst = null;
             }
         });
-}
+} 
+*/
+
+(() => {
+    let queueInst = queue({
+        padEndDelay: true,
+        easing: "ease",
+        duration: 2000,
+        loop: 4,
+        speed: 1,
+    });
+
+    queueInst.add(((): IAnimationOptions => {
+        let el = document.querySelector('#block') as HTMLElement;
+
+        // To support older browsers I can't use partial keyframes
+        return {
+            target: el,
+            "translate-x": [0, 600]
+        };
+    })(), "= 0");
+})();

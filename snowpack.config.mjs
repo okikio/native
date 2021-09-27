@@ -4,8 +4,8 @@
 /** @type {import("snowpack").SnowpackUserConfig } */
 export default {
   mount: {
-    docs: "/docs",
-    packages: "/packages"
+    // docs: "/docs",
+    // packages: "/packages"
     /* ... */
   },
   alias: {
@@ -19,6 +19,7 @@ export default {
     /* ... */
   ],
   packageOptions: {
+    // external: ["@okikio/animate", "@okikio/native"]
     /* ... */
   },
   devOptions: {
