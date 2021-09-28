@@ -88,6 +88,11 @@ animate({
     },
 });
 ```
+### Animation Options
+
+`Animate` supports many options ranging from `target` to `fillMode`, etc..., I highly suggest looking through the options offered as many of the features of `@okikio/animate` are unlocked when you know the options, and properly understand their quirks and abilities. 
+
+> [Read more about Animation Options   &#8594;](/docs/animate/api/options/index.md)
 
 ### Animation Options & CSS Properties as Methods
 

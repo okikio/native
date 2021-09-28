@@ -6,4 +6,4 @@
 
 Adds an offset amount to the `delay` option, for creating a timeline similar to `animejs`.
 
-I don't intend to create a `timeline` function for this library but if you wish to please try your hands at creating one, if it's small, light-weight, and there is a need I might incorperate it.
+> _**Note**: all uses of `delay` include the `timelineOffset` amount by default, if you wish to get the actual unoffseted delay you need to subtract the `timelineOffset` amount from the `delay`._

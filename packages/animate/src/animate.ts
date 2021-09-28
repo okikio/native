@@ -169,7 +169,10 @@ export const GetEase = (ease: keyof typeof EASINGS | string = "ease"): string =>
  *   easing: "ease",
  *   autoplay: true,
  *   duration: 1000,
+ * 
+ *   persist: true,
  *   fillMode: "none",
+ * 
  *   direction: "normal",
  *   padEndDelay: false,
  *   timeline: document.timeline,
@@ -189,7 +192,10 @@ export const DefaultAnimationOptions: IAnimationOptions = {
     timelineOffset: 0,
     autoplay: true,
     duration: 1000,
+
+    persist: true,
     fillMode: "none",
+
     direction: "normal",
     padEndDelay: false,
     timeline: document.timeline,
@@ -204,7 +210,7 @@ export const parseOptions = (options: IAnimationOptions): IAnimationOptions => {
 }
 
 export const FUNCTION_SUPPORTED_TIMING_KEYS = ["easing", "loop", "endDelay", "duration", "speed", "delay", "timelineOffset", "direction", "extend", "fillMode", "composite"];
-export const NOT_FUNCTION_SUPPORTED_TIMING_KEYS = ["keyframes", "padEndDelay", "onfinish", "oncancel", "autoplay", "target", "targets", "timeline"];
+export const NOT_FUNCTION_SUPPORTED_TIMING_KEYS = ["keyframes", "padEndDelay", "persist", "onfinish", "oncancel", "autoplay", "target", "targets", "timeline"];
 export const ALL_TIMING_KEYS = [...FUNCTION_SUPPORTED_TIMING_KEYS, ...NOT_FUNCTION_SUPPORTED_TIMING_KEYS];
 
 /**
@@ -332,7 +338,6 @@ export class Animate {
     constructor(options: IAnimationOptions = {}) {
         this.loop = this.loop.bind(this);
         this.onVisibilityChange = this.onVisibilityChange.bind(this);
-
         this.on("error", console.error);
         this.updateOptions(options);
 
@@ -585,6 +590,8 @@ export class Animate {
     /**
      * Explicitly persists an animation, when it would otherwise be removed due to the browser's Automatically removing filling animations behavior.
      * Learn more on [MDN](https://developer.mozilla.org/en-US/docs/Web/API/Animation/persist)
+     * 
+     * > _**Warning**: This is different from {@link IAnimationOptions.persist}, this keeps Animations while {@link IAnimationOptions.persist}, keeps the final state of CSS during the animation, in some instances they may have similar effects, **but they are very different**._ 
      */
     public persist() {
         this.all(anim => anim?.persist());
@@ -808,7 +815,7 @@ export class Animate {
             duration = Number(duration);
             endDelay = Number(endDelay);
             speed = Number(speed);
-            delay = Number(delay);
+            delay = Number(delay) + timelineOffset;
 
             this.timelineOffset = timelineOffset ?? this.timelineOffset;
             if (this.minDelay > delay) this.minDelay = delay;
@@ -841,7 +848,7 @@ export class Animate {
                 speed,
                 tempDurations: tempDuration,
                 endDelay,
-                delay: delay + timelineOffset,
+                delay,
                 duration,
                 iterations,
                 timelineOffset
@@ -853,13 +860,14 @@ export class Animate {
     /**
      * Creates animations out of an array of computed options
      */
-    protected createAnimations(param: { arrOfComputedOptions: any; padEndDelay: any; oldCSSProperties: any; onfinish: any; oncancel: any; timeline?: any; }, len: number) {
+    protected createAnimations(param: { arrOfComputedOptions: any; padEndDelay: any; oldCSSProperties: any; onfinish: any; oncancel: any; persist?: boolean; timeline?: any; }, len: number) {
         let {
             arrOfComputedOptions,
             padEndDelay,
             oldCSSProperties,
             onfinish,
             oncancel,
+            persist,
             timeline
         } = param;
 
@@ -926,6 +934,14 @@ export class Animate {
                     CSSProperties,
                     isValid(_offset) ? { offset: _offset.map(parseOffset) } : null
                 ) as PropertyIndexedKeyframes;
+                
+                // Persist animation states without `fillMode`
+                if (persist) {
+                    mapObject(CSSProperties, (value: any, key: any) => {
+                        if (!value.length) return;
+                        target.style.setProperty(key, value[value.length - 1]);
+                    });
+                }
             } else {
                 computedKeyframes = animationKeyframe.map((keyframe: Keyframe) => {
                     // Remove `speed` & `loop`, they are not valid CSS properties
@@ -944,6 +960,13 @@ export class Animate {
 
                 // Transform transformable CSS properties in each keyframe of the keyframe array
                 computedKeyframes = ParseTransformableCSSKeyframes(computedKeyframes) as Keyframe[];
+
+                // Persist animation states without `fillMode`
+                if (persist && computedKeyframes.length) {
+                    mapObject(computedKeyframes[computedKeyframes.length - 1], (value: any, key: any) => {
+                        target.style.setProperty(key, value);
+                    });
+                }
             }
 
             let animation: Animation, keyFrameEffect: KeyframeEffect;
@@ -1006,6 +1029,7 @@ export class Animate {
                 target,
                 targets,
                 timeline,
+                persist,
 
                 // These values are always functions
                 onfinish,
@@ -1038,6 +1062,7 @@ export class Animate {
                 oldCSSProperties,
                 onfinish,
                 oncancel,
+                persist,
                 timeline
             }, len);
 
@@ -1053,7 +1078,7 @@ export class Animate {
                 });
 
                 if (!this.mainkeyframeEffect.setKeyframes || !this.mainkeyframeEffect.updateTiming)
-                    console.warn("@okikio/animate - `KeyframeEffect.setKeyframes` and/or `KeyframeEffect.updateTiming` are not supported in this browser.");
+                    console.warn("[Animate - @okikio/animate] `KeyframeEffect.setKeyframes` and/or `KeyframeEffect.updateTiming` are not supported in this browser.");
             }
 
             if (this.mainAnimation.updatePlaybackRate)

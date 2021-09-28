@@ -1,18 +1,18 @@
 ---
 // import { Markdown } from 'astro/components';
-import Markdown from "~/components/Markdown";
-import BaseLayout from "~/layouts/BaseLayout";
+import Markdown from "../../components/Markdown.astro";
+import BaseLayout from "../../layouts/BaseLayout.astro";
 ---
 
-<BaseLayout>
+<BaseLayout title="demo">
   <main data-wrapper>
     <p>
       <span><a href="/">Home</a> / </span>
     </p> 
 
-    <div id="block" class="block w-36 h-36 bg-blue-500 rounded">
-    </div>
+    <div id="block" class="block w-36 h-36 bg-blue-500 rounded-xl"></div>
+    <div id="block-2" class="block w-36 h-36 bg-blue-500 rounded-xl"></div>
 
-    <script src={Astro.resolve("./animate.js")} async type="module"></script>
+    <script src={Astro.resolve("../../ts/animate.js")} async type="module"></script>
   </main>
 </BaseLayout>

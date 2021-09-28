@@ -158,8 +158,19 @@ export class Queue {
         let newInst: Animate | Queue;
         let insParams: IAnimationOptions = Object.assign({}, DefaultAnimationOptions, this.initialOptions,
             options instanceof Animate ? options.initialOptions : parseOptions(options));
+        
+        if (Math.abs(this.totalDuration) !== Infinity) {
+            if (/\</.test(timelineOffset as string)) {
+                let lastDuration = (this.animateInstances.last()?.totalDuration ?? 0);
 
-        insParams.timelineOffset = relativeTo(timelineOffset, this.totalDuration);
+                if (Math.abs(lastDuration) !== Infinity)
+                    insParams.timelineOffset = relativeTo(
+                        (timelineOffset + "").replace(/\</, ""),
+                        this.totalDuration - (this.animateInstances.last()?.totalDuration ?? 0)
+                    );
+            } else insParams.timelineOffset = relativeTo(timelineOffset, this.totalDuration);
+        }
+
         insParams.autoplay = this.initialOptions.autoplay;
 
         if (options instanceof Animate) {
@@ -176,7 +187,14 @@ export class Queue {
     /** Update the Queue's duration, endDelay, etc... based on the `animateInstances` */
     public updateTiming() {
         let timings = this.animateInstances.values();
+        if (timings.length <= 1) return this;
+
         let duration = Math.max(...timings.map(x => x.totalDuration));
+        if (Math.abs(duration) == Infinity) {
+            console.warn(`[Queue - @okikio/animate] individual Animate instances that are part of a Queue can't have Infinite totalDuration. You can't queue animations one after the other if one of the animations last for literally infinity. This issue may come from setting the "loop, duration, endDelay, delay, etc..." animation options to either Infinity (or for the loop option only, "true").`);
+            return this;
+        }
+
         this.mainInstance.updateOptions({
             autoplay: this.initialOptions.autoplay,
             duration,

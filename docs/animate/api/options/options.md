@@ -86,3 +86,5 @@ _**Note**: you can't use this property as a method._
     console.log(options); //= { ... }
 })();
 ```
+
+> Go through the [animation options docs](/docs/animate/api/options/index.md) for extra info. on other animation options.

@@ -10,6 +10,8 @@ import {
 import { toRGBAArr } from "./unit-conversion";
 import bezier from "./bezier-easing";
 
+import type { IAnimationOptions } from "./types";
+
 export const limit = (value: number, min: number, max: number) =>
     Math.min(Math.max(value, min), max);
 
@@ -719,7 +721,7 @@ const updateDuration = (optionsObj: TypeCustomEasingOptions = {}) => {
 export const CustomEasing = (
     values: (string | number)[],
     options: TypeCustomEasingOptions | string | TypeEasingFunction = {}
-) => {
+): (string | number)[] => {
     let optionsObj = CustomEasingOptions(options);
     updateDuration(optionsObj);
 
@@ -760,8 +762,8 @@ export const CustomEasing = (
  */
 export const SpringEasing = (
     values: (string | number)[],
-    options: TypeCustomEasingOptions = {}
-) => {
+    options: TypeCustomEasingOptions | string = {}
+): [(string | number)[], number] => {
     let optionsObj = CustomEasingOptions(options);
 
     let { duration } = optionsObj;
@@ -819,7 +821,13 @@ export const ApplyCustomEasing = (
             | TypeEasingFunction
             | (number | string)[];
     } = {}
-) => {
+): IAnimationOptions & TypeCustomEasingOptions & {
+    [key: string]:
+        | number
+        | string
+        | TypeEasingFunction
+        | (number | string)[];
+} => {
     let { easing, numPoints, decimal, duration, ...rest } = options;
     let optionsObj = { easing, numPoints, decimal, duration };
     updateDuration(optionsObj);

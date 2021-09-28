@@ -7,26 +7,26 @@ An initiative which aims to make it easy to create complex, light-weight, and pe
 
 A superset of the Map class, it extends the Map classes capabilities with awesome new features, and relieves some of the inconvient quirks of the Map class.
 
-[Dobumentation](/docs/manager/index.md) <span style="padding-inline: 1rem">|</span> [NPM](https://www.npmjs.com/package/@okikio/manager)
+[Documentation](/docs/manager/index.md) <span style="padding-inline: 1rem">|</span> [NPM](https://www.npmjs.com/package/@okikio/manager)
 
 
 ## [@okikio/emitter](/docs/emitter/index.md)
 
 A small Event Emitter written in typescript with performance and ease of use in mind.
 
-[Dobumentation](/docs/emitter/index.md) <span style="padding-inline: 1rem">|</span> [NPM](https://www.npmjs.com/package/@okikio/emitter)
+[Documentation](/docs/emitter/index.md) <span style="padding-inline: 1rem">|</span> [NPM](https://www.npmjs.com/package/@okikio/emitter)
 
 ## [@okikio/animate](/docs/animate/index.md)
 
 An animation library for the modern web. Inspired by animate plus, and animejs, it is a Javascript animation library focused on performance and ease of use. It utilizes the Web Animation API (WAAPI) to deliver fluid animations at a *semi-small* size.
 
-[Dobumentation](/docs/animate/index.md) <span style="padding-inline: 1rem">|</span> [NPM](https://www.npmjs.com/package/@okikio/animate)
+[Documentation](/docs/animate/index.md) <span style="padding-inline: 1rem">|</span> [NPM](https://www.npmjs.com/package/@okikio/animate)
 
 ## [@okikio/native](/docs/native/index.md)
 
 A framework to build custom dynamic web experiences around. It acts as a very light weight to build complex web apps, ranging from PJAX based sites to other Single Page Applications (SPA) (React, Vue, etc...) based sites and web apps.
 
-[Dobumentation](/docs/native/index.md) <span style="padding-inline: 1rem">|</span> [NPM](https://www.npmjs.com/package/@okikio/native)
+[Documentation](/docs/native/index.md) <span style="padding-inline: 1rem">|</span> [NPM](https://www.npmjs.com/package/@okikio/native)
 
 ## Demo & Showcases
 

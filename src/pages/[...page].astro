@@ -1,7 +1,8 @@
 ---
 // import { Markdown } from 'astro/components';
-import Markdown from "~/components/Markdown";
-import BaseLayout from "~/layouts/BaseLayout";
+// import { Markdown } from 'astro/components';
+import Markdown from "../components/Markdown.astro";
+import BaseLayout from "../layouts/BaseLayout.astro";
 
 import { globby } from 'globby';
 import { readFileSync } from "node:fs";
@@ -34,9 +35,11 @@ export async function getStaticPaths() {
 
 const {content} = Astro.props;
 let pathArr = Astro.request.params.page.split("/");
+let title = content.match(/\#{1,6}(.*)/)?.[1]?.trim() ?? "Homepage";
+let pkg = "@okikio/" + pathArr[0];
 ---
 
-<BaseLayout>
+<BaseLayout title={`${title}${ pkg == title ? "" : " - " + pkg}`}>
   <main data-wrapper>
     <p>
       <span><a href="/">Home</a>{ pathArr.length ? " / " : "" }</span>

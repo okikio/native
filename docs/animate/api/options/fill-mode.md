@@ -4,7 +4,7 @@
 | :------ | :------------------------------------------------------------------------------------------------------ |
 | `auto`  | String \| [TypeCallback](/docs/api/modules/_okikio_animate.md#typecallback) |
 
-_Be careful when using fillMode, it has some problems when it comes to concurrency of animations read more on [MDN](https://developer.mozilla.org/en-US/docs/Web/API/EffectTiming/fill), if browser support were better I would remove fillMode and use Animation.commitStyles, I'll have to change the way `fillMode` functions later. Use the onfinish method to commit styles [onfinish](/docs/animate/api/options/onfinish.md)._
+> _Be careful when using fillMode, it has some problems when it comes to concurrency of animations read more on [MDN](https://developer.mozilla.org/en-US/docs/Web/API/EffectTiming/fill). I highly suggest using [IAnimationOptions.persist](/docs/api/interfaces/_okikio_animate.IAnimationOptions.html#persist), as it's less permanent, or better yet use the [IAnimationOptions.onfinish(...)](/docs/api/interfaces/_okikio_animate.IAnimationOptions.html#onfinish) method, with [Animate.commitStyles(...)](/docs/api/classes/_okikio_animate.Animate.html#commitStyles) to commit styles._
 
 Defines how an element should look after the animation. The fillModes availble are:
 

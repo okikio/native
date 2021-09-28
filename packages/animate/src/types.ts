@@ -68,23 +68,50 @@ export type TypeMissingCSSProperties = {
     maxLines?: number | string | (string | number)[] | TypeCallback,
     offsetPosition?: number | string | (string | number)[] | TypeCallback,
     scrollbarColor?: string | string[] | TypeCallback,
-} & {
+} & 
+/**
+ * @ignore
+ */
+{
     [K in TypeAnimatableCSSProperties]?: TypeAnimationOptionTypes
 }
 
 /** 
  * Full list of CSS & SVG Animatable Properties & Animation Options that are supported
+ * 
+ * Animatable CSS properties are {@link TypeMissingCSSProperties}
+ * SVG Presentation Attributes are {@link TypeAnimatableSVGAttributes}
+ * 
 */
 export type TypeCSSAnimationOptions =
+    /**
+     * @ignore
+     */
     {
         [K in keyof CSSStyleDeclaration]?: CSSStyleDeclaration[K] | CSSStyleDeclaration[K][] | TypeAnimationOptionTypes
     } &
+    /**
+     * @ignore
+     */
     {
         [K in keyof CSSStyleDeclaration as KebabCase<K>]?: CSSStyleDeclaration[K] | CSSStyleDeclaration[K][] | TypeAnimationOptionTypes
     } &
-    TypeCSSTransformableProperties & KebabCasedProperties<TypeCSSTransformableProperties> &
-    TypeMissingCSSProperties & KebabCasedProperties<TypeMissingCSSProperties> &
-    TypeAnimatableSVGAttributes & KebabCasedProperties<TypeAnimatableSVGAttributes>;
+    TypeCSSTransformableProperties & 
+    /**
+     * @ignore
+     */
+    KebabCasedProperties<TypeCSSTransformableProperties> &
+    /**
+     * @ignore
+     */
+    TypeMissingCSSProperties & 
+    /**
+     * @ignore
+     */KebabCasedProperties<TypeMissingCSSProperties> &
+    TypeAnimatableSVGAttributes & 
+    /**
+     * @ignore
+     */KebabCasedProperties<TypeAnimatableSVGAttributes>;
     
 /**
  * Animation options control how an animation is produced, it shouldn't be too different for those who have used `animejs`, or `jquery`'s animate method.
@@ -298,9 +325,19 @@ export interface IAnimationOptions extends TypeCSSAnimationOptions {
      *
      * You can learn more here on [MDN](https://developer.mozilla.org/en-US/docs/Web/API/EffectTiming/fill).
 
-     * _Be careful when using fillMode, it has some problems when it comes to concurrency of animations read more on [MDN](https://developer.mozilla.org/en-US/docs/Web/API/EffectTiming/fill), if browser support were better I would remove fillMode and use Animation.commitStyles, I'll have to change the way `fillMode` functions later. Use the onfinish method to commit styles [onfinish](#onfinish)._
+     * > _Be careful when using fillMode, it has some problems when it comes to concurrency of animations read more on [MDN](https://developer.mozilla.org/en-US/docs/Web/API/EffectTiming/fill). I highly suggest using {@link IAnimationOptions.persist | persist}, as it's less permanent, or better yet use the {@link IAnimationOptions.onfinish | onfinish(...) } method, with {@link Animate.commitStyles | Animate.commitStyles(...)\ } to commit styles._
      */
     fillMode?: KeyframeEffectOptions["fill"] | FillMode,
+
+    /**
+     * Persists animation state, so, when an animation is complete it keeps said finished animation state. 
+     * Think of it more like a less strict version of {@link IAnimationOptions.fillMode | fillMode}, it was inspired by [motion one](https://motion.dev/).
+     * 
+     * By default WAAPI resets animations back to their initial state once an animation is complete and fillMode isn't being used. The persist animation option, basically tells Animate to find the final state of all CSS Properties being animated, and then set them, so, once the animation is finished and WAAPI resets animations back to their initial state (so `initial state = final state`) the user doesn't notice difference and it looks like the animation stopped on the final state.
+     * 
+     * > _**Note**: use this most of the time instead of `fillMode`, as it's impact is less permanent._
+     */
+    persist?: boolean,
 
     /**
      * Another way to input options for an animation, it's also used to chain animations.
