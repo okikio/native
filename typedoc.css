@@ -4,7 +4,8 @@
 
 @font-face {
     font-family: "FluentSystemIcons-Regular";
-    src: url("/fonts/FluentSystemIcons-Regular.ttf?996016c73e71cbeaf86416d20483c9db") format("truetype");
+    src: url("/fonts/FluentSystemIcons-Regular.ttf?996016c73e71cbeaf86416d20483c9db")
+        format("truetype");
 }
 
 .icon:before {
@@ -22,13 +23,35 @@
     content: "\f4e5";
 }
 
+a :is(h1, h2, h3, h4, h5, h6):after {
+    font-family: FluentSystemIcons-Regular !important;
+    font-style: normal;
+    font-weight: normal !important;
+    font-variant: normal;
+    text-transform: none;
+    line-height: 1;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    content: "\f4e5";
+
+    visibility: hidden;
+    font-size: 0.75em;
+}
+
+a :is(h1, h2, h3, h4, h5, h6):hover:after {
+    visibility: visible;
+}
+
+a :is(h1, h2, h3, h4, h5, h6):is(:hover, :focus):after {
+    visibility: visible;
+}
 
 :root {
     --light-color-background: #f8f9fa;
     --light-color-panel-divider: #dadce0;
     --light-link-color: #1155cc;
     --light-external-icon: url(/assets/light-external.svg);
-    --dark-external-icon: url(/assets/dark-external.svg);    
+    --dark-external-icon: url(/assets/dark-external.svg);
     --dark-color-panel-divider: #47474d;
     --dark-color-menu-divider-focus: #d73a49;
     --dark-color-background: #1b1c1f;
@@ -39,7 +62,8 @@ pre {
     padding: 14px;
 }
 
-pre, code {
+pre,
+code {
     border-radius: 6px;
 }
 
@@ -63,8 +87,8 @@ body.light {
     color-scheme: light;
 }
 
-blockquote {  
-    padding: .2em .8em .2em 1em;
+blockquote {
+    padding: 0.2em 0.8em 0.2em 1em;
     border-left: 5px solid gray;
     margin-bottom: 2.5rem;
     background-color: var(--color-background);
@@ -79,7 +103,7 @@ body:not(.light) :is(.tsd-panel) {
 @media (prefers-color-scheme: dark) {
     .tsd-panel {
         box-shadow: none;
-    }    
+    }
 }
 
 body.light .tsd-panel {
@@ -89,7 +113,7 @@ body.light .tsd-panel {
 @media (prefers-color-scheme: light) {
     .tsd-panel {
         box-shadow: 0 1px 3px 1px rgba(60, 64, 67, 0.15);
-    }    
+    }
 }
 
 .tsd-page-toolbar {
@@ -105,7 +129,8 @@ body.light .tsd-panel {
     border-radius: 0.65em;
 }
 
-:is(.tsd-typography, .tsd-index-panel, .tsd-member, .tsd-comment, .tsd-hierarchy, .tsd-type-parameters, .tsd-kind-interface) p {
+:is(.tsd-typography, .tsd-index-panel, .tsd-member, .tsd-comment, .tsd-hierarchy, .tsd-type-parameters, .tsd-kind-interface)
+    p {
     line-height: 1.85em;
 }
 
@@ -127,7 +152,7 @@ body.light .tsd-panel {
 
 @media (max-width: 900px) {
     html .col-menu.menu-sticky-wrap {
-    grid-template-rows: auto 1fr;
+        grid-template-rows: auto 1fr;
         transform: translate(0, 0);
     }
 }
@@ -198,7 +223,8 @@ body.light .tsd-panel {
     transition: all 0.2s 50ms;
 } */
 
-.tsd-panel a[target]:not([href*="https://gitpod.io/#"]):after {
+.tsd-panel a[target]:not([href*="https://gitpod.io/#"]):after
+{
     display: inline;
     content: var(--external-icon);
     stroke: currentColor;
@@ -253,7 +279,7 @@ body.light .tsd-panel {
     position: relative;
     /* display: inline-block; */
     height: 40px;
-    vertical-align: bottom; 
+    vertical-align: bottom;
     /* content: "\f561"; */
     /* display: none; */
 }
@@ -266,4 +292,3 @@ body.light .tsd-panel {
 .tsd-panel > :is(h1, h2, h3) a {
     text-decoration: none;
 }
-

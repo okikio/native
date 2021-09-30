@@ -38,13 +38,14 @@ export function loadPlugins(items) {
 const __dirname = path.resolve(path.dirname(""));
 (async () => {
     const plugins = [
-        [
-            "rehype-autolink-headings",
-            {
-                behavior: "append",
-                content: [h("i.icon.icon-link")],
-            },
-        ],
+        ["rehype-slug"],
+        // [
+        //     "rehype-autolink-headings",
+        //     {
+        //         behavior: "append",
+        //         content: [h("i.icon.icon-link")],
+        //     },
+        // ],
         ["rehype-urls", redirectDocsURL],
         ["rehype-highlight"],
         ["rehype-external-links", { target: "_blank", rel: ["noopener"] }],

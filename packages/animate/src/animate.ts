@@ -588,13 +588,27 @@ export class Animate {
     }
 
     /**
-     * Explicitly persists an animation, when it would otherwise be removed due to the browser's Automatically removing filling animations behavior.
-     * Learn more on [MDN](https://developer.mozilla.org/en-US/docs/Web/API/Animation/persist)
+     * Explicitly persists an animations final state it's similar to `commitStyles` except it doesn't care if the animation is filling or not.
+     * It does the exact same thing {@link IAnimationOptions.persist} does, except it's in function form. 
      * 
-     * > _**Warning**: This is different from {@link IAnimationOptions.persist}, this keeps Animations while {@link IAnimationOptions.persist}, keeps the final state of CSS during the animation, in some instances they may have similar effects, **but they are very different**._ 
+     * > _**Warning**: This is different [MDN Animation.persist](https://developer.mozilla.org/en-US/docs/Web/API/Animation/persist), this keeps the final state of CSS during the animation, while [MDN Animation.persist](https://developer.mozilla.org/en-US/docs/Web/API/Animation/persist), tells the browser to not automatically remove Animations._ 
      */
     public persist() {
-        this.all(anim => anim?.persist());
+        // Persist animation states without `fillMode`
+        this.targets.forEach((target: HTMLElement) => {
+            let computedKeyframes = this.computedKeyframes.get(target);
+            if (Array.isArray(computedKeyframes) && computedKeyframes.length) {
+                mapObject(computedKeyframes[computedKeyframes.length - 1], (value: any, key: any) => {
+                    target.style.setProperty(key, value);
+                });
+            } else {
+                mapObject(computedKeyframes, (value: any, key: any) => {
+                    if (!value.length || key == "offset") return;
+                    target.style.setProperty(key, value[value.length - 1]);
+                });
+            }
+        });
+        
         return this;
     }
 
@@ -934,14 +948,6 @@ export class Animate {
                     CSSProperties,
                     isValid(_offset) ? { offset: _offset.map(parseOffset) } : null
                 ) as PropertyIndexedKeyframes;
-                
-                // Persist animation states without `fillMode`
-                if (persist) {
-                    mapObject(CSSProperties, (value: any, key: any) => {
-                        if (!value.length) return;
-                        target.style.setProperty(key, value[value.length - 1]);
-                    });
-                }
             } else {
                 computedKeyframes = animationKeyframe.map((keyframe: Keyframe) => {
                     // Remove `speed` & `loop`, they are not valid CSS properties
@@ -960,13 +966,6 @@ export class Animate {
 
                 // Transform transformable CSS properties in each keyframe of the keyframe array
                 computedKeyframes = ParseTransformableCSSKeyframes(computedKeyframes) as Keyframe[];
-
-                // Persist animation states without `fillMode`
-                if (persist && computedKeyframes.length) {
-                    mapObject(computedKeyframes[computedKeyframes.length - 1], (value: any, key: any) => {
-                        target.style.setProperty(key, value);
-                    });
-                }
             }
 
             let animation: Animation, keyFrameEffect: KeyframeEffect;
@@ -992,10 +991,25 @@ export class Animate {
 
             // Support for on finish
             animation.onfinish = () => {
+                // Persist animation states without `fillMode`
+                if (persist) {
+                    // Persist animation states without `fillMode`
+                    if (Array.isArray(computedKeyframes) && computedKeyframes.length) {
+                        mapObject(computedKeyframes[computedKeyframes.length - 1], (value: any, key: any) => {
+                            target.style.setProperty(key, value);
+                        });
+                    } else {
+                        mapObject(computedKeyframes, (value: any, key: any) => {
+                            if (!value.length || key == "offset") return;
+                            target.style.setProperty(key, value[value.length - 1]);
+                        });
+                    }
+                }
+
                 typeof onfinish == "function" && onfinish.call(this, target, i, len, animation);
             };
 
-            // // Support for on cancel
+            // Support for on cancel
             animation.oncancel = () => {
                 typeof oncancel == "function" && oncancel.call(this, target, i, len, animation);
             };

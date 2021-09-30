@@ -155,23 +155,26 @@ export class Queue {
      * @param timelineOffset - by default the timelineOffset is 0, which means the Animation will play in chronological order of when it was defined; a different value, specifies how many miliseconds off from the chronological order before it starts playing the Animation. You can also use absolute values, for exmple, if you want your animation to start at 0ms, setting timelineOffset to 0, or "0" will use relative offsets, while using "= 0" will use absolute offsets. Read more on {@link relativeTo}
      */
     public add(options: IAnimationOptions | Animate = {}, timelineOffset: string | number = 0) {
-        let newInst: Animate | Queue;
+        let newInst: Animate;
         let insParams: IAnimationOptions = Object.assign({}, DefaultAnimationOptions, this.initialOptions,
             options instanceof Animate ? options.initialOptions : parseOptions(options));
         
         if (Math.abs(this.totalDuration) !== Infinity) {
-            if (/\</.test(timelineOffset as string)) {
+            let timelineOffsetStr = "" + timelineOffset;
+            if (/^\^/.test(timelineOffsetStr)) {
                 let lastDuration = (this.animateInstances.last()?.totalDuration ?? 0);
 
-                if (Math.abs(lastDuration) !== Infinity)
+                if (Math.abs(lastDuration) !== Infinity) {
                     insParams.timelineOffset = relativeTo(
-                        (timelineOffset + "").replace(/\</, ""),
-                        this.totalDuration - (this.animateInstances.last()?.totalDuration ?? 0)
+                        timelineOffsetStr.trim() == "^" ? 0 : timelineOffsetStr.replace(/^\^/, ""),
+                        this.totalDuration - lastDuration
                     );
+                }
             } else insParams.timelineOffset = relativeTo(timelineOffset, this.totalDuration);
         }
 
         insParams.autoplay = this.initialOptions.autoplay;
+        // insParams.persist = false;
 
         if (options instanceof Animate) {
             newInst = options;
@@ -187,7 +190,6 @@ export class Queue {
     /** Update the Queue's duration, endDelay, etc... based on the `animateInstances` */
     public updateTiming() {
         let timings = this.animateInstances.values();
-        if (timings.length <= 1) return this;
 
         let duration = Math.max(...timings.map(x => x.totalDuration));
         if (Math.abs(duration) == Infinity) {

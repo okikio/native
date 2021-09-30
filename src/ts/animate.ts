@@ -318,52 +318,64 @@ function playbackFn(containerSel: string, queueInst: Queue) {
 } 
 */
 
-(async () => {
+(() => {
     let [translateX, duration] = SpringEasing(["0vw", "50vw"], "spring(5, 100, 10, 1)");
-    let el = document.querySelector('#block-2') as HTMLElement;
-    let opts = await animate({
-        target: el,
-        "translate-x": ["0vw", "50vw"],
-        // translateX,
-        // translateY: [0, 500],
-        // padEndDelay: true,
-        easing: "linear",
-        // duration,
-        // loop: true,
-        speed: 1,
-        direction: "alternate"
-    });
-    await animate({
-        options: opts,
-        "translate-x": ["0vw", "50vw"].reverse(),
-    });
-    
-    // let queueInst = queue({
-    //     padEndDelay: true,
-    //     easing: "ease",
-    //     duration,
-    //     loop: true,
+    // let translateX = ["0vw", "50vw"];
+    // let duration = 1000;
+    // let el = document.querySelector('#block-2') as HTMLElement;
+    // let opts = await animate({
+    //     target: el,
+    //     "translate-x": ["0vw", "50vw"],
+    //     // translateX,
+    //     // translateY: [0, 500],
+    //     // padEndDelay: true,
+    //     easing: "linear",
+    //     // duration,
+    //     // loop: true,
     //     speed: 1,
     //     direction: "alternate"
     // });
+    // await animate({
+    //     options: opts,
+    //     "translate-x": ["0vw", "50vw"].reverse(),
+    // });
+    
+    let queueInst = queue({
+        // padEndDelay: true,
+        easing: "ease",
+        duration: 2000,
+        loop: 1,
+        speed: 1,
+        direction: "alternate"
+    });
 
-    // queueInst.add(((): IAnimationOptions => {
-    //     let el = document.querySelector('#block') as HTMLElement;
+    queueInst.add(((): IAnimationOptions => {
+        let el = document.querySelector('#block') as HTMLElement;
 
-    //     // To support older browsers I can't use partial keyframes
-    //     return {
-    //         target: el,
-    //         "translate-x": translateX,
-    //     };
-    // })(), "= 0");
+        // To support older browsers I can't use partial keyframes
+        return {
+            target: el,
+            "translate-x": translateX,
+        };
+    })(), "= 0");
 
-    // queueInst.add(((): IAnimationOptions => {
-    //     let el = document.querySelector('#block-2') as HTMLElement;
+    queueInst.add(((): IAnimationOptions => {
+        let el = document.querySelector('#block-2') as HTMLElement;
 
-    //     // To support older browsers I can't use partial keyframes
-    //     return {
-    //         target: el,
-    //         "translate-x": translateX,
-    //     };
-    // })(), "< 0");
+        // To support older browsers I can't use partial keyframes
+        return {
+            target: el,
+            "translate-x": translateX,
+        };
+    })());
+
+    queueInst.add(((): IAnimationOptions => {
+        let el = document.querySelector('#block-3') as HTMLElement;
+
+        // To support older browsers I can't use partial keyframes
+        return {
+            target: el,
+            "translate-x": translateX,
+        };
+    })(), "^50");
 })();
