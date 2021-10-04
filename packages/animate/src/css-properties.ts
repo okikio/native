@@ -248,8 +248,6 @@ export const ParseTransformableCSSProperties = (properties: ICSSProperties): ICS
         rest = Object.assign({}, omit(transformProperyNames, AllCSSProperties), toCSSVars(AllCSSProperties));
     } else {
         // Adds support for ordered transforms 
-    // Adds support for ordered transforms 
-        // Adds support for ordered transforms 
         let transformFunctionNames = Object.keys(AllCSSProperties)
             .filter(key => TransformFunctionNames.includes(key));
 
@@ -258,7 +256,7 @@ export const ParseTransformableCSSProperties = (properties: ICSSProperties): ICS
 
         transformFunctionValues = arrFill(transformFunctionValues);
 
-        // The transform string
+        // Create the transform string
         transform = transpose(...transformFunctionValues)
             .filter(isValid)
             .map(arr => createTransformProperty(transformFunctionNames, arr));
@@ -270,7 +268,7 @@ export const ParseTransformableCSSProperties = (properties: ICSSProperties): ICS
     rest = mapObject(rest, (value, key) => {
         let unit: typeof UnitDEGCSSValue | typeof UnitPXCSSValue;
 
-        // If key doesn't have the word color in it, try to add the default "px" or "deg" to it
+        // If the property key doesn't have the word color in it, try to add the default "px" or "deg" to it
         if (!/color|shadow/i.test(key)) {
             let isAngle = /rotate/i.test(key);
             let isLength = new RegExp(CSSPXDataType, "i").test(key) ||

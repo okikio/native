@@ -53,6 +53,10 @@ blockquote {
     }
 }
 
+details p {
+    @apply m-0;
+}
+
 // .icon {
 //     -webkit-font-feature-settings: "liga" off, "dlig";
 //     -moz-font-feature-settings: "liga=0, dlig=1";
