@@ -2,6 +2,9 @@
 // import { Markdown } from 'astro/components';
 import Markdown from "../../components/Markdown.astro";
 import BaseLayout from "../../layouts/BaseLayout.astro";
+
+import PlaybackBlock from "../../components/PlaybackBlock.astro";
+import AnimatedBox from '../../components/AnimatedBox.astro';
 ---
 
 <BaseLayout title="demo">
@@ -9,10 +12,11 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
     <p>
       <span><a href="/">Home</a> / </span>
     </p> 
-
-    <div id="block" class="block w-36 h-36 bg-blue-500 rounded-xl"></div>
-    <div id="block-2" class="block w-36 h-36 bg-blue-500 rounded-xl"></div>
-    <div id="block-3" class="block w-36 h-36 bg-blue-500 rounded-xl"></div>
+    
+    <PlaybackBlock id="simple-demo">
+      <AnimatedBox>1</AnimatedBox>
+      <AnimatedBox id="box-2">2</AnimatedBox>
+    </PlaybackBlock>
 
     <script src={Astro.resolve("../../ts/animate.js")} async type="module"></script>
   </main>

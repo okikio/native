@@ -1,0 +1,21 @@
+---
+const { props } = Astro;
+---
+<style lang="scss">
+    :global(.animated-box) {
+        @apply bg-blue-500 shadow-md rounded-xl;
+        @apply align-middle text-center;
+        @apply absolute top-0 left-0 z-10;
+    
+        --size: min(8vmax, 50px);
+        width: var(--size);
+        height: var(--size);
+        line-height: var(--size);
+
+        aspect-ratio: 1 / 1;
+    }
+</style>
+
+<div class="animated-box" {...props}>
+    <slot />
+</div>

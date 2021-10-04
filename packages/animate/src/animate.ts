@@ -411,8 +411,9 @@ export class Animate {
     /**
      * Represents an Animation Frame Loop
      */
-    public loop(): void {
+    public loop() {
         this.emit("update", this.getProgress(), this);
+        return this;
     }
 
     /**
@@ -420,6 +421,7 @@ export class Animate {
      */
     public stopLoop() {
         Animate.RUNNING.delete(this);
+        return this;
     }
 
     /**
@@ -993,7 +995,6 @@ export class Animate {
             animation.onfinish = () => {
                 // Persist animation states without `fillMode`
                 if (persist) {
-                    // Persist animation states without `fillMode`
                     if (Array.isArray(computedKeyframes) && computedKeyframes.length) {
                         mapObject(computedKeyframes[computedKeyframes.length - 1], (value: any, key: any) => {
                             target.style.setProperty(key, value);

@@ -245,7 +245,7 @@ export const ParseTransformableCSSProperties = (properties: ICSSProperties): ICS
     let transform: string[];
 
     if (CSSVarSupport) {
-        rest = Object.assign({}, toCSSVars(AllCSSProperties), omit(transformProperyNames, AllCSSProperties));
+        rest = Object.assign({}, omit(transformProperyNames, AllCSSProperties), toCSSVars(AllCSSProperties));
     } else {
         // Adds support for ordered transforms 
     // Adds support for ordered transforms 

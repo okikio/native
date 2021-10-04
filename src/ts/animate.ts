@@ -1,4 +1,4 @@
-import { animate, tweenAttr, random, queue, AnimateAttributes, SpringEasing } from "@okikio/animate";
+import { animate, tweenAttr, random, queue, AnimateAttributes, SpringEasing, ApplyCustomEasing } from "@okikio/animate";
 import { interpolate } from "polymorph-js";
 
 import type { IAnimationOptions, TypePlayStates, Queue, Animate } from "@okikio/animate";
@@ -316,7 +316,6 @@ function playbackFn(containerSel: string, queueInst: Queue) {
             }
         });
 } 
-*/
 
 (() => {
     let [translateX, duration] = SpringEasing(["0vw", "50vw"], "spring(5, 100, 10, 1)");
@@ -379,3 +378,121 @@ function playbackFn(containerSel: string, queueInst: Queue) {
         };
     })(), "^50");
 })();
+*/
+
+
+let containerSel = "#simple-demo";
+let el = document.querySelector(`${containerSel} .animated-box`);
+let parentEl = el.parentElement as HTMLElement;
+
+let boundingRect = el.getBoundingClientRect();
+let parentBoundingRect = parentEl.getBoundingClientRect();
+
+let { width, height } = boundingRect;
+let { width: parentWidth, height: parentHeight } = parentBoundingRect;
+
+let motionWidth = parseFloat(parentWidth as unknown as string) - parseFloat(width as unknown as string);
+let motionHeight = parseFloat(parentHeight as unknown as string) - parseFloat(height as unknown as string);
+
+let timelineInst = queue();
+timelineInst.add({
+    target: el,
+    translateX: [0, motionWidth],
+    ...ApplyCustomEasing({
+        translateY: [0, motionHeight],
+        easing: "out-bounce",
+        duration: 3000
+    }),
+    fillMode: "both",
+    loop: 5,
+    easing: "linear",
+    direction: "alternate"
+});
+timelineInst.add({
+    target: document.querySelector(`${containerSel} .animated-box#box-2`),
+    translateX: [0, motionWidth],
+    ...ApplyCustomEasing({
+        translateY: [0, motionHeight],
+        easing: "out-bounce",
+        duration: 3000
+    }),
+    fillMode: "both",
+    loop: 5,
+    easing: "linear",
+    direction: "alternate"
+}, "^400");
+
+setTimeout(() => {
+    console.clear();
+    timelineInst.allInstances((anim) => {
+        anim.updateOptions({
+            translateX: ["0", "200px"]
+        });
+        // console.log(anim);
+    });
+}, 3000);
+
+playbackFn(containerSel, timelineInst);
+
+let playStates = {
+    running: "play",
+    paused: "pause",
+    finished: "replay",
+    idle: "pause",
+    pending: "play"
+};
+
+// I added extra code to the demo to support Chrome 77 and below
+function playbackFn(containerSel, timelineInst) {
+    let container = document.querySelector(containerSel);
+
+    let controlBtn = container.querySelector(`.control-btn`);
+    let playbackEl = container.querySelector(`.playback`);
+    let progressBar = container.querySelector(`.progress-bar`);
+    let progressOutputEl = container.querySelector(`.progress-output`);
+
+    let oldState = timelineInst.getPlayState();
+    let updatePlayState = () => {
+        oldState = timelineInst.getPlayState();
+        playbackEl.setAttribute("data-state", playStates[oldState]);
+    };
+
+    const clickFn = () => {
+        if (timelineInst.is("running")) timelineInst.pause();
+        else if (timelineInst.is("finished")) timelineInst.reset();
+        else timelineInst.play();
+
+        updatePlayState();
+    };
+
+    const inputFn = () => {
+        let percent = Number(progressBar.value);
+        timelineInst.pause();
+        timelineInst.setProgress(percent);
+    };
+
+    const changeFn = () => {
+        if (oldState !== "paused") timelineInst.play();
+        else timelineInst.pause();
+
+        updatePlayState();
+    };
+
+    controlBtn.addEventListener("click", clickFn);
+    progressBar.addEventListener("input", inputFn);
+    progressBar.addEventListener("change", changeFn);
+
+    timelineInst.on("finish begin", updatePlayState).on({
+        update: (progress) => {
+            progress = +progress.toFixed(4);
+            progressBar.value = `` + progress;
+            progressOutputEl.textContent = `${Math.round(progress)}%`;
+        },
+        stop() {
+            controlBtn.removeEventListener("click", clickFn);
+            progressBar.removeEventListener("input", inputFn);
+            progressBar.removeEventListener("change", changeFn);
+            timelineInst = null;
+        }
+    });
+}

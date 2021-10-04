@@ -1,0 +1,69 @@
+---
+import Icon from './Icon.astro';
+const { class: className, ...rest } = Astro.props;
+---
+<style lang="scss">
+    input, button {
+        accent-color: theme("colors.blue.500");
+        
+        &:focus-visible {
+            outline: 2px solid theme("colors.blue.400");
+        }
+    }
+    .playback-block {
+        @apply bg-gray-200 dark:bg-elevated-2 p-5 rounded-xl overflow-hidden;
+    }
+    .playback-canvas {
+        @apply pb-8 relative;
+        height: min(200px, 20vh);
+    }
+    .playback {
+        display: grid;
+        grid-template-columns: 40px 1fr minmax(4ch, max-content);
+        gap: 10px;
+        align-items: center;
+    }
+    .control-btn {
+        @apply bg-gray-200 dark:bg-quaternary text-blue-500;
+        @apply hover:text-blue-600 hover:bg-gray-300 dark:hover:bg-black/60;
+        @apply focus:text-black focus:bg-blue-600;
+        @apply relative rounded-md border-2 border-blue-400/50;
+        width: 40px;
+        height: 40px;
+        
+        :global(.icon) {
+            visibility: hidden;
+            @apply absolute top-1/2 left-1/2;
+            transform: translate(-50%, -50%);
+        }
+    }
+    .playback[data-state="play"] :global(.icon.pause),
+    .playback[data-state="pause"] :global(.icon.play),
+    .playback[data-state="replay"] :global(.icon.replay) {
+        visibility: visible;
+    }
+    :global(.progress-bar) {
+        @apply p-0 m-0;
+    }
+    .progress-output {
+        @apply text-center tabular-nums;
+    }
+</style>
+
+<div class={`playback-block ${className}`} native-scrollbar {...rest}>
+    <div class="playback-canvas">
+        <slot />
+    </div>
+
+    <section class="playback" data-state="pause">
+        <button class="control-btn">
+            <Icon name="play" />
+            <Icon name="pause" />
+            <Icon name="replay" />
+        </button>
+
+        <input class="progress-bar" type="range" value="0" min="0" max="100" step="0.001">
+
+        <div class="progress-output">Loading...</div>
+    </section>
+</div>
