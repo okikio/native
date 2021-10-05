@@ -52,13 +52,13 @@
     "author": {
         "name": "Okiki Ojo",
         "email": "hey@okikio.dev",
-        "url": "https://okikio.dev"
+        "url": "https://blog.okikio.dev"
     },
     "license": "MIT",
     "bugs": {
         "url": "https://github.com/okikio/native/issues"
     },
-    "homepage": "https://github.com/okikio/native/tree/master/packages/animate#readme",
+    "homepage": "https://native.okikio.dev/animate",
     "peerDependencies": {
         "@okikio/emitter": "workspace:*",
         "@okikio/manager": "workspace:*"

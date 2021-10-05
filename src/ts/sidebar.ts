@@ -140,7 +140,7 @@ aside.querySelectorAll("a[href]").forEach((element) => {
             parent = parent.parentElement;
         }
 
-        element.scrollIntoView();
+        // element.scrollIntoView();
         element.scrollIntoView({
           behavior: 'smooth',
         //   block: 'start'

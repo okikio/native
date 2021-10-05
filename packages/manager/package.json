@@ -52,13 +52,13 @@
     "author": {
         "name": "Okiki Ojo",
         "email": "hey@okikio.dev",
-        "url": "https://okikio.dev"
+        "url": "https://blog.okikio.dev"
     },
     "license": "MIT",
     "bugs": {
         "url": "https://github.com/okikio/native/issues"
     },
-    "homepage": "https://github.com/okikio/native/tree/master/packages/manager#readme",
+    "homepage": "https://native.okikio.dev/manager",
     "devDependencies": {
         "@okikio/emitter": "workspace:^2.1.8",
         "esbuild": "^0.13.3",

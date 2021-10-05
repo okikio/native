@@ -52,13 +52,13 @@
     "author": {
         "name": "Okiki Ojo",
         "email": "hey@okikio.dev",
-        "url": "https://okikio.dev"
+        "url": "https://blog.okikio.dev"
     },
     "license": "MIT",
     "bugs": {
         "url": "https://github.com/okikio/native/issues"
     },
-    "homepage": "https://github.com/okikio/native/tree/master/packages/native#readme",
+    "homepage": "https://native.okikio.dev/native",
     "dependencies": {
         "path-to-regexp": "^6.2.0"
     },
