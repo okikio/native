@@ -14,7 +14,7 @@ export default {
     layouts: './src/layouts',
     '~': './src',
   },
-  workspaceRoot: '../..',
+  workspaceRoot: '../',
   
   plugins: [
     /* ... */

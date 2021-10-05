@@ -43,8 +43,10 @@ paths.forEach(p => {
 <style lang="scss">
   aside {
     font-size: 0.9em;
-    width: 300px;
-    @apply fixed lt-sm:h-full lt-sm:w-full py-2 sm:relative left-0 top-0;
+    min-width: 300px;
+    @apply lt-sm:-translate-x-full;
+    @apply py-2 min-w-[250px] lg:min-w-[300px];
+    @apply fixed lt-sm:h-full lt-sm:w-full sm:relative left-0 top-0;
   }
 
   .sticky {
@@ -53,9 +55,10 @@ paths.forEach(p => {
 
   .scroll-shadow-top,
   .scroll-shadow-bottom {
-    @apply from-white dark:from-black to-transparent z-10;
+    @apply from-white dark:from-black to-transparent z-10 flex-shrink-0;
     @apply w-full h-16 pointer-events-none;
   }
+
   .scroll-shadow-top {
     @apply bg-gradient-to-b translate-y-full;
     transform: translateY(99%);
@@ -84,7 +87,7 @@ paths.forEach(p => {
       @apply relative cursor-pointer py-2;
       padding-left: 2ch;
 
-      &::before {
+      &:before {
         font-family: FluentSystemIcons-Regular !important;
         font-style: normal;
         font-weight: normal !important;
@@ -99,24 +102,35 @@ paths.forEach(p => {
         content: "\f2af";
 
         @apply absolute left-0 top-1/2;
-        @apply text-2xl text-blue-600 dark:text-blue-400/60;
+        @apply text-2xl text-blue-600 dark:text-gray-400/60;
         transform: translate(0, -50%);
       }
     }
 
-    &[open] > summary::before {
-      content: "▼ ";
-      content: "\f2a2";
+    summary:before {
+        transition: transform 0.2s ease-in-out;
+        transform: translate(0, -50%) rotateZ(0deg);
+    }
+
+    &[open] > summary {
+      @apply text-blue-500;
+
+      &:before {
+        // content: "▼ ";
+        // content: "\f2a2";
+        transform: translate(0, -50%) rotateZ(90deg);
+      }
     }
 
     a {
       @apply border-none block font-light;
       @apply no-underline py-3 text-black/75 dark:text-blue-300/80;
+      word-break: break-word;
       padding-left: 3ch;
       font-size: 0.9em;
 
       &:before {
-        transform: translate(calc((1ch - 2px) / 2), -50%);
+        transform: translate(calc((1em - 2px) / 2), -50%);
         @apply w-px h-full border-l-[1px] border-dashed border-gray-500/60;
         content: "";
       }
@@ -177,3 +191,5 @@ paths.forEach(p => {
     <div class="scroll-shadow-bottom"></div>
   </div>
 </aside>
+
+<script src={Astro.resolve("../ts/sidebar.js")} type="module" async></script>

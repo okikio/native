@@ -126,46 +126,129 @@ h6 {
         padding-block-end: env(safe-area-inset-bottom);
     }
 }
-
 main[data-wrapper] {
+    @apply w-full;
+    @apply p-3;
+}
+.markdown-body {
     @apply container max-w-screen-lg;
-    padding: 13px;
+    @apply p-3;
 }
 
 article[main-content] {
-    @apply md:grid gap-x-10;
+    @apply md:grid gap-x-10 xl:gap-x-16;
+
+    @screen sm {
+        grid-template-columns: minmax(0, 1fr) 200px;
+    }
 
     @screen md {
-        grid-template-columns: minmax(0, 1fr) 250px;
+        grid-template-columns: minmax(0, 1fr) 300px;
     }
 }
 
 main ul {
     list-style-type: disc;
+
     li {
         margin-bottom: 0.2em;
     }
 }
 
 .toc {
-    @apply md:text-right pt-48;
+    @apply md:text-left pt-48;
 
     .toc-sticky {
-        @apply sticky top-0 overflow-y-auto pr-2 overflow-x-visible;
-        height: 100vh;
+        @apply sticky top-0 pb-2 pr-2 overflow-x-visible;
+        height: calc(100vh - theme("spacing.32"));
+        top: calc(theme("spacing.32") - theme("spacing.10"));
+
+        &:before,
+        &:after {
+            @apply absolute left-0 from-white dark:from-black to-transparent z-10 flex-shrink-0;
+            @apply block w-full h-16 pointer-events-none;
+            content: "";
+        }
+
+        &:before {
+            @apply top-0 bg-gradient-to-b;
+            transform: translateY(
+                calc(
+                    theme("fontSize.2xl[0]") +
+                        theme("fontSize.2xl.1.lineHeight")
+                )
+            );
+        }
+
+        &:after {
+            @apply bottom-0 bg-gradient-to-t;
+        }
 
         @supports (height: 100dvh) {
-            height: 100dvh;
+            height: calc(100dvh - theme("spacing.32"));
         }
     }
 
     .toc-title {
-        @apply pb-4 text-3xl uppercase;
-
+        @apply text-2xl uppercase relative z-10;
+        transform: translateY(calc(theme("spacing.10")));
     }
 
     a {
-        @apply no-underline;
+        @apply inline-block border-none text-black/75 dark:text-blue-300/80;
+        @apply py-1 no-underline hover:underline;
+        @apply font-light;
+        word-break: break-word;
+        font-size: 0.9em;
+
+        &:is(:hover, :focus) {
+            text-decoration-color: black;
+
+            @media (prefers-color-scheme: dark) {
+                text-decoration-color: white;
+            }
+        }
+
+        &:focus {
+            @apply font-normal;
+        }
+    }
+
+    .toc-level-1 {
+        @apply py-10 overflow-y-auto w-full;
+        height: calc(
+            100% - theme("fontSize.2xl[0]") - theme("fontSize.2xl.1.lineHeight")
+        );
+
+        & > .toc-item > a {
+            @apply text-blue-500;
+        }
+    }
+
+    .toc-item .toc-level {
+        padding-inline-start: 1em;
+        @apply py-1 relative;
+
+        li {
+            @apply mb-0;
+        }
+
+        a {
+            @apply py-2 border-l-[1px] border-dashed border-gray-500/60;
+            @apply hover:border-b-0;
+            padding-inline-start: 1em;
+
+            &:focus {
+                @apply text-blue-500;
+                @apply border-b-0;
+                @apply border-solid border-blue-500/80;
+            }
+        }
+    }
+
+    .toc-level-2 a {
+        // font-size: 0.7em;
+        @apply py-2;
     }
 }
 

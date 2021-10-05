@@ -33,8 +33,9 @@ $font-family-heading: $font-family-base;
 html {
     font-size: 62.5%; // So that root size becomes 10px
     font-family: $font-family-base;
-    scroll-padding-block-start: theme("spacing.24");
-    // scroll-margin-block-start: theme("spacing.24");
+    // scroll-padding-block-start: theme("spacing.24");
+    // scroll-margin-block-start: theme("spacing.24");  
+    scroll-padding-top: 15vh;
 
     scrollbar-gutter: stable both-edges;
 }
@@ -47,6 +48,7 @@ body {
     // max-width: 38em;
     color: $color-text;
     background-color: $color-bg;
+    font-size: $font-size-base * 0.95;
 }
 
 @media (max-width: 684px) {
