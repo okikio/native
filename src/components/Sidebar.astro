@@ -3,7 +3,6 @@ import Logo from "./Logo.astro";
 import { globby } from "globby";
 const paths = await globby('docs', {
 		expandDirectories: {
-			// files: ['cat', 'unicorn', '*.jpg'],
 			extensions: ['md']
 		}
 });
