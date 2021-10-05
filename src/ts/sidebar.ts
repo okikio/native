@@ -129,11 +129,11 @@ class Accordion {
   
         parent = parent.parentElement;
       }
-  
-      element.scrollIntoView({
-        behavior: 'smooth',
-        // block: 'start'
-      });
+      element.scrollIntoView();
+      // element.scrollIntoView({
+      //   behavior: 'smooth',
+      //   // block: 'start'
+      // });
     }
   });
   
