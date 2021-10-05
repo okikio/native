@@ -5,7 +5,7 @@
 export default {
   mount: {
     // docs: "/docs",
-    // packages: "/packages"
+    packages: "/packages"
     /* ... */
   },
   alias: {
@@ -13,7 +13,7 @@ export default {
     layouts: './src/layouts',
     '~': './src',
   },
-  workspaceRoot: '../..',
+  // workspaceRoot: '../..',
   
   plugins: [
     /* ... */

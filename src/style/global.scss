@@ -2,9 +2,7 @@
 @tailwind components;
 @tailwind utilities;
 
-
 @font-face {
-    // ?996016c73e71cbeaf86416d20483c9db
     font-family: "FluentSystemIcons-Regular";
     src: url("/fonts/FluentSystemIcons-Regular.ttf") format("truetype");
 }
@@ -55,6 +53,16 @@ blockquote {
 
 details p {
     @apply m-0;
+}
+
+:is(h1, h2, h3, h4, h5, h6, p, a) {
+    @screen lt-sm {
+        word-break: break-all;
+    }
+}
+
+a {
+    word-break: break-all;
 }
 
 // .icon {
@@ -108,8 +116,20 @@ h6 {
     }
 }
 
+.layout {
+    @apply flex relative;
+    @supports (padding-inline-start: env(safe-area-inset-left)) {
+        padding-inline-start: env(safe-area-inset-left);
+        padding-inline-end: env(safe-area-inset-right);
+
+        padding-block-start: env(safe-area-inset-top);
+        padding-block-end: env(safe-area-inset-bottom);
+    }
+}
+
 main[data-wrapper] {
     @apply container max-w-screen-lg;
+    padding: 13px;
 }
 
 article[main-content] {

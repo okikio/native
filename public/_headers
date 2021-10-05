@@ -17,7 +17,7 @@
   Content-Type: text/css
 
 /*.ttf
-  Cache-Control: public, max-age=31536000, stale-while-revalidate=480
+  Cache-Control: public, max-age=31536000, stale-while-revalidate=23480
   Content-Type: font/ttf
 
 /*.js

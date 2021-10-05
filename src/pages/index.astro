@@ -7,7 +7,7 @@ const content = Astro.fetchContent('../../README.md')[0].astro.source;
 ---
 
 <BaseLayout>
-  <main data-wrapper>
+  <div>
     <p>
       <span><a href="/">Home</a> / </span>
     </p> 
@@ -15,5 +15,5 @@ const content = Astro.fetchContent('../../README.md')[0].astro.source;
     <article main-content>
       <Markdown content={content} />
     </article> 
-  </main>
+  </div>
 </BaseLayout>

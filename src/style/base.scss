@@ -45,18 +45,8 @@ body {
     line-height: 1.618;
     @apply text-3xl;
     // max-width: 38em;
-    margin: auto;
     color: $color-text;
     background-color: $color-bg;
-    padding: 13px;
-
-    @supports (padding-left: env(safe-area-inset-left)) {
-        padding-inline-start: calc(13px + env(safe-area-inset-left));
-        padding-inline-end: calc(13px + env(safe-area-inset-right));
-
-        padding-block-start: calc(13px + env(safe-area-inset-top));
-        padding-block-end: calc(13px + env(safe-area-inset-bottom));
-    }
 }
 
 @media (max-width: 684px) {

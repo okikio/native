@@ -1,0 +1,180 @@
+---
+import Logo from "./Logo.astro";
+import { globby } from "globby";
+const paths = await globby('docs', {
+		expandDirectories: {
+			// files: ['cat', 'unicorn', '*.jpg'],
+			extensions: ['md']
+		}
+});
+
+const obj = {}; 
+function isObject(obj) {
+  return typeof obj === 'object' && obj !== null && obj !== undefined
+}
+function deepGet(obj, path) {
+  var length = path.length;
+  for (var i = 0; i < length; i++) {
+    if (obj == null) return void 0;
+    obj = obj[path[i]];
+  }
+  return length ? obj : void 0;
+}
+function deepSet(obj, path, value) {
+  var length = path.length;
+  for (var i = 0; i < length; i++) {
+    if (!isObject(obj[path[i]])) {
+      obj[path[i]] = {};
+    }
+    
+    if (i == length - 1) {
+      obj[path[i]] = value;
+    }
+
+    obj = obj[path[i]];
+  }
+  return length ? obj : void 0;
+}
+paths.forEach(p => {
+  let path = p.replace("docs/", "").replace(/\.md$/, "");
+  deepSet(obj, path.split("/"), "/" + path);
+})
+---
+
+<style lang="scss">
+  aside {
+    font-size: 0.9em;
+    width: 300px;
+    @apply fixed lt-sm:h-full lt-sm:w-full py-2 sm:relative left-0 top-0;
+  }
+
+  .sticky {
+    @apply sm:sticky h-full max-h-screen top-0 w-full flex flex-col;
+  }
+
+  .scroll-shadow-top,
+  .scroll-shadow-bottom {
+    @apply from-white dark:from-black to-transparent z-10;
+    @apply w-full h-16 pointer-events-none;
+  }
+  .scroll-shadow-top {
+    @apply bg-gradient-to-b translate-y-full;
+    transform: translateY(99%);
+  }
+  
+  .scroll-shadow-bottom {
+    @apply bg-gradient-to-t -translate-y-full;
+    transform: translateY(-99%);
+  }
+
+  .scroll {
+    @apply relative w-full overflow-auto px-5 py-10;
+  }
+
+  details {
+    .content {
+      padding-left: 2ch;
+      @apply py-2;
+    }
+
+    summary::marker {
+      content: "";
+    }
+
+    summary, a {
+      @apply relative cursor-pointer py-2;
+      padding-left: 2ch;
+
+      &::before {
+        font-family: FluentSystemIcons-Regular !important;
+        font-style: normal;
+        font-weight: normal !important;
+        font-variant: normal;
+        text-transform: none;
+        line-height: 1;
+
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+
+        content: "► ";
+        content: "\f2af";
+
+        @apply absolute left-0 top-1/2;
+        @apply text-2xl text-blue-600 dark:text-blue-400/60;
+        transform: translate(0, -50%);
+      }
+    }
+
+    &[open] > summary::before {
+      content: "▼ ";
+      content: "\f2a2";
+    }
+
+    a {
+      @apply border-none block font-light;
+      @apply no-underline py-3 text-black/75 dark:text-blue-300/80;
+      padding-left: 3ch;
+      font-size: 0.9em;
+
+      &:before {
+        transform: translate(calc((1ch - 2px) / 2), -50%);
+        @apply w-px h-full border-l-[1px] border-dashed border-gray-500/60;
+        content: "";
+      }
+
+      & + details {
+        @apply pt-6;
+      }
+
+      &.active {
+        @apply text-blue-500;
+
+        &:before {
+          @apply border-solid border-blue-500/80;
+        }
+      }
+    }
+  }
+</style>
+
+<aside>
+  <Logo />
+  <div class="sticky">
+    <div class="scroll-shadow-top"></div>
+    <div class="scroll">
+      {(() => {
+        // Capitalize first letter of each word
+        let capitalize = (str) => {
+          return str.replace(/-/g, " ").replace(/\w\S*/g, function(txt){
+            return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
+          }).replace(/api/gi, "API").replace(/css/gi, "CSS");
+        }
+
+        let generate = (obj) => {
+          let keys = Object.keys(obj).sort((a, b) => {
+            return a == "index" ? -1 : b == "index" ? 1 : 0;
+          });
+          return keys.map(item => {
+            if (isObject(obj[item])) {
+              return (
+                <details>
+                  <summary>
+                    <p>{["animate", "emitter", "manager", "native"].includes(item) ? `@okikio/${item}` : capitalize(item)}</p>
+                  </summary>
+
+                  <div class="content">
+                    {generate(obj[item])}
+                  </div>
+                </details>
+              );
+            } else {
+              return (<a href={obj[item]}>{item == "index" ? "Overview" : capitalize(item)}</a>);
+            }
+          })
+        }
+        return generate(obj);
+      })()}
+    </div>
+    <div class="scroll-shadow-bottom"></div>
+  </div>
+</aside>

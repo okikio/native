@@ -40,7 +40,7 @@ let pkg = "@okikio/" + pathArr[0];
 ---
 
 <BaseLayout title={`${title}${ pkg == title ? "" : " - " + pkg}`}>
-  <main data-wrapper>
+  <div>
     <p>
       <span><a href="/">Home</a>{ pathArr.length ? " / " : "" }</span>
       {pathArr.map((path, i) => {
@@ -51,5 +51,5 @@ let pkg = "@okikio/" + pathArr[0];
     <article main-content>
       <Markdown content={content} />
     </article> 
-  </main>
+  </div>
 </BaseLayout>
