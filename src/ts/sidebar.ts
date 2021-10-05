@@ -141,10 +141,10 @@ aside.querySelectorAll("a[href]").forEach((element) => {
         }
 
         element.scrollIntoView();
-        // element.scrollIntoView({
-        //   behavior: 'smooth',
-        //   // block: 'start'
-        // });
+        element.scrollIntoView({
+          behavior: 'smooth',
+        //   block: 'start'
+        });
     }
 });
 
