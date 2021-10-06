@@ -55,10 +55,18 @@ details p {
     @apply m-0;
 }
 
+details {
+    @apply cursor-pointer;
+}
+
 :is(h1, h2, h3, h4, h5, h6, p, a) {
     @screen lt-sm {
         word-break: break-all;
     }
+}
+
+p {
+    // @apply font-manrope font-normal;
 }
 
 a {

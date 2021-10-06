@@ -4,13 +4,18 @@
 
 [@okikio/animate](/docs/animate/index.md) is a js animation library for the modern web. It was inspired by [animateplus](https://github.com/bendc/animateplus) and [animejs](https://animejs.com/), it is focused on performance and ease of use. It utilizes the Web Animation API (WAAPI) to deliver fluid animations at a *semi-small* size, in total it weighs **~11.27 KB** (minified and gzipped). Most devs will only really be using a few of `@okiko/animate`'s features at a time, so the actual minimum usable [treeshakeable](https://developer.mozilla.org/en-US/docs/Glossary/Tree_shaking) file size is [**~7.07 KB** (minified and gzipped)](https://bundle.js.org/?q=@okikio/animate&treeshake=animate).
 
-> _**A quick note on size**: [CustomEasing](/docs/animate/api/custom-easing.md), [staggers](/docs/animate/api/stagger-and-random.md), and [Queues](/docs/animate/api/queues-class.md) are now supported. After these additions the total library size doubled, so when I mean minimum usable size, I mean when you are only using the `animate` function or the `Animate` class._
-
 I suggest reading the in depth [CSS-Tricks article](https://css-tricks.com/how-i-used-the-waapi-to-build-an-animation-library/) I made on `@okikio/animate`, it will help you determine if `@okikio/animate` is right for your project.
 
-> _**Note**: To properly understand the inner working of `@okikio/animate`, please read up on the [Web Animation API](https://developer.mozilla.org/en-US/docs/Web/API/Element/animate)._
+> _**A quick note on size**: [CustomEasing](/docs/animate/api/custom-easing.md), [staggers](/docs/animate/api/stagger-and-random.md), and [Queue](/docs/animate/api/queue-class.md) are now supported. After these additions the total library size doubled, so when I mean minimum usable size, I mean when you are only using the `animate` function._
 
 
+## Demo & Showcase
+
+* [bundle.js.org](https://bundle.js.org)
+* [jabodent.com](https://jabodent.com)
+* Your project name here...
+
+> [Click to view demo &#8594;](/docs/demo)
 
 ## Installation
 
@@ -65,31 +70,17 @@ const { animate } = window.animate;
 const { default: anime } = window.animate; // LOL
 ```
 
-## Demo & Showcase
-
-* [bundle.js.org](https://bundle.js.org)
-* [jabodent.com](https://jabodent.com)
-* Your project name here...
-
-> [Click to view demo &#8594;](/docs/demo/animate.html)
 
 ## Getting started
 
 `@okikio/animate` creates animations by creating instances of the [Animate class](/docs/api/classes/_okikio_animate.Animate.md) (a class that acts as a wrapper around the Web Animation API). 
 
-_To create new instances of the `Animate` class, you can either import the `Animate` class and do this, `new Animate({ ... })` or import the `animate` (lowercase) method and do this, `animate({ ... })`. The `animate` method creates new instances of the `Animate` class and passes the options it recieves as arguments to the `Animate` class._
+_To create new instances of the `Animate` class, you can do this, `animate({ ... })`._
 
 ```ts
-import { Animate, animate } from "@okikio/animate";
+import { animate } from "@okikio/animate";
 
-new Animate({
-  target: [/* ... */],
-  duration: 2000,
-  // ... 
-});
-
-// or
-
+// The `animate` function creates new instances of the `Animate` class
 animate({
   target: [/* ... */],
   duration: 2000,
@@ -97,13 +88,13 @@ animate({
 });
 ```
 
-The `Animate` class recieves a set of [targets](/docs/animate/api/options/target.md) to animate, it then creates a list of `Animation` instances corrosponding to the respective target elements. In order to determine when all target animations are complete, the `Animate` class also creates a main `Animation` instance. The main `Animation` instance plays for the total duration of all target animations, and alerts the user when all target animations have completed. 
+The `Animate` class recieves a set of [targets](/docs/animate/api/options/target.md) to animate, it then creates a list of WAAPI `Animation` instances corrosponding to the target elements. 
 
-Target animations are stored in `Animate.prototype.animations: WeakMap<KeyframeEffect, Animation>`, using their [KeyframeEffect](https://developer.mozilla.org/en-US/docs/Web/API/KeyframeEffect) as the key, while the the main animation is stored in `Animate.prototype.mainAnimation: Animation`. You can actually access the animation for a specific target using `Animate.prototype.getAnimation(target: HTMLElement): Animation`, meaning you aren't limited by what `@okikio/animate` provides, you can use the WAAPI api's you know and love directly.
-
-[Read the API docs to learn more  &#8594;](/docs/api/classes/_okikio_animate.Animate.md#animations)
+In order to determine when all target animations are complete, the `Animate` class also creates a main `Animation` instance. The main `Animation` instance plays for the total duration of all target animations, and alerts the user when all target animations have completed. 
 
 > _**Note**: `Animation` instances come from the `Animation` class of the Web Animations API. The `Animation` class represents a single animation player and provides playback controls and a timeline for an animation node or source, [Read more...](https://developer.mozilla.org/en-US/docs/Web/API/Animation)_
+
+[Read the API docs to learn more  &#8594;](/docs/animate/api/index.md)
 
 
 
@@ -133,7 +124,12 @@ import animate from "@okikio/animate";
 (async () => {
     let [options] = await animate({
         target: ".div",
-        /* NOTE: If you turn this on you have to comment out the transform property. The keyframes property is a different format for animation you cannot you both styles of formatting in the same animation */
+        /* 
+         * NOTE: 
+         *   If you turn this on you have to comment out the transform property. 
+         *   The keyframes property is a different format for animation you cannot use 
+         *   both styles of formatting in the same animation 
+         */
         // keyframes: [
         //     { transform: "translateX(0px)" },
         //     { transform: "translateX(300px)" }
@@ -207,7 +203,7 @@ There are other limitations to what the Web Animation API will allow, most of th
 
 Some of these constraints have been recently unlocked, with Chrome, Firefox, and Safari adding more WAAPI features, and `@okikio/animate` doing some background work to enable cool new features. For one, animations using motion paths are now possible through [Motion Path](https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Motion_Path), and morphing can be emulated through [tweenAttr](/docs/animate/api/animate-attributes.md).
 
-Not all limitations are covered here, look through the [limitations doc](/docs/animate/limitations.md) for more.
+Not all limitations are covered here, look through the [limitations guide](/docs/animate/limitations.md) for more.
 
 ## Best practices 
 
@@ -225,7 +221,7 @@ Learn about polyfilling, bundling, and more in the [browser support guide](/docs
 
 If there is something I missed, a mistake, or a feature you would like added please create an issue or a pull request on the `beta` branch and I'll try to get to it.
 
-Read through the [contributing documentation](/docs/animate/contributing.md) for detailed guides.
+Read through the [contributing guide](/docs/animate/contributing.md) for detailed guides.
 
 ## Licence
 

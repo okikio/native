@@ -4,6 +4,8 @@ If there is something I missed, a mistake, or a feature you would like added ple
 
 > _**Warning**: all contributions must be done on the `beta` branch. By default Gitpod will open on the `beta` branch, but still keep this in mind._
 
+> _**Note**: To properly understand the inner working of `@okikio/animate`, please read up on the [Web Animation API](https://developer.mozilla.org/en-US/docs/Web/API/Element/animate)._
+
 *The `native` initiative uses [Changesets](https://github.com/atlassian/changesets/blob/main/docs/intro-to-using-changesets.md#adding-changesets), for versioning and Changelog generation, you don't need to create one, but it would be amazing if you could.*
 
 ## Using Gitpod

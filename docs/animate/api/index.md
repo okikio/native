@@ -203,7 +203,7 @@ Use pre-made effects in `@okikio/animate`, for example, the `animate.css` effect
 
 ### Stagger and Random
 
-### Queues Class
+### Queue Class
 
 
 ### Methods & properties

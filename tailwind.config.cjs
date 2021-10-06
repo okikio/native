@@ -8,7 +8,8 @@ module.exports = {
     theme: {
         extend: {
             fontFamily: {
-                "lexend": ["Lexend", "Manrope", "Century Gothic", "sans-serif"]
+                "lexend": ["Lexend", "Manrope", "Century Gothic", "sans-serif"],
+                "manrope": ["Manrope", "Lexend", "Century Gothic", "sans-serif"]
             },
             colors: {
                 "elevated": "#1C1C1E",

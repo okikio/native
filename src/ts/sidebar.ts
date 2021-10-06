@@ -148,6 +148,6 @@ aside.querySelectorAll("a[href]").forEach((element) => {
     }
 });
 
-document.querySelectorAll("details").forEach((el) => {
+aside.querySelectorAll("details").forEach((el) => {
     new Accordion(el);
 });
