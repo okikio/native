@@ -2,7 +2,7 @@ import { CustomEasing, GetEasingFunction, parseEasingParameters } from "./custom
 import { getUnit } from "./utils";
 
 import type { TypeEasingFunction, TypeCustomEasingOptions } from "./custom-easing";
-import type { TypeCallback } from "./types";
+import type { TypeComputableAnimationFunction } from "./types";
 
 export interface IStaggerOptions {
     from?: number | "first" | "center" | "last",
@@ -96,7 +96,7 @@ export interface IStaggerOptions {
  * Because stagger returns an {@link TypeCallback | AnimationOption callback}, it fundementally doesn't work with {@link CustomEasing}, 
  * so, you need to use {@link StaggerCustomEasing} to enable custom easing.
  */
-export const stagger = (val: string | number | (string | number)[], params: IStaggerOptions = {}): TypeCallback => {
+export const stagger = (val: string | number | (string | number)[], params: IStaggerOptions = {}):  TypeComputableAnimationFunction<string | number> => {
     const { grid, axis, from = 0, easing, direction = "normal" } = params;
 
     const isArr = Array.isArray(val);
@@ -121,7 +121,7 @@ export const stagger = (val: string | number | (string | number)[], params: ISta
     let fromIndex = from as number;
     if (/from/i.test(from as string)) fromIndex = 0;
 
-    return (index, total): string | number => {
+    return (index: number, total: number): string | number => {
         if (/center/i.test(from as string)) fromIndex = (total - 1) / 2;
         if (/last/i.test(from as string)) fromIndex = total - 1;
 
@@ -206,10 +206,10 @@ export interface IStaggerCustomEasingOptions extends TypeCustomEasingOptions {
  * 
  * Check out demos on [Codepen](https://codepen.io/okikio/pen/JjNXGPq)
 */
-export const StaggerCustomEasing = (val: (string | number)[], params: IStaggerCustomEasingOptions = {}): TypeCallback => {
+export const StaggerCustomEasing = (val: (string | number)[], params: IStaggerCustomEasingOptions = {}):  TypeComputableAnimationFunction<(string | number)[]> => {
     let staggerOptions = params.stagger ?? {};
 
-    return (index, total) => {
+    return (index: number, total: number) => {
         let staggaredValues = val.map((current, i) => {
             let prev = val[Math.max(0, i - 1)];
             return stagger([prev, current], staggerOptions)(index, total);

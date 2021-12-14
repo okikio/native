@@ -6,11 +6,14 @@ import {
     mapObject,
     getUnit,
     trim,
+    isEmpty
 } from "./utils";
+import { rgba } from "./color-rgba";
 import { toRGBAArr } from "./unit-conversion";
+import { getCSS } from "./browser-objects";
 import bezier from "./bezier-easing";
 
-import type { IAnimationOptions } from "./types";
+import type { IAnimateInstanceConfig } from "./types";
 
 export const limit = (value: number, min: number, max: number) =>
     Math.min(Math.max(value, min), max);
@@ -189,7 +192,9 @@ export const EaseOutIn = (ease: TypeEasingFunction): TypeEasingFunction => {
 };
 
 /**
- * The default list of easing functions, do note this is different from {@link EASING}
+ * The default list of easing functions, 
+ * 
+ * _**Note**_: this is different from {@link EASING}
  */
 export const EasingFunctions: { [key: string]: TypeEasingFunction } = {
     steps: Steps,
@@ -452,7 +457,7 @@ export const interpolateComplex = (
     if (isNumber) return interpolateNumber(t, values as number[], decimal);
 
     // Interpolate colors
-    let isColor = values.every((v) => CSS.supports("color", toStr(v)));
+    let isColor = values.every((v) => !isEmpty(getCSS()) ? getCSS()?.supports?.("color", toStr(v)) : isValid(rgba(v ?? null)) );
     if (isColor)
         return `rgba(${interpolateColor(t, values as string[], decimal)})`;
 
@@ -821,7 +826,7 @@ export const ApplyCustomEasing = (
             | TypeEasingFunction
             | (number | string)[];
     } = {}
-): IAnimationOptions & TypeCustomEasingOptions & {
+): IAnimateInstanceConfig & TypeCustomEasingOptions & {
     [key: string]:
         | number
         | string

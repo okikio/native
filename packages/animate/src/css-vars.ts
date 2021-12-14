@@ -1,5 +1,6 @@
 import { UnitPXCSSValue, UnitDEGCSSValue } from "./unit-conversion";
-import { isValid, transpose } from "./utils";
+import { isValid, transpose, isEmpty } from "./utils";
+import { getCSS } from "./browser-objects";
 
 export const transformCSSVars = {
     translate3d: ["--translate3d0", "--translate3d1", "--translate3d2"],
@@ -20,7 +21,7 @@ export const transformCSSVars = {
     scaleY: "--scaleY",
     scaleZ: "--scaleZ",
 
-    // You can choose to use transform functions or matrix's, but not both
+    // // You can choose to use transform functions or matrix's, but not both
     // matrix3d: "--matrix3d",
     // matrix: "--matrix",
 
@@ -31,7 +32,7 @@ export const transformCSSVars = {
     perspective: "--perspective"
 };
 
-export const CSSVarSupport = "registerProperty" in CSS;
+export const CSSVarSupport = "registerProperty" in getCSS();
 export const transformProperyNames = Object.keys(transformCSSVars);
 
 export const createTransformValue = (opts = {}) => {
@@ -55,28 +56,28 @@ export const createTransformValue = (opts = {}) => {
 
                 if (/translate|perspective/i.test(name)) {
                     // @ts-ignore
-                    CSS.registerProperty({
+                    getCSS()?.registerProperty?.({
                         ...opts,
                         syntax: "<length-percentage>",
                         initialValue: "0px"
                     });
                 } else if (/rotate3d3|skew/i.test(name)) {
                     // @ts-ignore
-                    CSS.registerProperty({
+                    getCSS()?.registerProperty?.({
                         ...opts,
                         syntax: "<angle>",
                         initialValue: "0deg"
                     });
                 } else if (/scale|rotate3d/i.test(name)) {
                     // @ts-ignore
-                    CSS.registerProperty({
+                    getCSS()?.registerProperty?.({
                         ...opts,
                         syntax: "<number>",
                         initialValue: /rotate3d/i.test(name) ? 0 : 1
                     });
                 } else if (/rotate/i.test(name)) {
                     // @ts-ignore
-                    CSS.registerProperty({
+                    getCSS()?.registerProperty?.({
                         ...opts,
                         syntax: "<angle>",
                         initialValue: "0deg"
@@ -158,8 +159,8 @@ export const toCSSVars = (opts = {}) => {
         CSSVars.forEach((CSSvariable, i) => {
             // The first value in scale states both the x and y scales, but only if there is only one value given
             let index = ScaleBothAxis ? 0 : i;
-            let value = is2dArray
-                ? // flip a 2d array over it's diagonal axis,
+            let value = is2dArray ? 
+                // flip a 2d array over it's diagonal axis,
                 // this ensures the correct CSS axis variable for translate, scale, rotate, and their 3d varitants
                 // (search up "transpose matrix" on Google for more info.)
                 transpose(...input)[index]

@@ -5,15 +5,26 @@ import { KeyframeParse, parseOffset } from "./builtin-effects";
 import { ParseTransformableCSSProperties, ParseTransformableCSSKeyframes, CSSCamelCase } from "./css-properties";
 import { flatten, mapObject, convertToDash, isValid, omit, isObject } from "./utils";
 import { createTransformValue, CSSVarSupport, transformCSSVars } from "./css-vars";
+import { getDocument } from "./browser-objects";
 
 import type { TypeEventInput, TypeListenerCallback } from "@okikio/emitter";
-import type { TypeAnimationTarget, TypeAnimationOptionTypes, TypeCallbackArgs, TypeComputedAnimationOptions, IAnimationOptions, TypeComputedOptions, TypeKeyFrameOptionsType, TypeCSSLikeKeyframe, TypeAnimationEvents, TypePlayStates, ICSSProperties } from "./types";
+import type { TypeAnimationTarget, TypeCallbackArgs, IStandaloneComputedAnimateOptions, IStandaloneAnimationConfig, IIndividualTransformProperties, IAnimateInstanceConfig, TypeAnimationEvents, TypePlayStates, ITotalDurationInfo } from "./types";
 
-/* DOM */
+/**
+ * Get elements as an array
+ * @param selector The selector to get the elements from
+ * @returns An array of elements
+ */
 export const getElements = (selector: string | Node): Node[] => {
-    return typeof selector === "string" ? Array.from(document.querySelectorAll(selector as string)) : [selector];
+    return typeof selector === "string" ? Array.from(getDocument()?.querySelectorAll?.(selector as string)) : [selector];
 };
 
+/**
+ * Retrieves all target elements
+ * 
+ * @param targets targets to retrieve, ranging from strings to arrays to DOM Elements
+ * @returns Returns a flattened array with all the target to retrieve
+ */
 export const getTargets = (targets: TypeAnimationTarget): Node[] => {
     if (Array.isArray(targets)) {
         return flatten((targets as TypeAnimationTarget[]).map(getTargets));
@@ -25,15 +36,31 @@ export const getTargets = (targets: TypeAnimationTarget): Node[] => {
     return [];
 };
 
-/* VALUES */
-export const computeOption = (value: TypeAnimationOptionTypes, args: TypeCallbackArgs, context: Animate): TypeComputedAnimationOptions => {
+/**
+ * Computes values. 
+ * If the input value is a function, run it with the arguments from `args`, and the scope from `scope`, then return the computed value. 
+ * Otherwise, return the input value.
+ * 
+ * @param value The value to compute
+ * @param args If value is a function, the arguments to pass to said function
+ * @param scope The scope of the function
+ * @returns Returns the computed value if inputed value is a function, otherwise, returns the inputed value
+ */
+export const computeOption = (value: unknown, args: TypeCallbackArgs, scope: Animate): unknown => {
     if (typeof value === "function") {
-        return value.apply(context, args);
+        return value.apply(scope, args);
     } else return value;
 };
 
-export const mapAnimationOptions = (options: IAnimationOptions, args: TypeCallbackArgs, animate: Animate): TypeComputedOptions => {
-    return mapObject(options, (value) => computeOption(value, args, animate));
+/**
+ * Loops through animation options and computes the values of each option if the option is a function.
+ * @param options The computable options to compute
+ * @param args The arguments to pass to the computable options, callback function
+ * @param scope The scope of the computable options
+ * @returns The computed values of computable options 
+ */
+export const mapAnimationOptions = (options: IAnimateInstanceConfig, args: TypeCallbackArgs, scope: Animate): IStandaloneComputedAnimateOptions & Omit<KeyframeEffectOptions, keyof IStandaloneComputedAnimateOptions> => {
+    return mapObject(options, (value) => computeOption(value, args, scope));
 };
 
 /**
@@ -146,10 +173,10 @@ export const EasingKeys = Object.keys(EASINGS);
 /**
  * Converts users input into a usable easing function string
  *
- * @param ease - easing functions; {@link EasingKeys}, cubic-bezier, steps, linear, etc...
+ * @param ease easing functions; {@link EasingKeys}, cubic-bezier, steps, linear, etc...
  * @returns an easing function that `KeyframeEffect` can accept
  */
-export const GetEase = (ease: keyof typeof EASINGS | string = "ease"): string => {
+export const GetEase = (ease: keyof typeof EASINGS | (string & {}) = "ease"): string => {
     // Convert camelCase strings into dashed strings, then Remove the "ease-" keyword
     let search = convertToDash(ease).replace(/^ease-/, "");
     return EasingKeys.includes(search) ? EASINGS[search] : ease;
@@ -180,7 +207,7 @@ export const GetEase = (ease: keyof typeof EASINGS | string = "ease"): string =>
  * }
  * ```
  */
-export const DefaultAnimationOptions: IAnimationOptions = {
+export const DefaultAnimationOptions: IAnimateInstanceConfig = {
     keyframes: [],
     offset: [],
 
@@ -198,20 +225,31 @@ export const DefaultAnimationOptions: IAnimationOptions = {
 
     direction: "normal",
     padEndDelay: false,
-    timeline: document.timeline,
+    timeline: getDocument()?.timeline,
     extend: {}
 };
 
 /** Parses the different ways to define options, and returns a merged options object  */
-export const parseOptions = (options: IAnimationOptions): IAnimationOptions => {
+export const parseOptions = (options: IAnimateInstanceConfig): IAnimateInstanceConfig => {
     let { options: animation, ...rest } = options;
     let oldOptions = animation instanceof Animate ? animation.options : (Array.isArray(animation) ? animation?.[0]?.options : animation);
     return Object.assign({}, oldOptions, rest);
 }
 
-export const FUNCTION_SUPPORTED_TIMING_KEYS = ["easing", "loop", "endDelay", "duration", "speed", "delay", "timelineOffset", "direction", "extend", "fillMode", "composite"];
-export const NOT_FUNCTION_SUPPORTED_TIMING_KEYS = ["keyframes", "padEndDelay", "persist", "onfinish", "oncancel", "autoplay", "target", "targets", "timeline"];
-export const ALL_TIMING_KEYS = [...FUNCTION_SUPPORTED_TIMING_KEYS, ...NOT_FUNCTION_SUPPORTED_TIMING_KEYS];
+/** 
+ * The array of properties that can be computed as callback functions
+*/
+export const FUNCTION_SUPPORTED_ANIMATION_CONFIG_KEYS = ["easing", "loop", "endDelay", "duration", "speed", "delay", "timelineOffset", "direction", "extend", "fillMode", "composite"];
+
+/** 
+ * The array of properties that `can't` be computed as callback functions
+*/
+export const NON_FUNCTION_SUPPORTED_ANIMATION_CONFIG_KEYS = ["keyframes", "padEndDelay", "persist", "onfinish", "oncancel", "autoplay", "target", "targets", "timeline"];
+
+/**
+ * The full array of properties that are supported as config options, computable or not
+ */
+export const ALL_ANIMATION_CONFIG_KEYS = [...FUNCTION_SUPPORTED_ANIMATION_CONFIG_KEYS, ...NON_FUNCTION_SUPPORTED_ANIMATION_CONFIG_KEYS];
 
 /**
  * An animation library for the modern web, which. Inspired by animate plus, and animejs, [@okikio/animate](https://www.skypack.dev/view/@okikio/animate) is a Javascript animation library focused on performance and ease of use.
@@ -224,12 +262,12 @@ export class Animate {
      *
      * Read more about the {@link DefaultAnimationOptions}
      */
-    public options: IAnimationOptions = {};
+    public options: IAnimateInstanceConfig = {};
 
     /** 
      * Stores the options for the current animation `without` the {@link DefaultAnimationOptions}
     */
-    public initialOptions: IAnimationOptions = {};
+    public initialOptions: IAnimateInstanceConfig = {};
 
     /**
      * The properties to animate
@@ -244,7 +282,7 @@ export class Animate {
     /**
      * The computed options that are used for the total duration
      */
-    public totalDurationOptions: TypeComputedOptions = {};
+    public totalDurationOptions: ITotalDurationInfo = {};
 
     /**
      * The largest duration out of all Animation's
@@ -320,7 +358,7 @@ export class Animate {
      *
      * _**Note**: keyframes are not included, both the array form and the object form; the options, speed, extend, padEndDelay, and autoplay animation options are not included_
      */
-    public computedOptions: WeakMap<HTMLElement, TypeComputedOptions> = new WeakMap();
+    public computedOptions: WeakMap<HTMLElement, KeyframeEffect> = new WeakMap();
 
     /**
      * A WeakMap of Animations
@@ -334,8 +372,9 @@ export class Animate {
      *
      * _**Note**: the computedKeyframes are changed to their proper Animation instance options, so, some of the names are different, and options that can't be computed are not present. E.g. translateX, skew, etc..., they've all been turned into the transform property.*_
      */
-    public computedKeyframes: WeakMap<HTMLElement, TypeKeyFrameOptionsType> = new WeakMap();
-    constructor(options: IAnimationOptions = {}) {
+    public computedKeyframes: WeakMap<HTMLElement, Keyframe[] | PropertyIndexedKeyframes> = new WeakMap();
+
+    constructor(options: IAnimateInstanceConfig = {}) {
         this.loop = this.loop.bind(this);
         this.onVisibilityChange = this.onVisibilityChange.bind(this);
         this.on("error", console.error);
@@ -344,7 +383,7 @@ export class Animate {
         if (this.mainAnimation) {
             this.visibilityPlayState = this.getPlayState();
             if (Animate.pauseOnPageHidden) {
-                document.addEventListener('visibilitychange', this.onVisibilityChange, false);
+                getDocument()?.addEventListener('visibilitychange', this.onVisibilityChange, false);
             }
         }
 
@@ -438,7 +477,7 @@ export class Animate {
      * document `visibilitychange` event handler
      */
     public onVisibilityChange() {
-        if (document.hidden) {
+        if (getDocument()?.hidden) {
             this.visibilityPlayState = this.getPlayState();
             if (this.is("running")) {
                 this.loop();
@@ -636,7 +675,7 @@ export class Animate {
     public stop() {
         this.cancel();
         this.stopLoop();
-        document.removeEventListener('visibilitychange', this.onVisibilityChange, false);
+        getDocument()?.removeEventListener('visibilitychange', this.onVisibilityChange, false);
 
         this.targets.forEach((target: HTMLElement) => this.removeTarget(target));
 
@@ -671,7 +710,7 @@ export class Animate {
      * Returns the timings of an Animation, given a target
      * E.g. { duration, endDelay, delay, iterations, iterationStart, direction, easing, fill, etc... }
      */
-    public getTiming(target: HTMLElement): TypeComputedAnimationOptions {
+    public getTiming(target: HTMLElement): KeyframeEffectOptions {
         let keyframeOptions = this.computedOptions.get(target) ?? {};
         let timings = this.keyframeEffects.get(target).getTiming?.() ?? {};
 
@@ -734,12 +773,15 @@ export class Animate {
     /**
      * Set the playback speed of an Animation
      */
-    public setSpeed(speed: number = 1) {
-        this.maxSpeed = speed;
+    public setSpeed(speed: number | string = 1) {
+        if (typeof speed == "string")
+            speed = Number(speed);
+
+        this.maxSpeed = speed as number;
         this.all(anim => {
             if (anim.updatePlaybackRate)
-                anim.updatePlaybackRate(speed);
-            else anim.playbackRate = speed;
+                anim.updatePlaybackRate(speed as number);
+            else anim.playbackRate = speed as number;
         });
         return this;
     }
@@ -747,8 +789,14 @@ export class Animate {
     /**
      * Returns an array of computed options
      */
-    protected createArrayOfComputedOptions(optionsFromParam: IAnimationOptions, len: number) {
-        let result: TypeComputedAnimationOptions = [];
+    protected createArrayOfComputedOptions(optionsFromParam: IAnimateInstanceConfig, len: number) {
+        let result: (ReturnType<typeof mapAnimationOptions> & {
+            /**
+             * The temporary storage of a specific animations total duration
+             */
+            tempDurations?: number,
+            iterations?: KeyframeEffectOptions["iterations"] | number
+        })[] = [];
 
         // Converts animation options to their proper Animation Effects forms
         let convertOptions = (getOption: Function) => {
@@ -796,7 +844,7 @@ export class Animate {
 
         this.targets.forEach((target: HTMLElement, i) => {
             // Basically if there is already a computedOption for the target element use it, but don't ovveride any new options
-            let oldComputedOptions = (this.computedOptions.get(target) ?? {}) as IAnimationOptions;
+            let oldComputedOptions = (this.computedOptions.get(target) ?? {}) as IAnimateInstanceConfig;
             let animationOptions = convertOptions((key: string) => {
                 let computedKey = key;
                 if (key == "loop") computedKey = "iterations";
@@ -806,12 +854,13 @@ export class Animate {
 
             // Allows the use of functions as the values, for both the keyframes and the animation object
             // It adds the capability of advanced stagger animation, similar to the animejs stagger functions
-            let computedOptions = mapAnimationOptions(animationOptions as IAnimationOptions, [i, len, target], this);
+            let computedOptions = mapAnimationOptions(animationOptions as IAnimateInstanceConfig, [i, len, target], this);
             if (typeof computedOptions.easing == "string" || Array.isArray(computedOptions.easing)) {
                 let { easing } = computedOptions;
-                computedOptions.easing = (Array.isArray(easing) ? (easing as string[]).map(ease => GetEase(ease)) : GetEase(easing));
+                computedOptions.easing = (Array.isArray(easing) ? (easing as string[]).map(ease => GetEase(ease)) : GetEase(easing)) as IStandaloneAnimationConfig["easing"];
             }
 
+            // @ts-ignore
             if (computedOptions.iterations === true)
                 computedOptions.iterations = Infinity;
 
@@ -874,6 +923,11 @@ export class Animate {
     }
 
     /**
+     * Specifies if animations should use CSS variables, as CSS variables are not hardware accelerated
+     */
+    public static USE_CSS_VARS = false;
+
+    /**
      * Creates animations out of an array of computed options
      */
     protected createAnimations(param: { arrOfComputedOptions: any; padEndDelay: any; oldCSSProperties: any; onfinish: any; oncancel: any; persist?: boolean; timeline?: any; }, len: number) {
@@ -904,12 +958,12 @@ export class Animate {
             }
 
             let computedKeyframes: Keyframe[] | PropertyIndexedKeyframes;
-            let animationKeyframe: TypeKeyFrameOptionsType;
+            let animationKeyframe: Keyframe[] | PropertyIndexedKeyframes;
 
             // Accept keyframes as a keyframes Object, or a method,
             // if there are no animations in the keyframes array,
             // uses css properties from the options object
-            let arrKeyframes = keyframes as (Keyframe[] | TypeCSSLikeKeyframe);
+            let arrKeyframes = keyframes as (Keyframe[] | PropertyIndexedKeyframes);
             if (isObject(arrKeyframes)) arrKeyframes = KeyframeParse(arrKeyframes);
 
             // If `computedKeyframes` have been previously computed for this target element replace
@@ -932,7 +986,7 @@ export class Animate {
 
             if (!Array.isArray(animationKeyframe)) {
                 // Remove `keyframes` animation option, it's not a valid CSS property
-                let remaining: IAnimationOptions = omit(["keyframes"], animationKeyframe);
+                let remaining: IAnimateInstanceConfig = omit(["keyframes"], animationKeyframe);
                 let { offset, ...CSSProperties } = mapAnimationOptions(remaining, [i, len, target], this);
 
                 // Convert dashed case properties to camelCase, then create a transform CSS value with CSS Vars. as transform functions, 
@@ -943,12 +997,12 @@ export class Animate {
                 // for transform we parse the translate, skew, scale, and perspective functions (including all their varients) as CSS properties;
                 // it then turns these properties into valid `PropertyIndexedKeyframes`
                 // Read the documentation for `ParseTransformableCSSProperties`
-                CSSProperties = ParseTransformableCSSProperties(CSSProperties as ICSSProperties);
+                let TransformedCSSProperties = ParseTransformableCSSProperties((CSSProperties as any) as Keyframe, Animate.USE_CSS_VARS);
 
-                let _offset = offset as (string | number)[];
+                let _offset = offset as IStandaloneComputedAnimateOptions["offset"];
                 computedKeyframes = Object.assign({},
-                    CSSProperties,
-                    isValid(_offset) ? { offset: _offset.map(parseOffset) } : null
+                    TransformedCSSProperties,
+                    isValid(_offset) ? { offset: _offset.map(v => parseOffset(v)) } : null
                 ) as PropertyIndexedKeyframes;
             } else {
                 computedKeyframes = animationKeyframe.map((keyframe: Keyframe) => {
@@ -967,7 +1021,7 @@ export class Animate {
                 transformValue = createTransformValue(transformCSSVars);
 
                 // Transform transformable CSS properties in each keyframe of the keyframe array
-                computedKeyframes = ParseTransformableCSSKeyframes(computedKeyframes) as Keyframe[];
+                computedKeyframes = ParseTransformableCSSKeyframes(computedKeyframes, Animate.USE_CSS_VARS) as Keyframe[];
             }
 
             let animation: Animation, keyFrameEffect: KeyframeEffect;
@@ -987,6 +1041,7 @@ export class Animate {
                 this.animations.set(keyFrameEffect, animation);
             }
 
+            if (typeof speed == "string") speed = Number(speed);
             if (animation.updatePlaybackRate)
                 animation.updatePlaybackRate(speed);
             else animation.playbackRate = speed;
@@ -1016,8 +1071,9 @@ export class Animate {
             };
 
             // To avoid bugs, we manually apply the transform property from the computed CSS properties if CSS Vars are supported
-            if (CSSVarSupport)
-                Object.assign(target.style, { transform: transformValue });
+            // Note: CSS vars. are not hardware accelerated, so you must really need the flexibility of CSS Vars. before using them
+            if (CSSVarSupport && Animate.USE_CSS_VARS)
+                Object.assign(target?.style, { transform: transformValue });
 
             // Set the calculated options & keyframes for each individual animation
             this.computedOptions.set(target, computedOptions);
@@ -1030,7 +1086,7 @@ export class Animate {
      *
      * _**Note**: `KeyframeEffect` support is really low, so, I am suggest that you avoid using the `updateOptions` method, until browser support for `KeyframeEffect.updateTiming(...)` and `KeyframeEffefct.setKeyframes(...)` is better_
      */
-    public updateOptions(options: IAnimationOptions = {}) {
+    public updateOptions(options: IAnimateInstanceConfig = {}) {
         try {
             let optionsFromParam = parseOptions(options);
             this.initialOptions = optionsFromParam;
@@ -1054,10 +1110,10 @@ export class Animate {
                  * Theses are the CSS properties to be animated as Keyframes
                  */
                 ...oldCSSProperties
-            } = omit(FUNCTION_SUPPORTED_TIMING_KEYS, this.options);
+            } = omit(FUNCTION_SUPPORTED_ANIMATION_CONFIG_KEYS, this.options);
 
             // This removes all none CSS properties from `optionsFromParam`
-            this.properties = omit(ALL_TIMING_KEYS, optionsFromParam);
+            this.properties = omit(ALL_ANIMATION_CONFIG_KEYS, optionsFromParam);
 
             // Avoid duplicate elements
             let oldTargets = this.targets.values();
@@ -1240,13 +1296,13 @@ export class Animate {
     /**
      * Call all listeners within an event
      */
-    public emit(events: TypeAnimationEvents[] | TypeAnimationEvents | string | any[], ...args: any) {
+    public emit(events: TypeAnimationEvents[] | TypeAnimationEvents | (string & {})[] | (string & {}), ...args: any) {
         this.emitter?.emit?.(events, ...args);
         return this;
     }
 
     /** Returns the Animate options, as JSON  */
-    public toJSON(): IAnimationOptions {
+    public toJSON(): IAnimateInstanceConfig {
         return this.options;
     }
 
@@ -1345,7 +1401,7 @@ export class Animate {
  *
  * @packageDocumentation
  */
-export const animate = (options: IAnimationOptions = {}) => {
+export const animate = (options: IAnimateInstanceConfig = {}) => {
     return new Animate(options);
 };
 

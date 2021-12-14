@@ -1,12 +1,13 @@
 import { CSSArrValue, UnitPX, UnitPXCSSValue, UnitDEG, UnitLess, UnitDEGCSSValue, UnitLessCSSValue } from "./unit-conversion";
-import { camelCase, convertToDash, isValid, mapObject, omit, toStr, transpose, trim } from "./utils";
+import { camelCase, convertToDash, isEmpty, isValid, mapObject, omit, toStr, transpose, trim } from "./utils";
 import { CSSVarSupport, toCSSVars, transformProperyNames } from "./css-vars";
 import { interpolateString } from "./custom-easing";
+import { getCSS } from "./browser-objects";
 
-import type { TypeSingleValueCSSProperty, ICSSComputedTransformableProperties, ICSSProperties } from "./types";
+import type { TypeCSSGenericPropertyKeyframes, IIndividualTransformProperties, IComputableCSSProperties, IAllSupportedCSSProperties } from "./types";
 
 export interface ITransformFunctions {
-    [key: string]: (value: TypeSingleValueCSSProperty | Array<TypeSingleValueCSSProperty>) => TypeSingleValueCSSProperty | Array<TypeSingleValueCSSProperty>;
+    [key: string]: (value: TypeCSSGenericPropertyKeyframes | Array<TypeCSSGenericPropertyKeyframes>) => TypeCSSGenericPropertyKeyframes | Array<TypeCSSGenericPropertyKeyframes>;
 }
 
 /**
@@ -15,27 +16,27 @@ export interface ITransformFunctions {
 export const TransformFunctions: ITransformFunctions = {
     "translate": value => CSSArrValue(value, UnitPX),
     "translate3d": value => CSSArrValue(value, UnitPX),
-    "translateX": (value: TypeSingleValueCSSProperty) => UnitPXCSSValue(value),
-    "translateY": (value: TypeSingleValueCSSProperty) => UnitPXCSSValue(value),
-    "translateZ": (value: TypeSingleValueCSSProperty) => UnitPXCSSValue(value),
+    "translateX": (value: TypeCSSGenericPropertyKeyframes) => UnitPXCSSValue(value),
+    "translateY": (value: TypeCSSGenericPropertyKeyframes) => UnitPXCSSValue(value),
+    "translateZ": (value: TypeCSSGenericPropertyKeyframes) => UnitPXCSSValue(value),
 
     "rotate": value => CSSArrValue(value, UnitDEG),
     "rotate3d": value => CSSArrValue(value, UnitLess),
-    "rotateX": (value: TypeSingleValueCSSProperty) => UnitDEGCSSValue(value),
-    "rotateY": (value: TypeSingleValueCSSProperty) => UnitDEGCSSValue(value),
-    "rotateZ": (value: TypeSingleValueCSSProperty) => UnitDEGCSSValue(value),
+    "rotateX": (value: TypeCSSGenericPropertyKeyframes) => UnitDEGCSSValue(value),
+    "rotateY": (value: TypeCSSGenericPropertyKeyframes) => UnitDEGCSSValue(value),
+    "rotateZ": (value: TypeCSSGenericPropertyKeyframes) => UnitDEGCSSValue(value),
 
     "scale": value => CSSArrValue(value, UnitLess),
     "scale3d": value => CSSArrValue(value, UnitLess),
-    "scaleX": (value: TypeSingleValueCSSProperty) => UnitLessCSSValue(value),
-    "scaleY": (value: TypeSingleValueCSSProperty) => UnitLessCSSValue(value),
-    "scaleZ": (value: TypeSingleValueCSSProperty) => UnitLessCSSValue(value),
+    "scaleX": (value: TypeCSSGenericPropertyKeyframes) => UnitLessCSSValue(value),
+    "scaleY": (value: TypeCSSGenericPropertyKeyframes) => UnitLessCSSValue(value),
+    "scaleZ": (value: TypeCSSGenericPropertyKeyframes) => UnitLessCSSValue(value),
 
     "skew": value => CSSArrValue(value, UnitDEG),
-    "skewX": (value: TypeSingleValueCSSProperty) => UnitDEGCSSValue(value),
-    "skewY": (value: TypeSingleValueCSSProperty) => UnitDEGCSSValue(value),
+    "skewX": (value: TypeCSSGenericPropertyKeyframes) => UnitDEGCSSValue(value),
+    "skewY": (value: TypeCSSGenericPropertyKeyframes) => UnitDEGCSSValue(value),
 
-    "perspective": (value: TypeSingleValueCSSProperty) => UnitPXCSSValue(value),
+    "perspective": (value: TypeCSSGenericPropertyKeyframes) => UnitPXCSSValue(value),
 
     // "matrix": value => CSSArrValue(value, UnitLess),
     // "matrix3d": value => CSSArrValue(value, UnitLess),
@@ -238,13 +239,13 @@ export const arrFill = (arr: any[] | any[][], maxLen?: number) => {
  * an object with a properly formatted `transform` and `opactity`, as well as other unformatted CSS properties
  * ```
  */
-export const ParseTransformableCSSProperties = (properties: ICSSProperties): ICSSProperties => {
+export const ParseTransformableCSSProperties = (properties: IComputableCSSProperties, USE_CSS_VARS = false): IComputableCSSProperties => {
     // Convert dash seperated strings to camelCase strings
-    let AllCSSProperties = CSSCamelCase(properties) as ICSSProperties;
-    let rest: ICSSProperties;
+    let AllCSSProperties = CSSCamelCase(properties) as IComputableCSSProperties;
+    let rest: IComputableCSSProperties;
     let transform: string[];
 
-    if (CSSVarSupport) {
+    if (CSSVarSupport && USE_CSS_VARS) {
         rest = Object.assign({}, omit(transformProperyNames, AllCSSProperties), toCSSVars(AllCSSProperties));
     } else {
         // Adds support for ordered transforms 
@@ -272,7 +273,7 @@ export const ParseTransformableCSSProperties = (properties: ICSSProperties): ICS
         if (!/color|shadow/i.test(key)) {
             let isAngle = /rotate/i.test(key);
             let isLength = new RegExp(CSSPXDataType, "i").test(key) ||
-                CSS.supports(convertToDash(key), "1px");
+            (!isEmpty(getCSS()) && getCSS()?.supports?.(convertToDash(key), "1px"));
 
             // There is an intresting bug that occurs if you test a string againt the same instance of a Regular Expression
             // where the answer will be different every test
@@ -314,11 +315,11 @@ export const ParseTransformableCSSProperties = (properties: ICSSProperties): ICS
  * @returns
  * an array of keyframes, with transformed CSS properties
  */
-export const ParseTransformableCSSKeyframes = (keyframes: (ICSSComputedTransformableProperties & Keyframe)[]) => {
+export const ParseTransformableCSSKeyframes = (keyframes: (IIndividualTransformProperties & Keyframe)[], USE_CSS_VARS = false) => {
     return keyframes.map(properties => {
         // Convert dash seperated strings to camelCase strings
-        let AllCSSProperties = CSSCamelCase(properties) as ICSSComputedTransformableProperties & ICSSProperties & Keyframe;
-        if (CSSVarSupport) {
+        let AllCSSProperties = CSSCamelCase(properties) as IIndividualTransformProperties & Keyframe;
+        if (CSSVarSupport && USE_CSS_VARS) {
             return {
                 rest: Object.assign({}, toCSSVars(AllCSSProperties), omit(transformProperyNames, AllCSSProperties)),
                 transformFunctions: null
@@ -352,35 +353,34 @@ export const ParseTransformableCSSKeyframes = (keyframes: (ICSSComputedTransform
             // iterations,
             // offset,
             ...rest
-
         } = AllCSSProperties;
 
-        translate = UnitPXCSSValue(translate as TypeSingleValueCSSProperty);
-        translate3d = UnitPXCSSValue(translate3d as TypeSingleValueCSSProperty);
+        translate = UnitPXCSSValue(translate as TypeCSSGenericPropertyKeyframes);
+        translate3d = UnitPXCSSValue(translate3d as TypeCSSGenericPropertyKeyframes);
         translateX = UnitPXCSSValue(translateX)[0];
         translateY = UnitPXCSSValue(translateY)[0];
         translateZ = UnitPXCSSValue(translateZ)[0];
 
-        rotate = UnitDEGCSSValue(rotate as TypeSingleValueCSSProperty);
-        rotate3d = UnitLessCSSValue(rotate3d as TypeSingleValueCSSProperty);
+        rotate = UnitDEGCSSValue(rotate as TypeCSSGenericPropertyKeyframes);
+        rotate3d = UnitLessCSSValue(rotate3d as TypeCSSGenericPropertyKeyframes);
         rotateX = UnitDEGCSSValue(rotateX)[0];
         rotateY = UnitDEGCSSValue(rotateY)[0];
         rotateZ = UnitDEGCSSValue(rotateZ)[0];
 
-        scale = UnitLessCSSValue(scale as TypeSingleValueCSSProperty);
-        scale3d = UnitLessCSSValue(scale3d as TypeSingleValueCSSProperty);
+        scale = UnitLessCSSValue(scale as TypeCSSGenericPropertyKeyframes);
+        scale3d = UnitLessCSSValue(scale3d as TypeCSSGenericPropertyKeyframes);
         scaleX = UnitLessCSSValue(scaleX)[0];
         scaleY = UnitLessCSSValue(scaleY)[0];
         scaleZ = UnitLessCSSValue(scaleZ)[0];
 
-        skew = UnitDEGCSSValue(skew as TypeSingleValueCSSProperty);
+        skew = UnitDEGCSSValue(skew as TypeCSSGenericPropertyKeyframes);
         skewX = UnitDEGCSSValue(skewX)[0];
         skewY = UnitDEGCSSValue(skewY)[0];
 
         perspective = UnitPXCSSValue(perspective)[0];
 
-        // matrix = UnitLessCSSValue(matrix as TypeSingleValueCSSProperty);
-        // matrix3d = UnitLessCSSValue(matrix3d as TypeSingleValueCSSProperty);
+        // matrix = UnitLessCSSValue(matrix as TypeCSSGenericPropertyKeyframes);
+        // matrix3d = UnitLessCSSValue(matrix3d as TypeCSSGenericPropertyKeyframes);
 
         return {
             rest,

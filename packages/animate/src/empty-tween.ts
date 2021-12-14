@@ -1,10 +1,10 @@
-
 import { ApplyCustomEasing, ComplexEasingSyntax, EasingFunctionKeys, GetEasingFunction, interpolateComplex } from "./custom-easing";
-import { Animate, parseOptions, ALL_TIMING_KEYS, EasingKeys, GetEase, getTargets } from "./animate";
+import { Animate, parseOptions, ALL_ANIMATION_CONFIG_KEYS, EasingKeys, GetEase, getTargets } from "./animate";
 import { pick, omit, mapObject, isValid } from "./utils";
+import { getDocument } from "./browser-objects";
 import { Manager } from "@okikio/manager";
 
-import type { IAnimationOptions } from "./types";
+import type { IAnimateInstanceConfig, IStandaloneComputedAnimateOptions } from "./types";
 import type { TypeCustomEasingOptions, TypeEasingFunction } from "./custom-easing";
 import type { TypeListenerCallback } from "@okikio/emitter";
 
@@ -12,7 +12,7 @@ import type { TypeListenerCallback } from "@okikio/emitter";
 export let UIDCount = 0;
 
 /** For better performance push empty elements into `EmptyTweenElContainer` */
-export const EmptyTweenElContainer: HTMLElement = document.createElement("div");
+export const EmptyTweenElContainer: HTMLElement = getDocument()?.createElement?.("div");
 
 /** Creates a new empty tween element */
 export const createEmptyEl = () => {
@@ -20,10 +20,10 @@ export const createEmptyEl = () => {
         EmptyTweenElContainer.id = "empty-tween-el-container";
         EmptyTweenElContainer.style.setProperty("display", "none");
         EmptyTweenElContainer.style.setProperty("contain", "paint layout size");
-        document.body.appendChild(EmptyTweenElContainer);
+        getDocument()?.body?.appendChild(EmptyTweenElContainer);
     }
 
-    let el = document.createElement("div");
+    let el = getDocument()?.createElement?.("div");
     el.id = `empty-animate-el-${UIDCount++}`;
     el.style.setProperty("display", "none");
 
@@ -46,9 +46,9 @@ export class DestroyableAnimate extends Animate {
  * - animate the opacity of said element
  * - You can then use the "update" event to watch for changes in opacity and use the opacity as a progress bar of values between 0 to 1
 */
-export const createTweenOptions = (options: IAnimationOptions & TypeCustomEasingOptions = {}): IAnimationOptions => {
-    let { easing, decimal, numPoints, opacity, ...optionsObj } = parseOptions(options) as IAnimationOptions & TypeCustomEasingOptions;
-    let AnimationOptions = pick(ALL_TIMING_KEYS, optionsObj) as IAnimationOptions;
+export const createTweenOptions = (options: IAnimateInstanceConfig & TypeCustomEasingOptions = {}) => {
+    let { easing, decimal, numPoints, opacity, ...optionsObj } = parseOptions(options) as IAnimateInstanceConfig & TypeCustomEasingOptions;
+    let AnimationOptions = pick(ALL_ANIMATION_CONFIG_KEYS, optionsObj) as unknown as IStandaloneComputedAnimateOptions;
     let EasingFunction = easing as (string | string[] | TypeEasingFunction);
 
     if (typeof easing == "string") {
@@ -72,7 +72,7 @@ export const createTweenOptions = (options: IAnimationOptions & TypeCustomEasing
     return {
         ...opacityObj,
         ...AnimationOptions
-    };
+    } as unknown as IAnimateInstanceConfig;
 };
 
 /**  
@@ -119,14 +119,14 @@ export class AnimateAttributes extends DestroyableAnimate {
      * Stores all updateListeners for the corresponding tweens, to avoid leaving unused listeners
      */
     public updateListeners = new Manager<number, TypeListenerCallback>();
-    public updateOptions(options: IAnimationOptions & TypeCustomEasingOptions = {}) {
-        let optionsObj = parseOptions(options) as IAnimationOptions & TypeCustomEasingOptions;
+    public updateOptions(options: IAnimateInstanceConfig & TypeCustomEasingOptions = {}) {
+        let optionsObj = parseOptions(options) as IAnimateInstanceConfig & TypeCustomEasingOptions;
 
         let el = this.targets.size > 1 ? null : { target: createEmptyEl() };
         let opts = Object.assign({}, createTweenOptions(omit(["target", "targets"], optionsObj)), el);
         super.updateOptions(opts);
 
-        let Properties = omit(ALL_TIMING_KEYS, optionsObj);
+        let Properties = omit(ALL_ANIMATION_CONFIG_KEYS, optionsObj);
         try {
             this.updateListeners = this.updateListeners ?? new Manager<number, TypeListenerCallback>()
             this.updateListeners.forEach((listener, index) => {
@@ -172,6 +172,6 @@ export class AnimateAttributes extends DestroyableAnimate {
 /**  
  * Creates new instances of {@link AnimateAttributes}
  */
-export const tweenAttr = (options: IAnimationOptions & TypeCustomEasingOptions = {}) => {
+export const tweenAttr = (options: IAnimateInstanceConfig & TypeCustomEasingOptions = {}) => {
     return new AnimateAttributes(options);
 };

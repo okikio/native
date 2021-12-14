@@ -1,7 +1,7 @@
 import { Animate, DefaultAnimationOptions, parseOptions } from "./animate";
 import { Manager } from "@okikio/manager";
 
-import type { IAnimationOptions, TypeAnimationEvents, TypeComputedOptions, TypePlayStates } from "./types";
+import type { IAnimateInstanceConfig, TypeAnimationEvents, TypePlayStates } from "./types";
 import type { TypeEventInput, TypeListenerCallback } from "@okikio/emitter";
 
 /** 
@@ -126,10 +126,10 @@ export class Queue {
      * The options from the mainInstance
      */
     public get options() { return this.mainInstance.options; }
-    public set options(opts: IAnimationOptions) { this.mainInstance.options = parseOptions(opts); }
+    public set options(opts: IAnimateInstanceConfig) { this.mainInstance.options = parseOptions(opts); }
 
     /** The initial options set in the constructor */
-    public initialOptions: IAnimationOptions = {};
+    public initialOptions: IAnimateInstanceConfig = {};
 
     /**
      * The event emitter of the mainInstance
@@ -140,7 +140,7 @@ export class Queue {
      * The promise created by the mainInstance
      */
     public get promise() { return this.mainInstance.promise; }
-    constructor(options: IAnimationOptions = {}) {
+    constructor(options: IAnimateInstanceConfig = {}) {
         this.mainInstance = new Animate({ duration: 0 });
         this.initialOptions = Object.assign({}, DefaultAnimationOptions, parseOptions(options));
 
@@ -154,9 +154,9 @@ export class Queue {
      * @param options - you can add an Animate instance by either using animation options or by adding a pre-existing Animate Instance. 
      * @param timelineOffset - by default the timelineOffset is 0, which means the Animation will play in chronological order of when it was defined; a different value, specifies how many miliseconds off from the chronological order before it starts playing the Animation. You can also use absolute values, for exmple, if you want your animation to start at 0ms, setting timelineOffset to 0, or "0" will use relative offsets, while using "= 0" will use absolute offsets. Read more on {@link relativeTo}
      */
-    public add(options: IAnimationOptions | Animate = {}, timelineOffset: string | number = 0) {
+    public add(options: IAnimateInstanceConfig | Animate = {}, timelineOffset: string | number = 0) {
         let newInst: Animate;
-        let insParams: IAnimationOptions = Object.assign({}, DefaultAnimationOptions, this.initialOptions,
+        let insParams: IAnimateInstanceConfig = Object.assign({}, DefaultAnimationOptions, this.initialOptions,
             options instanceof Animate ? options.initialOptions : parseOptions(options));
         
         if (Math.abs(this.totalDuration) !== Infinity) {
@@ -418,7 +418,7 @@ export class Queue {
     }
 
     /** Returns the Animate options, as JSON  */
-    public toJSON(): IAnimationOptions {
+    public toJSON(): IAnimateInstanceConfig {
         return this.options;
     }
 
@@ -435,4 +435,4 @@ export class Queue {
 /** 
  * Creates a new {@link Queue} instance, and passes the options to the constructor
 */
-export const queue = (options: IAnimationOptions = {}) => new Queue(options);
+export const queue = (options: IAnimateInstanceConfig = {}) => new Queue(options);

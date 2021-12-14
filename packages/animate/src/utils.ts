@@ -2,20 +2,29 @@
 export const flatten = (arr: any[]) => [].concat(...arr);
 
 /** Determines whether value is an pure object (not array, not function, etc...) */
-export const isObject = (obj: any) => typeof obj == "object" && !Array.isArray(obj) && typeof obj != "function";
+export const isObject = (obj: any) =>
+    typeof obj == "object" && !Array.isArray(obj) && typeof obj != "function";
 
 /** Determines if an object is empty */
 export const isEmpty = (obj: any) => {
-    for (let _ in obj) { return false; }
+    for (let _ in obj) {
+        return false;
+    }
+    
     return true;
-}
+};
 
 /**
  * Acts like array.map(...) but for functions
  */
-export const mapObject = (obj: object, fn: (value: any, key: any, obj: any) => any) => {
+export const mapObject = (
+    obj: object,
+    fn: (value: any, key: any, obj: any) => any
+) => {
     let keys = Object.keys(obj);
-    let key: any, value: any, result = {};
+    let key: any,
+        value: any,
+        result = {};
     for (let i = 0, len = keys.length; i < len; i++) {
         key = keys[i];
         value = obj[key];
@@ -29,12 +38,12 @@ export const mapObject = (obj: object, fn: (value: any, key: any, obj: any) => a
 export const toStr = (input: any) => `` + input;
 
 /**
- * Returns the unit of a string, it does this by removing the number in the string 
+ * Returns the unit of a string, it does this by removing the number in the string
  */
 export const getUnit = (str: string | number) => {
     let num = parseFloat(str as string);
     return toStr(str).replace(toStr(num), "");
-}
+};
 
 /** 
   Convert value to string, then trim any extra white space and line terminator characters from the string. 
@@ -54,7 +63,7 @@ export const toArr = (input: any): any[] => {
     }
 
     return [input];
-}
+};
 
 /**
  * Checks if a value is valid/truthy; it counts empty arrays and strings as falsey,
@@ -69,22 +78,24 @@ export const isValid = (value: any) => {
     if (Array.isArray(value) || typeof value == "string")
         return Boolean(value.length);
     return value != null && value != undefined && !Number.isNaN(value);
-}
+};
 
 /** Convert a camelCase string to a dash-separated string (opposite of {@link camelCase}) */
 export const convertToDash = (str: string) => {
-    str = str.replace(/([A-Z])/g, letter => `-${letter.toLowerCase()}`);
+    str = str.replace(/([A-Z])/g, (letter) => `-${letter.toLowerCase()}`);
 
     // Remove first dash
-    return (str.charAt(0) == '-') ? str.substr(1) : str;
-}
+    return str.charAt(0) == "-" ? str.substr(1) : str;
+};
 
 /** Convert a dash-separated string into camelCase strings (opposite of {@link convertToDash}) */
 export const camelCase = (str: string) => {
     if (str.includes("--")) return str;
-    let result = `${str}`.replace(/-([a-z])/g, (_, letter) => letter.toUpperCase());
+    let result = `${str}`.replace(/-([a-z])/g, (_, letter) =>
+        letter.toUpperCase()
+    );
     return result;
-}
+};
 
 /**
  * Return a copy of the object without the keys specified in the keys argument
@@ -102,7 +113,7 @@ export const omit = (keys: string[], obj: { [key: string]: any }) => {
         rest = remaining;
     }
     return rest;
-}
+};
 
 /**
  * Return a copy of the object with only the keys specified in the keys argument
@@ -117,12 +128,11 @@ export const pick = (keys: string[], obj: { [key: string]: any }) => {
     let rest = {};
 
     for (let key of arr) {
-        if (isValid(obj[key]))
-            rest[key] = obj[key];
+        if (isValid(obj[key])) rest[key] = obj[key];
     }
 
     return rest;
-}
+};
 
 /**
  * Flips the rows and columns of 2-dimensional arrays
@@ -146,10 +156,10 @@ export const pick = (keys: string[], obj: { [key: string]: any }) => {
  * @returns
  * returns the new array of grouped elements
  */
-// (TypeSingleValueCSSProperty | TypeSingleValueCSSProperty[])[]
+// (TypeCSSGenericPropertyKeyframes | TypeCSSGenericPropertyKeyframes[])[]
 export const transpose = (...args: (any | any[])[]) => {
     let largestArrLen = 0;
-    args = args.map(arr => {
+    args = args.map((arr) => {
         // Convert all values in arrays to an array
         // This ensures that `arrays` is an array of arrays
         let result = toArr(arr);
@@ -168,10 +178,9 @@ export const transpose = (...args: (any | any[])[]) => {
 
         for (let row = 0; row < len; row++) {
             let val = args[row][col];
-            if (isValid(val))
-                result[col][row] = val;
+            if (isValid(val)) result[col][row] = val;
         }
     }
 
     return result;
-}
+};

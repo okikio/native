@@ -1,7 +1,10 @@
 import { Manager } from "@okikio/manager";
-import { getUnit, isValid, toArr } from "./utils";
+import { getUnit, isValid, toArr, isEmpty } from "./utils";
+import { getCSS, getDocument } from "./browser-objects";
+import rgba from "./color-rgba";
 
-import type { TypeSingleValueCSSProperty, ICSSComputedTransformableProperties, ICSSProperties } from "./types";
+import type { TypeCSSGenericPropertyKeyframes, TypeCommonGenerics } from "./types";
+
 /**
  * Returns a closure Function, which adds a unit to numbers but simply returns strings with no edits assuming the value has a unit if it's a string
  *
@@ -26,14 +29,15 @@ export const UnitDEG = addCSSUnit("deg");
 /**
  * Returns a closure function, which adds units to numbers, strings or arrays of both
  *
- * @param unit - a unit function to use to add units to {@link TypeSingleValueCSSProperty | TypeSingleValueCSSProperty's }
+ * @param unit - a unit function to use to add units to {@link TypeCSSGenericPropertyKeyframes TypeCSSGenericPropertyKeyframes's }
  * @returns
  * if input is a string split it into an array at the comma's, and add units
  * else if the input is a number add the default units
  * otherwise if the input is an array of both add units according to {@link addCSSUnit}
  */
+
 export const CSSValue = (unit: typeof UnitLess) => {
-    return (input: TypeSingleValueCSSProperty) => {
+    return (input: TypeCSSGenericPropertyKeyframes): ReturnType<typeof UnitLess>[] => {
         return isValid(input) ? toArr(input).map(val => {
             if (typeof val != "number" && typeof val != "string")
                 return val;
@@ -48,10 +52,10 @@ export const CSSValue = (unit: typeof UnitLess) => {
 }
 
 /**
- * Takes `TypeSingleValueCSSProperty` or an array of `TypeSingleValueCSSProperty` and adds units approriately
+ * Takes `TypeCSSGenericPropertyKeyframes` or an array of `TypeCSSGenericPropertyKeyframes` and adds units approriately
  *
  * @param arr - array of numbers, strings and/or an array of array of both e.g. ```[[25, "50px", "60%"], "25 35 60%", 50]```
- * @param unit - a unit function to use to add units to {@link TypeSingleValueCSSProperty | TypeSingleValueCSSProperty's }
+ * @param unit - a unit function to use to add units to {@link TypeCSSGenericPropertyKeyframes | TypeCSSGenericPropertyKeyframes's }
  * @returns
  * an array of an array of strings with units
  * e.g.
@@ -71,11 +75,11 @@ export const CSSValue = (unit: typeof UnitLess) => {
  * //= ]
  * ```
  */
-export const CSSArrValue = (arr: TypeSingleValueCSSProperty | TypeSingleValueCSSProperty[], unit: typeof UnitLess) => {
+export const CSSArrValue = (arr: TypeCSSGenericPropertyKeyframes | TypeCSSGenericPropertyKeyframes[], unit: typeof UnitLess) => {
     // This is for the full varients of the transform function as well as the 3d varients
     // zipping the `CSSValue` means if a user enters a string, it will treat each value (seperated by a comma) in that
     // string as a seperate transition state
-    return toArr(arr).map(CSSValue(unit)) as TypeSingleValueCSSProperty[];
+    return toArr(arr).map(CSSValue(unit)) as TypeCSSGenericPropertyKeyframes[];
 }
 
 /** Parses CSSValues without adding any units */
@@ -96,21 +100,29 @@ export const CSS_CACHE = new Manager();
  * Convert colors to an [r, g, b, a] Array
 */
 export const toRGBAArr = (color = "transparent") => {
+    let result: number[];
+
     color = color.trim();
     if (CSS_CACHE.has(color)) return CSS_CACHE.get(color);
-    if (!CSS.supports("background-color", color)) return color;
+    if (isEmpty(getCSS())) { 
+        result = rgba(color);
+    }
 
-    let el = document.createElement("div");
-    el.style.backgroundColor = color;
-    
-    let parent = document.body;
-    parent.appendChild(el);
+    if (!isEmpty(getDocument())) {
+        if (!getCSS()?.supports("background-color", color)) return color;
 
-    let { backgroundColor } = getComputedStyle(el);
-    el.remove();
-    
-    let computedColor = /\(([^)]+)\)?/.exec(backgroundColor)?.[1].split(",");
-    let result = (computedColor.length == 3 ? [...computedColor, "1"] : computedColor).map(v => parseFloat(v));
+        let el = getDocument()?.createElement("div");
+        el.style.backgroundColor = color;
+        
+        let parent = getDocument()?.body;
+        parent.appendChild(el);
+
+        let { backgroundColor } = globalThis?.getComputedStyle?.(el);
+        el.remove();
+        
+        let computedColor = /\(([^)]+)\)?/.exec(backgroundColor)?.[1].split(",");
+        result = (computedColor.length == 3 ? [...computedColor, "1"] : computedColor).map(v => parseFloat(v));
+    }
     
     CSS_CACHE.set(color, result);
     return result;
@@ -124,14 +136,14 @@ export const toRGBAArr = (color = "transparent") => {
 //     if (CSS_CACHE.has(value)) return CSS_CACHE.get(value);
 //     if (!CSS.supports("width", value)) return toPX;
 
-//     let el = document.createElement(target?.tagName ?? "div");
+//     let el = getDocument()?.createElement?.(target?.tagName ?? "div");
 //     el.style.width = value;
 
-//     let parent = target?.parentElement ?? document.body;
-//     parent.appendChild(el);
+//     let parent = target?.parentElement ?? getDocument()?.body;
+//     parent?.appendChild(el);
 
-//     let { width: result } = getComputedStyle(el);
-//     parent.removeChild(el);
+//     let { width: result } = globalThis?.getComputedStyle?.(el);
+//     parent?.removeChild(el);
 
 //     CSS_CACHE.set(value, result);
 //     return result;
