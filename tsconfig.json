@@ -12,13 +12,6 @@
         "esModuleInterop": true,
 
         "outDir": "./lib",
-
-        "baseUrl": ".",
-        "paths": {
-            "@/components/*": ["old-src/components/*"],
-            "@/layouts/*": ["old-src/layouts/*"],
-            "@/*": ["old-src/*"],
-        },
         
         "diagnostics": false,
         "extendedDiagnostics": false,

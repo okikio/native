@@ -157,27 +157,6 @@ paths.forEach(p => {
   <div class="sticky">
     <div class="scroll-shadow-top"></div>
     <div class="scroll">
-      {() => {
-        let generate = (input) => {
-          let _keys = Object.keys(input);
-          /*
-          .sort((a, b) => {
-            return a == "index" ? -1 : b == "index" ? 1 : 0;
-          }) */
-
-          return _keys.map(item => {
-            // let props = {
-            //   item,
-            //   details: input[item],
-            //   content: generate(input[item])
-            // };
-            return "What are you talking about"; /* (<SidebarSection  />) */;
-
-          });
-        };
-
-        return generate(obj);
-      }}
     </div>
     <div class="scroll-shadow-bottom"></div>
   </div>

@@ -2,7 +2,8 @@ module.exports = {
     darkMode: 'media',
     mode: "jit",
     purge: [
-        './src/**/*.{md,astro}'
+        './src/**/*.{md,astro,html,ts}',
+        // './public/**/*.{html}'
     ],
 
     theme: {

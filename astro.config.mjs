@@ -1,4 +1,4 @@
-import plugins from "./old-src/markdown-plugins.js";
+import plugins from "./src/markdown-plugins.js";
 
 // Full Astro Configuration API Documentation:
 // https://docs.astro.build/reference/configuration-reference
@@ -19,20 +19,20 @@ import plugins from "./old-src/markdown-plugins.js";
 
 /** @type {import('astro').AstroUserConfig} */
 export default {
-  // projectRoot: ".",
-  // buildOptions: {
-  //   site: 'https://native.okikio.dev/',  // Your public domain, e.g.: https://my-site.dev/. Used to generate sitemaps and canonical URLs.
-  //   sitemap: true,      // Generate sitemap (set to "false" to disable)
-  // },
-  // markdownOptions: {
-  //   render: [
-  //     "@astrojs/markdown-remark",
-  //     plugins
-  //   ],
-  // },
+  projectRoot: ".",
+  buildOptions: {
+    site: 'https://native.okikio.dev/',  // Your public domain, e.g.: https://my-site.dev/. Used to generate sitemaps and canonical URLs.
+    sitemap: true,      // Generate sitemap (set to "false" to disable)
+  },
+  markdownOptions: {
+    render: [
+      "@astrojs/markdown-remark",
+      plugins
+    ],
+  },
   // /** Options for the development server run with `astro dev`. */
-  // devOptions: {
-  //   tailwindConfig: './tailwind.config.cjs', // Path to tailwind.config.js if used, e.g. './tailwind.config.js'
+  devOptions: {
+    tailwindConfig: './tailwind.config.cjs', // Path to tailwind.config.js if used, e.g. './tailwind.config.js'
   //   /** The port to run the dev server on. */
   //   port: 3000,
   //   /**
@@ -43,7 +43,7 @@ export default {
   //    * Default: 'always'
   //    */
   //   // trailingSlash?: 'always' | 'never' | 'ignore';
-  // },
+  },
   // // Enable the Solidjs renderer to support Solid JSX components.
-  // renderers: ['@astrojs/renderer-solid']
+  renderers: ['@astrojs/renderer-solid']
 };

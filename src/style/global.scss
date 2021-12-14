@@ -2,6 +2,9 @@
 @tailwind components;
 @tailwind utilities;
 
+@import "./base.scss";
+@import "./components/hightlightjs";
+
 @font-face {
     font-family: "FluentSystemIcons-Regular";
     src: url("/fonts/FluentSystemIcons-Regular.ttf") format("truetype");
@@ -21,9 +24,6 @@
 .icon-link:before {
     content: "\f4e5";
 }
-
-@import "./base.scss";
-@import "./components/hightlightjs";
 
 body {
     @apply bg-white text-black;
