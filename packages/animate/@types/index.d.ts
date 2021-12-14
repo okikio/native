@@ -1,5 +1,8 @@
 export * from "./types";
 export * from "./utils";
+export * from "./colors";
+export * from "./color-rgba";
+export * from "./browser-objects";
 export * from "./builtin-effects";
 export * from "./css-properties";
 export * from "./unit-conversion";
@@ -8,4 +11,4 @@ export * from "./custom-easing";
 export * from "./animate";
 export * from "./empty-tween";
 export * from "./stagger-and-random";
-export * from "./timeline";
+export * from "./queue";

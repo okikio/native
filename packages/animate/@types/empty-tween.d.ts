@@ -1,6 +1,6 @@
 import { Animate } from "./animate";
 import { Manager } from "@okikio/manager";
-import type { IAnimationOptions } from "./types";
+import type { IAnimateInstanceConfig } from "./types";
 import type { TypeCustomEasingOptions } from "./custom-easing";
 import type { TypeListenerCallback } from "@okikio/emitter";
 /** Keeps track of how many empty tween elements are in use */
@@ -19,7 +19,7 @@ export declare class DestroyableAnimate extends Animate {
  * - animate the opacity of said element
  * - You can then use the "update" event to watch for changes in opacity and use the opacity as a progress bar of values between 0 to 1
 */
-export declare const createTweenOptions: (options?: IAnimationOptions & TypeCustomEasingOptions) => IAnimationOptions;
+export declare const createTweenOptions: (options?: IAnimateInstanceConfig & TypeCustomEasingOptions) => IAnimateInstanceConfig;
 /**
  * Uses the change in opacity of empty elements (created by {@link createTweenOptions}) to interpolate the attributes of other elements
  *
@@ -64,9 +64,9 @@ export declare class AnimateAttributes extends DestroyableAnimate {
      * Stores all updateListeners for the corresponding tweens, to avoid leaving unused listeners
      */
     updateListeners: Manager<number, TypeListenerCallback>;
-    updateOptions(options?: IAnimationOptions & TypeCustomEasingOptions): this;
+    updateOptions(options?: IAnimateInstanceConfig & TypeCustomEasingOptions): this;
 }
 /**
  * Creates new instances of {@link AnimateAttributes}
  */
-export declare const tweenAttr: (options?: IAnimationOptions & TypeCustomEasingOptions) => AnimateAttributes;
+export declare const tweenAttr: (options?: IAnimateInstanceConfig & TypeCustomEasingOptions) => AnimateAttributes;

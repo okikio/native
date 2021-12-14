@@ -1,0 +1,27 @@
+---
+let { props } = Astro; 
+let { item, details, content } = props;
+
+function isObject(obj) {
+  return typeof obj === 'object' && obj !== null && obj !== undefined
+}
+
+// Capitalize first letter of each word
+let capitalize = (str) => {
+  return str.replace(/-/g, " ").replace(/\w\S*/g, function(txt){
+    return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
+  }).replace(/api/gi, "API").replace(/css/gi, "CSS");
+};
+---
+{
+    isObject(details) ?
+    (
+        <details>
+            <summary>
+            <p>{["animate", "emitter", "manager", "native"].includes(item) ? `@okikio/${item}` : capitalize(item)}</p>
+            </summary>
+
+            <div class="content">{content}</div>
+        </details>
+    ) :  (<a href={details}>{item == "index" ? "Overview" : capitalize(item)}</a>)
+}

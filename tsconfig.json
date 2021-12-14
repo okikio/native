@@ -1,16 +1,31 @@
 {
     "compilerOptions": {
         "moduleResolution": "node",
-        "target": "ES2020",
+        "target": "ES2021",
         "module": "ES2020",
         
-        "lib": ["ES2020", "ESNext", "DOM"],
+        "lib": ["ES2021", "ESNext", "DOM"],
 
         "incremental": true,
 
         "isolatedModules": true,
         "esModuleInterop": true,
 
-        "outDir": "./lib"
+        "outDir": "./lib",
+
+        "baseUrl": ".",
+        "paths": {
+            "@/components/*": ["old-src/components/*"],
+            "@/layouts/*": ["old-src/layouts/*"],
+            "@/*": ["old-src/*"],
+        },
+        
+        "diagnostics": false,
+        "extendedDiagnostics": false,
+        "skipLibCheck": false,
+        "jsx": "preserve",
+
+        "allowJs": true,
     }
 }
+        

@@ -6,7 +6,7 @@ export default {
         "remark-code-titles",
         "remark-gfm",
         "remark-footnotes",
-        "@silvenon/remark-smartypants",
+        "remark-smartypants",
     ],
     rehypePlugins: [
         ["rehype-slug"],

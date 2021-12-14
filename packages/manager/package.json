@@ -7,21 +7,21 @@
     "publishConfig": {
         "umd": "manager",
         "access": "public",
-        "legacy": "lib/api.js",
-        "main": "lib/api.cjs",
-        "types": "@types/api.d.ts",
-        "browser": "lib/api.mjs",
-        "module": "lib/api.mjs",
+        "legacy": "lib/index.js",
+        "main": "lib/index.cjs",
+        "types": "@types/index.d.ts",
+        "browser": "lib/index.mjs",
+        "module": "lib/index.mjs",
         "exports": {
             ".": {
-                "require": "./lib/api.cjs",
-                "import": "./lib/api.mjs",
-                "default": "./lib/api.mjs"
+                "require": "./lib/index.cjs",
+                "import": "./lib/index.mjs",
+                "default": "./lib/index.mjs"
             },
             "./lib/*": "./lib/*.mjs"
         }
     },
-    "main": "src/api.ts",
+    "main": "src/index.ts",
     "directories": {
         "lib": "./lib",
         "src": "./src",
@@ -61,12 +61,12 @@
     "homepage": "https://native.okikio.dev/manager",
     "devDependencies": {
         "@okikio/emitter": "workspace:^2.1.8",
-        "esbuild": "^0.13.3",
+        "esbuild": "^0.14.5",
         "esbuild-jest": "^0.5.0",
-        "jest": "^27.2.4",
+        "jest": "^27.4.5",
         "jest-chain": "^1.1.5",
-        "jest-extended": "^0.11.5",
-        "typescript": "^4.4.3"
+        "jest-extended": "^1.2.0",
+        "typescript": "^4.5.4"
     },
     "gitHead": "ad422076cdb57d570426f786886129d5bca2f90f"
 }

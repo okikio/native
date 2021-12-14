@@ -1,19 +1,49 @@
 ---
-// import { Markdown } from 'astro/components';
-import Markdown from "../components/Markdown.astro";
-import BaseLayout from "../layouts/BaseLayout.astro";
-
-const content = Astro.fetchContent('../../README.md')[0].astro.source;
 ---
+<!DOCTYPE html>
+<html class="dark" lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>{ "Homepage" }</title>
+        <meta name="description" content="">
+        <meta name="color-scheme" content="dark light">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="viewport" content="initial-scale=1, viewport-fit=cover">
+        <link rel="icon" type="image/svg+xml" href="/assets/favicon.svg">
 
-<BaseLayout>
-  <div>
-    <p>
-      <span><a href="/">Home</a> / </span>
-    </p> 
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com">
+        <!-- <link rel="preconnect" href="https://cdn.jsdelivr.net"> -->
 
-    <article main-content>
-      <Markdown content={content} />
-    </article> 
-  </div>
-</BaseLayout>
+        <!-- <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@500;600;700;800&amp;display=swap" rel="stylesheet"> -->
+        <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;500;700&amp;display=swap" rel="stylesheet">
+        
+        <!-- <link href="https://cdn.jsdelivr.net/gh/microsoft/fluentui-system-icons/fonts/FluentSystemIcons-Regular.css" rel="stylesheet"> -->
+        <!-- <link href="https://fonts.googleapis.com/css2?family=Material+Icons+Round&amp;display=block" rel="stylesheet"> -->
+
+        <!-- <link rel="preload" href={Astro.resolve("@/style/global.scss")} as="style">
+        <link rel="stylesheet" href={Astro.resolve("@/style/global.scss")}> -->
+    </head>
+
+    <body>
+        <!--+navbar-->
+        <div class="navbar-offset"></div>
+
+        <div class="layout">
+            <!-- <Sidebar /> -->
+
+            <main data-wrapper>
+                <!--<slot />-->
+                Main Content
+            </main>
+        </div>
+
+        <!--+footer-->
+
+        <!--<script src={Astro.resolve("@/ts/index.ts")} type="module" async></script>
+         <script src="https://cdn.polyfill.io/v3/polyfill.min.js?features=default,es2015,es2018,Array.prototype.includes,Object.values,Promise,fetch" async></script> -->
+        <!-- <script src="./js/theme.min.js" type="module" async></script>
+        <script src="./js/main.min.js" type="module" async></script> -->
+    </body>
+</html>

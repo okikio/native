@@ -59,7 +59,7 @@ import { animate } from "https://cdn.jsdelivr.net/npm/@okikio/animate";
 import { animate } from "https://cdn.skypack.dev/@okikio/animate";
 
 // Via script tag
-<script src="https://unpkg.com/@okikio/animate/lib/api.js"></script>
+<script src="https://unpkg.com/@okikio/animate/lib/index.js"></script>
 // Do note, on the web you need to do this, if you installed it via the script tag:
 const animate = window.animate.default;
 // or
@@ -104,7 +104,7 @@ In order to determine when all target animations are complete, the `Animate` cla
 `@okikio/animate` is actually fairly easy to use, in fact you can use it in **10 lines or less**, check it out,
 
 
-[![@okikio/animate - starting demo](/packages/animate/assets/Code%20for%20Web%20Animation%20API%20Library%20Playground.png)](https://codepen.io/okikio/pen/RwVpvRz?editors=0010)
+[![@okikio/animate - starting demo](/packages/animate/assets/Code-for-Web-Animation-API-Library-Playground.png)](https://codepen.io/okikio/pen/RwVpvRz?editors=0010)
 
 > [Check out this demo on Codepen  &#8594;](https://codepen.io/okikio/pen/RwVpvRz) 
 
@@ -190,7 +190,7 @@ animate({
 });
 ```
 
-[![@okikio/animate - playground](/packages/animate/assets/Web%20Animation%20API%20Library%20Playground.png)](https://codepen.io/okikio/pen/mdPwNbJ?editors=0010)
+[![@okikio/animate - playground](/packages/animate/assets/Web-Animation-API-Library-Playground.png)](https://codepen.io/okikio/pen/mdPwNbJ?editors=0010)
 [Preview this example &#8594;](https://codepen.io/okikio/pen/mdPwNbJ?editors=0010)
 
 > [Go through a collection of examples & demos on Codepen   &#8594;](https://codepen.io/collection/rxOEBO)
@@ -201,7 +201,7 @@ Unfortunately, the Web Animation API still has some constraints, as it can't ani
 
 There are other limitations to what the Web Animation API will allow, most of these limitation are covered in detail by an article published by Adobe about [the current state of SVG animation on the web](https://blog.adobe.com/en/publish/2015/06/05/the-state-of-svg-animation.html#gs.pihpjw) 😭. 
 
-Some of these constraints have been recently unlocked, with Chrome, Firefox, and Safari adding more WAAPI features, and `@okikio/animate` doing some background work to enable cool new features. For one, animations using motion paths are now possible through [Motion Path](https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Motion_Path), and morphing can be emulated through [tweenAttr](/docs/animate/api/animate-attributes.md).
+Some of these constraints have been recently unlocked, with Chrome, Firefox, and Safari adding more WAAPI features, and `@okikio/animate` doing some background work to enable cool new features. For one, animations using motion paths are now possible through [Motion Path](https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Motion_Path), and morphing can be emulated through [tweenAttr](/docs/animate/api/animate-attributes-and-morphing.md).
 
 Not all limitations are covered here, look through the [limitations guide](/docs/animate/limitations.md) for more.
 

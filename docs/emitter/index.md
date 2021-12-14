@@ -47,7 +47,7 @@ import { EventEmitter } from "https://cdn.jsdelivr.net/npm/@okikio/emitter";
 import { EventEmitter } from "https://cdn.skypack.dev/@okikio/emitter";
 
 // Via script tag
-<script src="https://unpkg.com/@okikio/emitter/lib/api.js"></script>
+<script src="https://unpkg.com/@okikio/emitter/lib/index.js"></script>
 // Do note, on the web you need to do this, if you installed it via the script tag:
 const { EventEmitter } = window.emitter;
 ```

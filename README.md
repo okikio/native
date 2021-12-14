@@ -97,7 +97,7 @@ I use a couple conventions when naming my files, these will help you navigate th
 11. `tailwind.config.cjs` - configurations for `tailwind`
 12. `tsconfig.json` - config for `typescript`
 13. `repl.js` - a small js files for testing concepts and finding logic errors, you run it by typing `node repl.js` into your terminal.
-14. `api.ts` - the typescript file that exports all available modules
+14. `index.ts` - the typescript file that exports all available modules
 
 ```
 📦native
@@ -114,7 +114,7 @@ I use a couple conventions when naming my files, these will help you navigate th
  ┃ ┗ 📂native
  ┃ ┃ ┣ 📂lib
  ┃ ┃ ┣ 📂src
- ┃ ┃ ┃ ┣ 📜api.ts
+ ┃ ┃ ┃ ┣ 📜index.ts
  ┃ ┃ ┣ 📜CHANGELOG.md
  ┃ ┃ ┣ 📜LICENSE
  ┃ ┃ ┣ 📜README.md

@@ -1,3 +1,4 @@
+import type { IAnimateInstanceConfig } from "./types";
 export declare const limit: (value: number, min: number, max: number) => number;
 /**
  * The format to use when defining custom easing functions
@@ -49,7 +50,9 @@ export declare const EaseInOut: (ease: TypeEasingFunction) => TypeEasingFunction
 /** Converts easing functions to their `out-in` counter parts */
 export declare const EaseOutIn: (ease: TypeEasingFunction) => TypeEasingFunction;
 /**
- * The default list of easing functions, do note this is different from {@link EASING}
+ * The default list of easing functions,
+ *
+ * _**Note**_: this is different from {@link EASING}
  */
 export declare const EasingFunctions: {
     [key: string]: TypeEasingFunction;
@@ -189,7 +192,7 @@ export declare type TypeCustomEasingOptions = {
      *
      * _**Note**: you can also use camelCase when defining easing functions, e.g. `inOutCubic` to represent `in-out-cubic`_
      *
-    */
+     */
     easing?: string | TypeEasingFunction;
     numPoints?: number;
     decimal?: number;
@@ -222,7 +225,7 @@ export declare const TweenCache: Map<any, any>;
   
   Based on https://github.com/w3c/csswg-drafts/issues/229#issuecomment-861415901
 */
-export declare const EasingPts: ({ easing, numPoints, duration }?: TypeCustomEasingOptions) => number[];
+export declare const EasingPts: ({ easing, numPoints, duration, }?: TypeCustomEasingOptions) => number[];
 /**
  * Generates an Array of values using easing functions which in turn create the effect of custom easing.
  * To use this properly make sure to set the easing animation option to "linear".
@@ -323,8 +326,8 @@ export declare const EasingPts: ({ easing, numPoints, duration }?: TypeCustomEas
  *    easing: "linear"
  *  })
  *  ```
-*/
-export declare const CustomEasing: (values: (string | number)[], options?: TypeCustomEasingOptions | string | TypeEasingFunction) => any[];
+ */
+export declare const CustomEasing: (values: (string | number)[], options?: TypeCustomEasingOptions | string | TypeEasingFunction) => (string | number)[];
 /**
  * Returns an array containing `[easing pts, duration]`, it's meant to be a self enclosed way to create spring easing.
  * Springs have an optimal duration; using `getEasingDuration()` we are able to have the determine the optimal duration for a spring with given parameters.
@@ -355,7 +358,7 @@ export declare const CustomEasing: (values: (string | number)[], options?: TypeC
  * });
  * ```
  */
-export declare const SpringEasing: (values: (string | number)[], options?: TypeCustomEasingOptions) => (number | any[])[];
+export declare const SpringEasing: (values: (string | number)[], options?: TypeCustomEasingOptions | string) => [(string | number)[], number];
 /**
  * Applies the same custom easings to all properties of the object and returns an object with each property having an array of custom eased values
  *
@@ -396,4 +399,6 @@ export declare const SpringEasing: (values: (string | number)[], options?: TypeC
  */
 export declare const ApplyCustomEasing: (options?: TypeCustomEasingOptions & {
     [key: string]: string | number | (string | number)[] | TypeEasingFunction;
-}) => {};
+}) => IAnimateInstanceConfig & TypeCustomEasingOptions & {
+    [key: string]: string | number | (string | number)[] | TypeEasingFunction;
+};

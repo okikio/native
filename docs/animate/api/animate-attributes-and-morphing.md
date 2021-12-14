@@ -1,4 +1,4 @@
-## tweenAttr & AnimateAttributes
+## tweenAttr, AnimateAttributes & SVG Morphing
 
 [`tweenAttr()`](/docs/api/modules/_okikio_animate.md#tweenattr) uses the change in opacity (from the [AnimateAttributes](/docs/api/classes/_okikio_animate.AnimateAttributes.md) class) to interpolate the attribute value of other elements.
 
@@ -47,5 +47,21 @@ new AnimateAttributes({
     d: progress => morph(progress)
 })
 ```
+
+On Chrome you don't *"really"* need `tweenAttr`, as it supports morphing svg paths via the `d` property. You can use it like this,
+
+```ts
+// ...
+animate({
+     // ...
+     // The paths have to have the same number of points, that is why the 2 paths below seem similar 
+     d: [
+         `path("M2,5 S2,14 4,5 S7,8 8,4")`,
+         `path("M2,5 S2,-2 4,5 S7,8 8,4")`
+     ]
+})
+```
+
+> _**Note:** `tweenAttr(...)` is the recommended way to achieve morphing effects, as browsers have very limited support for baked in morphing, through the `d` CSS Property._
 
 Read more about [AnimateAttributes](/docs/api/classes/_okikio_animate.AnimateAttributes.md).

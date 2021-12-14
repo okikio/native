@@ -192,9 +192,9 @@ This technique has some benefits and drawbacks, you can learn all about these on
 
 Remove elements and animations from the DOM when the `.stop()` method is called. Read more on the [Destroyable Animate docs](/docs/animate/api/destroyable-animate.md)
 
-### AnimateAttributes & tweenAttr
+### AnimateAttributes, tweenAttr & Morphing
 
-Create morphing animations using the `tweenAttr` method, read more on the [animate attributes doc](/docs/animate/api/animate-attributes.md).
+Create morphing animations using the `tweenAttr` method, read more on the [animate attributes doc](/docs/animate/api/animate-attributes-and-morphing.md).
 
 ### Effects
 

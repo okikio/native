@@ -1,5 +1,5 @@
 import type { TypeEasingFunction, TypeCustomEasingOptions } from "./custom-easing";
-import type { TypeCallback } from "./types";
+import type { TypeComputableAnimationFunction } from "./types";
 export interface IStaggerOptions {
     from?: number | "first" | "center" | "last";
     grid?: number[];
@@ -91,7 +91,7 @@ export interface IStaggerOptions {
  * Because stagger returns an {@link TypeCallback | AnimationOption callback}, it fundementally doesn't work with {@link CustomEasing},
  * so, you need to use {@link StaggerCustomEasing} to enable custom easing.
  */
-export declare const stagger: (val: string | number | (string | number)[], params?: IStaggerOptions) => TypeCallback;
+export declare const stagger: (val: string | number | (string | number)[], params?: IStaggerOptions) => TypeComputableAnimationFunction<string | number>;
 export interface IStaggerCustomEasingOptions extends TypeCustomEasingOptions {
     stagger?: IStaggerOptions;
 }
@@ -126,7 +126,7 @@ export interface IStaggerCustomEasingOptions extends TypeCustomEasingOptions {
  *
  * Check out demos on [Codepen](https://codepen.io/okikio/pen/JjNXGPq)
 */
-export declare const StaggerCustomEasing: (val: (string | number)[], params?: IStaggerCustomEasingOptions) => TypeCallback;
+export declare const StaggerCustomEasing: (val: (string | number)[], params?: IStaggerCustomEasingOptions) => TypeComputableAnimationFunction<(string | number)[]>;
 /**
  * Generates random values within a range of values
  */

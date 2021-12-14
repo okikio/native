@@ -1,5 +1,5 @@
 import { Manager } from "@okikio/manager";
-import type { TypeSingleValueCSSProperty } from "./types";
+import type { TypeCSSGenericPropertyKeyframes } from "./types";
 /**
  * Returns a closure Function, which adds a unit to numbers but simply returns strings with no edits assuming the value has a unit if it's a string
  *
@@ -18,18 +18,18 @@ export declare const UnitDEG: (value: string | number) => string;
 /**
  * Returns a closure function, which adds units to numbers, strings or arrays of both
  *
- * @param unit - a unit function to use to add units to {@link TypeSingleValueCSSProperty | TypeSingleValueCSSProperty's }
+ * @param unit - a unit function to use to add units to {@link TypeCSSGenericPropertyKeyframes TypeCSSGenericPropertyKeyframes's }
  * @returns
  * if input is a string split it into an array at the comma's, and add units
  * else if the input is a number add the default units
  * otherwise if the input is an array of both add units according to {@link addCSSUnit}
  */
-export declare const CSSValue: (unit: typeof UnitLess) => (input: TypeSingleValueCSSProperty) => any[];
+export declare const CSSValue: (unit: typeof UnitLess) => (input: TypeCSSGenericPropertyKeyframes) => ReturnType<typeof UnitLess>[];
 /**
- * Takes `TypeSingleValueCSSProperty` or an array of `TypeSingleValueCSSProperty` and adds units approriately
+ * Takes `TypeCSSGenericPropertyKeyframes` or an array of `TypeCSSGenericPropertyKeyframes` and adds units approriately
  *
  * @param arr - array of numbers, strings and/or an array of array of both e.g. ```[[25, "50px", "60%"], "25 35 60%", 50]```
- * @param unit - a unit function to use to add units to {@link TypeSingleValueCSSProperty | TypeSingleValueCSSProperty's }
+ * @param unit - a unit function to use to add units to {@link TypeCSSGenericPropertyKeyframes | TypeCSSGenericPropertyKeyframes's }
  * @returns
  * an array of an array of strings with units
  * e.g.
@@ -49,13 +49,13 @@ export declare const CSSValue: (unit: typeof UnitLess) => (input: TypeSingleValu
  * //= ]
  * ```
  */
-export declare const CSSArrValue: (arr: TypeSingleValueCSSProperty | TypeSingleValueCSSProperty[], unit: typeof UnitLess) => TypeSingleValueCSSProperty[];
+export declare const CSSArrValue: (arr: TypeCSSGenericPropertyKeyframes | TypeCSSGenericPropertyKeyframes[], unit: typeof UnitLess) => TypeCSSGenericPropertyKeyframes[];
 /** Parses CSSValues without adding any units */
-export declare const UnitLessCSSValue: (input: TypeSingleValueCSSProperty) => any[];
+export declare const UnitLessCSSValue: (input: TypeCSSGenericPropertyKeyframes) => ReturnType<typeof UnitLess>[];
 /** Parses CSSValues and adds the "px" unit if required */
-export declare const UnitPXCSSValue: (input: TypeSingleValueCSSProperty) => any[];
+export declare const UnitPXCSSValue: (input: TypeCSSGenericPropertyKeyframes) => ReturnType<typeof UnitLess>[];
 /** Parses CSSValues and adds the "deg" unit if required */
-export declare const UnitDEGCSSValue: (input: TypeSingleValueCSSProperty) => any[];
+export declare const UnitDEGCSSValue: (input: TypeCSSGenericPropertyKeyframes) => ReturnType<typeof UnitLess>[];
 /**
  * Cache previously converted CSS values to avoid lots of Layout, Style, and Paint computations when computing CSS values
 */

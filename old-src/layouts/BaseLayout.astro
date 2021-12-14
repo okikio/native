@@ -2,7 +2,7 @@
 import Sidebar from "../components/Sidebar.astro";
 ---
 <!DOCTYPE html>
-<html class="dark">
+<html class="dark" lang="en">
     <head>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -23,8 +23,8 @@ import Sidebar from "../components/Sidebar.astro";
         <!-- <link href="https://cdn.jsdelivr.net/gh/microsoft/fluentui-system-icons/fonts/FluentSystemIcons-Regular.css" rel="stylesheet"> -->
         <!-- <link href="https://fonts.googleapis.com/css2?family=Material+Icons+Round&amp;display=block" rel="stylesheet"> -->
 
-        <link rel="preload" href={Astro.resolve("../style/global.css")} as="style">
-        <link rel="stylesheet" href={Astro.resolve("../style/global.css")}>
+        <!-- <link rel="preload" href={Astro.resolve("@/style/global.scss")} as="style">
+        <link rel="stylesheet" href={Astro.resolve("@/style/global.scss")}> -->
     </head>
 
     <body>
@@ -41,6 +41,7 @@ import Sidebar from "../components/Sidebar.astro";
 
         <!--+footer-->
 
+        <script src={Astro.resolve("@/ts/index.ts")} type="module" async></script>
         <!-- <script src="https://cdn.polyfill.io/v3/polyfill.min.js?features=default,es2015,es2018,Array.prototype.includes,Object.values,Promise,fetch" async></script> -->
         <!-- <script src="./js/theme.min.js" type="module" async></script>
         <script src="./js/main.min.js" type="module" async></script> -->

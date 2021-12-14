@@ -1,4 +1,5 @@
 ---
+import SidebarSection from "./SidebarSection.astro";
 import Logo from "./Logo.astro";
 import { globby } from "globby";
 const paths = await globby('docs', {
@@ -7,10 +8,10 @@ const paths = await globby('docs', {
 		}
 });
 
-const obj = {}; 
 function isObject(obj) {
   return typeof obj === 'object' && obj !== null && obj !== undefined
 }
+const obj = {}; 
 function deepGet(obj, path) {
   var length = path.length;
   for (var i = 0; i < length; i++) {
@@ -38,6 +39,7 @@ paths.forEach(p => {
   let path = p.replace("docs/", "").replace(/\.md$/, "");
   deepSet(obj, path.split("/"), "/" + path);
 })
+          
 ---
 
 <style lang="scss">
@@ -155,41 +157,30 @@ paths.forEach(p => {
   <div class="sticky">
     <div class="scroll-shadow-top"></div>
     <div class="scroll">
-      {(() => {
-        // Capitalize first letter of each word
-        let capitalize = (str) => {
-          return str.replace(/-/g, " ").replace(/\w\S*/g, function(txt){
-            return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
-          }).replace(/api/gi, "API").replace(/css/gi, "CSS");
-        }
-
-        let generate = (obj) => {
-          let keys = Object.keys(obj).sort((a, b) => {
+      {() => {
+        let generate = (input) => {
+          let _keys = Object.keys(input);
+          /*
+          .sort((a, b) => {
             return a == "index" ? -1 : b == "index" ? 1 : 0;
-          });
-          return keys.map(item => {
-            if (isObject(obj[item])) {
-              return (
-                <details>
-                  <summary>
-                    <p>{["animate", "emitter", "manager", "native"].includes(item) ? `@okikio/${item}` : capitalize(item)}</p>
-                  </summary>
+          }) */
 
-                  <div class="content">
-                    {generate(obj[item])}
-                  </div>
-                </details>
-              );
-            } else {
-              return (<a href={obj[item]}>{item == "index" ? "Overview" : capitalize(item)}</a>);
-            }
-          })
-        }
+          return _keys.map(item => {
+            // let props = {
+            //   item,
+            //   details: input[item],
+            //   content: generate(input[item])
+            // };
+            return "What are you talking about"; /* (<SidebarSection  />) */;
+
+          });
+        };
+
         return generate(obj);
-      })()}
+      }}
     </div>
     <div class="scroll-shadow-bottom"></div>
   </div>
 </aside>
 
-<script src={Astro.resolve("../ts/sidebar.js")} type="module" async></script>
+<!-- <script src={Astro.resolve("../ts/sidebar.js")} type="module" async></script> -->

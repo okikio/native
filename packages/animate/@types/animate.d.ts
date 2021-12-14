@@ -1,11 +1,39 @@
 import { EventEmitter } from "@okikio/emitter";
 import { Manager } from "@okikio/manager";
 import type { TypeEventInput, TypeListenerCallback } from "@okikio/emitter";
-import type { TypeAnimationTarget, TypeAnimationOptionTypes, TypeCallbackArgs, TypeComputedAnimationOptions, IAnimationOptions, TypeComputedOptions, TypeKeyFrameOptionsType, TypeAnimationEvents, TypePlayStates } from "./types";
+import type { TypeAnimationTarget, IStandaloneComputedAnimateOptions, IAnimateInstanceConfig, TypeAnimationEvents, TypePlayStates, ITotalDurationInfo } from "./types";
+/**
+ * Get elements as an array
+ * @param selector The selector to get the elements from
+ * @returns An array of elements
+ */
 export declare const getElements: (selector: string | Node) => Node[];
+/**
+ * Retrieves all target elements
+ *
+ * @param targets targets to retrieve, ranging from strings to arrays to DOM Elements
+ * @returns Returns a flattened array with all the target to retrieve
+ */
 export declare const getTargets: (targets: TypeAnimationTarget) => Node[];
-export declare const computeOption: (value: TypeAnimationOptionTypes, args: TypeCallbackArgs, context: Animate) => TypeComputedAnimationOptions;
-export declare const mapAnimationOptions: (options: IAnimationOptions, args: TypeCallbackArgs, animate: Animate) => TypeComputedOptions;
+/**
+ * Computes values.
+ * If the input value is a function, run it with the arguments from `args`, and the scope from `scope`, then return the computed value.
+ * Otherwise, return the input value.
+ *
+ * @param value The value to compute
+ * @param args If value is a function, the arguments to pass to said function
+ * @param scope The scope of the function
+ * @returns Returns the computed value if inputed value is a function, otherwise, returns the inputed value
+ */
+export declare const computeOption: (value: unknown, args: [index?: number, total?: number, element?: HTMLElement], scope: Animate) => unknown;
+/**
+ * Loops through animation options and computes the values of each option if the option is a function.
+ * @param options The computable options to compute
+ * @param args The arguments to pass to the computable options, callback function
+ * @param scope The scope of the computable options
+ * @returns The computed values of computable options
+ */
+export declare const mapAnimationOptions: (options: IAnimateInstanceConfig, args: [index?: number, total?: number, element?: HTMLElement], scope: Animate) => IStandaloneComputedAnimateOptions & Omit<KeyframeEffectOptions, keyof IStandaloneComputedAnimateOptions>;
 /**
  * From: [https://easings.net]
  *
@@ -98,10 +126,10 @@ export declare const EasingKeys: string[];
 /**
  * Converts users input into a usable easing function string
  *
- * @param ease - easing functions; {@link EasingKeys}, cubic-bezier, steps, linear, etc...
+ * @param ease easing functions; {@link EasingKeys}, cubic-bezier, steps, linear, etc...
  * @returns an easing function that `KeyframeEffect` can accept
  */
-export declare const GetEase: (ease?: keyof typeof EASINGS | string) => string;
+export declare const GetEase: (ease?: keyof typeof EASINGS | (string & {})) => string;
 /**
  * The default options for every Animate instance
  *
@@ -116,7 +144,10 @@ export declare const GetEase: (ease?: keyof typeof EASINGS | string) => string;
  *   easing: "ease",
  *   autoplay: true,
  *   duration: 1000,
+ *
+ *   persist: true,
  *   fillMode: "none",
+ *
  *   direction: "normal",
  *   padEndDelay: false,
  *   timeline: document.timeline,
@@ -124,12 +155,21 @@ export declare const GetEase: (ease?: keyof typeof EASINGS | string) => string;
  * }
  * ```
  */
-export declare const DefaultAnimationOptions: IAnimationOptions;
+export declare const DefaultAnimationOptions: IAnimateInstanceConfig;
 /** Parses the different ways to define options, and returns a merged options object  */
-export declare const parseOptions: (options: IAnimationOptions) => IAnimationOptions;
-export declare const FUNCTION_SUPPORTED_TIMING_KEYS: string[];
-export declare const NOT_FUNCTION_SUPPORTED_TIMING_KEYS: string[];
-export declare const ALL_TIMING_KEYS: string[];
+export declare const parseOptions: (options: IAnimateInstanceConfig) => IAnimateInstanceConfig;
+/**
+ * The array of properties that can be computed as callback functions
+*/
+export declare const FUNCTION_SUPPORTED_ANIMATION_CONFIG_KEYS: string[];
+/**
+ * The array of properties that `can't` be computed as callback functions
+*/
+export declare const NON_FUNCTION_SUPPORTED_ANIMATION_CONFIG_KEYS: string[];
+/**
+ * The full array of properties that are supported as config options, computable or not
+ */
+export declare const ALL_ANIMATION_CONFIG_KEYS: string[];
 /**
  * An animation library for the modern web, which. Inspired by animate plus, and animejs, [@okikio/animate](https://www.skypack.dev/view/@okikio/animate) is a Javascript animation library focused on performance and ease of use.
  *
@@ -141,11 +181,11 @@ export declare class Animate {
      *
      * Read more about the {@link DefaultAnimationOptions}
      */
-    options: IAnimationOptions;
+    options: IAnimateInstanceConfig;
     /**
      * Stores the options for the current animation `without` the {@link DefaultAnimationOptions}
     */
-    initialOptions: IAnimationOptions;
+    initialOptions: IAnimateInstanceConfig;
     /**
      * The properties to animate
      */
@@ -157,7 +197,7 @@ export declare class Animate {
     /**
      * The computed options that are used for the total duration
      */
-    totalDurationOptions: TypeComputedOptions;
+    totalDurationOptions: ITotalDurationInfo;
     /**
      * The largest duration out of all Animation's
      */
@@ -219,7 +259,7 @@ export declare class Animate {
      *
      * _**Note**: keyframes are not included, both the array form and the object form; the options, speed, extend, padEndDelay, and autoplay animation options are not included_
      */
-    computedOptions: WeakMap<HTMLElement, TypeComputedOptions>;
+    computedOptions: WeakMap<HTMLElement, KeyframeEffect>;
     /**
      * A WeakMap of Animations
      */
@@ -231,8 +271,8 @@ export declare class Animate {
      *
      * _**Note**: the computedKeyframes are changed to their proper Animation instance options, so, some of the names are different, and options that can't be computed are not present. E.g. translateX, skew, etc..., they've all been turned into the transform property.*_
      */
-    computedKeyframes: WeakMap<HTMLElement, TypeKeyFrameOptionsType>;
-    constructor(options?: IAnimationOptions);
+    computedKeyframes: WeakMap<HTMLElement, Keyframe[] | PropertyIndexedKeyframes>;
+    constructor(options?: IAnimateInstanceConfig);
     /**
      * Stores all currently running instances of the Animate Class that are actively using requestAnimationFrame to check progress,
      * it's meant to ensure you don't have multiple instances of the Animate Class creating multiple requestAnimationFrames at the same time
@@ -266,11 +306,11 @@ export declare class Animate {
     /**
      * Represents an Animation Frame Loop
      */
-    loop(): void;
+    loop(): this;
     /**
      * Cancels animation frame
      */
-    stopLoop(): void;
+    stopLoop(): this;
     /**
      * Tells all animate instances to pause when the page is hidden
      */
@@ -333,8 +373,10 @@ export declare class Animate {
      */
     commitStyles(): this;
     /**
-     * Explicitly persists an animation, when it would otherwise be removed due to the browser's Automatically removing filling animations behavior.
-     * Learn more on [MDN](https://developer.mozilla.org/en-US/docs/Web/API/Animation/persist)
+     * Explicitly persists an animations final state it's similar to `commitStyles` except it doesn't care if the animation is filling or not.
+     * It does the exact same thing {@link IAnimationOptions.persist} does, except it's in function form.
+     *
+     * > _**Warning**: This is different [MDN Animation.persist](https://developer.mozilla.org/en-US/docs/Web/API/Animation/persist), this keeps the final state of CSS during the animation, while [MDN Animation.persist](https://developer.mozilla.org/en-US/docs/Web/API/Animation/persist), tells the browser to not automatically remove Animations._
      */
     persist(): this;
     /**
@@ -357,7 +399,7 @@ export declare class Animate {
      * Returns the timings of an Animation, given a target
      * E.g. { duration, endDelay, delay, iterations, iterationStart, direction, easing, fill, etc... }
      */
-    getTiming(target: HTMLElement): TypeComputedAnimationOptions;
+    getTiming(target: HTMLElement): KeyframeEffectOptions;
     /**
      * Returns the current time of the Main Animation
      */
@@ -389,11 +431,21 @@ export declare class Animate {
     /**
      * Set the playback speed of an Animation
      */
-    setSpeed(speed?: number): this;
+    setSpeed(speed?: number | string): this;
     /**
      * Returns an array of computed options
      */
-    protected createArrayOfComputedOptions(optionsFromParam: IAnimationOptions, len: number): object | Keyframe[] | import("./types").TypeGeneric[];
+    protected createArrayOfComputedOptions(optionsFromParam: IAnimateInstanceConfig, len: number): (IStandaloneComputedAnimateOptions & Omit<KeyframeEffectOptions, keyof IStandaloneComputedAnimateOptions> & {
+        /**
+         * The temporary storage of a specific animations total duration
+         */
+        tempDurations?: number;
+        iterations?: KeyframeEffectOptions["iterations"] | number;
+    })[];
+    /**
+     * Specifies if animations should use CSS variables, as CSS variables are not hardware accelerated
+     */
+    static USE_CSS_VARS: boolean;
     /**
      * Creates animations out of an array of computed options
      */
@@ -403,6 +455,7 @@ export declare class Animate {
         oldCSSProperties: any;
         onfinish: any;
         oncancel: any;
+        persist?: boolean;
         timeline?: any;
     }, len: number): void;
     /**
@@ -410,7 +463,7 @@ export declare class Animate {
      *
      * _**Note**: `KeyframeEffect` support is really low, so, I am suggest that you avoid using the `updateOptions` method, until browser support for `KeyframeEffect.updateTiming(...)` and `KeyframeEffefct.setKeyframes(...)` is better_
      */
-    updateOptions(options?: IAnimationOptions): void;
+    updateOptions(options?: IAnimateInstanceConfig): void;
     /**
      * Adds a target to the Animate instance, and update the animation options with the change
      *
@@ -440,9 +493,9 @@ export declare class Animate {
     /**
      * Call all listeners within an event
      */
-    emit(events: TypeAnimationEvents[] | TypeAnimationEvents | string | any[], ...args: any): this;
+    emit(events: TypeAnimationEvents[] | TypeAnimationEvents | (string & {})[] | (string & {}), ...args: any): this;
     /** Returns the Animate options, as JSON  */
-    toJSON(): IAnimationOptions;
+    toJSON(): IAnimateInstanceConfig;
     /**
      * The Symbol.toStringTag well-known symbol is a string valued property that is used
      * in the creation of the default string description of an object.
@@ -535,5 +588,5 @@ export declare class Animate {
  *
  * @packageDocumentation
  */
-export declare const animate: (options?: IAnimationOptions) => Animate;
+export declare const animate: (options?: IAnimateInstanceConfig) => Animate;
 export default animate;

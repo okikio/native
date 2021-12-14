@@ -1,4 +1,4 @@
-import chalk from "chalk";
+import kleur from "kleur";
 import { rollup } from "rollup";
 import { terser } from "rollup-plugin-terser";
 
@@ -95,9 +95,9 @@ const configs = await rollupConfig(args);
 
 export async function build() {
     for (let { input, output, external } of configs) {
-        let title = chalk`{gray Bundled in}`;
+        let title = kleur.gray(`Bundled in`);
         console.time(title);
-        console.log(`\n` + chalk`Building {red ${input}}`);
+        console.log(`\n` + `Building ${kleur.red(input)}`);
 
         // Create a bundle
         const bundle = await rollup({

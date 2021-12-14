@@ -1,5 +1,5 @@
 import { jest, describe, expect, test, beforeEach } from '@jest/globals';
-import { Manager, methodCall } from "../src/api";
+import { Manager, methodCall } from "../src";
 
 describe("Manager", () => {
     let arr = [1, 2, 3, 4, 5];

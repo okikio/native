@@ -1,6 +1,6 @@
-import type { TypeSingleValueCSSProperty, ICSSComputedTransformableProperties, ICSSProperties } from "./types";
+import type { TypeCSSGenericPropertyKeyframes, IIndividualTransformProperties, IComputableCSSProperties } from "./types";
 export interface ITransformFunctions {
-    [key: string]: (value: TypeSingleValueCSSProperty | Array<TypeSingleValueCSSProperty>) => TypeSingleValueCSSProperty | Array<TypeSingleValueCSSProperty>;
+    [key: string]: (value: TypeCSSGenericPropertyKeyframes | Array<TypeCSSGenericPropertyKeyframes>) => TypeCSSGenericPropertyKeyframes | Array<TypeCSSGenericPropertyKeyframes>;
 }
 /**
  * Details how to compute each transform function
@@ -153,19 +153,19 @@ export declare const arrFill: (arr: any[] | any[][], maxLen?: number) => any;
  * an object with a properly formatted `transform` and `opactity`, as well as other unformatted CSS properties
  * ```
  */
-export declare const ParseTransformableCSSProperties: (properties: ICSSProperties) => ICSSProperties;
+export declare const ParseTransformableCSSProperties: (properties: IComputableCSSProperties, USE_CSS_VARS?: boolean) => IComputableCSSProperties;
 /**
  * Similar to {@link ParseTransformableCSSProperties} except it transforms the CSS properties in each Keyframe
  * @param keyframes - an array of keyframes with transformable CSS properties
  * @returns
  * an array of keyframes, with transformed CSS properties
  */
-export declare const ParseTransformableCSSKeyframes: (keyframes: (ICSSComputedTransformableProperties & Keyframe)[]) => ({
+export declare const ParseTransformableCSSKeyframes: (keyframes: (IIndividualTransformProperties & Keyframe)[], USE_CSS_VARS?: boolean) => ({
     transform: string;
 } & ({
     [x: string]: any;
 } | {
-    [x: string]: (TypeSingleValueCSSProperty | TypeSingleValueCSSProperty[]) & (string | number);
+    [property: string]: string | number;
     composite?: CompositeOperationOrAuto;
     easing?: string;
     offset?: number;

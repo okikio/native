@@ -24,7 +24,7 @@ export declare const isObject: (obj: any) => boolean;
 /**
  * The types of values `EventEmitter.prototype.on(...), EventEmitter.prototype.once(...), and EventEmitter.prototype.off(...)` accept
  */
-export declare type TypeEventInput = string | object | Array<string>;
+export declare type TypeEventInput = (string & {}) | object | Array<(string & {})>;
 /**
  * An Event Emitter
  * */

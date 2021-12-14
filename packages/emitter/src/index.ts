@@ -37,7 +37,7 @@ export const isObject = (obj: any) => typeof obj == "object" && !Array.isArray(o
 /**
  * The types of values `EventEmitter.prototype.on(...), EventEmitter.prototype.once(...), and EventEmitter.prototype.off(...)` accept
  */
-export type TypeEventInput = string | object | Array<string>;
+export type TypeEventInput = (string & {}) | object | Array<(string & {})>;
 
 /**
  * An Event Emitter

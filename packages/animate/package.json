@@ -7,21 +7,21 @@
     "publishConfig": {
         "umd": "animate",
         "access": "public",
-        "legacy": "lib/api.js",
-        "main": "lib/api.cjs",
-        "types": "@types/api.d.ts",
-        "browser": "lib/api.mjs",
-        "module": "lib/api.mjs",
+        "legacy": "lib/index.js",
+        "main": "lib/index.cjs",
+        "types": "@types/index.d.ts",
+        "browser": "lib/index.mjs",
+        "module": "lib/index.mjs",
         "exports": {
             ".": {
-                "require": "./lib/api.cjs",
-                "import": "./lib/api.mjs",
-                "default": "./lib/api.mjs"
+                "require": "./lib/index.cjs",
+                "import": "./lib/index.mjs",
+                "default": "./lib/index.mjs"
             },
             "./lib/*": "./lib/*.mjs"
         }
     },
-    "main": "src/api.ts",
+    "main": "src/index.ts",
     "directories": {
         "lib": "./lib",
         "src": "./src",
@@ -64,8 +64,9 @@
         "@okikio/manager": "workspace:*"
     },
     "devDependencies": {
-        "type-fest": "^2.3.4",
-        "typescript": "^4.4.3"
+        "csstype": "^3.0.10",
+        "type-fest": "^2.8.0",
+        "typescript": "^4.5.4"
     },
     "gitHead": "ad422076cdb57d570426f786886129d5bca2f90f"
 }

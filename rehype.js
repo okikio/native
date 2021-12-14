@@ -8,7 +8,7 @@ import path from "path";
 import rehypeParse from "rehype-parse";
 import rehypeStringify from 'rehype-stringify';
 
-import { redirectDocsURL } from "./src/markdown-plugins.js";
+import { redirectDocsURL } from "./old-src/markdown-plugins.js";
 
 async function importPlugin(p) {
     if (typeof p === "string") {
