@@ -504,7 +504,7 @@ export const ParseTransformableCSSKeyframes = (keyframes) => {
             ...rest
 
             // Convert dash seperated strings to camelCase strings
-        } = ParseCSSProperties(properties);
+        } = ParseCSSProperties(properties) as any;
 
         translate = UnitPXCSSValue(translate);
         translate3d = UnitPXCSSValue(translate3d);
@@ -604,7 +604,7 @@ export const ParseTransformableCSSKeyframes = (keyframes) => {
 //     [50, 60, 70],
 //     [80, 90, 100]
 // )))
-export const arrFill = (arr, maxLen) => {
+export const arrFill = (arr, maxLen?) => {
     // Ensure all transform function Arrays are the same length to create smooth motion
     maxLen = maxLen ?? Math.max(...arr.map(value => value.length));
     return arr.map(value => {

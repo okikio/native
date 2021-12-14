@@ -1,4 +1,4 @@
-import plugins from "./src/markdown-plugins.js";
+import plugins from "./markdown-plugins.mjs";
 
 // Full Astro Configuration API Documentation:
 // https://docs.astro.build/reference/configuration-reference
