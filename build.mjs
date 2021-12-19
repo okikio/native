@@ -9,7 +9,7 @@ import bundleSize from "rollup-plugin-bundle-size";
 import esbuild from "rollup-plugin-esbuild";
 
 import { readFileSync } from "fs";
-import { globby } from 'globby';
+import glob from 'fast-glob';
 
 import path from "path";
 import { fileURLToPath } from "url";
@@ -30,7 +30,7 @@ const __dirname = path.dirname(__filename);
 export const getSortedPackages = async (scope = [], ignore = []) => {
     scope = [].concat(scope);
     ignore = [].concat(ignore);
-    return (await globby(["packages"], {
+    return (await glob(["packages"], {
         expandDirectories: scope.length ? scope.map(v => `${v.replace("@okikio/", "")}/package.json`) : ["package.json"],
         ignore: ignore.length ? ignore.map(v => `packages/${v.replace("@okikio/", "")}/package.json`) : [],
         deep: 2

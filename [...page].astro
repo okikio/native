@@ -2,11 +2,11 @@
 import { Markdown } from "astro/components";
 import BaseLayout from "../layouts/BaseLayout.astro";
 
-import { globby } from 'globby';
+import glob from 'fast-glob';
 import { readFileSync } from "node:fs";
 
 export async function getStaticPaths() {
-    let res = await globby(["docs/**/*.md", "!docs/api"]);
+    let res = await glob(["docs/**/*.md", "!docs/api"]);
     let pages = res.map(x => {
         return { 
             path: x, 

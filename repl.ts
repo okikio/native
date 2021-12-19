@@ -32,6 +32,12 @@ console.log(ParseTransformableCSSProperties({
     padding: ["5px 6px 7px", "5px 6px 8px"]
 }))
 
+import glob from "fast-glob";
+/* 
+---
+layout: ../../layouts/PagesLayout.astro
+---
+*/
 // console.log(transpose(...transpose(
 //     [50, 60, 70],
 //     [80, 90, 100]

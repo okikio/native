@@ -1,6 +1,6 @@
 import { h } from "hastscript";
 import { unified } from 'unified';
-import { globby } from 'globby';
+import glob from 'fast-glob';
 
 import fs from "fs/promises";
 import path from "path";
@@ -59,7 +59,7 @@ const __dirname = path.resolve(path.dirname(""));
       parser.use(plugin, opts);
     });
   
-	const paths = await globby('public/api', {
+	const paths = await glob('public/api', {
 		expandDirectories: {
 			// files: ['cat', 'unicorn', '*.jpg'],
 			extensions: ['html']

@@ -1,12 +1,8 @@
 ---
-import SidebarSection from "./SidebarSection.astro";
+// import SidebarSection from "./SidebarSection.astro";
 import Logo from "./Logo.astro";
-import { globby } from "globby";
-const paths = await globby('docs', {
-		expandDirectories: {
-			extensions: ['md']
-		}
-});
+import glob from "fast-glob";
+const paths = await glob('docs/**/*.md');
 
 function isObject(obj) {
   return typeof obj === 'object' && obj !== null && obj !== undefined
