@@ -11,6 +11,18 @@ const paths = await globby('docs', {
 function isObject(obj) {
   return typeof obj === 'object' && obj !== null && obj !== undefined
 }
+
+// Capitalize first letter of each word
+let capitalize = (str) => {
+  return str
+        .replace(/-/g, " ")
+        .replace(/\w\S*/g, (txt) => 
+          (txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase())
+        )
+        .replace(/api/gi, "API")
+        .replace(/css/gi, "CSS");
+};
+
 const obj = {}; 
 function deepGet(obj, path) {
   var length = path.length;
@@ -157,7 +169,35 @@ paths.forEach(p => {
   <div class="sticky">
     <div class="scroll-shadow-top"></div>
     <div class="scroll">
+    {
+      () => {
+        let generate = (input, depth = 1) => {
+            let _keys = Object.keys(input).sort((a, b) => 
+              (a == "index" ? -1 : b == "index" ? 1 : 0)
+            );
+
+            return Promise.all(
+                _keys.map((item) => 
+                  isObject(input[item]) ?
+                  (
+                      <details>
+                          <summary>
+                          <p>{["animate", "emitter", "manager", "native"].includes(item) ? `@okikio/${item}` : capitalize(item)}</p>
+                          </summary>
+
+                          <div class="content">{depth >= 6 ? null : generate(input[item], depth + 1)}</div>
+                      </details>
+                  ) :  (<a href={input[item]}>{item == "index" ? "Overview" : capitalize(item)}</a>)
+                  // (<SidebarSection item={item} details={input[item]} content={depth >= 5 ? null : generate(input[item], depth + 1)} />)
+                )
+            );
+        };
+
+        return generate(obj);
+      }
+    }
     </div>
+
     <div class="scroll-shadow-bottom"></div>
   </div>
 </aside>

@@ -49,59 +49,79 @@ export type TypeCallbackArgs = Parameters<TypeComputableAnimationFunction<(strin
  * The `string & {}` is a typescript hack for autocomplete, 
  * check out [github.com/microsoft/TypeScript/issues/29729](https://github.com/microsoft/TypeScript/issues/29729) to learn more
  */
-export type TypeCommonGenerics = number | (string & {}) | `var(--${string})` | `var(--${string}, ${string | number})`;
+export type TypeCommonGenerics = number | (string & {});
 
 /** 
- * string & number generic values for CSS Properties. 
+ * string, number, calc(${...}) & var(--${...}) generic values for CSS Properties. 
  * 
  * The `string & {}` is a typescript hack for autocomplete, 
  * check out [github.com/microsoft/TypeScript/issues/29729](https://github.com/microsoft/TypeScript/issues/29729) to learn more
  */
-export type TypeCommonCSSGenerics = TypeCommonGenerics | `var(--${string})` | `var(--${string}, ${string | number})`;
+export type TypeCommonCSSGenerics = TypeCommonGenerics | `calc(${string})` | `var(--${string})` | `var(--${string}, ${string | number})`;
+
+/**
+ * Allow either the type alone, or an Array of that type
+ */
+export type OneOrMany<Type> = Type | Type[];
 
 /**
  * The CSS Generics of Property Indexed Keyframes {@link PropertyIndexedKeyframes}
  */
-export type TypeCSSGenericPropertyKeyframes = TypeCommonGenerics | TypeCommonGenerics[];
-
-/** 
- * Support CSS Property Functions {@link TypeComputableAnimationFunction} and normal Common Property Values {@link TypeCommonGenerics}
-*/
-export type TypeComputableCSSGenerics = TypeCSSGenericPropertyKeyframes | TypeComputableAnimationFunction<TypeCSSGenericPropertyKeyframes>;
+export type TypeCSSGenericPropertyKeyframes = OneOrMany<TypeCommonCSSGenerics>;
 
 /**
- * Contains the individual transform properties, `translate, rotate, scale, skew, perspective`, and all their varients
+ * Allow either the computed values, or a computable callback function
  */
-export interface IIndividualTransformProperties {
+export type ComputableOrComputed<Type> = Type | TypeComputableAnimationFunction<Type>;
+
+/** 
+ * Support CSS Property Functions {@link TypeComputableAnimationFunction} and normal Common Property Values {@link TypeCommonCSSGenerics}
+*/
+export type TypeComputableCSSGenerics = ComputableOrComputed<TypeCSSGenericPropertyKeyframes>;
+
+/**
+ * Represents the individual transform properties
+ */
+export type TypeIndividualTransformProperties = {
     perspective?: TypeCSSGenericPropertyKeyframes,
 
-    rotate?: TypeCSSGenericPropertyKeyframes | Array<TypeCSSGenericPropertyKeyframes>,
-    rotate3d?: TypeCSSGenericPropertyKeyframes | Array<TypeCSSGenericPropertyKeyframes>,
+    rotate?: OneOrMany<TypeCSSGenericPropertyKeyframes>,
+    rotate3d?: OneOrMany<TypeCSSGenericPropertyKeyframes>,
     rotateX?: TypeCSSGenericPropertyKeyframes,
     rotateY?: TypeCSSGenericPropertyKeyframes,
     rotateZ?: TypeCSSGenericPropertyKeyframes,
 
-    translate?: TypeCSSGenericPropertyKeyframes | Array<TypeCSSGenericPropertyKeyframes>,
-    translate3d?: TypeCSSGenericPropertyKeyframes | Array<TypeCSSGenericPropertyKeyframes>,
+    translate?: OneOrMany<TypeCSSGenericPropertyKeyframes>,
+    translate3d?: OneOrMany<TypeCSSGenericPropertyKeyframes>,
     translateX?: TypeCSSGenericPropertyKeyframes,
     translateY?: TypeCSSGenericPropertyKeyframes,
     translateZ?: TypeCSSGenericPropertyKeyframes,
 
-    scale?: TypeCSSGenericPropertyKeyframes | Array<TypeCSSGenericPropertyKeyframes>,
-    scale3d?: TypeCSSGenericPropertyKeyframes | Array<TypeCSSGenericPropertyKeyframes>,
+    scale?: OneOrMany<TypeCSSGenericPropertyKeyframes>,
+    scale3d?: OneOrMany<TypeCSSGenericPropertyKeyframes>,
 
     scaleX?: TypeCSSGenericPropertyKeyframes,
     scaleY?: TypeCSSGenericPropertyKeyframes,
     scaleZ?: TypeCSSGenericPropertyKeyframes,
 
-    skew?: TypeCSSGenericPropertyKeyframes | Array<TypeCSSGenericPropertyKeyframes>,
+    skew?: OneOrMany<TypeCSSGenericPropertyKeyframes>,
 
     skewX?: TypeCSSGenericPropertyKeyframes,
     skewY?: TypeCSSGenericPropertyKeyframes,
 
-    // matrix?: TypeCSSGenericPropertyKeyframes | Array<TypeCSSGenericPropertyKeyframes>,
-    // matrix3d?: TypeCSSGenericPropertyKeyframes | Array<TypeCSSGenericPropertyKeyframes>,
-}
+    // matrix?: OneOrMany<TypeCSSGenericPropertyKeyframes>,
+    // matrix3d?: OneOrMany<TypeCSSGenericPropertyKeyframes>,
+};
+
+/**
+ * Add support for Kebab Case transform properties, e.g. "translate-x", "translate-3d"
+ */
+export type AddKebabCaseTransformProperties = TypeIndividualTransformProperties & KebabCasedProperties<TypeIndividualTransformProperties>;
+
+/**
+ * Contains the individual transform properties, `translate, rotate, scale, skew, perspective`, and all their varients
+ */
+export interface IIndividualTransformProperties extends AddKebabCaseTransformProperties { }
 
 /**
  * The union of all CSS Property types, ranging from hypenated to cammelCase, including individual transform properties
@@ -123,13 +143,13 @@ export interface IIndividualTransformProperties {
  * 
 */
 export type TypeCSSProperties =
-    Properties<TypeCommonGenerics, TypeCommonGenerics> &
-    PropertiesHyphen<TypeCommonGenerics, TypeCommonGenerics> &
-    PropertiesFallback<TypeCommonGenerics, TypeCommonGenerics> &
-    PropertiesHyphenFallback<TypeCommonGenerics, TypeCommonGenerics> &
-
-    IIndividualTransformProperties &
-    KebabCasedProperties<IIndividualTransformProperties>;
+    Omit<
+        Properties<TypeCommonGenerics, TypeCommonGenerics> &
+        PropertiesHyphen<TypeCommonGenerics, TypeCommonGenerics> &
+        PropertiesFallback<TypeCommonGenerics, TypeCommonGenerics> &
+        PropertiesHyphenFallback<TypeCommonGenerics, TypeCommonGenerics>
+    , keyof IIndividualTransformProperties> &
+    IIndividualTransformProperties;
 
 /** 
  * Full list of supported CSS, SVG & Individual Transform Animatable Properties that are supported.
@@ -193,14 +213,14 @@ export interface IAllSupportedCSSProperties extends TypeCSSProperties {
      * 
      * Check out the [documentation](https://native.okikio.dev/animate/api/animate-attributes/) to learn more about animating attributes.
      */
-    d?: Property.OffsetPath | Property.OffsetPath[],
+    d?: Property.OffsetPath,
 
     /**
      * `offset`, by default represents the keyframe offset, to ensure the css offset property can still be access, we use `cssOffset` property name.
      * The offset CSS shorthand property sets all the properties required for animating an element along a defined path.
      * Read more on [MDN](https://developer.mozilla.org/en-US/docs/Web/CSS/offset)
      */
-    cssOffset?: TypeCSSProperties["offset"] | TypeCSSProperties["offset"][],
+    cssOffset?: TypeCSSProperties["offset"],
 
     /**
      * Theses are the CSS properties to be animated as Keyframes
@@ -245,14 +265,21 @@ export interface IAllSupportedCSSProperties extends TypeCSSProperties {
      *
      * _**Note**: to use `composite` you will need to add it to the {@link AnimationOptions.extend | extend} object as an option_
      */
-    [property: `--${string}`]: TypeComputableCSSGenerics,
+    [property: `--${string}`]: TypeCSSGenericPropertyKeyframes,
 }
 
 /**
- * Adds support computable CSS properties to the {@link IAllSupportedCSSProperties} interface
+ * Adds support computed CSS properties to the {@link IAllSupportedCSSProperties} interface
  */
-type TypeComputableCSSProperties = {
-    [K in keyof IAllSupportedCSSProperties]?: IAllSupportedCSSProperties[K] | TypeComputableAnimationFunction<IAllSupportedCSSProperties[K]>
+export type TypeComputedCSSProperties = {
+    [K in keyof IAllSupportedCSSProperties]?: OneOrMany<IAllSupportedCSSProperties[K]>
+}
+
+/**
+ * Adds support computable CSS properties to the {@link TypeComputedCSSProperties} interface
+ */
+export type TypeComputableCSSProperties = {
+    [K in keyof TypeComputedCSSProperties]?: ComputableOrComputed<TypeComputedCSSProperties[K]>
 }
 
 /**
@@ -626,7 +653,7 @@ export interface IStandaloneAnimationOptions {
  * }
  * ```
  */
-export interface IStandaloneComputedAnimateOptions extends IStandaloneAnimationConfig, IStandaloneAnimationOptions {}
+export interface IStandaloneComputedAnimateOptions extends IStandaloneAnimationConfig, IStandaloneAnimationOptions { }
 
 /**
  * Stores all the info needed to create a the total duration of an animation

@@ -1,0 +1,25 @@
+---
+// import { Markdown } from "astro/components";
+import BaseLayout from "../layouts/BaseLayout.astro";
+
+const {content} = Astro.props;
+let pathArr = Astro.request.url.pathname.split("/").filter(item => item && item.length);
+let title = content?.match?.(/\#{1,6}(.*)/)?.[1]?.trim() ?? "Homepage";
+let pkg = "@okikio/" + pathArr[0];
+---
+
+<BaseLayout title={`${title}${ pkg == title ? "" : " - " + pkg}`}>
+  <div>
+    <p>
+      <span><a href="/">Home</a>{ pathArr.length ? " / " : "" }</span>
+      {pathArr.map((path, i) => {
+        return `<a href="/${pathArr.slice(0, i + 1).join("/")}">${path}</a>` 
+      }).join(" / ")}
+    </p> 
+
+    <article main-content>
+      <!-- <Markdown content={content} /> -->
+      <slot />
+    </article> 
+  </div>
+</BaseLayout>
