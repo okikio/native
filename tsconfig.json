@@ -2,23 +2,20 @@
     "compilerOptions": {
         "moduleResolution": "node",
         "target": "ES2021",
-        "module": "ES2020",
-        
-        "lib": ["ES2021", "ESNext", "DOM"],
-
+        "module": "es2022",
+        "lib": [
+            "ES2021",
+            "ESNext",
+            "DOM"
+        ],
         "incremental": true,
-
         "isolatedModules": true,
         "esModuleInterop": true,
-
         "outDir": "./lib",
-        
         "diagnostics": false,
         "extendedDiagnostics": false,
         "skipLibCheck": false,
         "jsx": "preserve",
-
         "allowJs": true,
     }
 }
-        
