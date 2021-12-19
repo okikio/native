@@ -1,3 +1,6 @@
+---
+layout: layout:PagesLayout
+---
 ## Custom Easing
 
 Custom Easing isn't currently a thing in the Web Animation API (WAAPI), so, the next best thing is to emulate the effect of Custom Easing. I added the `CustomEasing` function for this reason, you can use it like this,

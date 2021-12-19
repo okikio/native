@@ -1,3 +1,6 @@
+---
+layout: layout:PagesLayout
+---
 ### oncancel
 
 | Default                                                                            | Type     |

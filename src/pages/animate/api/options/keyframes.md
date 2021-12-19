@@ -1,7 +1,10 @@
+---
+layout: layout:PagesLayout
+---
 ### keyframes
 
-| Default | Type                                                                                                                                                                                   |
-| :------ | :------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Default | Type                                                                                                                                                       |
+| :------ | :--------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `[]`    | TypeCSSLikeKeyframe \| ICSSComputedTransformableProperties[] & Keyframe[] \| object[] \| [TypeCallback](/docs/api/modules/_okikio_animate.md#typecallback) |
 
 I highly suggest going through the API documentation to better understand [keyframes](/docs/api/interfaces/_okikio_animate.ianimationoptions.md#keyframes).

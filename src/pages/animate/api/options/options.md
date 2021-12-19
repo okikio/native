@@ -1,7 +1,10 @@
+---
+layout: layout:PagesLayout
+---
 ### options
 
-| Default | Type                                                                                                                                        |
-| :------ | :------------------------------------------------------------------------------------------------------------------------------------------ |
+| Default | Type                                                                                                            |
+| :------ | :-------------------------------------------------------------------------------------------------------------- |
 | `{}`    | [IAnimationOptions](/docs/api/interfaces/_okikio_animate.ianimationoptions.md) = Object \| Animate \| Animate[] |
 
 Another way to input options for an animation, it's also used to chain animations.
@@ -87,4 +90,4 @@ _**Note**: you can't use this property as a method._
 })();
 ```
 
-> Go through the [animation options docs](/docs/animate/api/options/index.md) for extra info. on other animation options.
+> Go through the [animation options docs](/docs/animate/api/options/) for extra info. on other animation options.

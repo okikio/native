@@ -1,3 +1,6 @@
+---
+layout: layout:PagesLayout
+---
 ## API
 
 I highly suggest going through the [API documentation](/docs/api/modules/_okikio_native.md), for a more detailed documentation of the API's.
@@ -369,7 +372,7 @@ console.log(item.key); // => "item"
 
 #### AdvancedManager#....Manager#
 
-All the properties and methods of the `Manager` class, read [@okikio/manager's docs](/docs/manager/index.md) to learn more.
+All the properties and methods of the `Manager` class, read [@okikio/manager's docs](/docs/manager/) to learn more.
 
 #### AdvancedManager#app: IApp
 
@@ -734,7 +737,7 @@ App.prototype.on(events: EventInput, callback?: ListenerCallback): App;
 App.prototype.off(events: EventInput, callback?: ListenerCallback): App;
 
 /**
- * Shortcuts to the App EventEmitter on and off methods, they create and remove events and event listeners, read more about @okikio/emitter in [/docs/emitter/index.md](/docs/emitter/index.md).
+ * Shortcuts to the App EventEmitter on and off methods, they create and remove events and event listeners, read more about @okikio/emitter in [/docs/emitter/](/docs/emitter/).
  * Note: the scope of the events are automatically set to the App
  *
  * @param  {EventInput} events - Takes event name, and supports all the different ways to represent events that @okikio/amitter offers
@@ -749,7 +752,7 @@ App.prototype.off(events: EventInput, callback?: ListenerCallback): App;
 App.prototype.emit(events: string | any[], ...args: any): App;
 
 /**
- * Shortcuts to the App EventEmitter emit method, emits (triggers) events and event listeners, read more about @okikio/emitter in [/docs/emitter/index.md](/docs/emitter/index.md)
+ * Shortcuts to the App EventEmitter emit method, emits (triggers) events and event listeners, read more about @okikio/emitter in [/docs/emitter/](/docs/emitter/)
  *
  * @param  {string | any[]} events - Takes event names, and supports all the different ways to represent events that @okikio/amitter offers
  * @param  {any} [...args] - Arguments to pass to the events

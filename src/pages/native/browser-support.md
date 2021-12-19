@@ -1,3 +1,6 @@
+---
+layout: layout:PagesLayout
+---
 ## Browser support
 
 `@okikio/native` is provided as a native ES6 module, which means you may need to transpile it depending on your browser support policy. The library works using `<script type="module">` in
@@ -12,7 +15,7 @@ I recommend **only** using `@okikio/native` on browsers that support `ES6+`, the
 
 ## Polyfills & Bundling
 
-If you install [@okikio/native](/docs/native/index.md) via [npm](https://www.npmjs.com/package/@okikio/native) you are most likely going to need [rollup](https://rollupjs.org/) or [esbuild](https://esbuild.github.io/).
+If you install [@okikio/native](/docs/native/) via [npm](https://www.npmjs.com/package/@okikio/native) you are most likely going to need [rollup](https://rollupjs.org/) or [esbuild](https://esbuild.github.io/).
 
 You will need Promise, Object.values, Array.from, Array.prototype.includes, and fetch polyfills for older browsers.
 

@@ -1,8 +1,11 @@
+---
+layout: layout:PagesLayout
+---
 # @okikio/animate
 
-[NPM](https://www.npmjs.com/package/@okikio/animate) <span style="padding-inline: 1rem">|</span> [Github](https://github.com/okikio/native/tree/beta/packages/animate#readme) <span style="padding-inline: 1rem">|</span> [API Guide](/docs/animate/api/index.md) <span style="padding-inline: 1rem">|</span> [Licence](/packages/animate/LICENSE)  
+[NPM](https://www.npmjs.com/package/@okikio/animate) <span style="padding-inline: 1rem">|</span> [Github](https://github.com/okikio/native/tree/beta/packages/animate#readme) <span style="padding-inline: 1rem">|</span> [API Guide](/docs/animate/api/) <span style="padding-inline: 1rem">|</span> [Licence](/packages/animate/LICENSE)  
 
-[@okikio/animate](/docs/animate/index.md) is a js animation library for the modern web. It was inspired by [animateplus](https://github.com/bendc/animateplus) and [animejs](https://animejs.com/), it is focused on performance and ease of use. It utilizes the Web Animation API (WAAPI) to deliver fluid animations at a *semi-small* size, in total it weighs **~11.27 KB** (minified and gzipped). Most devs will only really be using a few of `@okiko/animate`'s features at a time, so the actual minimum usable [treeshakeable](https://developer.mozilla.org/en-US/docs/Glossary/Tree_shaking) file size is [**~7.07 KB** (minified and gzipped)](https://bundle.js.org/?q=@okikio/animate&treeshake=animate).
+[@okikio/animate](/docs/animate/) is a js animation library for the modern web. It was inspired by [animateplus](https://github.com/bendc/animateplus) and [animejs](https://animejs.com/), it is focused on performance and ease of use. It utilizes the Web Animation API (WAAPI) to deliver fluid animations at a *semi-small* size, in total it weighs **~11.27 KB** (minified and gzipped). Most devs will only really be using a few of `@okiko/animate`'s features at a time, so the actual minimum usable [treeshakeable](https://developer.mozilla.org/en-US/docs/Glossary/Tree_shaking) file size is [**~7.07 KB** (minified and gzipped)](https://bundle.js.org/?q=@okikio/animate&treeshake=animate).
 
 I suggest reading the in depth [CSS-Tricks article](https://css-tricks.com/how-i-used-the-waapi-to-build-an-animation-library/) I made on `@okikio/animate`, it will help you determine if `@okikio/animate` is right for your project.
 
@@ -19,7 +22,7 @@ I suggest reading the in depth [CSS-Tricks article](https://css-tricks.com/how-i
 
 ## Installation
 
-You can install [@okikio/animate](/docs/animate/index.md) from [npm](https://www.npmjs.com/package/@okikio/animate) via 
+You can install [@okikio/animate](/docs/animate/) from [npm](https://www.npmjs.com/package/@okikio/animate) via 
 
 ```bash
 npm i @okikio/animate
@@ -94,7 +97,7 @@ In order to determine when all target animations are complete, the `Animate` cla
 
 > _**Note**: `Animation` instances come from the `Animation` class of the Web Animations API. The `Animation` class represents a single animation player and provides playback controls and a timeline for an animation node or source, [Read more...](https://developer.mozilla.org/en-US/docs/Web/API/Animation)_
 
-[Read the API docs to learn more  &#8594;](/docs/animate/api/index.md)
+[Read the API docs to learn more  &#8594;](/docs/animate/api/)
 
 
 
@@ -108,7 +111,7 @@ In order to determine when all target animations are complete, the `Animate` cla
 
 > [Check out this demo on Codepen  &#8594;](https://codepen.io/okikio/pen/RwVpvRz) 
 
-Read through the [API guide](/docs/native/api/index.md) to learn more. 
+Read through the [API guide](/docs/native/api/) to learn more. 
 
 ## Examples
 

@@ -1,3 +1,6 @@
+---
+layout: layout:PagesLayout
+---
 ### extend
 
 | Default | Type                                                                                            |

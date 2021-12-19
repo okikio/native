@@ -1,3 +1,6 @@
+---
+layout: layout:PagesLayout
+---
 ## Animation Progress and requestAnimationFrame
 
 The Web Animation API doesn't allow for keeping track of the progress in a clean way, so, we are forced to use `requestAnimationFrame` to check the current progress of an animation, however, doing, so, can actually decrease framerates, so, I built a system to call `requestAnimationFrame` less often.

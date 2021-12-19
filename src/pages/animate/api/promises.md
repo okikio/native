@@ -1,6 +1,9 @@
+---
+layout: layout:PagesLayout
+---
 ## Promises and Promise-Like
 
-`new Animate()` is promise-like meaning it has `then`, `catch`, and `finally` methods, but `Animate` itself isn't a Promise (this is important to keep in mind when dealing with async/await asynchronous  animations). `Animate`'s `then` resolves once all animations are complete. The promise resolves to an Array with the `Animate` instance being the only element, but the `options` animation option can use the options of another `Animate` instance allowing animation chaining to be straightforward and convenient. The [Getting started](/docs/animate/index.md#getting-started) section gives a basic example.
+`new Animate()` is promise-like meaning it has `then`, `catch`, and `finally` methods, but `Animate` itself isn't a Promise (this is important to keep in mind when dealing with async/await asynchronous  animations). `Animate`'s `then` resolves once all animations are complete. The promise resolves to an Array with the `Animate` instance being the only element, but the `options` animation option can use the options of another `Animate` instance allowing animation chaining to be straightforward and convenient. The [Getting started](/docs/animate/#getting-started) section gives a basic example.
 
 Since `Animate` relies on native promises, you can benefit from all the usual features promises
 provide, such as `Promise.all`, `Promise.race`, and especially `async/await` which makes animation timelines easy to set up.

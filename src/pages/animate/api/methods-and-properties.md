@@ -1,3 +1,6 @@
+---
+layout: layout:PagesLayout
+---
 ## Methods & properties
 
 ### mainAnimation: Animation
@@ -99,7 +102,7 @@ Allows you to select a specific animation from an element
 #### `getTiming(value: HTMLElement | Animation): EffectTiming | AnimationOptions`
 
 Returns the timings of an Animation, given a target.
-E.g. { duration, endDelay, delay, iterations, iterationStart, direction, easing, fill, etc... }
+E.g. \{ duration, endDelay, delay, iterations, iterationStart, direction, easing, fill, etc... \}
 
 #### `getCurrentTime(): number`
 

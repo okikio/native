@@ -1,6 +1,6 @@
 import { App, PJAX, TransitionManager, HistoryManager, PageManager, Router } from "@okikio/native";
 import { animate } from "@okikio/animate";
-import { init, inFocus } from "./sidebar";
+import { init, inFocus } from "./sidebar.mjs";
 
 import type { ITransition } from "@okikio/native";
 

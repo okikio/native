@@ -1,3 +1,6 @@
+---
+layout: layout:PagesLayout
+---
 ### persist
 
 | Default | Type    |

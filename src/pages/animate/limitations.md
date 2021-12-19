@@ -1,3 +1,6 @@
+---
+layout: layout:PagesLayout
+---
 ## Limitations
 
 ### CSS & SVG Animations Support

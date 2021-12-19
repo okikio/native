@@ -1,3 +1,6 @@
+---
+layout: layout:PagesLayout
+---
 ## Options
 
 Animation options control how an animation is produced, it shouldn't be too different for those who have used `animejs`, or `jquery`'s animate method.

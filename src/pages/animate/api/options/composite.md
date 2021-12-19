@@ -1,3 +1,6 @@
+---
+layout: layout:PagesLayout
+---
 ### composite
 
 The `composite` property of a `KeyframeEffect` resolves how an element's animation impacts its underlying property values.

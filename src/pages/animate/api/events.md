@@ -1,3 +1,6 @@
+---
+layout: layout:PagesLayout
+---
 ## Events
 
 There are `8` events in total, they are:

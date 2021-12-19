@@ -1,3 +1,6 @@
+---
+layout: layout:PagesLayout
+---
 ### target(s)
 
 | Default     | Type                                                                                                 |

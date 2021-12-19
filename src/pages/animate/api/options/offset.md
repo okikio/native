@@ -1,7 +1,10 @@
+---
+layout: layout:PagesLayout
+---
 ### offset
 
-| Default     | Type                                                                                                                  |
-| :---------- | :-------------------------------------------------------------------------------------------------------------------- |
+| Default     | Type                                                                                      |
+| :---------- | :---------------------------------------------------------------------------------------- |
 | `undefined` | (Number \| String)[] \| [TypeCallback](/docs/api/modules/_okikio_animate.md#typecallback) |
 
 Controls the starting point of certain parts of an animation.

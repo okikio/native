@@ -1,7 +1,10 @@
+---
+layout: layout:PagesLayout
+---
 ### easing
 
-| Default | Type                                                                                                    |
-| :------ | :------------------------------------------------------------------------------------------------------ |
+| Default | Type                                                                        |
+| :------ | :-------------------------------------------------------------------------- |
 | `ease`  | String \| [TypeCallback](/docs/api/modules/_okikio_animate.md#typecallback) |
 
 Determines the acceleration curve of your animation.

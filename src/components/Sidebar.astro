@@ -183,7 +183,7 @@ paths.forEach(p => {
 
                           <div class="content">{depth >= 6 ? null : generate(input[item], depth + 1)}</div>
                       </details>
-                  ) :  (<a href={input[item]}>{item == "index" ? "Overview" : capitalize(item)}</a>)
+                  ) :  (<a href={input[item].replace(new RegExp("\/index$"), "/")}>{item == "index" ? "Overview" : capitalize(item)}</a>)
                   // (<SidebarSection item={item} details={input[item]} content={depth >= 5 ? null : generate(input[item], depth + 1)} />)
                 )
             );
@@ -198,4 +198,4 @@ paths.forEach(p => {
   </div>
 </aside>
 
-<!-- <script src={Astro.resolve("../ts/sidebar.js")} type="module" async></script> -->
+<script src={Astro.resolve("../ts/sidebar.mjs")} type="module"></script>

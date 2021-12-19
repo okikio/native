@@ -1,3 +1,6 @@
+---
+layout: layout:PagesLayout
+---
 ## tweenAttr, AnimateAttributes & SVG Morphing
 
 [`tweenAttr()`](/docs/api/modules/_okikio_animate.md#tweenattr) uses the change in opacity (from the [AnimateAttributes](/docs/api/classes/_okikio_animate.AnimateAttributes.md) class) to interpolate the attribute value of other elements.

@@ -1,3 +1,6 @@
+---
+layout: layout:PagesLayout
+---
 ### padEndDelay
 
 | Default | Type    |

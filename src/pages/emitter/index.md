@@ -1,3 +1,6 @@
+---
+layout: layout:PagesLayout
+---
 # @okikio/emitter
 
 [NPM](https://www.npmjs.com/package/@okikio/emitter) <span style="padding-inline: 1rem">|</span> [Github](https://github.com/okikio/native/tree/beta/packages/emitter#readme) <span style="padding-inline: 1rem">|</span> [API Guide](/docs/emitter/api.md) <span style="padding-inline: 1rem">|</span> [Licence](/packages/emitter/LICENSE) 
@@ -6,7 +9,7 @@ A small Event Emitter written in typescript with performance and ease of use in 
 
 ## Installation
 
-You can install [@okikio/emitter](/docs/emitter/index.md) from [npm](https://www.npmjs.com/package/@okikio/emitter) via 
+You can install [@okikio/emitter](/docs/emitter/) from [npm](https://www.npmjs.com/package/@okikio/emitter) via 
 
 
 ```bash
@@ -56,7 +59,7 @@ const { EventEmitter } = window.emitter;
 
 The `EventEmitter` class is what runs the show for the `@okikio/emitter` library. To use it properly you need to create a new instance of `EventEmitter`, the instance of `EventEmitter` is what allows for event emitting, and listening.
 
-`EventEmitter` allows for an easy way to manage events. It inherits properties/methods from [@okikio/manager](/docs/manager/index.md).
+`EventEmitter` allows for an easy way to manage events. It inherits properties/methods from [@okikio/manager](/docs/manager/).
 
 ```ts
 // You need to first initialize a new Event Emitter

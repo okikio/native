@@ -1,3 +1,6 @@
+---
+layout: layout:PagesLayout
+---
 ## Pause Animation when Page is out of Focus
 
 If the page looses focus, by default `Animate` will pause all playing animations until the user goes back to the page, however, this behavior can be changed by setting the `pauseOnPageHidden` static property to false.

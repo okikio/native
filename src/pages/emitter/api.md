@@ -1,3 +1,6 @@
+---
+layout: layout:PagesLayout
+---
 ## API
 
 #### EventEmitter#on(events, callback, scope) & EventEmitter#emit(events, ...args)

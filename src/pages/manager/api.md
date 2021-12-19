@@ -1,3 +1,6 @@
+---
+layout: layout:PagesLayout
+---
 ## API
 
 ### Existing Map Methods

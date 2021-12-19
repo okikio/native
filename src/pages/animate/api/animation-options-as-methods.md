@@ -1,3 +1,6 @@
+---
+layout: layout:PagesLayout
+---
 ## Animation Options & CSS Properties as Methods
 
 All options & properties except `target`, `targets`, `autoplay`, `extend`, `onfinish`, and `options` can be represented by a method with the arguments `(index: number, total: number, element: HTMLElement)`.

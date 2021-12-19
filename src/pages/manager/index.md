@@ -1,3 +1,6 @@
+---
+layout: layout:PagesLayout
+---
 # @okikio/manager
 
 [NPM](https://www.npmjs.com/package/@okikio/manager) <span style="padding-inline: 1rem">|</span> [Github](https://github.com/okikio/native/tree/beta/packages/manager#readme) <span style="padding-inline: 1rem">|</span> [API Guide](/docs/manager/api.md) <span style="padding-inline: 1rem">|</span> [Licence](/packages/manager/LICENSE) 
@@ -13,7 +16,7 @@ The `Manager` class makes Maps easier to use, as well as adding 7 methods, **get
 
 ### Installation
 
-You can install [@okikio/manager](/docs/manager/index.md) from [npm](https://www.npmjs.com/package/@okikio/manager) via 
+You can install [@okikio/manager](/docs/manager/) from [npm](https://www.npmjs.com/package/@okikio/manager) via 
 
 
 ```bash

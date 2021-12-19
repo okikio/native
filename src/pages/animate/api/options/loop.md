@@ -1,7 +1,10 @@
+---
+layout: layout:PagesLayout
+---
 ### loop
 
-| Default | Type                                                                                                               |
-| :------ | :----------------------------------------------------------------------------------------------------------------- |
+| Default | Type                                                                                   |
+| :------ | :------------------------------------------------------------------------------------- |
 | `1`     | Boolean \| Number \| [TypeCallback](/docs/api/modules/_okikio_animate.md#typecallback) |
 
 Determines if the animation should repeat, and how many times it should repeat.

@@ -17,5 +17,12 @@
         "skipLibCheck": false,
         "jsx": "preserve",
         "allowJs": true,
+        
+        "baseUrl": ".",
+        "paths": {
+            "src:*": ["src/*"],
+            "layout:*": ["src/layouts/*.astro"],
+            "component:*": ["src/components/*.astro"]
+        }
     }
 }

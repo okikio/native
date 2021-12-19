@@ -1,7 +1,10 @@
+---
+layout: layout:PagesLayout
+---
 ### delay
 
-| Default | Type                                                                                                    |
-| :------ | :------------------------------------------------------------------------------------------------------ |
+| Default | Type                                                                        |
+| :------ | :-------------------------------------------------------------------------- |
 | `0`     | Number \| [TypeCallback](/docs/api/modules/_okikio_animate.md#typecallback) |
 
 Determines the delay of your animation in milliseconds. By passing it a callback, you can define a different delay for each element. The callback takes the index of each element, the target dom element, and the total number of target elements as its argument and returns a number.

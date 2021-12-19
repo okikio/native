@@ -1,7 +1,10 @@
+---
+layout: layout:PagesLayout
+---
 ### direction
 
-| Default  | Type                                                                                                    |
-| :------- | :------------------------------------------------------------------------------------------------------ |
+| Default  | Type                                                                        |
+| :------- | :-------------------------------------------------------------------------- |
 | `normal` | String \| [TypeCallback](/docs/api/modules/_okikio_animate.md#typecallback) |
 
 Determines the direction of the animation, the directions available are:

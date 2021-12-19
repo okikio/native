@@ -1,7 +1,10 @@
+---
+layout: layout:PagesLayout
+---
 ### speed
 
-| Default | Type                                                                                                    |
-| :------ | :------------------------------------------------------------------------------------------------------ |
+| Default | Type                                                                        |
+| :------ | :-------------------------------------------------------------------------- |
 | `1`     | Number \| [TypeCallback](/docs/api/modules/_okikio_animate.md#typecallback) |
 
 Determines the animation playback rate. Useful in the authoring process to speed up some parts of a

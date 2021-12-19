@@ -1,3 +1,6 @@
+---
+layout: layout:PagesLayout
+---
 ## Browser support
 
 `@okikio/animate` is provided as a native ES6 module, which means you may need to transpile it depending on your browser support policy. The library works using `<script type="module">` in
@@ -17,7 +20,7 @@ _**Note**: as it really difficult to get access to older versions of these brows
 
 ## Polyfills & Bundling
 
-If you install [@okikio/animate](/docs/animate/index.md) via [npm](https://www.npmjs.com/package/@okikio/animate) you are most likely going to need [rollup](https://rollupjs.org/) or [esbuild](https://esbuild.github.io/).
+If you install [@okikio/animate](/docs/animate/) via [npm](https://www.npmjs.com/package/@okikio/animate) you are most likely going to need [rollup](https://rollupjs.org/) or [esbuild](https://esbuild.github.io/).
 
 You will most likely need the Web Animation API, Promise, Object.values, Array.prototype.includes and Array.from polyfills.
 

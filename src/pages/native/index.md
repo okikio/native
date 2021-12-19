@@ -1,3 +1,6 @@
+---
+layout: layout:PagesLayout
+---
 # @okikio/native
 
 [NPM](https://www.npmjs.com/package/@okikio/native) <span style="padding-inline: 1rem">|</span> [Github](https://github.com/okikio/native/tree/beta/packages/native#readme) <span style="padding-inline: 1rem">|</span> [API Guide](/docs/native/api.md) <span style="padding-inline: 1rem">|</span> [Licence](/packages/native/LICENSE) 
@@ -15,13 +18,13 @@ The `@okikio/native` package achieves performance, high efficiency, and a natura
 
 ## Getting Started
 
-[@okikio/native](/docs/native/index.md) was inspired by [Rezo Zero's - Starting Blocks](https://github.com/rezozero/starting-blocks) project, and [barbajs](https://barba.js.org/). Both libraries had a major impact on the development of this project. `barbajs` is easy to use and elevates the experience of a site with the use of PJAX, while `Starting Blocks` uses modern apis to create performant but complex web experiences. This project exists as a more flexible alternative to `Starting Blocks`, but with the same intuitive design and experience (UX/DX) `barbajs` provides. `@kikio/animate` doesn't need PJAX to function, and best of all if PJAX is enabled it can safely switch back to normal browser controls if something goes wrong.
+[@okikio/native](/docs/native/) was inspired by [Rezo Zero's - Starting Blocks](https://github.com/rezozero/starting-blocks) project, and [barbajs](https://barba.js.org/). Both libraries had a major impact on the development of this project. `barbajs` is easy to use and elevates the experience of a site with the use of PJAX, while `Starting Blocks` uses modern apis to create performant but complex web experiences. This project exists as a more flexible alternative to `Starting Blocks`, but with the same intuitive design and experience (UX/DX) `barbajs` provides. `@kikio/animate` doesn't need PJAX to function, and best of all if PJAX is enabled it can safely switch back to normal browser controls if something goes wrong.
 
 > _**Note**: if you don’t know what a PJAX is I suggest checking out [MoOx/pjax](https://github.com/MoOx/pjax); in short, PJAX allows for smooth transitions between pages by switching out DOM Elements, after fetching them._
 
 ## Installation
 
-You can install [@okikio/native](/docs/native/index.md) from [npm](https://www.npmjs.com/package/@okikio/native) via 
+You can install [@okikio/native](/docs/native/) from [npm](https://www.npmjs.com/package/@okikio/native) via 
 
 
 ```bash
@@ -474,7 +477,7 @@ Read through the [API guide](/docs/native/api.md) to learn more.
 
 ### Animations & extras
 
-When using PJAX on sites you may want to use an animation library to transition between pages, (slight shameless plug [^1]) might I suggest [@okikio/animate](/docs/animate/api/index.md). You can use `@okikio/animate` to create smooth and fluid transtions, however, you aren't limited to just `@okikio/animate`, you can use any other animation libraries, or if you are daring you can also just use CSS for your transitions. 
+When using PJAX on sites you may want to use an animation library to transition between pages, (slight shameless plug [^1]) might I suggest [@okikio/animate](/docs/animate/api/). You can use `@okikio/animate` to create smooth and fluid transtions, however, you aren't limited to just `@okikio/animate`, you can use any other animation libraries, or if you are daring you can also just use CSS for your transitions. 
 
 [^1]: A “shameless plug” is a term often used on the Internet to refer to a time when someone tries to include (or “plug”) some information that helps advance their own selfish interests. And that information is usually a little bit off-topic.
 

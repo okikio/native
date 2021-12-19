@@ -1,7 +1,10 @@
+---
+layout: layout:PagesLayout
+---
 ### fillMode
 
-| Default | Type                                                                                                    |
-| :------ | :------------------------------------------------------------------------------------------------------ |
+| Default | Type                                                                        |
+| :------ | :-------------------------------------------------------------------------- |
 | `auto`  | String \| [TypeCallback](/docs/api/modules/_okikio_animate.md#typecallback) |
 
 > _Be careful when using fillMode, it has some problems when it comes to concurrency of animations read more on [MDN](https://developer.mozilla.org/en-US/docs/Web/API/EffectTiming/fill). I highly suggest using [IAnimationOptions.persist](/docs/api/interfaces/_okikio_animate.IAnimationOptions.html#persist), as it's less permanent, or better yet use the [IAnimationOptions.onfinish(...)](/docs/api/interfaces/_okikio_animate.IAnimationOptions.html#onfinish) method, with [Animate.commitStyles(...)](/docs/api/classes/_okikio_animate.Animate.html#commitStyles) to commit styles._
