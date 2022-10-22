@@ -5,8 +5,17 @@
 @font-face {
     /* ?996016c73e71cbeaf86416d20483c9db */
     font-family: "FluentSystemIcons-Regular";
-    src: url("/fonts/FluentSystemIcons-Regular.ttf")
-        format("truetype");
+    src: url("/media/fonts/FluentSystemIcons-Regular.ttf") format("truetype");
+}
+
+:root {
+    --light-color-background: #f8f9fa;
+    --light-color-panel-divider: #dadce0;
+    --light-link-color: #1155cc;
+    --dark-color-panel-divider: #47474d;
+    --dark-color-menu-divider-focus: #d73a49;
+    --dark-color-background: #1b1c1f;
+    --dark-color-secondary-background: #2d2f34;
 }
 
 .icon:before {
@@ -36,27 +45,27 @@ a :is(h1, h2, h3, h4, h5, h6):after {
     content: "\f4e5";
 
     visibility: hidden;
-    font-size: 0.75em;
+    font-weight: 900;
+    font-size: 1em;
+    padding-left: 0.25em;
+    vertical-align: middle;
+    color: var(--color-link);
+}
+
+body.light a :is(h1, h2, h3, h4, h5, h6):after {
+    color: var(--light-link-color);
 }
 
 a :is(h1, h2, h3, h4, h5, h6):hover:after {
     visibility: visible;
 }
 
-a :is(h1, h2, h3, h4, h5, h6):is(:hover, :focus):after {
+a :is(h1, h2, h3, h4, h5, h6):is(:hover,:focus):after {
     visibility: visible;
 }
 
-:root {
-    --light-color-background: #f8f9fa;
-    --light-color-panel-divider: #dadce0;
-    --light-link-color: #1155cc;
-    --light-external-icon: url(/assets/light-external.svg);
-    --dark-external-icon: url(/assets/dark-external.svg);
-    --dark-color-panel-divider: #47474d;
-    --dark-color-menu-divider-focus: #d73a49;
-    --dark-color-background: #1b1c1f;
-    --dark-color-secondary-background: #2d2f34;
+details {
+    cursor: pointer;
 }
 
 pre {
@@ -66,6 +75,11 @@ pre {
 pre,
 code {
     border-radius: 6px;
+    border: 1px solid rgb(20 20 20 / 0.25);
+}
+
+pre code {
+    border: none;
 }
 
 html,
@@ -136,9 +150,13 @@ body.light .tsd-panel {
 }
 
 .menu-highlight {
-    display: grid;
-    grid-auto-rows: minmax(260px, auto) 2fr;
+    /* display: grid;
+    grid-auto-rows: auto 2fr; */
     padding-top: 50px;
+}
+
+.menu-highlight .tsd-navigation.primary {
+    padding-bottom: 20px;
 }
 
 @media (min-width: 901px) and (max-width: 1024px) {
@@ -187,6 +205,7 @@ body.light .tsd-panel {
 
 .tsd-panel {
     padding: 45px 45px;
+    word-wrap: break-word;
 }
 
 @media (max-width: 700px) {
@@ -205,34 +224,48 @@ body.light .tsd-panel {
     margin: 1.5em 0px 10px 0px;
     padding: 0 0 10px 0;
     font-weight: 600;
+    
+    word-wrap: break-word;
+    white-space: normal;
 }
 
 .tsd-panel a {
-    white-space: nowrap;
+    white-space: normal;
+    word-break: break-word;
+    
     text-decoration: underline solid;
     text-underline-offset: 0.2em;
     line-height: 1.85em;
+    color: var(--light-link-color);
 }
 
-/* .tsd-panel a:is([href*="http://"], [href*="https://"]):not([href*="https://gitpod.io/#"]):after {
-    display: inline;
-    content: var(--external-icon);
-    stroke: currentColor;
-    margin-left: 0.2rem;
-    margin-right: 0.1rem;
-    opacity: 0.6;
-    transition: all 0.2s 50ms;
-} */
+.tsd-panel a:hover {
+    opacity: 0.8;
+    text-decoration-style: wavy;
+}
 
-.tsd-panel a[target]:not([href*="https://gitpod.io/#"]):after
+.tsd-panel img[src="https://bundlejs.com/badge-light.svg"] {
+    overflow: hidden;
+    border-radius: 20em;
+    border: 1px solid rgb(20 20 20 / 0.25);
+}
+
+body:not(.light) .tsd-panel a {
+    color: var(--color-link);
+}
+
+.tsd-panel a[target] .external-icon
 {
     display: inline;
-    content: var(--external-icon);
     stroke: currentColor;
-    margin-left: 0.2rem;
-    margin-right: 0.1rem;
+    padding-left: 0.2rem;
+    padding-right: 0.1rem;
     opacity: 0.6;
-    transition: all 0.2s 50ms;
+}
+
+.tsd-panel a[target]:is([href*="https://gitpod.io/#"],[href*="https://bundlejs.com/?"]) .external-icon
+{
+    display: none;
 }
 
 .tsd-widget:is(.search, .options, .menu):after {

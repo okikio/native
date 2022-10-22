@@ -1,4 +1,4 @@
-import { describe, expect, test, beforeEach } from '@jest/globals';
+import { describe, expect, test, beforeEach } from 'vitest';
 import { EventEmitter, Event } from "../src";
 
 describe("EventEmitter", () => {

@@ -11,7 +11,7 @@ I suggest reading the in depth [CSS-Tricks article](https://css-tricks.com/how-i
 
 ## Demo & Showcase
 
-* [bundle.js.org](https://bundle.js.org)
+* [bundlejs.com](https://bundlejs.com)
 * [jabodent.com](https://jabodent.com)
 * Your project name here...
 

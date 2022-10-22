@@ -1,72 +1,78 @@
 {
-    "name": "@okikio/animate",
-    "version": "2.4.0",
-    "type": "module",
-    "sideEffects": false,
-    "description": "An animation library for the modern web which utilizes the Web Animation API (WAAPI) to create butter smooth animation.",
-    "publishConfig": {
-        "umd": "animate",
-        "access": "public",
-        "legacy": "lib/index.js",
-        "main": "lib/index.cjs",
-        "types": "@types/index.d.ts",
-        "browser": "lib/index.mjs",
-        "module": "lib/index.mjs",
-        "exports": {
-            ".": {
-                "require": "./lib/index.cjs",
-                "import": "./lib/index.mjs",
-                "default": "./lib/index.mjs"
-            },
-            "./lib/*": "./lib/*.mjs"
-        }
+  "name": "@okikio/animate",
+  "version": "2.4.0",
+  "type": "module",
+  "umd": "animate",
+  "sideEffects": false,
+  "description": "An animation library for the modern web which utilizes the Web Animation API (WAAPI) to create butter smooth animation.",
+  "access": "public",
+  "legacy": "lib/index.js",
+  "main": "lib/index.cjs",
+  "types": "@types/index.d.ts",
+  "browser": "lib/index.mjs",
+  "module": "lib/index.mjs",
+  "exports": {
+    ".": {
+      "require": "./lib/index.cjs",
+      "import": "./lib/index.mjs",
+      "default": "./lib/index.mjs"
     },
-    "main": "src/index.ts",
-    "directories": {
-        "lib": "./lib",
-        "src": "./src",
-        "@types": "./@types"
-    },
-    "files": [
-        "lib",
-        "src",
-        "@types"
-    ],
-    "scripts": {
-        "dts": "rm -r -f @types/ && tsc --project dts.tsconfig.json",
-        "pre-release": "npm run dts"
-    },
-    "repository": {
-        "type": "git",
-        "url": "git+https://github.com/okikio/native.git"
-    },
-    "keywords": [
-        "ts",
-        "modern",
-        "animation",
-        "library",
-        "web",
-        "css",
-        "smooth"
-    ],
-    "author": {
-        "name": "Okiki Ojo",
-        "email": "hey@okikio.dev",
-        "url": "https://blog.okikio.dev"
-    },
-    "license": "MIT",
-    "bugs": {
-        "url": "https://github.com/okikio/native/issues"
-    },
-    "homepage": "https://native.okikio.dev/animate",
-    "peerDependencies": {
-        "@okikio/emitter": "workspace:*",
-        "@okikio/manager": "workspace:*"
-    },
-    "devDependencies": {
-        "csstype": "^3.0.10",
-        "type-fest": "^2.8.0",
-        "typescript": "^4.5.4"
-    },
-    "gitHead": "ad422076cdb57d570426f786886129d5bca2f90f"
+    "./lib/*": "./lib/*.mjs",
+    "./src/*": "./src/*.ts"
+  },
+  "directories": {
+    "lib": "./lib",
+    "src": "./src",
+    "@types": "./@types"
+  },
+  "files": [
+    "lib",
+    "src",
+    "@types"
+  ],
+  "scripts": {
+    "dts": "rm -r -f @types/ && tsc --project dts.tsconfig.json",
+    "pre-release": "npm run dts",
+    "test": "vitest",
+    "test:run": "vitest run",
+    "build": "vite build"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/okikio/native.git"
+  },
+  "keywords": [
+    "ts",
+    "modern",
+    "animation",
+    "library",
+    "web",
+    "css",
+    "smooth"
+  ],
+  "author": {
+    "name": "Okiki Ojo",
+    "email": "hey@okikio.dev",
+    "url": "https://okikio.dev"
+  },
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/okikio/native/issues"
+  },
+  "homepage": "https://animate.okikio.dev",
+  "peerDependencies": {
+    "@okikio/emitter": "workspace:*",
+    "@okikio/manager": "workspace:*"
+  },
+  "devDependencies": {
+    "astro": "^1.5.2",
+    "csstype": "^3.1.1",
+    "esno": "^0.16.3",
+    "type-fest": "^3.1.0",
+    "typescript": "^4.8.4",
+    "ultra-runner": "^3.10.5",
+    "vite": "^3.1.8",
+    "vitest": "^0.24.3"
+  },
+  "gitHead": "ad422076cdb57d570426f786886129d5bca2f90f"
 }

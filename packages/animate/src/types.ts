@@ -211,7 +211,7 @@ export interface IAllSupportedCSSProperties extends TypeCSSProperties {
      * });
      * ```
      * 
-     * Check out the [documentation](https://native.okikio.dev/animate/api/animate-attributes/) to learn more about animating attributes.
+     * Check out the [documentation](https://animate.okikio.dev/api/animate-attributes/) to learn more about animating attributes.
      */
     d?: Property.OffsetPath,
 
