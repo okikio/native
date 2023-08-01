@@ -97,8 +97,8 @@ importers:
         specifier: ^6.2.0
         version: 6.2.0
       pnpm:
-        specifier: ^6.14.5
-        version: 6.14.5
+        specifier: ^7.33.4
+        version: 7.33.4
       postcss:
         specifier: ^8.3.6
         version: 8.3.6
@@ -146,8 +146,8 @@ importers:
         specifier: ^6.0.0
         version: 6.0.0
       pnpm:
-        specifier: ^6.9.1
-        version: 6.9.1
+        specifier: ^7.33.4
+        version: 7.33.4
       pretty-bytes:
         specifier: ^5.6.0
         version: 5.6.0
@@ -183,8 +183,8 @@ importers:
         specifier: ^1.1.5
         version: 1.1.5
       pnpm:
-        specifier: ^6.9.1
-        version: 6.9.1
+        specifier: ^7.33.4
+        version: 7.33.4
       pretty-bytes:
         specifier: ^5.6.0
         version: 5.6.0
@@ -222,8 +222,8 @@ importers:
         specifier: ^2.6.1
         version: 2.6.1
       pnpm:
-        specifier: ^6.9.1
-        version: 6.9.1
+        specifier: ^7.33.4
+        version: 7.33.4
       pretty-bytes:
         specifier: ^5.6.0
         version: 5.6.0
@@ -259,8 +259,8 @@ importers:
         specifier: ^6.0.0
         version: 6.0.0
       pnpm:
-        specifier: ^6.9.1
-        version: 6.9.1
+        specifier: ^7.33.4
+        version: 7.33.4
       pretty-bytes:
         specifier: ^5.6.0
         version: 5.6.0
@@ -6901,15 +6901,9 @@ packages:
       extend-shallow: 3.0.2
     dev: true
 
-  /pnpm@6.14.5:
-    resolution: {integrity: sha512-+N1B+Bj2JKZJ1GDJS141OgnDmwxAavHi/ecU3IIl0QunPSVBXxd51DbVizCw/mPwIB3UmeT474Fyz8o3Xj9sXA==}
-    engines: {node: '>=12.17'}
-    hasBin: true
-    dev: true
-
-  /pnpm@6.9.1:
-    resolution: {integrity: sha512-2qlbvmHB+ULAoTCMpJ75oADYoVQnsxD1ipCemdDJA2KW4auGwoTUzyowVYEiAe4DIDOqw3axhHVkNAo7P6goZA==}
-    engines: {node: '>=12.17'}
+  /pnpm@7.33.4:
+    resolution: {integrity: sha512-xEbf/tkwHpGM/GXq5U/sDSiE6ykLPho+o71PHNRWqkVLm6dJe4G/5Pg619Ow32ovekrr7pii5qtfamujB/+1bA==}
+    engines: {node: '>=14.6'}
     hasBin: true
     dev: true
 
