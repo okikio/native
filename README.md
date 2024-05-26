@@ -2,6 +2,8 @@
 
 ![GitHub issues](https://img.shields.io/github/issues/okikio/native?style=for-the-badge) ![GitHub](https://img.shields.io/github/license/okikio/native?style=for-the-badge)
 
+**THIS PROJECT IS MOSTLY UNMAINTAINED, I HAVEN'T HAD ENOUGH TIME TO MAINTAIN IT**
+
 `native` is an initiative which aims to make it easy to create complex, light-weight, and performant web applications using modern js.
 
 ## Table of Contents
