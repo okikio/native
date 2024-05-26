@@ -69,7 +69,7 @@
         "lerna-changelog": "^2.1.0",
         "path-to-regexp": "^6.2.0",
         "pnpm": "^7.33.4",
-        "postcss": "^8.3.6",
+        "postcss": "^8.4.31",
         "postcss-csso": "^5.0.1",
         "postcss-scss": "^4.0.0",
         "pretty-bytes": "^5.6.0",
