@@ -1,23 +1,38 @@
 /**
- * Convert the words "from", and "to" as well as percentage or numbers to offset value between 0 and 1
+ * Parses a string offset to a number. 
+ * Converts the words "from", and "to" as well as percentages or numbers to offset value between 0 and 1
+ *
+ * @param offset - The string offset, e.g., "from", "to", "50%", "0.7"
+ * @returns The numerical offset
+ *
+ * @example
+ * ```typescript
+ * parseOffset("from"); // 0
+ * parseOffset("50%");  // 0.5
+ * parseOffset("0.7");  // 0.7
+ * parseOffset("to");   // 1
+ * ```
  */
-export const parseOffset = (input: string | number): number => {
-    if (typeof input == "string") {
-        if (input.includes("%"))
-            return parseFloat(input) / 100;
-        else if (input == "from")
-            return 0;
-        else if (input == "to")
-            return 1;
-        else
-            return parseFloat(input);
-    }
+export function parseOffset(offset: string | number): number {
+    if (typeof offset === "number") return offset;
+    offset = offset.trim();
 
-    return input;
-};
+    switch (offset) {
+        case "from":
+            return 0;
+        case "to":
+            return 1;
+        default:
+            // Assumes offset is a percentage or a decimal
+            if (/%$/.test(offset)) {
+                return parseFloat(offset) / 100;
+            }
+            return parseFloat(offset);
+    }
+}
 
 /**
- * Allows you to quickly convert CSS like JSON into keyframes
+ * Allows you to quickly convert CSS-like JSON into keyframes
  *
  * @param input - CSS style JSON; check the example to understand what I mean
  *
@@ -43,27 +58,25 @@ export const parseOffset = (input: string | number): number => {
  * //= ]
  * ```
  */
-export const KeyframeParse = (input: object): Keyframe[] => {
-    // Set removes duplicate Keyframes for the same offset
-    let results = new Set<Keyframe>();
-    let keys = Object.keys(input);
-    let len = keys.length;
-    for (let i = 0; i < len; i++) {
-        let key = "" + keys[i];
-        let value = input[key];
-        let offsets = key.split(",");
-        let offsetLen = offsets.length;
+export function KeyframeParse<T extends Record<string, any>>(input: T): Keyframe[] {
+    // Using a Map to maintain order and remove duplicates
+    const results = new Map<number, Keyframe>();
+    const keys = Object.keys(input);
 
-        for (let j = 0; j < offsetLen; j++) {
-            let offset = parseOffset(offsets[j]);
-            results.add({ ...value, offset });
+    for (const key of keys) {
+        const value = input[key];
+        const offsets = key.split(",");
+
+        // Iterate over all offsets and add to results
+        for (const _offset of offsets) {
+            let offset = parseOffset(_offset);
+            results.set(offset, { ...value, offset });
         }
     }
 
-    return [...results].sort((a, b) => {
-        return a.offset - b.offset;
-    });
-};
+    // Convert Map to array and sort by offset
+    return Array.from(results.values()).sort((a, b) => a.offset! - b.offset!);
+}
 
 /**
  * I don't really want to put in the effort to create a complete list, so instead just look through the `animate.css` github and copy and paste the effects you need, into using a CSS Keyframe style JSON object, make sure to read the documentation for {@link KeyframeParse}

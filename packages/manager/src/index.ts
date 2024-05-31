@@ -6,7 +6,7 @@
  * */
 export class Manager<K, V> {
 	/** For backward compatability and performance reasons Manager use Map to store data */
-	public map: Map<K, V>;
+	protected map: Map<K, V>;
 	constructor(value?: Array<[K, V]>) {
 		this.map = new Map(value);
 	}
@@ -17,7 +17,7 @@ export class Manager<K, V> {
 	}
 
 	/** Get a value stored in the Manager */
-	public get(key: K): V {
+	public get(key: K): V | undefined {
 		return this.map.get(key);
 	}
 
@@ -39,9 +39,8 @@ export class Manager<K, V> {
 
 	/** Adds a value to Manager, and uses the current size of the Manager as it's key, it works best when all the key in the Manager are numbers */
 	public add(value: V): Manager<K, V> {
-		let size = this.size;
-		// @ts-ignore
-		let num: K = size as K;
+		const size = this.size;
+		const num = size as K;
 		this.set(num, value);
 		return this;
 	}
@@ -58,7 +57,7 @@ export class Manager<K, V> {
 
 	/** Returns the last item in the Manager who's index is a certain distance from the last item in the Manager */
 	public last(distance: number = 1): V | undefined {
-		let key = this.keys()[this.size - distance];
+		const key = this.keys()[this.size - distance];
 		return this.get(key);
 	}
 
@@ -105,12 +104,17 @@ export class Manager<K, V> {
 }
 
 /**
- * Calls the method of a certain name for all items that are currently installed
+ * Calls the method of a certain name for all items in the Map
  */
-export const methodCall = (manager: Manager<any, any>, method: string, ...args: any): void => {
+export function methodCall<K, V>(manager: Manager<K, V>, method: string, ...args: any): void {
 	manager.forEach((item) => {
-		// @ts-ignore
-		item[method](...args);
+		if (!item) return;
+		if (typeof item !== "object") return;
+		if (!(method in item)) return;
+
+		const fn = (item as Record<PropertyKey, Function>)[method];
+		if (typeof fn !== "function") return;
+		fn?.(...args);
 	});
 };
 

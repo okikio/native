@@ -2,18 +2,18 @@ import {
     isValid,
     transpose,
     toStr,
-    convertToDash,
+    camelCaseToKebabCase,
     mapObject,
     getUnit,
     trim,
     isEmpty
-} from "./utils";
-import { rgba } from "./color-rgba";
-import { toRGBAArr } from "./unit-conversion";
-import { getCSS } from "./browser-objects";
-import bezier from "./bezier-easing";
+} from "./utils.ts";
+import { rgba } from "./color-rgba.ts";
+import { toRGBAArr } from "./unit-conversion.ts";
+import { getCSS } from "./browser-objects.ts";
+import bezier from "./bezier-easing.ts";
 
-import type { IAnimateInstanceConfig } from "./types";
+import type { IAnimateInstanceConfig } from "./types.ts";
 
 export const limit = (value: number, min: number, max: number) =>
     Math.min(Math.max(value, min), max);
@@ -294,7 +294,7 @@ export const registerEasingFunctions = (
  * Convert string easing to their proper form
  */
 export const ComplexEasingSyntax = (ease: string) =>
-    convertToDash(ease)
+    camelCaseToKebabCase(ease)
         .replace(/^ease-/, "") // Remove the "ease-" keyword
         .replace(/(\(|\s).+/, "") // Remove the function brackets and parameters
         .toLowerCase()

@@ -1,23 +1,4 @@
 {
-  "compilerOptions": {
-    "moduleResolution": "node",
-    "target": "ES2021",
-    "module": "ES2020",
-    "lib": [
-      "ES2021",
-      "DOM"
-    ],
-    "sourceMap": true,
-    "outDir": "lib",
-    "resolveJsonModule": true,
-    "isolatedModules": true,
-    "esModuleInterop": true,
-    "skipLibCheck": true
-  },
-  "include": [
-    "src"
-  ],
-  "exclude": [
-    "node_modules"
-  ]
+  "extends": "../../tsconfig.json",
+  "compilerOptions": {}
 }

@@ -4,7 +4,8 @@ import { equal, newURL } from "./url";
 import { Service } from "./service";
 import { toAttr } from "./config";
 
-import { pathToRegexp } from "path-to-regexp";
+import { pathToRegexp } from "path-to-regexp"; 
+import "urlpattern-polyfill";
 
 import type { TypeIgnoreURLsList } from "./pjax";
 

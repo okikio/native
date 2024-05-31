@@ -2,6 +2,7 @@ import { Service } from "./service";
 import { Manager } from "./manager";
 import { newURL, getHashedPath } from "./url";
 import { Path, pathToRegexp } from "path-to-regexp";
+import "urlpattern-polyfill";
 
 import type { IHistoryManager } from "./history";
 

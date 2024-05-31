@@ -1,12 +1,12 @@
-import { ApplyCustomEasing, ComplexEasingSyntax, EasingFunctionKeys, GetEasingFunction, interpolateComplex } from "./custom-easing";
-import { Animate, parseOptions, ALL_ANIMATION_CONFIG_KEYS, EasingKeys, GetEase, getTargets } from "./animate";
-import { pick, omit, mapObject, isValid } from "./utils";
-import { getDocument } from "./browser-objects";
-import { Manager } from "@okikio/manager";
+import { ApplyCustomEasing, ComplexEasingSyntax, EasingFunctionKeys, GetEasingFunction, interpolateComplex } from "./custom-easing.ts";
+import { Animate, parseOptions, ALL_ANIMATION_CONFIG_KEYS, EasingKeys, GetEase, getTargets } from "./animate.ts";
+import { pick, omit, mapObject, isValid } from "./utils.ts";
+import { getDocument } from "./browser-objects.ts";
+import { Manager } from "@okikio/manager/src/index.ts";
 
-import type { IAnimateInstanceConfig, IStandaloneComputedAnimateOptions } from "./types";
-import type { TypeCustomEasingOptions, TypeEasingFunction } from "./custom-easing";
-import type { TypeListenerCallback } from "@okikio/emitter";
+import type { IAnimateInstanceConfig, IStandaloneComputedAnimateOptions } from "./types.ts";
+import type { TypeCustomEasingOptions, TypeEasingFunction } from "./custom-easing.ts";
+import type { TypeListenerCallback } from "@okikio/emitter/src/index.ts";
 
 /** Keeps track of how many empty tween elements are in use */
 export let UIDCount = 0;

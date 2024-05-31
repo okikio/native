@@ -6,48 +6,47 @@
   "sideEffects": false,
   "description": "A superset of the Map class, it gives the Map class superpowers.",
   "access": "public",
-  "legacy": "lib/index.js",
+  "legacy": "lib/index.cjs",
   "main": "lib/index.cjs",
-  "types": "@types/index.d.ts",
-  "browser": "lib/index.mjs",
-  "module": "lib/index.mjs",
+  "browser": "lib/index.js",
+  "module": "lib/index.js",
   "exports": {
     ".": {
-      "require": "./lib/index.cjs",
-      "import": "./lib/index.mjs",
-      "default": "./lib/index.mjs"
+      "require": {
+        "types": "./lib/index.d.cts",
+        "default": "./lib/index.cjs"
+      },
+      "import": {
+        "types": "./lib/index.d.ts",
+        "default": "./lib/index.js"
+      }
     },
-    "./lib/*": "./lib/*.mjs",
-    "./src/*": "./src/*.ts"
-  },
-  "directories": {
-    "lib": "./lib",
-    "src": "./src",
-    "@types": "./@types"
+    "./lib/*": "./lib/*",
+    "./src/*": "./src/*",
+    "./package.json": "./package.json"
   },
   "files": [
     "lib",
-    "src",
-    "@types"
+    "src"
   ],
+  "publishConfig": {
+    "provenance": true
+  },
   "scripts": {
-    "dts": "rm -r -f @types/ && tsc --project dts.tsconfig.json",
-    "test": "vitest",
+    "build": "tsup",
     "test:run": "vitest run",
-    "start": "npm run docs:dev",
-    "docs:preview": "astro preview",
-    "docs:build": "astro build",
-    "docs:dev": "astro dev",
-    "build": "vite build",
-    "pre-release": "npm run test:run && npm run dts && npm run build && npm run typedoc"
+    "test": "vitest",
+    "repl": "tsx repl.ts",
+    "deno": "deno run --allow-net --allow-env --allow-read --allow-write --allow-run ./repl.ts",
+    "pre-release": "pnpm build; pnpm test:run"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/okikio/native.git"
+    "url": "git+https://github.com/okikio/native.git",
+    "directory": "packages/manager"
   },
   "keywords": [
     "manager",
-    "ts",
     "map",
     "library",
     "web",
@@ -62,15 +61,13 @@
   "bugs": {
     "url": "https://github.com/okikio/native/issues"
   },
-  "homepage": "https://manager.okikio.dev",
+  "homepage": "https://native.okikio.dev/manager",
   "devDependencies": {
-    "@okikio/emitter": "workspace:^2.1.8",
-    "astro": "^1.5.2",
-    "esno": "^0.16.3",
-    "typescript": "^4.8.4",
-    "ultra-runner": "^3.10.5",
-    "vite": "^3.1.8",
-    "vitest": "^0.24.3"
+    "esbuild-plugin-umd-wrapper": "^2.0.0",
+    "tsup": "^8.0.2",
+    "tsx": "^4.11.0",
+    "typescript": "^5.4.5",
+    "vitest": "^1.6.0"
   },
   "gitHead": "ad422076cdb57d570426f786886129d5bca2f90f"
 }

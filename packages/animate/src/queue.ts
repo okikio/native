@@ -1,8 +1,8 @@
-import { Animate, DefaultAnimationOptions, parseOptions } from "./animate";
-import { Manager } from "@okikio/manager";
+import { Animate, DefaultAnimationOptions, parseOptions } from "./animate.ts";
+import { Manager } from "@okikio/manager/src/index.ts";
 
-import type { IAnimateInstanceConfig, TypeAnimationEvents, TypePlayStates } from "./types";
-import type { TypeEventInput, TypeListenerCallback } from "@okikio/emitter";
+import type { IAnimateInstanceConfig, TypeAnimationEvents, TypePlayStates } from "./types.ts";
+import type { TypeEventInput, TypeListenerCallback } from "@okikio/emitter/src/index.ts";
 
 /** 
  * If the input value is a string starting with with "=" (the equal sign), it removes the "=" and return the remaining number

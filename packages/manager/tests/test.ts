@@ -1,5 +1,5 @@
 import { describe, expect, test, beforeEach } from 'vitest';
-import { Manager, methodCall } from "../src";
+import { Manager, methodCall } from "../src/index.ts";
 
 describe("Manager", () => {
   let arr = [1, 2, 3, 4, 5];
@@ -121,19 +121,20 @@ describe("Manager", () => {
         expect([key, value]).toEqual([$key, $value]);
         expect(obj).toBeInstanceOf(Map);
         expect(obj).toEqual(manager.getMap());
+        // @ts-expect-error We are testing if this works as expected
         expect(this).not.toHaveProperty("clear");
       }, manager);
     });
 
     test("forEach in a normal function", () => {
       let entries = manager.entries();
-      manager.forEach(function (value, key, obj) {
+      manager.forEach(function (this: typeof manager, value, key, obj) {
         let [$key, $value] = entries.next().value;
         expect([key, value]).toEqual([$key, $value]);
         expect(obj).toBeInstanceOf(Map);
         expect(obj).toEqual(manager.getMap());
         expect(this).toHaveProperty("clear");
-        expect(this.get(key)).toBe(value);
+        expect(this.get(key!)).toBe(value);
       }, manager);
     });
   });

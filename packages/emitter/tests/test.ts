@@ -1,5 +1,5 @@
 import { describe, expect, test, beforeEach } from 'vitest';
-import { EventEmitter, Event } from "../src";
+import { EventEmitter, Event } from "../src/index.ts";
 
 describe("EventEmitter", () => {
     let emitter: EventEmitter;
@@ -14,7 +14,7 @@ describe("EventEmitter", () => {
             let obj = { bool: false };
             let on: EventEmitter = emitter.on(
                 "test",
-                function (key, value) {
+                function (this: typeof obj, key, value) {
                     test = [key, value];
                     expect(this).toHaveProperty("bool");
                     expect(this.bool).toBe(false);
@@ -33,7 +33,7 @@ describe("EventEmitter", () => {
             let counter = 0;
             let on: EventEmitter = emitter.on(
                 "test test1 test2",
-                function (key, value) {
+                function (this: typeof obj, key, value) {
                     test = [key, value];
                     counter++;
                     expect(this).toHaveProperty("bool");
@@ -54,7 +54,7 @@ describe("EventEmitter", () => {
             let counter = 0;
             let on: EventEmitter = emitter.on(
                 "test test1 test2".split(" "),
-                function (key, value) {
+                function (this: typeof obj, key, value) {
                     test = [key, value];
                     counter++;
                     expect(this).toHaveProperty("bool");
@@ -74,7 +74,7 @@ describe("EventEmitter", () => {
             let obj = { bool: false };
             let counter = 0;
             let fn = function (i = 1) {
-                return function (key, value) {
+                return function (this: typeof obj, key: number, value: string) {
                     test = [key, value];
                     counter += i;
                     expect(this).toHaveProperty("bool");
@@ -104,7 +104,7 @@ describe("EventEmitter", () => {
             let obj = { bool: false };
             let on: EventEmitter = emitter.on(
                 "test",
-                function (key, value) {
+                function (this: typeof obj, key, value) {
                     test = [key, value];
                     expect(this).toHaveProperty("bool");
                     expect(this.bool).toBe(false);
@@ -123,7 +123,7 @@ describe("EventEmitter", () => {
         test("listen for one event and one listener; emit one event listener; turn off an event listener", () => {
             let test: boolean | any = false;
             let obj = { bool: false };
-            let fn = function (key, value) {
+            let fn = function (this: typeof obj, key: number, value: string) {
                 test = [key, value];
                 expect(this).toHaveProperty("bool");
                 expect(this.bool).toBe(false);
@@ -142,13 +142,13 @@ describe("EventEmitter", () => {
             on.emit("test", 1, "true");
 
             expect(on.get("test")).toBeInstanceOf(Event);
-            expect(on.get("test").size).toBe(0);
+            expect(on.get("test")?.size).toBe(0);
         });
 
         test("listen for one event and one listener; emit one event listener; turn off an event listener without context/scope", () => {
             let test: boolean | any = false;
             let obj = { bool: false };
-            let fn = function (key, value) {
+            let fn = function (this: typeof obj, key: number, value: string) {
                 test = [key, value];
                 expect(obj).toHaveProperty("bool");
                 expect(obj.bool).toBe(false);
@@ -163,13 +163,13 @@ describe("EventEmitter", () => {
             expect(test).not.toEqual([1, "true"]);
 
             expect(on.get("test")).toBeInstanceOf(Event);
-            expect(on.get("test").size).toBe(0);
+            expect(on.get("test")?.size).toBe(0);
         });
 
         test("listen for multiple events, and one listener; emit multiples events; turn off multiple events", () => {
             let test: boolean | any = false;
             let obj = { bool: false };
-            let fn = function (key, value) {
+            let fn = function (this: typeof obj, key: number, value: string) {
                 test = [key, value];
                 expect(this).toHaveProperty("bool");
                 expect(this.bool).toBe(false);
@@ -191,7 +191,7 @@ describe("EventEmitter", () => {
         test("listen for multiple events (Array format), and one listener; emit multiples events (Array format); turn off multiple event listeners (Array format)", () => {
             let test: boolean | any = false;
             let obj = { bool: false };
-            let fn = function (key, value) {
+            let fn = function (this: typeof obj, key: number, value: string) {
                 test = [key, value];
                 expect(this).toHaveProperty("bool");
                 expect(this.bool).toBe(false);
@@ -210,13 +210,13 @@ describe("EventEmitter", () => {
             on.emit("test test1 test2".split(" "), 1, "true");
 
             expect(on.get("test")).toBeInstanceOf(Event);
-            expect(on.get("test").size).toBe(0);
+            expect(on.get("test")?.size).toBe(0);
 
             expect(on.get("test1")).toBeInstanceOf(Event);
-            expect(on.get("test1").size).toBe(0);
+            expect(on.get("test1")?.size).toBe(0);
 
             expect(on.get("test2")).toBeInstanceOf(Event);
-            expect(on.get("test2").size).toBe(0);
+            expect(on.get("test2")?.size).toBe(0);
         });
 
         test("listen for multiple events (Object format), and one listener; emit multiples events; turn off multiple event listeners (Object format)", () => {
@@ -224,7 +224,7 @@ describe("EventEmitter", () => {
             let obj = { bool: false };
             let counter = 0;
             let fn = (i = 1) => {
-                return function (key, value) {
+                return function (this: typeof obj, key: number, value: string) {
                     test = [key, value];
                     counter += i;
                     expect(this).toHaveProperty("bool");
@@ -252,13 +252,13 @@ describe("EventEmitter", () => {
             expect(counter).toBe(7);
 
             expect(on.get("test")).toBeInstanceOf(Event);
-            expect(on.get("test").size).toBe(0);
+            expect(on.get("test")?.size).toBe(0);
 
             expect(on.get("test1")).toBeInstanceOf(Event);
-            expect(on.get("test1").size).toBe(0);
+            expect(on.get("test1")?.size).toBe(0);
 
             expect(on.get("test2")).toBeInstanceOf(Event);
-            expect(on.get("test2").size).toBe(0);
+            expect(on.get("test2")?.size).toBe(0);
         });
     });
 
@@ -269,7 +269,7 @@ describe("EventEmitter", () => {
             let counter = 0;
             let on: EventEmitter = emitter.once(
                 "test",
-                function (key, value) {
+                function (this: typeof obj, key: number, value: string) {
                     test = [key, value];
                     counter++;
                     expect(this).toHaveProperty("bool");
@@ -285,7 +285,7 @@ describe("EventEmitter", () => {
             expect(counter).toBe(1);
 
             expect(on.get("test")).toBeInstanceOf(Event);
-            expect(on.get("test").size).toBe(0);
+            expect(on.get("test")?.size).toBe(0);
         });
 
         test("listen for multiple events and one listener once; emit multiples events once", () => {
@@ -294,7 +294,7 @@ describe("EventEmitter", () => {
             let counter = 0;
             let on: EventEmitter = emitter.once(
                 "test test1 test2",
-                function (key, value) {
+                function (this: typeof obj, key: number, value: string) {
                     test = [key, value];
                     counter++;
                     expect(this).toHaveProperty("bool");
@@ -309,13 +309,13 @@ describe("EventEmitter", () => {
             expect(test).toEqual([1, "true"]);
 
             expect(on.get("test")).toBeInstanceOf(Event);
-            expect(on.get("test").size).toBe(0);
+            expect(on.get("test")?.size).toBe(0);
 
             expect(on.get("test1")).toBeInstanceOf(Event);
-            expect(on.get("test1").size).toBe(0);
+            expect(on.get("test1")?.size).toBe(0);
 
             expect(on.get("test2")).toBeInstanceOf(Event);
-            expect(on.get("test2").size).toBe(0);
+            expect(on.get("test2")?.size).toBe(0);
 
             expect(counter).toBe(3);
         });
@@ -326,7 +326,7 @@ describe("EventEmitter", () => {
             let counter = 0;
             let on: EventEmitter = emitter.once(
                 "test test1 test2".split(" "),
-                function (key, value) {
+                function (this: typeof obj, key: number, value: string) {
                     test = [key, value];
                     counter++;
                     expect(this).toHaveProperty("bool");
@@ -341,13 +341,13 @@ describe("EventEmitter", () => {
             expect(test).toEqual([1, "true"]);
 
             expect(on.get("test")).toBeInstanceOf(Event);
-            expect(on.get("test").size).toBe(0);
+            expect(on.get("test")?.size).toBe(0);
 
             expect(on.get("test1")).toBeInstanceOf(Event);
-            expect(on.get("test1").size).toBe(0);
+            expect(on.get("test1")?.size).toBe(0);
 
             expect(on.get("test2")).toBeInstanceOf(Event);
-            expect(on.get("test2").size).toBe(0);
+            expect(on.get("test2")?.size).toBe(0);
 
             expect(counter).toBe(3);
         });
@@ -358,7 +358,7 @@ describe("EventEmitter", () => {
             let counter = 0;
             let on: EventEmitter = emitter.once(
                 "test test1 test2",
-                function () {
+                function (this: typeof obj) {
                     test = true;
                     counter++;
                     expect(this).toHaveProperty("bool");
@@ -372,13 +372,13 @@ describe("EventEmitter", () => {
             expect(test).toEqual(true);
 
             expect(on.get("test")).toBeInstanceOf(Event);
-            expect(on.get("test").size).toBe(1);
+            expect(on.get("test")?.size).toBe(1);
 
             expect(on.get("test1")).toBeInstanceOf(Event);
-            expect(on.get("test1").size).toBe(1);
+            expect(on.get("test1")?.size).toBe(1);
 
             expect(on.get("test2")).toBeInstanceOf(Event);
-            expect(on.get("test2").size).toBe(0);
+            expect(on.get("test2")?.size).toBe(0);
 
             expect(counter).toBe(1);
         });
@@ -387,7 +387,7 @@ describe("EventEmitter", () => {
             let test = false;
             let obj = { bool: false };
             let counter = 0;
-            let fn = function () {
+            let fn = function (this: typeof obj) {
                 test = true;
                 counter++;
                 expect(this).toHaveProperty("bool");
@@ -396,30 +396,30 @@ describe("EventEmitter", () => {
             let on: EventEmitter = emitter.once("test test1 test2", fn, obj);
             emitter.on("test2", fn, obj);
 
-            expect(on.get("test2").size).toBe(2);
+            expect(on.get("test2")?.size).toBe(2);
             on.emit("test2");
             on.emit("test2");
             expect(on).toBeInstanceOf(EventEmitter);
             expect(test).toEqual(true);
 
             expect(on.get("test")).toBeInstanceOf(Event);
-            expect(on.get("test").size).toBe(1);
+            expect(on.get("test")?.size).toBe(1);
 
             expect(on.get("test1")).toBeInstanceOf(Event);
-            expect(on.get("test1").size).toBe(1);
+            expect(on.get("test1")?.size).toBe(1);
 
             expect(on.get("test2")).toBeInstanceOf(Event);
-            expect(on.get("test2").size).toBe(1);
+            expect(on.get("test2")?.size).toBe(1);
 
             expect(counter).toBe(3);
         });
 
         test("listen for multiple events (Object format) and multiple listeners once; emit multiples events once", () => {
-            let test: boolean | (boolean | number)[] = false;
+            let test: boolean | (string | number)[] = false;
             let obj = { bool: false };
             let counter = 0;
             let fn = function (i = 1) {
-                return function (key, value) {
+                return function (this: typeof obj, key: number, value: string) {
                     test = [key, value];
                     counter += i;
                     expect(this).toHaveProperty("bool");
@@ -442,13 +442,13 @@ describe("EventEmitter", () => {
             expect(test).toEqual([1, "true"]);
 
             expect(on.get("test")).toBeInstanceOf(Event);
-            expect(on.get("test").size).toBe(0);
+            expect(on.get("test")?.size).toBe(0);
 
             expect(on.get("test1")).toBeInstanceOf(Event);
-            expect(on.get("test1").size).toBe(0);
+            expect(on.get("test1")?.size).toBe(0);
 
             expect(on.get("test3")).toBeInstanceOf(Event);
-            expect(on.get("test3").size).toBe(0);
+            expect(on.get("test3")?.size).toBe(0);
 
             expect(counter).toBe(7);
         });
@@ -458,7 +458,7 @@ describe("EventEmitter", () => {
             let obj = { bool: false };
             let counter = 0;
             let fn = function (i = 1) {
-                return function (key, value) {
+                return function (this: typeof obj, key: number, value: string) {
                     test = [key, value];
                     counter += i;
                     expect(this).toHaveProperty("bool");
@@ -478,17 +478,17 @@ describe("EventEmitter", () => {
             on.off("test3", emit.test3, obj);
 
             expect(on.get("test")).toBeInstanceOf(Event);
-            expect(on.get("test").size).toBe(1);
+            expect(on.get("test")?.size).toBe(1);
 
             expect(on.get("test1")).toBeInstanceOf(Event);
-            expect(on.get("test1").size).toBe(1);
+            expect(on.get("test1")?.size).toBe(1);
 
             expect(on.get("test3")).toBeInstanceOf(Event);
-            expect(on.get("test3").size).toBe(1);
+            expect(on.get("test3")?.size).toBe(1);
 
             on.off("test");
-            on.off("test1", on.get("test1").get(0).callback, obj);
-            on.off("test3", on.get("test3").get(0).callback, obj);
+            on.off("test1", on.get("test1")?.get(0)?.callback, obj);
+            on.off("test3", on.get("test3")?.get(0)?.callback, obj);
 
             on.emit("test test1 test3", 1, "true");
             on.emit("test test1 test3", 1, "true");
@@ -498,10 +498,10 @@ describe("EventEmitter", () => {
             expect(on.get("test")).toBe(undefined);
 
             expect(on.get("test1")).toBeInstanceOf(Event);
-            expect(on.get("test1").size).toBe(0);
+            expect(on.get("test1")?.size).toBe(0);
 
             expect(on.get("test3")).toBeInstanceOf(Event);
-            expect(on.get("test3").size).toBe(0);
+            expect(on.get("test3")?.size).toBe(0);
 
             expect(counter).toBe(0);
         });
@@ -514,7 +514,7 @@ describe("EventEmitter", () => {
             let counter = 0;
             let on: EventEmitter = emitter.on(
                 "test",
-                function (key, value) {
+                function (this: typeof obj, key: number, value: string) {
                     test = [key, value];
                     counter++;
                     expect(this).toHaveProperty("bool");
@@ -529,7 +529,7 @@ describe("EventEmitter", () => {
             expect(counter).toBe(0);
 
             expect(on.get("test")).toBeInstanceOf(Event);
-            expect(on.get("test").size).toBe(1);
+            expect(on.get("test")?.size).toBe(1);
         });
 
         test("listen for one event and one listener; emit an event listener with no arguments", () => {
@@ -538,7 +538,7 @@ describe("EventEmitter", () => {
             let counter = 0;
             let on: EventEmitter = emitter.on(
                 "test",
-                function (key, value) {
+                function (this: typeof obj, key: number, value: string) {
                     counter++;
                     expect([key, value]).toEqual([undefined, undefined]);
                     expect(this).toHaveProperty("bool");
@@ -553,7 +553,7 @@ describe("EventEmitter", () => {
             expect(counter).toBe(1);
 
             expect(on.get("test")).toBeInstanceOf(Event);
-            expect(on.get("test").size).toBe(1);
+            expect(on.get("test")?.size).toBe(1);
         });
 
         test("listen for multiple events (Array format) and one listener; emit multiples events (Array format) with no arguments", () => {
@@ -562,7 +562,7 @@ describe("EventEmitter", () => {
             let counter = 0;
             let on: EventEmitter = emitter.on(
                 "test test1 test2".split(" "),
-                function (key, value) {
+                function (this: typeof obj, key: number, value: string) {
                     counter++;
                     expect([key, value]).toEqual([undefined, undefined]);
                     expect(this).toHaveProperty("bool");
@@ -577,13 +577,13 @@ describe("EventEmitter", () => {
             expect(test).toBe(false);
 
             expect(on.get("test")).toBeInstanceOf(Event);
-            expect(on.get("test").size).toBe(1);
+            expect(on.get("test")?.size).toBe(1);
 
             expect(on.get("test1")).toBeInstanceOf(Event);
-            expect(on.get("test1").size).toBe(1);
+            expect(on.get("test1")?.size).toBe(1);
 
             expect(on.get("test2")).toBeInstanceOf(Event);
-            expect(on.get("test2").size).toBe(1);
+            expect(on.get("test2")?.size).toBe(1);
 
             expect(counter).toBe(6);
         });

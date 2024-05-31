@@ -1,21 +1,21 @@
-import { EventEmitter } from "@okikio/emitter";
-import { Manager } from "@okikio/manager";
+import { EventEmitter } from "@okikio/emitter/src/index.ts";
+import { Manager } from "@okikio/manager/src/index.ts";
 
-import { KeyframeParse, parseOffset } from "./builtin-effects";
-import { ParseTransformableCSSProperties, ParseTransformableCSSKeyframes, CSSCamelCase } from "./css-properties";
-import { flatten, mapObject, convertToDash, isValid, omit, isObject } from "./utils";
-import { createTransformValue, CSSVarSupport, transformCSSVars } from "./css-vars";
-import { getDocument } from "./browser-objects";
+import { KeyframeParse, parseOffset } from "./builtin-effects.ts";
+import { ParseTransformableCSSProperties, ParseTransformableCSSKeyframes, CSSCamelCase } from "./css-properties.ts";
+import { flatten, mapObject, camelCaseToKebabCase, isValid, omit, isObject } from "./utils.ts";
+import { createTransformValue, CSSVarSupport, transformCSSVars } from "./css-vars.ts";
+import { getDocument } from "./browser-objects.ts";
 
-import type { TypeEventInput, TypeListenerCallback } from "@okikio/emitter";
-import type { TypeAnimationTarget, TypeCallbackArgs, IStandaloneComputedAnimateOptions, IStandaloneAnimationConfig, IIndividualTransformProperties, IAnimateInstanceConfig, TypeAnimationEvents, TypePlayStates, ITotalDurationInfo } from "./types";
+import type { TypeEventInput, TypeListenerCallback } from "@okikio/emitter/src/index.ts";
+import type { TypeAnimationTarget, TypeCallbackArgs, IStandaloneComputedAnimateOptions, IStandaloneAnimationConfig, IAnimateInstanceConfig, TypeAnimationEvents, TypePlayStates, ITotalDurationInfo } from "./types.ts";
 
 /**
  * Get elements as an array
  * @param selector The selector to get the elements from
  * @returns An array of elements
  */
-export const getElements = (selector: string | Node): Node[] => {
+export function getElements(selector: string | Node): Node[] {
     return typeof selector === "string" ? Array.from(getDocument()?.querySelectorAll?.(selector as string)) : [selector];
 };
 
@@ -25,7 +25,7 @@ export const getElements = (selector: string | Node): Node[] => {
  * @param targets targets to retrieve, ranging from strings to arrays to DOM Elements
  * @returns Returns a flattened array with all the target to retrieve
  */
-export const getTargets = (targets: TypeAnimationTarget): Node[] => {
+export function getTargets(targets: TypeAnimationTarget): Node[] {
     if (Array.isArray(targets)) {
         return flatten((targets as TypeAnimationTarget[]).map(getTargets));
     }
@@ -46,7 +46,7 @@ export const getTargets = (targets: TypeAnimationTarget): Node[] => {
  * @param scope The scope of the function
  * @returns Returns the computed value if inputed value is a function, otherwise, returns the inputed value
  */
-export const computeOption = (value: unknown, args: TypeCallbackArgs, scope: Animate): unknown => {
+export function computeOption(value: unknown, args: TypeCallbackArgs, scope: Animate): unknown {
     if (typeof value === "function") {
         return value.apply(scope, args);
     } else return value;
@@ -59,7 +59,7 @@ export const computeOption = (value: unknown, args: TypeCallbackArgs, scope: Ani
  * @param scope The scope of the computable options
  * @returns The computed values of computable options 
  */
-export const mapAnimationOptions = (options: IAnimateInstanceConfig, args: TypeCallbackArgs, scope: Animate): IStandaloneComputedAnimateOptions & Omit<KeyframeEffectOptions, keyof IStandaloneComputedAnimateOptions> => {
+export function mapAnimationOptions (options: IAnimateInstanceConfig, args: TypeCallbackArgs, scope: Animate): IStandaloneComputedAnimateOptions & Omit<KeyframeEffectOptions, keyof IStandaloneComputedAnimateOptions> {
     return mapObject(options, (value) => computeOption(value, args, scope));
 };
 
@@ -178,7 +178,7 @@ export const EasingKeys = Object.keys(EASINGS);
  */
 export const GetEase = (ease: keyof typeof EASINGS | (string & {}) = "ease"): string => {
     // Convert camelCase strings into dashed strings, then Remove the "ease-" keyword
-    let search = convertToDash(ease).replace(/^ease-/, "");
+    let search = camelCaseToKebabCase(ease).replace(/^ease-/, "");
     return EasingKeys.includes(search) ? EASINGS[search] : ease;
 };
 

@@ -1,8 +1,8 @@
-import { CustomEasing, GetEasingFunction, parseEasingParameters } from "./custom-easing";
-import { getUnit } from "./utils";
+import { CustomEasing, GetEasingFunction, parseEasingParameters } from "./custom-easing.ts";
+import { getUnit } from "./utils.ts";
 
-import type { TypeEasingFunction, TypeCustomEasingOptions } from "./custom-easing";
-import type { TypeComputableAnimationFunction } from "./types";
+import type { TypeEasingFunction, TypeCustomEasingOptions } from "./custom-easing.ts";
+import type { TypeComputableAnimationFunction } from "./types.ts";
 
 export interface IStaggerOptions {
     from?: number | "first" | "center" | "last",

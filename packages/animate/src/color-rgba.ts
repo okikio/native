@@ -1,7 +1,7 @@
 /** 
  * Based on color-rgba https://github.com/colorjs/color-rgba 
  */
-import names from './colors';
+import * as colors from './colors.ts';
 
 export const hsl = {
     name: 'hsl',
@@ -83,8 +83,8 @@ export const parse = (cstr) => {
     var m, parts = [], alpha = 1, space
     if (typeof cstr === 'string') {
         //keyword
-        if (names[cstr]) {
-            parts = names[cstr].slice()
+        if (colors[cstr]) {
+            parts = colors[cstr].slice()
             space = 'rgb'
         }
 

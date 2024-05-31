@@ -1,8 +1,8 @@
 import { Manager, methodCall } from "@okikio/manager";
 import { EventEmitter } from "@okikio/emitter";
 
-import type { ICONFIG } from "./config";
-import type { IApp } from "./app";
+import type { ICONFIG } from "./config.ts";
+import type { IApp } from "./app.ts";
 
 export type TypeAdvancedManager = AdvancedManager<any, ManagerItem>;
 
