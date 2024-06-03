@@ -1,12 +1,12 @@
-// import type { Properties, PropertiesHyphen, PropertiesFallback, PropertiesHyphenFallback, Property } from "csstype";
+import type * as CSS from "csstype";
 import type { EASINGS } from "./animate.ts";
 
 // Utility type to convert a string to kebab-case
 export type KebabCase<S extends string> =
   S extends `${infer T}${infer U}` ?
   T extends Lowercase<T> ?
-  `${T}${KebabCase<U>}` :
-  `-${Lowercase<T>}${KebabCase<U>}`
+    `${T}${KebabCase<U>}` :
+    `-${Lowercase<T>}${KebabCase<U>}`
   : S;
 
 // Utility type to apply the kebab-case transformation to each property of an interface
@@ -42,11 +42,9 @@ export type TypeAnimationTarget = string | Node | NodeList | HTMLCollection | HT
 /**
  * The callback parameters for computable animation functions
  * e.g. `(index?: number, total?: number, element?: HTMLElement) => number`
- * 
  * @param index - index of target element
  * @param total - total number of target element
  * @param element - the target element
- * 
  * @returns T
  */
 export type TypeComputableAnimationFunction<T> = (index?: number, total?: number, element?: HTMLElement) => T;
@@ -137,14 +135,18 @@ export type AddKebabCaseTransformProperties = TypeIndividualTransformProperties 
  */
 export interface IIndividualTransformProperties extends AddKebabCaseTransformProperties { }
 
+
+interface CSSStyles extends CSS.Properties<TypeCommonGenerics, TypeCommonGenerics>, 
+  CSS.PropertiesHyphen<TypeCommonGenerics, TypeCommonGenerics> { }
+
 /**
  * The union of all CSS Property types, ranging from hypenated to cammelCase, including individual transform properties
  * 
  * e.g.
  * ```ts
  * {
- *  // ...
- *  "background-color": "red",
+ *   // ...
+ *   "background-color": "red",
  *   borderColor: "green" 
  * }
  * ```
@@ -156,14 +158,7 @@ export interface IIndividualTransformProperties extends AddKebabCaseTransformPro
  * - [SVG Presentation Attributes](https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute/Presentation) excluding the `d` property
  * 
 */
-export type TypeCSSProperties =
-  Omit<object
-    // Properties<TypeCommonGenerics, TypeCommonGenerics> &
-    // PropertiesHyphen<TypeCommonGenerics, TypeCommonGenerics> &
-    // PropertiesFallback<TypeCommonGenerics, TypeCommonGenerics> &
-    // PropertiesHyphenFallback<TypeCommonGenerics, TypeCommonGenerics>
-    , keyof IIndividualTransformProperties> &
-  IIndividualTransformProperties;
+export type TypeCSSProperties = Omit<CSSStyles, keyof IIndividualTransformProperties> & IIndividualTransformProperties;
 
 /** 
  * Full list of supported CSS, SVG & Individual Transform Animatable Properties that are supported.
@@ -181,12 +176,12 @@ export interface IAllSupportedCSSProperties extends TypeCSSProperties {
    * ```ts
    * // ...
    * animate({
-   *      // ...
-   *      // The paths have to have the same number of points, that is why the 2 paths below seem similar 
-   *      d: [
-   *          `path("M2,5 S2,14 4,5 S7,8 8,4")`,
-   *          `path("M2,5 S2,-2 4,5 S7,8 8,4")`
-   *      ]
+   *   // ...
+   *   // The paths have to have the same number of points, that is why the 2 paths below seem similar 
+   *   d: [
+   *     `path("M2,5 S2,14 4,5 S7,8 8,4")`,
+   *     `path("M2,5 S2,-2 4,5 S7,8 8,4")`
+   *   ]
    * })
    * ```
    * 
@@ -202,10 +197,10 @@ export interface IAllSupportedCSSProperties extends TypeCSSProperties {
    * // This is an svg path interpolate function
    * // If used in tandem with `AnimateAttributes`, you can create morphing animations
    * let morph = interpolate([startPath, endPath], {
-   *      addPoints: 0,
-   *      origin: { x: 0, y: 0 },
-   *      optimize: "fill",
-   *      precision: 3
+   *    addPoints: 0,
+   *    origin: { x: 0, y: 0 },
+   *    optimize: "fill",
+   *    precision: 3
    * });
    * 
    * // `tweenAttr` supports all Animation Options with some restrictions and things to note.
@@ -220,8 +215,8 @@ export interface IAllSupportedCSSProperties extends TypeCSSProperties {
    * // 3. You can use `.updateOptions(...)` to update the animation options of tweens
    * 
    * tweenAttr({
-   *      target: "svg path",
-   *      d: progress => morph(progress)
+   *   target: "svg path",
+   *   d: progress => morph(progress)
    * });
    * ```
    * 
@@ -307,13 +302,13 @@ export interface IComputableCSSProperties extends TypeComputableCSSProperties { 
  * e.g. 
  * ```ts
  * {
- *     easing: "in-sine",
- *     duration: 2000,
- *     delay: 1000,
- *     endDelay: 1000,
- *     loop: 2,
- *     speed: 1.25,
- *     direction: "alternate",
+ *   easing: "in-sine",
+ *   duration: 2000,
+ *   delay: 1000,
+ *   endDelay: 1000,
+ *   loop: 2,
+ *   speed: 1.25,
+ *   direction: "alternate",
  * }
  * ```
  */
@@ -346,16 +341,16 @@ export interface IStandaloneAnimationConfig {
    * ```ts
    * // cubic-bezier easing
    * animate({
-   *     target: ".div",
-   *     easing: "cubic-bezier(0.47, 0, 0.745, 0.715)",
+   *   target: ".div",
+   *   easing: "cubic-bezier(0.47, 0, 0.745, 0.715)",
    *
-   *     // or
-   *     easing: "in-sine",
-   *     
-   *     // or
-   *     easing: "inSine",
+   *   // or
+   *   easing: "in-sine",
+   *   
+   *   // or
+   *   easing: "inSine",
    * 
-   *     transform: ["translate(0px)", "translate(500px)"],
+   *   transform: ["translate(0px)", "translate(500px)"],
    * });
    * ```
    */
@@ -368,12 +363,12 @@ export interface IStandaloneAnimationConfig {
    * ```ts
    * // First element fades out in 1s, second element in 2s, etc.
    * animate({
-   *      target: ".div",
-   *      easing: "linear",
-   *      duration: 1000,
-   *      // or
-   *      duration: (index) => (index + 1) * 1000,
-   *      opacity: [1, 0],
+   *   target: ".div",
+   *   easing: "linear",
+   *   duration: 1000,
+   *   // or
+   *   duration: (index) => (index + 1) * 1000,
+   *   opacity: [1, 0],
    * });
    * ```
    */
@@ -386,12 +381,12 @@ export interface IStandaloneAnimationConfig {
    * ```ts
    * // First element starts fading out after 1s, second element after 2s, etc.
    * animate({
-   *     target: ".div",
-   *     easing: "linear",
-   *     delay: 5,
-   *     // or
-   *     delay: (index) => (index + 1) * 1000,
-   *     opacity: [1, 0],
+   *   target: ".div",
+   *   easing: "linear",
+   *   delay: 5,
+   *   // or
+   *   delay: (index) => (index + 1) * 1000,
+   *   opacity: [1, 0],
    * });
    * ```
    */
@@ -406,12 +401,12 @@ export interface IStandaloneAnimationConfig {
    * ```ts
    * // First element fades out but then after 1s finishes, the second element after 2s, etc.
    * animate({
-   *     target: ".div",
-   *     easing: "linear",
-   *     endDelay: 1000,
-   *     // or
-   *     endDelay: (index) => (index + 1) * 1000,
-   *     opacity: [1, 0],
+   *   target: ".div",
+   *   easing: "linear",
+   *   endDelay: 1000,
+   *   // or
+   *   endDelay: (index) => (index + 1) * 1000,
+   *   opacity: [1, 0],
    * });
    * ```
    */
@@ -424,12 +419,12 @@ export interface IStandaloneAnimationConfig {
    * ```ts
    * // Loop forever
    * animate({
-   *     target: ".div",
-   *     easing: "linear",
-   *     loop: true, // If you want it to continously loop
-   *     // or
-   *     // loop: 5, // If you want the animation to loop 5 times
-   *     opacity: [1, 0],
+   *   target: ".div",
+   *   easing: "linear",
+   *   loop: true, // If you want it to continously loop
+   *   // or
+   *   // loop: 5, // If you want the animation to loop 5 times
+   *   opacity: [1, 0],
    * });
    * ```
    */
@@ -457,18 +452,18 @@ export interface IStandaloneAnimationConfig {
  * e.g. 
  * ```ts
  * {
- *     offset: [0, 0.5],
- *     direction: "alternate",
- *     timelineOffset: 200,
- *     fillMode: "auto",
- *     keyframes: [
- *         { opacity: 1, offset: 0 },
- *         { opacity: 0, offset: 0.25 },
- *     ],
- *     composite: "default",
- *     extend: {
- *         iterationStart: 0.5
- *     }
+ *   offset: [0, 0.5],
+ *   direction: "alternate",
+ *   timelineOffset: 200,
+ *   fillMode: "auto",
+ *   keyframes: [
+ *     { opacity: 1, offset: 0 },
+ *     { opacity: 0, offset: 0.25 },
+ *   ],
+ *   composite: "default",
+ *   extend: {
+ *     iterationStart: 0.5
+ *   }
  * }
  * ```
  */
@@ -499,10 +494,11 @@ export interface IStandaloneAnimationOptions {
 
    * @example
    * ```ts
-   * element.animate([ { opacity: 1 },
-   *                   { opacity: 0.1, offset: 0.7 },
-   *                   { opacity: 0 } ],
-   *                 2000);
+   * element.animate([ 
+   *   { opacity: 1 },
+   *   { opacity: 0.1, offset: 0.7 },
+   *   { opacity: 0 } 
+   * ], 2000);
    * ```
    *
    * _**Note**: `offset` values, if provided, must be between 0.0 and 1.0 (inclusive) and arranged in ascending order._
@@ -517,10 +513,11 @@ export interface IStandaloneAnimationOptions {
 
    * @example
    * ```ts
-   * element.animate([ { opacity: 1, easing: 'ease-out' },
-   *                   { opacity: 0.1, easing: 'ease-in' },
-   *                   { opacity: 0 } ],
-   *                 2000);
+   * element.animate([ 
+   *   { opacity: 1, easing: 'ease-out' },
+   *   { opacity: 0.1, easing: 'ease-in' },
+   *   { opacity: 0 } 
+   * ], 2000);
    * ```
    *
    * In this example, the specified easing only applies from the keyframe where it is specified until the next keyframe. Any easing value specified on the options argument, however, applies across a single iteration of the animation — for the entire duration.
@@ -532,15 +529,15 @@ export interface IStandaloneAnimationOptions {
    * @example
    * ```ts
    * animate({
-   *      keyframes: {
-   *          "from, 50%, to": {
-   *              opacity: 1
-   *          },
+   *   keyframes: {
+   *     "from, 50%, to": {
+   *       opacity: 1
+   *     },
    *
-   *          "25%, 0.7": {
-   *              opacity: 0
-   *          }
-   *      }
+   *     "25%, 0.7": {
+   *       opacity: 0
+   *     }
+   *   }
    * })
    * // Results in a keyframe array like this
    * //= [
@@ -565,15 +562,15 @@ export interface IStandaloneAnimationOptions {
    * @example
    * ```ts
    * animate({
-   *      duration: 2000,
-   *      opacity: [ 0, 0.9, 1 ],
-   *      easing: [ 'ease-in', 'ease-out' ],
+   *   duration: 2000,
+   *   opacity: [ 0, 0.9, 1 ],
+   *   easing: [ 'ease-in', 'ease-out' ],
    *
-   *      offset: [ "from", 0.8 ], // Shorthand for [ 0, 0.8, 1 ]
-   *      // or
-   *      offset: [ 0, "80%", "to" ], // Shorthand for [ 0, 0.8, 1 ]
-   *      // or
-   *      offset: [ "0", "0.8", "to" ], // Shorthand for [ 0, 0.8, 1 ]
+   *   offset: [ "from", 0.8 ], // Shorthand for [ 0, 0.8, 1 ]
+   *   // or
+   *   offset: [ 0, "80%", "to" ], // Shorthand for [ 0, 0.8, 1 ]
+   *   // or
+   *   offset: [ "0", "0.8", "to" ], // Shorthand for [ 0, 0.8, 1 ]
    * });
    * ```
    */
@@ -625,15 +622,15 @@ export interface IStandaloneAnimationOptions {
    * @example
    * ```ts
    * animate({
-   *     target: ".div",
-   *     opacity: [0, 1],
-   *     loop: 5,
-   *     extend: {
-   *         iterationStart: 0.5,
-   *         // etc...
-   *         fill: "both", // This overrides fillMode
-   *         iteration: 2, // This overrides loop
-   *     }
+   *   target: ".div",
+   *   opacity: [0, 1],
+   *   loop: 5,
+   *   extend: {
+   *     iterationStart: 0.5,
+   *     // etc...
+   *     fill: "both", // This overrides fillMode
+   *     iteration: 2, // This overrides loop
+   *   }
    * });
    * ```
    */
@@ -645,25 +642,25 @@ export interface IStandaloneAnimationOptions {
  * e.g.
  * ```ts
  * {
- *     easing: "in-sine",
- *     duration: 2000,
- *     delay: 1000,
- *     endDelay: 1000,
- *     loop: 2,
- *     speed: 1.25,
- *     direction: "alternate",
- *     offset: [0, 0.5],
- *     direction: "alternate",
- *     timelineOffset: 200,
- *     fillMode: "auto",
- *     keyframes: [
- *         { opacity: 1, offset: 0 },
- *         { opacity: 0, offset: 0.25 },
- *     ],
- *     composite: "default",
- *     extend: {
- *         iterationStart: 0.5
- *     }
+ *   easing: "in-sine",
+ *   duration: 2000,
+ *   delay: 1000,
+ *   endDelay: 1000,
+ *   loop: 2,
+ *   speed: 1.25,
+ *   direction: "alternate",
+ *   offset: [0, 0.5],
+ *   direction: "alternate",
+ *   timelineOffset: 200,
+ *   fillMode: "auto",
+ *   keyframes: [
+ *     { opacity: 1, offset: 0 },
+ *     { opacity: 0, offset: 0.25 },
+ *   ],
+ *   composite: "default",
+ *   extend: {
+ *     iterationStart: 0.5
+ *   }
  * }
  * ```
  */
@@ -773,63 +770,61 @@ export interface INoneComputableAnimationConfig {
    *
    * `options` extends the animation properties of an animation, but more importance is given to the actual animation options object, so, the properties from `options` will be ignored if there is already an animation option with the same name declared.
    *
-   *
    * _**Note**: you can't use this property as a method._
    *
    * @example
    * ```ts
    * (async () => {
-   *     // animate is Promise-like, as in it has a then() method like a Promise but it isn't a Promise.
-   *     // animate resolves to an Array that contains the Animate instance, e.g. [Animate]
-   *     let [options] = await animate({
-   *         target: ".div",
-   *         opacity: [0, 1],
-   *     });
+   *   // animate is Promise-like, as in it has a then() method like a Promise but it isn't a Promise.
+   *   // animate resolves to an Array that contains the Animate instance, e.g. [Animate]
+   *   let [options] = await animate({
+   *     target: ".div",
+   *     opacity: [0, 1],
+   *   });
    *
-   *     animate({
-   *         options,
+   *   animate({
+   *     options,
    *
-   *         // opacity overrides the opacity property from `options`
-   *         opacity: [1, 0],
-   *     });
+   *     // opacity overrides the opacity property from `options`
+   *     opacity: [1, 0],
+   *   });
    *
-   *     console.log(options); //= Animate
+   *   console.log(options); //= Animate
    * })();
    *
    * // or
    * (async () => {
-   *     let options = await animate({
-   *         target: ".div",
-   *         opacity: [0, 1],
-   *         duration: 2000,
+   *   let options = await animate({
+   *     target: ".div",
+   *     opacity: [0, 1],
+   *     duration: 2000,
+   *   });
    *
-   *     });
+   *   // Remeber, the `options` animation option can handle Arrays with an Animate instance, e.g. [Animate]
+   *   // Also, remeber that Animate resolves to an Arrays with an Animate instance, e.g. [Animate]
+   *   // Note: the `options` animation option can only handle one Animate instance in an Array and that is alway the first element in the Array
+   *   animate({
+   *     options,
+   *     opacity: [1, 0],
+   *   });
    *
-   *     // Remeber, the `options` animation option can handle Arrays with an Animate instance, e.g. [Animate]
-   *     // Also, remeber that Animate resolves to an Arrays with an Animate instance, e.g. [Animate]
-   *     // Note: the `options` animation option can only handle one Animate instance in an Array and that is alway the first element in the Array
-   *     animate({
-   *         options,
-   *         opacity: [1, 0],
-   *     });
-   *
-   *     console.log(options); //= [Animate]
+   *   console.log(options); //= [Animate]
    * })();
    *
    * // or
    * (async () => {
-   *     let options = {
-   *         target: ".div",
-   *         opacity: [0, 1],
-   *     };
+   *   let options = {
+   *     target: ".div",
+   *     opacity: [0, 1],
+   *   };
    *
-   *     await animate(options);
-   *     animate({
-   *         options,
-   *         opacity: [1, 0],
-   *     });
+   *   await animate(options);
+   *   animate({
+   *     options,
+   *     opacity: [1, 0],
+   *   });
    *
-   *     console.log(options); //= { ... }
+   *   console.log(options); //= { ... }
    * })();
    * ```
    */

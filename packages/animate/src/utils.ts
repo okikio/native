@@ -306,7 +306,7 @@ export function pick<T extends Record<PropertyKey, unknown>>(keys: (keyof T)[], 
  * @param args - The arrays to process as a set of arguments
  * @returns The new array of grouped elements
  */
-export function transpose(...args: unknown[][]): unknown[][] {
+export function transpose(args: unknown[][]): unknown[][] {
   // Find the length of the longest array
   const maxLength = Math.max(...args.map(arr => arr.length));
   // Create an array of arrays where each sub-array represents a column

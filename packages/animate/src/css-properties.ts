@@ -48,40 +48,82 @@ export const TransformFunctions: ITransformFunctions = {
 export const TransformFunctionNames = Object.keys(TransformFunctions);
 
 /**
- * Removes dashes from CSS properties & maps the values to camelCase keys
+ * Converts CSS properties from kebab-case to camelCase.
+ *
+ * @param obj - An object with CSS properties in kebab-case.
+ * @returns An object with CSS properties in camelCase.
+ *
+ * @example
+ * const camelCaseObj = CSSCamelCase({ 'border-left': '1px', 'background-color': 'red' });
+ * // { borderLeft: '1px', backgroundColor: 'red' }
+ *
+ * @example
+ * const camelCaseObj = CSSCamelCase({ 'margin-top': '10px', 'padding-bottom': '20px' });
+ * // { marginTop: '10px', paddingBottom: '20px' }
+ *
+ * @example
+ * const camelCaseObj = CSSCamelCase({});
+ * // {}
  */
-export const CSSCamelCase = (obj: object) => {
-  let keys = Object.keys(obj);
-  let key: any, value: any, result = {};
-  for (let i = 0, len = keys.length; i < len; i++) {
-    key = kebabCaseToCamelCase(keys[i]);
-    value = obj[keys[i]];
-    result[key] = value;
+export function CSSCamelCase(obj: object): Record<string, any> {
+  const keys = Object.keys(obj);
+  const result: Record<string, any> = {};
+
+  for (const key of keys) {
+    const camelCaseKey = kebabCaseToCamelCase(key);
+    result[camelCaseKey] = obj[key];
   }
 
   return result;
 }
 
 /**
- * Creates the transform property text
+ * Creates the transform property text.
+ *
+ * @param transformFnNames - An array of transform function names.
+ * @param arr - An array of values for the transform functions.
+ * @returns A string representing the transform property.
+ *
+ * @example
+ * const transformText = createTransformProperty(['translateX', 'scale'], [[50, '100px'], [1, 2]]);
+ * // 'translateX(50px) scale(1, 2)'
+ *
+ * @example
+ * const transformText = createTransformProperty(['rotate'], [[45, '90deg']]);
+ * // 'rotate(45deg, 90deg)'
+ *
+ * @example
+ * const transformText = createTransformProperty(['skewX', 'skewY'], [['20deg'], ['10deg']]);
+ * // 'skewX(20deg) skewY(10deg)'
  */
-export const createTransformProperty = (transformFnNames: string[], arr: any[]) => {
+export function createTransformProperty(transformFnNames: string[], arr: any[]): string {
   let result = "";
-  let len = transformFnNames.length;
+  const len = transformFnNames.length;
+
   for (let i = 0; i < len; i++) {
-    let name = transformFnNames[i];
-    let value = arr[i];
-    if (isValid(value))
+    const name = transformFnNames[i];
+    const value = arr[i];
+    if (isValid(value)) {
       result += `${name}(${Array.isArray(value) ? value.join(", ") : value}) `;
+    }
   }
 
   return result.trim();
 }
 
-/** Common CSS Property names with the units "px" as an acceptable value */
-export const CSSPXDataType = ["margin", "padding", "size", "width", "height", "left", "right", "top", "bottom", "radius", "gap", "basis", "inset", "outline-offset", "translate", "perspective", "thickness", "position", "distance", "spacing"].map(kebabCaseToCamelCase).join("|");
+/**
+ * Common CSS Property names with the units "px" as an acceptable value.
+ */
+export const CSSPXDataType = ["margin", "padding", "size", "width", "height", "left", "right", "top", "bottom", "radius", "gap", "basis", "inset", "outline-offset", "translate", "perspective", "thickness", "position", "distance", "spacing"].map(x => kebabCaseToCamelCase(x)).join("|");
+
 
 /**
+ * Ensures that all transform function arrays are the same length.
+ *
+ * @param arr - An array of transform function values.
+ * @param maxLen - The maximum length of the arrays (optional).
+ * @returns An array of transformed function values.
+ *
  * It fills in the gap between different size transform functions, so, for example,
  * ```ts
  * {
@@ -114,43 +156,70 @@ export const CSSPXDataType = ["margin", "padding", "size", "width", "height", "l
  *   ]
  * }
  * ```
+ * 
+ * @example
+ * const filledArray = arrFill([
+ *   [1, 2], 
+ *   [3, 4, 5]
+ * ]);
+ * // [[1, 2, 2], [3, 4, 5]]
+ *
+ * @example
+ * const filledArray = arrFill([
+ *   [10], 
+ *   [20, 30]
+ * ], 3);
+ * // [[10, 10, 10], [20, 30, 30]]
+ *
+ * @example
+ * const filledArray = arrFill([
+ *   ['10%', '20%'], 
+ *   ['30%']
+ * ]);
+ * // [['10%', '20%', '20%'], ['30%', '30%']]
  */
-export const arrFill = (arr: any[] | any[][], maxLen?: number) => {
+export function arrFill(arr: any[] | any[][], maxLen?: number): any[] | any[][] {
   // Ensure all transform function Arrays are the same length to create smooth motion
   maxLen = maxLen ?? Math.max(...arr.map((value: any[]) => value.length));
   return arr.map((value: any[]) => {
-    let len = value.length;
-    let is2dArray = value.every(v => Array.isArray(v));
+    const len = value.length;
+    const is2dArray = value.every(v => Array.isArray(v));
 
     // If value is a one dimensional Array
     if (!is2dArray) {
       if (len !== maxLen) {
-        return Array.from(Array(maxLen), (_, i) => {
+        return Array.from({ length: maxLen }, (_, i) => {
           // `interpolateString` requires a minimum of 2 elements in an array to interploate between,
           // repeat the first value twice if there are not enough values to satisfy `interpolateString`
-          let values = len == 1 ? Array(2).fill(value[0]) : value;
+          const values = len === 1 ? Array(2).fill(value[0]) : value;
           return interpolateString(i / (maxLen - 1), values);
         });
       } else return value;
-    }
+    } 
 
     // * transpose 2d Array (because of what the array row and col's represent, to ensure we are calling arrFill on the proper axes),
     // * run arrFill to ensure a set size,
     // * transpose once more to return to it's original form but with all Arrays in the 2d array having the same size
-    else return transpose(...arrFill(transpose(...value), maxLen));
+    else {
+      return transpose(arrFill(transpose(value), maxLen));
+    }
   });
 }
 
+
 /**
+ * Parses transformable CSS properties.
+ * 
  * Removes the need for the full transform statement in order to use translate, rotate, scale, skew, or perspective including their X, Y, Z, and 3d varients
  * Also, adds the ability to use single string or number values for transform functions
  *
  * _**Note**: the `transform` animation option will override all transform function properties_
- * 
  * _**Note**: the order of where/when you define transform function matters, for example, depending on the order you define `translate`, and `rotate`, you can create change the radius of the rotation_
  *
- * @param properties - the CSS properties to transform
- *
+ * @param properties - The CSS properties to transform.
+ * @param USE_CSS_VARS - Flag to use CSS variables (optional).
+ * @returns An object with formatted CSS properties. 
+ * 
  * @example
  * ```ts
  * ParseTransformableCSSProperties({
@@ -235,13 +304,21 @@ export const arrFill = (arr: any[] | any[][], maxLen?: number) => {
  * // on browsers that *don't* support `CSS.registerProperty`
  * ```
  *
- * @returns
- * an object with a properly formatted `transform` and `opactity`, as well as other unformatted CSS properties
- * ```
+ * @example
+ * const parsedProps = ParseTransformableCSSProperties({ translateX: [50, '100px'], scale: [1, 2] });
+ * // { transform: ['translateX(50px) scale(1, 2)'] }
+ *
+ * @example
+ * const parsedProps = ParseTransformableCSSProperties({ rotate: ['45deg', '90deg'], skewX: ['20deg'] });
+ * // { transform: ['rotate(45deg, 90deg) skewX(20deg)'] }
+ *
+ * @example
+ * const parsedProps = ParseTransformableCSSProperties({ 'border-left': '1px', 'background-color': 'red' });
+ * // { borderLeft: ['1px'], backgroundColor: ['red'] }
  */
-export const ParseTransformableCSSProperties = (properties: IComputableCSSProperties, USE_CSS_VARS = false): IComputableCSSProperties => {
+export function ParseTransformableCSSProperties(properties: IComputableCSSProperties, USE_CSS_VARS = false): IComputableCSSProperties {
   // Convert dash seperated strings to camelCase strings
-  let AllCSSProperties = CSSCamelCase(properties) as IComputableCSSProperties;
+  const AllCSSProperties = CSSCamelCase(properties) as IComputableCSSProperties;
   let rest: IComputableCSSProperties;
   let transform: string[];
 
@@ -249,17 +326,16 @@ export const ParseTransformableCSSProperties = (properties: IComputableCSSProper
     rest = Object.assign({}, omit(transformProperyNames, AllCSSProperties), toCSSVars(AllCSSProperties));
   } else {
     // Adds support for ordered transforms 
-    let transformFunctionNames = Object.keys(AllCSSProperties)
+    const transformFunctionNames = Object.keys(AllCSSProperties)
       .filter(key => TransformFunctionNames.includes(key));
 
     let transformFunctionValues = transformFunctionNames
       .map((key) => TransformFunctions[key](AllCSSProperties[key]));
 
-    transformFunctionValues = arrFill(transformFunctionValues);
-
     // Create the transform string
-    transform = transpose(...transformFunctionValues)
-      .filter(isValid)
+    transformFunctionValues = arrFill(transformFunctionValues);
+    transform = transpose(transformFunctionValues)
+      .filter(x => isValid(x))
       .map(arr => createTransformProperty(transformFunctionNames, arr));
 
     rest = omit(TransformFunctionNames, AllCSSProperties);
@@ -271,8 +347,8 @@ export const ParseTransformableCSSProperties = (properties: IComputableCSSProper
 
     // If the property key doesn't have the word color in it, try to add the default "px" or "deg" to it
     if (!/color|shadow/i.test(key)) {
-      let isAngle = /rotate/i.test(key);
-      let isLength = new RegExp(CSSPXDataType, "i").test(key) ||
+      const isAngle = /rotate/i.test(key);
+      const isLength = new RegExp(CSSPXDataType, "i").test(key) || 
         (!isEmpty(getCSS()) && getCSS()?.supports?.(camelCaseToKebabCase(key), "1px"));
 
       // There is an intresting bug that occurs if you test a string againt the same instance of a Regular Expression
@@ -280,11 +356,9 @@ export const ParseTransformableCSSProperties = (properties: IComputableCSSProper
       // so, to avoid this bug, I create a new instance every time
       if (isAngle || isLength) {
         // If the key has rotate in it's name use "deg" as a default unit
-        if (isAngle) unit = degUnitSet;
-
         // If the key is for a common CSS Property name which has the units "px" as an acceptable value
         // try to add "px" as the default unit
-        else if (isLength) unit = pxUnitSet;
+        unit = isAngle ? degUnitSet : pxUnitSet;
 
         // Note: we first apply units, to make sure if it's a simple number, then units are added
         // but otherwise, if it's "margin", "padding", "inset", etc.. with values like "55 60 70 5em"
@@ -294,19 +368,16 @@ export const ParseTransformableCSSProperties = (properties: IComputableCSSProper
           // split the value into an array using spaces as the seperator
           // then apply the valid default units and join them back with spaces
           // seperating them
-
-          let arr = trim(str).split(/\s+/);
+          const arr = trim(str).split(/\s+/);
           return unit(arr).join(" ");
         });
       }
     }
 
-    return [].concat(value).map(toStr);
+    return [].concat(value).map(x => toStr(x));
   });
 
-  return Object.assign({},
-    isValid(transform) ? { transform } : null,
-    rest);
+  return Object.assign({}, isValid(transform) ? { transform } : null, rest);
 }
 
 /**
@@ -426,5 +497,112 @@ export const ParseTransformableCSSKeyframes = (keyframes: (IIndividualTransformP
     return Object.assign({},
       isValid(transform) ? { transform } : null,
       rest);
+  });
+}
+
+/**
+ * Parses transformable CSS keyframes.
+ *
+ * @param keyframes - An array of keyframes with transformable CSS properties.
+ * @param USE_CSS_VARS - Flag to use CSS variables (optional).
+ * @returns An array of keyframes with transformed CSS properties.
+ *
+ * @example
+ * const parsedKeyframes = ParseTransformableCSSKeyframes([{ translateX: [50, '100px'], scale: [1, 2] }]);
+ * // [{ transform: ['translateX(50px) scale(1, 2)'] }]
+ *
+ * @example
+ * const parsedKeyframes = ParseTransformableCSSKeyframes([{ rotate: ['45deg', '90deg'], skewX: ['20deg'] }]);
+ * // [{ transform: ['rotate(45deg, 90deg) skewX(20deg)'] }]
+ *
+ * @example
+ * const parsedKeyframes = ParseTransformableCSSKeyframes([{ 'border-left': '1px', 'background-color': 'red' }]);
+ * // [{ borderLeft: ['1px'], backgroundColor: ['red'] }]
+ */
+export function ParseTransformableCSSKeyframes(keyframes: (IIndividualTransformProperties & Keyframe)[], USE_CSS_VARS = false) {
+  return keyframes.map(properties => {
+    const AllCSSProperties = CSSCamelCase(properties) as IIndividualTransformProperties & Keyframe;
+
+    if (CSSVarSupport && USE_CSS_VARS) {
+      return {
+        rest: Object.assign({}, toCSSVars(AllCSSProperties), omit(transformProperyNames, AllCSSProperties)),
+        transformFunctions: null
+      };
+    }
+
+    let {
+      translate,
+      translate3d,
+      translateX,
+      translateY,
+      translateZ,
+      rotate,
+      rotate3d,
+      rotateX,
+      rotateY,
+      rotateZ,
+      scale,
+      scale3d,
+      scaleX,
+      scaleY,
+      scaleZ,
+      skew,
+      skewX,
+      skewY,
+      perspective,
+      ...rest
+    } = AllCSSProperties;
+
+    translate = pxUnitSet(translate as TypeCSSGenericPropertyKeyframes);
+    translate3d = pxUnitSet(translate3d as TypeCSSGenericPropertyKeyframes);
+    translateX = pxUnitSet(translateX)[0];
+    translateY = pxUnitSet(translateY)[0];
+    translateZ = pxUnitSet(translateZ)[0];
+
+    rotate = degUnitSet(rotate as TypeCSSGenericPropertyKeyframes);
+    rotate3d = noUnitSet(rotate3d as TypeCSSGenericPropertyKeyframes);
+    rotateX = degUnitSet(rotateX)[0];
+    rotateY = degUnitSet(rotateY)[0];
+    rotateZ = degUnitSet(rotateZ)[0];
+
+    scale = noUnitSet(scale as TypeCSSGenericPropertyKeyframes);
+    scale3d = noUnitSet(scale3d as TypeCSSGenericPropertyKeyframes);
+    scaleX = noUnitSet(scaleX)[0];
+    scaleY = noUnitSet(scaleY)[0];
+    scaleZ = noUnitSet(scaleZ)[0];
+
+    skew = degUnitSet(skew as TypeCSSGenericPropertyKeyframes);
+    skewX = degUnitSet(skewX)[0];
+    skewY = degUnitSet(skewY)[0];
+
+    perspective = pxUnitSet(perspective)[0];
+
+    return {
+      rest,
+      transformFunctions: [translate3d, translate, translateX, translateY, translateZ,
+        rotate3d, rotate, rotateX, rotateY, rotateZ,
+        scale3d, scale, scaleX, scaleY, scaleZ,
+        skew, skewX, skewY,
+        perspective]
+    };
+  }).map(({ rest, transformFunctions }) => {
+    const transform = CSSVarSupport ? null : createTransformProperty(TransformFunctionNames, transformFunctions);
+    rest = mapObject(rest as object, (value, key) => {
+      value = toStr(value);
+
+      if (!/color|shadow/i.test(key)) {
+        const isAngle = /rotate/i.test(key);
+        const isLength = new RegExp(CSSPXDataType, "i").test(key);
+
+        if (isAngle || isLength) {
+          const unit = isAngle ? degUnitSet : pxUnitSet;
+          return unit(value).join(" ");
+        }
+      }
+
+      return value;
+    });
+
+    return Object.assign({}, isValid(transform) ? { transform } : null, rest);
   });
 }
