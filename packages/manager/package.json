@@ -63,6 +63,7 @@
   },
   "homepage": "https://native.okikio.dev/manager",
   "devDependencies": {
+    "@swc/core": "^1.5.25",
     "esbuild-plugin-umd-wrapper": "^2.0.0",
     "tsup": "^8.1.0",
     "tsx": "^4.13.3",

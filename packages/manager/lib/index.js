@@ -1,0 +1,97 @@
+// src/index.ts
+var Manager = class {
+  /** For backward compatability and performance reasons Manager use Map to store data */
+  map;
+  constructor(value) {
+    this.map = new Map(value);
+  }
+  /** Returns the Manager classes base Map */
+  getMap() {
+    return this.map;
+  }
+  /** Get a value stored in the Manager */
+  get(key) {
+    return this.map.get(key);
+  }
+  /** Returns the keys of all items stored in the Manager as an Array */
+  keys() {
+    return Array.from(this.map.keys());
+  }
+  /** Returns the values of all items stored in the Manager as an Array */
+  values() {
+    return Array.from(this.map.values());
+  }
+  /** Set a value to the Manager using a key */
+  set(key, value) {
+    this.map.set(key, value);
+    return this;
+  }
+  /** Adds a value to Manager, and uses the current size of the Manager as it's key, it works best when all the key in the Manager are numbers */
+  add(value) {
+    const size = this.size;
+    const num = size;
+    this.set(num, value);
+    return this;
+  }
+  /** Returns the total number of items stored in the Manager */
+  get size() {
+    return this.map.size;
+  }
+  /** An alias for size */
+  get length() {
+    return this.map.size;
+  }
+  /** Returns the last item in the Manager who's index is a certain distance from the last item in the Manager */
+  last(distance = 1) {
+    const key = this.keys()[this.size - distance];
+    return this.get(key);
+  }
+  /** Removes a value stored in the Manager via a key, returns true if an element in the Map object existed and has been removed, or false if the element does not exist */
+  delete(key) {
+    return this.map.delete(key);
+  }
+  /** Removes a value stored in the Manager via a key, returns the Manager class, allowing for chains */
+  remove(key) {
+    this.map.delete(key);
+    return this;
+  }
+  /** Clear the Manager of all its contents */
+  clear() {
+    this.map.clear();
+    return this;
+  }
+  /** Checks if the Manager contains a certain key */
+  has(key) {
+    return this.map.has(key);
+  }
+  /** Returns a new Iterator object that contains an array of [key, value] for each element in the Map object in insertion order. */
+  entries() {
+    return this.map.entries();
+  }
+  /** Iterates through the Managers contents, calling a callback function every iteration */
+  forEach(callback, context) {
+    this.map.forEach(callback, context);
+    return this;
+  }
+  /** Allows for iteration via for..of, learn more: [https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Iterators_and_Generators] */
+  [Symbol.iterator]() {
+    return this.entries();
+  }
+};
+function methodCall(manager, method, ...args) {
+  manager.forEach((item) => {
+    if (!item) return;
+    if (typeof item !== "object") return;
+    if (!(method in item)) return;
+    const fn = item[method];
+    if (typeof fn !== "function") return;
+    fn?.(...args);
+  });
+}
+var src_default = Manager;
+export {
+  Manager,
+  src_default as default,
+  methodCall
+};
+//# sourceMappingURL=index.js.map

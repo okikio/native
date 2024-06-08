@@ -1,38 +1,38 @@
 # native
 
-An initiative which aims to make it easy to create complex, light-weight, and performant web applications using modern js. The initiative is a monorepo with 4 smaller packages within it, they are [@okikio/manager](/docs/manager/index.md), [@okikio/emitter](/docs/emitter/index.md), [@okikio/animate](/docs/animate/index.md), and [@okikio/native](/docs/native/index.md).
+An initiative which aims to make it easy to create complex, light-weight, and performant web applications using modern js. The initiative is a monorepo with 4 smaller packages within it, they are [@okikio/manager](/src/content/manager/index.md), [@okikio/emitter](/src/content/emitter/index.md), [@okikio/animate](/src/content/animate/index.md), and [@okikio/native](/src/content/native/index.md).
 
 
-## [@okikio/manager](/docs/manager/index.md)
+## [@okikio/manager](/src/content/manager/index.md)
 
 A superset of the Map class, it extends the Map classes capabilities with awesome new features, and relieves some of the inconvient quirks of the Map class.
 
-[Documentation](/docs/manager/index.md) <span style="padding-inline: 1rem">|</span> [NPM](https://www.npmjs.com/package/@okikio/manager)
+[Documentation](/src/content/manager/index.md) <span style="padding-inline: 1rem">|</span> [NPM](https://www.npmjs.com/package/@okikio/manager)
 
 
-## [@okikio/emitter](/docs/emitter/index.md)
+## [@okikio/emitter](/src/content/emitter/index.md)
 
 A small Event Emitter written in typescript with performance and ease of use in mind.
 
-[Documentation](/docs/emitter/index.md) <span style="padding-inline: 1rem">|</span> [NPM](https://www.npmjs.com/package/@okikio/emitter)
+[Documentation](/src/content/emitter/index.md) <span style="padding-inline: 1rem">|</span> [NPM](https://www.npmjs.com/package/@okikio/emitter)
 
-## [@okikio/animate](/docs/animate/index.md)
+## [@okikio/animate](/src/content/animate/index.md)
 
 An animation library for the modern web. Inspired by animate plus, and animejs, it is a Javascript animation library focused on performance and ease of use. It utilizes the Web Animation API (WAAPI) to deliver fluid animations at a *semi-small* size.
 
-[Documentation](/docs/animate/index.md) <span style="padding-inline: 1rem">|</span> [NPM](https://www.npmjs.com/package/@okikio/animate)
+[Documentation](/src/content/animate/index.md) <span style="padding-inline: 1rem">|</span> [NPM](https://www.npmjs.com/package/@okikio/animate)
 
-## [@okikio/native](/docs/native/index.md)
+## [@okikio/native](/src/content/native/index.md)
 
 A framework to build custom dynamic web experiences around. It acts as a very light weight to build complex web apps, ranging from PJAX based sites to other Single Page Applications (SPA) (React, Vue, etc...) based sites and web apps.
 
-[Documentation](/docs/native/index.md) <span style="padding-inline: 1rem">|</span> [NPM](https://www.npmjs.com/package/@okikio/native)
+[Documentation](/src/content/native/index.md) <span style="padding-inline: 1rem">|</span> [NPM](https://www.npmjs.com/package/@okikio/native)
 
 ## Demo & Showcases
 
   * [josephojo.com](https://josephojo.com)
   * [jabodent.com](https://jabodent.com)
-  * [bundle.js.org](https://bundle.js.org)
+  * [bundlejs.org](https://bundlejs.org)
   * Your site here...
   
 > [View a demo &#8594;](https://okikio.github.io/native/demo)
@@ -40,11 +40,11 @@ A framework to build custom dynamic web experiences around. It acts as a very li
 
 ## API Documentation
 
-Go to [/docs/api](/docs/api/index.md), for detailed API documentation on the packages under native initiative.
+Go to [/src/content/api](/src/content/api/index.md), for detailed API documentation on the packages under native initiative.
 
 ## Contributing
 
-[![Open In Gitpod](https://gitpod.io/button/open-in-gitpod.svg)](https://gitpod.io/#https://github.com/okikio/native/blob/beta/README.md)
+[![Open In Gitpod](https://gitpod.io/button/open-in-gitpod.svg)](https://gitpod.io/#https://github.com/okikio/native/blob/dev/README.md)
 
 > _**Note**: By default we use Gitpod for contributions, but you can also use **Github Codespaces**. You will need to follow each packages documentation on how you contribute changes._
 
@@ -54,11 +54,11 @@ By default Gitpod will start the dev script for you, but if you need to restart 
 pnpm start
 ```
 
-Once Gitpod has booted up, go to the [demo/pug/](/docs/demo/pug/) and [demo/ts/](/docs/demo/ts/) folders to try out the packages under the `native` initiative.
+Once Gitpod has booted up, go to the [demo/pug/](/src/content/demo/pug/) and [demo/ts/](/src/content/demo/ts/) folders to try out the packages under the `native` initiative.
 
 If there is something I missed, a mistake, or a feature you would like added please create an issue or a pull request and I'll try to get to it.
 
-*The `native` initiative uses [Changesets](https://github.com/atlassian/changesets/blob/main/docs/intro-to-using-changesets.md#adding-changesets), for versioning and Changelog generation, you don't need to create one, but it would be amazing if you could.*
+*The `native` initiative uses [Changesets](https://github.com/atlassian/changesets/blob/main/src/content/intro-to-using-changesets.md#adding-changesets), for versioning and Changelog generation, you don't need to create one, but it would be amazing if you could.*
 
 > _**Warning**: all contributions must be done on the `beta` branch. By default Gitpod will open on the `beta` branch, but still keep this in mind._
 
@@ -72,11 +72,11 @@ I suggest using [bundle.js.org](https://bundle.js.org), if you would like to qui
 
 ### File Structure
 
-* [demo/](/docs/demo) - contains the build files for the demo.
-  * [pug/](/docs/demo/pug/) - contains the [pug](https://pugjs.org/api/getting-started.html) files for the demo.
-  * [scss/](/docs/demo/scss/) - contains the [scss](https://sass-lang.com/guide) files for the demo.
-  * [ts/](/docs/demo/ts/) - contains [typescript](https://www.typescriptlang.org/) files for the demo.
-  * [assets/](/docs/demo/assets/) - contains favicon, manifest.json, and other assets that we don't want to be processed for the demo.
+* [demo/](/src/content/demo) - contains the build files for the demo.
+  * [pug/](/src/content/demo/pug/) - contains the [pug](https://pugjs.org/api/getting-started.html) files for the demo.
+  * [scss/](/src/content/demo/scss/) - contains the [scss](https://sass-lang.com/guide) files for the demo.
+  * [ts/](/src/content/demo/ts/) - contains [typescript](https://www.typescriptlang.org/) files for the demo.
+  * [assets/](/src/content/demo/assets/) - contains favicon, manifest.json, and other assets that we don't want to be processed for the demo.
 * [packages/](/packages) - contains the packages under the native initiative.
   * [manager/](/packages/manager) - contains the [@okikio/manager](https://npmjs.com/@okikio/manager) package.
   * [emitter/](/packages/emitter) - contains the [@okikio/emitter](https://npmjs.com/@okikio/emitter) package.

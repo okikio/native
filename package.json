@@ -1,43 +1,36 @@
 {
-    "name": "root",
-    "private": true,
-    "license": "MIT",
-    "type": "module",
-    "workspaces": [
-        "packages/*"
-    ],
-    "scripts": {
-        "typedoc": "rm -r -f public/api/ && typedoc && node ./rehype.mjs",
-        "build": "rm -r -f packages/**/lib/ && node ./build.mjs",
-        "preview": "astro preview",
-        "watch": "astro dev",
-        "start": "astro dev",
-        "dev": "astro dev",
-        "docs": "pnpm typedoc && astro build",
-        "test": "pnpm -r test",
-        "pre-release": "pnpm -r pre-release && pnpm docs && pnpm typedoc",
-        "changelog": "changeset version && git add -A && git commit -m 'chore(release): :rocket:'",
-        "release": "pnpm -r publish --tag latest"
-    },
-    "dependencies": {
-        "@okikio/animate": "workspace:*",
-        "@okikio/emitter": "workspace:*",
-        "@okikio/manager": "workspace:*",
-        "@okikio/native": "workspace:*",
-        "polymorph-js": "^1.0.2",
-        "web-animations-js": "^2.3.2"
-    },
-    "devDependencies": {
-        "@astrojs/markdown-remark": "^5.1.0",
-        "@astrojs/markdown-support": "^0.3.1",
-        "@changesets/cli": "^2.27.5",
-        "jsr": "^0.12.4",
-        "sass": "^1.77.4",
-        "tailwindcss": "3.4.4",
-        "typedoc": "0.25.13",
-        "typedoc-plugin-mdn-links": "^3.1.28",
-        "typescript": "~5.4.5",
-        "vitest": "^1.6.0"
-    },
-    "packageManager": "pnpm@9.2.0+sha512.98a80fd11c2e7096747762304106432b3ddc67dcf54b5a8c01c93f68a2cd5e05e6821849522a06fb76284d41a2660d5e334f2ee3bbf29183bf2e739b1dafa771"
+  "name": "root",
+  "type": "module",
+  "workspaces": [
+    "packages/*"
+  ],
+  "scripts": {
+    "dev": "astro dev",
+    "start": "astro dev",
+    "build": "astro check && astro build",
+    "preview": "astro preview",
+    "astro": "astro",
+    "docs": "astro build",
+    "changelog": "changeset version && git add -A && git commit -m 'chore(release): :rocket:'",
+    "release": "pnpm -r publish --tag latest"
+  },
+  "dependencies": {
+    "@okikio/animate": "workspace:*",
+    "@okikio/emitter": "workspace:*",
+    "@okikio/manager": "workspace:*",
+    "@okikio/native": "workspace:*",
+    "polymorph-js": "^1.0.2",
+    "web-animations-js": "^2.3.2"
+  },
+  "devDependencies": {
+    "@changesets/cli": "^2.27.5",
+    "jsr": "^0.12.4",
+    "sass": "^1.77.4",
+    "tailwindcss": "3.4.4",
+    "astro": "^4.10.0",
+    "@astrojs/check": "^0.7.0",
+    "typescript": "^5.4.5",
+    "vitest": "^1.6.0"
+  },
+  "packageManager": "pnpm@9.2.0+sha512.98a80fd11c2e7096747762304106432b3ddc67dcf54b5a8c01c93f68a2cd5e05e6821849522a06fb76284d41a2660d5e334f2ee3bbf29183bf2e739b1dafa771"
 }

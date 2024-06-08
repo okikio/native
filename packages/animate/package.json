@@ -79,6 +79,6 @@
   },
   "gitHead": "ad422076cdb57d570426f786886129d5bca2f90f",
   "dependencies": {
-    "@dynimorius/color-utilities": "npm:@jsr/dynimorius__color-utilities@^1.0.7"
+    "@dynimorius/color-utilities": "npm:@jsr/dynimorius__color-utilities@^1.0.11"
   }
 }

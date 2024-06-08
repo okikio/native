@@ -17,4 +17,3 @@ tasks:
     command: |
       nvm i
       corepack enable
-      pnpm build 
