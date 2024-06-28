@@ -67,7 +67,7 @@ _Note: you can install it as a separate package from the rest of the `@okikio/na
 
 ## Bundling
 
-***Note**: All package in the `native` initiative are built for ES2020, This project expects the user to use a build tool to support older versions of browsers, the idea being most people are using evergreen browsers, so, why are web developers piling on polyfill code that most users don't need. I suggest `esbuild`, `rollup`, `*typescript`, or `webpack` for bundling the library, and for polyfills `babel` or `polyfill.io`.*
+***Note**: All package in the `native` initiative are built for ES2020, This project expects the user to use a build tool to support older versions of browsers, the idea being most people are using evergreen browsers, so, why are web developers piling on polyfill code that most users don't need. I suggest `esbuild`, `rollup`, `*typescript`, or `webpack` for bundling the library, and for polyfills `babel`.*
 
 **I have found typescript to be the best method for bundling for older browsers e.g. IE11. I only suggest you use `babel` for polyfilling `Promise`, `fetch`, etc...*
 

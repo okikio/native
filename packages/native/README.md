@@ -16,7 +16,7 @@ Currently many websites rely on older code to make sure they reach as wide an au
 
 `@okikio/native` uses modern browser api's like the Maps, pushState, etc.... to achieve high efficiency and performance. The browser API's can be difficult to work with, so, I developed [@okikio/manager](https://www.npmjs.com/package/@okikio/manager), [@okikio/emitter](https://www.npmjs.com/package/@okikio/emitter), and [@okiko/animate](https://www.npmjs.com/package/@okikio/animate) libraries to make them more managable. I developed these libraries to ensure the framework is well optimized and to avoid large number of dependencies.
 
-*You will need a Map, Promise, and fetch polyfill for older browsers. If you install `@okikio/native` via [npm](https://www.npmjs.com/package/@okikio/native) you are most likely going to need [rollup](https://rollupjs.org/) or [esbuild](https://esbuild.github.io/). You can use [polyfill.io](https://polyfill.io/), or another source to create a polyfill. The minimum feature requirement for a polyfill are Map, Promise, and fetch e.g. [https://cdn.polyfill.io/v3/polyfill.min.js?features=default,es2015,es2018,Array.prototype.includes,Map,Promise,fetch](https://cdn.polyfill.io/v3/polyfill.min.js?features=default,es2015,Array.prototype.includes,Object.values,es2018,Map,Promise,fetch).*
+*You will need a Map, Promise, and fetch polyfill for older browsers. If you install `@okikio/native` via [npm](https://www.npmjs.com/package/@okikio/native) you are most likely going to need [rollup](https://rollupjs.org/) or [esbuild](https://esbuild.github.io/). You can use another source to create a polyfill. The minimum feature requirement for a polyfill are Map, Promise, and fetch.*
 
 You can try out `@okikio/native` using Gitpod:
 
