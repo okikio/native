@@ -61,7 +61,7 @@
         "@okikio/animate": "workspace:*",
         "@okikio/emitter": "workspace:*",
         "@okikio/manager": "workspace:*",
-        "path-to-regexp": "^6.2.0"
+        "path-to-regexp": "^8.0.0"
     },
     "devDependencies": {
         "del-cli": "^4.0.0",
