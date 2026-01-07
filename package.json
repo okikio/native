@@ -54,7 +54,7 @@
         "commitizen": "^4.2.4",
         "del": "^6.0.0",
         "del-cli": "^4.0.1",
-        "esbuild": "^0.12.24",
+        "esbuild": "^0.25.0",
         "gulp": "^4.0.2",
         "gulp-esbuild": "^0.8.6",
         "gulp-plumber": "^1.2.1",
