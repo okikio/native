@@ -97,8 +97,8 @@ importers:
         specifier: ^8.0.0
         version: 8.0.0
       pnpm:
-        specifier: ^7.33.4
-        version: 7.33.4
+        specifier: ^10.27.0
+        version: 10.27.0
       postcss:
         specifier: ^8.4.31
         version: 8.4.31
@@ -146,8 +146,8 @@ importers:
         specifier: ^6.0.0
         version: 6.0.0
       pnpm:
-        specifier: ^7.33.4
-        version: 7.33.4
+        specifier: ^10.27.0
+        version: 10.27.0
       pretty-bytes:
         specifier: ^5.6.0
         version: 5.6.0
@@ -183,8 +183,8 @@ importers:
         specifier: ^1.1.5
         version: 1.1.5
       pnpm:
-        specifier: ^7.33.4
-        version: 7.33.4
+        specifier: ^10.27.0
+        version: 10.27.0
       pretty-bytes:
         specifier: ^5.6.0
         version: 5.6.0
@@ -222,8 +222,8 @@ importers:
         specifier: ^2.6.1
         version: 2.6.1
       pnpm:
-        specifier: ^7.33.4
-        version: 7.33.4
+        specifier: ^10.27.0
+        version: 10.27.0
       pretty-bytes:
         specifier: ^5.6.0
         version: 5.6.0
@@ -259,8 +259,8 @@ importers:
         specifier: ^6.0.0
         version: 6.0.0
       pnpm:
-        specifier: ^7.33.4
-        version: 7.33.4
+        specifier: ^10.27.0
+        version: 10.27.0
       pretty-bytes:
         specifier: ^5.6.0
         version: 5.6.0
@@ -2076,7 +2076,7 @@ packages:
     resolution: {integrity: sha512-oWb1Z6mkHIskLzEJ/XWX0srkpkTQ7vaopMQkyaEIoq0fmtFVxOthb8cCxeT+p3ynTdkk/RZwbgG4brR5BeWECw==}
     engines: {node: '>= 4.0'}
     os: [darwin]
-    deprecated: The v1 package contains DANGEROUS / INSECURE binaries. Upgrade to safe fsevents v2
+    deprecated: Upgrade to fsevents v2 to mitigate potential security issues
 
   fsevents@2.3.2:
     resolution: {integrity: sha512-xiqMQR4xAeHTuB9uWm+fFRcIOgKBMiOBP+eXiyT7jsgVCq1bkVygt00oASowB7EdtpOHaaPgKt812P9ab+DDKA==}
@@ -3585,9 +3585,9 @@ packages:
     resolution: {integrity: sha512-L1zP0dk7vGweZME2i+EeakvUNqSrdiI3F91TwEoYiGrAfUXmVv6fJIq4g82PAXxNsWOp0J7ZqQy/3Szz0ajTxA==}
     engines: {node: '>= 0.10'}
 
-  pnpm@7.33.4:
-    resolution: {integrity: sha512-xEbf/tkwHpGM/GXq5U/sDSiE6ykLPho+o71PHNRWqkVLm6dJe4G/5Pg619Ow32ovekrr7pii5qtfamujB/+1bA==}
-    engines: {node: '>=14.6'}
+  pnpm@10.27.0:
+    resolution: {integrity: sha512-ctaZ2haxF5wUup5k3HHJpAmIy9xlwmTLDkidt96RfyDc9NZNhyNiXylpulLUt+KhFwaC2awqXcrqq3MrfhbwSg==}
+    engines: {node: '>=18.12'}
     hasBin: true
 
   polymorph-js@1.0.2:
@@ -4572,6 +4572,7 @@ packages:
 
   ua-parser-js@0.7.28:
     resolution: {integrity: sha512-6Gurc1n//gjp9eQNXjD9O3M/sMwVtN5S8Lv9bvOYBfKfDNiIIhqiyi01vMBO45u4zkDE420w/e0se7Vs+sIg+g==}
+    deprecated: You are using an outdated version of ua-parser-js. Please update to ua-parser-js v0.7.33 / v1.0.33 / v2.0.0 (or later) to avoid ReDoS vulnerability [CVE-2022-25927](https://github.com/advisories/GHSA-fhg7-m89q-25r3)
 
   uglify-js@3.14.1:
     resolution: {integrity: sha512-JhS3hmcVaXlp/xSo3PKY5R0JqKs5M3IV+exdLHW99qKvKivPO4Z8qbej6mte17SOPqAOVMjt/XGgWacnFSzM3g==}
@@ -4708,6 +4709,7 @@ packages:
 
   whatwg-encoding@1.0.5:
     resolution: {integrity: sha512-b5lim54JOPN9HtzvK9HFXvBma/rnfFeqsic0hSpjtDbVxR3dJKLc+KB4V6GgiGOvl7CY/KNh8rxSo9DKQrnUEw==}
+    deprecated: Use @exodus/bytes instead for a more spec-conformant and faster implementation
 
   whatwg-mimetype@2.3.0:
     resolution: {integrity: sha512-M4yMwr6mAnQz76TbJm914+gPpB/nCwvZbJU28cUD6dR004SAxDLOOSUaB1JDRqLtaOV/vi0IC5lEAGFgrjGv/g==}
@@ -9053,7 +9055,7 @@ snapshots:
       arr-union: 3.1.0
       extend-shallow: 3.0.2
 
-  pnpm@7.33.4: {}
+  pnpm@10.27.0: {}
 
   polymorph-js@1.0.2: {}
 
