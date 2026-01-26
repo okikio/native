@@ -97,8 +97,8 @@ importers:
         specifier: ^8.0.0
         version: 8.0.0
       pnpm:
-        specifier: ^10.27.0
-        version: 10.27.0
+        specifier: ^10.28.2
+        version: 10.28.2
       postcss:
         specifier: ^8.4.31
         version: 8.4.31
@@ -146,8 +146,8 @@ importers:
         specifier: ^6.0.0
         version: 6.0.0
       pnpm:
-        specifier: ^10.27.0
-        version: 10.27.0
+        specifier: ^10.28.2
+        version: 10.28.2
       pretty-bytes:
         specifier: ^5.6.0
         version: 5.6.0
@@ -183,8 +183,8 @@ importers:
         specifier: ^1.1.5
         version: 1.1.5
       pnpm:
-        specifier: ^10.27.0
-        version: 10.27.0
+        specifier: ^10.28.2
+        version: 10.28.2
       pretty-bytes:
         specifier: ^5.6.0
         version: 5.6.0
@@ -222,8 +222,8 @@ importers:
         specifier: ^2.6.1
         version: 2.6.1
       pnpm:
-        specifier: ^10.27.0
-        version: 10.27.0
+        specifier: ^10.28.2
+        version: 10.28.2
       pretty-bytes:
         specifier: ^5.6.0
         version: 5.6.0
@@ -259,8 +259,8 @@ importers:
         specifier: ^6.0.0
         version: 6.0.0
       pnpm:
-        specifier: ^10.27.0
-        version: 10.27.0
+        specifier: ^10.28.2
+        version: 10.28.2
       pretty-bytes:
         specifier: ^5.6.0
         version: 5.6.0
@@ -3736,8 +3736,8 @@ packages:
     resolution: {integrity: sha512-L1zP0dk7vGweZME2i+EeakvUNqSrdiI3F91TwEoYiGrAfUXmVv6fJIq4g82PAXxNsWOp0J7ZqQy/3Szz0ajTxA==}
     engines: {node: '>= 0.10'}
 
-  pnpm@10.27.0:
-    resolution: {integrity: sha512-ctaZ2haxF5wUup5k3HHJpAmIy9xlwmTLDkidt96RfyDc9NZNhyNiXylpulLUt+KhFwaC2awqXcrqq3MrfhbwSg==}
+  pnpm@10.28.2:
+    resolution: {integrity: sha512-QYcvA3rSL3NI47Heu69+hnz9RI8nJtnPdMCPGVB8MdLI56EVJbmD/rwt9kC1Q43uYCPrsfhO1DzC1lTSvDJiZA==}
     engines: {node: '>=18.12'}
     hasBin: true
 
@@ -4514,6 +4514,7 @@ packages:
   tar@6.1.11:
     resolution: {integrity: sha512-an/KZQzQUkZCkuoAA64hM92X0Urb6VpRhAFllDzz44U2mcD5scmT3zBc4VgVpkugF580+DQn8eAFSyoQt0tznA==}
     engines: {node: '>= 10'}
+    deprecated: Old versions of tar are not supported, and contain widely publicized security vulnerabilities, which have been fixed in the current version. Please update. Support for old versions may be purchased (at exhorbitant rates) by contacting i@izs.me
 
   term-size@1.2.0:
     resolution: {integrity: sha512-7dPUZQGy/+m3/wjVz3ZW5dobSoD/02NxJpoXUX0WIyjfVS3l0c+b/+9phIDFA7FHzkYtwtMFgeGZ/Y8jVTeqQQ==}
@@ -9307,7 +9308,7 @@ snapshots:
       arr-union: 3.1.0
       extend-shallow: 3.0.2
 
-  pnpm@10.27.0: {}
+  pnpm@10.28.2: {}
 
   polymorph-js@1.0.2: {}
 
