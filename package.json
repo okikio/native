@@ -67,7 +67,7 @@
         "gzip-size": "^6.0.0",
         "husky": "^7.0.2",
         "lerna-changelog": "^2.1.0",
-        "path-to-regexp": "^8.0.0",
+        "path-to-regexp": "^8.4.0",
         "pnpm": "^10.28.2",
         "postcss": "^8.4.31",
         "postcss-csso": "^5.0.1",
