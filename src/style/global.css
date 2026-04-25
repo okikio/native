@@ -34,7 +34,7 @@ a {
 }
 
 .layout {
-  @apply flex min-h-screen relative;
+  @apply relative flex min-h-screen;
 
   @supports (padding-inline-start: env(safe-area-inset-left)) {
     padding-inline-start: env(safe-area-inset-left);
@@ -45,7 +45,7 @@ a {
 }
 
 main[data-wrapper] {
-  @apply w-full p-4 md:p-6 xl:p-8;
+  @apply min-w-0 w-full p-3 md:p-6 xl:p-8;
 }
 
 .page-shell,
@@ -53,6 +53,12 @@ main[data-wrapper] {
 .package-grid,
 article[main-content] {
   @apply w-full max-w-5xl mx-auto;
+}
+
+.docs-page-shell,
+.docs-page-shell .package-grid,
+.docs-page-shell article[main-content] {
+  @apply max-w-screen-lg;
 }
 
 .page-shell {
@@ -77,6 +83,32 @@ article[main-content] {
   @media (prefers-color-scheme: dark) {
     @apply bg-slate-950/70 ring-slate-800;
   }
+}
+
+.docs-page-shell {
+  @apply space-y-4;
+}
+
+.docs-page-shell article[main-content] {
+  @apply rounded-none bg-transparent p-0 shadow-none ring-0;
+  backdrop-filter: none;
+}
+
+.docs-page-shell .package-grid {
+  @apply gap-0;
+}
+
+.docs-page-shell .package-card {
+  @apply rounded-none bg-transparent px-0 py-5 shadow-none ring-0;
+  border-top: 1px solid rgb(148 163 184 / 0.28);
+}
+
+.docs-page-shell .package-card:last-child {
+  border-bottom: 1px solid rgb(148 163 184 / 0.28);
+}
+
+.docs-page-shell .package-card strong {
+  @apply text-2xl;
 }
 
 article[main-content] > :last-child {

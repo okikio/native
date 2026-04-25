@@ -15,7 +15,7 @@ const pageTitle = `${title} · native`;
 ---
 
 <BaseLayout title={pageTitle} description={description}>
-  <div class="page-shell">
+  <div class="page-shell docs-page-shell">
     <nav aria-label="Breadcrumb" class="breadcrumbs">
       <a href="/">Home</a>
       {breadcrumbs.map((breadcrumb) => (
@@ -26,7 +26,7 @@ const pageTitle = `${title} · native`;
       ))}
     </nav>
 
-    <article main-content>
+    <article main-content data-docs-content>
       <slot />
     </article>
   </div>
