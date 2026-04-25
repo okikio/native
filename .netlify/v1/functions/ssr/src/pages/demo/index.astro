@@ -1,0 +1,31 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import PlaybackBlock from "../../components/PlaybackBlock.astro";
+import AnimatedBox from "../../components/AnimatedBox.astro";
+---
+
+<BaseLayout title="Demo · native" description="Interactive demo for the native initiative packages.">
+  <div class="page-shell">
+    <nav aria-label="Breadcrumb" class="breadcrumbs">
+      <a href="/">Home</a>
+      <span aria-hidden="true">/</span>
+      <a href="/demo/">Demo</a>
+    </nav>
+
+    <article main-content>
+      <h1>Demo</h1>
+      <p>Interactive playback example for the docs site.</p>
+
+      <PlaybackBlock id="simple-demo">
+        <AnimatedBox>1</AnimatedBox>
+        <AnimatedBox id="box-2">2</AnimatedBox>
+      </PlaybackBlock>
+    </article>
+  </div>
+
+  <script>
+    import { startPlaybackDemo } from "../../scripts/animate";
+
+    startPlaybackDemo();
+  </script>
+</BaseLayout>

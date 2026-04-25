@@ -34,6 +34,7 @@
     "tailwindcss": "^4.2.4",
     "astro": "^6.1.9",
     "@astrojs/check": "^0.9.8",
+    "@astrojs/netlify": "^7.0.8",
     "astro-auto-adapter": "^2.5.5",
     "astro-icon": "^1.1.5",
     "typescript": "^5.9.3",
