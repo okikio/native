@@ -1,32 +1,68 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
-import { getDocEntries } from "../lib/docs";
-
-const overviewPages = (await getDocEntries()).filter((entry) => entry.label === "Overview" && entry.prettySegments.length === 1);
 ---
 
-<BaseLayout title="native · Astro v6 docs" description="Modernized documentation for the native initiative and its packages.">
-  <section class="hero">
-    <p class="eyebrow">Astro v6 refactor</p>
-    <h1>native</h1>
-    <p>
-      Documentation, examples, and package guides for the <code>@okikio/native</code> initiative, rebuilt on the
-      current Astro platform with Tailwind v4, modern icon tooling, and the new Astro fonts pipeline.
-    </p>
+<BaseLayout
+  title="native"
+  description="An initiative which aims to make it easy to create complex, light-weight, and performant web applications using modern js."
+>
+  <div class="page-shell">
+    <nav aria-label="Breadcrumb" class="breadcrumbs">
+      <a href="/">Home</a>
+      <span aria-hidden="true">/</span>
+    </nav>
 
-    <div class="hero-actions">
-      <a class="hero-link" href="/docs/native/">Read the native docs</a>
-      <a class="hero-link secondary" href="/demo/">Open the demo</a>
-    </div>
-  </section>
+    <article main-content>
+      <h1>native</h1>
+      <p>
+        An initiative which aims to make it easy to create complex, light-weight, and performant web applications
+        using modern js. The initiative is a monorepo with 4 smaller packages within it, they are
+        <a href="/docs/manager/">@okikio/manager</a>, <a href="/docs/emitter/">@okikio/emitter</a>,
+        <a href="/docs/animate/">@okikio/animate</a>, and <a href="/docs/native/">@okikio/native</a>.
+      </p>
 
-  <section class="package-grid" aria-label="Package documentation">
-    {overviewPages.map((entry) => (
-      <a class="package-card" href={entry.href}>
-        <span class="package-label">{entry.prettySegments[0] === "native" ? "Framework" : "Package"}</span>
-        <strong>{entry.prettySegments[0] === "native" ? "@okikio/native" : `@okikio/${entry.prettySegments[0]}`}</strong>
-        <span>Open the overview, API guides, and supporting documentation.</span>
-      </a>
-    ))}
-  </section>
+      <h2><a href="/docs/manager/">@okikio/manager</a></h2>
+      <p>
+        A superset of the Map class, it extends the Map classes capabilities with awesome new features, and relieves
+        some of the inconvient quirks of the Map class.
+      </p>
+      <p>
+        <a href="/docs/manager/">Documentation</a>
+        <span style="padding-inline: 1rem">|</span>
+        <a href="https://www.npmjs.com/package/@okikio/manager">NPM</a>
+      </p>
+
+      <h2><a href="/docs/emitter/">@okikio/emitter</a></h2>
+      <p>A small Event Emitter written in typescript with performance and ease of use in mind.</p>
+      <p>
+        <a href="/docs/emitter/">Documentation</a>
+        <span style="padding-inline: 1rem">|</span>
+        <a href="https://www.npmjs.com/package/@okikio/emitter">NPM</a>
+      </p>
+
+      <h2><a href="/docs/animate/">@okikio/animate</a></h2>
+      <p>
+        An animation library for the modern web. Inspired by animate plus, and animejs, it is a Javascript animation
+        library focused on performance and ease of use. It utilizes the Web Animation API (WAAPI) to deliver fluid
+        animations at a <em>semi-small</em> size.
+      </p>
+      <p>
+        <a href="/docs/animate/">Documentation</a>
+        <span style="padding-inline: 1rem">|</span>
+        <a href="https://www.npmjs.com/package/@okikio/animate">NPM</a>
+      </p>
+
+      <h2><a href="/docs/native/">@okikio/native</a></h2>
+      <p>
+        A framework to build custom dynamic web experiences around. It acts as a very light weight to build complex
+        web apps, ranging from PJAX based sites to other Single Page Applications (SPA) (React, Vue, etc...) based
+        sites and web apps.
+      </p>
+      <p>
+        <a href="/docs/native/">Documentation</a>
+        <span style="padding-inline: 1rem">|</span>
+        <a href="https://www.npmjs.com/package/@okikio/native">NPM</a>
+      </p>
+    </article>
+  </div>
 </BaseLayout>

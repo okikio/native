@@ -49,16 +49,8 @@ main[data-wrapper] {
 }
 
 .page-shell,
-.hero,
-.package-grid,
 article[main-content] {
   @apply w-full max-w-5xl mx-auto;
-}
-
-.docs-page-shell,
-.docs-page-shell .package-grid,
-.docs-page-shell article[main-content] {
-  @apply max-w-screen-lg;
 }
 
 .page-shell {
@@ -77,98 +69,8 @@ article[main-content] {
   @apply no-underline;
 }
 
-article[main-content] {
-  @apply rounded-3xl bg-white/70 p-5 shadow-sm ring-1 ring-slate-200/70 backdrop-blur md:p-8;
-
-  @media (prefers-color-scheme: dark) {
-    @apply bg-slate-950/70 ring-slate-800;
-  }
-}
-
-.docs-page-shell {
-  @apply space-y-4;
-}
-
-.docs-page-shell article[main-content] {
-  @apply rounded-none bg-transparent p-0 shadow-none ring-0;
-  backdrop-filter: none;
-}
-
-.docs-page-shell .package-grid {
-  @apply gap-0;
-}
-
-.docs-page-shell .package-card {
-  @apply border-t border-slate-400/28 rounded-none bg-transparent px-0 py-5 shadow-none ring-0;
-}
-
-.docs-page-shell .package-card:last-child {
-  @apply border-b border-slate-400/28;
-}
-
-.docs-page-shell .package-card strong {
-  @apply text-2xl;
-}
-
 article[main-content] > :last-child {
   margin-bottom: 0;
-}
-
-.hero {
-  @apply rounded-[2rem] bg-gradient-to-br from-slate-100 via-white to-blue-100 p-6 shadow-sm ring-1 ring-slate-200/70 md:p-10;
-
-  @media (prefers-color-scheme: dark) {
-    @apply from-slate-950 via-slate-950 to-blue-950 ring-slate-800;
-  }
-}
-
-.hero h1 {
-  @apply mt-4 mb-4 text-5xl md:text-6xl;
-}
-
-.eyebrow {
-  @apply mb-0 text-sm font-semibold uppercase tracking-[0.2em] text-blue-600;
-}
-
-.hero-actions {
-  @apply mt-8 flex flex-wrap gap-3;
-}
-
-.hero-link,
-.package-card {
-  @apply no-underline transition-colors duration-200;
-}
-
-.hero-link {
-  @apply inline-flex items-center justify-center rounded-full bg-blue-600 px-5 py-3 font-semibold text-white;
-}
-
-.hero-link.secondary {
-  @apply bg-slate-900 text-white;
-
-  @media (prefers-color-scheme: dark) {
-    @apply bg-slate-800;
-  }
-}
-
-.package-grid {
-  @apply grid gap-4 md:grid-cols-2;
-}
-
-.package-card {
-  @apply flex flex-col gap-3 rounded-3xl bg-white p-5 shadow-sm ring-1 ring-slate-200/70;
-
-  @media (prefers-color-scheme: dark) {
-    @apply bg-slate-950 ring-slate-800;
-  }
-}
-
-.package-card strong {
-  @apply text-xl;
-}
-
-.package-label {
-  @apply text-xs font-semibold uppercase tracking-[0.18em] text-blue-600;
 }
 
 details p {
