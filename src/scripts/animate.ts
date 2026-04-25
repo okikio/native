@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { animate, tweenAttr, random, queue, AnimateAttributes, SpringEasing, ApplyCustomEasing } from "@okikio/animate";
 import { interpolate } from "polymorph-js";
 

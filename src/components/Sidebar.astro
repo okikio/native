@@ -1,30 +1,15 @@
 ---
-import ChevronRight from "~icons/fluent/chevron-right-20-filled";
 import Logo from "./Logo.astro";
-import { getDocTree, type DocTreeNode } from "../lib/docs";
+import SidebarSection from "./SidebarSection.astro";
+import { getDocTree } from "../lib/docs";
 import sidebarScript from "../scripts/sidebar.ts?url";
 
 const tree = getDocTree();
-
-function renderNodes(nodes: DocTreeNode[]) {
-  return nodes.map((node) =>
-    node.kind === "group" ? (
-      <details>
-        <summary>
-          <ChevronRight class="summary-icon" aria-hidden="true" />
-          <span>{node.label}</span>
-        </summary>
-
-        <div class="content">{node.children ? renderNodes(node.children) : null}</div>
-      </details>
-    ) : (
-      <a href={node.href}>{node.label}</a>
-    )
-  );
-}
 ---
 
 <style lang="scss">
+  @reference "../style/tailwind-reference.css";
+
   aside {
     font-size: 0.9em;
     min-width: 300px;
@@ -130,11 +115,11 @@ function renderNodes(nodes: DocTreeNode[]) {
   <div class="sticky">
     <div class="scroll-shadow-top"></div>
     <div class="scroll">
-      {renderNodes(tree)}
+      {tree.map((node) => <SidebarSection node={node} />)}
     </div>
 
     <div class="scroll-shadow-bottom"></div>
   </div>
 </aside>
 
-<script src={sidebarScript} type="module"></script>
+<script is:inline src={sidebarScript} type="module"></script>

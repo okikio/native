@@ -3,6 +3,8 @@ import Icon from './Icon.astro';
 const { class: className, ...rest } = Astro.props;
 ---
 <style lang="scss">
+    @reference "../style/tailwind-reference.css";
+
     input, button {
         accent-color: #3b82f6;
         

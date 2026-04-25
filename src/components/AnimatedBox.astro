@@ -2,6 +2,8 @@
 const props = Astro.props;
 ---
 <style lang="scss">
+    @reference "../style/tailwind-reference.css";
+
     :global(.animated-box) {
         @apply bg-blue-500 shadow-md rounded-xl;
         @apply align-middle text-center;

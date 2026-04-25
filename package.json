@@ -23,7 +23,10 @@
     "web-animations-js": "^2.3.2"
   },
   "devDependencies": {
+    "@astrojs/node": "^10.0.6",
     "@changesets/cli": "^2.27.5",
+    "@fontsource-variable/geist-mono": "^5.2.7",
+    "@fontsource-variable/lexend": "^5.2.7",
     "@iconify-json/fluent": "^1.2.45",
     "@tailwindcss/vite": "^4.2.4",
     "jsr": "^0.12.4",
@@ -33,7 +36,7 @@
     "@astrojs/check": "^0.9.8",
     "astro-auto-adapter": "^2.5.5",
     "astro-icon": "^1.1.5",
-    "typescript": "^6.0.2",
+    "typescript": "^5.9.3",
     "unplugin-icons": "^23.0.1",
     "vitest": "^1.6.0"
   },
