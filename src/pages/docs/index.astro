@@ -1,0 +1,36 @@
+---
+import PagesLayout from "../../layouts/PagesLayout.astro";
+---
+
+<PagesLayout
+  title="Docs"
+  description="Overview pages for the native initiative packages."
+  breadcrumbs={[{ label: "Docs", href: "/docs/" }]}
+>
+  <h1>Docs</h1>
+  <p>
+    Documentation for the <a href="https://github.com/okikio/native">native</a> initiative and its packages. Pick a
+    package below to dive into its overview, API guide, and supporting docs.
+  </p>
+
+  <h2><a href="/docs/manager/">@okikio/manager</a></h2>
+  <p>
+    A superset of the Map class, it extends the Map classes capabilities with awesome new features, and relieves
+    some of the inconvient quirks of the Map class.
+  </p>
+
+  <h2><a href="/docs/emitter/">@okikio/emitter</a></h2>
+  <p>A small Event Emitter written in typescript with performance and ease of use in mind.</p>
+
+  <h2><a href="/docs/animate/">@okikio/animate</a></h2>
+  <p>
+    An animation library for the modern web. Inspired by animate plus, and animejs, it is a Javascript animation
+    library focused on performance and ease of use.
+  </p>
+
+  <h2><a href="/docs/native/">@okikio/native</a></h2>
+  <p>
+    A framework to build custom dynamic web experiences around. It acts as a very light weight to build complex web
+    apps, ranging from PJAX based sites to other Single Page Applications (SPA) based sites and web apps.
+  </p>
+</PagesLayout>

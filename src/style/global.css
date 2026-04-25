@@ -1,0 +1,97 @@
+@import "@fontsource-variable/lexend";
+@import "@fontsource-variable/geist-mono";
+
+@import "./tailwind-reference.css";
+
+@import "./base.css";
+@import "./components/highlightjs.css";
+
+:root {
+  --font-lexend: "Lexend Variable";
+  --font-geist-mono: "Geist Mono Variable";
+}
+
+body {
+  @apply bg-white text-slate-900 font-sans;
+  line-height: 1.6;
+
+  @media (prefers-color-scheme: dark) {
+    @apply bg-black text-label;
+  }
+}
+
+body[data-sidebar-open="true"] {
+  overflow: hidden;
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-focus);
+  outline-offset: 4px;
+}
+
+a {
+  word-break: break-word;
+}
+
+.layout {
+  @apply relative flex min-h-screen;
+
+  @supports (padding-inline-start: env(safe-area-inset-left)) {
+    padding-inline-start: env(safe-area-inset-left);
+    padding-inline-end: env(safe-area-inset-right);
+    padding-block-start: env(safe-area-inset-top);
+    padding-block-end: env(safe-area-inset-bottom);
+  }
+}
+
+main[data-wrapper] {
+  @apply min-w-0 w-full p-3 md:p-6 xl:p-8;
+}
+
+.page-shell,
+article[main-content] {
+  @apply w-full max-w-5xl mx-auto;
+}
+
+.page-shell {
+  @apply space-y-6;
+}
+
+.breadcrumbs {
+  @apply flex flex-wrap items-center gap-2 text-sm text-slate-500;
+
+  @media (prefers-color-scheme: dark) {
+    @apply text-slate-400;
+  }
+}
+
+.breadcrumbs a {
+  @apply no-underline;
+}
+
+article[main-content] > :last-child {
+  margin-bottom: 0;
+}
+
+details p {
+  @apply m-0;
+}
+
+main ul {
+  list-style-type: disc;
+}
+
+main ul li {
+  margin-bottom: 0.2em;
+}
+
+code,
+pre code {
+  font-family: var(--font-geist-mono), ui-monospace, monospace;
+}
+
+@media (width < 40rem) {
+  :is(h1, h2, h3, h4, h5, h6, p, a) {
+    word-break: break-word;
+  }
+}

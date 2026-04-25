@@ -1,27 +1,25 @@
 ---
-let { props } = Astro; 
-let { item, details, content } = props;
+import ChevronRight from "~icons/fluent/chevron-right-20-filled";
+import type { DocTreeNode } from "../lib/docs";
 
-function isObject(obj) {
-  return typeof obj === 'object' && obj !== null && obj !== undefined
+export interface Props {
+  node: DocTreeNode;
 }
 
-// Capitalize first letter of each word
-let capitalize = (str) => {
-  return str.replace(/-/g, " ").replace(/\w\S*/g, function(txt){
-    return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
-  }).replace(/api/gi, "API").replace(/css/gi, "CSS");
-};
+const { node } = Astro.props;
 ---
-{
-    isObject(details) ?
-    (
-        <details>
-            <summary>
-            <p>{["animate", "emitter", "manager", "native"].includes(item) ? `@okikio/${item}` : capitalize(item)}</p>
-            </summary>
 
-            <div class="content">{content}</div>
-        </details>
-    ) :  (<a href={details}>{item == "index" ? "Overview" : capitalize(item)}</a>)
-}
+{node.kind === "group" ? (
+  <details>
+    <summary>
+      <ChevronRight class="summary-icon" aria-hidden="true" />
+      <span>{node.label}</span>
+    </summary>
+
+    <div class="content">
+      {node.children?.map((child) => <Astro.self node={child} />)}
+    </div>
+  </details>
+) : (
+  <a href={node.href}>{node.label}</a>
+)}
