@@ -1,4 +1,4 @@
-import { defineConfig, fontProviders } from "astro/config";
+import { defineConfig } from "astro/config";
 import { adapter, output, getEnv, AUTO_ASTRO_ADAPTER_ENV_VAR, getAutoAdapterType } from "astro-auto-adapter";
 import tailwindcss from "@tailwindcss/vite";
 import icon from "astro-icon";
@@ -19,20 +19,6 @@ export default defineConfig({
       mode: "standalone",
     },
   }),
-  fonts: [
-    {
-      provider: fontProviders.fontsource(),
-      name: "Lexend",
-      cssVariable: "--font-lexend",
-      weights: [300, 400, 500, 700],
-    },
-    {
-      provider: fontProviders.fontsource(),
-      name: "Geist Mono",
-      cssVariable: "--font-geist-mono",
-      weights: [400, 500, 700],
-    },
-  ],
   integrations: [
     icon({
       include: {
