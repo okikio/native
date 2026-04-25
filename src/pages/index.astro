@@ -1,19 +1,32 @@
 ---
-// import { Markdown } from 'astro/components';
-import { Markdown } from "astro/components";
 import BaseLayout from "../layouts/BaseLayout.astro";
+import { getDocEntries } from "../lib/docs";
 
-const content = Astro.fetchContent('../../README.md')[0].astro.source;
+const overviewPages = getDocEntries().filter((entry) => entry.label === "Overview" && entry.prettySegments.length === 1);
 ---
 
-<BaseLayout>
-  <div>
+<BaseLayout title="native · Astro v6 docs" description="Modernized documentation for the native initiative and its packages.">
+  <section class="hero">
+    <p class="eyebrow">Astro v6 refactor</p>
+    <h1>native</h1>
     <p>
-      <span><a href="/">Home</a> / </span>
-    </p> 
+      Documentation, examples, and package guides for the <code>@okikio/native</code> initiative, rebuilt on the
+      current Astro platform with Tailwind v4, modern icon tooling, and the new Astro fonts pipeline.
+    </p>
 
-    <article main-content>
-      <Markdown content={content} />
-    </article> 
-  </div>
+    <div class="hero-actions">
+      <a class="hero-link" href="/docs/native/">Read the native docs</a>
+      <a class="hero-link secondary" href="/demo/">Open the demo</a>
+    </div>
+  </section>
+
+  <section class="package-grid" aria-label="Package documentation">
+    {overviewPages.map((entry) => (
+      <a class="package-card" href={entry.href}>
+        <span class="package-label">{entry.prettySegments[0] === "native" ? "Framework" : "Package"}</span>
+        <strong>{entry.prettySegments[0] === "native" ? "@okikio/native" : `@okikio/${entry.prettySegments[0]}`}</strong>
+        <span>Open the overview, API guides, and supporting documentation.</span>
+      </a>
+    ))}
+  </section>
 </BaseLayout>

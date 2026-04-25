@@ -1,25 +1,33 @@
 ---
-// import { Markdown } from "astro/components";
 import BaseLayout from "../layouts/BaseLayout.astro";
 
-const {content} = Astro.props;
-let pathArr = Astro.request.url.pathname.split("/").filter(item => item && item.length);
-let title = content?.match?.(/\#{1,6}(.*)/)?.[1]?.trim() ?? "Homepage";
-let pkg = "@okikio/" + pathArr[0];
+export interface Props {
+  title: string;
+  description?: string;
+  breadcrumbs?: Array<{
+    label: string;
+    href: string;
+  }>;
+}
+
+const { title, description, breadcrumbs = [] } = Astro.props;
+const pageTitle = `${title} · native`;
 ---
 
-<BaseLayout title={`${title}${ pkg == title ? "" : " - " + pkg}`}>
-  <div>
-    <p>
-      <span><a href="/">Home</a>{ pathArr.length ? " / " : "" }</span>
-      {pathArr.map((path, i) => {
-        return `<a href="/${pathArr.slice(0, i + 1).join("/")}">${path}</a>` 
-      }).join(" / ")}
-    </p> 
+<BaseLayout title={pageTitle} description={description}>
+  <div class="page-shell">
+    <nav aria-label="Breadcrumb" class="breadcrumbs">
+      <a href="/">Home</a>
+      {breadcrumbs.map((breadcrumb) => (
+        <>
+          <span aria-hidden="true">/</span>
+          <a href={breadcrumb.href}>{breadcrumb.label}</a>
+        </>
+      ))}
+    </nav>
 
     <article main-content>
-      <!-- <Markdown content={content} /> -->
       <slot />
-    </article> 
+    </article>
   </div>
 </BaseLayout>

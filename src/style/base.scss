@@ -44,11 +44,8 @@ body {
     // $font-size-base must be a rem value
     font-size: $font-size-base;
     line-height: 1.618;
-    @apply text-3xl;
     // max-width: 38em;
-    color: $color-text;
-    background-color: $color-bg;
-    font-size: $font-size-base * 0.95;
+    font-size: 1rem;
 }
 
 @media (max-width: 684px) {

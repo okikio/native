@@ -1,0 +1,34 @@
+---
+import PagesLayout from "../../layouts/PagesLayout.astro";
+import { getBreadcrumbs, getDocEntries, getDocModule } from "../../lib/docs";
+
+export async function getStaticPaths() {
+  return getDocEntries().flatMap((entry) => [
+    {
+      params: { slug: entry.prettySegments },
+      props: { file: entry.file },
+    },
+    {
+      params: { slug: entry.legacySegments },
+      props: { file: entry.file },
+    },
+  ]);
+}
+
+const { file } = Astro.props;
+const entry = getDocEntries().find((item) => item.file === file);
+
+if (!entry) {
+  throw new Error(`Documentation entry not found for ${file}`);
+}
+
+const mod = await getDocModule(file);
+const Content = mod.default;
+const title = mod.frontmatter?.title ?? entry.label;
+const description = mod.frontmatter?.description;
+const breadcrumbs = getBreadcrumbs(entry);
+---
+
+<PagesLayout title={title} description={description} breadcrumbs={breadcrumbs}>
+  <Content />
+</PagesLayout>

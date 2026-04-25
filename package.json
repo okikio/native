@@ -24,12 +24,17 @@
   },
   "devDependencies": {
     "@changesets/cli": "^2.27.5",
+    "@iconify-json/fluent": "^1.2.45",
+    "@tailwindcss/vite": "^4.2.4",
     "jsr": "^0.12.4",
     "sass": "^1.77.4",
-    "tailwindcss": "3.4.4",
-    "astro": "^4.10.0",
-    "@astrojs/check": "^0.7.0",
-    "typescript": "^5.4.5",
+    "tailwindcss": "^4.2.4",
+    "astro": "^6.1.9",
+    "@astrojs/check": "^0.9.8",
+    "astro-auto-adapter": "^2.5.5",
+    "astro-icon": "^1.1.5",
+    "typescript": "^6.0.2",
+    "unplugin-icons": "^23.0.1",
     "vitest": "^1.6.0"
   },
   "packageManager": "pnpm@9.2.0+sha512.98a80fd11c2e7096747762304106432b3ddc67dcf54b5a8c01c93f68a2cd5e05e6821849522a06fb76284d41a2660d5e334f2ee3bbf29183bf2e739b1dafa771"

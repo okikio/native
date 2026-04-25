@@ -1,62 +1,42 @@
 ---
-// import SidebarSection from "./SidebarSection.astro";
+import ChevronRight from "~icons/fluent/chevron-right-20-filled";
 import Logo from "./Logo.astro";
-import glob from "fast-glob";
-const paths = await glob('docs/**/*.md');
+import { getDocTree, type DocTreeNode } from "../lib/docs";
+import sidebarScript from "../scripts/sidebar.ts?url";
 
-function isObject(obj) {
-  return typeof obj === 'object' && obj !== null && obj !== undefined
+const tree = getDocTree();
+
+function renderNodes(nodes: DocTreeNode[]) {
+  return nodes.map((node) =>
+    node.kind === "group" ? (
+      <details>
+        <summary>
+          <ChevronRight class="summary-icon" aria-hidden="true" />
+          <span>{node.label}</span>
+        </summary>
+
+        <div class="content">{node.children ? renderNodes(node.children) : null}</div>
+      </details>
+    ) : (
+      <a href={node.href}>{node.label}</a>
+    )
+  );
 }
-
-// Capitalize first letter of each word
-let capitalize = (str) => {
-  return str
-        .replace(/-/g, " ")
-        .replace(/\w\S*/g, (txt) => 
-          (txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase())
-        )
-        .replace(/api/gi, "API")
-        .replace(/css/gi, "CSS");
-};
-
-const obj = {}; 
-function deepGet(obj, path) {
-  var length = path.length;
-  for (var i = 0; i < length; i++) {
-    if (obj == null) return void 0;
-    obj = obj[path[i]];
-  }
-  return length ? obj : void 0;
-}
-function deepSet(obj, path, value) {
-  var length = path.length;
-  for (var i = 0; i < length; i++) {
-    if (!isObject(obj[path[i]])) {
-      obj[path[i]] = {};
-    }
-    
-    if (i == length - 1) {
-      obj[path[i]] = value;
-    }
-
-    obj = obj[path[i]];
-  }
-  return length ? obj : void 0;
-}
-paths.forEach(p => {
-  let path = p.replace("docs/", "").replace(/\.md$/, "");
-  deepSet(obj, path.split("/"), "/" + path);
-})
-          
 ---
 
 <style lang="scss">
   aside {
     font-size: 0.9em;
     min-width: 300px;
-    @apply lt-sm:-translate-x-full;
     @apply py-2 min-w-[250px] lg:min-w-[300px];
-    @apply fixed lt-sm:h-full lt-sm:w-full sm:relative left-0 top-0;
+    @apply fixed left-0 top-0 h-full w-full sm:relative sm:h-auto sm:w-auto;
+    transform: translateX(-100%);
+  }
+
+  @media (min-width: 40rem) {
+    aside {
+      transform: translateX(0);
+    }
   }
 
   .sticky {
@@ -93,43 +73,28 @@ paths.forEach(p => {
       content: "";
     }
 
-    summary, a {
+    summary,
+    a {
       @apply relative cursor-pointer py-2;
       padding-left: 2ch;
-
-      &:before {
-        font-family: FluentSystemIcons-Regular !important;
-        font-style: normal;
-        font-weight: normal !important;
-        font-variant: normal;
-        text-transform: none;
-        line-height: 1;
-
-        -webkit-font-smoothing: antialiased;
-        -moz-osx-font-smoothing: grayscale;
-
-        content: "► ";
-        content: "\f2af";
-
-        @apply absolute left-0 top-1/2;
-        @apply text-2xl text-blue-600 dark:text-gray-400/60;
-        transform: translate(0, -50%);
-      }
     }
 
-    summary:before {
-        transition: transform 0.2s ease-in-out;
-        transform: translate(0, -50%) rotateZ(0deg);
+    summary {
+      @apply flex items-center gap-2;
+    }
+
+    .summary-icon {
+      @apply absolute left-0 top-1/2 text-blue-600 dark:text-gray-400/60;
+      transition: transform 0.2s ease-in-out;
+      transform: translateY(-50%);
     }
 
     &[open] > summary {
       @apply text-blue-500;
+    }
 
-      &:before {
-        // content: "▼ ";
-        // content: "\f2a2";
-        transform: translate(0, -50%) rotateZ(90deg);
-      }
+    &[open] > summary .summary-icon {
+      transform: translateY(-50%) rotate(90deg);
     }
 
     a {
@@ -165,37 +130,11 @@ paths.forEach(p => {
   <div class="sticky">
     <div class="scroll-shadow-top"></div>
     <div class="scroll">
-    {
-      () => {
-        let generate = (input, depth = 1) => {
-            let _keys = Object.keys(input).sort((a, b) => 
-              (a == "index" ? -1 : b == "index" ? 1 : 0)
-            );
-
-            return Promise.all(
-                _keys.map((item) => 
-                  isObject(input[item]) ?
-                  (
-                      <details>
-                          <summary>
-                          <p>{["animate", "emitter", "manager", "native"].includes(item) ? `@okikio/${item}` : capitalize(item)}</p>
-                          </summary>
-
-                          <div class="content">{depth >= 6 ? null : generate(input[item], depth + 1)}</div>
-                      </details>
-                  ) :  (<a href={input[item].replace(new RegExp("\/index$"), "/")}>{item == "index" ? "Overview" : capitalize(item)}</a>)
-                  // (<SidebarSection item={item} details={input[item]} content={depth >= 5 ? null : generate(input[item], depth + 1)} />)
-                )
-            );
-        };
-
-        return generate(obj);
-      }
-    }
+      {renderNodes(tree)}
     </div>
 
     <div class="scroll-shadow-bottom"></div>
   </div>
 </aside>
 
-<script src={Astro.resolve("../ts/sidebar.mjs")} type="module"></script>
+<script src={sidebarScript} type="module"></script>
