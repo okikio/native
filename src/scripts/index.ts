@@ -1,4 +1,5 @@
 // @ts-nocheck
+// Legacy PJAX demo script retained for behavior parity during the Astro v6 migration.
 import { App, PJAX, TransitionManager, HistoryManager, PageManager, Router } from "@okikio/native";
 import { animate } from "@okikio/animate";
 import { init, inFocus } from "./sidebar";

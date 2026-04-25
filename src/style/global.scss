@@ -1,13 +1,4 @@
-@import "tailwindcss";
-
-@theme {
-  --font-sans: var(--font-lexend), ui-sans-serif, system-ui, sans-serif;
-  --font-mono: var(--font-geist-mono), ui-monospace, monospace;
-  --color-label: #d9d8dc;
-  --color-tertiary: #172033;
-  --color-quaternary: #111827;
-  --color-elevated-2: #101828;
-}
+@import "./tailwind-reference.css";
 
 @import "./base.scss";
 @import "./components/hightlightjs";
@@ -22,7 +13,7 @@ body {
 }
 
 :focus-visible {
-  outline: 2px solid #60a5fa;
+  outline: 2px solid var(--color-focus);
   outline-offset: 4px;
 }
 
@@ -154,7 +145,7 @@ pre code {
   font-family: var(--font-geist-mono), ui-monospace, monospace;
 }
 
-@media (max-width: 39.999rem) {
+@media (width < 40rem) {
   :is(h1, h2, h3, h4, h5, h6, p, a) {
     word-break: break-word;
   }

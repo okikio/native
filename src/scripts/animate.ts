@@ -1,4 +1,5 @@
 // @ts-nocheck
+// Legacy animation demo script retained for behavior parity during the Astro v6 migration.
 import { animate, tweenAttr, random, queue, AnimateAttributes, SpringEasing, ApplyCustomEasing } from "@okikio/animate";
 import { interpolate } from "polymorph-js";
 

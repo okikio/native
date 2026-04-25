@@ -3,6 +3,7 @@ import { adapter, output, getEnv, AUTO_ASTRO_ADAPTER_ENV_VAR, getAutoAdapterType
 import tailwindcss from "@tailwindcss/vite";
 import icon from "astro-icon";
 import Icons from "unplugin-icons/vite";
+import { fluentIcons } from "./src/lib/icons";
 
 const ADAPTER_TYPES = getAutoAdapterType();
 const ASTRO_ADAPTER_MODE =
@@ -23,23 +24,19 @@ export default defineConfig({
       provider: fontProviders.fontsource(),
       name: "Lexend",
       cssVariable: "--font-lexend",
-      weights: ["300 700"],
+      weights: [300, 400, 500, 700],
     },
     {
       provider: fontProviders.fontsource(),
       name: "Geist Mono",
       cssVariable: "--font-geist-mono",
-      weights: ["400 700"],
+      weights: [400, 500, 700],
     },
   ],
   integrations: [
     icon({
       include: {
-        fluent: [
-          "arrow-counterclockwise-20-filled",
-          "pause-20-filled",
-          "play-20-filled",
-        ],
+        fluent: [...fluentIcons],
       },
     }),
   ],

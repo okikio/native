@@ -3,13 +3,14 @@ import Icon from './Icon.astro';
 const { class: className, ...rest } = Astro.props;
 ---
 <style lang="scss">
+    /* Tailwind v4 component-style reference */
     @reference "../style/tailwind-reference.css";
 
     input, button {
-        accent-color: #3b82f6;
+        accent-color: var(--color-accent);
         
         &:focus-visible {
-            outline: 2px solid #60a5fa;
+            outline: 2px solid var(--color-focus);
         }
     }
     .playback-block {

@@ -1,4 +1,5 @@
 // @ts-nocheck
+// Legacy DOM script retained for behavior parity during the Astro v6 migration.
 // Based on https://css-tricks.com/how-to-animate-the-details-element-using-waapi/
 class Accordion {
   constructor(el) {

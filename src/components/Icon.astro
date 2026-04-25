@@ -1,17 +1,13 @@
 ---
 import { Icon as AstroIcon } from "astro-icon/components";
+import { playbackIcons, type PlaybackIconName } from "../lib/icons";
 
 export interface Props {
-  name: "play" | "pause" | "replay";
+  name: PlaybackIconName;
 }
 
 const { name = "pause" } = Astro.props;
-
-const iconName = {
-  play: "fluent:play-20-filled",
-  pause: "fluent:pause-20-filled",
-  replay: "fluent:arrow-counterclockwise-20-filled",
-}[name];
+const iconName = playbackIcons[name];
 ---
 
 <style lang="scss">

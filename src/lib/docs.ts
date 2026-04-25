@@ -45,8 +45,8 @@ function capitalize(segment: string) {
   return segment
     .replace(/-/g, " ")
     .replace(/\w\S*/g, (txt) => txt.charAt(0).toUpperCase() + txt.slice(1).toLowerCase())
-    .replace(/\bApi\b/g, "API")
-    .replace(/\bCss\b/g, "CSS");
+    .replace(/\bapi\b/gi, "API")
+    .replace(/\bcss\b/gi, "CSS");
 }
 
 function labelForSegment(segment: string, depth: number) {
@@ -73,7 +73,7 @@ function toHref(segments: string[], legacy = false) {
     return "/docs/";
   }
 
-  return legacy ? `/docs/${segments.join("/")}` : `/docs/${segments.join("/")}/`;
+  return `/docs/${segments.join("/")}${legacy ? "" : "/"}`;
 }
 
 export function getDocEntries(): DocEntry[] {
@@ -82,8 +82,9 @@ export function getDocEntries(): DocEntry[] {
     .map((file) => {
       const prettySegments = toPrettySegments(file);
       const legacySegments = toLegacySegments(file);
-      const leaf = prettySegments.at(-1) ?? legacySegments.at(-1)?.replace(/\.md$/, "") ?? "Overview";
       const isOverview = /\/index\.md$/.test(file);
+      const legacyLeaf = legacySegments.at(-1)?.replace(/\.md$/, "");
+      const labelSource = prettySegments.at(-1) ?? legacyLeaf ?? "Overview";
 
       return {
         file,
@@ -91,7 +92,7 @@ export function getDocEntries(): DocEntry[] {
         legacySegments,
         href: toHref(prettySegments),
         legacyHref: toHref(legacySegments, true),
-        label: isOverview ? "Overview" : labelForSegment(leaf, prettySegments.length - 1),
+        label: isOverview ? "Overview" : labelForSegment(labelSource, prettySegments.length - 1),
       };
     });
 }

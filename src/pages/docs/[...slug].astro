@@ -4,6 +4,14 @@ import { getBreadcrumbs, getDocEntries, getDocModule } from "../../lib/docs";
 
 export const prerender = true;
 
+type MarkdownModule = {
+  default: (props: Record<string, unknown>) => unknown;
+  frontmatter?: {
+    title?: string;
+    description?: string;
+  };
+};
+
 export async function getStaticPaths() {
   return getDocEntries().flatMap((entry) => [
     {
@@ -24,14 +32,8 @@ if (!entry) {
   throw new Error(`Documentation entry not found for ${file}`);
 }
 
-const mod = (await getDocModule(file)) as {
-  default: unknown;
-  frontmatter?: {
-    title?: string;
-    description?: string;
-  };
-};
-const Content = mod.default as any;
+const mod = (await getDocModule(file)) as MarkdownModule;
+const Content = mod.default;
 const title = mod.frontmatter?.title ?? entry.label;
 const description = mod.frontmatter?.description;
 const breadcrumbs = getBreadcrumbs(entry);
