@@ -99,12 +99,11 @@ article[main-content] {
 }
 
 .docs-page-shell .package-card {
-  @apply rounded-none bg-transparent px-0 py-5 shadow-none ring-0;
-  border-top: 1px solid rgb(148 163 184 / 0.28);
+  @apply border-t border-slate-400/28 rounded-none bg-transparent px-0 py-5 shadow-none ring-0;
 }
 
 .docs-page-shell .package-card:last-child {
-  border-bottom: 1px solid rgb(148 163 184 / 0.28);
+  @apply border-b border-slate-400/28;
 }
 
 .docs-page-shell .package-card strong {
