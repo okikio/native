@@ -85,7 +85,15 @@ class PlaybackTimeline {
   }
 
   private toNumber(value: CSSNumberish | null | undefined) {
-    return typeof value === "number" ? value : 0;
+    if (typeof value === "number") {
+      return value;
+    }
+
+    if (value && typeof value === "object" && "value" in value && typeof value.value === "number") {
+      return value.value;
+    }
+
+    return 0;
   }
 }
 

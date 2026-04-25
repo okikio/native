@@ -28,6 +28,8 @@ class Accordion {
     this.summary.addEventListener("click", this.onClick);
   }
 
+  // These listeners live on the static sidebar elements for the full page lifecycle,
+  // so there is no intermediate teardown step before the page unloads.
   private onClick = (event: MouseEvent) => {
     event.preventDefault();
     this.el.style.overflow = "hidden";
@@ -127,6 +129,14 @@ function setSidebarOpen(elements: SidebarElements, open: boolean) {
   elements.overlay.setAttribute("aria-hidden", String(!(shouldOpen && isMobileViewport())));
 
   document.body.dataset.sidebarOpen = String(shouldOpen && isMobileViewport());
+
+  if (shouldOpen && isMobileViewport()) {
+    const firstFocusable = elements.aside.querySelector<HTMLAnchorElement | HTMLButtonElement>(
+      "a[href], button:not([disabled])"
+    );
+
+    firstFocusable?.focus();
+  }
 }
 
 function cleanURL(value: string | URL) {
@@ -158,7 +168,7 @@ export function inFocus(aside: HTMLElement | null = getSidebar()) {
       parent = parent.parentElement;
     }
 
-    anchor.scrollIntoView({ behavior: "smooth", block: "nearest" });
+    anchor.scrollIntoView({ behavior: "smooth" });
   });
 }
 

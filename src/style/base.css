@@ -25,14 +25,14 @@
 }
 
 html {
-  font-size: 100%;
+  font-size: 62.5%;
   font-family: var(--font-family-base);
   scroll-padding-top: 15vh;
   scrollbar-gutter: stable both-edges;
 }
 
 body {
-  font-size: 1rem;
+  font-size: 1.8rem;
   line-height: 1.618;
 }
 

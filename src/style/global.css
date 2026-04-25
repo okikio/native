@@ -1,7 +1,7 @@
 @import "./tailwind-reference.css";
 
 @import "./base.css";
-@import "./components/hightlightjs.css";
+@import "./components/highlightjs.css";
 
 body {
   @apply bg-white text-slate-900 font-sans;
