@@ -1,41 +1,35 @@
 ---
+import { render } from "astro:content";
 import PagesLayout from "../../layouts/PagesLayout.astro";
-import { getBreadcrumbs, getDocEntries, getDocModule } from "../../lib/docs";
+import { getBreadcrumbs, getDocEntries, getDocEntryById } from "../../lib/docs";
 
 export const prerender = true;
 
-type MarkdownModule = {
-  default: (props: Record<string, unknown>) => unknown;
-  frontmatter?: {
-    title?: string;
-    description?: string;
-  };
-};
-
 export async function getStaticPaths() {
-  return getDocEntries().flatMap((entry) => [
+  const entries = await getDocEntries();
+
+  return entries.flatMap((entry) => [
     {
       params: { slug: entry.prettySegments.join("/") },
-      props: { file: entry.file },
+      props: { docId: entry.id },
     },
     {
       params: { slug: entry.legacySegments.join("/") },
-      props: { file: entry.file },
+      props: { docId: entry.id },
     },
   ]);
 }
 
-const { file } = Astro.props;
-const entry = getDocEntries().find((item) => item.file === file);
+const { docId } = Astro.props;
+const entry = await getDocEntryById(docId);
 
 if (!entry) {
-  throw new Error(`Documentation entry not found for ${file}`);
+  throw new Error(`Documentation entry not found for ${docId}`);
 }
 
-const mod = (await getDocModule(file)) as MarkdownModule;
-const Content = mod.default;
-const title = mod.frontmatter?.title ?? entry.label;
-const description = mod.frontmatter?.description;
+const { Content } = await render(entry.entry);
+const title = entry.entry.data.title ?? entry.label;
+const description = entry.entry.data.description;
 const breadcrumbs = getBreadcrumbs(entry);
 ---
 

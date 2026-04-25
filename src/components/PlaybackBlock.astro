@@ -2,16 +2,16 @@
 import Icon from './Icon.astro';
 const { class: className, ...rest } = Astro.props;
 ---
-<style lang="scss">
+<style>
     /* Tailwind v4 component-style reference */
     @reference "../style/tailwind-reference.css";
 
     input, button {
         accent-color: var(--color-accent);
-        
-        &:focus-visible {
-            outline: 2px solid var(--color-focus);
-        }
+    }
+    input:focus-visible,
+    button:focus-visible {
+        outline: 2px solid var(--color-focus);
     }
     .playback-block {
         @apply bg-gray-200 dark:bg-elevated-2 p-5 rounded-xl overflow-hidden;
@@ -33,12 +33,11 @@ const { class: className, ...rest } = Astro.props;
         @apply relative rounded-md border-2 border-blue-400/50;
         width: 40px;
         height: 40px;
-        
-        :global(.icon) {
-            visibility: hidden;
-            @apply absolute top-1/2 left-1/2;
-            transform: translate(-50%, -50%);
-        }
+    }
+    .control-btn :global(.icon) {
+        visibility: hidden;
+        @apply absolute top-1/2 left-1/2;
+        transform: translate(-50%, -50%);
     }
     .playback[data-state="play"] :global(.icon.pause),
     .playback[data-state="pause"] :global(.icon.play),

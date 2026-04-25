@@ -1,7 +1,7 @@
 @import "./tailwind-reference.css";
 
-@import "./base.scss";
-@import "./components/hightlightjs";
+@import "./base.css";
+@import "./components/hightlightjs.css";
 
 body {
   @apply bg-white text-slate-900 font-sans;
@@ -10,6 +10,10 @@ body {
   @media (prefers-color-scheme: dark) {
     @apply bg-black text-label;
   }
+}
+
+body[data-sidebar-open="true"] {
+  overflow: hidden;
 }
 
 :focus-visible {
@@ -134,10 +138,10 @@ details p {
 
 main ul {
   list-style-type: disc;
+}
 
-  li {
-    margin-bottom: 0.2em;
-  }
+main ul li {
+  margin-bottom: 0.2em;
 }
 
 code,

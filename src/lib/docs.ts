@@ -1,7 +1,10 @@
-const docModules = import.meta.glob("/src/content/**/*.md");
+import { getCollection, type CollectionEntry } from "astro:content";
+
+export type DocsCollectionEntry = CollectionEntry<"docs">;
 
 export interface DocEntry {
-  file: string;
+  entry: DocsCollectionEntry;
+  id: string;
   prettySegments: string[];
   legacySegments: string[];
   href: string;
@@ -33,12 +36,8 @@ interface TreePage {
 
 type TreeNode = TreeGroup | TreePage;
 
-function toRelativePath(file: string) {
-  return file.replace(/^\/src\/content\//, "");
-}
-
-function toPathWithoutExtension(file: string) {
-  return toRelativePath(file).replace(/\.md$/, "");
+function normalizeId(id: string) {
+  return id.replaceAll("\\", "/");
 }
 
 function capitalize(segment: string) {
@@ -57,15 +56,12 @@ function labelForSegment(segment: string, depth: number) {
   return capitalize(segment);
 }
 
-function toPrettySegments(file: string) {
-  return toPathWithoutExtension(file)
-    .replace(/\/index$/, "")
-    .split("/")
-    .filter(Boolean);
+function toPrettySegments(id: string) {
+  return normalizeId(id).replace(/\.md$/, "").replace(/\/index$/, "").split("/").filter(Boolean);
 }
 
-function toLegacySegments(file: string) {
-  return toRelativePath(file).split("/").filter(Boolean);
+function toLegacySegments(id: string) {
+  return normalizeId(id).split("/").filter(Boolean);
 }
 
 function toHref(segments: string[], legacy = false) {
@@ -76,25 +72,37 @@ function toHref(segments: string[], legacy = false) {
   return `/docs/${segments.join("/")}${legacy ? "" : "/"}`;
 }
 
-export function getDocEntries(): DocEntry[] {
-  return Object.keys(docModules)
-    .sort()
-    .map((file) => {
-      const prettySegments = toPrettySegments(file);
-      const legacySegments = toLegacySegments(file);
-      const isOverview = /\/index\.md$/.test(file);
-      const legacyLeaf = legacySegments.at(-1)?.replace(/\.md$/, "");
-      const labelSource = prettySegments.at(-1) ?? legacyLeaf ?? "Overview";
+async function getDocsCollection() {
+  const entries = await getCollection("docs");
+  return entries.sort((left, right) => left.id.localeCompare(right.id));
+}
 
-      return {
-        file,
-        prettySegments,
-        legacySegments,
-        href: toHref(prettySegments),
-        legacyHref: toHref(legacySegments, true),
-        label: isOverview ? "Overview" : labelForSegment(labelSource, prettySegments.length - 1),
-      };
-    });
+export async function getDocEntries(): Promise<DocEntry[]> {
+  const entries = await getDocsCollection();
+
+  return entries.map((entry) => {
+    const id = normalizeId(entry.id);
+    const prettySegments = toPrettySegments(id);
+    const legacySegments = toLegacySegments(id);
+    const isOverview = /\/index\.md$/.test(id);
+    const legacyLeaf = legacySegments.at(-1)?.replace(/\.md$/, "");
+    const labelSource = prettySegments.at(-1) ?? legacyLeaf ?? "Overview";
+
+    return {
+      entry,
+      id,
+      prettySegments,
+      legacySegments,
+      href: toHref(prettySegments),
+      legacyHref: toHref(legacySegments, true),
+      label: isOverview ? "Overview" : labelForSegment(labelSource, prettySegments.length - 1),
+    };
+  });
+}
+
+export async function getDocEntryById(id: string) {
+  const entries = await getDocEntries();
+  return entries.find((entry) => entry.id === normalizeId(id));
 }
 
 function sortNodes(nodes: DocTreeNode[]) {
@@ -110,7 +118,7 @@ function sortNodes(nodes: DocTreeNode[]) {
   });
 }
 
-export function getDocTree(): DocTreeNode[] {
+export async function getDocTree(): Promise<DocTreeNode[]> {
   const root: TreeGroup = {
     kind: "group",
     key: "root",
@@ -118,32 +126,32 @@ export function getDocTree(): DocTreeNode[] {
     children: new Map(),
   };
 
-  for (const entry of getDocEntries()) {
-    const relative = toPathWithoutExtension(entry.file).split("/").filter(Boolean);
+  for (const entry of await getDocEntries()) {
+    const relative = entry.id.replace(/\.md$/, "").split("/").filter(Boolean);
     let current = root;
 
-    relative.forEach((segment, index) => {
+    for (const [index, segment] of relative.entries()) {
       const isLast = index === relative.length - 1;
       const isOverview = isLast && segment === "index";
 
       if (isOverview) {
-        current.children.set(`overview:${entry.file}`, {
+        current.children.set(`overview:${entry.id}`, {
           kind: "page",
-          key: `overview:${entry.file}`,
+          key: `overview:${entry.id}`,
           label: "Overview",
           href: entry.href,
         });
-        return;
+        continue;
       }
 
       if (isLast) {
-        current.children.set(`page:${entry.file}`, {
+        current.children.set(`page:${entry.id}`, {
           kind: "page",
-          key: `page:${entry.file}`,
+          key: `page:${entry.id}`,
           label: labelForSegment(segment, index),
           href: entry.href,
         });
-        return;
+        continue;
       }
 
       const groupKey = `group:${relative.slice(0, index + 1).join("/")}`;
@@ -151,7 +159,7 @@ export function getDocTree(): DocTreeNode[] {
 
       if (existing?.kind === "group") {
         current = existing;
-        return;
+        continue;
       }
 
       const created: TreeGroup = {
@@ -163,7 +171,7 @@ export function getDocTree(): DocTreeNode[] {
 
       current.children.set(groupKey, created);
       current = created;
-    });
+    }
   }
 
   const materialize = (group: TreeGroup): DocTreeNode[] =>
@@ -188,16 +196,6 @@ export function getDocTree(): DocTreeNode[] {
     );
 
   return materialize(root);
-}
-
-export async function getDocModule(file: string) {
-  const loader = docModules[file];
-
-  if (!loader) {
-    throw new Error(`Unknown documentation file: ${file}`);
-  }
-
-  return loader();
 }
 
 export function getBreadcrumbs(entry: DocEntry) {

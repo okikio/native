@@ -1,22 +1,40 @@
 ---
+import { Icon as AstroIcon } from "astro-icon/components";
 import Logo from "./Logo.astro";
 import SidebarSection from "./SidebarSection.astro";
 import { getDocTree } from "../lib/docs";
-import sidebarScript from "../scripts/sidebar.ts?url";
 
-const tree = getDocTree();
+const tree = await getDocTree();
 ---
 
-<style lang="scss">
+<style>
   /* Tailwind v4 component-style reference */
   @reference "../style/tailwind-reference.css";
+
+  .sidebar-backdrop,
+  .mobile-menu-button {
+    @apply sm:hidden;
+  }
+
+  .sidebar-backdrop {
+    @apply fixed inset-0 z-30 bg-slate-950/50 opacity-0 pointer-events-none transition-opacity duration-200;
+  }
+
+  .sidebar-backdrop[data-open="true"] {
+    @apply opacity-100 pointer-events-auto;
+  }
 
   aside {
     font-size: 0.9em;
     min-width: 300px;
     @apply py-2 min-w-[250px] lg:min-w-[300px];
-    @apply fixed left-0 top-0 h-full w-full sm:relative sm:h-auto sm:w-auto;
+    @apply fixed left-0 top-0 z-40 h-full w-full bg-white dark:bg-black sm:relative sm:z-auto sm:h-auto sm:w-auto sm:bg-transparent;
     transform: translateX(-100%);
+    transition: transform 0.2s ease-in-out;
+  }
+
+  aside[data-open="true"] {
+    transform: translateX(0);
   }
 
   @media (min-width: 40rem) {
@@ -49,69 +67,86 @@ const tree = getDocTree();
     @apply relative w-full overflow-auto px-5 py-10;
   }
 
-  details {
-    .content {
-      padding-left: 2ch;
-      @apply py-2;
-    }
+  details .content {
+    padding-left: 2ch;
+    @apply py-2;
+  }
 
-    summary::marker {
-      content: "";
-    }
+  details summary::marker {
+    content: "";
+  }
 
-    summary,
-    a {
-      @apply relative cursor-pointer py-2;
-      padding-left: 2ch;
-    }
+  details summary,
+  details a {
+    @apply relative cursor-pointer py-2;
+    padding-left: 2ch;
+  }
 
-    summary {
-      @apply flex items-center gap-2;
-    }
+  details summary {
+    @apply flex items-center gap-2;
+  }
 
-    .summary-icon {
-      @apply absolute left-0 top-1/2 text-blue-600 dark:text-gray-400/60;
-      transition: transform 0.2s ease-in-out;
-      transform: translateY(-50%);
-    }
+  details .summary-icon {
+    @apply absolute left-0 top-1/2 text-blue-600 dark:text-gray-400/60;
+    transition: transform 0.2s ease-in-out;
+    transform: translateY(-50%);
+  }
 
-    &[open] > summary {
-      @apply text-blue-500;
-    }
+  details[open] > summary {
+    @apply text-blue-500;
+  }
 
-    &[open] > summary .summary-icon {
-      transform: translateY(-50%) rotate(90deg);
-    }
+  details[open] > summary .summary-icon {
+    transform: translateY(-50%) rotate(90deg);
+  }
 
-    a {
-      @apply border-none block font-light;
-      @apply no-underline py-3 text-black/75 dark:text-blue-300/80;
-      word-break: break-word;
-      padding-left: 3ch;
-      font-size: 0.9em;
+  details a {
+    @apply border-none block font-light;
+    @apply no-underline py-3 text-black/75 dark:text-blue-300/80;
+    word-break: break-word;
+    padding-left: 3ch;
+    font-size: 0.9em;
+  }
 
-      &:before {
-        transform: translate(calc((1em - 2px) / 2), -50%);
-        @apply w-px h-full border-l-[1px] border-dashed border-gray-500/60;
-        content: "";
-      }
+  details a::before {
+    transform: translate(calc((1em - 2px) / 2), -50%);
+    @apply w-px h-full border-l-[1px] border-dashed border-gray-500/60;
+    content: "";
+  }
 
-      & + details {
-        @apply pt-6;
-      }
+  details a + details {
+    @apply pt-6;
+  }
 
-      &.active {
-        @apply text-blue-500;
+  details a.active {
+    @apply text-blue-500;
+  }
 
-        &:before {
-          @apply border-solid border-blue-500/80;
-        }
-      }
-    }
+  details a.active::before {
+    @apply border-solid border-blue-500/80;
+  }
+
+  .mobile-menu-button {
+    @apply fixed bottom-4 right-4 z-50 flex h-14 w-14 items-center justify-center rounded-full bg-blue-600 text-white shadow-lg ring-1 ring-blue-400/60;
+    bottom: calc(env(safe-area-inset-bottom, 0px) + 1rem);
+    right: calc(env(safe-area-inset-right, 0px) + 1rem);
+  }
+
+  .mobile-menu-button :global([data-icon]) {
+    @apply h-6 w-6;
   }
 </style>
 
-<aside>
+<button
+  class="sidebar-backdrop"
+  type="button"
+  data-sidebar-overlay
+  data-open="false"
+  aria-hidden="true"
+  tabindex="-1"
+></button>
+
+<aside id="docs-sidebar" data-sidebar data-open="false">
   <Logo />
   <div class="sticky">
     <div class="scroll-shadow-top"></div>
@@ -123,4 +158,19 @@ const tree = getDocTree();
   </div>
 </aside>
 
-<script is:inline src={sidebarScript} type="module"></script>
+<button
+  class="mobile-menu-button"
+  type="button"
+  data-sidebar-toggle
+  aria-controls="docs-sidebar"
+  aria-expanded="false"
+  aria-label="Open documentation navigation"
+>
+  <AstroIcon name="hugeicons:menu-01" />
+</button>
+
+<script>
+  import { startSidebar } from "../scripts/sidebar";
+
+  startSidebar();
+</script>

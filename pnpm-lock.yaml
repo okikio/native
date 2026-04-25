@@ -45,6 +45,9 @@ importers:
       '@iconify-json/fluent':
         specifier: ^1.2.45
         version: 1.2.45
+      '@iconify-json/hugeicons':
+        specifier: ^1.2.26
+        version: 1.2.26
       '@tailwindcss/vite':
         specifier: ^4.2.4
         version: 4.2.4(vite@7.3.2(jiti@2.6.1)(lightningcss@1.32.0)(sass@1.77.4)(terser@5.31.1)(tsx@4.13.3)(yaml@2.8.3))
@@ -60,9 +63,6 @@ importers:
       jsr:
         specifier: ^0.12.4
         version: 0.12.4
-      sass:
-        specifier: ^1.77.4
-        version: 1.77.4
       tailwindcss:
         specifier: ^4.2.4
         version: 4.2.4
@@ -797,6 +797,9 @@ packages:
 
   '@iconify-json/fluent@1.2.45':
     resolution: {integrity: sha512-gdlHc/HpvogYxocfCCg46V3A0wtAsGVBRr3FtTTmUnUyF4kaTnYe2cxdPOUj+gUBK8PZlvXqTmrQ5GTt20f4Jw==}
+
+  '@iconify-json/hugeicons@1.2.26':
+    resolution: {integrity: sha512-ZJB0EjFrYJy+EBUnx2/mGD4MCGScQr4dauV455lC9CuCt50guk6TosnOi9t2r4EIyhHmytO5IOeVFG4C8V9/hw==}
 
   '@iconify/tools@4.2.0':
     resolution: {integrity: sha512-WRxPva/ipxYkqZd1+CkEAQmd86dQmrwH0vwK89gmp2Kh2WyyVw57XbPng0NehP3x4V1LzLsXUneP1uMfTMZmUA==}
@@ -5066,6 +5069,10 @@ snapshots:
     dependencies:
       '@iconify/types': 2.0.0
 
+  '@iconify-json/hugeicons@1.2.26':
+    dependencies:
+      '@iconify/types': 2.0.0
+
   '@iconify/tools@4.2.0':
     dependencies:
       '@iconify/types': 2.0.0
@@ -6928,7 +6935,8 @@ snapshots:
 
   ignore@5.3.1: {}
 
-  immutable@4.3.6: {}
+  immutable@4.3.6:
+    optional: true
 
   indent-string@4.0.0: {}
 
@@ -8206,7 +8214,8 @@ snapshots:
     dependencies:
       chokidar: 3.6.0
       immutable: 4.3.6
-      source-map-js: 1.2.0
+      source-map-js: 1.2.1
+    optional: true
 
   sax@1.6.0: {}
 

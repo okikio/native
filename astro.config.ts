@@ -37,6 +37,7 @@ export default defineConfig({
     icon({
       include: {
         fluent: [...fluentIcons],
+        hugeicons: ["menu-01"],
       },
     }),
   ],

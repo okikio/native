@@ -2,7 +2,7 @@
 import BaseLayout from "../layouts/BaseLayout.astro";
 import { getDocEntries } from "../lib/docs";
 
-const overviewPages = getDocEntries().filter((entry) => entry.label === "Overview" && entry.prettySegments.length === 1);
+const overviewPages = (await getDocEntries()).filter((entry) => entry.label === "Overview" && entry.prettySegments.length === 1);
 ---
 
 <BaseLayout title="native · Astro v6 docs" description="Modernized documentation for the native initiative and its packages.">

@@ -2,7 +2,6 @@
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import PlaybackBlock from "../../components/PlaybackBlock.astro";
 import AnimatedBox from "../../components/AnimatedBox.astro";
-import animateScript from "../../scripts/animate.ts?url";
 ---
 
 <BaseLayout title="Demo · native" description="Interactive demo for the native initiative packages.">
@@ -15,7 +14,7 @@ import animateScript from "../../scripts/animate.ts?url";
 
     <article main-content>
       <h1>Demo</h1>
-      <p>Interactive playback example powered by <code>@okikio/animate</code> and <code>@okikio/native</code>.</p>
+      <p>Interactive playback example for the docs site.</p>
 
       <PlaybackBlock id="simple-demo">
         <AnimatedBox>1</AnimatedBox>
@@ -24,5 +23,9 @@ import animateScript from "../../scripts/animate.ts?url";
     </article>
   </div>
 
-  <script is:inline src={animateScript} type="module"></script>
+  <script>
+    import { startPlaybackDemo } from "../../scripts/animate";
+
+    startPlaybackDemo();
+  </script>
 </BaseLayout>
