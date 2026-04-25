@@ -11,6 +11,10 @@ const tree = await getDocTree();
   /* Tailwind v4 component-style reference */
   @reference "../style/tailwind-reference.css";
 
+  :root {
+    --mobile-sidebar-peek-width: 1.25rem;
+  }
+
   .sidebar-backdrop,
   .mobile-menu-button {
     @apply sm:hidden;
@@ -34,7 +38,7 @@ const tree = await getDocTree();
     border-inline-end: 1px solid rgb(148 163 184 / 0.22);
     border-radius: 0 1.75rem 1.75rem 0;
     box-shadow: 0 18px 48px rgb(15 23 42 / 0.18);
-    transform: translateX(calc(-100% + 1.25rem));
+    transform: translateX(calc(-100% + var(--mobile-sidebar-peek-width)));
     transition: transform 0.24s ease-in-out, box-shadow 0.24s ease-in-out;
   }
 
@@ -169,7 +173,7 @@ const tree = await getDocTree();
   }
 
   .mobile-menu-label {
-    @apply tracking-[0.14em] uppercase;
+    @apply text-xs tracking-wide uppercase;
   }
 </style>
 
