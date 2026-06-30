@@ -68,7 +68,7 @@
         "husky": "^7.0.2",
         "lerna-changelog": "^2.1.0",
         "path-to-regexp": "^8.4.0",
-        "pnpm": "^10.28.2",
+        "pnpm": "^10.34.4",
         "postcss": "^8.5.10",
         "postcss-csso": "^5.0.1",
         "postcss-scss": "^4.0.0",
