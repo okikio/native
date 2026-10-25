@@ -216,5 +216,7 @@ $RECYCLE.BIN/
 dist/
 # generated types
 .astro/
+# Netlify local build output
+.netlify/
 # jetbrains setting folder
 .idea/

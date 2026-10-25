@@ -1,19 +1,68 @@
 ---
-// import { Markdown } from 'astro/components';
-import { Markdown } from "astro/components";
 import BaseLayout from "../layouts/BaseLayout.astro";
-
-const content = Astro.fetchContent('../../README.md')[0].astro.source;
 ---
 
-<BaseLayout>
-  <div>
-    <p>
-      <span><a href="/">Home</a> / </span>
-    </p> 
+<BaseLayout
+  title="native"
+  description="An initiative which aims to make it easy to create complex, light-weight, and performant web applications using modern js."
+>
+  <div class="page-shell">
+    <nav aria-label="Breadcrumb" class="breadcrumbs">
+      <a href="/">Home</a>
+      <span aria-hidden="true">/</span>
+    </nav>
 
     <article main-content>
-      <Markdown content={content} />
-    </article> 
+      <h1>native</h1>
+      <p>
+        An initiative which aims to make it easy to create complex, light-weight, and performant web applications
+        using modern js. The initiative is a monorepo with 4 smaller packages within it, they are
+        <a href="/docs/manager/">@okikio/manager</a>, <a href="/docs/emitter/">@okikio/emitter</a>,
+        <a href="/docs/animate/">@okikio/animate</a>, and <a href="/docs/native/">@okikio/native</a>.
+      </p>
+
+      <h2><a href="/docs/manager/">@okikio/manager</a></h2>
+      <p>
+        A superset of the Map class, it extends the Map classes capabilities with awesome new features, and relieves
+        some of the inconvient quirks of the Map class.
+      </p>
+      <p>
+        <a href="/docs/manager/">Documentation</a>
+        <span style="padding-inline: 1rem">|</span>
+        <a href="https://www.npmjs.com/package/@okikio/manager">NPM</a>
+      </p>
+
+      <h2><a href="/docs/emitter/">@okikio/emitter</a></h2>
+      <p>A small Event Emitter written in typescript with performance and ease of use in mind.</p>
+      <p>
+        <a href="/docs/emitter/">Documentation</a>
+        <span style="padding-inline: 1rem">|</span>
+        <a href="https://www.npmjs.com/package/@okikio/emitter">NPM</a>
+      </p>
+
+      <h2><a href="/docs/animate/">@okikio/animate</a></h2>
+      <p>
+        An animation library for the modern web. Inspired by animate plus, and animejs, it is a Javascript animation
+        library focused on performance and ease of use. It utilizes the Web Animation API (WAAPI) to deliver fluid
+        animations at a <em>semi-small</em> size.
+      </p>
+      <p>
+        <a href="/docs/animate/">Documentation</a>
+        <span style="padding-inline: 1rem">|</span>
+        <a href="https://www.npmjs.com/package/@okikio/animate">NPM</a>
+      </p>
+
+      <h2><a href="/docs/native/">@okikio/native</a></h2>
+      <p>
+        A framework to build custom dynamic web experiences around. It acts as a very light weight to build complex
+        web apps, ranging from PJAX based sites to other Single Page Applications (SPA) (React, Vue, etc...) based
+        sites and web apps.
+      </p>
+      <p>
+        <a href="/docs/native/">Documentation</a>
+        <span style="padding-inline: 1rem">|</span>
+        <a href="https://www.npmjs.com/package/@okikio/native">NPM</a>
+      </p>
+    </article>
   </div>
 </BaseLayout>

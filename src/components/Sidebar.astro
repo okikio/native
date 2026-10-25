@@ -1,62 +1,61 @@
 ---
-// import SidebarSection from "./SidebarSection.astro";
+import { Icon as AstroIcon } from "astro-icon/components";
 import Logo from "./Logo.astro";
-import glob from "fast-glob";
-const paths = await glob('docs/**/*.md');
+import SidebarSection from "./SidebarSection.astro";
+import { getDocTree } from "../lib/docs";
 
-function isObject(obj) {
-  return typeof obj === 'object' && obj !== null && obj !== undefined
-}
-
-// Capitalize first letter of each word
-let capitalize = (str) => {
-  return str
-        .replace(/-/g, " ")
-        .replace(/\w\S*/g, (txt) => 
-          (txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase())
-        )
-        .replace(/api/gi, "API")
-        .replace(/css/gi, "CSS");
-};
-
-const obj = {}; 
-function deepGet(obj, path) {
-  var length = path.length;
-  for (var i = 0; i < length; i++) {
-    if (obj == null) return void 0;
-    obj = obj[path[i]];
-  }
-  return length ? obj : void 0;
-}
-function deepSet(obj, path, value) {
-  var length = path.length;
-  for (var i = 0; i < length; i++) {
-    if (!isObject(obj[path[i]])) {
-      obj[path[i]] = {};
-    }
-    
-    if (i == length - 1) {
-      obj[path[i]] = value;
-    }
-
-    obj = obj[path[i]];
-  }
-  return length ? obj : void 0;
-}
-paths.forEach(p => {
-  let path = p.replace("docs/", "").replace(/\.md$/, "");
-  deepSet(obj, path.split("/"), "/" + path);
-})
-          
+const tree = await getDocTree();
 ---
 
-<style lang="scss">
+<style>
+  /* Tailwind v4 component-style reference */
+  @reference "../style/tailwind-reference.css";
+
+  :root {
+    --mobile-sidebar-peek-width: 0rem;
+  }
+
+  .sidebar-backdrop,
+  .mobile-menu-button {
+    @apply sm:hidden;
+  }
+
+  .sidebar-backdrop {
+    @apply fixed inset-0 z-30 bg-slate-950/50 opacity-0 pointer-events-none transition-opacity duration-200;
+  }
+
+  .sidebar-backdrop[data-open="true"] {
+    @apply opacity-100 pointer-events-auto;
+  }
+
   aside {
     font-size: 0.9em;
     min-width: 300px;
-    @apply lt-sm:-translate-x-full;
     @apply py-2 min-w-[250px] lg:min-w-[300px];
-    @apply fixed lt-sm:h-full lt-sm:w-full sm:relative left-0 top-0;
+    @apply fixed left-0 top-0 z-40 h-full bg-white dark:bg-slate-950 sm:relative sm:z-auto sm:h-auto sm:w-auto sm:bg-transparent;
+    width: min(21rem, calc(100vw - 4.5rem));
+    max-width: calc(100vw - 1rem);
+    border-inline-end: 1px solid rgb(148 163 184 / 0.22);
+    border-radius: 0;
+    box-shadow: 0 18px 48px rgb(15 23 42 / 0.18);
+    transform: translateX(calc(-100% + var(--mobile-sidebar-peek-width)));
+    transition: transform 0.24s ease-in-out, box-shadow 0.24s ease-in-out;
+  }
+
+  aside[data-open="true"] {
+    transform: translateX(0);
+    box-shadow: 0 24px 64px rgb(15 23 42 / 0.28);
+  }
+
+  @media (min-width: 40rem) {
+    aside {
+      width: auto;
+      max-width: none;
+      border-inline-end: 0;
+      border-radius: 0;
+      box-shadow: none;
+      transform: translateX(0);
+    }
   }
 
   .sticky {
@@ -81,121 +80,127 @@ paths.forEach(p => {
 
   .scroll {
     @apply relative w-full overflow-auto px-5 py-10;
+    padding-bottom: calc(env(safe-area-inset-bottom, 0px) + 6rem);
   }
 
-  details {
-    .content {
-      padding-left: 2ch;
-      @apply py-2;
-    }
+  details .content {
+    padding-left: 2ch;
+    @apply py-2;
+  }
 
-    summary::marker {
-      content: "";
-    }
+  details summary::marker {
+    content: "";
+  }
 
-    summary, a {
-      @apply relative cursor-pointer py-2;
-      padding-left: 2ch;
+  details summary,
+  details a {
+    @apply relative cursor-pointer py-2;
+    padding-left: 2ch;
+  }
 
-      &:before {
-        font-family: FluentSystemIcons-Regular !important;
-        font-style: normal;
-        font-weight: normal !important;
-        font-variant: normal;
-        text-transform: none;
-        line-height: 1;
+  details summary {
+    @apply flex items-center gap-2;
+  }
 
-        -webkit-font-smoothing: antialiased;
-        -moz-osx-font-smoothing: grayscale;
+  details .summary-icon {
+    @apply absolute left-0 top-1/2 text-blue-600 dark:text-gray-400/60;
+    transition: transform 0.2s ease-in-out;
+    transform: translateY(-50%);
+  }
 
-        content: "► ";
-        content: "\f2af";
+  details[open] > summary {
+    @apply text-blue-500;
+  }
 
-        @apply absolute left-0 top-1/2;
-        @apply text-2xl text-blue-600 dark:text-gray-400/60;
-        transform: translate(0, -50%);
-      }
-    }
+  details[open] > summary .summary-icon {
+    transform: translateY(-50%) rotate(90deg);
+  }
 
-    summary:before {
-        transition: transform 0.2s ease-in-out;
-        transform: translate(0, -50%) rotateZ(0deg);
-    }
+  details a {
+    @apply border-none block font-light;
+    @apply no-underline py-3 text-black/75 dark:text-blue-300/80;
+    word-break: break-word;
+    padding-left: 3ch;
+    font-size: 0.9em;
+  }
 
-    &[open] > summary {
-      @apply text-blue-500;
+  details a::before {
+    transform: translate(calc((1em - 2px) / 2), -50%);
+    @apply w-px h-full border-l-[1px] border-dashed border-gray-500/60;
+    content: "";
+  }
 
-      &:before {
-        // content: "▼ ";
-        // content: "\f2a2";
-        transform: translate(0, -50%) rotateZ(90deg);
-      }
-    }
+  details a + details {
+    @apply pt-6;
+  }
 
-    a {
-      @apply border-none block font-light;
-      @apply no-underline py-3 text-black/75 dark:text-blue-300/80;
-      word-break: break-word;
-      padding-left: 3ch;
-      font-size: 0.9em;
+  details a.active {
+    @apply text-blue-500;
+  }
 
-      &:before {
-        transform: translate(calc((1em - 2px) / 2), -50%);
-        @apply w-px h-full border-l-[1px] border-dashed border-gray-500/60;
-        content: "";
-      }
+  details a.active::before {
+    @apply border-solid border-blue-500/80;
+  }
 
-      & + details {
-        @apply pt-6;
-      }
+  .mobile-menu-button {
+    @apply fixed bottom-4 right-4 z-50 inline-flex items-center gap-2 rounded-full px-3 py-3 text-sm font-semibold text-white shadow-lg;
+    @apply bg-blue-600 ring-1 ring-blue-300/50 transition-all duration-200;
+    @apply dark:bg-blue-500 dark:text-slate-950 dark:ring-blue-300/40;
+    bottom: calc(env(safe-area-inset-bottom, 0px) + 1rem);
+    right: calc(env(safe-area-inset-right, 0px) + 1rem);
+  }
 
-      &.active {
-        @apply text-blue-500;
+  .mobile-menu-button:hover {
+    @apply bg-blue-500 dark:bg-blue-400;
+  }
 
-        &:before {
-          @apply border-solid border-blue-500/80;
-        }
-      }
-    }
+  .mobile-menu-button[aria-expanded="true"] {
+    @apply bg-blue-600 text-white ring-blue-300/50 dark:bg-blue-500 dark:text-slate-950;
+  }
+
+  .mobile-menu-button :global([data-icon]) {
+    @apply h-5 w-5;
+  }
+
+  .mobile-menu-label {
+    @apply text-xs tracking-wide uppercase;
   }
 </style>
 
-<aside>
+<button
+  class="sidebar-backdrop"
+  type="button"
+  data-sidebar-overlay
+  data-open="false"
+  aria-label="Close documentation navigation"
+></button>
+
+<aside id="docs-sidebar" data-sidebar data-open="false">
   <Logo />
   <div class="sticky">
     <div class="scroll-shadow-top"></div>
     <div class="scroll">
-    {
-      () => {
-        let generate = (input, depth = 1) => {
-            let _keys = Object.keys(input).sort((a, b) => 
-              (a == "index" ? -1 : b == "index" ? 1 : 0)
-            );
-
-            return Promise.all(
-                _keys.map((item) => 
-                  isObject(input[item]) ?
-                  (
-                      <details>
-                          <summary>
-                          <p>{["animate", "emitter", "manager", "native"].includes(item) ? `@okikio/${item}` : capitalize(item)}</p>
-                          </summary>
-
-                          <div class="content">{depth >= 6 ? null : generate(input[item], depth + 1)}</div>
-                      </details>
-                  ) :  (<a href={input[item].replace(new RegExp("\/index$"), "/")}>{item == "index" ? "Overview" : capitalize(item)}</a>)
-                  // (<SidebarSection item={item} details={input[item]} content={depth >= 5 ? null : generate(input[item], depth + 1)} />)
-                )
-            );
-        };
-
-        return generate(obj);
-      }
-    }
+      {tree.map((node) => <SidebarSection node={node} />)}
     </div>
 
     <div class="scroll-shadow-bottom"></div>
   </div>
 </aside>
 
-<script src={Astro.resolve("../ts/sidebar.mjs")} type="module"></script>
+<button
+  class="mobile-menu-button"
+  type="button"
+  data-sidebar-toggle
+  aria-controls="docs-sidebar"
+  aria-expanded="false"
+  aria-label="Open documentation navigation"
+>
+  <AstroIcon name="hugeicons:menu-01" />
+  <span class="mobile-menu-label">Menu</span>
+</button>
+
+<script>
+  import { startSidebar } from "../scripts/sidebar";
+
+  startSidebar();
+</script>

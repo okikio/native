@@ -1,0 +1,35 @@
+---
+import PagesLayout from "../../layouts/PagesLayout.astro";
+---
+
+<PagesLayout
+  title="Docs"
+  description="Overview pages for the native initiative packages."
+  breadcrumbs={[{ label: "Docs", href: "/docs/" }]}
+>
+  <h1>Docs</h1>
+  <p>
+    Documentation for the <a href="https://github.com/okikio/native">native</a> initiative and its packages. Pick a
+    package below for its overview, API guide, and examples.
+  </p>
+
+  <h2><a href="/docs/manager/">@okikio/manager</a></h2>
+  <p>
+    Store keyed values with a collection built around Map. Manager adds convenience methods and returns arrays
+    from its keys and values methods.
+  </p>
+
+  <h2><a href="/docs/emitter/">@okikio/emitter</a></h2>
+  <p>Connect application components through named events and listeners.</p>
+
+  <h2><a href="/docs/animate/">@okikio/animate</a></h2>
+  <p>
+    Create and control browser animations through the Web Animations API.
+  </p>
+
+  <h2><a href="/docs/native/">@okikio/native</a></h2>
+  <p>
+    Organize browser behavior into an application and its services. Optional PJAX navigation fetches the next page
+    and replaces its content without a full reload.
+  </p>
+</PagesLayout>
